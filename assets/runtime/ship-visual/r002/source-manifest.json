@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "cef32c45a5b6f43dbd899c303eb4f2634d332daeb3b8b5529a82eb2aa74ce5f8",
+  "compilerSha256": "38a90bb55f12407be5c6b06438e6b5fc476ea9d4c7003eaa3363133ce1362a50",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,11 +12,11 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "7b4752c87f92a133b9ef43a0528f51f23d507f7fc4f063d7be28fddea1563faa"
+      "sha256": "21c06cd3bf557e3e05912434845a724856a0e1af35c3b42f028fd624aa1af2e1"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "7e6c418cbb71568b2a363d6063776b890145bb6a34b0492b650a8bf169959732"
+      "sha256": "e0ac62b8428ef50e3d14318aad2fb21f60bc4bf11a50591faa2a16cf2000a2ea"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
@@ -36,11 +36,39 @@
     },
     {
       "path": "packages/content/src/ship-prefab.ts",
-      "sha256": "d5c9fd0ca77bfe5fc726a78af0e92d1846b2f2f32f9e17114f5c8430b7db3d22"
+      "sha256": "4916d14d6ab01ddd043f3957af602cbe6505952969f869499cf684a9e8931823"
     },
     {
       "path": "packages/content/src/ship-furniture.ts",
-      "sha256": "acc109413b2c28ebaf5a6b452fcff2d777d31ab9f5401b8a550d2c86206aa7d2"
+      "sha256": "4537b0478990de34005877b1a1af25c5556ff1500794ee0327e6bdf5f65538d5"
+    },
+    {
+      "path": "packages/content/src/ship-room-fixtures-r025.ts",
+      "sha256": "18f2bfacf499c368d2f23dd8966f0e61bcdaf64298c797e68cd177e399efcdd9"
+    },
+    {
+      "path": "packages/content/src/ship-prefab-catalog.ts",
+      "sha256": "8fc4384837460758137f3435e0f09259c3bd4adedd1107d229e358c060d381c6"
+    },
+    {
+      "path": "packages/content/src/ship-reference-room-layout-r025.ts",
+      "sha256": "bc2be735c61772e23a3f49075988c2bd866d42f78ca71cae436c315cfa535313"
+    },
+    {
+      "path": "packages/content/src/prefabs/federation.ts",
+      "sha256": "ff59de4b43f2cb80e780a80d1351c86f5a7f8e2bd54bc65cd52090850081a606"
+    },
+    {
+      "path": "packages/content/package.json",
+      "sha256": "1ef70fbc3bbdc6b39abefe371c9de277200b35ec4d6b24355d8a8567919e552e"
+    },
+    {
+      "path": "scripts/prefab-render-harness/game.ts",
+      "sha256": "0dece654ceabf1819255b48d0cf16648c08cadfe6fda6d4bb2ef7d69836695b4"
+    },
+    {
+      "path": "scripts/prefab-render-harness/main.ts",
+      "sha256": "a69d09579e4776f29f22d1374eb203b60d5a0dfc01ca4e1d5150bb46871921e8"
     },
     {
       "path": "packages/sim/src/ship-visual-sampler.ts",
@@ -159,6 +187,50 @@
       "sha256": "e1fa4011ff479498b52833600b40de9503bb90030bf0daa1aa40c19a865a8d7a"
     },
     {
+      "path": "scripts/art_library/ship_reference_r025_reactor.py",
+      "sha256": "e74308bda96424f86956c5621aa2a49d77686b964e55e0aee47b255bb7e155b7"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r025_rooms.py",
+      "sha256": "cadd4cffaa5cf8624bb814866c1e70bd4ee1f9283dff52e5c70eb78a9a206c71"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r025_rooms_clean.py",
+      "sha256": "a1ebc2ac2142fcad372caa9adfbf0be9a0b3006db34bcbb68384251a8f90d400"
+    },
+    {
+      "path": "assets/runtime/ship-objects/reference-r025-clean/shipyard.equipment.workshop-bank-r025-source.json",
+      "sha256": "14fc0290e59154e314ef2f5dd94796f34f07e4a0a7cab9f3e16a9245cfe829a6"
+    },
+    {
+      "path": "assets/runtime/ship-objects/reference-r025-clean/shipyard.equipment.medical-equipment-bank-r025-source.json",
+      "sha256": "38c1e3df72b27120f3b0e6b3510950eea345d0faf787284c1757bfc8647fc4eb"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.workshop-bank-r025.blend",
+      "sha256": "1d155d878f0ae01504a810aa6a849fd98ceee6bd0aa1438442aca3f116220981"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.medical-equipment-bank-r025.blend",
+      "sha256": "fe635cf1dcea58764168a25dc15dacc17154a7ec2091410b9b96d8326f131e6d"
+    },
+    {
+      "path": "assets/runtime/ship-visual/r002/equipment-r025/reactor.md-source.json",
+      "sha256": "06b549cf02083f11afd35a7164c6be11d701b9b2d34378da15caa2235ad2b017"
+    },
+    {
+      "path": "assets/runtime/ship-visual/r002/equipment-r025/reactor.lg-source.json",
+      "sha256": "b5791fd299e948813139a36da86b1a8cdc62e78749e9ac8bcd1522bbd1430fba"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/equipment-r025/reactor.md.blend",
+      "sha256": "f4453f1a37ad71f0d7a501227c358fc836c0573e9a8169a32c9ba0bc71e515cf"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/equipment-r025/reactor.lg.blend",
+      "sha256": "18521a6e285e1feba3a8b9af683296ec625f832cb68209c6f0e6b69373250340"
+    },
+    {
       "path": "assets/runtime/ship-visual/r002/door-leaf-r019-source.json",
       "sha256": "78f3b2cc6b797605069088a8f1df3cfb34147d3532688bee4f4e14a894bc2bc7"
     },
@@ -244,7 +316,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/reference-instruments.ts",
-      "sha256": "735640fc6945f57b1e301f2f7816aa00c43a1cff183ca84a4ad66932eb34764c"
+      "sha256": "dfe9e4e0596bad8376995f61253233fff580bf67ad7237bbbf911fcee6330d4a"
     }
   ]
 }

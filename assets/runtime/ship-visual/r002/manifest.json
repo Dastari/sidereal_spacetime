@@ -4,8 +4,8 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "cef32c45a5b6f43dbd899c303eb4f2634d332daeb3b8b5529a82eb2aa74ce5f8",
-  "profilesSha256": "7adb6ffd2d6837c900277d3176ec464b2cd425a33ffa05a973270a1b39d454c8",
+  "compilerSha256": "38a90bb55f12407be5c6b06438e6b5fc476ea9d4c7003eaa3363133ce1362a50",
+  "profilesSha256": "d6831c62c2303941685931a7670cbab17ee9f279a4f2d5ea5887e0eec06603ee",
   "slots": [
     "primary",
     "secondary",
@@ -19,7 +19,7 @@
   ],
   "prefabs": {
     "fed.s.wren": "ecdb038c1b9333780c719aa3e19a8c677852c99cf4dab86421a2934aa60937e5",
-    "fed.m.crest": "d0816b972d7fa3f1bf4f3498d5681d44b7a0ff9f3c6d60d487480e647b32f890",
+    "fed.m.crest": "6b0aa0b105174f7f2af341ac46c16ef6d5b8b7bd9a4de4e36f8abf290bdcebf9",
     "fed.m.meridian": "91773eae04acb358093b39c893a1a98c4ce299a7a3984b63c77c5443dd98958b",
     "fed.l.bastion": "2b44b421f06925fe5f82e1ae68961d7d64a6a04923d7db31fed54794f80ea7fb",
     "rj.s.jackal": "b6d83dba14511b1cd73ec6f9b52ae026e86b074584b474717473c1b0a1de22b1",
@@ -1695,9 +1695,9 @@
         2.9375,
         1.75
       ],
-      "url": "/assets/ship-visual/r002/equipment-r020/reactor.lg.glb",
-      "sha256": "a6c95612457ad95ad973ec4aafc6cb475776ade73a5c5968d4dbca1be65845c6",
-      "bytes": 84908
+      "url": "/assets/ship-visual/r002/equipment-r025/reactor.lg.glb",
+      "sha256": "fbc03973b688c3d07fb58d2698c1f9f9ed5204154a59b06c08930d00d6a73b69",
+      "bytes": 93348
     },
     {
       "kind": "component",
@@ -1711,9 +1711,9 @@
         2.3125,
         1.25
       ],
-      "url": "/assets/ship-visual/r002/equipment-r020/reactor.md.glb",
-      "sha256": "86707f363546a578323803ac4d0290f92ecab7988e93633f20da635c31c1c9fc",
-      "bytes": 84884
+      "url": "/assets/ship-visual/r002/equipment-r025/reactor.md.glb",
+      "sha256": "88b6e9e0448247a343c919604639f924140b4aa7f50fc003d9986fe5965276ab",
+      "bytes": 93320
     },
     {
       "kind": "component",
@@ -2306,6 +2306,38 @@
       "url": "/assets/ship-components/r006/warp-drive.xl.glb",
       "sha256": "ab7786d9ab81edc8e95d804ac1c4d0928df54a725febe3488e1f84b2444cd7b0",
       "bytes": 427716
+    },
+    {
+      "kind": "object",
+      "id": "shipyard.equipment.workshop-bank-r025",
+      "frame": "interior",
+      "bounds": [
+        -1.625,
+        0,
+        -0.5,
+        1.625,
+        2,
+        0.5
+      ],
+      "url": "/assets/ship-objects/reference-r025-clean/shipyard.equipment.workshop-bank-r025.glb",
+      "sha256": "65b2db98cff4bacf80e0632c0457b3abd80f997e69903462b711afc3ce4bf7b2",
+      "bytes": 124380
+    },
+    {
+      "kind": "object",
+      "id": "shipyard.equipment.medical-equipment-bank-r025",
+      "frame": "interior",
+      "bounds": [
+        -0.625,
+        0,
+        -0.625,
+        0.625,
+        2,
+        0.625
+      ],
+      "url": "/assets/ship-objects/reference-r025-clean/shipyard.equipment.medical-equipment-bank-r025.glb",
+      "sha256": "c7eff904bf0c1ea1b7c0e24a3cd02f595710570adf10a592a31965dbfa0fe393",
+      "bytes": 97908
     },
     {
       "kind": "kit-manifest",
