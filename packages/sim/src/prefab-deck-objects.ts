@@ -1,3 +1,11 @@
+import {
+  isWayfarerGameplay,
+  WAYFARER_GAMEPLAY_OBJECTS,
+  WAYFARER_STORAGE_OBJECTS,
+  WAYFARER_BED_OBJECTS,
+  wayfarerStorageDesign,
+  wayfarerConsoleFootprints,
+} from "@sidereal/content/wayfarer-authored-gameplay";
 /**
  * Placed objects of a prefab ship, derived from its grammar data and the component catalog:
  * interior modules (reactor, bunk, consoles...), room furniture sockets (lockers, crates...),
@@ -183,6 +191,39 @@ export function prefabShipObjects(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
 ): PrefabShipObject[] {
+  if (isWayfarerGameplay(doc))
+    return WAYFARER_GAMEPLAY_OBJECTS.map((o) => ({
+      id:
+        o.object === "Cockpit_command_station"
+          ? "mount:helm"
+          : `socket:${o.object}`,
+      kind:
+        o.object === "Cockpit_command_station"
+          ? ("component" as const)
+          : ("furniture" as const),
+      componentId:
+        o.object === "Cockpit_command_station" ? "console.navigation.sm" : null,
+      designId: WAYFARER_STORAGE_OBJECTS.some((id) => id === o.object)
+        ? wayfarerStorageDesign(o.object)
+        : WAYFARER_BED_OBJECTS.some((id) => id === o.object)
+          ? "shipyard.equipment.crew-bunk"
+          : o.piece,
+      sourceId: o.object === "Cockpit_command_station" ? "helm" : o.object,
+      attach:
+        o.object === "Cockpit_command_station"
+          ? ("interior" as const)
+          : ("socket" as const),
+      room: o.room,
+      view: "deck" as const,
+      min: o.min,
+      max: o.max,
+      blocks:
+        o.max[2] > 0.3 &&
+        o.min[2] < 1.9875 &&
+        o.object !== "Cockpit_command_station" &&
+        o.object !== "Cockpit_pilot_chair",
+      station: o.object === "Cockpit_command_station" ? "pilot" : null,
+    }));
   const hit = cache.get(doc);
   if (hit) return hit;
   const interior = deriveInterior(doc, 0, catalog);
@@ -310,6 +351,15 @@ export function prefabDeckBlockers(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
 ): PrefabDeckBlocker[] {
+  if (isWayfarerGameplay(doc))
+    return prefabShipObjects(doc, catalog)
+      .filter((o) => o.blocks)
+      .map((o) => ({
+        objectId: o.id,
+        definitionId: o.componentId ?? o.designId ?? o.kind,
+        rect: [o.min[0], o.min[1], o.max[0], o.max[1]] as Rect,
+        trimmed: false,
+      }));
   const interior = deriveInterior(doc, 0, catalog);
   const cellRoom = new Set(
     interior.floors.map((f) => `${f.cell[0]},${f.cell[1]}`),
@@ -365,6 +415,42 @@ export function prefabDeckObstacles(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
 ): DeckObstacle[] {
+  if (isWayfarerGameplay(doc)) {
+    const toShip = ([x, y]: readonly number[]): [number, number] => [
+      -y + 0,
+      x + 0,
+    ];
+    const obstacles: DeckObstacle[] = WAYFARER_GAMEPLAY_OBJECTS.filter(
+      (o) =>
+        o.max[2] > 0.3 &&
+        o.min[2] < 1.9875 &&
+        o.object !== "Cockpit_command_station" &&
+        o.object !== "Cockpit_pilot_chair",
+    ).map((o) => ({
+      id: `prefab-socket:${o.object}`,
+      definitionId: o.piece,
+      vertices: o.footprint.map(toShip),
+    }));
+    wayfarerConsoleFootprints().forEach((polygon, i) =>
+      obstacles.push({
+        id: `prefab-mount:helm:${i}`,
+        definitionId: "console.navigation.sm",
+        vertices: polygon.map(toShip),
+      }),
+    );
+    // Unique baked cockpit bulkhead is not a reusable source piece. Its physical segments
+    // retain the .63m door half-clearance rather than substituting a full solid envelope.
+    for (const [i, r] of [
+      [0, [4.42, -5.5, 5.08, -0.63]],
+      [1, [4.42, 0.63, 5.08, 5.5]],
+    ] as [number, Rect][])
+      obstacles.push({
+        id: `prefab-bulkhead:${i}`,
+        definitionId: "wayfarer.bulkhead",
+        vertices: planRectToShip(doc, r),
+      });
+    return obstacles;
+  }
   return prefabDeckBlockers(doc, catalog).map((b) => ({
     id: `prefab-${b.objectId}`,
     definitionId: b.definitionId.slice(0, 128),

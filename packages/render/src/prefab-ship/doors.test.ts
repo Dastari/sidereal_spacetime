@@ -31,8 +31,10 @@ describe("prefab door specs", () => {
     expect(specs.filter((d) => !d.exterior).length).toBeGreaterThanOrEqual(3);
   });
 
-  it("gives every prefab's exterior airlock a closed door", () => {
-    for (const doc of PREFAB_SHIPS) {
+  it("gives every airlock-equipped prefab a closed exterior door", () => {
+    for (const doc of PREFAB_SHIPS.filter((doc) =>
+      doc.mounts.some((mount) => mount.component.startsWith("airlock.")),
+    )) {
       const specs = prefabDoorSpecs(doc, catalog);
       expect(
         specs.some((d) => d.airlock),
@@ -43,6 +45,10 @@ describe("prefab door specs", () => {
         expect(Math.hypot(...d.normal)).toBeCloseTo(1, 6);
       }
     }
+  });
+
+  it("does not invent an exterior hatch for the authored Wayfarer cutaway", () => {
+    expect(prefabDoorSpecs(prefabById("fed.m.wayfarer")!, catalog)).toEqual([]);
   });
 });
 

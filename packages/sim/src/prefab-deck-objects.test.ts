@@ -232,7 +232,11 @@ describe("prefab deck objects", () => {
       for (const i of seen) {
         const [px, py] = toPlan(at(i));
         const f = interior.floors.find(
-          (c) => c.cell[0] === Math.floor(px) && c.cell[1] === Math.floor(py),
+          (c) =>
+            px >= c.cell[0] &&
+            px < c.cell[0] + 1 &&
+            py >= c.cell[1] &&
+            py < c.cell[1] + 1,
         );
         if (f) reachedRooms.add(f.room);
       }

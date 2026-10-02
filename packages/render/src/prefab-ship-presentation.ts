@@ -90,7 +90,11 @@ export async function loadPrefabShipPresentation(
     // Engines glow only while the server fires them (exhaust.ts), not as a baked idle plume.
     staticPlumes: false,
   });
-  const exhaust = createShipExhaust(scene, view.root, doc.theme);
+  const exhaust = createShipExhaust(
+    scene,
+    doc.id === "fed.m.wayfarer" ? shipRoot : view.root,
+    doc.theme,
+  );
   const doors = createPrefabDoors(
     scene,
     view.root,

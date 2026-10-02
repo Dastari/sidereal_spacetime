@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -85,7 +85,8 @@
     "./definition-references": "./src/definition-references.ts",
     "./ship-visual": "./src/ship-visual.ts",
     "./ship-visual-fixture": "./src/ship-visual-fixture.ts",
-    "./wayfarer-authored-study": "./src/wayfarer-authored-study.ts"
+    "./wayfarer-authored-study": "./src/wayfarer-authored-study.ts",
+    "./wayfarer-authored-gameplay": "./src/wayfarer-authored-gameplay.ts"
   },
   "dependencies": {}
 }

@@ -399,6 +399,10 @@ export async function createPrefabShipView(
   doc: ShipPrefabDocumentV1,
   options: PrefabShipViewOptions,
 ): Promise<PrefabShipView> {
+  if (doc.id === "fed.m.wayfarer") {
+    const { createWayfarerLiveView } = await import("./wayfarer-live-view");
+    return createWayfarerLiveView(scene, doc, options);
+  }
   if (!scene.useRightHandedSystem)
     throw Error(
       "createPrefabShipView requires a right-handed scene (scene.useRightHandedSystem = true)",

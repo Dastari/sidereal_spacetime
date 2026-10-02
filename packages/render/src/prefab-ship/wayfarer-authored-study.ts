@@ -298,6 +298,7 @@ export async function loadAuthoredStudy(
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    scene.onDisposeObservable.remove(sceneDisposeObserver);
     for (const mesh of meshes) mesh.dispose(false, false);
     for (const container of containers) container.dispose();
   };
@@ -305,7 +306,7 @@ export async function loadAuthoredStudy(
     if (disposed || scene.isDisposed)
       throw Error("Authored study load cancelled");
   };
-  scene.onDisposeObservable.addOnce(dispose);
+  const sceneDisposeObserver = scene.onDisposeObservable.addOnce(dispose);
   try {
     for (const piece of pieces) {
       ensureActive();

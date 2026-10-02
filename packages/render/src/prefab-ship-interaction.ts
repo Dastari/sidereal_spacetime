@@ -31,6 +31,7 @@ import {
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
+import { isWayfarerGameplay } from "@sidereal/content/wayfarer-authored-gameplay";
 import {
   prefabShipObjects,
   type PrefabShipObject,
@@ -428,7 +429,7 @@ export function createPrefabObjectPicker(
         const viewRoot = shipRoot
           .getChildTransformNodes(false)
           .find((n) => n.name === viewRootName);
-        const deck = isDeckView();
+        const deck = isDeckView() || isWayfarerGameplay(binding.doc);
         mesh = objectProxyMesh(
           scene,
           shipRoot,
@@ -470,7 +471,7 @@ export function createPrefabObjectPicker(
     const inverse = Matrix.Invert(shipRoot.computeWorldMatrix(true));
     const o = Vector3.TransformCoordinates(ray.origin, inverse);
     const d = Vector3.TransformNormal(ray.direction, inverse).normalize();
-    const deck = isDeckView();
+    const deck = isDeckView() || isWayfarerGameplay(binding.doc);
     let best: { t: number; id: string } | undefined;
     for (const { object, box } of objects) {
       if (!inView(object, deck)) continue;

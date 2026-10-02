@@ -18,6 +18,8 @@ export interface PinnedPrefabShip {
    * socket and fills it with the named `CREW_WARDROBE_KITS` kit, in the issuing transaction.
    */
   readonly issueStock?: readonly PrefabIssueStock[];
+  /** Bind all authored storage sockets to new empty, collision-qualified inventories. */
+  readonly issueEmptyStorage?: boolean;
 }
 
 export interface PrefabIssueStock {
@@ -187,8 +189,21 @@ export const FED_WREN_R2_PIN: PinnedPrefabShip = {
     "Wren (Federation courier, size S, prefab r2; legacy live instances)",
 };
 
+/** Owner-selected authored Wayfarer r1, explicitly issued or used for targeted replacement. */
+export const FED_WAYFARER_PIN: PinnedPrefabShip = {
+  prefabId: "fed.m.wayfarer",
+  catalogRevision: "ship-components-v1@4",
+  blueprintSha256:
+    "49e5898ceaafb12c5361250440515562f5e6202d0c7a6d4f4405f2419ade90fa",
+  flightDefinitionSha256:
+    "7d87c73d43ebf00afda0f9b4344ea0a7abd7eba1fc65883ceebab2d6d41073a0",
+  description: "Wayfarer (Federation explorer, authored prefab r1)",
+  issueEmptyStorage: true,
+};
+
 export const REGISTERED_PREFAB_PINS: readonly PinnedPrefabShip[] = [
   FED_WREN_PIN,
+  FED_WAYFARER_PIN,
 ];
 
 /**

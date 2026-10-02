@@ -27,6 +27,20 @@ def seed_runtime(root: Path) -> None:
 
 
 class PrepareAppTests(unittest.TestCase):
+    def test_live_wayfarer_bundle_is_published_without_neighboring_studies(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            seed_runtime(root)
+            selected = "ship-study/wayfarer-authored-r001"
+            for name in (f"{selected}/glb/props/crate.glb", f"{selected}/rcs.md.glb",
+                         "ship-study/unselected-roof/roof.glb"):
+                write(root, f"assets/runtime/{name}")
+            prepare("client", root)
+            public = root / "apps/client/public/assets"
+            self.assertTrue((public / selected / "glb/props/crate.glb").is_file())
+            self.assertTrue((public / selected / "rcs.md.glb").is_file())
+            self.assertFalse((public / "ship-study/unselected-roof").exists())
+
     def test_only_allowlisted_help_and_runtime_survive(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

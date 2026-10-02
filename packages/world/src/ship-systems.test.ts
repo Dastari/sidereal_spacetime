@@ -124,9 +124,15 @@ function fixture() {
   return { db, ctx, tick, addShip };
 }
 
-test("server compile equals the shared estimator on all 12 prefabs, within the per-tick budget", () => {
+test("server compile equals the shared estimator on every registered prefab, within the per-tick budget", () => {
   const { db, ctx, tick, addShip } = fixture();
-  expect(PREFAB_SHIPS).toHaveLength(12);
+  const count = PREFAB_SHIPS.length;
+  expect(count).toBe(13);
+  const remaining = count - SHIP_SYSTEMS_COMPILES_PER_TICK;
+  const deferred = Array.from(
+    { length: Math.ceil(count / SHIP_SYSTEMS_COMPILES_PER_TICK) - 1 },
+    (_, i) => count - (i + 1) * SHIP_SYSTEMS_COMPILES_PER_TICK,
+  );
   for (const p of PREFAB_SHIPS) {
     addShip(p.id, p);
     markShipSystemsDirty(ctx, p.id, "install");
@@ -135,24 +141,24 @@ test("server compile equals the shared estimator on all 12 prefabs, within the p
   const first = tick();
   expect(first).toMatchObject({
     compiled: SHIP_SYSTEMS_COMPILES_PER_TICK,
-    remaining: 10,
+    remaining,
   });
   expect(db.shipSystemsState.count()).toBe(2n);
   expect(db.shipSystemsClock.id.find(0)).toMatchObject({
     compiles: 2n,
     deferredTicks: 1n,
-    deferredShips: 10n,
-    lastQueue: 10,
+    deferredShips: BigInt(remaining),
+    lastQueue: remaining,
   });
-  for (let i = 0; i < 5; i++) tick();
+  for (let i = 0; i < deferred.length; i++) tick();
   expect(db.shipSystemsDirty.count()).toBe(0n);
   const clock = db.shipSystemsClock.id.find(0);
   expect(clock).toMatchObject({
-    compiles: 12n,
-    changed: 12n,
+    compiles: BigInt(count),
+    changed: BigInt(count),
     failed: 0n,
-    deferredTicks: 5n,
-    deferredShips: 10n + 8n + 6n + 4n + 2n,
+    deferredTicks: BigInt(deferred.length),
+    deferredShips: BigInt(deferred.reduce((sum, n) => sum + n, 0)),
     lastQueue: 0,
   });
   for (const p of PREFAB_SHIPS) {
