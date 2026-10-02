@@ -189,6 +189,150 @@ describe("authored material pooling", () => {
   });
 });
 
+it("partitions receiver placements without changing indexed attributes or material pooling", async () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  const bytes = new Uint8Array(
+    readFileSync(
+      new URL(
+        "../../../../assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.grate.glb",
+        import.meta.url,
+      ),
+    ),
+  );
+  const pieces = [
+    {
+      id: "floor.grate",
+      file: "floor.grate.glb",
+      sha256:
+        "55d663ea86cef90fb3f155e3e8c436aa4ac7c4e467842066f6852c7834ee9317",
+      triangles: 1404,
+      frame: "piece-local" as const,
+    },
+  ];
+  const instances = [
+    {
+      object: "lounge-grate",
+      piece: "floor.grate",
+      role: "floor",
+      matrix: identity,
+    },
+    {
+      object: "rest-grate",
+      piece: "floor.grate",
+      role: "floor",
+      matrix: identity.map((row, i) =>
+        row.map((v, j) => (i === 0 && j === 3 ? 2 : v)),
+      ),
+    },
+  ];
+  const palette = {
+    deck_dark: { family: "plastic-deck" },
+    secondary: { family: "plastic-dark" },
+    trim: { family: "plastic-dark" },
+  };
+  const snapshot = (candidate: Awaited<ReturnType<typeof loadAuthoredStudy>>) =>
+    candidate.meshes
+      .flatMap((mesh) => {
+        const indices = mesh.getIndices()!;
+        return mesh.metadata.authoredStudy.placementRanges.map(
+          (range: {
+            object: string;
+            material: string;
+            indexStart: number;
+            indexCount: number;
+          }) => ({
+            object: range.object,
+            material: range.material,
+            materialKey: mesh.metadata.authoredStudy.materialKey,
+            attributes: mesh
+              .getVerticesDataKinds()
+              .sort()
+              .map((kind) => {
+                const values = mesh.getVerticesData(kind)!;
+                const size = values.length / mesh.getTotalVertices();
+                return [
+                  kind,
+                  Array.from(
+                    indices.slice(
+                      range.indexStart,
+                      range.indexStart + range.indexCount,
+                    ),
+                  ).flatMap((i) =>
+                    Array.from(values.slice(i * size, (i + 1) * size)),
+                  ),
+                ];
+              }),
+          }),
+        );
+      })
+      .sort((a, b) =>
+        `${a.object}:${a.material}`.localeCompare(`${b.object}:${b.material}`),
+      );
+  try {
+    const original = await loadAuthoredStudy(
+      scene,
+      pieces,
+      instances,
+      palette,
+      [0, 0],
+      async () => bytes,
+    );
+    const expected = snapshot(original);
+    expect(original.meshes).toHaveLength(3);
+    original.dispose();
+    const regions = new Map([["lounge-grate", "lounge"]]);
+    const split = await loadAuthoredStudy(
+      scene,
+      pieces,
+      instances,
+      palette,
+      [0, 0],
+      async () => {
+        regions.clear(); // Async caller changes must not alter the admitted cohort.
+        return bytes;
+      },
+      { batchRegions: regions },
+    );
+    expect(split.meshes).toHaveLength(6);
+    expect(split.report.placedTriangles).toBe(2808);
+    expect(snapshot(split)).toEqual(expected);
+    expect(new Set(split.meshes.map((mesh) => mesh.material)).size).toBe(3);
+    for (const mesh of split.meshes) {
+      const metadata = mesh.metadata.authoredStudy;
+      expect(metadata.placementRanges).toHaveLength(1);
+      expect(metadata.receiverRegion).toBe(
+        metadata.placementRanges[0].object === "lounge-grate"
+          ? "lounge"
+          : "rest",
+      );
+    }
+    split.dispose();
+    expect(scene.meshes).toHaveLength(0);
+    expect(scene.materials).toHaveLength(0);
+    let imports = 0;
+    await expect(
+      loadAuthoredStudy(
+        scene,
+        pieces,
+        instances,
+        palette,
+        [0, 0],
+        async () => {
+          imports++;
+          return bytes;
+        },
+        { batchRegions: new Map([["unknown-grate", "lounge"]]) },
+      ),
+    ).rejects.toThrow("Unknown authored receiver placement");
+    expect(imports).toBe(0);
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
+});
+
 it("registers retained materials for shader invalidation and removes them on disposal", async () => {
   const engine = new NullEngine();
   const scene = new Scene(engine);

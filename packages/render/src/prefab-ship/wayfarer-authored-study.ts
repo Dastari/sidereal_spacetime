@@ -269,15 +269,27 @@ export async function loadAuthoredStudy(
   palette: Readonly<Record<string, AuthoredPaletteInput>>,
   origin: readonly [number, number],
   fetchPiece: (piece: AuthoredPieceInput) => Promise<Uint8Array>,
+  options: { batchRegions?: ReadonlyMap<string, string> } = {},
 ) {
   if (!scene.useRightHandedSystem)
     throw Error("Authored study needs the normal right-handed game scene");
+  const batchRegions = new Map(options.batchRegions);
+  const objects = new Set(instances.map((row) => row.object));
+  for (const [id, region] of batchRegions)
+    if (!objects.has(id) || typeof region !== "string" || !region.trim())
+      throw Error("Unknown authored receiver placement or empty region");
   const containers: AssetContainer[] = [],
     meshes: Mesh[] = [];
   const materials = new Map<string, PBRMaterial>();
   const groups = new Map<
     string,
-    { geometry: MergeGroup; material: PBRMaterial; ranges: AuthoredRange[] }
+    {
+      geometry: MergeGroup;
+      material: PBRMaterial;
+      ranges: AuthoredRange[];
+      region: string;
+      materialKey: string;
+    }
   >();
   const materialPolicy: unknown[] = [];
   let importedPrimitives = 0,
@@ -372,11 +384,13 @@ export async function loadAuthoredStudy(
           pieceTriangles += sub.indexCount / 3;
           importedPrimitives++;
           for (const row of placements) {
+            const region = batchRegions.get(row.object) ?? "";
+            const compatibleKey = region ? canonical([key, region]) : key;
             // Glass and decals retain independent placement depth sorting.
             const batchKey =
               definition.alphaMode === "BLEND"
-                ? `${key}:${row.object}:${source.uniqueId}:${sub.indexStart}`
-                : key;
+                ? `${compatibleKey}:${row.object}:${source.uniqueId}:${sub.indexStart}`
+                : compatibleKey;
             let group = groups.get(batchKey);
             if (!group) {
               group = {
@@ -388,6 +402,8 @@ export async function loadAuthoredStudy(
                 },
                 material: pooled,
                 ranges: [],
+                region,
+                materialKey: key,
               };
               groups.set(batchKey, group);
             }
@@ -452,7 +468,13 @@ export async function loadAuthoredStudy(
       setMeshRole(mesh, "hull");
       mesh.metadata = {
         ...mesh.metadata,
-        authoredStudy: { materialKey: key, placementRanges: group.ranges },
+        authoredStudy: {
+          materialKey: batchRegions.size ? group.materialKey : key,
+          placementRanges: group.ranges,
+          ...(batchRegions.size
+            ? { receiverRegion: group.region || "rest" }
+            : {}),
+        },
       };
       meshes.push(mesh);
     }

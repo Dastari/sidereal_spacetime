@@ -34,6 +34,8 @@ interface Review {
   setCamera?: (name: string) => void;
   setPracticals?: (enabled: boolean) => void;
   practicals?: boolean;
+  regionalPracticals?: boolean;
+  setRegionalPracticals?: (enabled: boolean) => void;
   setContactShadows?: (enabled: boolean) => void;
   contactShadows?: boolean;
   setGuardedNormalBias?: (enabled: boolean) => void;
@@ -48,8 +50,48 @@ declare global {
   }
 }
 const cameraName = new URLSearchParams(location.search).get("cam") ?? "hero";
+const regionalReceivers =
+  new URLSearchParams(location.search).get("receivers") === "lounge";
 const poolPracticals =
+  regionalReceivers ||
   new URLSearchParams(location.search).get("lights") === "pools";
+const loungeObjects = new Set([
+  "FLOOR_lounge_-1_-2",
+  "FLOOR_lounge_-1_-3",
+  "FLOOR_lounge_-1_-4",
+  "FLOOR_lounge_-1_-5",
+  "FLOOR_lounge_-2_-2",
+  "FLOOR_lounge_-2_-3",
+  "FLOOR_lounge_-2_-4",
+  "FLOOR_lounge_-2_-5",
+  "FLOOR_lounge_-3_-2",
+  "FLOOR_lounge_-3_-3",
+  "FLOOR_lounge_-3_-4",
+  "FLOOR_lounge_-3_-5",
+  "FLOOR_lounge_0_-2",
+  "FLOOR_lounge_0_-3",
+  "FLOOR_lounge_0_-4",
+  "FLOOR_lounge_0_-5",
+  "Lounge_coffee_table",
+  "Lounge_plant_tall",
+  "Lounge_poster_goodcrew",
+  "Lounge_shelf_unit",
+  "Lounge_sofa_l",
+  "Lounge_walls_hall_post",
+  "Lounge_walls_lounge_alcove",
+  "PART_lounge_front",
+  "POST_lounge_front",
+  "POST_lounge_opening",
+  "WALL_far_05",
+  "WALL_far_06",
+  "WALL_far_07",
+  "WALL_far_08",
+  "LINER_far_05",
+  "LINER_far_06",
+  "LINER_far_07",
+  "LINER_far_08",
+  "HULL_far_bay04_cluster",
+]);
 const review: Review = { ready: false, camera: cameraName };
 window.__wayfarerAuthored = review;
 const base = "/assets/ship-study/wayfarer-authored-r001/";
@@ -71,7 +113,7 @@ async function json(url: string, pin?: string) {
 }
 
 async function main() {
-  if (!["hero", "reverse", "bow", "rooms"].includes(cameraName))
+  if (!["hero", "reverse", "bow", "rooms", "lounge"].includes(cameraName))
     throw Error("Unknown authored review camera");
   const descriptor = await json(`${base}descriptor.json`);
   if (!descriptor || typeof descriptor !== "object")
@@ -126,8 +168,29 @@ async function main() {
     study.palette,
     origin,
     (piece) => bytes(`${base}${piece.file}`),
+    regionalReceivers
+      ? {
+          batchRegions: new Map([...loungeObjects].map((id) => [id, "lounge"])),
+        }
+      : {},
   );
   review.candidate = candidate;
+  if (
+    regionalReceivers &&
+    (candidate.report.batches > 180 ||
+      candidate.report.placedTriangles !== 796632 ||
+      candidate.report.instances !== 459 ||
+      candidate.report.pieces !== 188 ||
+      candidate.meshes.some((mesh) => {
+        const info = mesh.metadata.authoredStudy;
+        return info.placementRanges.some(
+          (range: { object: string }) =>
+            loungeObjects.has(range.object) !==
+            (info.receiverRegion === "lounge"),
+        );
+      }))
+  )
+    throw Error("Changed lounge receiver cohort or candidate census");
   moldedLightRig(scene).include(candidate.meshes);
   // A matched OFF/ON pair retains three studio contributions in both modes.
   scene.getLightByName("construction-fill")?.setEnabled(false);
@@ -141,6 +204,14 @@ async function main() {
   const selectedNames = poolPracticals
     ? ["LT_pool_8", "LT_pool_9", "LT_pool_15", "LT_pool_31", "LT_pool_34"]
     : practicalOwners;
+  if (regionalReceivers)
+    selectedNames.push("LT_pool_14", "LT_pool_21", "LT_pool_22");
+  const loungeSources = new Set([
+    "LT_pool_14",
+    "LT_pool_21",
+    "LT_pool_22",
+    "LT_pool_34",
+  ]);
   const sourceLights = (layout as { lights?: unknown }).lights;
   if (!Array.isArray(sourceLights))
     throw Error("Missing study practical lights");
@@ -176,8 +247,9 @@ async function main() {
       row.location as [number, number, number],
       origin,
     );
+    const owner = practicalOwners[index] ?? row.name;
     const light = new PointLight(
-      `authored-study:${practicalOwners[index]}`,
+      `authored-study:${owner}`,
       Vector3.FromArray(position),
       scene,
     );
@@ -195,7 +267,7 @@ async function main() {
     light.metadata = { reviewSourceRow: row.name };
     light.shadowEnabled = false;
     light.includedOnlyMeshes = candidate.meshes;
-    registerLocalPbrLight(light, `authored-study:${practicalOwners[index]}`);
+    registerLocalPbrLight(light, `authored-study:${owner}`);
     light.setEnabled(false);
     return light;
   });
@@ -222,6 +294,7 @@ async function main() {
     reverse: { alpha: 0.75, beta: 1.03, radius: 44, target: [0, 0.9, 0] },
     bow: { alpha: -1.65, beta: 0.85, radius: 15, target: [0, 0.9, -9.5] },
     rooms: { alpha: -2.4, beta: 0.78, radius: 15, target: [-3.8, 0.8, 0.5] },
+    lounge: { alpha: -2.4, beta: 0.78, radius: 12, target: [3.8, 0.8, 0.5] },
   };
   let view = views[cameraName as keyof typeof views];
   const fixtureSet = new Set(candidate.meshes);
@@ -288,11 +361,43 @@ async function main() {
     new URLSearchParams(location.search).get("shadow") === "contact",
   );
   review.practicals = false;
-  review.setPracticals = (enabled) => {
-    for (const light of practicals) light.setEnabled(enabled);
-    review.practicals = enabled;
+  review.regionalPracticals = regionalReceivers;
+  const receiverPracticalNames = (mesh: (typeof candidate.meshes)[number]) =>
+    !review.practicals
+      ? []
+      : practicals
+          .filter((light, index) =>
+            review.regionalPracticals &&
+            mesh.metadata.authoredStudy.receiverRegion === "lounge"
+              ? loungeSources.has(light.metadata.reviewSourceRow)
+              : index < 5,
+          )
+          .map((light) => light.name);
+  const distributePracticals = () => {
+    for (const [index, light] of practicals.entries()) {
+      light.includedOnlyMeshes = review.regionalPracticals
+        ? candidate.meshes.filter((mesh) =>
+            mesh.metadata.authoredStudy.receiverRegion === "lounge"
+              ? loungeSources.has(light.metadata.reviewSourceRow)
+              : index < 5,
+          )
+        : candidate.meshes;
+      light.setEnabled(
+        Boolean(review.practicals && (index < 5 || review.regionalPracticals)),
+      );
+    }
     review.ready = false;
     settled = 0;
+  };
+  review.setPracticals = (enabled) => {
+    review.practicals = enabled;
+    distributePracticals();
+  };
+  review.setRegionalPracticals = (enabled) => {
+    if (enabled && !regionalReceivers)
+      throw Error("Lounge receiver partition not loaded");
+    review.regionalPracticals = enabled;
+    distributePracticals();
   };
   review.setPracticals(
     new URLSearchParams(location.search).get("lights") !== "off",
@@ -353,18 +458,20 @@ async function main() {
       review.error = "Fitted shadow depth clips actual caster bounds";
       return;
     }
+    const studioNames = ["construction-star", "molded-cool-fill", "molded-rim"];
+    const expectedForMesh = (mesh: (typeof candidate.meshes)[number]) =>
+      [...studioNames, ...receiverPracticalNames(mesh)].sort();
     const expectedLights = [
-      "construction-star",
-      "molded-cool-fill",
-      "molded-rim",
-      ...(review.practicals ? practicals.map((light) => light.name) : []),
+      ...new Set(candidate.meshes.flatMap(expectedForMesh)),
     ].sort();
     if (
       candidate.meshes.some((mesh) => {
         const actual = mesh.lightSources.map((light) => light.name).sort();
+        const expected = expectedForMesh(mesh);
         return (
-          actual.length !== expectedLights.length ||
-          actual.some((name, index) => name !== expectedLights[index]) ||
+          actual.length > 8 ||
+          actual.length !== expected.length ||
+          actual.some((name, index) => name !== expected[index]) ||
           !(mesh.material instanceof PBRMaterial) ||
           mesh.material.maxSimultaneousLights !== 8
         );
@@ -423,7 +530,26 @@ async function main() {
       },
       practicalLighting: {
         enabled: review.practicals,
-        mode: poolPracticals ? "source-pools" : "central-rooms",
+        mode: review.regionalPracticals
+          ? "lounge-regional-pools"
+          : poolPracticals
+            ? "source-pools"
+            : "central-rooms",
+        partitionedReceivers: regionalReceivers,
+        regionalDistribution: review.regionalPracticals,
+        enabledSceneLightObjects: scene.lights.filter((light) =>
+          light.isEnabled(),
+        ).length,
+        receiverAssignments: regionalReceivers
+          ? candidate.meshes.map((mesh) => ({
+              mesh: mesh.name,
+              region: mesh.metadata.authoredStudy.receiverRegion,
+              objects: mesh.metadata.authoredStudy.placementRanges.map(
+                (range: { object: string }) => range.object,
+              ),
+              expectedLights: expectedForMesh(mesh),
+            }))
+          : undefined,
         sourceRows: practicalRows,
         mapping: poolPracticals
           ? "watts / 10; artistic standard falloff; range1.8; PBR diffuse/specular"
@@ -438,6 +564,7 @@ async function main() {
           range: light.range,
           radius: light.radius,
           enabled: light.isEnabled(),
+          receiverCount: light.includedOnlyMeshes.length,
           diffuse: light.diffuse.asArray(),
           intensityMode: light.intensityMode,
           falloffType: light.falloffType,
