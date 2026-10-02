@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
+import { Matrix, Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { crewArmedClipInfo, crewItem } from "@sidereal/content/crew-items";
 
@@ -241,4 +242,68 @@ describe("held r001 item with draw and holster", () => {
     held.dispose();
     scene.dispose();
   });
+});
+
+it("qualified stow keeps the same item visible and guards every ordinary held writer until release", async () => {
+  const engine = new NullEngine();
+  engines.push(engine);
+  const scene = new Scene(engine),
+    crew = fakeCrew(scene);
+  const held = createVoxelHeldItem(scene, crew as never, {
+    instant: () => true,
+  });
+  held.set("pistol");
+  await held.whenComplete();
+  const visual = held.visual!,
+    ordinaryParent = visual.root.parent;
+  const ordinary = visual.root.computeWorldMatrix(true).clone();
+  const dock = new TransformNode("station-rack", scene);
+  const stow = Matrix.Compose(
+    Vector3.One(),
+    Quaternion.RotationAxis(Vector3.Up(), 0.4),
+    new Vector3(-0.5, 0.9, 0.3),
+  );
+  const scope = held.claimOperatorStow(
+    Symbol("current-generation"),
+    "pistol",
+    dock,
+    stow,
+  );
+  const loadCount = loaded.length,
+    clipCount = crew.clips.length;
+  held.set("rifle");
+  held.set(null);
+  held.reload();
+  held.playItem("fire");
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  scene.onBeforeRenderObservable.notifyObservers(scene);
+  expect(held.visual).toBe(visual);
+  expect(held.itemId).toBe("pistol");
+  expect(held.phase).toBe("held");
+  expect(visual.root.parent).toBe(dock);
+  expect(visual.root.isEnabled()).toBe(true);
+  expect(Array.from(visual.root.computeWorldMatrix(true).m)).toEqual(
+    Array.from(stow.m),
+  );
+  expect(loaded).toHaveLength(loadCount);
+  expect(crew.clips).toHaveLength(clipCount);
+  expect(played).toEqual([]);
+  expect(held.muzzle()).toBeUndefined();
+  expect(crew.supportTarget).toBeNull();
+  expect(() =>
+    held.claimOperatorStow(Symbol(), "pistol", dock, stow),
+  ).toThrow();
+  scope.release();
+  scope.release();
+  expect(visual.root.parent).toBe(ordinaryParent);
+  expect(Array.from(visual.root.computeWorldMatrix(true).m)).toEqual(
+    Array.from(ordinary.m),
+  );
+  held.set("rifle");
+  await held.whenComplete();
+  expect(held.itemId).toBe("rifle");
+  held.dispose();
+  held.dispose();
+  expect(disposed.filter((id) => id === "pistol")).toHaveLength(1);
+  expect(disposed.filter((id) => id === "rifle")).toHaveLength(1);
 });

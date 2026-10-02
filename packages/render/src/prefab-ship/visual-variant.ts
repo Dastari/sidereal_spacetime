@@ -33,6 +33,7 @@ export interface VisualVariantSelection {
 }
 export interface VerifiedVisualVariant {
   manifest: ShipVisualManifest;
+  manifestSha256: string;
   profile: ShipVisualProfileId;
   components: Map<string, GlbGeometry>;
   objects: Map<string, GlbGeometry>;
@@ -408,6 +409,7 @@ export async function resolveVisualVariant(
       throw Error("Scene disposed before candidate activation");
     const variant: VerifiedVisualVariant = {
       manifest,
+      manifestSha256: selection.sha256,
       profile: profileFor(doc),
       components,
       objects,

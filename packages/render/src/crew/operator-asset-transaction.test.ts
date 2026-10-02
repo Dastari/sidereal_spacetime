@@ -116,7 +116,11 @@ test("invalidation retains stationary resources, not current qualification", () 
   owner.accept({ ...occupied, pose: "recovering" });
   expect(restore).not.toHaveBeenCalled();
   owner.accept({ ...occupied, pose: "none", acceptedY: 2.625 });
-  expect(restore).toHaveBeenCalledWith(handle, [0, 2.625]);
+  expect(restore).toHaveBeenCalledWith(
+    handle,
+    [0, 2.625],
+    expect.objectContaining({ transferred: true }),
+  );
   expect(handle.dispose).toHaveBeenCalledOnce();
   expect(owner.committed).toBeNull();
 });
@@ -206,21 +210,81 @@ test.each(["invalidate", "withdraw"] as const)(
   },
 );
 
-test("throwing accepted-recovery callback still releases owned resources once", () => {
+test("failed ordinary recovery before transfer retains resources and retries only the new coherent none tuple", () => {
+  let ready = false;
+  const restored: number[][] = [];
   const owner = createOperatorAssetTransaction({
-    restoreAtAcceptedRecovery: () => {
-      throw Error("adapter recovery failed");
+    restoreAtAcceptedRecovery: (_handle, xy, receipt) => {
+      if (!ready) throw Error("ordinary materials changed");
+      receipt.assertCurrent();
+      restored.push([...xy]);
+      receipt.transfer();
     },
   });
   owner.accept(occupied);
   const ticket = owner.request("first"),
     handle = complete("first");
   owner.complete(ticket, handle);
-  expect(() => owner.accept({ ...occupied, pose: "none" })).toThrow(
-    "adapter recovery failed",
-  );
-  expect(handle.dispose).toHaveBeenCalledOnce();
+  owner.accept({
+    ...occupied,
+    pose: "none",
+    acceptedX: 3,
+    acceptedY: 4,
+    dead: true,
+  });
+  expect(owner.committed).toBe(handle);
+  expect(handle.dispose).not.toHaveBeenCalled();
+  expect(owner.qualifiesCurrentRequest).toBe(false);
+  expect(owner.error).toBe("ordinary materials changed");
+  ready = true;
+  owner.accept({
+    ...occupied,
+    pose: "none",
+    acceptedX: 5,
+    acceptedY: 6,
+    dead: true,
+  });
+  expect(restored).toEqual([[5, 6]]);
   expect(owner.committed).toBeNull();
+  expect(handle.dispose).toHaveBeenCalledOnce();
   owner.withdraw();
   expect(handle.dispose).toHaveBeenCalledOnce();
+});
+
+test("an exception after ordinary transfer never recaptures or double-disposes the physical handle", () => {
+  const owner = createOperatorAssetTransaction({
+    restoreAtAcceptedRecovery: (_handle, _xy, receipt) => {
+      receipt.transfer();
+      throw Error("ordinary is already owned by the scene");
+    },
+  });
+  owner.accept(occupied);
+  const ticket = owner.request("first"),
+    handle = complete("first");
+  owner.complete(ticket, handle);
+  owner.accept({ ...occupied, pose: "none" });
+  expect(owner.committed).toBeNull();
+  expect(handle.dispose).toHaveBeenCalledOnce();
+  expect(owner.error).toBe("ordinary is already owned by the scene");
+  owner.withdraw();
+  expect(handle.dispose).toHaveBeenCalledOnce();
+});
+
+test("reentrant context replacement during ordinary activation cannot transfer stale recovery", () => {
+  const owner = createOperatorAssetTransaction({
+    restoreAtAcceptedRecovery: (_handle, _xy, receipt) => {
+      owner.accept({ ...occupied, associationKey: "new-visit" });
+      receipt.transfer();
+    },
+  });
+  owner.accept(occupied);
+  const ticket = owner.request("first"),
+    handle = complete("first");
+  owner.complete(ticket, handle);
+  owner.accept({ ...occupied, pose: "none" });
+  expect(owner.committed).toBeNull();
+  expect(handle.dispose).toHaveBeenCalledOnce();
+  expect(owner.error).toBeNull();
+  const next = owner.request("current");
+  expect(next.associationKey).toBe("new-visit");
 });

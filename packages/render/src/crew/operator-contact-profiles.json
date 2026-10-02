@@ -1,0 +1,182 @@
+{
+  "schema": "sidereal.operator-contacts.v1",
+  "profileId": "operator-r007",
+  "navigationSha256": "b741bc33f04efc5e90f92df9c4d1cc6a4304147bb5c09ec6ba431985c0bc6b5a",
+  "bodyTranslation": [0, 0.29375, -0.09375],
+  "bodyRotationQuaternion": [0, 1, 0, 0],
+  "seatContact": {
+    "lift": 0.29375,
+    "lean": 0,
+    "footSupport": 0.29375
+  },
+  "wristMatrices": {
+    "L": [0, -1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0.24, 0.984375, 0.09, 1],
+    "R": [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, -0.24, 0.984375, 0.09, 1]
+  },
+  "poleDirectionMagnitudes": [0.15, 0.05, 0.15],
+  "maximumHandResidualM": 0.0001,
+  "items": {
+    "pistol": {
+      "sha256": "192a99a6e23c3824e46abb046832bc1180707a93b076d617b2b98d664cfab752",
+      "translation": [-0.78125, 0.351875, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "smg": {
+      "sha256": "bd4c573160fce16342bf38b7e4f28b381371cbef532a187f9fb4d8884249ebc5",
+      "translation": [-0.84375, 0.39875, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "compact-carbine": {
+      "sha256": "6a8637249f185f14432bee78bcc6f8924a3e6bb7d3748e7c14152484747f080f",
+      "translation": [-0.84375, 0.476875, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "rifle": {
+      "sha256": "2d59edc08b3b45959b0df5cfabb2b2346edb75edc70e197cd50f20f08c3dc44c",
+      "translation": [-0.875, 0.5081249999999999, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "shotgun": {
+      "sha256": "4268f2ce62150d83251cbea93ef7b10995d165489e7369d3936f4fd3212bb908",
+      "translation": [-0.84375, 0.445625, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "heavy-gun": {
+      "sha256": "e78453a2ae3f5dd6dcbd970bcb4c66f527197fb7a6027be40e3f988875ec50a9",
+      "translation": [-0.9375, 0.43, 0.39125],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "beam-rifle": {
+      "sha256": "d2821b52a7dfdb11b611f887a9add589930b049eaaa658738008351b33c7a8b1",
+      "translation": [-0.8125, 0.414375, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "rail-rifle": {
+      "sha256": "a96a9b976b7a49baf8d1b1c47c7f7bef5f008a594313ac2efab25bcf60aed25a",
+      "translation": [-0.84375, 0.5081249999999999, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "stun-gun": {
+      "sha256": "3dd0f2f671c1209db627c01cb430ba7960caa87078ce266200292bbccb8c28f0",
+      "translation": [-0.78125, 0.289375, 0.39125],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "baton": {
+      "sha256": "ebd3d2acf58ef823552eb6a1549d617b9d694bee012062df7b44aef1a27c113f",
+      "translation": [-0.5625, 0.33625, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "grenade": {
+      "sha256": "3c9590b36d1cc2c47bd9fb69b4c01799612ffba32ff798832e9a0e2ca9c760d7",
+      "translation": [-0.625, 0.2425, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "medgun": {
+      "sha256": "cf25f13af6c1a021699c69d658c35c5e7f4266ff3bebbaf77956bb1de920ad24",
+      "translation": [-0.9375, 0.351875, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "medkit": {
+      "sha256": "e8eb5bee2e5a8a5e4f288d6f9e6b659cfa30be2aa362bf850dfe87443ebb9284",
+      "translation": [-0.515625, 0.2425, 0.2975],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "utility-cutter": {
+      "sha256": "c508bec6b7803e16a6bd1be5cd240d821a0428f0f2efaa6fca8a7e976a03a51f",
+      "translation": [-0.625, 0.445625, 0.39125],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "repair-tool": {
+      "sha256": "f79d9120f6526f61e72cb1a7443b1ab8caeafc9f83010820165f746105286645",
+      "translation": [-0.8125, 0.289375, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "welder": {
+      "sha256": "a22c5cfcff7a1c2e913d8cd4991213fefab3eb401a20a4a6adfc0e3544f2961e",
+      "translation": [-0.828125, 0.289375, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "multi-tool": {
+      "sha256": "4bd008eb15165ef78227e68ced54b08a205712f0b5118ade226ed73a6cc68897",
+      "translation": [-0.8125, 0.289375, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "mining-drill": {
+      "sha256": "0d5f4836b42ff120a67b5c6d066ec684e19d7a12c2bca8fa99db438082e436cf",
+      "translation": [-0.9375, 0.3206250149011612, 0.3912499850988388],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "wrench": {
+      "sha256": "bf9e7e9b676d5e1ef83743e8ff5a5ddbf6969ea5a817fa3abd9ed4c34598523c",
+      "translation": [-0.640625, 0.289375, 0.45375],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "scanner": {
+      "sha256": "59a4f9622705402d68348ad6cdc341064cb21a5709a16f19b3a049c6af9eb3e2",
+      "translation": [-0.84375, 0.27375, 0.406875],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "sample-scanner": {
+      "sha256": "cd722bb28ae319471ac7b5a9bd1b6ea0350e5670823252bd7364bb3b8e3ca48e",
+      "translation": [-0.765625, 0.2581250074505806, 0.4224999925494194],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "data-pad": {
+      "sha256": "d87cf9ecadcac0ac48f27a4044387c51dc68d6824ee735b42018f8171722f51c",
+      "translation": [-0.625, 0.21125, 0.14125],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "shield-emitter": {
+      "sha256": "611afab49b88ae014c4b7c258780053a60386ce1d6ff211e8bb870fd1dd66174",
+      "translation": [-0.859375, 0.305, 0.36],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "flashlight": {
+      "sha256": "32bce6658460760c4b3f5cbcf2071f751e38add3c1918154f649502d876ed74b",
+      "translation": [-0.5625, 0.2737500074505806, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "grapple": {
+      "sha256": "b61fe2fc073213c86b5458d22551945343440201c5ef7e5c6bf5ae45a8f2e23f",
+      "translation": [-0.7187500149011612, 0.258125, 0.4225],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "drone": {
+      "sha256": "08564e3bda999f711b01e96e9057f614dd1580fe4a68cd7fcaabeb1ec9361c77",
+      "translation": [-0.671875, 0.2737500074505806, 0.36],
+      "rotationQuaternion": [-0.5, -0.5, 0.5, -0.5],
+      "placement": "rack"
+    },
+    "cargo-box": {
+      "sha256": "f2ed1313b14b9bdbea159b0583cb2dfd82b288fa61fce5beb06a985aba4de464",
+      "translation": [0.25, 0.25, -0.3455],
+      "rotationQuaternion": [0, 0, 0, 1],
+      "placement": "dock"
+    }
+  }
+}

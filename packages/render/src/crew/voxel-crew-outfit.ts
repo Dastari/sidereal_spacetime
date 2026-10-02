@@ -18,6 +18,23 @@ import { attachCrewArmor, type CrewArmorAttachment } from "./armor-attach";
 import { attachVoxelCrewHead } from "./voxel-crew-kit";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import {
+  equippedHelmetPalette,
+  restoreOwnedTacticalVisorFinish,
+  SEALED_HEAD_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_MARINE_CROWN_RECEIVER_DIAGNOSTIC_REVISION,
+} from "./head-palette";
+import { resolveHeadLoadout } from "@sidereal/content/crew-heads";
+import {
   CREW_EMISSIVE_INTENSITY,
   type createVoxelCrewVisual,
 } from "./voxel-crew";
@@ -56,6 +73,7 @@ export function toneCrewEmissive(meshes: readonly AbstractMesh[]) {
       material instanceof MultiMaterial ? material.subMaterials : [material];
     for (const m of list) {
       if (!(m instanceof PBRMaterial)) continue;
+      restoreOwnedTacticalVisorFinish(m);
       if (m.emissiveIntensity > CREW_EMISSIVE_INTENSITY)
         m.emissiveIntensity = CREW_EMISSIVE_INTENSITY;
       setPbrLightBudget(m, CREW_MAX_LIGHTS);
@@ -157,7 +175,37 @@ export function createVoxelCrewOutfit(
       bodyType: resolved.bodyType,
       equippedComponents: equipped,
     });
-    const key = JSON.stringify([loadout, resolved.headArtRevision]);
+    const wornSlots =
+      options.operatorSources &&
+      (resolved.headArtRevision === SEALED_HEAD_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision === SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision === SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_MARINE_CROWN_RECEIVER_DIAGNOSTIC_REVISION)
+        ? equippedHelmetPalette(
+            equipped.helmet,
+            resolveHeadLoadout(loadout).nodes.find(
+              (node) => node.role === "helmet",
+            )?.slots,
+          )
+        : undefined;
+    const key = JSON.stringify([loadout, resolved.headArtRevision, wornSlots]);
     if (key !== headKey) {
       headKey = key;
       const revision = ++headRevision;
@@ -166,6 +214,32 @@ export function createVoxelCrewOutfit(
           deferActivation: true,
           verifiedSources: options.operatorSources?.head,
           verifiedAtlases: options.operatorSources?.headAtlases,
+          wornSlots,
+          navyTacticalVisor: Boolean(
+            options.operatorSources &&
+            (resolved.headArtRevision ===
+              SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_MARINE_CROWN_RECEIVER_DIAGNOSTIC_REVISION),
+          ),
         }),
       )
         .then((next) => {

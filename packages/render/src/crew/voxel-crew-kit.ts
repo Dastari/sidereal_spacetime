@@ -17,6 +17,7 @@ import {
   resolveFaceFrames,
   resolveHeadLoadout,
   type HeadLoadout,
+  type SlotValues,
 } from "@sidereal/content/crew-heads";
 import { crewArmedClass, crewItem } from "@sidereal/content/crew-items";
 import { crewUsesSupportGrip, loadArmedClips } from "./voxel-held-item";
@@ -29,6 +30,7 @@ import type { createVoxelCrewVisual } from "./voxel-crew";
 import { loadRgbaImage, loadVerifiedRgbaImage } from "./voxel-face";
 import { tagCrewPart } from "../molded-plastic";
 import { headArtSources } from "./head-art-revision";
+import { bindHeadWornPalette, isTacticalTintedVisor } from "./head-palette";
 import {
   verifiedCrewSourceBytes,
   type VerifiedCrewSource,
@@ -178,6 +180,10 @@ export async function attachVoxelCrewHead(
     deferActivation?: boolean;
     verifiedSources?: ReadonlyMap<string, VerifiedCrewSource>;
     verifiedAtlases?: ReadonlyMap<string, VerifiedCrewSource>;
+    /** Explicit new proposal only; independently owned worn slots, never person or uniform. */
+    wornSlots?: SlotValues;
+    /** Exact new proposal's authored tactical tinted visor only. */
+    navyTacticalVisor?: boolean;
   } = {},
 ) {
   const resolved = resolveHeadLoadout(loadout);
@@ -264,6 +270,8 @@ export async function attachVoxelCrewHead(
     throw error;
   }
   space.setEnabled(false);
+  let wornPalette: ReturnType<typeof bindHeadWornPalette> | undefined;
+  let visorPalette: ReturnType<typeof bindHeadWornPalette> | undefined;
   try {
     for (const c of containers) {
       c.addAllToScene();
@@ -299,6 +307,48 @@ export async function attachVoxelCrewHead(
         else if (person[slot])
           m.albedoColor = Color3.FromHexString(person[slot]).toLinearSpace();
       }
+    if (options.wornSlots && !artError) {
+      const wornNodes = new Set(
+        resolved.nodes
+          .filter((node) => node.role === "helmet" || node.role === "visor")
+          .map((node) => node.node),
+      );
+      wornPalette = bindHeadWornPalette(
+        containers.flatMap((container) =>
+          container.meshes.filter((mesh) => {
+            for (
+              let node: import("@babylonjs/core/node").Node | null = mesh;
+              node;
+              node = node.parent
+            )
+              if (wornNodes.has(node.name)) return true;
+            return false;
+          }),
+        ),
+        options.wornSlots,
+      );
+    }
+    if (
+      options.navyTacticalVisor &&
+      !artError &&
+      resolved.nodes.some(isTacticalTintedVisor)
+    ) {
+      visorPalette = bindHeadWornPalette(
+        containers.flatMap((container) =>
+          container.meshes.filter((mesh) => {
+            for (
+              let node: import("@babylonjs/core/node").Node | null = mesh;
+              node;
+              node = node.parent
+            )
+              if (node.name === "visor.tactical.tinted") return true;
+            return false;
+          }),
+        ),
+        {},
+        { navyTacticalVisor: true },
+      );
+    }
     // Two v1 head-kit export defects, repaired at load (see ensureFaceCanvasUVs /
     // alignWindingToNormals): no TEXCOORD_0, so the pixel face sampled one texel (flat skin); and
     // triangle winding opposite to the (outward) normals on several parts, so double-sided lighting
@@ -357,12 +407,16 @@ export async function attachVoxelCrewHead(
       dispose() {
         if (disposed) return;
         disposed = true;
+        visorPalette?.dispose();
+        wornPalette?.dispose();
         space.dispose();
         for (const c of containers) c.dispose();
         if (active) crew.setHiddenRegions([]);
       },
     };
   } catch (error) {
+    visorPalette?.dispose();
+    wornPalette?.dispose();
     space.dispose();
     for (const c of containers) c.dispose();
     throw error;

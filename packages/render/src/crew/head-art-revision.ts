@@ -149,7 +149,12 @@ export function validateHeadArtBytes(
     )
   )
     throw new Error("character art required nodes missing from active scene");
-  const widths: Record<string, number> = { SCALAR: 1, VEC3: 3, VEC4: 4 };
+  const widths: Record<string, number> = {
+    SCALAR: 1,
+    VEC2: 2,
+    VEC3: 3,
+    VEC4: 4,
+  };
   const sizes: Record<number, number> = { 5121: 1, 5123: 2, 5125: 4, 5126: 4 };
   for (const a of doc.accessors ?? []) {
     const b = doc.bufferViews?.[a.bufferView];
@@ -196,6 +201,7 @@ export function validateHeadArtBytes(
       const normal = doc.accessors[p.attributes?.NORMAL];
       const color = doc.accessors[p.attributes?.COLOR_0];
       const index = doc.accessors[p.indices];
+      const uv = doc.accessors[p.attributes?.TEXCOORD_0];
       if (
         !pos ||
         pos.type !== "VEC3" ||
@@ -206,6 +212,11 @@ export function validateHeadArtBytes(
         !color ||
         color.count !== pos.count ||
         !["VEC3", "VEC4"].includes(color.type) ||
+        (p.attributes?.TEXCOORD_0 !== undefined &&
+          (!uv ||
+            uv.type !== "VEC2" ||
+            uv.componentType !== 5126 ||
+            uv.count !== pos.count)) ||
         !index ||
         index.type !== "SCALAR" ||
         ![5121, 5123, 5125].includes(index.componentType) ||

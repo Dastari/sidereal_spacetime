@@ -1,4 +1,4 @@
-/** Real independent asset staging. No contact/stow transform or production registration lives here. */
+/** Independent verified asset staging; physical contacts require a qualified scene-owned placement. */
 import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -45,6 +45,11 @@ import {
   VOXEL_CREW_UPPER_BONES,
 } from "@sidereal/content/crew-voxel-bundle";
 import type { CompleteOperatorAssets } from "./operator-asset-transaction";
+import {
+  createOperatorContact,
+  type OperatorContact,
+  type OperatorContactPlacement,
+} from "./operator-contact";
 
 type Crew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 export interface OperatorEnsembleRequest {
@@ -556,6 +561,12 @@ export interface PreparedOperatorEnsemble extends CompleteOperatorAssets {
   readonly root: TransformNode;
   readonly outfit: ReturnType<typeof createVoxelCrewOutfit>;
   readonly held: ReturnType<typeof createVoxelHeldItem>;
+  readonly contact?: OperatorContact;
+  readonly ordinaryBaseline?: PreparedOperatorEnsemble;
+  /** Separate handle ownership transfers only after ordinary activation/restoration succeeds. */
+  releaseOrdinaryBaseline?(handle: PreparedOperatorEnsemble): void;
+  checkActivation(): void;
+  activationKey(): string;
   /** Recompile changed flags while still staged; activation itself never lowers render settings. */
   prepareActivation(): Promise<void>;
 }
@@ -566,7 +577,12 @@ export async function prepareOperatorEnsemble(
   request: OperatorEnsembleRequest,
   ports: OperatorEnsembleLoaders = loaders,
   configureMeshes?: (meshes: readonly AbstractMesh[]) => void,
+  contactPlacement?: OperatorContactPlacement,
 ): Promise<PreparedOperatorEnsemble> {
+  contactPlacement = contactPlacement && {
+    ...contactPlacement,
+    navigationLocal: contactPlacement.navigationLocal.clone(),
+  };
   // Canonical requests own their values before the first asynchronous load. A later wardrobe
   // edit must create a new generation rather than mutate the ensemble already being prepared.
   const incoming = request;
@@ -620,20 +636,30 @@ export async function prepareOperatorEnsemble(
   let crew: Crew | undefined;
   let outfit: ReturnType<typeof createVoxelCrewOutfit> | undefined;
   let held: ReturnType<typeof createVoxelHeldItem> | undefined;
+  let contact: OperatorContact | undefined;
+  let ordinaryBaseline: PreparedOperatorEnsemble | undefined;
   let disposed = false;
   const dispose = () => {
     if (disposed) return;
     disposed = true;
     try {
-      held?.dispose();
+      ordinaryBaseline?.dispose();
     } finally {
       try {
-        outfit?.dispose();
+        contact?.dispose();
       } finally {
         try {
-          crew?.dispose();
+          held?.dispose();
         } finally {
-          root.dispose();
+          try {
+            outfit?.dispose();
+          } finally {
+            try {
+              crew?.dispose();
+            } finally {
+              root.dispose();
+            }
+          }
         }
       }
     }
@@ -690,13 +716,60 @@ export async function prepareOperatorEnsemble(
       if (outfit.armour[slot as keyof typeof outfit.armour] !== part?.part)
         throw new Error("Operator requested armor incomplete");
     const actualCrew = crew;
-    const meshes = actualCrew.root
+    if (contactPlacement) {
+      ordinaryBaseline = await prepareOperatorEnsemble(
+        scene,
+        parent,
+        request,
+        ports,
+        configureMeshes,
+      );
+      const actualItem =
+        request.heldItem && request.heldSources?.item(request.heldItem);
+      if (request.heldItem && !actualItem)
+        throw new Error("Operator physical item source unavailable");
+      contact = createOperatorContact(
+        scene,
+        root,
+        actualCrew,
+        held,
+        contactPlacement,
+        request.associationKey,
+        request.heldItem && actualItem
+          ? { id: request.heldItem, sha256: actualItem.source.sha256 }
+          : null,
+      );
+    }
+    const meshes = root
       .getChildMeshes()
       .filter((mesh) => mesh.getTotalVertices() > 0);
     if (!meshes.length || meshes.some((mesh) => !mesh.getIndices()?.length))
       throw new Error("Operator indexed ensemble unavailable");
     configureMeshes?.(meshes);
     let materialKey = await ports.materials(scene, meshes);
+    await contact?.whenEvaluated();
+    const checkActivation = () => {
+      contact?.assertReady();
+      if (disposed || materialKey !== operatorMaterialKey(scene, meshes))
+        throw new Error("Operator activation configuration changed");
+      const enabled = root.isEnabled(false);
+      root.setEnabled(true);
+      try {
+        if (
+          materialKey !== operatorMaterialKey(scene, meshes) ||
+          !operatorDrawReady(
+            scene,
+            meshes.filter(
+              (mesh) =>
+                mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0,
+            ),
+          )
+        )
+          throw new Error("Operator actual draw unavailable");
+      } finally {
+        root.setEnabled(enabled);
+      }
+    };
     return {
       state: "verified-complete",
       requestedKey: request.requestedKey,
@@ -705,31 +778,27 @@ export async function prepareOperatorEnsemble(
       root,
       outfit,
       held,
+      contact,
+      get ordinaryBaseline() {
+        return ordinaryBaseline;
+      },
+      releaseOrdinaryBaseline(handle) {
+        if (!ordinaryBaseline || ordinaryBaseline !== handle)
+          throw new Error("Operator ordinary ownership mismatch");
+        ordinaryBaseline = undefined;
+      },
+      checkActivation,
+      activationKey: () => operatorMaterialKey(scene, meshes),
       async prepareActivation() {
         if (disposed) throw new Error("Operator ensemble withdrawn");
+        await ordinaryBaseline?.prepareActivation();
         if (materialKey !== operatorMaterialKey(scene, meshes))
           materialKey = await ports.materials(scene, meshes);
       },
       activate() {
-        if (disposed || materialKey !== operatorMaterialKey(scene, meshes))
-          throw new Error("Operator activation configuration changed");
+        ordinaryBaseline?.checkActivation();
+        checkActivation();
         root.setEnabled(true);
-        try {
-          if (
-            materialKey !== operatorMaterialKey(scene, meshes) ||
-            !operatorDrawReady(
-              scene,
-              meshes.filter(
-                (mesh) =>
-                  mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0,
-              ),
-            )
-          )
-            throw new Error("Operator actual draw unavailable");
-        } catch (error) {
-          root.setEnabled(false);
-          throw error;
-        }
       },
       dispose,
     };
