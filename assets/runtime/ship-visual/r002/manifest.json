@@ -4,7 +4,7 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "38a90bb55f12407be5c6b06438e6b5fc476ea9d4c7003eaa3363133ce1362a50",
+  "compilerSha256": "1ee9cdb693ad4b1c70cdc6eb62753baa8947bf5b851f53b9be03101c74868d72",
   "profilesSha256": "d6831c62c2303941685931a7670cbab17ee9f279a4f2d5ea5887e0eec06603ee",
   "slots": [
     "primary",
@@ -2319,8 +2319,8 @@
         2,
         0.5
       ],
-      "url": "/assets/ship-objects/reference-r025-clean/shipyard.equipment.workshop-bank-r025.glb",
-      "sha256": "65b2db98cff4bacf80e0632c0457b3abd80f997e69903462b711afc3ce4bf7b2",
+      "url": "/assets/ship-objects/reference-r025-display/shipyard.equipment.workshop-bank-r025.glb",
+      "sha256": "048719587259668ff4cb6e3292e17691d6af7b446e4f7bb4919f4b004225f292",
       "bytes": 124380
     },
     {
@@ -2335,8 +2335,8 @@
         2,
         0.625
       ],
-      "url": "/assets/ship-objects/reference-r025-clean/shipyard.equipment.medical-equipment-bank-r025.glb",
-      "sha256": "c7eff904bf0c1ea1b7c0e24a3cd02f595710570adf10a592a31965dbfa0fe393",
+      "url": "/assets/ship-objects/reference-r025-display/shipyard.equipment.medical-equipment-bank-r025.glb",
+      "sha256": "af530358121142a53a5508f639ebdc015d6d1fb5ea0abb4fc5fb0a63bce719d0",
       "bytes": 97908
     },
     {

@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "38a90bb55f12407be5c6b06438e6b5fc476ea9d4c7003eaa3363133ce1362a50",
+  "compilerSha256": "1ee9cdb693ad4b1c70cdc6eb62753baa8947bf5b851f53b9be03101c74868d72",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -40,7 +40,7 @@
     },
     {
       "path": "packages/content/src/ship-furniture.ts",
-      "sha256": "4537b0478990de34005877b1a1af25c5556ff1500794ee0327e6bdf5f65538d5"
+      "sha256": "9e4502d6a5d16b4a4131450c47787599c18d8b83456ccbfa1d97ae3cad47f161"
     },
     {
       "path": "packages/content/src/ship-room-fixtures-r025.ts",
@@ -213,6 +213,26 @@
     {
       "path": "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.medical-equipment-bank-r025.blend",
       "sha256": "fe635cf1dcea58764168a25dc15dacc17154a7ec2091410b9b96d8326f131e6d"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r025_rooms_display.py",
+      "sha256": "4040c19cd8f2eda41b416a0f794fedf95f1b7ff52331c54748711202fb76b697"
+    },
+    {
+      "path": "assets/runtime/ship-objects/reference-r025-display/shipyard.equipment.workshop-bank-r025-source.json",
+      "sha256": "d486286d9634bf550c59cf23d2c63d5c0c5a54fd1232cd23dbbdfa4bd5847efb"
+    },
+    {
+      "path": "assets/runtime/ship-objects/reference-r025-display/shipyard.equipment.medical-equipment-bank-r025-source.json",
+      "sha256": "9dd9b79d2722d42457b6bae17fbdb8070d3ab91c4d56b7a2c6d27dd968ddaba4"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/rooms-r025-display/shipyard.equipment.workshop-bank-r025.blend",
+      "sha256": "65b648c7ce8b8a69a36328d27c031eb24a2d72c55b8d3d889b8ca4b460b75e64"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/rooms-r025-display/shipyard.equipment.medical-equipment-bank-r025.blend",
+      "sha256": "9ed8fdac527ee6d81075608f1f691ce6e6bd3ef1d8a9c64cfb5fdc7eb61c5250"
     },
     {
       "path": "assets/runtime/ship-visual/r002/equipment-r025/reactor.md-source.json",
