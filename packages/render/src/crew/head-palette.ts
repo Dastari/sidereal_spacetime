@@ -28,6 +28,8 @@ export const SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION =
   "sealed-r006-tactical-functional-007-emissive-bevel";
 export const SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION =
   "sealed-r006-tactical-pressure-contour-008-actual-validated";
+export const SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION =
+  "sealed-r006-tactical-wide-visor-contour-009-actual-validated";
 const navyVisorMaterials = new WeakSet<PBRMaterial>();
 /** Physical style owns these two responses after the generic glass finish; only owned clones qualify. */
 export function restoreOwnedTacticalVisorFinish(material: PBRMaterial): void {

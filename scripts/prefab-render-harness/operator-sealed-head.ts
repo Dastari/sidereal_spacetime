@@ -11,6 +11,7 @@ import {
   SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION,
   SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION,
   SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION,
 } from "../../packages/render/src/crew/head-palette";
 import { verifyCrewSource } from "../../packages/render/src/crew/crew-asset-cache";
 import { validateHeadArtBytes } from "../../packages/render/src/crew/head-art-revision";
@@ -86,6 +87,14 @@ const proposals = {
     glbBytes: 108128,
     glbSha: "f9f638902e215177a0ad77788621133f4d1e4d5964bb9f32ec835014c77e937d",
   },
+  [SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION]: {
+    base: "/@fs/root/sidereal-worktrees/candidate-pilot-seat-contact/.operator-diagnostic-assets/sealed-r006-tactical-wide-visor-contour-009-actual-validated/",
+    manifestBytes: 2926,
+    manifestSha:
+      "2f5f1e6676e47c44c3720e27224fe1726ea4007c510aee2da54a620988b7892b",
+    glbBytes: 108996,
+    glbSha: "2987638a2971438e66a82d01ae86ecaf1cd110d12647372fff3ffa4b30103a19",
+  },
 };
 const nodes = [
   "helmet.tactical",
@@ -111,7 +120,8 @@ export async function applySealedDiagnosticHead(
     selection !== SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION &&
     selection !== SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION &&
     selection !== SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION &&
-    selection !== SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION
+    selection !== SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION &&
+    selection !== SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION
   )
     return request;
   const proposal = proposals[selection];

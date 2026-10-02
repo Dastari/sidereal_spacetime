@@ -28,6 +28,7 @@ import {
   SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION,
   SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION,
   SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION,
 } from "./head-palette";
 import { resolveHeadLoadout } from "@sidereal/content/crew-heads";
 import {
@@ -185,7 +186,9 @@ export function createVoxelCrewOutfit(
         resolved.headArtRevision ===
           SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION ||
         resolved.headArtRevision ===
-          SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION)
+          SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION)
         ? equippedHelmetPalette(
             equipped.helmet,
             resolveHeadLoadout(loadout).nodes.find(
@@ -218,7 +221,9 @@ export function createVoxelCrewOutfit(
               resolved.headArtRevision ===
                 SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION ||
               resolved.headArtRevision ===
-                SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION),
+                SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION),
           ),
         }),
       )
