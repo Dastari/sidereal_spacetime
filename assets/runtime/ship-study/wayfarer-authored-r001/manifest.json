@@ -1,0 +1,6569 @@
+{
+ "generator": "sidereal-wayfarer-study/src/export_kit.py",
+ "status": "study export - proposal, not owner-approved art, not installed in the game",
+ "theme": "federation",
+ "conventions": {
+  "units": "metres",
+  "gltf_axes": "glTF +Y up (Blender +Z up converted by the exporter); Blender +Y (piece outward / prop front) becomes glTF -Z",
+  "frames": {
+   "hull.bay": "face piece: +X along the face from its start, +Y outward, +Z up; z = 0 is the deck top",
+   "hull.corner": "convex outline vertex, origin at the vertex on the deck plane",
+   "floor": "1 x 1 m cell, origin at the cell's min corner, top at z = 0",
+   "int.halfwall/post/doorbeam/threshold": "edge piece: +X along the edge, +Y across the wall (centred), +Z up",
+   "int.wallpanel/wallbay/rimliner": "face-local: hull inner plane at y = -1, dressing extends to more negative y",
+   "prop": "origin at floor level in the footprint centre (wall props: back on the wall plane), front faces +Y",
+   "engine": "engine module, origin at the stern face line, +X forward"
+  },
+  "materials": "slot names (primary, secondary, accent, trim, metal, dark, emit_a, emit_b, glass) recolour with the ship theme; other names are the shared palette; SR_tex_* / SR_decal_* keep their textures",
+  "study_only": [
+   "interior props are placed x1.147 taller in the study (see layout.json matrix_true_scale)",
+   "practical lights, bloom and grading are render-time study effects",
+   "fx.* exhaust volumes are not exported"
+  ]
+ },
+ "palette": {
+  "accent": {
+   "kind": "slot",
+   "family": "plastic-colour",
+   "colour": [
+    0.3,
+    0.017,
+    0.045
+   ],
+   "strength": 0.0
+  },
+  "blue": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.02,
+    0.12,
+    0.55
+   ],
+   "strength": 0.0
+  },
+  "dark": {
+   "kind": "slot",
+   "family": "plastic-dark",
+   "colour": [
+    0.008,
+    0.009,
+    0.024
+   ],
+   "strength": 0.0
+  },
+  "deck": {
+   "kind": "shared",
+   "family": "plastic-deck",
+   "colour": [
+    0.055,
+    0.058,
+    0.105
+   ],
+   "strength": 0.0
+  },
+  "deck_dark": {
+   "kind": "shared",
+   "family": "plastic-deck",
+   "colour": [
+    0.02,
+    0.022,
+    0.045
+   ],
+   "strength": 0.0
+  },
+  "deck_seam": {
+   "kind": "shared",
+   "family": "plastic-dark",
+   "colour": [
+    0.03,
+    0.032,
+    0.06
+   ],
+   "strength": 0.0
+  },
+  "emit_a": {
+   "kind": "slot",
+   "family": "emissive",
+   "colour": [
+    0.05,
+    0.48,
+    1.0
+   ],
+   "strength": 5.0
+  },
+  "emit_a@high": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    0.05,
+    0.48,
+    1.0
+   ],
+   "strength": 6.0
+  },
+  "emit_a@low": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    0.05,
+    0.48,
+    1.0
+   ],
+   "strength": 1.2
+  },
+  "emit_b": {
+   "kind": "slot",
+   "family": "emissive",
+   "colour": [
+    1.0,
+    0.3,
+    0.025
+   ],
+   "strength": 4.2
+  },
+  "emit_b@high": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    1.0,
+    0.3,
+    0.025
+   ],
+   "strength": 6.0
+  },
+  "emit_b@low": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    1.0,
+    0.3,
+    0.025
+   ],
+   "strength": 1.2
+  },
+  "emit_c@mid": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    1.0,
+    0.1,
+    0.55
+   ],
+   "strength": 3.0
+  },
+  "emit_g@mid": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    0.75,
+    1.0,
+    0.45
+   ],
+   "strength": 3.0
+  },
+  "emit_r@high": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    1.0,
+    0.06,
+    0.03
+   ],
+   "strength": 6.0
+  },
+  "emit_r@low": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    1.0,
+    0.06,
+    0.03
+   ],
+   "strength": 1.2
+  },
+  "emit_w@high": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    1.0,
+    0.86,
+    0.66
+   ],
+   "strength": 6.0
+  },
+  "emit_w@mid": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    1.0,
+    0.86,
+    0.66
+   ],
+   "strength": 3.0
+  },
+  "fabric_blue": {
+   "kind": "shared",
+   "family": "fabric",
+   "colour": [
+    0.025,
+    0.14,
+    0.62
+   ],
+   "strength": 0.0
+  },
+  "fabric_white": {
+   "kind": "shared",
+   "family": "fabric",
+   "colour": [
+    0.78,
+    0.8,
+    0.84
+   ],
+   "strength": 0.0
+  },
+  "glass_canopy": {
+   "kind": "shared",
+   "family": "glass",
+   "colour": [
+    0.3,
+    0.55,
+    1.0
+   ],
+   "strength": 0.5
+  },
+  "glass_dark": {
+   "kind": "shared",
+   "family": "glass",
+   "colour": [
+    0.02,
+    0.05,
+    0.12
+   ],
+   "strength": 0.0
+  },
+  "hazard": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.9,
+    0.42,
+    0.04
+   ],
+   "strength": 0.0
+  },
+  "leaf": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.06,
+    0.36,
+    0.03
+   ],
+   "strength": 0.0
+  },
+  "leaf_light": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.2,
+    0.6,
+    0.05
+   ],
+   "strength": 0.0
+  },
+  "metal": {
+   "kind": "slot",
+   "family": "metal",
+   "colour": [
+    0.4,
+    0.41,
+    0.45
+   ],
+   "strength": 0.0
+  },
+  "orange": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.9,
+    0.25,
+    0.02
+   ],
+   "strength": 0.0
+  },
+  "pink": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.85,
+    0.16,
+    0.3
+   ],
+   "strength": 0.0
+  },
+  "primary": {
+   "kind": "slot",
+   "family": "plastic-light",
+   "colour": [
+    0.6,
+    0.6,
+    0.63
+   ],
+   "strength": 0.0
+  },
+  "rubber": {
+   "kind": "shared",
+   "family": "rubber",
+   "colour": [
+    0.012,
+    0.012,
+    0.016
+   ],
+   "strength": 0.0
+  },
+  "scr_blue@low": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    0.06,
+    0.35,
+    1.0
+   ],
+   "strength": 1.2
+  },
+  "scr_blue@mid": {
+   "kind": "emissive",
+   "family": "emissive",
+   "colour": [
+    0.06,
+    0.35,
+    1.0
+   ],
+   "strength": 3.0
+  },
+  "secondary": {
+   "kind": "slot",
+   "family": "plastic-dark",
+   "colour": [
+    0.03,
+    0.034,
+    0.1
+   ],
+   "strength": 0.0
+  },
+  "skin": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.75,
+    0.5,
+    0.36
+   ],
+   "strength": 0.0
+  },
+  "soil": {
+   "kind": "shared",
+   "family": "rubber",
+   "colour": [
+    0.05,
+    0.03,
+    0.02
+   ],
+   "strength": 0.0
+  },
+  "terracotta": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.55,
+    0.16,
+    0.06
+   ],
+   "strength": 0.0
+  },
+  "trim": {
+   "kind": "slot",
+   "family": "plastic-dark",
+   "colour": [
+    0.075,
+    0.085,
+    0.15
+   ],
+   "strength": 0.0
+  },
+  "wall": {
+   "kind": "shared",
+   "family": "plastic-light",
+   "colour": [
+    0.26,
+    0.255,
+    0.29
+   ],
+   "strength": 0.0
+  },
+  "wall_dark": {
+   "kind": "shared",
+   "family": "plastic-dark",
+   "colour": [
+    0.13,
+    0.13,
+    0.17
+   ],
+   "strength": 0.0
+  },
+  "white": {
+   "kind": "shared",
+   "family": "plastic-light",
+   "colour": [
+    0.8,
+    0.8,
+    0.82
+   ],
+   "strength": 0.0
+  },
+  "x_bridge_navyblue": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.022,
+    0.04,
+    0.17
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_can_red": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.5,
+    0.09,
+    0.11
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_leaf_lime": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.36,
+    0.75,
+    0.06
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_leaf_purple": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.4,
+    0.03,
+    0.13
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_mag_pink": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.78,
+    0.1,
+    0.42
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_mag_yellow": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.95,
+    0.6,
+    0.08
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_mug_grey": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.22,
+    0.2,
+    0.34
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_mug_orange": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.62,
+    0.17,
+    0.03
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_pale_blue": {
+   "kind": "new",
+   "family": "plastic-light",
+   "colour": [
+    0.42,
+    0.52,
+    0.72
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_sofa_base": {
+   "kind": "new",
+   "family": "fabric",
+   "colour": [
+    0.14,
+    0.014,
+    0.022
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_sofa_red": {
+   "kind": "new",
+   "family": "fabric",
+   "colour": [
+    0.6,
+    0.13,
+    0.18
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_sofa_red_back": {
+   "kind": "new",
+   "family": "fabric",
+   "colour": [
+    0.29,
+    0.027,
+    0.083
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_suit_red": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.62,
+    0.03,
+    0.05
+   ],
+   "strength": 0.0
+  },
+  "x_lounge_table_pink": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.21,
+    0.026,
+    0.1
+   ],
+   "strength": 0.0
+  },
+  "x_quarters_blue_fold": {
+   "kind": "new",
+   "family": "fabric",
+   "colour": [
+    0.16,
+    0.24,
+    0.72
+   ],
+   "strength": 0.0
+  },
+  "x_quarters_bronze": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.32,
+    0.13,
+    0.035
+   ],
+   "strength": 0.0
+  },
+  "x_quarters_gold": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.55,
+    0.22,
+    0.03
+   ],
+   "strength": 0.0
+  },
+  "x_quarters_mattress": {
+   "kind": "new",
+   "family": "fabric",
+   "colour": [
+    0.56,
+    0.59,
+    0.68
+   ],
+   "strength": 0.0
+  },
+  "x_quarters_pot": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.42,
+    0.055,
+    0.05
+   ],
+   "strength": 0.0
+  },
+  "x_quarters_seam": {
+   "kind": "new",
+   "family": "fabric",
+   "colour": [
+    0.42,
+    0.44,
+    0.5
+   ],
+   "strength": 0.0
+  },
+  "x_quarters_tan": {
+   "kind": "new",
+   "family": "fabric",
+   "colour": [
+    0.21,
+    0.075,
+    0.03
+   ],
+   "strength": 0.0
+  },
+  "x_walls_cream": {
+   "kind": "new",
+   "family": "plastic-light",
+   "colour": [
+    0.52,
+    0.37,
+    0.3
+   ],
+   "strength": 0.0
+  },
+  "x_walls_rail": {
+   "kind": "new",
+   "family": "plastic-light",
+   "colour": [
+    0.4,
+    0.4,
+    0.45
+   ],
+   "strength": 0.0
+  },
+  "x_wr_case_greyblue": {
+   "kind": "new",
+   "family": "plastic-light",
+   "colour": [
+    0.2,
+    0.22,
+    0.36
+   ],
+   "strength": 0.0
+  },
+  "x_wr_chili": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.9,
+    0.1,
+    0.02
+   ],
+   "strength": 0.0
+  },
+  "x_wr_guard": {
+   "kind": "new",
+   "family": "plastic-dark",
+   "colour": [
+    0.15,
+    0.17,
+    0.3
+   ],
+   "strength": 0.0
+  },
+  "x_wr_kale": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.1,
+    0.42,
+    0.2
+   ],
+   "strength": 0.0
+  },
+  "x_wr_kale_dark": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.05,
+    0.25,
+    0.13
+   ],
+   "strength": 0.0
+  },
+  "x_wr_label_green": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.1,
+    0.5,
+    0.1
+   ],
+   "strength": 0.0
+  },
+  "x_wr_lavender": {
+   "kind": "new",
+   "family": "plastic-light",
+   "colour": [
+    0.19,
+    0.2,
+    0.46
+   ],
+   "strength": 0.0
+  },
+  "x_wr_lid": {
+   "kind": "new",
+   "family": "plastic-light",
+   "colour": [
+    0.3,
+    0.33,
+    0.46
+   ],
+   "strength": 0.0
+  },
+  "x_wr_orange_dark": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.45,
+    0.1,
+    0.01
+   ],
+   "strength": 0.0
+  },
+  "x_wr_pebble": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.45,
+    0.5,
+    0.07
+   ],
+   "strength": 0.0
+  },
+  "x_wr_pebble_tan": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.55,
+    0.36,
+    0.12
+   ],
+   "strength": 0.0
+  },
+  "x_wr_sage": {
+   "kind": "new",
+   "family": "plastic-light",
+   "colour": [
+    0.2,
+    0.23,
+    0.18
+   ],
+   "strength": 0.0
+  },
+  "x_wr_stem": {
+   "kind": "new",
+   "family": "plastic-colour",
+   "colour": [
+    0.14,
+    0.32,
+    0.05
+   ],
+   "strength": 0.0
+  },
+  "yellow": {
+   "kind": "shared",
+   "family": "plastic-colour",
+   "colour": [
+    0.92,
+    0.48,
+    0.02
+   ],
+   "strength": 0.0
+  }
+ },
+ "pieces": [
+  {
+   "id": "engine.pod.w2.4.l5.z-0.75_1.6",
+   "family": "engine",
+   "role": "engine-pod",
+   "rooms": [],
+   "file": "glb/engine/engine.pod.w2.4.l5.z-0.75_1.6.glb",
+   "sha256": "23a3ec8bf4c629ba2b7207d96ab2c93a0c9a5d7872a34337494d5a135a07f93e",
+   "triangles": 21718,
+   "vertices": 12088,
+   "bounds_min": [
+    -5.65,
+    -1.43,
+    -1.1794
+   ],
+   "bounds_max": [
+    0.035,
+    1.43,
+    1.81
+   ],
+   "materials": [
+    "accent",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "metal",
+    "primary",
+    "rubber",
+    "scr_blue@mid",
+    "secondary",
+    "trim"
+   ],
+   "placements": 3
+  },
+  {
+   "id": "engine.pod.w2.4.l5.z-0.75_1.6.logos",
+   "family": "engine",
+   "role": "livery",
+   "rooms": [],
+   "file": "glb/engine/engine.pod.w2.4.l5.z-0.75_1.6.logos.glb",
+   "sha256": "c7cc5a620722daae03aa239f460913913252728d075946370ab554f2afb3a2da",
+   "triangles": 4,
+   "vertices": 8,
+   "bounds_min": [
+    -3.52,
+    -1.226,
+    -0.075
+   ],
+   "bounds_max": [
+    -2.58,
+    1.226,
+    0.865
+   ],
+   "materials": [
+    "SR_decal_engines_planet"
+   ],
+   "placements": 3
+  },
+  {
+   "id": "floor.access",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit",
+    "galley",
+    "hall",
+    "hydro",
+    "lounge",
+    "quarters_a",
+    "quarters_b",
+    "utility"
+   ],
+   "file": "glb/floor/floor.access.glb",
+   "sha256": "d84898c825cbfc0c7133cdf6f062df7914a7268116b08ea7ac95a3935edccb72",
+   "triangles": 756,
+   "vertices": 392,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.014
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 16
+  },
+  {
+   "id": "floor.access+hzx",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit"
+   ],
+   "file": "glb/floor/floor.access+hzx.glb",
+   "sha256": "31a8ec8f9862a55e50643b9e5f5870c56082eb74ca939c58e327d2273caab744",
+   "triangles": 864,
+   "vertices": 448,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.014
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.corridor",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor"
+   ],
+   "file": "glb/floor/floor.corridor.glb",
+   "sha256": "58910d0ccf4a3b9fb97a2c15499300db2bbf890991089e1e13420d1fff8946bb",
+   "triangles": 552,
+   "vertices": 288,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.004
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "emit_b@low",
+    "trim"
+   ],
+   "placements": 12
+  },
+  {
+   "id": "floor.framed",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit"
+   ],
+   "file": "glb/floor/floor.framed.glb",
+   "sha256": "f984fa807d53952d4a6460b70b4208aa789aa60adb9514351418b5645f95b32a",
+   "triangles": 648,
+   "vertices": 336,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.004
+   ],
+   "materials": [
+    "deck",
+    "deck_dark"
+   ],
+   "placements": 11
+  },
+  {
+   "id": "floor.framed+hzx",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit"
+   ],
+   "file": "glb/floor/floor.framed+hzx.glb",
+   "sha256": "f83327d65b10316e2c2b44149bc731df63049687cce43df0ccbd42b133436e00",
+   "triangles": 756,
+   "vertices": 392,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.008
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "floor.grate",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "corridor",
+    "hall",
+    "quarters_a",
+    "utility"
+   ],
+   "file": "glb/floor/floor.grate.glb",
+   "sha256": "55d663ea86cef90fb3f155e3e8c436aa4ac7c4e467842066f6852c7834ee9317",
+   "triangles": 1404,
+   "vertices": 728,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.0
+   ],
+   "materials": [
+    "deck_dark",
+    "secondary",
+    "trim"
+   ],
+   "placements": 17
+  },
+  {
+   "id": "floor.plate.EN",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "galley",
+    "hall",
+    "hydro",
+    "quarters_a",
+    "quarters_b"
+   ],
+   "file": "glb/floor/floor.plate.EN.glb",
+   "sha256": "f342512cfa1d79989c536c319301e96917dc024789e0f83d8744fa599f444809",
+   "triangles": 240,
+   "vertices": 128,
+   "bounds_min": [
+    0.0,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 11
+  },
+  {
+   "id": "floor.plate.EN+hzd",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "hall"
+   ],
+   "file": "glb/floor/floor.plate.EN+hzd.glb",
+   "sha256": "92d1eedcaea310c431c68616e7353763d8ec60359ce88ee96cd9f552e635a1c8",
+   "triangles": 456,
+   "vertices": 240,
+   "bounds_min": [
+    0.0,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.EN+sub",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "hydro"
+   ],
+   "file": "glb/floor/floor.plate.EN+sub.glb",
+   "sha256": "f22a1d6151515835605f107ce86bf0bf54a602e01050b6ef14cf3cdaf2873e52",
+   "triangles": 396,
+   "vertices": 216,
+   "bounds_min": [
+    0.0,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 4
+  },
+  {
+   "id": "floor.plate.ES",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "galley",
+    "hall",
+    "hydro",
+    "quarters_a",
+    "quarters_b"
+   ],
+   "file": "glb/floor/floor.plate.ES.glb",
+   "sha256": "900228cf989fe5f854fd49efb4eeb8f941e8e8fcce379c95ed70869588a8be1c",
+   "triangles": 240,
+   "vertices": 128,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    1.0,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 15
+  },
+  {
+   "id": "floor.plate.ES+sub",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "hall"
+   ],
+   "file": "glb/floor/floor.plate.ES+sub.glb",
+   "sha256": "08cb4275007b9c488ac4834551bbd6ddce15768bd161db421336b840a8854f55",
+   "triangles": 396,
+   "vertices": 216,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    1.0,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.ESN",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "galley",
+    "hall",
+    "hydro",
+    "lounge",
+    "quarters_a",
+    "quarters_b",
+    "utility"
+   ],
+   "file": "glb/floor/floor.plate.ESN.glb",
+   "sha256": "50e121b2794a7c754d510b71cbfb0d9382b12ab5de5a6b726e8cc4d1d0366cb5",
+   "triangles": 360,
+   "vertices": 192,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 21
+  },
+  {
+   "id": "floor.plate.ESN+hzd",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor",
+    "hall"
+   ],
+   "file": "glb/floor/floor.plate.ESN+hzd.glb",
+   "sha256": "76ea5fe09d4190f2f43d3737daf8bd25c4a8391aff88d57e112a57e016b0ba81",
+   "triangles": 576,
+   "vertices": 304,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "floor.plate.ESN+hzdn",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor"
+   ],
+   "file": "glb/floor/floor.plate.ESN+hzdn.glb",
+   "sha256": "fb2458b67f530c4565c6fefff72aa7152bbbb557d47ee5e8ed468f37feb74323",
+   "triangles": 576,
+   "vertices": 304,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.ESN+sub",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit",
+    "galley",
+    "quarters_a",
+    "utility"
+   ],
+   "file": "glb/floor/floor.plate.ESN+sub.glb",
+   "sha256": "fc9906bf35e524b074d72b557c2a2a1c7318d586650f93058e9c6ab3e9f66633",
+   "triangles": 516,
+   "vertices": 280,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 5
+  },
+  {
+   "id": "floor.plate.ESN+sub+hzd",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor"
+   ],
+   "file": "glb/floor/floor.plate.ESN+sub+hzd.glb",
+   "sha256": "e7c2e48a60fa1a2e22bab59b795f93afb2a38504af85f9fbb4adc5430f081483",
+   "triangles": 732,
+   "vertices": 392,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.ESN+sub+hzdn",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor"
+   ],
+   "file": "glb/floor/floor.plate.ESN+sub+hzdn.glb",
+   "sha256": "aa2b84b2e78ed1ccabac8ea78ae2ef40d5ad0f7bbaa927be2d4a3a47eeb52e0c",
+   "triangles": 732,
+   "vertices": 392,
+   "bounds_min": [
+    0.0,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.WEN",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit",
+    "lounge",
+    "quarters_a",
+    "quarters_b",
+    "utility",
+    "workshop"
+   ],
+   "file": "glb/floor/floor.plate.WEN.glb",
+   "sha256": "ba00e6f537425586c7400184625bc8be131cc4bd2d9b0601ace16d0fef2657d7",
+   "triangles": 360,
+   "vertices": 192,
+   "bounds_min": [
+    0.016,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 9
+  },
+  {
+   "id": "floor.plate.WEN+hzdn",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "hall"
+   ],
+   "file": "glb/floor/floor.plate.WEN+hzdn.glb",
+   "sha256": "f5d703588b214ce9570e9a8594f2d3664acb9ef0052c8b3dae50b789a690506c",
+   "triangles": 576,
+   "vertices": 304,
+   "bounds_min": [
+    0.016,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.WEN+sub",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "galley"
+   ],
+   "file": "glb/floor/floor.plate.WEN+sub.glb",
+   "sha256": "22943282b8fdbd5f41d371bf78510a638a63c96aba243f7ea4cf0684e08944b4",
+   "triangles": 516,
+   "vertices": 280,
+   "bounds_min": [
+    0.016,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.WES",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit",
+    "galley",
+    "hall",
+    "lounge",
+    "quarters_b",
+    "utility",
+    "workshop"
+   ],
+   "file": "glb/floor/floor.plate.WES.glb",
+   "sha256": "37d89de1c97d7743679e4250b8362c1b69419bdc15199289f424b63bf7a2609b",
+   "triangles": 360,
+   "vertices": 192,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    1.0,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 10
+  },
+  {
+   "id": "floor.plate.WES+sub",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "quarters_a"
+   ],
+   "file": "glb/floor/floor.plate.WES+sub.glb",
+   "sha256": "d4056c22b7aed04b9fc5b2c248cd0b77bef3d396767602faf557e88f48201d19",
+   "triangles": 516,
+   "vertices": 280,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    1.0,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.WESN",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "galley",
+    "hydro",
+    "lounge",
+    "quarters_a",
+    "quarters_b"
+   ],
+   "file": "glb/floor/floor.plate.WESN.glb",
+   "sha256": "d8d0722741642481ba1f2839cc70386a0504a1dfae56e532138c8b6620d7adcd",
+   "triangles": 588,
+   "vertices": 312,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 10
+  },
+  {
+   "id": "floor.plate.WESN+hzd",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor"
+   ],
+   "file": "glb/floor/floor.plate.WESN+hzd.glb",
+   "sha256": "75aebf30d221a383d7a1d0650684855658ac8e68bc8a977a58f41379fd3b71f3",
+   "triangles": 804,
+   "vertices": 424,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 3
+  },
+  {
+   "id": "floor.plate.WESN+hzdn",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor"
+   ],
+   "file": "glb/floor/floor.plate.WESN+hzdn.glb",
+   "sha256": "ee1df5169fcfa08ce3a003303baf8773ac2ac329bfa259395c265bd1b1ee8ea8",
+   "triangles": 804,
+   "vertices": 424,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 3
+  },
+  {
+   "id": "floor.plate.WESN+sub",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "hall"
+   ],
+   "file": "glb/floor/floor.plate.WESN+sub.glb",
+   "sha256": "df2d2e095bad028211b6ea94556ebcb0eaf93c9b39e49ccdb48cbf04060101c9",
+   "triangles": 744,
+   "vertices": 400,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.WESN+sub+hzx",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit"
+   ],
+   "file": "glb/floor/floor.plate.WESN+sub+hzx.glb",
+   "sha256": "d775316b48d92fab6fc593913eb3093732a3708110f6d89ccc9577720b489a53",
+   "triangles": 852,
+   "vertices": 456,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.008
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.WN",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "galley",
+    "hall",
+    "hydro",
+    "quarters_a",
+    "quarters_b"
+   ],
+   "file": "glb/floor/floor.plate.WN.glb",
+   "sha256": "53ba5dd4d00b7ca9bdcab91b016e76039a018fd5176e8defd0efed9b440c63d9",
+   "triangles": 240,
+   "vertices": 128,
+   "bounds_min": [
+    0.016,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 12
+  },
+  {
+   "id": "floor.plate.WN+hzd",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "hall"
+   ],
+   "file": "glb/floor/floor.plate.WN+hzd.glb",
+   "sha256": "12cb1f5df2c2a893a5a463b3643824bb4b1721be8a775d1a34cf8f4fc30e9348",
+   "triangles": 456,
+   "vertices": 240,
+   "bounds_min": [
+    0.016,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.WN+hzx",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit"
+   ],
+   "file": "glb/floor/floor.plate.WN+hzx.glb",
+   "sha256": "1d889350fb6f1af7ad4064931e584019a787eec1b58fdce65ad619001a31289c",
+   "triangles": 348,
+   "vertices": 184,
+   "bounds_min": [
+    0.016,
+    0.0,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.008
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 3
+  },
+  {
+   "id": "floor.plate.WS",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "galley",
+    "hall",
+    "hydro",
+    "quarters_a",
+    "quarters_b"
+   ],
+   "file": "glb/floor/floor.plate.WS.glb",
+   "sha256": "9adc6b5280e9bfb45e40a6a8910ec417b1ff84e1dff5d7b12b8410c74bf45220",
+   "triangles": 240,
+   "vertices": 128,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    1.0,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 9
+  },
+  {
+   "id": "floor.plate.WS+hzx",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit"
+   ],
+   "file": "glb/floor/floor.plate.WS+hzx.glb",
+   "sha256": "b6b3c1d61772df0306b3f6e24d12e38f0acdb8b37d32d6c2c48bd842da331e9f",
+   "triangles": 348,
+   "vertices": 184,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    1.0,
+    0.008
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 3
+  },
+  {
+   "id": "floor.plate.WS+sub",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "hydro"
+   ],
+   "file": "glb/floor/floor.plate.WS+sub.glb",
+   "sha256": "8692cb1cd05551bd369ea914961f7cb78d9ce0ed7ef50b4c259a12e8805b1c64",
+   "triangles": 396,
+   "vertices": 216,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    1.0,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 4
+  },
+  {
+   "id": "floor.plate.WSN",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "cockpit",
+    "galley",
+    "hall",
+    "hydro",
+    "lounge",
+    "quarters_a",
+    "quarters_b",
+    "utility"
+   ],
+   "file": "glb/floor/floor.plate.WSN.glb",
+   "sha256": "71636eb86d643f033b27f22f8a9bb0973f077c7cbcbde1612390981c66b1d625",
+   "triangles": 360,
+   "vertices": 192,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 22
+  },
+  {
+   "id": "floor.plate.WSN+hzd",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor"
+   ],
+   "file": "glb/floor/floor.plate.WSN+hzd.glb",
+   "sha256": "603d07cbaa6a3d3d6919c674d860fca7b8dfb8f182df457dda1d24d6bac4a3f8",
+   "triangles": 576,
+   "vertices": 304,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "floor.plate.WSN+hzdn",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "corridor"
+   ],
+   "file": "glb/floor/floor.plate.WSN+hzdn.glb",
+   "sha256": "ac30ccf6184b7ea5fe4809d817e575e4dc6c9afd0f5ba77da39c98c01bb6eeed",
+   "triangles": 576,
+   "vertices": 304,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "floor.plate.WSN+hzx",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit"
+   ],
+   "file": "glb/floor/floor.plate.WSN+hzx.glb",
+   "sha256": "6c1b844b3a7c6e601f0ca9d8e763c90350a17c166effc07d80f668a7cac768ff",
+   "triangles": 468,
+   "vertices": 248,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.008
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.plate.WSN+sub",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cockpit",
+    "lounge",
+    "quarters_a"
+   ],
+   "file": "glb/floor/floor.plate.WSN+sub.glb",
+   "sha256": "7bf0b1d250d7e83575ff12e26f32fd8e93d57213242fcddf39a24070e978a5de",
+   "triangles": 516,
+   "vertices": 280,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "trim"
+   ],
+   "placements": 3
+  },
+  {
+   "id": "floor.plate.WSN+sub+hzd",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "hall"
+   ],
+   "file": "glb/floor/floor.plate.WSN+sub+hzd.glb",
+   "sha256": "3a798a2c8adc80c33504119120a075eab586216ef01c497f0b79da650c33ef98",
+   "triangles": 732,
+   "vertices": 392,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    1.0,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "deck_dark",
+    "hazard",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "floor.strips",
+   "family": "floor",
+   "role": "floor",
+   "rooms": [
+    "cargo",
+    "quarters_b"
+   ],
+   "file": "glb/floor/floor.strips.glb",
+   "sha256": "39d93e74c50879303121838551859fe1b023d844e56d1a1b7693c37efcc0d784",
+   "triangles": 648,
+   "vertices": 336,
+   "bounds_min": [
+    0.016,
+    0.016,
+    -0.06
+   ],
+   "bounds_max": [
+    0.984,
+    0.984,
+    0.006
+   ],
+   "materials": [
+    "deck",
+    "trim"
+   ],
+   "placements": 8
+  },
+  {
+   "id": "hull.bay.cluster.light.navy.louvre.w3.000.s0.k-2.35",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.cluster.light.navy.louvre.w3.000.s0.k-2.35.glb",
+   "sha256": "a5b69e941e36c50ed431b7e02a9cbcac4bbe08d4e6c068178781fe94e8a87892",
+   "triangles": 12044,
+   "vertices": 6656,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.59
+   ],
+   "bounds_max": [
+    3.44,
+    0.83,
+    1.89
+   ],
+   "materials": [
+    "accent",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.livery.navy.navy.louvre.w2.000.s2.k-2.2",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.livery.navy.navy.louvre.w2.000.s2.k-2.2.glb",
+   "sha256": "6c00486be3e19ac51739c2dae7808cab5fcb672d6e2e862110c97c1fdcc1d5e4",
+   "triangles": 5984,
+   "vertices": 3260,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.44
+   ],
+   "bounds_max": [
+    2.44,
+    0.3681,
+    1.89
+   ],
+   "materials": [
+    "accent",
+    "dark",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.livery_plate.light.mixed.plate.w2.000.s1.k-2.15",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.livery_plate.light.mixed.plate.w2.000.s1.k-2.15.glb",
+   "sha256": "12bf3034667892369c8a739064238937bbb4c7c0a8b6919a0f2a194ded4b57ba",
+   "triangles": 5840,
+   "vertices": 3212,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.12
+   ],
+   "bounds_max": [
+    2.44,
+    0.3211,
+    1.858
+   ],
+   "materials": [
+    "accent",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.navy.navy.mixed.mixed.w2.000.s5.k-2.35",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.navy.navy.mixed.mixed.w2.000.s5.k-2.35.glb",
+   "sha256": "9052306c703f9add630f09c5aa51774861c1e5ac11969031294a282e3f1e6c8e",
+   "triangles": 7148,
+   "vertices": 3960,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.42
+   ],
+   "bounds_max": [
+    2.44,
+    0.5758,
+    1.858
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.navy.navy.navy.louvre.w13.000.s0.k-2.5.t0.25",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.navy.navy.navy.louvre.w13.000.s0.k-2.5.t0.25.glb",
+   "sha256": "542ff3d88b6bcc55f605ae01ad06c8876414b3d62c00c482146048fedca20ecf",
+   "triangles": 21652,
+   "vertices": 11688,
+   "bounds_min": [
+    0.0,
+    -0.31,
+    -2.57
+   ],
+   "bounds_max": [
+    13.0,
+    0.5285,
+    1.925
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "hull.bay.pilaster.bumper.navy.plate.w1.000.s0.k-2.1",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.pilaster.bumper.navy.plate.w1.000.s0.k-2.1.glb",
+   "sha256": "57381a584a30e8d5518741cb2d699d3e73e6f1e087ca45ad5862ae9bead79df0",
+   "triangles": 3924,
+   "vertices": 2172,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.17
+   ],
+   "bounds_max": [
+    1.44,
+    0.521,
+    1.926
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 4
+  },
+  {
+   "id": "hull.bay.pillar.bumper.navy.louvre.w1.414.s0.k-2",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.pillar.bumper.navy.louvre.w1.414.s0.k-2.glb",
+   "sha256": "d901c56b0e1430b1033261034d567a29033e17cb700de1b8b1558839045fe7da",
+   "triangles": 5392,
+   "vertices": 2940,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.07
+   ],
+   "bounds_max": [
+    1.4142,
+    0.57,
+    1.893
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "emit_r@high",
+    "glass_dark",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.plate_large.canopy_sill.none.plate.w0.985.s3.k-1.25.t-0.95_0.42_1.3_1.85",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.plate_large.canopy_sill.none.plate.w0.985.s3.k-1.25.t-0.95_0.42_1.3_1.85.glb",
+   "sha256": "20ead3842719a24ac749ac4798204d5112f7e714e9a4fb92579ffc5b3d1d10aa",
+   "triangles": 1756,
+   "vertices": 968,
+   "bounds_min": [
+    -0.002,
+    -1.08,
+    -1.22
+   ],
+   "bounds_max": [
+    1.1013,
+    0.35,
+    1.34
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.plate_large.canopy_sill.none.plate.w2.950.s2.k-1.25.t-0.95_0.42_1.3_1.85",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.plate_large.canopy_sill.none.plate.w2.950.s2.k-1.25.t-0.95_0.42_1.3_1.85.glb",
+   "sha256": "17752c08b0c672e5081bf66128598eeb98fcbd4d8b0244b011b9abe6134e972f",
+   "triangles": 3612,
+   "vertices": 1996,
+   "bounds_min": [
+    -0.002,
+    -1.08,
+    -1.32
+   ],
+   "bounds_max": [
+    2.952,
+    0.2,
+    1.34
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.plate_large.canopy_sill.none.plate.w3.828.s0.k-1.25.t-0.95_0.42_1.3_1.85",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.plate_large.canopy_sill.none.plate.w3.828.s0.k-1.25.t-0.95_0.42_1.3_1.85.glb",
+   "sha256": "689ad1b409a07b06c13368d5da87d66e42641a3c3ab301dcd59cc10eea9151c9",
+   "triangles": 4300,
+   "vertices": 2328,
+   "bounds_min": [
+    -0.002,
+    -1.08,
+    -1.32
+   ],
+   "bounds_max": [
+    3.8304,
+    0.2,
+    1.34
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "hull.bay.plate_large.window.navy.plate.w1.275.s0.k-1.25.t-0.95_0.42_1.3_1.85",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.plate_large.window.navy.plate.w1.275.s0.k-1.25.t-0.95_0.42_1.3_1.85.glb",
+   "sha256": "f53aac22e593632d2c4ac2d6fa7a4e907409036b7e7af720ea2b77d74b870ea3",
+   "triangles": 3174,
+   "vertices": 1756,
+   "bounds_min": [
+    -0.116,
+    -1.0,
+    -1.25
+   ],
+   "bounds_max": [
+    1.275,
+    0.35,
+    1.893
+   ],
+   "materials": [
+    "SR_tex_window0",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.plate_large.window.navy.plate.w1.275.s1.k-1.25.t-0.95_0.42_1.3_1.85",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.plate_large.window.navy.plate.w1.275.s1.k-1.25.t-0.95_0.42_1.3_1.85.glb",
+   "sha256": "a1b771ee048362052e716d008bc5b289216e144dfcaceb82799407bcaa76718a",
+   "triangles": 2586,
+   "vertices": 1432,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -1.22
+   ],
+   "bounds_max": [
+    1.275,
+    0.2,
+    1.905
+   ],
+   "materials": [
+    "SR_tex_window0",
+    "accent",
+    "dark",
+    "emit_a",
+    "primary",
+    "secondary",
+    "trim",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.red_hatch.bumper.navy.plate.w2.000.s6.k-2.4",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.red_hatch.bumper.navy.plate.w2.000.s6.k-2.4.glb",
+   "sha256": "48e8e0b45888fe358fcd9fdd14bdbad8927816e79be6ffb648c2ab6223c2d44f",
+   "triangles": 6748,
+   "vertices": 3744,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.47
+   ],
+   "bounds_max": [
+    2.44,
+    0.503,
+    1.858
+   ],
+   "materials": [
+    "accent",
+    "blue",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "emit_r@high",
+    "primary",
+    "secondary",
+    "trim",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.vent.light.navy.plate.w2.000.s4.k-2",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.vent.light.navy.plate.w2.000.s4.k-2.glb",
+   "sha256": "96569baa5d989a57f7c7378950972be8e83646d614cf49d8e83f70771dc2b2dc",
+   "triangles": 6052,
+   "vertices": 3320,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.07
+   ],
+   "bounds_max": [
+    2.44,
+    0.511,
+    1.926
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "glass_dark",
+    "primary",
+    "secondary",
+    "trim",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.bay.vent_amber.bumper.red.plate.w3.000.s2.k-2.05",
+   "family": "hull/bay",
+   "role": "hull-bay",
+   "rooms": [],
+   "file": "glb/hull/bay/hull.bay.vent_amber.bumper.red.plate.w3.000.s2.k-2.05.glb",
+   "sha256": "0aa992bd610d9b5f51d80b17f2692814f0e3928e4a775567a6868fdbe54c45d8",
+   "triangles": 8444,
+   "vertices": 4660,
+   "bounds_min": [
+    0.0,
+    -1.0,
+    -2.15
+   ],
+   "bounds_max": [
+    3.44,
+    0.581,
+    1.926
+   ],
+   "materials": [
+    "accent",
+    "blue",
+    "dark",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "yellow"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.corner.k-1.25.t1.34",
+   "family": "hull/corner",
+   "role": "hull-corner",
+   "rooms": [],
+   "file": "glb/hull/corner/hull.corner.k-1.25.t1.34.glb",
+   "sha256": "1f15aefe893e6daf6062e58618f41dc046a2ee13ca1b5f36c0d28bd0dfe414af",
+   "triangles": 324,
+   "vertices": 168,
+   "bounds_min": [
+    -0.55,
+    -0.55,
+    -1.15
+   ],
+   "bounds_max": [
+    0.16,
+    0.16,
+    1.44
+   ],
+   "materials": [
+    "primary",
+    "secondary"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.corner.k-1.25.t1.85",
+   "family": "hull/corner",
+   "role": "hull-corner",
+   "rooms": [],
+   "file": "glb/hull/corner/hull.corner.k-1.25.t1.85.glb",
+   "sha256": "0cb32b1d37fa1b8f8829de99daaa6892acfaa7943d182f2c96b58bd633d1a105",
+   "triangles": 324,
+   "vertices": 168,
+   "bounds_min": [
+    -0.55,
+    -0.55,
+    -1.15
+   ],
+   "bounds_max": [
+    0.16,
+    0.16,
+    1.95
+   ],
+   "materials": [
+    "primary",
+    "secondary"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "hull.corner.k-2.5.t1.85",
+   "family": "hull/corner",
+   "role": "hull-corner",
+   "rooms": [],
+   "file": "glb/hull/corner/hull.corner.k-2.5.t1.85.glb",
+   "sha256": "d1a8ab67d0997fe2ebc1bea777eb1fb653122dff94a4cf5db10b764c3ca15ac8",
+   "triangles": 324,
+   "vertices": 168,
+   "bounds_min": [
+    -0.55,
+    -0.55,
+    -2.4
+   ],
+   "bounds_max": [
+    0.16,
+    0.16,
+    1.95
+   ],
+   "materials": [
+    "primary",
+    "secondary"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "int.doorbeam.emit_a.l0.8",
+   "family": "int/doorbeam",
+   "role": "door-light",
+   "rooms": [],
+   "file": "glb/int/doorbeam/int.doorbeam.emit_a.l0.8.glb",
+   "sha256": "d0129f6a0236e72f354f842ca8d6df1d3eb686f278fde3831fd5292cdcafe3f9",
+   "triangles": 1296,
+   "vertices": 672,
+   "bounds_min": [
+    0.08,
+    -0.125,
+    1.14
+   ],
+   "bounds_max": [
+    0.72,
+    0.125,
+    1.341
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@low",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.doorbeam.emit_a.l0.95",
+   "family": "int/doorbeam",
+   "role": "door-light",
+   "rooms": [],
+   "file": "glb/int/doorbeam/int.doorbeam.emit_a.l0.95.glb",
+   "sha256": "b95dd2812aa302a0e9956565b7fbbde352091d63ab201259fef8e87ac0059604",
+   "triangles": 1512,
+   "vertices": 784,
+   "bounds_min": [
+    0.08,
+    -0.125,
+    1.14
+   ],
+   "bounds_max": [
+    0.87,
+    0.125,
+    1.341
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@low",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.doorbeam.emit_a.l1",
+   "family": "int/doorbeam",
+   "role": "door-light",
+   "rooms": [],
+   "file": "glb/int/doorbeam/int.doorbeam.emit_a.l1.glb",
+   "sha256": "a4c00b37b668df56d9968ae5f59fdecf861d90fd2f7438068f507d7209db3d89",
+   "triangles": 1512,
+   "vertices": 784,
+   "bounds_min": [
+    0.08,
+    -0.125,
+    1.14
+   ],
+   "bounds_max": [
+    0.92,
+    0.125,
+    1.341
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@low",
+    "secondary",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "int.doorbeam.emit_a.l1.2",
+   "family": "int/doorbeam",
+   "role": "door-light",
+   "rooms": [],
+   "file": "glb/int/doorbeam/int.doorbeam.emit_a.l1.2.glb",
+   "sha256": "d7e299153463a55018539c72a59ae84db8c3609c0dfb2511d97228101199eed1",
+   "triangles": 1728,
+   "vertices": 896,
+   "bounds_min": [
+    0.08,
+    -0.125,
+    1.14
+   ],
+   "bounds_max": [
+    1.12,
+    0.125,
+    1.341
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@low",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.doorbeam.emit_a.l1.25",
+   "family": "int/doorbeam",
+   "role": "door-light",
+   "rooms": [],
+   "file": "glb/int/doorbeam/int.doorbeam.emit_a.l1.25.glb",
+   "sha256": "24fedba84a6c7980e44d6d698d99f9815b02dd14ece4c30ed89cd9144ff41c95",
+   "triangles": 1728,
+   "vertices": 896,
+   "bounds_min": [
+    0.08,
+    -0.125,
+    1.14
+   ],
+   "bounds_max": [
+    1.17,
+    0.125,
+    1.341
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@low",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l1",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l1.glb",
+   "sha256": "dc5689a391b0d7687486ff390b19831c14bb8cf69e9e2c3988808aa1fe606826",
+   "triangles": 2424,
+   "vertices": 1264,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    1.004,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l1.2",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l1.2.glb",
+   "sha256": "a596c6302a6ad70a5998058d33c3597e38be06ec6ba579d46c279164605d4d04",
+   "triangles": 2844,
+   "vertices": 1480,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    1.204,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l1.5",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l1.5.glb",
+   "sha256": "de0f3253da6e537561c2dfa19b559a909c5292a06b2affc689e5556fc1f4bc08",
+   "triangles": 2304,
+   "vertices": 1200,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    1.504,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l1.8",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l1.8.glb",
+   "sha256": "f9b42ba603502d73154a35b2fe38450d93773e23a2d827df909747b17a967671",
+   "triangles": 2424,
+   "vertices": 1264,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    1.804,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l1.9",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l1.9.glb",
+   "sha256": "a08798b75c8d91cf5fb3c5b55bf4774266e12492120af387f09abab227423f01",
+   "triangles": 2304,
+   "vertices": 1200,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    1.904,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l2.15",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l2.15.glb",
+   "sha256": "2be1cc402568ae64f21915c7499c685c8cc7fbb3589b7c778b454db8581dd3b1",
+   "triangles": 2964,
+   "vertices": 1544,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    2.154,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l2.4",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l2.4.glb",
+   "sha256": "764595faeb8e785b5ac7e76473a6dba1da257cc194c9fa709260f318344687bb",
+   "triangles": 4272,
+   "vertices": 2224,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    2.404,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l3.25",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l3.25.glb",
+   "sha256": "910d03da4af4d6d3f1447d31ef6d0d18e938402e9d8cde20427e189e306cd553",
+   "triangles": 4272,
+   "vertices": 2224,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    3.254,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l3.55",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l3.55.glb",
+   "sha256": "5252a563e926e510a9a3020202328fe6f9ec4c0a92135cfe6e1f304c71915508",
+   "triangles": 3852,
+   "vertices": 2008,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    3.554,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l4",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l4.glb",
+   "sha256": "52c9c18b886822734f6e907dae9e1facc7d4c2aed6ad72947efd5910d2e739ff",
+   "triangles": 4272,
+   "vertices": 2224,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    4.004,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "int.halfwall.l4.000",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l4.000.glb",
+   "sha256": "88e5ac16cc7f83d775983a11297b15b99a04c715bc88eb7dfd22254007cc69b8",
+   "triangles": 4272,
+   "vertices": 2224,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    4.004,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "int.halfwall.l4.05",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l4.05.glb",
+   "sha256": "284bedd51fa764d2d7e0df6c7359bb207afc4b4f86bfc98627129bf47901057b",
+   "triangles": 5820,
+   "vertices": 3032,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    4.054,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.halfwall.l4.500",
+   "family": "int/halfwall",
+   "role": "partition",
+   "rooms": [],
+   "file": "glb/int/halfwall/int.halfwall.l4.500.glb",
+   "sha256": "b11ad5fe1f508e3edd7592b7cb09fe622f6e317695c7a4a712c9edc2aabc8d4f",
+   "triangles": 6360,
+   "vertices": 3312,
+   "bounds_min": [
+    -0.004,
+    -0.139,
+    0.0
+   ],
+   "bounds_max": [
+    4.504,
+    0.139,
+    1.129
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.post.pink",
+   "family": "int/post",
+   "role": "door-post",
+   "rooms": [],
+   "file": "glb/int/post/int.post.pink.glb",
+   "sha256": "68d982ae6adf2ffd624509f4a0e3e43ef885ffc5915e17210199cdc5d944e8a1",
+   "triangles": 996,
+   "vertices": 520,
+   "bounds_min": [
+    -0.13,
+    -0.27,
+    0.0
+   ],
+   "bounds_max": [
+    0.13,
+    0.27,
+    1.39
+   ],
+   "materials": [
+    "accent",
+    "dark",
+    "emit_b",
+    "secondary",
+    "trim"
+   ],
+   "placements": 4
+  },
+  {
+   "id": "int.post.white",
+   "family": "int/post",
+   "role": "door-post",
+   "rooms": [],
+   "file": "glb/int/post/int.post.white.glb",
+   "sha256": "ad5be49bcc75908fcd6888ab54cb1dc21062594117e0f149b9111d9cbf25933d",
+   "triangles": 996,
+   "vertices": 520,
+   "bounds_min": [
+    -0.13,
+    -0.27,
+    0.0
+   ],
+   "bounds_max": [
+    0.13,
+    0.27,
+    1.39
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 12
+  },
+  {
+   "id": "int.rimliner.v0.w0.25",
+   "family": "int/rimliner",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/rimliner/int.rimliner.v0.w0.25.glb",
+   "sha256": "b9e133ad4c005b015e553b55c6ddaeefe65ccd5ce5f9b0e8212c1a9fc0fc9bba",
+   "triangles": 496,
+   "vertices": 280,
+   "bounds_min": [
+    0.0,
+    -1.051,
+    1.28
+   ],
+   "bounds_max": [
+    0.25,
+    -0.21,
+    1.75
+   ],
+   "materials": [
+    "dark",
+    "metal",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.rimliner.v0.w1",
+   "family": "int/rimliner",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/rimliner/int.rimliner.v0.w1.glb",
+   "sha256": "c5a143dcb839fcf06a5e6ad5a5071f716e0ea9962eb49caebfb59d77c47b9e72",
+   "triangles": 2224,
+   "vertices": 1176,
+   "bounds_min": [
+    0.0,
+    -1.051,
+    1.28
+   ],
+   "bounds_max": [
+    1.0,
+    -0.21,
+    1.816
+   ],
+   "materials": [
+    "dark",
+    "metal",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 6
+  },
+  {
+   "id": "int.rimliner.v1.w0.95",
+   "family": "int/rimliner",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/rimliner/int.rimliner.v1.w0.95.glb",
+   "sha256": "aada80887c6b51423345fdfc21aa32c278808809c231d0e8899dd52bc33a7d68",
+   "triangles": 1468,
+   "vertices": 784,
+   "bounds_min": [
+    0.0,
+    -1.051,
+    1.28
+   ],
+   "bounds_max": [
+    0.95,
+    -0.21,
+    1.791
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "metal",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.rimliner.v1.w1",
+   "family": "int/rimliner",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/rimliner/int.rimliner.v1.w1.glb",
+   "sha256": "859a7551ba6181282066f8abc59c140299e18676c73918a75ecf25b6b9fe13cd",
+   "triangles": 1468,
+   "vertices": 784,
+   "bounds_min": [
+    0.0,
+    -1.051,
+    1.28
+   ],
+   "bounds_max": [
+    1.0,
+    -0.21,
+    1.756
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "metal",
+    "secondary",
+    "trim"
+   ],
+   "placements": 6
+  },
+  {
+   "id": "int.rimliner.v2.w0.95",
+   "family": "int/rimliner",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/rimliner/int.rimliner.v2.w0.95.glb",
+   "sha256": "bef224363835f2f3e18b04c42f8866fc86503f1c37c237281711634f1f99e12a",
+   "triangles": 1792,
+   "vertices": 952,
+   "bounds_min": [
+    0.0,
+    -1.051,
+    1.28
+   ],
+   "bounds_max": [
+    0.95,
+    -0.21,
+    1.816
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "metal",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.rimliner.v2.w1",
+   "family": "int/rimliner",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/rimliner/int.rimliner.v2.w1.glb",
+   "sha256": "7f22d780355f52c5fc0d6724ac5dbf5a3f8e4cbe5297a1ca759766ceb460a13d",
+   "triangles": 1468,
+   "vertices": 784,
+   "bounds_min": [
+    0.0,
+    -1.051,
+    1.28
+   ],
+   "bounds_max": [
+    1.0,
+    -0.21,
+    1.816
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "metal",
+    "secondary",
+    "trim"
+   ],
+   "placements": 5
+  },
+  {
+   "id": "int.threshold.l0.8",
+   "family": "int/threshold",
+   "role": "threshold",
+   "rooms": [],
+   "file": "glb/int/threshold/int.threshold.l0.8.glb",
+   "sha256": "24780783bc506e42765162b88244f3a7d36766a575ae40db35e39f77677dfc86",
+   "triangles": 1188,
+   "vertices": 616,
+   "bounds_min": [
+    0.1,
+    -0.44,
+    0.0
+   ],
+   "bounds_max": [
+    0.7,
+    0.44,
+    0.016
+   ],
+   "materials": [
+    "deck",
+    "emit_b",
+    "emit_b@low",
+    "secondary"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.threshold.l0.95",
+   "family": "int/threshold",
+   "role": "threshold",
+   "rooms": [],
+   "file": "glb/int/threshold/int.threshold.l0.95.glb",
+   "sha256": "8e8ed38bdf462b0d832c574a4f7cd660351d55f9b611f6c974e3d82c123f3fd8",
+   "triangles": 1188,
+   "vertices": 616,
+   "bounds_min": [
+    0.1,
+    -0.44,
+    0.0
+   ],
+   "bounds_max": [
+    0.85,
+    0.44,
+    0.016
+   ],
+   "materials": [
+    "deck",
+    "emit_b",
+    "emit_b@low",
+    "secondary"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.threshold.l1",
+   "family": "int/threshold",
+   "role": "threshold",
+   "rooms": [],
+   "file": "glb/int/threshold/int.threshold.l1.glb",
+   "sha256": "ad32ad226e592f726fc8bb7e7817e3da2844ff46d631c9e7f002800289aa31e8",
+   "triangles": 1188,
+   "vertices": 616,
+   "bounds_min": [
+    0.1,
+    -0.44,
+    0.0
+   ],
+   "bounds_max": [
+    0.9,
+    0.44,
+    0.016
+   ],
+   "materials": [
+    "deck",
+    "emit_b",
+    "emit_b@low",
+    "secondary"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.threshold.l1.2",
+   "family": "int/threshold",
+   "role": "threshold",
+   "rooms": [],
+   "file": "glb/int/threshold/int.threshold.l1.2.glb",
+   "sha256": "e4e1d442142165492f161c227ede3e870b51f0c010b2a5c8b8d58e231aa12e84",
+   "triangles": 1188,
+   "vertices": 616,
+   "bounds_min": [
+    0.1,
+    -0.44,
+    0.0
+   ],
+   "bounds_max": [
+    1.1,
+    0.44,
+    0.016
+   ],
+   "materials": [
+    "deck",
+    "emit_b",
+    "emit_b@low",
+    "secondary"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.threshold.l1.25",
+   "family": "int/threshold",
+   "role": "threshold",
+   "rooms": [],
+   "file": "glb/int/threshold/int.threshold.l1.25.glb",
+   "sha256": "78275c7bdd061635d169382cbc30c847e4a52e6a8b4de7ac8f4bd778ddc03b16",
+   "triangles": 1188,
+   "vertices": 616,
+   "bounds_min": [
+    0.1,
+    -0.44,
+    0.0
+   ],
+   "bounds_max": [
+    1.15,
+    0.44,
+    0.016
+   ],
+   "materials": [
+    "deck",
+    "emit_b",
+    "emit_b@low",
+    "secondary"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.00.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.00.w1.glb",
+   "sha256": "24f4c0db02376f095842ef63c1fa1326062b0cf18d250679ceb7209dece740bb",
+   "triangles": 10004,
+   "vertices": 5240,
+   "bounds_min": [
+    -0.008,
+    -1.226,
+    0.0
+   ],
+   "bounds_max": [
+    1.665,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "emit_b@high",
+    "emit_b@low",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_quarters_bronze",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.01.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.01.w1.glb",
+   "sha256": "1d96404cee81e249659ce2ae01c1cfd083a863459cbce1e3d5d29d2418f9f91b",
+   "triangles": 4244,
+   "vertices": 2216,
+   "bounds_min": [
+    0.0,
+    -1.192,
+    0.0
+   ],
+   "bounds_max": [
+    1.032,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "emit_g@mid",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "white",
+    "x_lounge_suit_red",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.02.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.02.w1.glb",
+   "sha256": "a99a54806e8b1a7af1a1a4d56f6fbbc3105d16d2102bb9d656ad403e6ae056c6",
+   "triangles": 3636,
+   "vertices": 1896,
+   "bounds_min": [
+    0.0,
+    -1.2,
+    0.0
+   ],
+   "bounds_max": [
+    1.133,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@high",
+    "emit_b",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.03.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.03.w1.glb",
+   "sha256": "ca31d96ca5b69bcda0ee70f7282397064cc1f0a8637a874fe61c3ba527fb0d13",
+   "triangles": 5620,
+   "vertices": 2936,
+   "bounds_min": [
+    -0.133,
+    -1.2,
+    0.0
+   ],
+   "bounds_max": [
+    1.932,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@high",
+    "emit_b",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_quarters_bronze",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.04.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.04.w1.glb",
+   "sha256": "4f3d3a0520283b89240188e29f26dbe4897274f1ecf682f7dbd26d06a3b3630b",
+   "triangles": 1322,
+   "vertices": 692,
+   "bounds_min": [
+    0.0,
+    -1.192,
+    0.0
+   ],
+   "bounds_max": [
+    1.472,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "SR_tex_walls_tex_label",
+    "dark",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.05.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.05.w1.glb",
+   "sha256": "397a1f832a8d13e3c74899012552998eaffd28bdb937a4f631413a85072211e4",
+   "triangles": 780,
+   "vertices": 408,
+   "bounds_min": [
+    0.0,
+    -1.192,
+    0.0
+   ],
+   "bounds_max": [
+    1.597,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.06.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.06.w1.glb",
+   "sha256": "7b3fcbbd50eaa97a2c62929a1710aa06b221e8fc2356070e279707068d5eca39",
+   "triangles": 4024,
+   "vertices": 2104,
+   "bounds_min": [
+    0.0,
+    -1.192,
+    0.0
+   ],
+   "bounds_max": [
+    1.133,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "emit_b@high",
+    "emit_b@low",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_quarters_bronze",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.07.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.07.w1.glb",
+   "sha256": "393f80843002f2100518818270cc46d5651b51590c8666dfa30d2e9bebe90632",
+   "triangles": 8284,
+   "vertices": 4336,
+   "bounds_min": [
+    -0.133,
+    -1.214,
+    0.0
+   ],
+   "bounds_max": [
+    1.052,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "emit_g@mid",
+    "emit_w@mid",
+    "metal",
+    "primary",
+    "scr_blue@low",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_quarters_bronze",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.08.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.08.w1.glb",
+   "sha256": "b38e314360ce492b884a8e8688254c6e6f16ca10ff500f0a25ef97fbf521555f",
+   "triangles": 4012,
+   "vertices": 2088,
+   "bounds_min": [
+    0.0,
+    -1.2,
+    0.0
+   ],
+   "bounds_max": [
+    2.352,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@high",
+    "emit_b",
+    "emit_g@mid",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_quarters_bronze",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.09.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.09.w1.glb",
+   "sha256": "de22fa43c5cd733ea6014f2f4c7335278efc8096e9e08aca083cef09d5a99d7c",
+   "triangles": 12,
+   "vertices": 8,
+   "bounds_min": [
+    0.0,
+    -1.05,
+    0.0
+   ],
+   "bounds_max": [
+    1.0,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "wall_dark"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.10.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.10.w1.glb",
+   "sha256": "61590d24386acb52839718054acf40515e7dd69e61fa548408913860e10e9860",
+   "triangles": 2788,
+   "vertices": 1456,
+   "bounds_min": [
+    0.0,
+    -1.192,
+    0.0
+   ],
+   "bounds_max": [
+    1.127,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@high",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "white",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.11.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.11.w1.glb",
+   "sha256": "2fc356dc6d74430165b247fba543f99de6a73aa79d24e5299125044a8e9b1be1",
+   "triangles": 2684,
+   "vertices": 1400,
+   "bounds_min": [
+    0.0,
+    -1.192,
+    0.0
+   ],
+   "bounds_max": [
+    2.902,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.12.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.12.w1.glb",
+   "sha256": "2ddd39cfd9305c46724ebdcd6ab091bbdab11fc7e2206cbb04796fa32cc33020",
+   "triangles": 12,
+   "vertices": 8,
+   "bounds_min": [
+    0.0,
+    -1.05,
+    0.0
+   ],
+   "bounds_max": [
+    1.0,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "wall_dark"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.13.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.13.w1.glb",
+   "sha256": "d37084058b167f58b40dbd022edda8414d7612498bc1053187c882dc24dc0706",
+   "triangles": 1336,
+   "vertices": 704,
+   "bounds_min": [
+    0.0,
+    -1.214,
+    0.0
+   ],
+   "bounds_max": [
+    1.442,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_w@mid",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.14.w1",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.14.w1.glb",
+   "sha256": "e6ea4b05832020618dad1f39f447524bbbbb07a94c95512c4dbb01c7ee37b43e",
+   "triangles": 5908,
+   "vertices": 3096,
+   "bounds_min": [
+    0.0,
+    -1.2,
+    0.0
+   ],
+   "bounds_max": [
+    1.173,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@high",
+    "emit_b",
+    "emit_g@mid",
+    "metal",
+    "primary",
+    "scr_blue@low",
+    "secondary",
+    "trim",
+    "wall",
+    "wall_dark",
+    "x_quarters_bronze",
+    "x_walls_rail",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallbay.far.15.w0.25",
+   "family": "int/wallbay",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallbay/int.wallbay.far.15.w0.25.glb",
+   "sha256": "6f1f89e2f2f2f162742951d129bbdcc828d5c165818f1f02def913d41d738a9b",
+   "triangles": 460,
+   "vertices": 248,
+   "bounds_min": [
+    0.0,
+    -1.192,
+    0.0
+   ],
+   "bounds_max": [
+    0.258,
+    -1.0,
+    1.68
+   ],
+   "materials": [
+    "dark",
+    "primary",
+    "trim",
+    "wall_dark",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallpanel.cockpit+amber.w0.95.s0.i1",
+   "family": "int/wallpanel",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallpanel/int.wallpanel.cockpit+amber.w0.95.s0.i1.glb",
+   "sha256": "341cd9347f3647fea5294027e900816b1dbaa072b43529e47a981f986a163038",
+   "triangles": 1308,
+   "vertices": 680,
+   "bounds_min": [
+    0.0,
+    -1.2,
+    0.0
+   ],
+   "bounds_max": [
+    0.95,
+    -1.0,
+    1.75
+   ],
+   "materials": [
+    "emit_a",
+    "emit_b",
+    "secondary",
+    "wall_dark"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallpanel.cockpit+amber.w1.s0.i1",
+   "family": "int/wallpanel",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallpanel/int.wallpanel.cockpit+amber.w1.s0.i1.glb",
+   "sha256": "ca19c4d955371ed5b43d8d53b51796c7fbb5d3d4394a6e8f11869150602440e4",
+   "triangles": 1308,
+   "vertices": 680,
+   "bounds_min": [
+    0.0,
+    -1.2,
+    0.0
+   ],
+   "bounds_max": [
+    1.0,
+    -1.0,
+    1.75
+   ],
+   "materials": [
+    "emit_a",
+    "emit_b",
+    "secondary",
+    "wall_dark"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallpanel.cockpit+cyanbox.w1.s0.i1",
+   "family": "int/wallpanel",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallpanel/int.wallpanel.cockpit+cyanbox.w1.s0.i1.glb",
+   "sha256": "d623680143fa0b9624b357f4b3f296f1c2993eb257119048db41558dfb9bc7be",
+   "triangles": 1416,
+   "vertices": 736,
+   "bounds_min": [
+    0.0,
+    -1.22,
+    0.0
+   ],
+   "bounds_max": [
+    1.0,
+    -1.0,
+    1.75
+   ],
+   "materials": [
+    "emit_a",
+    "secondary",
+    "trim",
+    "wall_dark"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallpanel.cockpit.w0.335281.s0.i1.h1.17",
+   "family": "int/wallpanel",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallpanel/int.wallpanel.cockpit.w0.335281.s0.i1.h1.17.glb",
+   "sha256": "aee226dee7c2ef73c81aa498179820cf6b17820e785733de4c2b60fedee73e58",
+   "triangles": 768,
+   "vertices": 400,
+   "bounds_min": [
+    0.0,
+    -1.12,
+    0.0
+   ],
+   "bounds_max": [
+    0.3353,
+    -1.0,
+    1.17
+   ],
+   "materials": [
+    "emit_a",
+    "secondary",
+    "wall_dark"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "int.wallpanel.cockpit.w0.95.s0.i1",
+   "family": "int/wallpanel",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallpanel/int.wallpanel.cockpit.w0.95.s0.i1.glb",
+   "sha256": "9f44dcc17a6b5ff656b83685291110ace206ddf1bb178224b7ae84ec0768b418",
+   "triangles": 1092,
+   "vertices": 568,
+   "bounds_min": [
+    0.0,
+    -1.12,
+    0.0
+   ],
+   "bounds_max": [
+    0.95,
+    -1.0,
+    1.75
+   ],
+   "materials": [
+    "emit_a",
+    "secondary",
+    "wall_dark"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "int.wallpanel.cockpit.w1.s0.i1.h1.17",
+   "family": "int/wallpanel",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallpanel/int.wallpanel.cockpit.w1.s0.i1.h1.17.glb",
+   "sha256": "cece8541e2b92429e43389f51855c4015f32eb6576dd92714958672452688bc6",
+   "triangles": 1092,
+   "vertices": 568,
+   "bounds_min": [
+    0.0,
+    -1.12,
+    0.0
+   ],
+   "bounds_max": [
+    1.0,
+    -1.0,
+    1.17
+   ],
+   "materials": [
+    "emit_a",
+    "secondary",
+    "wall_dark"
+   ],
+   "placements": 6
+  },
+  {
+   "id": "int.wallpanel.machinery.w1.s0.i0.25",
+   "family": "int/wallpanel",
+   "role": "wall-dressing",
+   "rooms": [],
+   "file": "glb/int/wallpanel/int.wallpanel.machinery.w1.s0.i0.25.glb",
+   "sha256": "83efcd30c833e161feb59c1dc2adf9ad361c57e9bdcff923b7ffbff2307d457f",
+   "triangles": 2316,
+   "vertices": 1204,
+   "bounds_min": [
+    0.0,
+    -0.5115,
+    0.0
+   ],
+   "bounds_max": [
+    1.0,
+    -0.25,
+    1.75
+   ],
+   "materials": [
+    "dark",
+    "scr_blue@mid",
+    "secondary",
+    "trim"
+   ],
+   "placements": 11
+  },
+  {
+   "id": "prop.props_bridge.cockpit_side_panel",
+   "family": "props/bridge",
+   "role": "room-content",
+   "rooms": [
+    "Cockpit"
+   ],
+   "file": "glb/props/bridge/prop.props_bridge.cockpit_side_panel.glb",
+   "sha256": "30c7af633725aacc60aa078ef1809201841acd9d1789221b4bebef8a47d7714b",
+   "triangles": 594,
+   "vertices": 324,
+   "bounds_min": [
+    -0.3,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.3,
+    0.33,
+    1.62
+   ],
+   "materials": [
+    "SR_tex_bridge_scr_dark",
+    "SR_tex_bridge_scr_small_blue",
+    "SR_tex_bridge_scr_small_orange",
+    "dark",
+    "metal",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "prop.props_bridge.command_station",
+   "family": "props/bridge",
+   "role": "room-content",
+   "rooms": [
+    "Cockpit"
+   ],
+   "file": "glb/props/bridge/prop.props_bridge.command_station.glb",
+   "sha256": "5ec193859f56554c17886be5a6790d9660de957138a99ea0cfa1e8fcbb7faa04",
+   "triangles": 12478,
+   "vertices": 7316,
+   "bounds_min": [
+    -1.8926,
+    -0.99,
+    0.0
+   ],
+   "bounds_max": [
+    1.8926,
+    1.64,
+    1.3875
+   ],
+   "materials": [
+    "SR_tex_bridge_gauge_a",
+    "SR_tex_bridge_gauge_b",
+    "SR_tex_bridge_scr_desk_a",
+    "SR_tex_bridge_scr_desk_b",
+    "SR_tex_bridge_scr_helm_main",
+    "SR_tex_bridge_scr_helm_side",
+    "SR_tex_bridge_scr_mon_data",
+    "SR_tex_bridge_scr_mon_radar",
+    "SR_tex_bridge_scr_side_a",
+    "SR_tex_bridge_scr_side_b",
+    "SR_tex_bridge_scr_sill_a",
+    "SR_tex_bridge_scr_sill_c",
+    "SR_tex_bridge_scr_wide_a",
+    "SR_tex_bridge_scr_wide_b",
+    "accent",
+    "blue",
+    "dark",
+    "deck_dark",
+    "emit_a",
+    "emit_a@low",
+    "emit_b",
+    "emit_b@low",
+    "emit_r@high",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_bridge.floor_hatch",
+   "family": "props/bridge",
+   "role": "room-content",
+   "rooms": [
+    "Cockpit"
+   ],
+   "file": "glb/props/bridge/prop.props_bridge.floor_hatch.glb",
+   "sha256": "701f3e49b288b91ae778635ea600c58adf018a22d2878511768fdd8908fd6759",
+   "triangles": 1668,
+   "vertices": 872,
+   "bounds_min": [
+    -0.4,
+    -0.5,
+    0.0
+   ],
+   "bounds_max": [
+    0.4,
+    0.5,
+    0.034
+   ],
+   "materials": [
+    "deck_dark",
+    "hazard",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_bridge.pilot_chair",
+   "family": "props/bridge",
+   "role": "room-content",
+   "rooms": [
+    "Cockpit"
+   ],
+   "file": "glb/props/bridge/prop.props_bridge.pilot_chair.glb",
+   "sha256": "9dc2f7b54152816516b8a992597af5194895b2c7c22a124c61ea33e4c0b8887e",
+   "triangles": 4072,
+   "vertices": 2120,
+   "bounds_min": [
+    -0.422,
+    -0.3908,
+    0.0
+   ],
+   "bounds_max": [
+    0.422,
+    0.408,
+    1.3796
+   ],
+   "materials": [
+    "deck_seam",
+    "emit_b",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_bridge.screen_box",
+   "family": "props/bridge",
+   "role": "room-content",
+   "rooms": [
+    "Cockpit"
+   ],
+   "file": "glb/props/bridge/prop.props_bridge.screen_box.glb",
+   "sha256": "6b0b2f80644b8f2dcfd8e2fd4c6ff9c4010ceab0ed726545203c2d3a6ea1538e",
+   "triangles": 794,
+   "vertices": 416,
+   "bounds_min": [
+    -0.225,
+    -0.2,
+    0.0
+   ],
+   "bounds_max": [
+    0.234,
+    0.206,
+    0.62
+   ],
+   "materials": [
+    "SR_tex_bridge_scr_box",
+    "dark",
+    "emit_a",
+    "emit_r@high",
+    "metal",
+    "primary",
+    "secondary",
+    "x_bridge_navyblue"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "prop.props_bridge.wall_console",
+   "family": "props/bridge",
+   "role": "room-content",
+   "rooms": [
+    "Cockpit"
+   ],
+   "file": "glb/props/bridge/prop.props_bridge.wall_console.glb",
+   "sha256": "dbdc73427388803e90e1bf22788798e19923d0ac80ae31788ed7ce2cc5b4a4cc",
+   "triangles": 5348,
+   "vertices": 3040,
+   "bounds_min": [
+    -0.915,
+    -0.4167,
+    0.0
+   ],
+   "bounds_max": [
+    0.915,
+    0.37,
+    1.3375
+   ],
+   "materials": [
+    "SR_tex_bridge_gauge_a",
+    "SR_tex_bridge_gauge_b",
+    "SR_tex_bridge_scr_desk_b",
+    "SR_tex_bridge_scr_side_b",
+    "SR_tex_bridge_scr_sill_c",
+    "SR_tex_bridge_scr_wide_a",
+    "SR_tex_bridge_scr_wide_b",
+    "accent",
+    "blue",
+    "dark",
+    "emit_a",
+    "emit_a@low",
+    "emit_b",
+    "emit_b@low",
+    "emit_r@high",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 4
+  },
+  {
+   "id": "prop.props_bridge.wall_console_low",
+   "family": "props/bridge",
+   "role": "room-content",
+   "rooms": [
+    "Cockpit"
+   ],
+   "file": "glb/props/bridge/prop.props_bridge.wall_console_low.glb",
+   "sha256": "4fea3b933200208ff25c2b94eb7dfa1baf6f32a9b11ef22cd32ffa8013693394",
+   "triangles": 4866,
+   "vertices": 2780,
+   "bounds_min": [
+    -0.875,
+    -0.33,
+    0.0
+   ],
+   "bounds_max": [
+    0.875,
+    0.37,
+    1.08
+   ],
+   "materials": [
+    "SR_tex_bridge_gauge_a",
+    "SR_tex_bridge_gauge_b",
+    "SR_tex_bridge_scr_mon_data",
+    "SR_tex_bridge_scr_sill_a",
+    "SR_tex_bridge_scr_sill_b",
+    "SR_tex_bridge_scr_sill_c",
+    "SR_tex_bridge_scr_wide_b",
+    "accent",
+    "blue",
+    "dark",
+    "emit_a",
+    "emit_a@low",
+    "emit_b",
+    "emit_b@low",
+    "emit_r@high",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 3
+  },
+  {
+   "id": "prop.props_bridge.wall_light_cyan_v",
+   "family": "props/bridge",
+   "role": "room-content",
+   "rooms": [
+    "Cockpit"
+   ],
+   "file": "glb/props/bridge/prop.props_bridge.wall_light_cyan_v.glb",
+   "sha256": "9614d20e384a9a4d4d89bcee74f319a2418263d456853ae14917d87b1d43065b",
+   "triangles": 1080,
+   "vertices": 560,
+   "bounds_min": [
+    -0.13,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.13,
+    0.09,
+    1.1
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "scr_blue@mid",
+    "secondary",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "prop.props_lounge.coffee_table",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Lounge"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.coffee_table.glb",
+   "sha256": "d279d547eadbf0aadb8e9397d1c1b64c1511d52cd19ce9f32f72d5ff84562cc1",
+   "triangles": 5800,
+   "vertices": 3117,
+   "bounds_min": [
+    -0.75,
+    -0.4,
+    0.0
+   ],
+   "bounds_max": [
+    0.75,
+    0.4,
+    0.9561
+   ],
+   "materials": [
+    "accent",
+    "dark",
+    "deck_seam",
+    "emit_a",
+    "emit_a@low",
+    "leaf",
+    "leaf_light",
+    "rubber",
+    "secondary",
+    "soil",
+    "trim",
+    "wall",
+    "white",
+    "x_lounge_leaf_lime",
+    "x_lounge_leaf_purple",
+    "x_lounge_mag_pink",
+    "x_lounge_mag_yellow",
+    "x_lounge_mug_grey",
+    "x_lounge_mug_orange",
+    "x_lounge_table_pink"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.crew_chibi",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Hall"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.crew_chibi.glb",
+   "sha256": "169d5233b157ca0980f8de48b20384a793aa10137dd91b54068a6bfc9c285c6c",
+   "triangles": 6796,
+   "vertices": 3512,
+   "bounds_min": [
+    -0.395,
+    -0.282,
+    0.0
+   ],
+   "bounds_max": [
+    0.395,
+    0.242,
+    1.25
+   ],
+   "materials": [
+    "dark",
+    "deck_seam",
+    "emit_a",
+    "emit_b",
+    "rubber",
+    "skin",
+    "white",
+    "x_lounge_pale_blue",
+    "x_lounge_sofa_base",
+    "x_lounge_suit_red"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.fridge_cabinet",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Hall"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.fridge_cabinet.glb",
+   "sha256": "b62e4fb17d10e3973a0790ae00071287be02ad93cbda414216994fe917f63f7b",
+   "triangles": 4044,
+   "vertices": 2104,
+   "bounds_min": [
+    -0.232,
+    -0.28,
+    0.0
+   ],
+   "bounds_max": [
+    0.232,
+    0.302,
+    0.895
+   ],
+   "materials": [
+    "accent",
+    "dark",
+    "emit_a",
+    "emit_r@low",
+    "primary",
+    "trim",
+    "white",
+    "x_lounge_can_red",
+    "x_lounge_pale_blue"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.plant_tall",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Lounge"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.plant_tall.glb",
+   "sha256": "1c3f55ec4e01e383a288bc8778c6bc3049a232bbfe6640a584c0ab9dda8df862",
+   "triangles": 1252,
+   "vertices": 813,
+   "bounds_min": [
+    -0.2757,
+    -0.2492,
+    0.0
+   ],
+   "bounds_max": [
+    0.2313,
+    0.2439,
+    1.0824
+   ],
+   "materials": [
+    "leaf",
+    "leaf_light",
+    "primary",
+    "soil",
+    "terracotta",
+    "x_lounge_leaf_lime",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.poster_goodcrew",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Lounge"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.poster_goodcrew.glb",
+   "sha256": "70e0736880bfbf335b8a9e17248409248c89a0e6dae23ae70961edcb603ce482",
+   "triangles": 1558,
+   "vertices": 812,
+   "bounds_min": [
+    -0.537,
+    0.0,
+    -0.008
+   ],
+   "bounds_max": [
+    0.537,
+    0.115,
+    1.29
+   ],
+   "materials": [
+    "SR_tex_lounge_goodcrew_r5",
+    "emit_c@mid",
+    "emit_r@low",
+    "pink",
+    "primary",
+    "secondary"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.selection_ring",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Hall"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.selection_ring.glb",
+   "sha256": "de0142b3eda012d8cab848cb049bdd1f4f25e742bb4407eae669d3d54365d0b0",
+   "triangles": 432,
+   "vertices": 288,
+   "bounds_min": [
+    -0.525,
+    -0.525,
+    0.003
+   ],
+   "bounds_max": [
+    0.525,
+    0.525,
+    0.015
+   ],
+   "materials": [
+    "emit_w@mid"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.shelf_unit",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Lounge"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.shelf_unit.glb",
+   "sha256": "b2b63d5b0ba4b3350625fdca064ebe0ce58dd7bb9aca0f8347a2686bef04083d",
+   "triangles": 4716,
+   "vertices": 2507,
+   "bounds_min": [
+    -0.6,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.6,
+    0.362,
+    1.0
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "hazard",
+    "leaf_light",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "x_lounge_leaf_lime"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.sofa_l",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Lounge"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.sofa_l.glb",
+   "sha256": "c39273ea76c3849f625e24bdd8f457a9e064589033aee559c8d52bffa596e5ba",
+   "triangles": 7336,
+   "vertices": 3728,
+   "bounds_min": [
+    -1.154,
+    -0.8,
+    0.0
+   ],
+   "bounds_max": [
+    1.154,
+    0.814,
+    0.824
+   ],
+   "materials": [
+    "rubber",
+    "x_lounge_sofa_base",
+    "x_lounge_sofa_red",
+    "x_lounge_sofa_red_back"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.wall_locker_door",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Hall"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.wall_locker_door.glb",
+   "sha256": "f4e0aa457981a56e2b11918d38cb07c6767e907febefd96542a6592ff6023e16",
+   "triangles": 1944,
+   "vertices": 1008,
+   "bounds_min": [
+    -0.4,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.4,
+    0.094,
+    1.42
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "wall",
+    "white"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_lounge.wall_screen_tall",
+   "family": "props/lounge",
+   "role": "room-content",
+   "rooms": [
+    "Hall"
+   ],
+   "file": "glb/props/lounge/prop.props_lounge.wall_screen_tall.glb",
+   "sha256": "db5a24c9cf54ac0e79aa1c39c8d6b50da232b7d727379dccea3112f238f312d6",
+   "triangles": 650,
+   "vertices": 340,
+   "bounds_min": [
+    -0.31,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.31,
+    0.145,
+    1.053
+   ],
+   "materials": [
+    "SR_tex_lounge_screen_tall",
+    "dark",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_quarters.bed_single",
+   "family": "props/quarters",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_A"
+   ],
+   "file": "glb/props/quarters/prop.props_quarters.bed_single.glb",
+   "sha256": "35e7e222d4c8d703fea109c76254862fd8d793efda5f2041f55affe63104cd6f",
+   "triangles": 2844,
+   "vertices": 1489,
+   "bounds_min": [
+    -1.0,
+    -0.55,
+    0.0
+   ],
+   "bounds_max": [
+    1.0,
+    0.55,
+    0.5922
+   ],
+   "materials": [
+    "dark",
+    "fabric_blue",
+    "fabric_white",
+    "secondary",
+    "white",
+    "x_quarters_blue_fold",
+    "x_quarters_mattress",
+    "x_quarters_seam"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_quarters.bunk_bed",
+   "family": "props/quarters",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_B"
+   ],
+   "file": "glb/props/quarters/prop.props_quarters.bunk_bed.glb",
+   "sha256": "5b95385bb74930ff17d3f3ed91c60e41719e22046ae9aa8bb46e27b3e6d6a4a1",
+   "triangles": 6936,
+   "vertices": 3666,
+   "bounds_min": [
+    -1.0,
+    -0.5,
+    0.0
+   ],
+   "bounds_max": [
+    1.07,
+    0.506,
+    1.6072
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "emit_w@high",
+    "fabric_blue",
+    "fabric_white",
+    "metal",
+    "secondary",
+    "trim",
+    "white",
+    "x_quarters_blue_fold",
+    "x_quarters_mattress",
+    "x_quarters_seam"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_quarters.cyan_wall_strip",
+   "family": "props/quarters",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_B"
+   ],
+   "file": "glb/props/quarters/prop.props_quarters.cyan_wall_strip.glb",
+   "sha256": "f86085a87c12043ed4620c0bfef58f4bb093d3676871aa99d5c3fbbb1dce8dc3",
+   "triangles": 664,
+   "vertices": 352,
+   "bounds_min": [
+    -0.655,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.655,
+    0.082,
+    0.195
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@high",
+    "emit_b",
+    "emit_w@high",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_quarters.desk_set",
+   "family": "props/quarters",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_A"
+   ],
+   "file": "glb/props/quarters/prop.props_quarters.desk_set.glb",
+   "sha256": "262b337b8e833b7a7962b2d2cee8c9f549c6a6f839820770a7b47722b9f4563d",
+   "triangles": 3356,
+   "vertices": 1922,
+   "bounds_min": [
+    -0.69,
+    -0.4,
+    0.0
+   ],
+   "bounds_max": [
+    0.7031,
+    0.395,
+    1.38
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "deck_seam",
+    "emit_a",
+    "emit_a@high",
+    "emit_b",
+    "emit_g@mid",
+    "leaf",
+    "leaf_light",
+    "metal",
+    "orange",
+    "primary",
+    "secondary",
+    "soil",
+    "trim",
+    "wall_dark",
+    "white",
+    "x_lounge_mug_orange",
+    "x_lounge_suit_red",
+    "x_quarters_pot",
+    "x_quarters_tan",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_quarters.locker_lit",
+   "family": "props/quarters",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_A"
+   ],
+   "file": "glb/props/quarters/prop.props_quarters.locker_lit.glb",
+   "sha256": "f5e7d84d772b3df4046fe8bdff4675cc7098015ab990af2112f6baeb3dde3edf",
+   "triangles": 980,
+   "vertices": 520,
+   "bounds_min": [
+    -0.4,
+    -0.33,
+    0.0
+   ],
+   "bounds_max": [
+    0.41,
+    0.346,
+    1.72
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_a@high",
+    "primary",
+    "scr_blue@low",
+    "secondary",
+    "white"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_quarters.poster_planet",
+   "family": "props/quarters",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_A"
+   ],
+   "file": "glb/props/quarters/prop.props_quarters.poster_planet.glb",
+   "sha256": "3d75403d7a7d862f6a0263fabe132ee347bbc8c4efc5bf05fefb19795060e713",
+   "triangles": 230,
+   "vertices": 124,
+   "bounds_min": [
+    -0.41,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.41,
+    0.08,
+    1.0
+   ],
+   "materials": [
+    "SR_tex_quarters_poster",
+    "dark",
+    "primary"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_quarters.side_table_plant",
+   "family": "props/quarters",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_B"
+   ],
+   "file": "glb/props/quarters/prop.props_quarters.side_table_plant.glb",
+   "sha256": "6bb2701fb206ece58504099f1f984c3b997910b33da253387d566f2282e02682",
+   "triangles": 1604,
+   "vertices": 943,
+   "bounds_min": [
+    -0.316,
+    -0.255,
+    0.0
+   ],
+   "bounds_max": [
+    0.3296,
+    0.3116,
+    0.9484
+   ],
+   "materials": [
+    "SR_tex_quarters_wallscreen",
+    "dark",
+    "emit_a",
+    "emit_a@high",
+    "emit_b",
+    "emit_g@mid",
+    "leaf",
+    "leaf_light",
+    "primary",
+    "secondary",
+    "soil",
+    "trim",
+    "white",
+    "x_quarters_gold"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_quarters.wall_screen_small",
+   "family": "props/quarters",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_B"
+   ],
+   "file": "glb/props/quarters/prop.props_quarters.wall_screen_small.glb",
+   "sha256": "e608d54c802877f0492c5e1deeb3b11419916bc99298ace97c97411ec6098e02",
+   "triangles": 212,
+   "vertices": 120,
+   "bounds_min": [
+    -0.18,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.18,
+    0.084,
+    1.35
+   ],
+   "materials": [
+    "SR_tex_quarters_wallscreen",
+    "dark",
+    "emit_b",
+    "x_quarters_bronze"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_hall_lampcol",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Hall"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_hall_lampcol.glb",
+   "sha256": "51e9b14e7d34eb93176d36990f0d4a802aca021fa48fb7f4c87bcee3d0b611a2",
+   "triangles": 1780,
+   "vertices": 924,
+   "bounds_min": [
+    -0.11,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.5248,
+    0.184,
+    1.2101
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "white",
+    "x_lounge_suit_red",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_hall_mid",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Hall"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_hall_mid.glb",
+   "sha256": "5c1006bd8d455c2291349dc6d8d97dd6c820d76f79f91067ff14b03295f1786f",
+   "triangles": 434,
+   "vertices": 228,
+   "bounds_min": [
+    -0.1725,
+    0.0,
+    0.8282
+   ],
+   "bounds_max": [
+    0.1625,
+    0.06,
+    1.1683
+   ],
+   "materials": [
+    "SR_tex_walls_tex_leaf",
+    "dark",
+    "emit_b",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_hall_post",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Lounge"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_hall_post.glb",
+   "sha256": "643a932f62a559351492fe12af8e1145472a42dc4afc3f50b321ecd484c52668",
+   "triangles": 218,
+   "vertices": 116,
+   "bounds_min": [
+    -0.12,
+    0.0,
+    0.558
+   ],
+   "bounds_max": [
+    0.12,
+    0.0585,
+    1.2075
+   ],
+   "materials": [
+    "SR_tex_walls_tex_hero",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_hall_screenbay",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Hall"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_hall_screenbay.glb",
+   "sha256": "b5cea34cbeb44b265c8e336fdce5cda5ab107d38702332d94b297f5f958b820d",
+   "triangles": 1620,
+   "vertices": 844,
+   "bounds_min": [
+    -0.29,
+    0.0,
+    0.0174
+   ],
+   "bounds_max": [
+    0.29,
+    0.115,
+    0.3575
+   ],
+   "materials": [
+    "dark",
+    "emit_a",
+    "emit_b",
+    "orange",
+    "primary",
+    "scr_blue@low",
+    "trim",
+    "wall",
+    "x_lounge_suit_red",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_lounge_alcove",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Lounge"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_lounge_alcove.glb",
+   "sha256": "5bcb3a6111a21d95fd0063f467315238e5537dbbc6cab25983522b8b657bf069",
+   "triangles": 2224,
+   "vertices": 1156,
+   "bounds_min": [
+    -0.23,
+    0.0,
+    0.7386
+   ],
+   "bounds_max": [
+    0.23,
+    0.17,
+    1.2119
+   ],
+   "materials": [
+    "emit_w@mid",
+    "leaf",
+    "leaf_light",
+    "secondary",
+    "wall",
+    "white",
+    "x_lounge_leaf_lime",
+    "x_quarters_bronze"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_qa_duct",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_A"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_qa_duct.glb",
+   "sha256": "af9082ad63626f2e8c8cc2f13f9ac2a5b029a4be1c01dbadcf2ab18fb220f5d7",
+   "triangles": 1116,
+   "vertices": 580,
+   "bounds_min": [
+    -0.155,
+    0.0,
+    0.1046
+   ],
+   "bounds_max": [
+    0.185,
+    0.075,
+    1.2031
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim",
+    "x_quarters_bronze"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_qa_terminal",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_A"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_qa_terminal.glb",
+   "sha256": "696793165ed310a47e7e802e8e06802e2c560a42a1d3a393ac8e57c5f193d5b3",
+   "triangles": 1082,
+   "vertices": 564,
+   "bounds_min": [
+    -0.1325,
+    0.0,
+    0.5405
+   ],
+   "bounds_max": [
+    0.1325,
+    0.05,
+    1.1927
+   ],
+   "materials": [
+    "SR_tex_walls_tex_term",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_qb_column",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_B"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_qb_column.glb",
+   "sha256": "635b0b8e300b0d3c177f5fb5902ac6d554226ac928addff6108cc45daed51eac",
+   "triangles": 612,
+   "vertices": 320,
+   "bounds_min": [
+    -0.15,
+    0.0,
+    0.0872
+   ],
+   "bounds_max": [
+    0.15,
+    0.118,
+    1.2075
+   ],
+   "materials": [
+    "dark",
+    "emit_w@mid",
+    "primary",
+    "x_quarters_gold",
+    "x_walls_cream"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_qb_glyph",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_B"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_qb_glyph.glb",
+   "sha256": "bfc11cba73ddfdd89d0b09a578a474eaa1cead4948444aa641b9bafb46f9969e",
+   "triangles": 840,
+   "vertices": 440,
+   "bounds_min": [
+    -0.17,
+    0.0,
+    0.0872
+   ],
+   "bounds_max": [
+    0.17,
+    0.145,
+    1.1944
+   ],
+   "materials": [
+    "SR_tex_walls_tex_glyph",
+    "dark",
+    "emit_b",
+    "secondary",
+    "trim",
+    "x_quarters_bronze"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_walls.walls_qb_head",
+   "family": "props/walls",
+   "role": "room-content",
+   "rooms": [
+    "Quarters_B"
+   ],
+   "file": "glb/props/walls/prop.props_walls.walls_qb_head.glb",
+   "sha256": "158215ecb4c5ddad0dfd7ce4a0b03fc6a155ac98e86b319a60bc93342b927acd",
+   "triangles": 1364,
+   "vertices": 704,
+   "bounds_min": [
+    -0.195,
+    0.0,
+    0.1046
+   ],
+   "bounds_max": [
+    0.17,
+    0.1,
+    1.2075
+   ],
+   "materials": [
+    "emit_a",
+    "emit_b",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.bench_case",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Galley"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.bench_case.glb",
+   "sha256": "66d2d42fb6f53717ed53f302f2e0b699ea2295da397765f01bff04f583eb8f98",
+   "triangles": 540,
+   "vertices": 280,
+   "bounds_min": [
+    -0.23,
+    -0.15,
+    0.0
+   ],
+   "bounds_max": [
+    0.23,
+    0.16,
+    0.168
+   ],
+   "materials": [
+    "dark",
+    "x_walls_rail",
+    "x_wr_case_greyblue"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.blue_case_trolley",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.blue_case_trolley.glb",
+   "sha256": "1cdb6c2c1df926a00df819812b76a83b77f7e4d6d9d9f828f768cb3ea3b4b983",
+   "triangles": 2528,
+   "vertices": 1316,
+   "bounds_min": [
+    -0.23,
+    -0.24,
+    0.0
+   ],
+   "bounds_max": [
+    0.23,
+    0.176,
+    0.87
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "emit_w@high",
+    "orange",
+    "rubber",
+    "secondary",
+    "white",
+    "x_bridge_navyblue"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.cabinet_dark",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Hydroponics"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.cabinet_dark.glb",
+   "sha256": "a430605d54efbd15390cea33e5e66db7d50ba0279f3a54f9892bf2a86ad053cf",
+   "triangles": 5528,
+   "vertices": 2928,
+   "bounds_min": [
+    -0.27,
+    -0.21,
+    0.0
+   ],
+   "bounds_max": [
+    0.2713,
+    0.259,
+    1.101
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "emit_b",
+    "leaf_light",
+    "metal",
+    "orange",
+    "primary",
+    "rubber",
+    "secondary",
+    "soil",
+    "trim",
+    "white"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.canister_red",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.canister_red.glb",
+   "sha256": "d6f33d935935ab5e524400da927b8b9b4f0124af5def8eedca8be2f4ee72e795",
+   "triangles": 1216,
+   "vertices": 665,
+   "bounds_min": [
+    -0.129,
+    -0.129,
+    0.0
+   ],
+   "bounds_max": [
+    0.129,
+    0.137,
+    0.5
+   ],
+   "materials": [
+    "emit_r@high",
+    "metal",
+    "orange",
+    "rubber",
+    "secondary",
+    "white",
+    "x_lounge_suit_red"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.cargo_rack",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.cargo_rack.glb",
+   "sha256": "58d3b2b60f2cbf9ca16dd9d18b18de61a384cf82bc5f731273da58c8747103e3",
+   "triangles": 3116,
+   "vertices": 1624,
+   "bounds_min": [
+    -0.35,
+    -0.21,
+    0.0
+   ],
+   "bounds_max": [
+    0.35,
+    0.21,
+    0.99
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "emit_b@high",
+    "emit_w@high",
+    "orange",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.crate_pale_vent",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.crate_pale_vent.glb",
+   "sha256": "85104af79dbcee885f4e5f63da75a99638648a457c2b917ed261c586a8d04dc7",
+   "triangles": 3096,
+   "vertices": 1608,
+   "bounds_min": [
+    -0.266,
+    -0.25,
+    0.0
+   ],
+   "bounds_max": [
+    0.286,
+    0.264,
+    0.67
+   ],
+   "materials": [
+    "dark",
+    "metal",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.crate_small_white",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.crate_small_white.glb",
+   "sha256": "3d9a92793f1c91bd519b98c4e97ff8f28537385ccd62e4ff76ec5588320b7ef5",
+   "triangles": 2636,
+   "vertices": 1376,
+   "bounds_min": [
+    -0.258,
+    -0.258,
+    0.0
+   ],
+   "bounds_max": [
+    0.258,
+    0.268,
+    0.522
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "emit_a@low",
+    "metal",
+    "primary",
+    "white",
+    "x_bridge_navyblue",
+    "x_wr_guard"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.crate_white_blue",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.crate_white_blue.glb",
+   "sha256": "0193096d7f367f27ca8991a769e50155b1f2e18a22bb4e7b8a2699c4679f4790",
+   "triangles": 3226,
+   "vertices": 1684,
+   "bounds_min": [
+    -0.308,
+    -0.283,
+    0.0
+   ],
+   "bounds_max": [
+    0.33,
+    0.289,
+    0.916
+   ],
+   "materials": [
+    "SR_tex_wr_cratescreen",
+    "blue",
+    "dark",
+    "emit_g@mid",
+    "orange",
+    "primary",
+    "secondary",
+    "trim",
+    "white",
+    "x_bridge_navyblue",
+    "x_wr_guard"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.crate_yellow",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.crate_yellow.glb",
+   "sha256": "19dbdd06fbb560c538413ccbc25add94f9e9511d4e6bbad82228da30520ad4df",
+   "triangles": 2868,
+   "vertices": 1488,
+   "bounds_min": [
+    -0.287,
+    -0.287,
+    0.0
+   ],
+   "bounds_max": [
+    0.287,
+    0.293,
+    0.654
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "metal",
+    "secondary",
+    "white",
+    "x_bridge_navyblue",
+    "yellow"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.fabricator",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Workshop"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.fabricator.glb",
+   "sha256": "184503894f3bb758603c117a86fca779aa826da1d814fbcae9017a6d2dfe26b2",
+   "triangles": 5112,
+   "vertices": 2672,
+   "bounds_min": [
+    -0.356,
+    -0.225,
+    0.0
+   ],
+   "bounds_max": [
+    0.356,
+    0.3001,
+    1.018
+   ],
+   "materials": [
+    "SR_tex_wr_fabscreen",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "emit_g@mid",
+    "emit_w@mid",
+    "hazard",
+    "metal",
+    "orange",
+    "primary",
+    "secondary",
+    "trim",
+    "white"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.galley_floor_unit",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Galley"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.galley_floor_unit.glb",
+   "sha256": "fa9f4befd9e9571801f157962d8f36a8e81b9c88d56b6f31a4febfa2d73af4b9",
+   "triangles": 1750,
+   "vertices": 916,
+   "bounds_min": [
+    -0.36,
+    -0.23,
+    0.0
+   ],
+   "bounds_max": [
+    0.36,
+    0.265,
+    0.53
+   ],
+   "materials": [
+    "SR_tex_wr_unitscreen",
+    "dark",
+    "metal",
+    "orange",
+    "primary",
+    "rubber",
+    "trim",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.grow_hood",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Galley"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.grow_hood.glb",
+   "sha256": "868929e8e1fa054d565210c9725d132644b121291a38b93d47e177d6b8899319",
+   "triangles": 8194,
+   "vertices": 4843,
+   "bounds_min": [
+    -0.65,
+    -0.275,
+    0.0
+   ],
+   "bounds_max": [
+    0.65,
+    0.277,
+    0.98
+   ],
+   "materials": [
+    "SR_tex_wr_growdiff_soft",
+    "dark",
+    "emit_b",
+    "emit_g@mid",
+    "emit_w@high",
+    "hazard",
+    "leaf",
+    "leaf_light",
+    "orange",
+    "primary",
+    "secondary",
+    "soil",
+    "trim",
+    "white",
+    "x_lounge_suit_red",
+    "x_wr_chili",
+    "x_wr_pebble",
+    "x_wr_pebble_tan",
+    "x_wr_sage",
+    "x_wr_stem"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.hydro_locker",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Hydroponics"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.hydro_locker.glb",
+   "sha256": "fa13239a58dc96b137c26fb32a0d98b16fd06b0d9424879a1e31e187d7f3c029",
+   "triangles": 3744,
+   "vertices": 1944,
+   "bounds_min": [
+    -0.25,
+    -0.225,
+    0.0
+   ],
+   "bounds_max": [
+    0.25,
+    0.25,
+    1.043
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "emit_b",
+    "metal",
+    "primary",
+    "rubber",
+    "secondary",
+    "trim",
+    "white",
+    "x_wr_label_green"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.jerry_can",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Workshop"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.jerry_can.glb",
+   "sha256": "7c126e6c34468408b7a2a6d0b7d989418d5927d5a0f7722c864b970b0571119a",
+   "triangles": 1008,
+   "vertices": 524,
+   "bounds_min": [
+    -0.1,
+    -0.072,
+    0.0
+   ],
+   "bounds_max": [
+    0.1,
+    0.072,
+    0.3
+   ],
+   "materials": [
+    "dark",
+    "orange",
+    "x_wr_orange_dark"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.machine_small",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.machine_small.glb",
+   "sha256": "a08ded7ab469b9329e587f6c5ae2c5046a1ddf6fdb4b8fdc78369d84333cdc83",
+   "triangles": 3660,
+   "vertices": 1904,
+   "bounds_min": [
+    -0.3925,
+    -0.3,
+    0.0
+   ],
+   "bounds_max": [
+    0.3925,
+    0.32,
+    0.698
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_b@low",
+    "orange",
+    "primary",
+    "rubber",
+    "scr_blue@mid",
+    "secondary",
+    "trim",
+    "white",
+    "x_wr_lid"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.machine_yellow",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Workshop"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.machine_yellow.glb",
+   "sha256": "3a81e8f48f7594217d2baad18144b93536f22e021b5c03c1582c6fa7f2677302",
+   "triangles": 2922,
+   "vertices": 1524,
+   "bounds_min": [
+    -0.3,
+    -0.15,
+    0.0
+   ],
+   "bounds_max": [
+    0.3125,
+    0.2073,
+    0.968
+   ],
+   "materials": [
+    "dark",
+    "emit_b@high",
+    "emit_g@mid",
+    "hazard",
+    "orange",
+    "rubber",
+    "secondary",
+    "trim",
+    "white",
+    "x_bridge_navyblue"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.parts_chest",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Workshop"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.parts_chest.glb",
+   "sha256": "284db1d784c77cb9d1c7482acd493af7322b6146f047901ffd430072a1fcdf7e",
+   "triangles": 1796,
+   "vertices": 936,
+   "bounds_min": [
+    -0.3,
+    -0.225,
+    0.0
+   ],
+   "bounds_max": [
+    0.3,
+    0.234,
+    0.494
+   ],
+   "materials": [
+    "dark",
+    "orange",
+    "secondary",
+    "white",
+    "x_wr_lavender"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.planter_row",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Hydroponics"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.planter_row.glb",
+   "sha256": "bfb9f38ddab9acfafa1798a5e4c1e47648b8b4bfd01c746bc45a0cb5c413fa84",
+   "triangles": 6972,
+   "vertices": 4680,
+   "bounds_min": [
+    -0.83,
+    -0.2458,
+    0.0
+   ],
+   "bounds_max": [
+    0.8777,
+    0.3038,
+    0.7961
+   ],
+   "materials": [
+    "dark",
+    "emit_g@mid",
+    "leaf",
+    "leaf_light",
+    "metal",
+    "secondary",
+    "soil",
+    "white",
+    "x_bridge_navyblue",
+    "x_lounge_suit_red",
+    "x_wr_kale",
+    "x_wr_kale_dark",
+    "x_wr_pebble",
+    "x_wr_pebble_tan",
+    "x_wr_stem"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.robot_box",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Galley"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.robot_box.glb",
+   "sha256": "431139842acb290141e9f287c6687cdfb798fe5b565af18d1e9d7d18bc891127",
+   "triangles": 1852,
+   "vertices": 964,
+   "bounds_min": [
+    -0.244,
+    -0.244,
+    0.0
+   ],
+   "bounds_max": [
+    0.244,
+    0.256,
+    0.625
+   ],
+   "materials": [
+    "dark",
+    "emit_r@high",
+    "metal",
+    "orange",
+    "rubber",
+    "scr_blue@mid",
+    "secondary",
+    "trim",
+    "white"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.toolbox_tray",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.toolbox_tray.glb",
+   "sha256": "4de9387b3c7da9c8a298adffba559d2ee44870b1619fcc5b747bd12dc6b79e4f",
+   "triangles": 1404,
+   "vertices": 728,
+   "bounds_min": [
+    -0.375,
+    -0.225,
+    0.0
+   ],
+   "bounds_max": [
+    0.377,
+    0.225,
+    0.28
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "hazard",
+    "orange",
+    "white",
+    "x_bridge_navyblue"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.utility_console",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Utility"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.utility_console.glb",
+   "sha256": "bd800cae32ec80007076b748973c06455b6761977a3b554d10c69168a2351519",
+   "triangles": 3096,
+   "vertices": 1608,
+   "bounds_min": [
+    -0.394,
+    -0.25,
+    0.0
+   ],
+   "bounds_max": [
+    0.394,
+    0.274,
+    0.88
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "metal",
+    "orange",
+    "rubber",
+    "secondary",
+    "trim"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.utility_twin",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Utility"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.utility_twin.glb",
+   "sha256": "3291b8239f7d7727275a5d43df9b88086a3f992a9cff9e5d8d0917681896028d",
+   "triangles": 3500,
+   "vertices": 1820,
+   "bounds_min": [
+    -0.36,
+    -0.25,
+    0.0
+   ],
+   "bounds_max": [
+    0.36,
+    0.265,
+    0.9053
+   ],
+   "materials": [
+    "dark",
+    "emit_b@low",
+    "emit_g@mid",
+    "metal",
+    "rubber",
+    "secondary",
+    "trim",
+    "white",
+    "x_walls_rail"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.wall_hatch_orange",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Cargo"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.wall_hatch_orange.glb",
+   "sha256": "97710788654b25d1d64247acd74447506482d40cec3cd88bd78c5ee47a74f67c",
+   "triangles": 648,
+   "vertices": 336,
+   "bounds_min": [
+    -0.31,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.31,
+    0.07,
+    0.36
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "hazard",
+    "scr_blue@mid"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.wall_lamp_amber",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Hydroponics"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.wall_lamp_amber.glb",
+   "sha256": "cbee9d81958ba4536b04560c0b8ae5f36d3b77f43fd842c8c17c8ecb9f19c84d",
+   "triangles": 648,
+   "vertices": 336,
+   "bounds_min": [
+    -0.13,
+    0.0,
+    -0.03
+   ],
+   "bounds_max": [
+    0.13,
+    0.075,
+    0.34
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "orange"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.wall_shelf_screen",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Hydroponics"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.wall_shelf_screen.glb",
+   "sha256": "e0e58eda40df9c3d154afeeb0f6f1bdaac3f55870f7aed7367f5ff6282a8f973",
+   "triangles": 1520,
+   "vertices": 796,
+   "bounds_min": [
+    -0.25,
+    0.0,
+    -0.045
+   ],
+   "bounds_max": [
+    0.25,
+    0.26,
+    0.155
+   ],
+   "materials": [
+    "SR_tex_wr_tablet",
+    "dark",
+    "emit_b@high",
+    "orange",
+    "primary"
+   ],
+   "placements": 1
+  },
+  {
+   "id": "prop.props_workrooms.wall_strip_amber",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Utility",
+    "Workshop"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.wall_strip_amber.glb",
+   "sha256": "ea9cdf18bcc60ba72a45a4bc4ba64d56d81e27293b2abbffabab823c38d1020b",
+   "triangles": 648,
+   "vertices": 336,
+   "bounds_min": [
+    -0.05,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.05,
+    0.062,
+    0.5
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "trim"
+   ],
+   "placements": 2
+  },
+  {
+   "id": "prop.props_workrooms.workbench",
+   "family": "props/workrooms",
+   "role": "room-content",
+   "rooms": [
+    "Galley"
+   ],
+   "file": "glb/props/workrooms/prop.props_workrooms.workbench.glb",
+   "sha256": "1bf2d2c71af96bf1176ea16fec0206bb0bfcc6835e739c0e613349392ee6fdf4",
+   "triangles": 3636,
+   "vertices": 1892,
+   "bounds_min": [
+    -0.8,
+    -0.3,
+    0.0
+   ],
+   "bounds_max": [
+    0.808,
+    0.405,
+    0.796
+   ],
+   "materials": [
+    "blue",
+    "dark",
+    "emit_b",
+    "metal",
+    "orange",
+    "rubber",
+    "secondary",
+    "trim",
+    "white"
+   ],
+   "placements": 1
+  }
+ ],
+ "unique": [
+  {
+   "id": "unique.BOW_canopy",
+   "role": "canopy",
+   "file": "glb/unique/BOW_canopy.glb",
+   "sha256": "3e561b6f16d297eb3295a3ae67162bb89d703f59cd34bd9460cf293d4182978c",
+   "triangles": 5384,
+   "bounds_min": [
+    9.6006,
+    -4.6394,
+    1.22
+   ],
+   "bounds_max": [
+    12.89,
+    4.6394,
+    2.285
+   ],
+   "materials": [
+    "emit_a@high",
+    "emit_a@low",
+    "glass_canopy",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.BOW_nose_cap",
+   "role": "nose",
+   "file": "glb/unique/BOW_nose_cap.glb",
+   "sha256": "9373aef8203714156d887134ab0fa056ce5f71ce60ad342eebf44651a9cb9a7c",
+   "triangles": 1836,
+   "bounds_min": [
+    11.9669,
+    -2.4473,
+    -1.32
+   ],
+   "bounds_max": [
+    13.33,
+    2.3341,
+    1.32
+   ],
+   "materials": [
+    "dark",
+    "emit_b",
+    "emit_r@high",
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.BULKHEAD_cockpit",
+   "role": "bulkhead",
+   "file": "glb/unique/BULKHEAD_cockpit.glb",
+   "sha256": "6b6b596a6adf6f49f8d83fe0d6ca11265b5a67cbe204d48d0b499bede959f820",
+   "triangles": 5616,
+   "bounds_min": [
+    -5.5,
+    -0.33,
+    0.0
+   ],
+   "bounds_max": [
+    5.5,
+    0.33,
+    2.19
+   ],
+   "materials": [
+    "emit_a",
+    "primary",
+    "secondary",
+    "wall_dark"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.DECK_floor_base",
+   "role": null,
+   "file": "glb/unique/DECK_floor_base.glb",
+   "sha256": "e47f22da37afd6161f20acdec2062e7ad87b2eb2e9d016b76f075580ae8bfb76",
+   "triangles": 20,
+   "bounds_min": [
+    -10.75,
+    -5.5,
+    -0.08
+   ],
+   "bounds_max": [
+    12.0,
+    5.5,
+    -0.03
+   ],
+   "materials": [
+    "deck_seam"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.HULL_deck_slab",
+   "role": "structure",
+   "file": "glb/unique/HULL_deck_slab.glb",
+   "sha256": "4032be3a887faca9d7e3541ebf056e718658083425cb3f12ea5e31276660f540",
+   "triangles": 172,
+   "bounds_min": [
+    -10.75,
+    -5.9,
+    -2.2
+   ],
+   "bounds_max": [
+    12.4,
+    5.9,
+    -0.02
+   ],
+   "materials": [
+    "deck_dark",
+    "secondary"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.LIVERY_explore",
+   "role": "livery",
+   "file": "glb/unique/LIVERY_explore.glb",
+   "sha256": "a9df234ba4d28199812214c680cb670ab6d2b7343fec7b8494ded1cd6c7b0484",
+   "triangles": 2,
+   "bounds_min": [
+    1.2,
+    0.18,
+    -1.95
+   ],
+   "bounds_max": [
+    2.8,
+    0.18,
+    0.45
+   ],
+   "materials": [
+    "SR_decal_explore"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.LIVERY_explore_far",
+   "role": "livery",
+   "file": "glb/unique/LIVERY_explore_far.glb",
+   "sha256": "117421800e00d9f98ad0f7cd48ec7a7e39037c458e3d6888e7f1a25349b1f1af",
+   "triangles": 2,
+   "bounds_min": [
+    1.2,
+    0.18,
+    -1.95
+   ],
+   "bounds_max": [
+    2.8,
+    0.18,
+    0.45
+   ],
+   "materials": [
+    "SR_decal_explore"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.LIVERY_wayfarer",
+   "role": "livery",
+   "file": "glb/unique/LIVERY_wayfarer.glb",
+   "sha256": "609542f799135fc2a50ba890b34a35c7fe64257ab5506629069b891d38ac2a42",
+   "triangles": 2,
+   "bounds_min": [
+    1.55,
+    0.095,
+    -0.505
+   ],
+   "bounds_max": [
+    4.3,
+    0.095,
+    0.075
+   ],
+   "materials": [
+    "SR_decal_wayfarer"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.LIVERY_wayfarer_far",
+   "role": "livery",
+   "file": "glb/unique/LIVERY_wayfarer_far.glb",
+   "sha256": "4635abd0341ded0bca35be6e2fd0810a7c1c68e5a912102f04efe76dec12de14",
+   "triangles": 2,
+   "bounds_min": [
+    1.55,
+    0.095,
+    -0.505
+   ],
+   "bounds_max": [
+    4.3,
+    0.095,
+    0.075
+   ],
+   "materials": [
+    "SR_decal_wayfarer"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.LIVERY_wf011",
+   "role": "livery",
+   "file": "glb/unique/LIVERY_wf011.glb",
+   "sha256": "fb70ca408a27e9c551bf8573ed044854c7df02ac417830532299cbc757f15380",
+   "triangles": 326,
+   "bounds_min": [
+    3.0,
+    -0.1,
+    -2.55
+   ],
+   "bounds_max": [
+    4.895,
+    0.25,
+    0.5
+   ],
+   "materials": [
+    "SR_decal_wf011",
+    "accent",
+    "dark"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  },
+  {
+   "id": "unique.LIVERY_wf011_far",
+   "role": "livery",
+   "file": "glb/unique/LIVERY_wf011_far.glb",
+   "sha256": "5c3e982e1fe27645a78f7c0a1d6a04738c9be13852c065d365ad2bc99837c732",
+   "triangles": 326,
+   "bounds_min": [
+    3.0,
+    -0.1,
+    -2.55
+   ],
+   "bounds_max": [
+    4.895,
+    0.25,
+    0.5
+   ],
+   "materials": [
+    "SR_decal_wf011",
+    "accent",
+    "dark"
+   ],
+   "frame": "ship (object transform kept in the GLB node)"
+  }
+ ],
+ "totals": {
+  "pieces": 177,
+  "unique": 11,
+  "placements": 465,
+  "triangles_per_piece": 451416,
+  "triangles_as_placed": 796632,
+  "palette_entries": 77
+ }
+}
