@@ -9,6 +9,7 @@ import {
   SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION,
   SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION,
   SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION,
 } from "../../packages/render/src/crew/head-palette";
 import { verifyCrewSource } from "../../packages/render/src/crew/crew-asset-cache";
 import { validateHeadArtBytes } from "../../packages/render/src/crew/head-art-revision";
@@ -68,6 +69,14 @@ const proposals = {
     glbBytes: 196680,
     glbSha: "654e17f7043a99e458ae24fbfbaa3cb6926055dc25a1f760433d833eeda04c50",
   },
+  [SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION]: {
+    base: "/@fs/root/sidereal-worktrees/candidate-pilot-seat-contact/.operator-diagnostic-assets/sealed-r006-tactical-functional-007-emissive-bevel/",
+    manifestBytes: 6480,
+    manifestSha:
+      "81e9b84ea9570a5a67ab881d505ed1c17f040c43ce11d86fa781a1a454fb8d0d",
+    glbBytes: 166844,
+    glbSha: "59b70be678e116bc30eaa6fc0895abd481b60d2107197146685d1c35500acca1",
+  },
 };
 const nodes = [
   "helmet.tactical",
@@ -91,7 +100,8 @@ export async function applySealedDiagnosticHead(
     selection !== SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION &&
     selection !== SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION &&
     selection !== SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION &&
-    selection !== SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION
+    selection !== SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION &&
+    selection !== SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION
   )
     return request;
   const proposal = proposals[selection];
