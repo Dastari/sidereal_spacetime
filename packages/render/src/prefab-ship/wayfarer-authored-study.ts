@@ -425,6 +425,15 @@ export async function loadAuthoredStudy(
       // CPU batching is complete for this asset. Retain its materials and embedded textures.
       for (const source of container.meshes) source.dispose(false, false);
     }
+    // AssetContainer import removes these from the scene registry. Retained
+    // originals must participate in scene-wide shader/prepass invalidation.
+    // Their containers continue to own disposal; no source meshes are admitted.
+    ensureActive();
+    const usedMaterials = new Set(
+      [...groups.values()].map((group) => group.material),
+    );
+    for (const material of usedMaterials)
+      if (!scene.materials.includes(material)) scene.addMaterial(material);
     for (const [key, group] of groups) {
       const mesh = new Mesh(`authored-study:${key}`, scene),
         data = new VertexData();
