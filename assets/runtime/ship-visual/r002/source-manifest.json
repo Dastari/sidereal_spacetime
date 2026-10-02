@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "0f651813a8aa0fbb3c362ef1f470b16c339ec234b4083da60a9686a12097b835",
+  "compilerSha256": "2febb1b603625874bf8cc6b32d314bd55eb8964e06910c28ed8880e6d493d0ea",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,11 +12,11 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "ba3bab4a1f9c40bbb9fa9680f0510e0b69f91301066f97ea1438753f0a351969"
+      "sha256": "d58aa3165820c9dc9c95b07eb3602cd4a3377162e2fa7689c4de8c0370aca96c"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "39756a538edd215878c38a60c4ef945748be06ce9ab62976a19b4dc09ade72a4"
+      "sha256": "e8c2ccac1063b5c9101d156535f306408acf5c72a546c2d5c25cde0571e1e3b7"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
@@ -32,7 +32,7 @@
     },
     {
       "path": "packages/sim/src/ship-visual-r002-bow-cases-r026.ts",
-      "sha256": "7f2829bace4023a3779b9ee4137ead6d25ad24e9903777acbd27531eaee93ddd"
+      "sha256": "a02dbbf042ea0f872df309dec982e6b3d7077ad51d850957f0f5fc6197a6757b"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-canopy-source-r026.ts",
