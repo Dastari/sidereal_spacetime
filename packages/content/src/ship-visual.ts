@@ -92,6 +92,19 @@ export interface ShipVisualAsset {
   id: string;
   node?: string;
 }
+/** Finite private proposal; ordinary/r001 visual envelopes keep their old cap. */
+export const SHIP_VISUAL_BOW_CASE_ENVELOPE_R026 = {
+  kind: "wren-four-broad-bow-cases-r026",
+  prefab: "fed.s.wren",
+  prefabSha256:
+    "ecdb038c1b9333780c719aa3e19a8c677852c99cf4dab86421a2934aa60937e5",
+  bodies: [
+    [144, 8, 40, 158, 28, 46],
+    [144, 80, 40, 158, 104, 46],
+    [180, 34, 24, 190, 52, 30],
+    [180, 56, 24, 190, 78, 30],
+  ],
+} as const;
 export interface ShipVisualManifest {
   schema: typeof SHIP_VISUAL_SCHEMA;
   revision: string;
@@ -106,6 +119,14 @@ export interface ShipVisualManifest {
   assets: ShipVisualAsset[];
   /** Decoration stays inside these additional outer/vertical metres; never changes gameplay bounds. */
   decorativeEnvelope: { outward: number; upward: number; inward: number };
+  /** Actual helper source pin and exact finite bodies; never a default envelope. */
+  bowCaseEnvelopeR026?: {
+    kind: typeof SHIP_VISUAL_BOW_CASE_ENVELOPE_R026.kind;
+    prefab: typeof SHIP_VISUAL_BOW_CASE_ENVELOPE_R026.prefab;
+    prefabSha256: string;
+    sourceSha256: string;
+    bodies: ShipVisualLayer["bounds"][];
+  };
 }
 
 const sha = /^[a-f0-9]{64}$/;
@@ -167,13 +188,30 @@ export function readShipVisualManifest(value: unknown): ShipVisualManifest {
     ids.add(key);
   }
   const e = m.decorativeEnvelope;
+  const bow = m.bowCaseEnvelopeR026;
+  const expectedBow = SHIP_VISUAL_BOW_CASE_ENVELOPE_R026;
+  if (
+    bow !== undefined &&
+    (!bow ||
+      m.revision !== "r002" ||
+      bow.kind !== expectedBow.kind ||
+      bow.prefab !== expectedBow.prefab ||
+      bow.prefabSha256 !== expectedBow.prefabSha256 ||
+      m.prefabs[expectedBow.prefab] !== expectedBow.prefabSha256 ||
+      !sha.test(bow.sourceSha256) ||
+      JSON.stringify(bow.bodies) !== JSON.stringify(expectedBow.bodies) ||
+      e?.outward !== 0.1875 ||
+      e?.upward !== 0.375 ||
+      e?.inward !== 0)
+  )
+    throw Error("Invalid finite R26 bow envelope declaration");
   if (
     !e ||
     ![e.outward, e.upward, e.inward].every(Number.isFinite) ||
     e.outward < 0 ||
     e.outward > 0.1875 ||
     e.upward < 0 ||
-    e.upward > 0.1875 ||
+    e.upward > (bow === undefined ? 0.1875 : 0.375) ||
     e.inward !== 0
   )
     throw Error("Invalid visual decorative bounds");

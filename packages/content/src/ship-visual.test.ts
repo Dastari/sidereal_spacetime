@@ -1,9 +1,116 @@
 import { describe, expect, it } from "vitest";
-import { validateShipVisualLayers, type ShipVisualLayer } from "./ship-visual";
+import {
+  validateShipVisualLayers,
+  readShipVisualManifest,
+  SHIP_VISUAL_SCHEMA,
+  SHIP_VISUAL_FRAME,
+  SHIP_VISUAL_BOW_CASE_ENVELOPE_R026,
+  type ShipVisualLayer,
+} from "./ship-visual";
+import { SHIP_KIT_SLOTS } from "./ship-kit";
 import {
   REFERENCE_OPTICAL_INTERFACES_R002,
   SHIP_VISUAL_MACRO_PROFILES_R002,
 } from "./ship-visual-r002";
+
+describe("finite private R26 bow envelope", () => {
+  const bow = SHIP_VISUAL_BOW_CASE_ENVELOPE_R026;
+  const ordinary = {
+    schema: SHIP_VISUAL_SCHEMA,
+    revision: "r001",
+    status: "proposal",
+    frame: SHIP_VISUAL_FRAME,
+    lattice: 16,
+    compilerSha256: "a".repeat(64),
+    profilesSha256: "b".repeat(64),
+    slots: SHIP_KIT_SLOTS,
+    prefabs: { [bow.prefab]: bow.prefabSha256 },
+    assets: [
+      {
+        kind: "normal",
+        id: "test",
+        url: "/assets/test.png",
+        bytes: 1,
+        sha256: "c".repeat(64),
+      },
+    ],
+    decorativeEnvelope: { outward: 0.1875, upward: 0.1875, inward: 0 },
+  };
+  const candidate = {
+    ...ordinary,
+    revision: "r002",
+    decorativeEnvelope: { outward: 0.1875, upward: 0.375, inward: 0 },
+    bowCaseEnvelopeR026: { ...bow, sourceSha256: "d".repeat(64) },
+  };
+  it("retains ordinary bounds and admits only the declared four-body proposal", () => {
+    expect(readShipVisualManifest(ordinary).decorativeEnvelope.upward).toBe(
+      0.1875,
+    );
+    expect(
+      readShipVisualManifest(candidate).bowCaseEnvelopeR026?.bodies,
+    ).toEqual(bow.bodies);
+    for (const revision of ["r001", "r002"])
+      expect(() =>
+        readShipVisualManifest({
+          ...ordinary,
+          revision,
+          decorativeEnvelope: { ...ordinary.decorativeEnvelope, upward: 0.375 },
+        }),
+      ).toThrow("decorative bounds");
+  });
+  it("rejects changed body/source/prefab identity and every undeclared envelope", () => {
+    for (const patch of [
+      { revision: "r001" },
+      { prefabs: { [bow.prefab]: "e".repeat(64) } },
+      { bowCaseEnvelopeR026: null },
+      {
+        bowCaseEnvelopeR026: {
+          ...candidate.bowCaseEnvelopeR026,
+          kind: "general",
+        },
+      },
+      {
+        bowCaseEnvelopeR026: {
+          ...candidate.bowCaseEnvelopeR026,
+          prefab: "fed.m.crest",
+        },
+      },
+      {
+        bowCaseEnvelopeR026: {
+          ...candidate.bowCaseEnvelopeR026,
+          sourceSha256: "",
+        },
+      },
+      {
+        bowCaseEnvelopeR026: {
+          ...candidate.bowCaseEnvelopeR026,
+          prefabSha256: "e".repeat(64),
+        },
+      },
+      {
+        bowCaseEnvelopeR026: {
+          ...candidate.bowCaseEnvelopeR026,
+          bodies: [...bow.bodies, bow.bodies[0]],
+        },
+      },
+      {
+        bowCaseEnvelopeR026: {
+          ...candidate.bowCaseEnvelopeR026,
+          bodies: [[143, 8, 40, 158, 28, 46], ...bow.bodies.slice(1)],
+        },
+      },
+      { decorativeEnvelope: { outward: 0.25, upward: 0.375, inward: 0 } },
+      { decorativeEnvelope: { outward: 0.1875, upward: 0.4375, inward: 0 } },
+      { decorativeEnvelope: { outward: 0.1875, upward: 0.1875, inward: 0 } },
+      {
+        decorativeEnvelope: { outward: 0.1875, upward: 0.375, inward: 0.0625 },
+      },
+    ])
+      expect(() => readShipVisualManifest({ ...candidate, ...patch })).toThrow(
+        "finite R26 bow",
+      );
+  });
+});
 
 describe("finite reference manufacturing inputs", () => {
   it("keeps separate finite source/retained optical boxes and meaningful clipped room dimensions", () => {
