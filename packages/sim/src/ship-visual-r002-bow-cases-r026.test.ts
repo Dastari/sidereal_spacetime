@@ -23,7 +23,18 @@ describe("actual four broad private Wren bow casings", () => {
   it("retains every actual roof/core/optical cell and admits only the exact new backed bodies", () => {
     const doc = PREFAB_SHIPS.find((d) => d.id === "fed.s.wren")!;
     const catalog = defaultPrefabComponentCatalog();
-    const prior = shipVisualLayersR002(doc, "flight", catalog, "federation");
+    const integrated = shipVisualLayersR002(
+      doc,
+      "flight",
+      catalog,
+      "federation",
+    );
+    const selected = integrated.filter((l) =>
+      l.id.startsWith("volume:hull:r026-broad-bow:"),
+    );
+    const prior = integrated.filter(
+      (l) => !l.id.startsWith("volume:hull:r026-broad-bow:"),
+    );
     const guards = referenceOpticalGuardBoxesR002(doc, "flight", catalog);
     const added = referenceBowCasesR026(
       doc,
@@ -32,6 +43,7 @@ describe("actual four broad private Wren bow casings", () => {
       prior,
       guards,
     );
+    expect(added).toEqual(selected);
     expect(added.length).toBeGreaterThan(0);
     expect(added.length).toBeLessThan(600);
     expect(() => validateShipVisualLayers([...prior, ...added])).not.toThrow();

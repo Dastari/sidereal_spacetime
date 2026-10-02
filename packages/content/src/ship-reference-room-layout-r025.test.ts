@@ -80,10 +80,10 @@ describe("finite reference R025 room furniture", () => {
     expect(isCrewStationDesign(medical)).toBe(false);
     expect(isCrewStationDesign("pale-studless.console.standard")).toBe(true);
     expect(deckObjectVisualUrl(workshop)).toBe(
-      `/assets/ship-objects/reference-r025-display/${workshop}.glb`,
+      `/assets/ship-objects/reference-r026-room-architecture-stepped/${workshop}.glb`,
     );
     expect(deckObjectVisualUrl(medical)).toBe(
-      `/assets/ship-objects/reference-r025-display/${medical}.glb`,
+      `/assets/ship-objects/reference-r026-room-architecture-stepped/${medical}.glb`,
     );
     expect(deckObjectVisualUrl("shipyard.equipment.medical-bed")).toBe(
       "/assets/ship-objects/r001/shipyard.equipment.medical-bed.glb",

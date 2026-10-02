@@ -1,0 +1,320 @@
+{
+  "designId": "shipyard.equipment.medical-equipment-bank-r025",
+  "status": "proposal; integrated native art pending",
+  "revision": "r026",
+  "sizeTexels": [
+    20,
+    20,
+    32
+  ],
+  "triangles": 838,
+  "vertices": 2514,
+  "boxes": 25,
+  "boundsM": [
+    [
+      -0.625,
+      -0.625,
+      0.0
+    ],
+    [
+      0.625,
+      0.625,
+      2.0
+    ]
+  ],
+  "materialSlotsUsed": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary.equipment-frame",
+    "secondary.equipment-cover"
+  ],
+  "glb": "assets/runtime/ship-objects/reference-r026-room-architecture-stepped/shipyard.equipment.medical-equipment-bank-r025.glb",
+  "url": "/assets/ship-objects/reference-r026-room-architecture-stepped/shipyard.equipment.medical-equipment-bank-r025.glb",
+  "bytes": 94720,
+  "sha256": "b4b421cb732ed7ca540230b66ecf9169361d2c62cc2667f2fbd64f92c7a80592",
+  "source": "assets/source/ship-reference/r002/rooms-r026-room-architecture-stepped/shipyard.equipment.medical-equipment-bank-r025.blend",
+  "sourceSha256": "eb9704c7affc8a09cddbc50e51085bf5f3224837399518f3752da858cf784624",
+  "generator": "scripts/art_library/ship_reference_r026_room_architecture_stepped.py",
+  "generatorSha256": "41326ae03cc8219b10ee8137d4fd113dbafdb750b8c23b1ba65a9f224366f890",
+  "helperSha256": "314e3afaccdb2d4d62fdd6f5bbcdb971e5b2f72477dfdf652dcc1533d1260f72",
+  "semanticAuthoringSha256": "aebf29e531bc0759e78affdfd67917265dfeb5cb742b804f599728d6843da735",
+  "authoredBoxesTexels": [
+    [
+      0,
+      0,
+      0,
+      20,
+      20,
+      1,
+      "dark"
+    ],
+    [
+      0,
+      0,
+      0.75,
+      20,
+      2,
+      14,
+      "secondary"
+    ],
+    [
+      0,
+      1.5,
+      0.75,
+      20,
+      20,
+      13.5,
+      "primary.equipment-frame"
+    ],
+    [
+      1.5,
+      1.75,
+      2.5,
+      18.5,
+      8,
+      12,
+      "dark"
+    ],
+    [
+      2.5,
+      7.5,
+      3,
+      9,
+      14,
+      10.8,
+      "metal"
+    ],
+    [
+      10,
+      7.5,
+      4,
+      17.5,
+      12,
+      11.5,
+      "secondary.equipment-cover"
+    ],
+    [
+      11.5,
+      11.8,
+      6,
+      16,
+      12.4,
+      7.1,
+      "accent"
+    ],
+    [
+      0,
+      0,
+      13,
+      20,
+      20,
+      14,
+      "trim"
+    ],
+    [
+      0.5,
+      2,
+      13.875,
+      19.5,
+      19.5,
+      15,
+      "primary"
+    ],
+    [
+      2,
+      14,
+      14.875,
+      11,
+      18,
+      15.8,
+      "secondary"
+    ],
+    [
+      3,
+      15,
+      15.65,
+      4.5,
+      16.5,
+      16.2,
+      "metal"
+    ],
+    [
+      5.5,
+      15,
+      15.65,
+      7.0,
+      16.5,
+      16.2,
+      "metal"
+    ],
+    [
+      8,
+      15,
+      15.65,
+      9.5,
+      16.5,
+      16.2,
+      "metal"
+    ],
+    [
+      14,
+      3,
+      14,
+      16,
+      6,
+      32,
+      "metal"
+    ],
+    [
+      5,
+      4,
+      22,
+      20,
+      8,
+      31,
+      "primary.equipment-frame"
+    ],
+    [
+      6.5,
+      4.8,
+      23.5,
+      18.5,
+      7,
+      29.5,
+      "dark"
+    ],
+    [
+      7,
+      6.95,
+      24,
+      18,
+      7.15,
+      29,
+      "emit_a"
+    ],
+    [
+      17.5,
+      12,
+      3.5,
+      19.5,
+      19.9,
+      5.5,
+      "trim"
+    ],
+    [
+      17.6,
+      19.875,
+      4,
+      19.4,
+      20,
+      5,
+      "emit_b"
+    ],
+    [
+      1,
+      3,
+      14.875,
+      6,
+      5,
+      28,
+      "secondary"
+    ],
+    [
+      1,
+      4.7,
+      16,
+      6,
+      12,
+      24,
+      "primary.equipment-frame"
+    ],
+    [
+      1.7,
+      4.8,
+      18,
+      5.3,
+      5.2,
+      24,
+      "dark"
+    ],
+    [
+      2,
+      5,
+      18.5,
+      4.8,
+      8.3,
+      22.5,
+      "metal"
+    ],
+    [
+      2.2,
+      8.1,
+      20,
+      4.6,
+      8.6,
+      22.5,
+      "accent"
+    ],
+    [
+      7,
+      4,
+      20,
+      19,
+      6.6,
+      31,
+      "secondary.equipment-cover"
+    ]
+  ],
+  "immutableCleanSourceSha256": "a1ebc2ac2142fcad372caa9adfbf0be9a0b3006db34bcbb68384251a8f90d400",
+  "immutableDisplaySourceSha256": "4040c19cd8f2eda41b416a0f794fedf95f1b7ff52331c54748711202fb76b697",
+  "displayCorridorTexels": [
+    7,
+    7.15,
+    24,
+    18,
+    20,
+    29
+  ],
+  "serviceBodyScope": "existing catalog footprint; unchanged display plane and lower contact geometry",
+  "immutablePreviousSourceSha256": "cadd4cffaa5cf8624bb814866c1e70bd4ee1f9283dff52e5c70eb78a9a206c71",
+  "normalPolicy": "actual loop triangles split; unchanged positions/material/geometric flat normals",
+  "displayChart": {
+    "policy": "whole planar display X-to-U/Z-to-V; all other UVs unchanged",
+    "displayLoopCount": 6,
+    "sourceXZBoundsM": [
+      -0.1875,
+      1.5,
+      0.5,
+      1.8125
+    ]
+  },
+  "capabilities": {
+    "seat": false,
+    "storage": false,
+    "control": false
+  },
+  "upperRingMicrobevelOmittedTexels": [
+    [
+      1,
+      4.7,
+      16,
+      6,
+      12,
+      24
+    ],
+    [
+      5,
+      4,
+      22,
+      20,
+      8,
+      31
+    ]
+  ]
+}

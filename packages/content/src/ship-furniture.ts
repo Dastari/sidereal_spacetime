@@ -72,7 +72,7 @@ export function isCrewStationDesign(id: string): boolean {
 /** GLB URL for a deck-object design, or null when it keeps the placeholder. */
 export function deckObjectVisualUrl(designId: string): string | null {
   if (referenceRoomFixtureR025(designId))
-    return `/assets/ship-objects/reference-r025-display/${designId}.glb`;
+    return `/assets/ship-objects/reference-r026-room-architecture-stepped/${designId}.glb`;
   return DECK_OBJECT_DESIGNS.includes(designId)
     ? `/assets/ship-objects/${SHIP_OBJECT_ART_REVISION}/${designId}.glb`
     : null;

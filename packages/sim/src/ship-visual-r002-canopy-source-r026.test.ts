@@ -118,7 +118,18 @@ describe("finite original-source Crest canopy", () => {
         PREFAB_SHIPS.find((p) => p.id === "fed.m.crest")!,
       ),
       catalog = defaultPrefabComponentCatalog();
-    const prior = shipVisualLayersR002(doc, "flight", catalog, "federation"),
+    const integrated = shipVisualLayersR002(
+      doc,
+      "flight",
+      catalog,
+      "federation",
+    );
+    const selected = integrated.filter((l) =>
+      l.id.startsWith("volume:hull:r026-original-canopy:"),
+    );
+    const prior = integrated.filter(
+        (l) => !l.id.startsWith("volume:hull:r026-original-canopy:"),
+      ),
       guards = referenceOpticalGuardBoxesR002(doc, "flight", catalog);
     const added = referenceOriginalCanopySourceR026(
       doc,
@@ -128,6 +139,7 @@ describe("finite original-source Crest canopy", () => {
       prior,
       guards,
     );
+    expect(added).toEqual(selected);
     expect(added.length).toBeGreaterThan(0);
     expect(added.length).toBeLessThan(4000);
     validateShipVisualLayers([...prior, ...added]);

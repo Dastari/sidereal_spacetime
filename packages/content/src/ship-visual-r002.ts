@@ -2169,7 +2169,1291 @@ export function referenceCockpitApertureSourceAdmittedR002(
   );
 }
 
+/** Exact source-qualified R26 north cases; conservative whole-cube guards in metres.
+ * Selected component pins are enforced by the publisher; unknown documents/catalogs retain old geometry. */
 export const REFERENCE_EXTERIOR_CATALOG_SHA256_R026 =
   "04ccf564848f18e28dc6ea188dbfbf034cffcb34203129918e00cc9bddc6ada4";
+export const REFERENCE_EXTERIOR_CASES_R026 = {
+  "fed.s.wren": {
+    documentSha256:
+      "ecdb038c1b9333780c719aa3e19a8c677852c99cf4dab86421a2934aa60937e5",
+    northBounds: [83, 112, 8, 111, 115, 28],
+    wholeAddedCubeGuardBoundsM: [
+      [-2.4688, 1.9196, 0.9563999999999999, 0.125, 3.0804, 2.0804],
+      [-2.4688, 2.9196, 0.9563999999999999, 0.125, 4.0804, 2.0804],
+      [-2.4688, 3.9196, 0.9563999999999999, 0.125, 5.0804, 2.0804],
+      [8.75, -1.125, 0.75, 10.25, 0.125, 2.25],
+      [8.75, 6.875, 0.75, 10.25, 8.125, 2.25],
+      [-0.25, -3.125, 0.4375, 1.25, -1.875, 1.9375],
+      [-0.25, 8.875, 0.4375, 1.25, 10.125, 1.9375],
+      [4.875, -0.5, 0.0625500000000001, 7.125, 0.125, 2.62495],
+      [0.375, 0.875, 2.5625, 2.625, 3.125, 3.394],
+      [0.375, 3.875, 2.5625, 2.625, 6.125, 3.394],
+      [8.875, 2.9375, 0.0625, 10.0625, 4.0625, 1.5625],
+      [8, 0.5, 0.0625, 9, 1.5625, 1.375],
+      [0.125, 4.0625, 0.0625, 2.875, 6.875, 2.625],
+      [2, 0, 0.0625, 3, 1.0625, 1.9375],
+      [0, 0, 0.0625, 2, 2.0625, 1.375],
+      [3.375, 5.375, 0.0625, 5.625, 6.625, 1.875],
+      [2, 1, 0.0625, 3, 2.0625, 1.375],
+      [7, 6, 0.0625, 8, 7.0625, 1.375],
+      [0, 2, 0.0625, 1.0625, 3, 1.5625],
+      [4.9375, 2.9375, 2.9375, 6.75, 4.0625, 4.1981],
+      [7.4375, 3.4375, 2.8125, 9.25, 4.5625, 4.0731],
+      [7.4375, 2.4375, 2.8125, 9.25, 3.5625, 4.0731],
+      [2.9375, 2.9375, 2.8125, 4.0625, 4.0625, 4.1693999999999996],
+      [2.5625, 1.65125, 0, 3.4375, 4.34875, 2.125],
+      [4.65125, 3.5625, 0, 7.34875, 4.4375, 2.125],
+      [4.65125, 1.5625, 0, 7.34875, 2.4375, 2.125],
+      [7.5625, 1.65125, 0, 8.4375, 4.34875, 2.125],
+      [4.65125, -0.4375, 0, 7.34875, 0.4375, 2.125],
+      [6.875, 0.125, -0.125, 8.125, 0.975, 2.125],
+      [6.875, -0.745, -0.125, 8.125, 0.105, 2.125],
+      [6.875, 1.9449999999999998, -0.125, 8.125, 2.795, 2.125],
+      [-0.125, -2.125, 0.5, 5.125, 0.125, 1.875],
+      [-0.125, 6.875, 0.5, 5.125, 9.125, 1.875],
+      [9.875, -0.1875, 0.6875, 11.125, 1.125, 1.3125],
+      [9.875, -0.1875, 0.875, 11.125, 1.125, 1.5625],
+      [9.875, -0.1875, 1.4375, 11.125, 1.125, 2.4375],
+      [9.875, -0.125, 0.9375, 11.125, 1.125, 2.3125],
+      [9.875, -0.1875, 1.1875, 10.1875, 0.3125, 2.3125],
+      [10.6875, 0.8125, 0.9375, 11.125, 1.125, 1.8125],
+      [9.875, -0.125, 0.9375, 11.125, 1.125, 2.3125],
+      [10.875, 0.8125, 0.6875, 12.125, 2.125, 1.0625],
+      [10.875, 4.875, 0.6875, 12.125, 6.125, 1.0625],
+      [9.875, 5.875, 0.6875, 11.125, 7.125, 1.3125],
+      [9.875, 5.875, 0.875, 11.125, 7.125, 1.5625],
+      [9.875, 5.875, 1.4375, 11.125, 7.125, 2.4375],
+      [9.875, 5.875, 0.9375, 11.125, 7.125, 2.3125],
+      [10.6875, 5.875, 0.9375, 11.125, 6.1875, 1.8125],
+      [9.875, 6.6875, 1.1875, 10.1875, 7.125, 2.3125],
+      [9.875, 5.875, 0.9375, 11.125, 7.125, 2.3125],
+      [8.875, -0.125, 0.8125, 10.125, 0.25, 1.375],
+      [8.875, -0.125, 1.125, 10.125, 0.25, 1.625],
+      [8.875, -0.125, 2, 10.125, 0.25, 2.6875],
+      [8.875, -0.125, 1.25, 10.125, 0.25, 2.5625],
+      [8.875, -0.125, 1.3125, 9.1875, 0.25, 2.5625],
+      [9.8125, -0.125, 1.25, 10.125, 0.25, 2.3125],
+      [8.875, -0.125, 1.25, 10.125, 0.25, 2.5625],
+      [8.875, 6.75, 0.8125, 10.125, 7.125, 1.375],
+      [8.875, 6.75, 1.125, 10.125, 7.125, 1.625],
+      [8.875, 6.75, 2, 10.125, 7.125, 2.6875],
+      [8.875, 6.75, 1.25, 10.125, 7.125, 2.5625],
+      [9.8125, 6.75, 1.25, 10.125, 7.125, 2.3125],
+      [8.875, 6.75, 1.3125, 9.1875, 7.125, 2.5625],
+      [8.875, 6.75, 1.25, 10.125, 7.125, 2.5625],
+      [11.75, 1.875, 0.6875, 12.125, 3.125, 1.0625],
+      [11.75, 2.875, 0.6875, 12.125, 4.125, 1.0625],
+      [11.75, 3.875, 0.6875, 12.125, 5.125, 1.0625],
+      [7.75, -0.25, -0.25, 8.25, 1.25, 2.375],
+      [7.75, 0.75, -0.25, 8.25, 2.25, 2.375],
+      [7.75, 3.75, -0.25, 8.25, 5.25, 2.375],
+      [7.75, 4.75, -0.25, 8.25, 6.25, 2.375],
+      [7.75, 5.75, -0.25, 8.25, 7.25, 2.375],
+    ],
+    selectedComponents: [
+      {
+        id: "thrust-block.sm",
+        url: "/assets/ship-components/r006/thrust-block.sm.glb",
+        sha256:
+          "a324af0e75da51e78bbb94bbb8a3419eb74be9f395a79146e6662aac48ba3dc3",
+        bounds: [-0.4554, -0.4186, 0, 0.4554, 0.4554, 2.3438],
+        frame: "face",
+      },
+      {
+        id: "rcs.md",
+        url: "/assets/ship-components/r006/rcs.md.glb",
+        sha256:
+          "a9bbc5b87e29af695abd74244ba2a7475eeac7a3eb6a6ed8efb55e99cbaab566",
+        bounds: [-0.625, -0.625, 0, 0.625, 0.625, 1],
+        frame: "face",
+      },
+      {
+        id: "airlock.exterior.md",
+        url: "/assets/ship-components/r006/airlock.exterior.md.glb",
+        sha256:
+          "05567dcd78d909a77f99dbab26d1c659b9904430d73a0e13ce83b09d3c4f1023",
+        bounds: [-1, -1.1562, 0, 1, 1.1562, 0.375],
+        frame: "face",
+      },
+      {
+        id: "radiator.md",
+        url: "/assets/ship-components/r006/radiator.md.glb",
+        sha256:
+          "da551bdf54037d04e8d53fc3d18316dc66c77f0ebd2b3b8961bc4a928bb3bd57",
+        bounds: [-1, 0, -1, 1, 0.5815, 1],
+        frame: "top",
+      },
+      {
+        id: "console.navigation.sm",
+        url: "/assets/ship-components/r006/console.navigation.sm.glb",
+        sha256:
+          "38040bf3158cf13f0953f5af7d5ed5f1265bf8103906d2dd56e88316c274194a",
+        bounds: [-0.4375, 0, -0.5, 0.4375, 1.25, 0.4375],
+        frame: "interior",
+      },
+      {
+        id: "computer-core.sm",
+        url: "/assets/ship-components/r006/computer-core.sm.glb",
+        sha256:
+          "784acfa50da950f1ffe35feb26f104c66db5d931c0ec8ef18d458b7ba517e6c2",
+        bounds: [-0.375, 0, -0.4375, 0.375, 1.0625, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "reactor.md",
+        url: "/assets/ship-visual/r002/equipment-r025/reactor.md.glb",
+        sha256:
+          "88b6e9e0448247a343c919604639f924140b4aa7f50fc003d9986fe5965276ab",
+        bounds: [-1.25, 0, -1.3125, 1.25, 2.3125, 1.25],
+        frame: "interior",
+      },
+      {
+        id: "life-support.sm",
+        url: "/assets/ship-components/r006/life-support.sm.glb",
+        sha256:
+          "3c3a596c797fd392f103d15714e56e54807d2daf58f5d9cbf2c4ad74612ac371",
+        bounds: [-0.375, 0, -0.4375, 0.375, 1.625, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "fuel-tank.md",
+        url: "/assets/ship-components/r006/fuel-tank.md.glb",
+        sha256:
+          "6bf15650dd18646d87fd12e60d60288668ccdbd1a465d47b35a46ca6c39eb146",
+        bounds: [-0.875, 0, -0.9375, 0.875, 1.0625, 0.875],
+        frame: "interior",
+      },
+      {
+        id: "crew-bunk.sm",
+        url: "/assets/ship-components/r006/crew-bunk.sm.glb",
+        sha256:
+          "77831e86ef1c4134d5766bbc75307a12f916379aaf57143e450c363409982af3",
+        bounds: [-1, 0, -0.5, 1, 1.5625, 0.5],
+        frame: "interior",
+      },
+      {
+        id: "coolant-pump.md",
+        url: "/assets/ship-components/r006/coolant-pump.md.glb",
+        sha256:
+          "25cd1fb2490f2bd07171ae13dc53098d3b7a521213311e4780c18c62b3a527ce",
+        bounds: [-0.375, 0, -0.4375, 0.375, 1.0625, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "magazine.ballistic.sm",
+        url: "/assets/ship-components/r006/magazine.ballistic.sm.glb",
+        sha256:
+          "7a445b9740c3472c3f6586dd62ad0b254ecdd7317c5348267b68b80046b6d733",
+        bounds: [-0.375, 0, -0.4375, 0.375, 1.0625, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "battery.sm",
+        url: "/assets/ship-components/r006/battery.sm.glb",
+        sha256:
+          "f2d13222b749cd2b8459aa663bd399dc9bfeee623619d3fa2fc92b198431f087",
+        bounds: [-0.375, 0, -0.4375, 0.375, 1.25, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "autocannon.sm",
+        url: "/assets/ship-components/r006/autocannon.sm.glb",
+        sha256:
+          "edff79691672eaddcd9864e1b5262ff80ed0d0ccfc9bc6bcf00176895827d42c",
+        bounds: [-0.4375, 0, -1.125, 0.4375, 1.0106, 0.4375],
+        frame: "top",
+      },
+      {
+        id: "sensor-dish.sm",
+        url: "/assets/ship-components/r006/sensor-dish.sm.glb",
+        sha256:
+          "0ef11b6b64be5fca9145f4ba1d442b9e43ca819110e6dd11ff19d8de9dfc43df",
+        bounds: [-0.4375, 0, -0.4375, 0.4375, 1.1069, 0.4375],
+        frame: "top",
+      },
+    ],
+    guardCount: 71,
+    guardMembership: [
+      {
+        id: "main-s",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "main-c",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "main-p",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rcs-bow-s",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rcs-bow-p",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rcs-stern-s",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rcs-stern-p",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "airlock",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rad-a",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rad-b",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "helm",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "core",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "reactor",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "life",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "fuel",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "bunk",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "coolant",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "ammo",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "battery",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "turret",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "guns-a",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "guns-b",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "sensor",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "d-engine",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-bunks",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-hold",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-bridge",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "airlock",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "btn-lock-in",
+        kind: "actual-button-art-plus-press-approach",
+      },
+      {
+        id: "btn-lock-out",
+        kind: "actual-button-art-plus-press-approach",
+      },
+      {
+        id: "btn-hall",
+        kind: "actual-button-art-plus-press-approach",
+      },
+      {
+        id: "wing-s",
+        kind: "complete-connected-volume-envelope",
+      },
+      {
+        id: "wing-p",
+        kind: "complete-connected-volume-envelope",
+      },
+      {
+        id: "bow.slope1.deck.s2.a1.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a1.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a1.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a1.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a1.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a1.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a1.edge1",
+        kind: "original-optical-retained-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s3.a1.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s3.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.slope1.deck.s2.a0.edge1",
+        kind: "original-optical-retained-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge0",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge0",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge0",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge0",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge0",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge0",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge0",
+        kind: "original-optical-retained-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge2",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge2",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge2",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge2",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge2",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge2",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s1.a0.edge2",
+        kind: "original-optical-retained-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s3.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s3.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "bow.square.deck.s3.a0.edge1",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "[[8,0],[8,1]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+      {
+        id: "[[8,1],[8,2]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+      {
+        id: "[[8,4],[8,5]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+      {
+        id: "[[8,5],[8,6]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+      {
+        id: "[[8,6],[8,7]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+    ],
+    guardBoundsSha256:
+      "7bc5f267275e788f28383f5a32b8a5c0c8255303d0f0a9e3765f9da26c6a288e",
+    opticalGuardsSha256:
+      "0c8d6bb91db20b85eb6dafcbf265f9eafbb88a6e9a4c0cd1e38c1eb478e9fc63",
+  },
+  "fed.m.crest": {
+    documentSha256:
+      "6b0aa0b105174f7f2af341ac46c16ef6d5b8b7bd9a4de4e36f8abf290bdcebf9",
+    northBounds: [195, 160, 8, 268, 163, 28],
+    wholeAddedCubeGuardBoundsM: [
+      [
+        -5.875, 0.008799999999999919, 0.11919999999999997, 0.125, 2.9912,
+        2.9912,
+      ],
+      [-5.875, 7.0088, 0.11919999999999997, 0.125, 9.9912, 2.9912],
+      [-4.75, 3.9642, 0.5378, 0.125, 6.0358, 2.5358],
+      [3.375, 11, 0.6875, 4.125, 12, 1.6875],
+      [3.375, -2, 0.6875, 4.125, -1, 1.6875],
+      [18.75, 9.875, 0.75, 20.25, 11.125, 2.25],
+      [18.75, -1.125, 0.75, 20.25, 0.125, 2.25],
+      [16.875, -0.5, 0.0625500000000001, 19.125, 0.125, 2.62495],
+      [13.875, -0.5, 0.0625500000000001, 16.125, 0.125, 2.62495],
+      [0.875, 0.875, 2.5625, 4.125, 4.125, 3.6112],
+      [8.875, 6.875, 2.5625, 11.125, 9.125, 3.394],
+      [8.875, 0.875, 2.5625, 11.125, 3.125, 3.394],
+      [21.875, 4.4375, 0.0625, 23.0625, 5.5625, 1.5625],
+      [20.875, 1.875, 0.0625, 22.125, 3.125, 1.5],
+      [20.875, 6.875, 0.0625, 22.125, 8.125, 1.5],
+      [20, 1, 0.0625, 21, 2.0625, 2.0625],
+      [0.125, 3.125, 0.0625, 3.9375, 6.875, 3.25],
+      [2, 0.5625, 0.0625, 3.0625, 2.4375, 2.1875],
+      [4.375, 8.375, 0.0625, 6.625, 9.625, 1.875],
+      [8.375, 8.375, 0.0625, 10.625, 9.625, 1.875],
+      [0, 0, 0.0625, 2.0625, 2, 1.375],
+      [0, 2, 0.0625, 1.0625, 3, 1.375],
+      [0.0625, 7.0625, 0.0625, 1, 7.9375, 1.125],
+      [0, 8.0625, 0.0625, 1.0625, 9.9375, 1.5625],
+      [1.0625, 7, 0.0625, 3, 8, 1.75],
+      [5.4375, 1.4375, 2.9375, 9, 3.5625, 4.92],
+      [12.9375, 6.9375, 2.8125, 15.6875, 9.0625, 4.6025],
+      [17.4375, 2.4375, 2.9375, 18.8125, 3.5625, 4.1019000000000005],
+      [0.9375, 6.9375, 2.8125, 3.0625, 9.0625, 4.9394],
+      [3.5625, 3.65125, 0, 4.4375, 6.34875, 2.125],
+      [5.65125, 3.5625, 0, 8.348749999999999, 4.4375, 2.125],
+      [9.651250000000001, 3.5625, 0, 12.348749999999999, 4.4375, 2.125],
+      [13.651250000000001, 3.5625, 0, 16.34875, 4.4375, 2.125],
+      [16.65125, 3.5625, 0, 19.34875, 4.4375, 2.125],
+      [4.65125, 5.5625, 0, 7.34875, 6.4375, 2.125],
+      [8.651250000000001, 5.5625, 0, 11.348749999999999, 6.4375, 2.125],
+      [12.651250000000001, 5.5625, 0, 15.348749999999999, 6.4375, 2.125],
+      [16.65125, 5.5625, 0, 19.34875, 6.4375, 2.125],
+      [19.5625, 3.65125, 0, 20.4375, 6.34875, 2.125],
+      [16.65125, -0.4375, 0, 19.34875, 0.4375, 2.125],
+      [13.651250000000001, -0.4375, 0, 16.34875, 0.4375, 2.125],
+      [3.875, 9.875, 0.5, 12.125, 13.125, 1.875],
+      [3.875, -3.125, 0.5, 12.125, 0.125, 1.875],
+      [19.8125, -0.3125, 1.75, 21.3125, 1.1875, 2.125],
+      [20.8125, 0.6875, 1.75, 22.3125, 2.1875, 2.125],
+      [21.8125, 1.6875, 1.75, 23.3125, 3.1875, 2.125],
+      [22.8125, 2.6875, 1.75, 24.3125, 4.1875, 2.125],
+      [22.8125, 5.8125, 1.75, 24.3125, 7.3125, 2.125],
+      [21.8125, 6.8125, 1.75, 23.3125, 8.3125, 2.125],
+      [20.8125, 7.8125, 1.75, 22.3125, 9.3125, 2.125],
+      [19.8125, 8.8125, 1.75, 21.3125, 10.3125, 2.125],
+      [23.75, 3.6875, 1.75, 24.375, 4.3125, 2.125],
+      [23.8125, 5.8125, 1.75, 24.3125, 6.3125, 2.125],
+      [23.8125, 3.875, 1.75, 24.3125, 5.125, 2.125],
+      [23.8125, 4.875, 1.75, 24.3125, 6.125, 2.125],
+      [23.75, 3.75, -0.25, 24.25, 5.25, 2.375],
+      [23.75, 4.75, -0.25, 24.25, 6.25, 2.375],
+      [11.75, 5.75, -0.25, 13.25, 6.25, 2.375],
+      [14.75, 5.75, -0.25, 16.25, 6.25, 2.375],
+      [15.75, 5.75, -0.25, 17.25, 6.25, 2.375],
+    ],
+    selectedComponents: [
+      {
+        id: "ion-drive.lg",
+        url: "/assets/ship-components/r006/ion-drive.lg.glb",
+        sha256:
+          "c1d962024ef14594155d8f0703baf031f24455fbe9ccf24b87d94e6692367745",
+        bounds: [-1.3662, -1.2558, 0, 1.3662, 1.3662, 5.75],
+        frame: "face",
+      },
+      {
+        id: "ion-drive.md",
+        url: "/assets/ship-components/r006/ion-drive.md.glb",
+        sha256:
+          "d9b99933a8a2308fb1235f9035a9a245e2cca93fe4abc29096efaaca1c21fc32",
+        bounds: [-0.9108, -0.8372, 0, 0.9108, 0.9108, 4.625],
+        frame: "face",
+      },
+      {
+        id: "rcs.sm",
+        url: "/assets/ship-components/r006/rcs.sm.glb",
+        sha256:
+          "768f28f1ec7afd69ff99d660d16bd2a1d10632f8e0a87cc4a50a393d915fb1fb",
+        bounds: [-0.375, -0.375, 0, 0.375, 0.375, 0.5],
+        frame: "face",
+      },
+      {
+        id: "rcs.md",
+        url: "/assets/ship-components/r006/rcs.md.glb",
+        sha256:
+          "a9bbc5b87e29af695abd74244ba2a7475eeac7a3eb6a6ed8efb55e99cbaab566",
+        bounds: [-0.625, -0.625, 0, 0.625, 0.625, 1],
+        frame: "face",
+      },
+      {
+        id: "airlock.exterior.md",
+        url: "/assets/ship-components/r006/airlock.exterior.md.glb",
+        sha256:
+          "05567dcd78d909a77f99dbab26d1c659b9904430d73a0e13ce83b09d3c4f1023",
+        bounds: [-1, -1.1562, 0, 1, 1.1562, 0.375],
+        frame: "face",
+      },
+      {
+        id: "cargo-door.2m",
+        url: "/assets/ship-components/r006/cargo-door.2m.glb",
+        sha256:
+          "e320048c52baf56993b8ba3ccc50aa7e04b78d003ba81ba62997b63466cccff2",
+        bounds: [-1, -1.1562, 0, 1, 1.1562, 0.375],
+        frame: "face",
+      },
+      {
+        id: "radiator.lg",
+        url: "/assets/ship-components/r006/radiator.lg.glb",
+        sha256:
+          "03e7863edd84c98aa51065e47fa489016ac38351a3ae86ff6504504d0b19a91b",
+        bounds: [-1.5, 0, -1.5, 1.5, 0.7987, 1.5],
+        frame: "top",
+      },
+      {
+        id: "radiator.md",
+        url: "/assets/ship-components/r006/radiator.md.glb",
+        sha256:
+          "da551bdf54037d04e8d53fc3d18316dc66c77f0ebd2b3b8961bc4a928bb3bd57",
+        bounds: [-1, 0, -1, 1, 0.5815, 1],
+        frame: "top",
+      },
+      {
+        id: "console.navigation.sm",
+        url: "/assets/ship-components/r006/console.navigation.sm.glb",
+        sha256:
+          "38040bf3158cf13f0953f5af7d5ed5f1265bf8103906d2dd56e88316c274194a",
+        bounds: [-0.4375, 0, -0.5, 0.4375, 1.25, 0.4375],
+        frame: "interior",
+      },
+      {
+        id: "console.command.sm",
+        url: "/assets/ship-components/r006/console.command.sm.glb",
+        sha256:
+          "70ebed5e67d6955756df3909681d48dec03ca19be83916801f7b79943bf74e04",
+        bounds: [-0.5, 0, -0.5, 0.5, 1.1875, 0.5],
+        frame: "interior",
+      },
+      {
+        id: "console.sensor.sm",
+        url: "/assets/ship-components/r006/console.sensor.sm.glb",
+        sha256:
+          "fe8b290e987886d131c89ce623f65a1e269df835319afaa78b03f81cee00f182",
+        bounds: [-0.5, 0, -0.5, 0.5, 1.1875, 0.5],
+        frame: "interior",
+      },
+      {
+        id: "computer-core.md",
+        url: "/assets/ship-components/r006/computer-core.md.glb",
+        sha256:
+          "3f38e86ad85faf55e7d99fd78457cd4f3020446df8ca491c653da4f9d4563b75",
+        bounds: [-0.375, 0, -0.4375, 0.375, 1.75, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "reactor.lg",
+        url: "/assets/ship-visual/r002/equipment-r025/reactor.lg.glb",
+        sha256:
+          "fbc03973b688c3d07fb58d2698c1f9f9ed5204154a59b06c08930d00d6a73b69",
+        bounds: [-1.75, 0, -1.8125, 1.75, 2.9375, 1.75],
+        frame: "interior",
+      },
+      {
+        id: "life-support.md",
+        url: "/assets/ship-components/r006/life-support.md.glb",
+        sha256:
+          "34fe243e5a7cffd87f55d05d9ce13608fd74968a9f05e7ce8aef3f364b6722be",
+        bounds: [-0.8125, 0, -0.4375, 0.8125, 1.875, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "crew-bunk.sm",
+        url: "/assets/ship-components/r006/crew-bunk.sm.glb",
+        sha256:
+          "77831e86ef1c4134d5766bbc75307a12f916379aaf57143e450c363409982af3",
+        bounds: [-1, 0, -0.5, 1, 1.5625, 0.5],
+        frame: "interior",
+      },
+      {
+        id: "fuel-tank.md",
+        url: "/assets/ship-components/r006/fuel-tank.md.glb",
+        sha256:
+          "6bf15650dd18646d87fd12e60d60288668ccdbd1a465d47b35a46ca6c39eb146",
+        bounds: [-0.875, 0, -0.9375, 0.875, 1.0625, 0.875],
+        frame: "interior",
+      },
+      {
+        id: "coolant-pump.md",
+        url: "/assets/ship-components/r006/coolant-pump.md.glb",
+        sha256:
+          "25cd1fb2490f2bd07171ae13dc53098d3b7a521213311e4780c18c62b3a527ce",
+        bounds: [-0.375, 0, -0.4375, 0.375, 1.0625, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "coolant-pump.sm",
+        url: "/assets/ship-components/r006/coolant-pump.sm.glb",
+        sha256:
+          "68fd3157a58860b12a72cd68a691a34abbbca430089425cca2ea2b15ce4fb5cd",
+        bounds: [-0.3125, 0, -0.375, 0.3125, 0.8125, 0.3125],
+        frame: "interior",
+      },
+      {
+        id: "magazine.ballistic.md",
+        url: "/assets/ship-components/r006/magazine.ballistic.md.glb",
+        sha256:
+          "1ebbfbc7593c5bf0664af3333ecda4ad2bda95a4e53d65e53d847b483ec041c6",
+        bounds: [-0.8125, 0, -0.4375, 0.8125, 1.25, 0.375],
+        frame: "interior",
+      },
+      {
+        id: "battery.md",
+        url: "/assets/ship-components/r006/battery.md.glb",
+        sha256:
+          "b4328170ed8d5c536f04c40a942af16d85653823deb8ed58a89911e11665685a",
+        bounds: [-0.375, 0, -0.875, 0.375, 1.4375, 0.8125],
+        frame: "interior",
+      },
+      {
+        id: "autocannon.md",
+        url: "/assets/ship-components/r006/autocannon.md.glb",
+        sha256:
+          "1a03d4547068f1ea933300bdc45fc41b9e1aa7a648ae2e8a6c1e65991610f7cd",
+        bounds: [-0.9375, 0, -2.375, 0.9375, 1.7325, 0.9375],
+        frame: "top",
+      },
+      {
+        id: "laser-cannon.md",
+        url: "/assets/ship-components/r006/laser-cannon.md.glb",
+        sha256:
+          "81423cb6696c48e249e0a534b6ed59ea3b98b18bcf299f272535a452f3b0360f",
+        bounds: [-0.9375, 0, -1.5625, 0.9375, 1.54, 0.9375],
+        frame: "top",
+      },
+      {
+        id: "point-defense.sm",
+        url: "/assets/ship-components/r006/point-defense.sm.glb",
+        sha256:
+          "86becfa4427cce4fb408c3e09c17d37e13e6c3c368a81cff49d713462dd949c5",
+        bounds: [-0.4375, 0, -0.6875, 0.4375, 0.9144, 0.4375],
+        frame: "top",
+      },
+      {
+        id: "sensor-dish.md",
+        url: "/assets/ship-components/r006/sensor-dish.md.glb",
+        sha256:
+          "5185e813b7b70ab7eddb0f4e15dff5c51a3f203af5c03f5f56999d18ebe23b18",
+        bounds: [-0.9375, 0, -0.9375, 0.9375, 1.8769, 0.9375],
+        frame: "top",
+      },
+    ],
+    guardCount: 60,
+    guardMembership: [
+      {
+        id: "main-s",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "main-p",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "main-c",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rcs-p",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rcs-s",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rcs-bow-p",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rcs-bow-s",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "lock",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "cargo-door",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rad-lg",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rad-a",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "rad-b",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "helm",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "command",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "sensors",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "core",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "reactor",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "life",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "bunk-1",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "bunk-2",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "fuel",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "coolant",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "coolant-aux",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "ammo",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "battery",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "turret",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "laser",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "pd",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "sensor",
+        kind: "actual-selected-component-fixed-pose",
+      },
+      {
+        id: "d-eng",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-med",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-shop",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-cargo",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-lock",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-q1",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-q2",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-lounge",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-galley",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "d-bridge",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "lock",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "cargo-door",
+        kind: "original-door-frame-and-full-leaf-sweep",
+      },
+      {
+        id: "plate-p",
+        kind: "complete-connected-volume-envelope",
+      },
+      {
+        id: "plate-s",
+        kind: "complete-connected-volume-envelope",
+      },
+      {
+        id: "canopy.slope1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.slope1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.slope1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.slope1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.slope1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.slope1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.slope1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.slope1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.corner45.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.corner45.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.straight.w1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "canopy.straight.w1.deck.cut",
+        kind: "original-optical-source-whole-cube-halo",
+      },
+      {
+        id: "[[24,4],[24,5]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+      {
+        id: "[[24,5],[24,6]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+      {
+        id: "[[12,6],[13,6]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+      {
+        id: "[[15,6],[16,6]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+      {
+        id: "[[16,6],[17,6]]",
+        kind: "original-glazed-wall-full-interface-halo",
+      },
+    ],
+    guardBoundsSha256:
+      "f78ef52fb4962b2f3ca773297b96b4f18747bdefbd36f72c56e97d258e208816",
+    opticalGuardsSha256:
+      "bc6af5e5de906a0fe04976188504662f450552b78d6fe873c908154885f7ee0c",
+  },
+} as const;
+
+/** Exact original deck upper bindings retained as existing case contact. */
+export const REFERENCE_EXTERIOR_EXISTING_BOUNDARY_R026 = {
+  "fed.s.wren": [
+    {
+      key: "95,111,26",
+      cell: {
+        x: 95,
+        y: 111,
+        z: 26,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "74cb8846836ed5fed6fd2d39ab1ac0f81617f31e7f74422d86174e0d0e473ae5",
+    },
+    {
+      key: "96,111,26",
+      cell: {
+        x: 96,
+        y: 111,
+        z: 26,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:32:armor:case",
+      ownerLayerSHA256:
+        "a1522e1f07680ac54bbb30696d0fa6cccd30c2f12eeb84e5888507136e4be2ab",
+    },
+    {
+      key: "94,111,27",
+      cell: {
+        x: 94,
+        y: 111,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "171b1a8e55d5fb423b9de47694e6a655fe6740fcc34e8de80705c382ca77e1b5",
+    },
+    {
+      key: "95,111,27",
+      cell: {
+        x: 95,
+        y: 111,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "171b1a8e55d5fb423b9de47694e6a655fe6740fcc34e8de80705c382ca77e1b5",
+    },
+    {
+      key: "96,111,27",
+      cell: {
+        x: 96,
+        y: 111,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:32:armor:case",
+      ownerLayerSHA256:
+        "0bf16a5912b7c668363d6f2491316f0ed38a988f23f179231da6b7e0f4629f20",
+    },
+    {
+      key: "97,111,27",
+      cell: {
+        x: 97,
+        y: 111,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:32:armor:case",
+      ownerLayerSHA256:
+        "0bf16a5912b7c668363d6f2491316f0ed38a988f23f179231da6b7e0f4629f20",
+    },
+  ],
+  "fed.m.crest": [
+    {
+      key: "223,159,26",
+      cell: {
+        x: 223,
+        y: 159,
+        z: 26,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:96:armor:case",
+      ownerLayerSHA256:
+        "8901e5b3590ab8493cf67e302ef9716165b678db354f250119365bb72662c1c4",
+    },
+    {
+      key: "224,159,26",
+      cell: {
+        x: 224,
+        y: 159,
+        z: 26,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "fdbbde87ac085aff3dd395eff7a2452ea54c605a57a8dca0628da4ddd5e96b1b",
+    },
+    {
+      key: "255,159,26",
+      cell: {
+        x: 255,
+        y: 159,
+        z: 26,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "fdbbde87ac085aff3dd395eff7a2452ea54c605a57a8dca0628da4ddd5e96b1b",
+    },
+    {
+      key: "256,159,26",
+      cell: {
+        x: 256,
+        y: 159,
+        z: 26,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:32:armor:case",
+      ownerLayerSHA256:
+        "7507c274b19610edb81d4388806b1afcf22eceb59b60c3d42ef1bfd2a0abbbc2",
+    },
+    {
+      key: "222,159,27",
+      cell: {
+        x: 222,
+        y: 159,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:96:armor:case",
+      ownerLayerSHA256:
+        "cf32654f9b2d0a564e9be54bd5b8fdd09059b8488c54e00824b2d879819cb84b",
+    },
+    {
+      key: "223,159,27",
+      cell: {
+        x: 223,
+        y: 159,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:96:armor:case",
+      ownerLayerSHA256:
+        "cf32654f9b2d0a564e9be54bd5b8fdd09059b8488c54e00824b2d879819cb84b",
+    },
+    {
+      key: "224,159,27",
+      cell: {
+        x: 224,
+        y: 159,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "bae033ce1c8afb1afe58b0aa760a7ebb9eeeb5139f9ebda3ea807ecd5e46c378",
+    },
+    {
+      key: "225,159,27",
+      cell: {
+        x: 225,
+        y: 159,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "bae033ce1c8afb1afe58b0aa760a7ebb9eeeb5139f9ebda3ea807ecd5e46c378",
+    },
+    {
+      key: "254,159,27",
+      cell: {
+        x: 254,
+        y: 159,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "bae033ce1c8afb1afe58b0aa760a7ebb9eeeb5139f9ebda3ea807ecd5e46c378",
+    },
+    {
+      key: "255,159,27",
+      cell: {
+        x: 255,
+        y: 159,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:64:access:case",
+      ownerLayerSHA256:
+        "bae033ce1c8afb1afe58b0aa760a7ebb9eeeb5139f9ebda3ea807ecd5e46c378",
+    },
+    {
+      key: "256,159,27",
+      cell: {
+        x: 256,
+        y: 159,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:32:armor:case",
+      ownerLayerSHA256:
+        "7821ed200ee3e9d9ee150e8dfd2692e2f02a295bb83397648f934e1160301b5b",
+    },
+    {
+      key: "257,159,27",
+      cell: {
+        x: 257,
+        y: 159,
+        z: 27,
+        role: "core",
+        slot: "trim",
+        family: "volume:hull",
+        surfaceRole: "hull",
+      },
+      ownerId: "volume:hull:exposed-bay:4:32:armor:case",
+      ownerLayerSHA256:
+        "7821ed200ee3e9d9ee150e8dfd2692e2f02a295bb83397648f934e1160301b5b",
+    },
+  ],
+} as const;
 
 export { default as REFERENCE_CANOPY_SOURCE_R026 } from "./ship-canopy-source-r026.v1.json";

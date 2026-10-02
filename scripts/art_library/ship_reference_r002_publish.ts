@@ -18,12 +18,16 @@ import {
   REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
   REFERENCE_STATIC_WALL_FITTINGS_R002,
   REFERENCE_ROOF_FIXED_POSE_R002,
+  REFERENCE_EXTERIOR_CASES_R026,
+  REFERENCE_EXTERIOR_CATALOG_SHA256_R026,
 } from "@sidereal/content/ship-visual-r002";
 import { interiorArtQuarterTurns } from "@sidereal/content/ship-furniture";
 import { SHIP_KIT_SLOTS } from "@sidereal/content/ship-kit";
 import {
   SHIP_VISUAL_FRAME,
   SHIP_VISUAL_SCHEMA,
+  SHIP_VISUAL_BOW_CASE_ENVELOPE_R026,
+  SHIP_VISUAL_CANOPY_SOURCE_R026,
   readShipVisualManifest,
   type ShipVisualAsset,
 } from "@sidereal/content/ship-visual";
@@ -71,11 +75,25 @@ const sources = [
   "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
   "packages/sim/src/ship-visual-r002-bow-frame.ts",
   "packages/sim/src/ship-visual-r002-bow-transition.ts",
+  "packages/sim/src/ship-visual-r002-bow-cases-r026.ts",
+  "packages/sim/src/ship-visual-r002-canopy-source-r026.ts",
+  "packages/content/src/ship-canopy-source-r026.v1.json",
+  "scripts/art_library/ship_reference_r026_canopy_source.py",
+  "packages/content/src/construction-grammar.ts",
+  "packages/content/src/construction-grammar.v1.json",
+  "assets/runtime/ship-kit/r002/manifest.json",
+  "assets/runtime/ship-kit/r002/canopy.slope1.deck.glb",
+  "assets/runtime/ship-kit/r002/canopy.corner45.deck.glb",
+  "assets/runtime/ship-kit/r002/canopy.straight.w1.deck.glb",
+  "assets/runtime/ship-kit/r002/canopy.nav.deck.glb",
   "packages/sim/src/ship-dresser.ts",
   "packages/content/src/ship-prefab.ts",
   "packages/content/src/ship-furniture.ts",
   "packages/content/src/ship-room-fixtures-r025.ts",
   "packages/content/src/ship-prefab-catalog.ts",
+  "packages/content/src/ship-prefab-components.ts",
+  "packages/content/src/ship-components-source.ts",
+  "packages/content/src/ship-components.v1.json",
   "packages/content/src/ship-reference-room-layout-r025.ts",
   "packages/content/src/prefabs/federation.ts",
   "packages/content/package.json",
@@ -118,6 +136,11 @@ const sources = [
   "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.workshop-bank-r025.blend",
   "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.medical-equipment-bank-r025.blend",
   "scripts/art_library/ship_reference_r025_rooms_display.py",
+  "scripts/art_library/ship_reference_r026_room_architecture_stepped.py",
+  "assets/runtime/ship-objects/reference-r026-room-architecture-stepped/shipyard.equipment.workshop-bank-r025-source.json",
+  "assets/runtime/ship-objects/reference-r026-room-architecture-stepped/shipyard.equipment.medical-equipment-bank-r025-source.json",
+  "assets/source/ship-reference/r002/rooms-r026-room-architecture-stepped/shipyard.equipment.workshop-bank-r025.blend",
+  "assets/source/ship-reference/r002/rooms-r026-room-architecture-stepped/shipyard.equipment.medical-equipment-bank-r025.blend",
   "assets/runtime/ship-objects/reference-r025-display/shipyard.equipment.workshop-bank-r025-source.json",
   "assets/runtime/ship-objects/reference-r025-display/shipyard.equipment.medical-equipment-bank-r025-source.json",
   "assets/source/ship-reference/r002/rooms-r025-display/shipyard.equipment.workshop-bank-r025.blend",
@@ -789,6 +812,196 @@ if (roomCandidate) {
   }
 }
 
+// Preserve both historical R25 gates above. Only these two private host rows
+// select the independently qualified R26 stepped machinery derivative.
+const roomArchitectureBuilder =
+  "scripts/art_library/ship_reference_r026_room_architecture_stepped.py";
+const roomArchitectureBuilderSha256 =
+  "41326ae03cc8219b10ee8137d4fd113dbafdb750b8c23b1ba65a9f224366f890";
+const roomArchitecturePins = {
+  "shipyard.equipment.workshop-bank-r025": {
+    sha256: "18049ea0acf18c55187d1100238c20406cd35df77a63aba48901c9dbd7e68526",
+    metadataSha256:
+      "ed84a9fb2b29b27d7538e4440186eac3fe51f23fc401cb32e4995cb6aa592045",
+    sourceSha256:
+      "7fafb992425fa967f7125d25780a3c8c72d89a3b1d5b9e53dea1924683439084",
+    bytes: 123324,
+    triangles: 1114,
+    triangleCap: 1124,
+    materials: [
+      "primary",
+      "secondary",
+      "accent",
+      "trim",
+      "metal",
+      "dark",
+      "emit_a",
+      "emit_b",
+      "primary.equipment-cover",
+      "primary.equipment-frame",
+    ],
+  },
+  "shipyard.equipment.medical-equipment-bank-r025": {
+    sha256: "b4b421cb732ed7ca540230b66ecf9169361d2c62cc2667f2fbd64f92c7a80592",
+    metadataSha256:
+      "a22e90046eae75f878d6fdefa45df7b0caed9301979c9ebdbff9132cd5f9f1a9",
+    sourceSha256:
+      "eb9704c7affc8a09cddbc50e51085bf5f3224837399518f3752da858cf784624",
+    bytes: 94720,
+    triangles: 838,
+    triangleCap: 866,
+    materials: [
+      "primary",
+      "secondary",
+      "accent",
+      "trim",
+      "metal",
+      "dark",
+      "emit_a",
+      "emit_b",
+      "primary.equipment-frame",
+      "secondary.equipment-cover",
+    ],
+  },
+} as const;
+if (roomCandidate) {
+  if (
+    hash(readFileSync(resolve(root, roomArchitectureBuilder))) !==
+    roomArchitectureBuilderSha256
+  )
+    throw Error(
+      "Finite R26 room architecture source differs from qualified derivative",
+    );
+  for (const entry of REFERENCE_ROOM_FIXTURE_CATALOG_R025.entries) {
+    const id = entry.designId,
+      pin = roomArchitecturePins[id],
+      dir = "ship-objects/reference-r026-room-architecture-stepped";
+    const index = assets.findIndex((a) => a.kind === "object" && a.id === id);
+    const metadataBytes = readFileSync(
+      resolve(root, "assets/runtime", dir, `${id}-source.json`),
+    );
+    const meta = JSON.parse(metadataBytes.toString());
+    const oldMeta = JSON.parse(
+      readFileSync(
+        resolve(
+          root,
+          "assets/runtime/ship-objects/reference-r025-display",
+          `${id}-source.json`,
+        ),
+        "utf8",
+      ),
+    );
+    const bytes = readFileSync(
+      resolve(root, "assets/runtime", dir, `${id}.glb`),
+    );
+    if (
+      index < 0 ||
+      assets[index].sha256 !== roomDisplayPins[id].sha256 ||
+      hash(metadataBytes) !== pin.metadataSha256 ||
+      meta.designId !== id ||
+      meta.revision !== "r026" ||
+      meta.generator !== roomArchitectureBuilder ||
+      meta.generatorSha256 !== roomArchitectureBuilderSha256 ||
+      meta.immutableCleanSourceSha256 !== roomBuilderSha256 ||
+      meta.immutableDisplaySourceSha256 !== roomDisplayBuilderSha256 ||
+      meta.immutablePreviousSourceSha256 !== roomPreviousSha256 ||
+      meta.helperSha256 !== oldMeta.helperSha256 ||
+      meta.semanticAuthoringSha256 !== oldMeta.semanticAuthoringSha256 ||
+      meta.source !==
+        `assets/source/ship-reference/r002/rooms-r026-room-architecture-stepped/${id}.blend` ||
+      hash(readFileSync(resolve(root, meta.source))) !== pin.sourceSha256 ||
+      meta.sourceSha256 !== pin.sourceSha256 ||
+      meta.url !== `/assets/${dir}/${id}.glb` ||
+      meta.glb !== `assets/runtime/${dir}/${id}.glb` ||
+      hash(bytes) !== pin.sha256 ||
+      meta.sha256 !== pin.sha256 ||
+      bytes.length !== pin.bytes ||
+      meta.bytes !== pin.bytes ||
+      meta.triangles !== pin.triangles ||
+      meta.triangles > pin.triangleCap ||
+      meta.materialSlotsUsed.length !== 10 ||
+      JSON.stringify(meta.materialSlotsUsed) !==
+        JSON.stringify(pin.materials) ||
+      JSON.stringify(meta.sizeTexels) !== JSON.stringify(entry.texels) ||
+      JSON.stringify(meta.boundsM) !== JSON.stringify(oldMeta.boundsM) ||
+      JSON.stringify(meta.capabilities) !==
+        JSON.stringify(oldMeta.capabilities) ||
+      JSON.stringify(meta.displayChart) !== JSON.stringify(oldMeta.displayChart)
+    )
+      throw Error(`Finite R26 room architecture source/output mismatch: ${id}`);
+    assets[index] = {
+      ...assets[index],
+      url: meta.url,
+      sha256: pin.sha256,
+      bytes: pin.bytes,
+    };
+  }
+}
+
+// Every source-qualified exterior guard uses these exact selected component
+// bytes and catalog transforms. A changed or missing input never receives the case.
+if (
+  hash(JSON.stringify(defaultPrefabComponentCatalog().list())) !==
+  REFERENCE_EXTERIOR_CATALOG_SHA256_R026
+)
+  throw Error("R26 exterior catalog differs from admitted source frame");
+for (const certificate of Object.values(REFERENCE_EXTERIOR_CASES_R026))
+  for (const expected of certificate.selectedComponents) {
+    const actual = assets.find(
+      (a) => a.kind === "component" && a.id === expected.id,
+    );
+    if (
+      !actual ||
+      actual.url !== expected.url ||
+      actual.sha256 !== expected.sha256 ||
+      actual.frame !== expected.frame ||
+      JSON.stringify(actual.bounds) !== JSON.stringify(expected.bounds) ||
+      hash(
+        readFileSync(
+          resolve(root, "assets/runtime", actual.url.slice("/assets/".length)),
+        ),
+      ) !== expected.sha256
+    )
+      throw Error(
+        `R26 exterior selected component differs from admitted XYZ guard: ${expected.id}`,
+      );
+  }
+const broadBowSourceR026 =
+  "packages/sim/src/ship-visual-r002-bow-cases-r026.ts";
+const broadBowSourceSha256R026 =
+  "7f2829bace4023a3779b9ee4137ead6d25ad24e9903777acbd27531eaee93ddd";
+if (
+  hash(readFileSync(resolve(root, broadBowSourceR026))) !==
+  broadBowSourceSha256R026
+)
+  throw Error("R26 finite bow helper differs from admitted source bytes");
+
+const canopySourceR026 =
+  "packages/sim/src/ship-visual-r002-canopy-source-r026.ts";
+const canopySourceSha256R026 =
+  "1ae78a325f672bf5851a845a68417f14404e58919dedb132f11aaa09a92b6495";
+for (const [path, pin] of [
+  [canopySourceR026, canopySourceSha256R026],
+  [
+    "packages/content/src/ship-canopy-source-r026.v1.json",
+    SHIP_VISUAL_CANOPY_SOURCE_R026.tableSha256,
+  ],
+  [
+    "scripts/art_library/ship_reference_r026_canopy_source.py",
+    SHIP_VISUAL_CANOPY_SOURCE_R026.generatorSha256,
+  ],
+  [
+    "scripts/art_library/ship_kit_modules.py",
+    SHIP_VISUAL_CANOPY_SOURCE_R026.originalSourceSha256,
+  ],
+  [
+    "packages/content/src/construction-grammar.v1.json",
+    SHIP_VISUAL_CANOPY_SOURCE_R026.grammarSha256,
+  ],
+] as const)
+  if (hash(readFileSync(resolve(root, path))) !== pin)
+    throw Error(`Finite original canopy source mismatch: ${path}`);
+
 // The candidate overrides legacy r004 catalog URLs with these exact r006 assets.
 // A fixed-pose roof certificate admits ONLY actual selected bytes/frame/bounds.
 for (const [id, certificate] of Object.entries(
@@ -842,6 +1055,21 @@ const kitBytes = readFileSync(
   resolve(root, "assets/runtime/ship-kit/r002/manifest.json"),
 );
 const kit = JSON.parse(kitBytes.toString("utf8"));
+for (const [id, pin] of Object.entries(
+  SHIP_VISUAL_CANOPY_SOURCE_R026.originalAssets,
+)) {
+  const row = kit.pieces[id];
+  if (
+    !row ||
+    row.file !== `${id}.glb` ||
+    hash(
+      readFileSync(resolve(root, "assets/runtime/ship-kit/r002", row.file)),
+    ) !== pin
+  )
+    throw Error(
+      `Finite original canopy asset or placement source mismatch: ${id}`,
+    );
+}
 // A finite optical certificate is valid only for the retained bytes it actually
 // measured. A native-kit revision must never silently reuse old 3D exclusions.
 for (const [id, certificate] of Object.entries(
@@ -979,7 +1207,20 @@ const manifest = readShipVisualManifest({
     ]),
   ),
   assets,
-  decorativeEnvelope: { outward: 0.1875, upward: 0.1875, inward: 0 },
+  decorativeEnvelope: { outward: 0.1875, upward: 0.375, inward: 0 },
+  ...(roomCandidate
+    ? {
+        canopySourceR026: {
+          ...SHIP_VISUAL_CANOPY_SOURCE_R026,
+          sourceSha256: canopySourceSha256R026,
+        },
+      }
+    : {}),
+  bowCaseEnvelopeR026: {
+    ...SHIP_VISUAL_BOW_CASE_ENVELOPE_R026,
+    bodies: SHIP_VISUAL_BOW_CASE_ENVELOPE_R026.bodies.map((b) => [...b]),
+    sourceSha256: broadBowSourceSha256R026,
+  },
 });
 const json = JSON.stringify(manifest, null, 2) + "\n";
 mkdirSync(resolve(root, "assets/runtime/ship-visual/r002"), {

@@ -27,9 +27,13 @@ import {
   referenceCockpitApertureSourceAdmittedR002,
   SHIP_VISUAL_MACRO_PROFILES_R002,
   REFERENCE_OPTICAL_INTERFACES_R002,
+  REFERENCE_EXTERIOR_CASES_R026,
+  REFERENCE_EXTERIOR_EXISTING_BOUNDARY_R026,
 } from "@sidereal/content/ship-visual-r002";
 import {
   referenceCockpitApertureR002,
+  referenceExteriorCasesR026,
+  shipVisualLayersR002,
   referenceRoofOperatingBoundsR002,
   referenceStaticWallFittingBoundsR002,
   referenceOpticalGuardBoxesR002,
@@ -38,6 +42,7 @@ import {
   compactColumns,
 } from "./ship-visual-layers-r002";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { referenceRoomLayoutR025 } from "@sidereal/content/ship-reference-room-layout-r025";
 import {
   createRetainedWallBoundaryR002,
   RETAINED_WALL_INPUTS_R002,
@@ -3115,6 +3120,291 @@ describe("finite V3 Wren cockpit aperture duties", () => {
       } finally {
         spy.mockRestore();
       }
+    }
+  });
+});
+
+describe("R26 finite architectural cases", () => {
+  const catalog = defaultPrefabComponentCatalog();
+  const addedCase = (l: ShipVisualLayer) =>
+    l.id.includes(":r026-exterior:") || l.id.includes(":r026-broad-bow:");
+  it.each([
+    ["fed.s.wren", "deck"],
+    ["fed.s.wren", "flight"],
+    ["fed.m.crest", "deck"],
+    ["fed.m.crest", "flight"],
+  ] as const)(
+    "keeps original cells and attaches closed guarded cases on %s %s",
+    (id, view) => {
+      const original = PREFAB_SHIPS.find((p) => p.id === id)!;
+      const doc =
+        id === "fed.m.crest" ? referenceRoomLayoutR025(original) : original;
+      const layers = shipVisualLayersR002(doc, view, catalog, "federation");
+      // Actual complete ordered source before the new finite case writes. Floor
+      // response is checked independently below; this is not a historical recipe clone.
+      const prior = sampleShipVisualLayers(layers.filter((l) => !addedCase(l)));
+      const current = sampleShipVisualLayers(layers);
+      const persistentMetadata = (c: VisualCell | undefined) => {
+        if (!c) return undefined;
+        // Covering an old face recomputes exposure qualification. Authored cell
+        // geometry, material, family, chart and surface semantics stay exact.
+        const {
+          normalFaces: _n,
+          normalSideFaces: _s,
+          facetFaces: _f,
+          facetNeighbourFaces: _a,
+          ...metadata
+        } = c;
+        return JSON.stringify(metadata);
+      };
+      const retentionFailures: string[] = [];
+      for (const [k, c] of prior)
+        if (persistentMetadata(current.get(k)) !== persistentMetadata(c))
+          retentionFailures.push(k);
+      expect(retentionFailures).toEqual([]);
+      const certificate = REFERENCE_EXTERIOR_CASES_R026[id],
+        b = certificate.northBounds;
+      const own = layers.filter((l) => l.id.includes(":r026-exterior:"));
+      const retained =
+        view === "deck" ? REFERENCE_EXTERIOR_EXISTING_BOUNDARY_R026[id] : [];
+      const bridgeWrites = own.filter((l) =>
+        l.id.endsWith(":boundary-backing"),
+      );
+      const bridge = sampleShipVisualLayers(bridgeWrites);
+      expect(bridge.size).toBe((b[3] - b[0]) * (b[5] - b[2]) - retained.length);
+      const originalLayers = layers.filter((l) => !addedCase(l));
+      for (const original of retained) {
+        expect(bridge.has(original.key)).toBe(false);
+        expect(persistentMetadata(current.get(original.key))).toBe(
+          JSON.stringify(original.cell),
+        );
+      }
+      if (view === "deck") {
+        // These same-family pressure cells qualify only with their exact original
+        // last writer; generic CORE, altered metadata or another positive bridge
+        // cell never expands the finite admission.
+        const [x, y, z] = retained[0].key.split(",").map(Number);
+        const copied: ShipVisualLayer = {
+          id: "unclassified-boundary-copy",
+          role: "core",
+          slot: "trim",
+          support: "volume:hull",
+          surfaceRole: "hull",
+          bounds: [x, y, z, x + 1, y + 1, z + 1],
+        };
+        expect(
+          referenceExteriorCasesR026(doc, view, catalog, "federation", [
+            ...originalLayers,
+            copied,
+          ]),
+        ).toEqual([]);
+        expect(
+          referenceExteriorCasesR026(doc, view, catalog, "federation", [
+            ...originalLayers,
+            { ...copied, slot: "primary" },
+          ]),
+        ).toEqual([]);
+        expect(
+          referenceExteriorCasesR026(doc, view, catalog, "federation", [
+            ...originalLayers,
+            {
+              ...copied,
+              bounds: [b[0], b[1] - 1, b[2], b[0] + 1, b[1], b[2] + 1],
+            },
+          ]),
+        ).toEqual([]);
+      }
+      expect(own.filter((l) => l.id.endsWith(":closed-body"))).toHaveLength(1);
+      expect(own.filter((l) => l.id.endsWith(":mouth"))).toHaveLength(
+        id === "fed.s.wren" ? 1 : 2,
+      );
+      const contactKeys = new Set<string>(),
+        newCells = new Map<string, VisualCell>(),
+        failures: string[] = [];
+      for (const [k, c] of current) {
+        if (
+          prior.has(k) ||
+          c.x < b[0] ||
+          c.x >= b[3] ||
+          c.y < b[1] - 1 ||
+          c.y >= b[4] ||
+          c.z < b[2] ||
+          c.z >= b[5]
+        )
+          continue;
+        newCells.set(k, c);
+        const cube = [
+          c.x / 16,
+          c.y / 16,
+          c.z / 16,
+          (c.x + 1) / 16,
+          (c.y + 1) / 16,
+          (c.z + 1) / 16,
+        ];
+        if (
+          certificate.wholeAddedCubeGuardBoundsM.some((g) =>
+            [0, 1, 2].every(
+              (i) => cube[i] <= g[i + 3] + 1e-10 && cube[i + 3] >= g[i] - 1e-10,
+            ),
+          )
+        )
+          failures.push(`guard:${k}`);
+        if (c.y === b[1] - 1) {
+          const n = prior.get(visualCellKey(c.x, c.y - 1, c.z));
+          const inward = prior.get(visualCellKey(c.x, c.y - 2, c.z));
+          if (
+            n?.role === "core" &&
+            inward?.role === "core" &&
+            n.family === inward.family &&
+            !n.facet &&
+            !inward.facet &&
+            !["glass", "emit_a", "emit_b"].includes(n.slot) &&
+            !["glass", "emit_a", "emit_b"].includes(inward.slot)
+          )
+            contactKeys.add(k);
+          else failures.push(`direct-two-core:${k}`);
+        }
+      }
+      expect(failures).toEqual([]);
+      expect(contactKeys.size).toBeGreaterThanOrEqual(8);
+      expect(newCells.size).toBeGreaterThan(500);
+      // Every actual emitted positive case cell reaches actual prior wall geometry
+      // by six-face voxel connectivity, not a box or common pressure-volume label.
+      const reached = new Set(contactKeys),
+        queue = [...contactKeys];
+      for (let i = 0; i < queue.length; i++) {
+        const c = newCells.get(queue[i])!;
+        for (const [dx, dy, dz] of [
+          [1, 0, 0],
+          [-1, 0, 0],
+          [0, 1, 0],
+          [0, -1, 0],
+          [0, 0, 1],
+          [0, 0, -1],
+        ]) {
+          const k = visualCellKey(c.x + dx, c.y + dy, c.z + dz);
+          if (newCells.has(k) && !reached.has(k)) {
+            reached.add(k);
+            queue.push(k);
+          }
+        }
+      }
+      expect(reached.size).toBe(newCells.size);
+      for (const mouth of own.filter((l) => l.id.endsWith(":mouth"))) {
+        let open = 0;
+        for (let z = mouth.bounds[2]; z < mouth.bounds[5]; z++)
+          for (let x = mouth.bounds[0]; x < mouth.bounds[3]; x++) {
+            if (!current.has(visualCellKey(x, b[4] - 1, z))) open++;
+            const backing = current.get(visualCellKey(x, b[1], z));
+            if (
+              !backing ||
+              backing.role !== "plate" ||
+              backing.family !== "volume:hull"
+            )
+              failures.push(`backing:${x},${z}`);
+          }
+        expect(open).toBeGreaterThan(20);
+      }
+      expect(failures).toEqual([]);
+      const rawFloor = sampleShipVisualLayers(
+        layers.filter(
+          (l) => !/:floor-cover(?:-|:)|:floor-room-circulation:/.test(l.id),
+        ),
+      );
+      const physical = (cells: Map<string, VisualCell>) => {
+        const tops = new Map<string, number>();
+        for (const c of cells.values())
+          if (c.role === "floor") {
+            const k = `${c.x},${c.y}`;
+            tops.set(k, Math.max(tops.get(k) ?? -Infinity, c.z));
+          }
+        return [...tops].sort((a, b) => a[0].localeCompare(b[0]));
+      };
+      expect(physical(current)).toEqual(physical(rawFloor));
+      const bindings = layers.filter((l) =>
+        l.id.includes(":floor-cover-binding:"),
+      );
+      expect(
+        bindings.every(
+          (l) =>
+            l.role === "floor" &&
+            l.slot === "dark" &&
+            l.surfaceRole === "floor",
+        ),
+      ).toBe(true);
+      expect(new Set(bindings.map((l) => l.id.split(":").at(-1)))).toEqual(
+        new Set(
+          view === "deck" && id === "fed.m.crest" ? ["shop", "cargo"] : [],
+        ),
+      );
+      const bow = layers
+        .filter((l) => l.id.includes(":r026-broad-bow:"))
+        .flatMap((l) => (l.role === "void" ? [] : [l]));
+      expect(bow.length > 0).toBe(view === "flight" && id === "fed.s.wren");
+      for (const [k, c] of current)
+        if (!prior.has(k) && !newCells.has(k)) {
+          const bounds = [
+            [144, 8, 40, 158, 28, 46],
+            [144, 80, 40, 158, 104, 46],
+            [180, 34, 24, 190, 52, 30],
+            [180, 56, 24, 190, 78, 30],
+          ];
+          if (
+            !bounds.some((g) =>
+              [c.x, c.y, c.z].every((v, i) => v >= g[i] && v < g[i + 3]),
+            )
+          )
+            failures.push(`undeclared:${k}`);
+        }
+      expect(failures).toEqual([]);
+    },
+    25000,
+  );
+
+  it("rejects changed documents, catalogs and missing effective optical admission atomically", () => {
+    const doc = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
+    expect(
+      referenceExteriorCasesR026(
+        { ...doc, revision: doc.revision + 1 },
+        "deck",
+        catalog,
+        "federation",
+        [],
+      ),
+    ).toEqual([]);
+    expect(
+      referenceExteriorCasesR026(
+        doc,
+        "deck",
+        { ...catalog, list: () => [] },
+        "federation",
+        [],
+      ),
+    ).toEqual([]);
+    expect(
+      referenceExteriorCasesR026(
+        doc,
+        "deck",
+        {
+          ...catalog,
+          get: (id) => {
+            const c = catalog.get(id);
+            return c ? { ...c, cells: [99, 99] } : undefined;
+          },
+        },
+        "federation",
+        [],
+      ),
+    ).toEqual([]);
+    const macro = SHIP_VISUAL_MACRO_PROFILES_R002.federation,
+      old = macro.opticalInterfaces;
+    try {
+      macro.opticalInterfaces = {} as typeof old;
+      expect(
+        referenceExteriorCasesR026(doc, "deck", catalog, "federation", []),
+      ).toEqual([]);
+    } finally {
+      macro.opticalInterfaces = old;
     }
   });
 });

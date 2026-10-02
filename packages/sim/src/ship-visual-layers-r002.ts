@@ -1,3 +1,5 @@
+import { sha256 } from "@noble/hashes/sha2.js";
+import { bytesToHex } from "@noble/hashes/utils.js";
 /** r002 source recipes: pressure backing, subframe, inset plates and selected equipment bays. */
 import {
   G,
@@ -10,6 +12,7 @@ import { bowGlass, bowHeights } from "@sidereal/content/bow-profiles";
 import { mountTileAccepts } from "@sidereal/content/ship-mount-tiles";
 import {
   deriveInterior,
+  canonicalShipPrefabJson,
   deckApproachZones,
   volumeGeometry,
   placeMount,
@@ -32,6 +35,8 @@ import { dressShip } from "./ship-dresser";
 import { createRetainedWallBoundaryR002 } from "./ship-visual-r002-retained-wall-boundary";
 import { referenceBowFrameR002 } from "./ship-visual-r002-bow-frame";
 import { referenceBowTransitionR002 } from "./ship-visual-r002-bow-transition";
+import { referenceBowCasesR026 } from "./ship-visual-r002-bow-cases-r026";
+import { referenceOriginalCanopySourceR026 } from "./ship-visual-r002-canopy-source-r026";
 
 import {
   SHIP_VISUAL_PROFILES_R002,
@@ -39,6 +44,9 @@ import {
   referencePlateDecals,
   referenceCockpitApertureSourceAdmittedR002,
   REFERENCE_OPTICAL_INTERFACES_R002,
+  REFERENCE_EXTERIOR_CASES_R026,
+  REFERENCE_EXTERIOR_EXISTING_BOUNDARY_R026,
+  REFERENCE_EXTERIOR_CATALOG_SHA256_R026,
   type ShipVisualMacroProfile,
 } from "@sidereal/content/ship-visual-r002";
 
@@ -626,6 +634,267 @@ export function referenceCockpitApertureR002(
   return result;
 }
 
+const sourceDigestR026 = (s: string) =>
+  bytesToHex(sha256(new TextEncoder().encode(s)));
+
+/** Exact named R26 exterior bodies; immutable full-XYZ guard certificate.
+ * This added finish never changes original cells, pressure or authority. */
+export function referenceExteriorCasesR026(
+  doc: ShipPrefabDocumentV1,
+  view: ShipVisualView,
+  catalog: PrefabComponentCatalog,
+  profileId: ShipVisualProfileId,
+  finalLayers: readonly ShipVisualLayer[],
+): ShipVisualLayer[] {
+  const certificate =
+    REFERENCE_EXTERIOR_CASES_R026[
+      doc.id as keyof typeof REFERENCE_EXTERIOR_CASES_R026
+    ];
+  if (
+    !certificate ||
+    !["deck", "flight"].includes(view) ||
+    profileId !== "federation" ||
+    sourceDigestR026(canonicalShipPrefabJson(doc)) !==
+      certificate.documentSha256 ||
+    sourceDigestR026(JSON.stringify(catalog.list())) !==
+      REFERENCE_EXTERIOR_CATALOG_SHA256_R026 ||
+    doc.mounts.some(
+      (m) =>
+        JSON.stringify(catalog.get(m.component)) !==
+        JSON.stringify(catalog.list().find((c) => c.id === m.component)),
+    )
+  )
+    return [];
+  const effectiveGuards = referenceOpticalGuardBoxesR002(
+    doc,
+    "deck",
+    catalog,
+    SHIP_VISUAL_MACRO_PROFILES_R002[profileId].opticalInterfaces,
+  );
+  if (
+    certificate.wholeAddedCubeGuardBoundsM.length !== certificate.guardCount ||
+    certificate.guardMembership.length !== certificate.guardCount ||
+    sourceDigestR026(JSON.stringify(certificate.wholeAddedCubeGuardBoundsM)) !==
+      certificate.guardBoundsSha256 ||
+    effectiveGuards.unknownVariant ||
+    sourceDigestR026(
+      JSON.stringify({
+        unknownVariant: effectiveGuards.unknownVariant,
+        bounds: effectiveGuards.bounds,
+      }),
+    ) !== certificate.opticalGuardsSha256 ||
+    certificate.wholeAddedCubeGuardBoundsM.some(
+      (g) =>
+        g.length !== 6 ||
+        !g.every(Number.isFinite) ||
+        g.some((v, i) => i < 3 && v > g[i + 3]),
+    )
+  )
+    return [];
+  const cells = sampleShipVisualLayers(finalLayers),
+    b = certificate.northBounds,
+    wallY = b[1];
+  const retainedBoundary =
+    view === "deck"
+      ? REFERENCE_EXTERIOR_EXISTING_BOUNDARY_R026[
+          doc.id as keyof typeof REFERENCE_EXTERIOR_EXISTING_BOUNDARY_R026
+        ]
+      : [];
+  const retainedKeys = new Set<string>(retainedBoundary.map((c) => c.key));
+  const reverseLayers = [...finalLayers].reverse();
+  const persistentMetadata = (c: ReturnType<typeof cells.get>) => {
+    if (!c) return undefined;
+    const {
+      normalFaces: _n,
+      normalSideFaces: _s,
+      facetFaces: _f,
+      facetNeighbourFaces: _a,
+      ...metadata
+    } = c;
+    return JSON.stringify(metadata);
+  };
+  // This closed original cohort is retained, not repainted or refilled. Match
+  // the true ordered source primitive as well as every persistent cell field.
+  for (const original of retainedBoundary) {
+    const c = cells.get(original.key);
+    if (!c || persistentMetadata(c) !== JSON.stringify(original.cell))
+      return [];
+    const owner = reverseLayers.find(
+      (l) =>
+        c.x >= l.bounds[0] &&
+        c.x < l.bounds[3] &&
+        c.y >= l.bounds[1] &&
+        c.y < l.bounds[4] &&
+        c.z >= l.bounds[2] &&
+        c.z < l.bounds[5] &&
+        (!l.polygon ||
+          (insidePolygon(l.polygon, c.x + 0.5, c.y + 0.5) &&
+            !l.holes?.some((h) => insidePolygon(h, c.x + 0.5, c.y + 0.5)) &&
+            (l.band === undefined ||
+              polygonBoundarySample([c.x + 0.5, c.y + 0.5], l.polygon)
+                .distance <= l.band))),
+    );
+    if (
+      !owner ||
+      owner.id !== original.ownerId ||
+      sourceDigestR026(JSON.stringify(owner)) !== original.ownerLayerSHA256
+    )
+      return [];
+  }
+  const opaqueContact = (c: ReturnType<typeof cells.get>) =>
+    !!c && !c.facet && !["glass", "emit_a", "emit_b"].includes(c.slot);
+  let widestPositiveAttachment = 0;
+  const touch = (a: readonly number[], g: readonly number[]) =>
+    [0, 1, 2].every(
+      (i) => a[i] <= g[i + 3] + 1e-10 && a[i + 3] >= g[i] - 1e-10,
+    );
+  for (let z = b[2]; z < b[5]; z++) {
+    let attachmentWidth = 0;
+    for (let x = b[0]; x < b[3]; x++) {
+      // The original empty boundary course lies inside the construction band.
+      // Its new backing must directly contact BOTH original raw CORE courses;
+      // a farther pair behind an empty seam cannot qualify attachment.
+      const outerCore = cells.get(visualCellKey(x, wallY - 2, z));
+      const innerCore = cells.get(visualCellKey(x, wallY - 3, z));
+      if (
+        outerCore?.role !== "core" ||
+        innerCore?.role !== "core" ||
+        outerCore.family !== "volume:hull" ||
+        innerCore.family !== "volume:hull" ||
+        !opaqueContact(outerCore) ||
+        !opaqueContact(innerCore)
+      )
+        return [];
+      attachmentWidth++;
+      widestPositiveAttachment = Math.max(
+        widestPositiveAttachment,
+        attachmentWidth,
+      );
+      // Validate the finite bridge as well as all three outward courses against
+      // the SAME complete immutable guard set and original positive occupancy.
+      for (let y = b[1] - 1; y < b[4]; y++) {
+        const key = visualCellKey(x, y, z);
+        if (cells.has(key) && !(y === b[1] - 1 && retainedKeys.has(key)))
+          return [];
+        const cube = [
+          x / 16,
+          y / 16,
+          z / 16,
+          (x + 1) / 16,
+          (y + 1) / 16,
+          (z + 1) / 16,
+        ];
+        if (certificate.wholeAddedCubeGuardBoundsM.some((g) => touch(cube, g)))
+          return [];
+      }
+    }
+  }
+  // The connected finite inner course reaches a real raw wall face through a
+  // broad >=8-cell patch; a guessed core pair behind a VOID alone cannot admit it.
+  if (widestPositiveAttachment < 8) return [];
+  const result: ShipVisualLayer[] = [],
+    prefix = `volume:hull:r026-exterior:${doc.id}:north`;
+  const add = (
+    id: string,
+    role: ShipVisualLayer["role"],
+    slot: ShipKitSlot,
+    bounds: ShipVisualLayer["bounds"],
+  ) => {
+    result.push({
+      id: `${prefix}:${id}`,
+      role,
+      slot,
+      bounds,
+      support: "volume:hull",
+      surfaceRole: "hull",
+    });
+  };
+  // Split only this finite backing around the exact retained original keys;
+  // never emit a redundant or replacement write over their pressure binding.
+  for (let z = b[2]; z < b[5]; z++) {
+    let start: number | undefined;
+    for (let x = b[0]; x <= b[3]; x++) {
+      if (x < b[3] && !retainedKeys.has(visualCellKey(x, b[1] - 1, z)))
+        start ??= x;
+      else if (start !== undefined) {
+        add(`${start}:${z}:boundary-backing`, "plate", "secondary", [
+          start,
+          b[1] - 1,
+          z,
+          x,
+          b[1],
+          z + 1,
+        ]);
+        start = undefined;
+      }
+    }
+  }
+  add("closed-body", "plate", "secondary", [...b]);
+  const split =
+    doc.id === "fed.s.wren" ? [b[0], b[3]] : [b[0], b[0] + 32, b[3]];
+  for (let i = 0; i < split.length - 1; i++) {
+    const x = split[i],
+      X = split[i + 1],
+      z = b[2] + 3,
+      Z = b[5] - 3;
+    // Two-course true open mouth leaves the finite first outward course as
+    // continuous backing. Broad rims, returns and a substantial cassette close
+    // the field; no generic thin-line badge or pressure-course carving.
+    add(`field-${i}:backing`, "plate", "dark", [
+      x + 3,
+      b[1],
+      z,
+      X - 3,
+      b[1] + 1,
+      Z,
+    ]);
+    add(`field-${i}:mouth`, "void", "dark", [
+      x + 3,
+      b[1] + 1,
+      z,
+      X - 3,
+      b[4],
+      Z,
+    ]);
+    const cassetteX = x + 4,
+      cassetteX1 = Math.min(X - 5, cassetteX + (i === 0 ? 14 : 18));
+    add(`field-${i}:cassette`, "service", i === 0 ? "secondary" : "metal", [
+      cassetteX,
+      b[1] + 1,
+      z + 2,
+      cassetteX1,
+      b[4],
+      Z - 2,
+    ]);
+    add(`field-${i}:access`, "plate", "primary", [
+      cassetteX + 1,
+      b[4] - 1,
+      z + 3,
+      cassetteX1 - 1,
+      b[4],
+      Z - 3,
+    ]);
+    add(`field-${i}:latch`, "service", "metal", [
+      cassetteX1 - 2,
+      b[4] - 1,
+      z + 5,
+      cassetteX1,
+      b[4],
+      z + 8,
+    ]);
+    if (X - cassetteX1 >= 10)
+      add(`field-${i}:distribution`, "service", "metal", [
+        cassetteX1 + 3,
+        b[1] + 1,
+        z + 3,
+        X - 4,
+        b[4] - 1,
+        Z - 2,
+      ]);
+  }
+  return result;
+}
+
 const mod = (n: number, d: number) => ((n % d) + d) % d;
 export function shipVisualLayersR002(
   doc: ShipPrefabDocumentV1,
@@ -636,6 +905,17 @@ export function shipVisualLayersR002(
   const profile = SHIP_VISUAL_PROFILES_R002[profileId],
     macro = SHIP_VISUAL_MACRO_PROFILES_R002[profileId],
     layers: ShipVisualLayer[] = [];
+  const r026Certificate =
+    REFERENCE_EXTERIOR_CASES_R026[
+      doc.id as keyof typeof REFERENCE_EXTERIOR_CASES_R026
+    ];
+  const referenceFloorR026 =
+    profileId === "federation" &&
+    !!r026Certificate &&
+    sourceDigestR026(canonicalShipPrefabJson(doc)) ===
+      r026Certificate.documentSha256 &&
+    sourceDigestR026(JSON.stringify(catalog.list())) ===
+      REFERENCE_EXTERIOR_CATALOG_SHA256_R026;
   let surfaceRole: NonNullable<ShipVisualLayer["surfaceRole"]> = "hull";
   const box = (
     id: string,
@@ -729,6 +1009,43 @@ export function shipVisualLayersR002(
     room: string;
   }[] = [];
   for (const room of doc.rooms) {
+    if (referenceFloorR026) {
+      // Source-qualified machine-edge lids only. Unknown engineering eligibility
+      // has no new lid; the existing continuous FLOOR field stays intact.
+      const bounds =
+        doc.id === "fed.m.crest"
+          ? room.id === "shop"
+            ? [148, 24, 172, 40]
+            : room.id === "cargo"
+              ? [232, 20, 256, 36]
+              : null
+          : null;
+      if (bounds) {
+        let fullSupport = true;
+        for (let y = bounds[1]; y < bounds[3] && fullSupport; y++)
+          for (let x = bounds[0]; x < bounds[2]; x++)
+            if (!supportedFloorPlan.has(`${x},${y}`)) {
+              fullSupport = false;
+              break;
+            }
+        if (
+          fullSupport &&
+          !occupiedFloorRects.some(
+            (q) =>
+              bounds[0] / 16 < q[2] + 1 / 16 &&
+              bounds[2] / 16 > q[0] - 1 / 16 &&
+              bounds[1] / 16 < q[3] + 1 / 16 &&
+              bounds[3] / 16 > q[1] - 1 / 16,
+          )
+        )
+          floorCovers.push({
+            bounds,
+            kind: room.type === "workshop" ? "vent" : "access",
+            room: room.id,
+          });
+      }
+      continue;
+    }
     if (
       ![
         "engineering",
@@ -2088,11 +2405,15 @@ export function shipVisualLayersR002(
               const corner =
                 Math.min(x - a, A - 1 - x) + Math.min(y - b, B - 1 - y) < 2;
               if (edge === 0 || corner) {
-                surfaceRole = "hull";
+                surfaceRole = referenceFloorR026 ? "floor" : "hull";
                 column(
                   `${family}:floor-cover-binding:${cover.room}`,
                   "floor",
-                  macro.architecture?.roofMassing ? "primary" : "trim",
+                  referenceFloorR026
+                    ? "dark"
+                    : macro.architecture?.roofMassing
+                      ? "primary"
+                      : "trim",
                   x,
                   y,
                   floor - 1,
@@ -2105,19 +2426,21 @@ export function shipVisualLayersR002(
                   cover.kind === "access" && x - a > 3 && x - a < 9;
                 // Flush manufactured access lids borrow the existing hull finish.
                 // Their occupied contact plane and FLOOR role remain unchanged.
-                surfaceRole = "hull";
+                surfaceRole = referenceFloorR026 ? "floor" : "hull";
                 column(
                   `${family}:floor-cover:${cover.room}`,
                   "floor",
-                  macro.architecture?.roofMassing
-                    ? edge < 2 ||
-                      (x - a >= Math.floor((A - a) * 0.61) &&
-                        x - a < Math.floor((A - a) * 0.61) + 2)
-                      ? "primary"
-                      : "trim"
-                    : tooling
-                      ? "trim"
-                      : "primary",
+                  referenceFloorR026
+                    ? "secondary"
+                    : macro.architecture?.roofMassing
+                      ? edge < 2 ||
+                        (x - a >= Math.floor((A - a) * 0.61) &&
+                          x - a < Math.floor((A - a) * 0.61) + 2)
+                        ? "primary"
+                        : "trim"
+                      : tooling
+                        ? "trim"
+                        : "primary",
                   x,
                   y,
                   floor - 1,
@@ -5752,8 +6075,36 @@ export function shipVisualLayersR002(
       ),
     ];
   };
-  const finishedLayers = finishBow([...finalLayers, ...cockpitAperture]);
-  if (!matingSolids.some((s) => !s.veto)) return finishedLayers;
+  const geometricFinish = finishBow([...finalLayers, ...cockpitAperture]);
+  const broadBow = [
+    ...geometricFinish,
+    ...referenceBowCasesR026(
+      doc,
+      view,
+      profileId,
+      geometricFinish,
+      opticalBoxes,
+    ),
+  ];
+  const finishedLayers = [
+    ...broadBow,
+    ...referenceExteriorCasesR026(doc, view, catalog, profileId, broadBow),
+  ];
+  // Resolve original exposed-face pigments before adding the finite Crest
+  // casing. Its new faces must not suppress an original material overlay.
+  const appendOriginalCanopy = (ordered: ShipVisualLayer[]) => [
+    ...ordered,
+    ...referenceOriginalCanopySourceR026(
+      doc,
+      view,
+      catalog,
+      profileId,
+      ordered,
+      opticalBoxes,
+    ),
+  ];
+  if (!matingSolids.some((s) => !s.veto))
+    return appendOriginalCanopy(finishedLayers);
   // A pigment cannot change source-layer grouping priority. Resolve the complete
   // geometry FIRST and append only slot overlays for already occupied exposed
   // final owners; never compact these overlays back across earlier voids/cases.
@@ -5812,7 +6163,7 @@ export function shipVisualLayersR002(
       bounds: [c.x, c.y, c.z, c.x + 1, c.y + 1, c.z + 1],
     });
   }
-  return [...finishedLayers, ...overlays];
+  return appendOriginalCanopy([...finishedLayers, ...overlays]);
 }
 
 /** Exact box compaction with dependencies only between writes to the same XYZ cells. */
