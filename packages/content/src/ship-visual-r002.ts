@@ -1720,6 +1720,112 @@ export const REFERENCE_STATIC_WALL_FITTINGS_R002 = {
   },
 };
 
+/** Exact current top-frame assets are rendered at one cardinal component matrix.
+ * This certifies fixed-pose geometry/service guards only, never a future rotating sweep.
+ * Unknown assets/frames keep the previous low roof presentation. */
+export const REFERENCE_ROOF_FIXED_POSE_R002: Record<
+  string,
+  {
+    assetSha256: string;
+    bounds: readonly [number, number, number, number, number, number];
+    frame: "top";
+    motion: "fixed-pose";
+    clearanceCells: number;
+    muzzleCells: number;
+  }
+> = {
+  "plasma-turret.lg": {
+    assetSha256:
+      "7129a24a4de7b6db56e28a6ea0220ca36ed4856345ce9fb4630de27444e0d86a",
+    bounds: [-1.5, 0, -1.5, 1.5, 3.125, 1.5],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 8,
+  },
+  "plasma-turret.md": {
+    assetSha256:
+      "2a3c04bcc0626841d90084e15451db025512f5c6dbcd6ec5c302c1c5b5887cf7",
+    bounds: [-1, 0, -1, 1, 2.1875, 1],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 8,
+  },
+  "radiator.lg": {
+    assetSha256:
+      "03e7863edd84c98aa51065e47fa489016ac38351a3ae86ff6504504d0b19a91b",
+    bounds: [-1.5, 0, -1.5, 1.5, 0.7987, 1.5],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 0,
+  },
+  "radiator.md": {
+    assetSha256:
+      "da551bdf54037d04e8d53fc3d18316dc66c77f0ebd2b3b8961bc4a928bb3bd57",
+    bounds: [-1, 0, -1, 1, 0.5815, 1],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 0,
+  },
+  "radiator.sm": {
+    assetSha256:
+      "166204786e4a191c4e5a3edf4495e50fd5fc850a020ff17a1031470bbeb82458",
+    bounds: [-0.5, 0, -0.5, 0.5, 0.3734, 0.5],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 0,
+  },
+  "railgun.lg": {
+    assetSha256:
+      "210d4b19543fd995c009436110522e6953bc4cabf9720caac2bdea1f8bcd0f10",
+    bounds: [-1.4375, 0, -3.625, 1.4375, 2.0694, 1.4375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 8,
+  },
+  "railgun.md": {
+    assetSha256:
+      "e8ea22e2afc0adaa8f8086c8da81dd466cf75f9396433e3a588ba8f30eb20ddc",
+    bounds: [-0.9375, 0, -2.375, 0.9375, 1.4438, 0.9375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 8,
+  },
+  "sensor-dish.lg": {
+    assetSha256:
+      "e6fd6860b1e50f0dcb0a33f41122063e5f8abd1d0282931553b6686ca597db69",
+    bounds: [-1.4375, 0, -1.4375, 1.4375, 2.6469, 1.4375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 0,
+  },
+  "sensor-dish.md": {
+    assetSha256:
+      "5185e813b7b70ab7eddb0f4e15dff5c51a3f203af5c03f5f56999d18ebe23b18",
+    bounds: [-0.9375, 0, -0.9375, 0.9375, 1.8769, 0.9375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 0,
+  },
+  "sensor-dish.sm": {
+    assetSha256:
+      "0ef11b6b64be5fca9145f4ba1d442b9e43ca819110e6dd11ff19d8de9dfc43df",
+    bounds: [-0.4375, 0, -0.4375, 0.4375, 1.1069, 0.4375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 0,
+  },
+};
+
 export interface ShipVisualMacroProfile {
   armorSection: number;
   corner: number;
@@ -1736,6 +1842,13 @@ export interface ShipVisualMacroProfile {
     floorCover: readonly [number, number];
     roofStep: number;
     roofThermalRibs: number;
+    roofMassing?: {
+      high: number;
+      medium: number;
+      low: number;
+      connection: number;
+    };
+    roofFixedPose: typeof REFERENCE_ROOF_FIXED_POSE_R002;
   };
   staticWallFittings: typeof REFERENCE_STATIC_WALL_FITTINGS_R002;
   opticalInterfaces: Record<string, ReferenceOpticalInterface>;
@@ -1787,6 +1900,8 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
       floorCover: [32, 24],
       roofStep: 2,
       roofThermalRibs: 4,
+      roofMassing: { high: 4, medium: 1, low: -1, connection: 8 },
+      roofFixedPose: REFERENCE_ROOF_FIXED_POSE_R002,
     },
     staticWallFittings: REFERENCE_STATIC_WALL_FITTINGS_R002,
     opticalInterfaces: REFERENCE_OPTICAL_INTERFACES_R002,

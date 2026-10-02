@@ -2485,6 +2485,7 @@ describe("versioned reference recipes", () => {
   it.each(["fed.s.wren", "fed.m.crest"])(
     "joins unequal task-sized roof cases to the backing and leaves functional recesses visible in %s",
     (id) => {
+      const compileStarted = performance.now();
       const ship = PREFAB_SHIPS.find((s) => s.id === id)!,
         r = compileShipVisual(
           ship,
@@ -2494,6 +2495,9 @@ describe("versioned reference recipes", () => {
           undefined,
           "r002",
         );
+      const compileMs = performance.now() - compileStarted;
+      const checksStarted = performance.now();
+      const exactFailures: string[] = [];
       const geoms = ship.volumes.map(volumeGeometry);
       const occupied = [
         ...ship.mounts
@@ -2544,14 +2548,55 @@ describe("versioned reference recipes", () => {
             visible++;
             upperLevels.add(z);
             const base = caseBases.get(`${l.id}:${x},${y}`)!;
-            for (const course of [base - 1, base - 2])
-              expect(r.cells.get(visualCellKey(x, y, course))?.role).toBe(
-                "core",
-              );
-            for (let course = base; course <= z; course++)
-              expect(r.cells.has(visualCellKey(x, y, course))).toBe(true);
+            for (const course of [base - 1, base - 2]) {
+              const key = visualCellKey(x, y, course),
+                actual = r.cells.get(key)?.role;
+              if (actual !== "core")
+                exactFailures.push(
+                  `${key}: expected CORE backing, actual ${actual}`,
+                );
+            }
+            for (let course = base; course <= z; course++) {
+              const key = visualCellKey(x, y, course);
+              if (!r.cells.has(key))
+                exactFailures.push(
+                  `${key}: expected positive case course, actual absent`,
+                );
+            }
           }
       expect(visible).toBeGreaterThan(1000);
+      // R24 changes the actual high roof silhouette, not only pigment/endpoints.
+      expect(Math.max(...upperLevels)).toBe(46);
+      expect(
+        Math.max(...upperLevels) - Math.min(...upperLevels),
+      ).toBeGreaterThanOrEqual(5);
+      let deepMouths = 0;
+      for (const l of r.layers.filter(
+        (l) =>
+          l.id.includes(":roof-cluster-well:") &&
+          l.bounds[2] === 41 &&
+          l.bounds[5] === 47,
+      ))
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            if (r.cells.has(visualCellKey(x, y, 45))) continue;
+            deepMouths++;
+            const bottomKey = visualCellKey(x, y, 40),
+              bottom = r.cells.get(bottomKey)?.role;
+            if (bottom !== "plate")
+              exactFailures.push(
+                `${bottomKey}: expected PLATE closed bottom, actual ${bottom}`,
+              );
+            for (const z of [38, 39]) {
+              const key = visualCellKey(x, y, z),
+                actual = r.cells.get(key)?.role;
+              if (actual !== "core")
+                exactFailures.push(
+                  `${key}: expected CORE mouth backing, actual ${actual}`,
+                );
+            }
+          }
+      expect(deepMouths).toBeGreaterThan(20);
       expect(upperLevels.size).toBeGreaterThanOrEqual(2);
       // Actual occupied top cells must expose the promised two-cell step;
       // different box endpoints or a recolor alone do not establish relief.
@@ -2575,13 +2620,37 @@ describe("versioned reference recipes", () => {
             const backing = [l.bounds[2] - 1, l.bounds[2] - 2].find((z) =>
               r.cells.has(visualCellKey(x, y, z)),
             );
-            expect(backing).toBeDefined();
-            const cell = r.cells.get(visualCellKey(x, y, backing!))!;
-            const topCore = cell.role === "core" ? backing! : backing! - 1;
-            for (const z of [topCore, topCore - 1])
-              expect(r.cells.get(visualCellKey(x, y, z))?.role).toBe("core");
+            if (backing === undefined)
+              exactFailures.push(
+                `${x},${y},${l.bounds[2]}: expected finite functional pocket backing, actual absent`,
+              );
+            else {
+              const cell = r.cells.get(visualCellKey(x, y, backing))!;
+              const topCore = cell.role === "core" ? backing : backing - 1;
+              for (const z of [topCore, topCore - 1]) {
+                const key = visualCellKey(x, y, z),
+                  actual = r.cells.get(key)?.role;
+                if (actual !== "core")
+                  exactFailures.push(
+                    `${key}: expected CORE functional pocket backing, actual ${actual}`,
+                  );
+              }
+            }
           }
       expect(open).toBeGreaterThan(100);
+      console.log(
+        JSON.stringify({
+          scope: "R24 exact roof cell checks",
+          id,
+          compileMs,
+          checkMs: performance.now() - checksStarted,
+          visible,
+          deepMouths,
+          open,
+          exactFailures,
+        }),
+      );
+      expect(exactFailures).toEqual([]);
     },
     15000,
   );

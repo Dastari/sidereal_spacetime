@@ -30,6 +30,7 @@ import {
 import { dressShip } from "./ship-dresser";
 import { createRetainedWallBoundaryR002 } from "./ship-visual-r002-retained-wall-boundary";
 import { referenceBowFrameR002 } from "./ship-visual-r002-bow-frame";
+import { referenceBowTransitionR002 } from "./ship-visual-r002-bow-transition";
 
 import {
   SHIP_VISUAL_PROFILES_R002,
@@ -1273,6 +1274,50 @@ export function shipVisualLayersR002(
       .map((m) => placeMount(m, catalog.get(m.component), geoms, doc).rect),
     ...(doc.mountTiles ?? []).map((t) => placeMountTile(t, geoms).rect),
   ].map((r) => r.map((n) => n * 16));
+  // Same GLTF_TO_ZUP -> COMPONENT_TO_PREFAB -> cardinal placement as buildComponents.
+  // Project actual fixed-pose geometry plus finite service/muzzle guards conservatively;
+  // this does not certify a hypothetical rotating or animated component.
+  const roofOperating = new Map<string, number[]>();
+  for (const c of dressShip(doc, { catalog }).components) {
+    const p = c.placement,
+      cert = macro.architecture?.roofFixedPose[c.component];
+    if (
+      p.mount.attach !== "top" ||
+      !cert ||
+      !p.spec ||
+      cert.frame !== "top" ||
+      cert.motion !== "fixed-pose" ||
+      p.spec.attach[0] !== "top" ||
+      p.spec.id !== c.component ||
+      !p.spec.visual ||
+      !Number.isInteger(p.quarterTurns) ||
+      ![0, 1, 2, 3].includes(p.quarterTurns) ||
+      ![...p.anchor, p.anchorZ, ...cert.bounds].every(Number.isFinite)
+    )
+      continue;
+    const corners: number[][] = [];
+    const angle = (p.quarterTurns * Math.PI) / 2,
+      C = Math.round(Math.cos(angle)),
+      S = Math.round(Math.sin(angle));
+    for (const x of [cert.bounds[0], cert.bounds[3]])
+      for (const z of [
+        cert.bounds[2] - cert.muzzleCells / 16,
+        cert.bounds[5],
+      ]) {
+        const X = -z,
+          Y = -x;
+        corners.push([
+          (p.anchor[0] + C * X - S * Y) * 16,
+          (p.anchor[1] + S * X + C * Y) * 16,
+        ]);
+      }
+    roofOperating.set(c.mount, [
+      Math.min(...corners.map((p) => p[0])) - cert.clearanceCells,
+      Math.min(...corners.map((p) => p[1])) - cert.clearanceCells,
+      Math.max(...corners.map((p) => p[0])) + cert.clearanceCells,
+      Math.max(...corners.map((p) => p[1])) + cert.clearanceCells,
+    ]);
+  }
   const roofMarkings = referencePlateDecals(
     doc,
     dressShip(doc, { catalog }).decals,
@@ -1390,6 +1435,7 @@ export function shipVisualLayersR002(
       kind: "utility" | "habitation" | "control";
       fixtures: number[][];
       broadSide: "low" | "high";
+      massing: boolean;
     }[] = [];
     if (deck) {
       const mounted = [
@@ -1440,6 +1486,9 @@ export function shipVisualLayersR002(
             .sort()
             .join("+")}`,
           kind,
+          massing:
+            !!macro.architecture?.roofMassing &&
+            items.every((m) => roofOperating.has(m.id)),
           fixtures: items.map((m) => [...m.bounds]),
           broadSide: index === 2 ? "high" : "low",
           bounds: [
@@ -1510,6 +1559,7 @@ export function shipVisualLayersR002(
         roofCases.push({
           id: "exposed-cover",
           kind: "habitation",
+          massing: false,
           fixtures: [],
           broadSide: "high",
           bounds: candidates[0].bounds,
@@ -1769,6 +1819,99 @@ export function shipVisualLayersR002(
         for (const key of keys) admittedRoofCases.set(key, body);
       }
     }
+    // Tall presentation is a separate finite subfootprint. Rejected/unknown
+    // occurrences retain their ENTIRE previous low body, not a partial fallback.
+    const massingCells = new Set<string>();
+    for (const body of new Set(admittedRoofCases.values())) {
+      if (!body.massing) continue;
+      const remaining = new Set(
+        [...admittedRoofCases]
+          .filter(([key, owner]) => {
+            if (owner !== body) return false;
+            const [x, y] = key.split(",").map(Number);
+            return ![...roofOperating.values()].some((r) =>
+              inRect(x + 0.5, y + 0.5, r),
+            );
+          })
+          .map(([key]) => key),
+      );
+      while (remaining.size) {
+        const first = remaining.values().next().value!;
+        remaining.delete(first);
+        const keys = [first];
+        let cursor = 0;
+        while (cursor < keys.length) {
+          const [x, y] = keys[cursor++].split(",").map(Number);
+          for (const [dx, dy] of [
+            [1, 0],
+            [-1, 0],
+            [0, 1],
+            [0, -1],
+          ])
+            if (remaining.delete(`${x + dx},${y + dy}`))
+              keys.push(`${x + dx},${y + dy}`);
+        }
+        const present = new Set(keys),
+          width = macro.architecture!.roofMassing!.connection;
+        const broadApron = keys.some((key) => {
+          const [x, y] = key.split(",").map(Number),
+            d = distanceToFixture(body, x + 0.5, y + 0.5);
+          if (d < 2 || d >= 8) return false;
+          return [
+            [1, 0],
+            [0, 1],
+          ].some(([dx, dy]) =>
+            Array.from(
+              { length: width },
+              (_, i) => i - Math.floor(width / 2),
+            ).every(
+              (n) =>
+                present.has(`${x + dx * n},${y + dy * n}`) &&
+                distanceToFixture(body, x + dx * n + 0.5, y + dy * n + 0.5) < 8,
+            ),
+          );
+        });
+        if (!broadApron) continue;
+        // Erode by a complete width×width box, connect only that broad spine,
+        // then restore its supported boxes. A one-cell neck cannot carry a cheek.
+        const offsets = Array.from(
+          { length: width },
+          (_, i) => i - Math.floor(width / 2),
+        );
+        const broadCenters = new Set(
+          keys.filter((key) => {
+            const [x, y] = key.split(",").map(Number);
+            return offsets.every((dx) =>
+              offsets.every((dy) => present.has(`${x + dx},${y + dy}`)),
+            );
+          }),
+        );
+        const connected: string[] = [];
+        for (const key of broadCenters) {
+          const [x, y] = key.split(",").map(Number);
+          if (distanceToFixture(body, x + 0.5, y + 0.5) < 8 + width / 2)
+            connected.push(key);
+        }
+        for (const key of connected) broadCenters.delete(key);
+        let at = 0;
+        while (at < connected.length) {
+          const [x, y] = connected[at++].split(",").map(Number);
+          for (const [dx, dy] of [
+            [1, 0],
+            [-1, 0],
+            [0, 1],
+            [0, -1],
+          ])
+            if (broadCenters.delete(`${x + dx},${y + dy}`))
+              connected.push(`${x + dx},${y + dy}`);
+        }
+        for (const key of connected) {
+          const [x, y] = key.split(",").map(Number);
+          for (const dx of offsets)
+            for (const dy of offsets) massingCells.add(`${x + dx},${y + dy}`);
+        }
+      }
+    }
     for (let y = by; y < bY; y++)
       for (let x = bx; x < bX; x++) {
         const p: Pt = [x + 0.5, y + 0.5];
@@ -1850,7 +1993,7 @@ export function shipVisualLayersR002(
                 column(
                   `${family}:floor-cover-binding:${cover.room}`,
                   "floor",
-                  "trim",
+                  macro.architecture?.roofMassing ? "primary" : "trim",
                   x,
                   y,
                   floor - 1,
@@ -1867,7 +2010,15 @@ export function shipVisualLayersR002(
                 column(
                   `${family}:floor-cover:${cover.room}`,
                   "floor",
-                  tooling ? "trim" : "primary",
+                  macro.architecture?.roofMassing
+                    ? edge < 2 ||
+                      (x - a >= Math.floor((A - a) * 0.61) &&
+                        x - a < Math.floor((A - a) * 0.61) + 2)
+                      ? "primary"
+                      : "trim"
+                    : tooling
+                      ? "trim"
+                      : "primary",
                   x,
                   y,
                   floor - 1,
@@ -1881,7 +2032,12 @@ export function shipVisualLayersR002(
                   x < A - 4 &&
                   y > b + 3 &&
                   y < B - 4 &&
-                  mod(x - a, 5) < 2
+                  (macro.architecture?.roofMassing
+                    ? [
+                        Math.floor((A - a) * 0.3),
+                        Math.floor((A - a) * 0.65),
+                      ].some((at) => x - a >= at && x - a < at + 3)
+                    : mod(x - a, 5) < 2)
                 )
                   column(
                     `${family}:floor-cover-fin:${cover.room}`,
@@ -2759,6 +2915,35 @@ export function shipVisualLayersR002(
             }
             const architecturalCase =
               !!macro.architecture && deck && shoulder && !!shapedCase;
+            const massing =
+              architecturalCase && massingCells.has(`${x},${y}`)
+                ? macro.architecture?.roofMassing
+                : undefined;
+            const mouthLeft = enclosure ? enclosure.bounds[0] + 5 : 0,
+              mouthRight = enclosure
+                ? Math.min(enclosure.bounds[2] - 5, mouthLeft + 28)
+                : 0,
+              mouthBottom = enclosure ? enclosure.bounds[1] + 5 : 0,
+              mouthTop = enclosure
+                ? Math.min(enclosure.bounds[3] - 5, mouthBottom + 20)
+                : 0;
+            const inHighShell = (X: number, Y: number) =>
+              !!enclosure &&
+              admittedRoofCases.get(`${X},${Y}`) === enclosure &&
+              massingCells.has(`${X},${Y}`) &&
+              ((enclosure.broadSide === "high"
+                ? (caseLongX
+                    ? Y - enclosure.bounds[1]
+                    : X - enclosure.bounds[0]) >=
+                  caseWidth - cheekWidth
+                : (caseLongX
+                    ? Y - enclosure.bounds[1]
+                    : X - enclosure.bounds[0]) < cheekWidth) ||
+                (X >= mouthLeft - 3 &&
+                  X < mouthRight + 3 &&
+                  Y >= mouthBottom - 3 &&
+                  Y < mouthTop + 3));
+            const highHousing = !!massing && inHighShell(x, y);
             if (architecturalCase) {
               const start = layers.length;
               // Retire the old visible finish, including its independent
@@ -2770,17 +2955,35 @@ export function shipVisualLayersR002(
                 x,
                 y,
                 hi - 3,
-                hi + 1,
+                massing ? hi + massing.high : hi + 1,
                 family,
               );
               const step = macro.architecture!.roofStep;
               const lowShoulder = !broadCheek && !apertureReturn;
               const connector = caseEdge < 3 || caseEnd < 5 || apertureReturn;
-              const upper = connector ? hi - 1 : lowShoulder ? hi - step : hi;
+              const upper = massing
+                ? highHousing
+                  ? hi + massing.high
+                  : connector
+                    ? hi + massing.low
+                    : hi + massing.medium
+                : connector
+                  ? hi - 1
+                  : lowShoulder
+                    ? hi - step
+                    : hi;
               column(
                 `${family}:roof-task-case:${enclosure.id}`,
                 "plate",
-                lowShoulder ? "trim" : "primary",
+                massing
+                  ? highHousing
+                    ? "primary"
+                    : connector
+                      ? "trim"
+                      : "primary"
+                  : lowShoulder
+                    ? "trim"
+                    : "primary",
                 x,
                 y,
                 hi - 3,
@@ -2860,7 +3063,21 @@ export function shipVisualLayersR002(
                 across >= pocketBottom &&
                 across < pocketTop &&
                 !joinedReturn;
-              if (pocket) {
+              const deepMouth =
+                !!massing &&
+                mouthRight - mouthLeft >= 12 &&
+                mouthTop - mouthBottom >= 10 &&
+                x >= mouthLeft &&
+                x < mouthRight &&
+                y >= mouthBottom &&
+                y < mouthTop &&
+                [-3, -2, -1, 0, 1, 2, 3].every((dx) =>
+                  [-3, -2, -1, 0, 1, 2, 3].every((dy) =>
+                    inHighShell(x + dx, y + dy),
+                  ),
+                ) &&
+                !joinedReturn;
+              if (massing ? deepMouth : pocket) {
                 const pocketStart = layers.length;
                 column(
                   `${family}:roof-cluster-well:${enclosure.id}`,
@@ -2868,25 +3085,32 @@ export function shipVisualLayersR002(
                   "dark",
                   x,
                   y,
-                  hi - 3,
-                  architecturalCase ? hi : hi + 1,
+                  massing ? hi - 2 : hi - 3,
+                  massing ? hi + massing.high : architecturalCase ? hi : hi + 1,
                   family,
                 );
                 // The existing two CORE courses [hi-5,hi-3) form the finite
                 // well floor. No invented extra finish bottom hides the depth.
                 if (
                   enclosure.kind === "utility" &&
-                  (architecturalCase
-                    ? Array.from(
-                        { length: macro.architecture!.roofThermalRibs },
-                        (_, i) =>
-                          pocketBottom +
-                          Math.floor(
-                            ((i + 0.5) * (pocketTop - pocketBottom)) /
-                              macro.architecture!.roofThermalRibs,
-                          ),
-                      ).some((at) => across >= at && across < at + 2)
-                    : mod(across - pocketBottom, 6) < 2)
+                  (massing
+                    ? [
+                        mouthBottom + 3,
+                        mouthBottom +
+                          Math.floor((mouthTop - mouthBottom) * 0.5),
+                        mouthTop - 5,
+                      ].some((at) => y >= at && y < at + 3)
+                    : architecturalCase
+                      ? Array.from(
+                          { length: macro.architecture!.roofThermalRibs },
+                          (_, i) =>
+                            pocketBottom +
+                            Math.floor(
+                              ((i + 0.5) * (pocketTop - pocketBottom)) /
+                                macro.architecture!.roofThermalRibs,
+                            ),
+                        ).some((at) => across >= at && across < at + 2)
+                      : mod(across - pocketBottom, 6) < 2)
                 )
                   column(
                     `${family}:roof-cluster-vent:${enclosure.id}`,
@@ -2894,8 +3118,8 @@ export function shipVisualLayersR002(
                     "metal",
                     x,
                     y,
-                    hi - 3,
-                    hi - 2,
+                    massing ? hi - 2 : hi - 3,
+                    massing ? hi + 1 : hi - 2,
                     family,
                   );
                 else if (
@@ -2912,7 +3136,7 @@ export function shipVisualLayersR002(
                     x,
                     y,
                     hi - 3,
-                    hi - 2,
+                    massing ? hi : hi - 2,
                     family,
                   );
                 pendingRoofClusterLayers.push(...layers.splice(pocketStart));
@@ -4862,9 +5086,41 @@ export function shipVisualLayersR002(
               switch (task.key) {
                 case "engineering":
                   if (panel === 0 && openField) {
-                    use("well", "void", "dark");
+                    const cassetteWidth = Math.min(
+                        24,
+                        Math.max(14, Math.floor(W * 0.36)),
+                      ),
+                      cassetteLeft = Math.floor((W - cassetteWidth) * 0.43),
+                      cassetteRight = cassetteLeft + cassetteWidth;
+                    if (q < cassetteLeft - 2 || q >= cassetteRight + 2) {
+                      use("well", "void", "dark");
+                      const blockBottom = v >= 4 && v < Math.min(height - 4, 8),
+                        blockTop =
+                          v >= Math.max(9, height - 9) && v < height - 4;
+                      if (
+                        (q < cassetteLeft - 2 && blockBottom) ||
+                        (q >= cassetteRight + 2 && blockTop)
+                      )
+                        use("cooling-machine-block", "service", "metal");
+                    } else {
+                      use("central-service-cassette", "plate", "primary");
+                      if (
+                        q >= cassetteLeft + 3 &&
+                        q < cassetteRight - 3 &&
+                        v >= 6 &&
+                        v < height - 6
+                      )
+                        use("cassette-access-field", "plate", "trim");
+                      if (
+                        q >= cassetteRight - 5 &&
+                        q < cassetteRight - 2 &&
+                        v >= 6 &&
+                        v < 9
+                      )
+                        use("cassette-actuator", "service", "metal");
+                    }
                     if (lowerBank || upperBank)
-                      use("broad-cooling-bank", "service", "metal");
+                      use("cooling-case-shoulder", "plate", "primary");
                   } else if (panel === 1) {
                     use("distribution-case", "plate", "trim");
                     if (q >= 4 && q < Math.min(W - 4, 9))
@@ -4906,7 +5162,12 @@ export function shipVisualLayersR002(
                     if (lowerBank)
                       use("counter-utility-bank", "service", "metal");
                   } else if (panel > 0 && v < height - 5) {
-                    use("galley-storage-cover", "plate", "trim");
+                    use("galley-storage-cover", "plate", "primary");
+                    if (
+                      q >= Math.floor(W * 0.56) &&
+                      q < Math.floor(W * 0.56) + 3
+                    )
+                      use("galley-storage-return", "frame", "trim");
                     if (q >= W - 7 && q < W - 5 && v >= 4 && v < 8)
                       use("storage-pull", "service", "metal");
                   }
@@ -4922,7 +5183,12 @@ export function shipVisualLayersR002(
                     if (lowerBank)
                       use("reading-supply-bank", "service", "metal");
                   } else if (q >= 4 && q < W - 4 && v < height - 5) {
-                    use("berth-storage-cover", "plate", "trim");
+                    use("berth-storage-cover", "plate", "primary");
+                    if (
+                      q >= Math.floor(W * 0.59) &&
+                      q < Math.floor(W * 0.59) + 2
+                    )
+                      use("berth-storage-return", "frame", "trim");
                     if (q >= W - 7 && q < W - 5 && v >= 5 && v < 9)
                       use("berth-storage-pull", "service", "metal");
                   }
@@ -5370,10 +5636,23 @@ export function shipVisualLayersR002(
   // Root's exact paired manufactured frame is a FINAL duty after both the
   // accepted raw pane mask and every finish/pigment write. Unknown admission
   // returns no replacement and retains the complete preceding candidate.
-  const finishBow = (ordered: ShipVisualLayer[]) => [
-    ...ordered,
-    ...referenceBowFrameR002(doc, view, catalog, profileId, ordered),
-  ];
+  const finishBow = (ordered: ShipVisualLayer[]) => {
+    const previous = [
+      ...ordered,
+      ...referenceBowFrameR002(doc, view, catalog, profileId, ordered),
+    ];
+    return [
+      ...previous,
+      ...referenceBowTransitionR002(
+        doc,
+        view,
+        catalog,
+        profileId,
+        previous,
+        cockpitAperture,
+      ),
+    ];
+  };
   if (!matingSolids.some((s) => !s.veto))
     return finishBow([...finalLayers, ...cockpitAperture]);
   // A pigment cannot change source-layer grouping priority. Resolve the complete

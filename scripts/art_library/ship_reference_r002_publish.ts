@@ -10,6 +10,7 @@ import {
   REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
   REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
   REFERENCE_STATIC_WALL_FITTINGS_R002,
+  REFERENCE_ROOF_FIXED_POSE_R002,
 } from "@sidereal/content/ship-visual-r002";
 import { interiorArtQuarterTurns } from "@sidereal/content/ship-furniture";
 import { SHIP_KIT_SLOTS } from "@sidereal/content/ship-kit";
@@ -38,6 +39,7 @@ const sources = [
   "packages/sim/src/ship-visual-layers-r002.ts",
   "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
   "packages/sim/src/ship-visual-r002-bow-frame.ts",
+  "packages/sim/src/ship-visual-r002-bow-transition.ts",
   "packages/sim/src/ship-dresser.ts",
   "packages/content/src/ship-prefab.ts",
   "packages/content/src/ship-furniture.ts",
@@ -442,6 +444,29 @@ for (const [id, pin] of Object.entries(architecturePins)) {
     sha256: row.sha256,
     bytes: row.bytes,
   };
+}
+// The candidate overrides legacy r004 catalog URLs with these exact r006 assets.
+// A fixed-pose roof certificate admits ONLY actual selected bytes/frame/bounds.
+for (const [id, certificate] of Object.entries(
+  REFERENCE_ROOF_FIXED_POSE_R002,
+)) {
+  const asset = assets.find((a) => a.kind === "component" && a.id === id);
+  if (
+    !asset ||
+    asset.frame !== certificate.frame ||
+    asset.sha256 !== certificate.assetSha256 ||
+    asset.url !== `/assets/ship-components/r006/${id}.glb` ||
+    JSON.stringify(asset.bounds) !== JSON.stringify(certificate.bounds) ||
+    certificate.motion !== "fixed-pose" ||
+    hash(
+      readFileSync(
+        resolve(root, "assets/runtime", asset.url.slice("/assets/".length)),
+      ),
+    ) !== certificate.assetSha256
+  )
+    throw Error(
+      `R24 roof operating certificate mismatches selected component: ${id}`,
+    );
 }
 // Measured static certificates cannot qualify space using unrelated old heights.
 const objectMetadata = JSON.parse(
