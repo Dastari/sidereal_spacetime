@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "28126695bd42efc61cd3bad942d8870d5ba0e4f5fe5db5192b4257d587299967",
+  "compilerSha256": "cef32c45a5b6f43dbd899c303eb4f2634d332daeb3b8b5529a82eb2aa74ce5f8",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,11 +12,11 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "12e85f4a3410f174c7128b7df2b675314198ec43b03894160b47142739f9f471"
+      "sha256": "7b4752c87f92a133b9ef43a0528f51f23d507f7fc4f063d7be28fddea1563faa"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "2b1e955431afaef7321a9983967aa78238e97bc82170180095fc06eee8f2a69b"
+      "sha256": "7e6c418cbb71568b2a363d6063776b890145bb6a34b0492b650a8bf169959732"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
@@ -25,6 +25,10 @@
     {
       "path": "packages/sim/src/ship-visual-r002-bow-frame.ts",
       "sha256": "066bbb212a00b7c783467b19ab74ffa3d0fc62715329c1728e20408cfced4abf"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-r002-bow-transition.ts",
+      "sha256": "d8f1786af1751f24ffd5f40dc2e12a49a179b03f5883926c64f4285f26c18a55"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
@@ -104,7 +108,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/doors.ts",
-      "sha256": "4dcab82642e6cdabbc6866c7ca28d3e116c38e1a145b4c88d4658ca166a44e63"
+      "sha256": "60e45fb424866ba56ac4b31c07513def5143521e93c3b24b11eefbab5a0f0f92"
     },
     {
       "path": "packages/render/src/prefab-ship/shadows.ts",
@@ -112,7 +116,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship-presentation.ts",
-      "sha256": "fd97fa45bd37c63b7a5d4f7fbd8d93f4b5cec129a9889ef8a5cfc148543896d5"
+      "sha256": "52cbd2c3ae1c5deda69449bba57ca94dca206c2e060a5f4861515c310921acf6"
     },
     {
       "path": "packages/render/src/construction-instance.ts",
@@ -120,7 +124,7 @@
     },
     {
       "path": "packages/render/src/index.ts",
-      "sha256": "bb5792dcdae00c75fb27b4630bbf48f0bba5bfef67a45eff64203a91c97e4dcb"
+      "sha256": "9f411cd163b57a9e6eca1999b732b349c5ba99eccb37797c4faea9d9aaf5cb3f"
     },
     {
       "path": "packages/render/src/pbr-light-budget.ts",
