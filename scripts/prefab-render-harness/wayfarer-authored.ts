@@ -8,7 +8,9 @@ import { loadAuthoredStudy } from "../../packages/render/src/prefab-ship/wayfare
 import { moldedLightRig } from "../../packages/render/src/molded-plastic";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { PointLight } from "@babylonjs/core/Lights/pointLight";
+import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { Light } from "@babylonjs/core/Lights/light";
+import { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { prefabToShipLocal } from "../../packages/render/src/prefab-ship/frames";
 import {
@@ -32,6 +34,12 @@ interface Review {
   setCamera?: (name: string) => void;
   setPracticals?: (enabled: boolean) => void;
   practicals?: boolean;
+  setContactShadows?: (enabled: boolean) => void;
+  contactShadows?: boolean;
+  setGuardedNormalBias?: (enabled: boolean) => void;
+  guardedNormalBias?: boolean;
+  setFittedShadowDepth?: (enabled: boolean) => void;
+  fittedShadowDepth?: boolean;
   metrics?: unknown;
 }
 declare global {
@@ -171,7 +179,7 @@ async function main() {
     light.diffuse = Color3.FromArray(row.colour);
     light.specular = Color3.Black();
     // Declared artistic mapping, not physical equivalence to Blender watts.
-    light.intensity = Math.max(0.2, Math.min(0.75, (row.watts * 0.55) / 140));
+    light.intensity = Math.max(0.8, Math.min(3, (row.watts * 2.2) / 140));
     light.intensityMode = Light.INTENSITYMODE_LUMINOUSINTENSITY;
     light.falloffType = Light.FALLOFF_STANDARD;
     light.radius = row.radius;
@@ -182,6 +190,17 @@ async function main() {
     light.setEnabled(false);
     return light;
   });
+  const star = scene.getLightByName("construction-star");
+  const shadows = star?.getShadowGenerator();
+  if (
+    !(star instanceof DirectionalLight) ||
+    !(shadows instanceof ShadowGenerator) ||
+    !star.autoUpdateExtends ||
+    star.shadowFrustumSize !== 0 ||
+    shadows.bias !== 0.0035 ||
+    shadows.normalBias !== 0.015
+  )
+    throw Error("Changed normal construction shadow baseline");
   for (const light of scene.lights) {
     const map = light.getShadowGenerator()?.getShadowMap();
     if (map) map.renderList = candidate.meshes;
@@ -215,6 +234,50 @@ async function main() {
   camera.beta = view.beta;
   camera.radius = view.radius;
   let settled = 0;
+  review.guardedNormalBias =
+    new URLSearchParams(location.search).get("normal") === "guarded";
+  review.setGuardedNormalBias = (enabled) => {
+    review.guardedNormalBias = enabled;
+    shadows.normalBias = review.contactShadows
+      ? enabled
+        ? 0.01
+        : 0.003
+      : 0.015;
+    review.ready = false;
+    settled = 0;
+  };
+  review.fittedShadowDepth = false;
+  review.setFittedShadowDepth = (enabled) => {
+    star.autoCalcShadowZBounds = enabled;
+    if (!enabled) {
+      // The normal baseline intentionally leaves these unset (Babylon's types
+      // declare number although the actual runtime defaults are undefined).
+      star.shadowMinZ = undefined as unknown as number;
+      star.shadowMaxZ = undefined as unknown as number;
+    }
+    star.forceProjectionMatrixCompute();
+    review.fittedShadowDepth = enabled;
+    review.ready = false;
+    settled = 0;
+  };
+  review.setFittedShadowDepth(
+    new URLSearchParams(location.search).get("depth") === "fitted",
+  );
+  review.contactShadows = false;
+  review.setContactShadows = (enabled) => {
+    shadows.bias = enabled ? 0.0005 : 0.0035;
+    shadows.normalBias = enabled
+      ? review.guardedNormalBias
+        ? 0.01
+        : 0.003
+      : 0.015;
+    review.contactShadows = enabled;
+    review.ready = false;
+    settled = 0;
+  };
+  review.setContactShadows(
+    new URLSearchParams(location.search).get("shadow") === "contact",
+  );
   review.practicals = false;
   review.setPracticals = (enabled) => {
     for (const light of practicals) light.setEnabled(enabled);
@@ -242,6 +305,45 @@ async function main() {
     )
       return;
     if (++settled < 3) return;
+    const casterList = shadows.getShadowMap()?.renderList;
+    if (
+      !casterList ||
+      casterList.length !== candidate.meshes.length ||
+      candidate.meshes.some((mesh) => !casterList.includes(mesh))
+    ) {
+      review.error = "Changed authored shadow caster set";
+      return;
+    }
+    const lightView = star.getViewMatrix();
+    if (!lightView) throw Error("Missing actual shadow light-view matrix");
+    const casterDepths = candidate.meshes.map((mesh) => {
+      const values = mesh
+        .getBoundingInfo()
+        .boundingBox.vectorsWorld.map(
+          (corner) => Vector3.TransformCoordinates(corner, lightView).z,
+        );
+      if (values.some((value) => !Number.isFinite(value)))
+        throw Error("Nonfinite authored shadow caster bounds");
+      return {
+        mesh: mesh.name,
+        min: Math.min(...values),
+        max: Math.max(...values),
+      };
+    });
+    if (
+      review.fittedShadowDepth &&
+      (!Number.isFinite(star.shadowMinZ) ||
+        !Number.isFinite(star.shadowMaxZ) ||
+        star.shadowMinZ >= star.shadowMaxZ ||
+        casterDepths.some(
+          (bounds) =>
+            bounds.min < star.shadowMinZ - 1e-5 ||
+            bounds.max > star.shadowMaxZ + 1e-5,
+        ))
+    ) {
+      review.error = "Fitted shadow depth clips actual caster bounds";
+      return;
+    }
     const expectedLights = [
       "construction-star",
       "molded-cool-fill",
@@ -290,16 +392,37 @@ async function main() {
       settledFrames: settled,
       pendingData: scene.getWaitingItemsCount(),
       normalGameRenderer: true,
+      shadowContact: {
+        refined: review.contactShadows,
+        guardedNormalBias: review.guardedNormalBias,
+        bias: shadows.bias,
+        normalBias: shadows.normalBias,
+        mapSize: shadows.getShadowMap()?.getSize(),
+        casters: shadows.getShadowMap()?.renderList?.length,
+        pcf: shadows.usePercentageCloserFiltering,
+        transform: shadows.getTransformMatrix().asArray(),
+        normalizedDepthMin: star.getDepthMinZ(camera),
+        normalizedDepthMax: star.getDepthMaxZ(camera),
+        projectionNear: star.shadowMinZ ?? camera.minZ,
+        projectionFar: star.shadowMaxZ ?? camera.maxZ,
+        autoDepthBounds: star.autoCalcShadowZBounds,
+        autoXYExtents: star.autoUpdateExtends,
+        shadowFrustumSize: star.shadowFrustumSize,
+        fitted: review.fittedShadowDepth,
+        lightView: lightView.asArray(),
+        casterDepths,
+      },
       practicalLighting: {
         enabled: review.practicals,
         sourceRows: practicalRows,
         mapping:
-          "clamp(watts * 0.55 / 140, 0.2, 0.75); standard luminous intensity; range4; diffuse-only",
+          "clamp(watts * 2.2 / 140, 0.8, 3); standard luminous intensity; range4; diffuse-only",
         disabledStudioFill: "construction-fill",
         lights: practicals.map((light) => ({
           name: light.name,
           position: light.position.asArray(),
           intensity: light.intensity,
+          scaledIntensity: light.getScaledIntensity(),
           range: light.range,
           radius: light.radius,
           enabled: light.isEnabled(),
@@ -322,6 +445,18 @@ async function main() {
             ),
           ),
         ],
+        shaderLightWitnesses: candidate.meshes.map((mesh) => ({
+          mesh: mesh.name,
+          material: mesh.material?.name,
+          counts: mesh.subMeshes.map((sub) => {
+            const defines = sub.effect?.defines ?? "";
+            return Array.from({ length: 8 }, (_, index) =>
+              new RegExp(`^#define LIGHT${index}(?![0-9A-Za-z_])`, "m").test(
+                defines,
+              ),
+            ).filter(Boolean).length;
+          }),
+        })),
       },
     };
     review.ready = true;
