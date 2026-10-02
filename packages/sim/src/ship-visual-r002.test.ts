@@ -40,6 +40,7 @@ import {
   referenceOpticalMatingSolidsR002,
   referenceOpticalMatingCubeR002,
   compactColumns,
+  referenceRoofAssemblyR027,
 } from "./ship-visual-layers-r002";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { referenceRoomLayoutR025 } from "@sidereal/content/ship-reference-room-layout-r025";
@@ -3406,5 +3407,328 @@ describe("R26 finite architectural cases", () => {
     } finally {
       macro.opticalInterfaces = old;
     }
+  });
+});
+
+describe("finite R27 closed roof finish ownership", () => {
+  const noOpticalGuard = { bounds: [], unknownVariant: false };
+  const body = {
+    id: "utility:measured-apron:body:0",
+    kind: "utility" as const,
+    fixtures: [[-12, 8, -2, 24]],
+  };
+  const fixture = () => {
+    const layers: ShipVisualLayer[] = [
+      {
+        id: "volume:hull:roof-pressure-tray",
+        role: "core",
+        slot: "secondary",
+        bounds: [0, 0, 38, 64, 32, 40],
+        support: "volume:hull",
+        surfaceRole: "roof",
+      },
+      {
+        id: "volume:hull:roof-task-case:utility:measured-apron:body:0",
+        role: "plate",
+        slot: "primary",
+        bounds: [0, 0, 40, 64, 32, 47],
+        support: "volume:hull",
+        surfaceRole: "roof",
+      },
+    ];
+    const plans = Array.from({ length: 32 }, (_, y) =>
+      Array.from({ length: 64 }, (_, x) => ({
+        x,
+        y,
+        hi: 43,
+        family: "volume:hull",
+        wing: false,
+        body,
+        massing: true,
+      })),
+    ).flat();
+    return { layers, plans };
+  };
+  it("authors unequal closed cases with a finite high-shell bottom, minority cover and actual eight-wide apron", () => {
+    const { layers, plans } = fixture(),
+      added = referenceRoofAssemblyR027(layers, plans, noOpticalGuard);
+    expect(added.length).toBeGreaterThan(0);
+    const final = sampleShipVisualLayers([...layers, ...added]),
+      prior = sampleShipVisualLayers(layers);
+    const bad: string[] = [];
+    for (const [key, c] of prior)
+      if (c.role === "core") {
+        const n = final.get(key);
+        if (
+          !n ||
+          n.role !== c.role ||
+          n.slot !== c.slot ||
+          n.family !== c.family
+        )
+          bad.push(key);
+      }
+    expect(bad).toEqual([]);
+    expect(
+      added.some((l) => l.id.endsWith(":high-case") && l.bounds[5] === 47),
+    ).toBe(true);
+    expect(
+      added.some((l) => l.id.endsWith(":high-case") && l.bounds[5] === 45),
+    ).toBe(true);
+    expect(
+      added.some(
+        (l) => l.id.endsWith(":service-shoulder") && l.bounds[5] === 44,
+      ),
+    ).toBe(true);
+    expect(
+      added.some(
+        (l) =>
+          l.id.endsWith(":access-clamp") &&
+          l.role === "service" &&
+          l.slot === "metal",
+      ),
+    ).toBe(true);
+    const highLayers = added.filter((l) => l.id.endsWith(":high-case"));
+    const cornerX = Math.min(...highLayers.map((l) => l.bounds[0])),
+      cornerY = Math.min(...highLayers.map((l) => l.bounds[1]));
+    expect(final.get(visualCellKey(cornerX, cornerY, 44))?.role).toBe("plate");
+    expect(final.has(visualCellKey(cornerX, cornerY, 45))).toBe(false);
+    const primary = new Set<string>(),
+      mouth = new Set<string>(),
+      high = new Set<string>();
+    for (const l of added)
+      for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+        for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+          const xy = `${x},${y}`;
+          if (l.id.endsWith(":high-case")) high.add(xy);
+          if (l.id.endsWith(":closed-access")) primary.add(xy);
+          if (l.id.endsWith(":mouth")) {
+            mouth.add(xy);
+            expect(l.bounds.slice(2, 3)).toEqual([41]);
+            expect(l.bounds[5]).toBe(47);
+            expect(final.get(visualCellKey(x, y, 40))?.role).toBe("plate");
+            expect(final.get(visualCellKey(x, y, 39))?.role).toBe("core");
+          }
+        }
+    expect(primary.size).toBeGreaterThan(0);
+    expect(mouth.size).toBeGreaterThan(0);
+    expect(primary.size).toBeLessThanOrEqual(Math.floor(high.size / 3));
+    expect(mouth.size).toBeLessThanOrEqual(Math.floor(high.size / 5));
+  });
+  it.each([
+    {
+      id: "utility:rad-a+rad-b:body:0",
+      main: [4, 6, 28, 14],
+      service: [28, 6, 40, 14],
+      kind: "utility",
+      fixtures: [[8, 16, 40, 48]],
+    },
+    {
+      id: "utility:rad-a+rad-b:body:1",
+      main: [4, 50, 28, 62],
+      service: [28, 50, 40, 58],
+      kind: "utility",
+      fixtures: [[8, 64, 40, 96]],
+    },
+    {
+      id: "utility:rad-a+rad-b:body:2",
+      main: [4, 98, 28, 106],
+      service: [28, 98, 40, 106],
+      kind: "utility",
+      fixtures: [[8, 64, 40, 96]],
+    },
+    {
+      id: "control:sensor+sensor+turret+turret:body:0",
+      main: [45, 38, 61, 46],
+      service: [61, 38, 69, 46],
+      kind: "control",
+      fixtures: [[48, 48, 64, 64]],
+    },
+  ] as const)(
+    "keeps measured small Wren $id inside its old map with nonempty closed access and backed hardware",
+    ({ id, main, service, kind, fixtures }) => {
+      const selectedBody = { id, kind, fixtures: fixtures.map((r) => [...r]) };
+      const plans = [];
+      for (const [x0, y0, X, Y] of [main, service])
+        for (let y = y0; y < Y; y++)
+          for (let x = x0; x < X; x++)
+            plans.push({
+              x,
+              y,
+              hi: 43,
+              family: "volume:hull",
+              wing: false,
+              body: selectedBody,
+              massing: true,
+            });
+      const layers: ShipVisualLayer[] = plans.flatMap(
+        (p) =>
+          [
+            {
+              id: "volume:hull:roof-pressure-tray",
+              role: "core",
+              slot: "secondary",
+              bounds: [p.x, p.y, 38, p.x + 1, p.y + 1, 40],
+              support: "volume:hull",
+              surfaceRole: "roof",
+            },
+            {
+              id: `volume:hull:roof-task-case:${id}`,
+              role: "plate",
+              slot: "primary",
+              bounds: [p.x, p.y, 40, p.x + 1, p.y + 1, 47],
+              support: "volume:hull",
+              surfaceRole: "roof",
+            },
+          ] as ShipVisualLayer[],
+      );
+      expect(referenceRoofAssemblyR027(layers, plans, noOpticalGuard)).toEqual(
+        [],
+      );
+      const added = referenceRoofAssemblyR027(
+        layers,
+        plans,
+        noOpticalGuard,
+        undefined,
+        true,
+      );
+      const final = sampleShipVisualLayers([...layers, ...added]);
+      const allowed = new Set(plans.map((p) => `${p.x},${p.y}`));
+      const primary = new Set<string>(),
+        mouth = new Set<string>(),
+        machines = new Set<string>();
+      for (const l of added)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            expect(allowed.has(`${x},${y}`)).toBe(true);
+            if (l.id.endsWith(":closed-access")) primary.add(`${x},${y}`);
+            if (l.id.endsWith(":mouth")) {
+              mouth.add(`${x},${y}`);
+              expect(l.bounds[2]).toBe(41);
+              expect(l.bounds[5]).toBe(47);
+              expect(final.get(visualCellKey(x, y, 40))?.role).toBe("plate");
+              expect(final.get(visualCellKey(x, y, 39))?.role).toBe("core");
+            }
+            if (l.id.endsWith(":cooling-machine")) machines.add(`${x},${y}`);
+          }
+      const area = (main[2] - main[0]) * (main[3] - main[1]);
+      expect(primary.size).toBeGreaterThan(0);
+      expect(primary.size).toBeLessThanOrEqual(Math.floor(area / 3));
+      expect(added.some((l) => l.id.endsWith(":access-clamp"))).toBe(true);
+      expect(
+        added.some((l) => l.id.endsWith(":high-case") && l.bounds[5] === 47),
+      ).toBe(true);
+      expect(
+        added.some((l) => l.id.endsWith(":high-case") && l.bounds[5] === 45),
+      ).toBe(true);
+      expect(
+        added.some(
+          (l) => l.id.endsWith(":service-shoulder") && l.bounds[5] === 44,
+        ),
+      ).toBe(true);
+      expect(mouth.size).toBeLessThanOrEqual(Math.floor(area / 5));
+      if (kind === "utility") {
+        expect(mouth.size).toBeGreaterThanOrEqual(24);
+        expect(machines.size).toBe(7); // Two separate unequal footprints: 2×2 and 3×1.
+      } else expect(mouth.size).toBe(0);
+      for (let y = service[1]; y < service[3]; y++)
+        for (const x of [main[2] - 1, service[0]])
+          expect(final.has(visualCellKey(x, y, 42))).toBe(true);
+      for (const p of plans)
+        for (const z of [38, 39]) {
+          const c = final.get(visualCellKey(p.x, p.y, z));
+          expect([c?.role, c?.slot, c?.family]).toEqual([
+            "core",
+            "secondary",
+            "volume:hull",
+          ]);
+        }
+      const changed = [
+        ...layers,
+        {
+          id: "volume:hull:unclassified-contact",
+          role: "core",
+          slot: "trim",
+          bounds: [main[0], main[1], 44, main[0] + 1, main[1] + 1, 45],
+          support: "volume:hull",
+          surfaceRole: "roof",
+        } as ShipVisualLayer,
+      ];
+      expect(
+        referenceRoofAssemblyR027(
+          changed,
+          plans,
+          noOpticalGuard,
+          undefined,
+          true,
+        ),
+      ).toEqual([]);
+    },
+  );
+  it.each(["core", "frame", "glass"] as const)(
+    "retains the entire old body when a different final %s owns one covered course",
+    (role) => {
+      const { layers, plans } = fixture();
+      layers.push({
+        id: "volume:hull:protected-foreign-owner",
+        role: role === "glass" ? "core" : role,
+        slot: role === "glass" ? "glass" : "trim",
+        bounds: [4, 4, 44, 5, 5, 45],
+        support: "volume:hull",
+        surfaceRole: "roof",
+      });
+      expect(referenceRoofAssemblyR027(layers, plans, noOpticalGuard)).toEqual(
+        [],
+      );
+    },
+  );
+  it("does not replace a body whose named fixture has no actual broad apron path", () => {
+    const { layers, plans } = fixture();
+    expect(
+      referenceRoofAssemblyR027(
+        layers,
+        plans.map((p) => ({
+          ...p,
+          body: { ...body, fixtures: [[-80, 8, -72, 24]] },
+        })),
+        noOpticalGuard,
+      ),
+    ).toEqual([]);
+  });
+  it("never uses a one-cell neck to attach a distant finish section", () => {
+    const { layers, plans } = fixture();
+    const selected = plans.filter(
+      (p) =>
+        p.x < 48 ||
+        (p.x >= 52 && p.y >= 4 && p.y < 28) ||
+        (p.y === 15 && p.x >= 48 && p.x < 52),
+    );
+    const added = referenceRoofAssemblyR027(layers, selected, noOpticalGuard);
+    expect(added.length).toBeGreaterThan(0);
+    expect(added.every((l) => l.bounds[3] <= 48)).toBe(true);
+  });
+  it("preserves an empty optical clearance and rejects unknown effective interfaces atomically", () => {
+    const { layers, plans } = fixture();
+    const emptyLayers = layers.map((l) =>
+      l.role === "plate"
+        ? { ...l, bounds: [0, 0, 40, 64, 32, 43] as typeof l.bounds }
+        : l,
+    );
+    const guard = {
+      piece: "test-original-interface",
+      kind: "source" as const,
+      bounds: [4, 4, 44, 5, 5, 45] as ShipVisualLayer["bounds"],
+    };
+    expect(
+      referenceRoofAssemblyR027(emptyLayers, plans, {
+        bounds: [guard],
+        unknownVariant: false,
+      }),
+    ).toEqual([]);
+    expect(
+      referenceRoofAssemblyR027(layers, plans, {
+        bounds: [],
+        unknownVariant: true,
+      }),
+    ).toEqual([]);
   });
 });

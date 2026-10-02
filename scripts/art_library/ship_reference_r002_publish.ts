@@ -969,7 +969,7 @@ for (const certificate of Object.values(REFERENCE_EXTERIOR_CASES_R026))
 const broadBowSourceR026 =
   "packages/sim/src/ship-visual-r002-bow-cases-r026.ts";
 const broadBowSourceSha256R026 =
-  "7f2829bace4023a3779b9ee4137ead6d25ad24e9903777acbd27531eaee93ddd";
+  "a02dbbf042ea0f872df309dec982e6b3d7077ad51d850957f0f5fc6197a6757b";
 if (
   hash(readFileSync(resolve(root, broadBowSourceR026))) !==
   broadBowSourceSha256R026

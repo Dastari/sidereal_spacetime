@@ -895,6 +895,474 @@ export function referenceExteriorCasesR026(
   return result;
 }
 
+type ReferenceRoofColumnR027 = {
+  x: number;
+  y: number;
+  hi: number;
+  family: string;
+  wing: boolean;
+  body?: {
+    id: string;
+    kind: "utility" | "habitation" | "control";
+    fixtures: number[][];
+  };
+  massing: boolean;
+};
+
+/** A finite late finish replacement. The exact ordered owner is checked at EACH
+ * changed XYZ; an old roof top does not authorize clearing unrelated lower cells. */
+export function referenceRoofAssemblyR027(
+  ordered: readonly ShipVisualLayer[],
+  plans: readonly ReferenceRoofColumnR027[],
+  opticalGuards: ReturnType<typeof referenceOpticalGuardBoxesR002>,
+  sampled?: ReturnType<typeof sampleShipVisualLayers>,
+  smallWrenClasses = false,
+): ShipVisualLayer[] {
+  if (
+    !plans.length ||
+    opticalGuards.unknownVariant ||
+    opticalGuards.bounds.some(
+      (g) =>
+        g.bounds.length !== 6 ||
+        !g.bounds.every(Number.isFinite) ||
+        [0, 1, 2].some((axis) => g.bounds[axis] >= g.bounds[axis + 3]),
+    )
+  )
+    return [];
+  const cells = sampled ?? sampleShipVisualLayers(ordered);
+  const columns = new Map<string, ShipVisualLayer[]>();
+  for (const p of plans) columns.set(`${p.x},${p.y}`, []);
+  const minZ = Math.min(...plans.map((p) => p.hi - 3));
+  const maxZ = Math.max(...plans.map((p) => p.hi + (p.massing ? 4 : 1)));
+  for (const l of ordered) {
+    if (l.bounds[2] >= maxZ || l.bounds[5] <= minZ) continue;
+    for (let y = Math.floor(l.bounds[1]); y < Math.ceil(l.bounds[4]); y++)
+      for (let x = Math.floor(l.bounds[0]); x < Math.ceil(l.bounds[3]); x++)
+        columns.get(`${x},${y}`)?.push(l);
+  }
+  const owner = (p: ReferenceRoofColumnR027, z: number) => {
+    const layers = columns.get(`${p.x},${p.y}`)!;
+    for (let i = layers.length - 1; i >= 0; i--) {
+      const l = layers[i];
+      if (
+        p.x < l.bounds[0] ||
+        p.x >= l.bounds[3] ||
+        p.y < l.bounds[1] ||
+        p.y >= l.bounds[4] ||
+        z < l.bounds[2] ||
+        z >= l.bounds[5]
+      )
+        continue;
+      const pt: Pt = [p.x + 0.5, p.y + 0.5];
+      if (
+        l.polygon &&
+        (!insidePolygon(l.polygon, ...pt) ||
+          l.holes?.some((h) => insidePolygon(h, ...pt)) ||
+          (l.band !== undefined &&
+            polygonBoundarySample(pt, l.polygon).distance > l.band))
+      )
+        continue;
+      return l;
+    }
+    return undefined;
+  };
+  const finish = (
+    p: ReferenceRoofColumnR027,
+    z: number,
+    allowEmpty: boolean,
+  ) => {
+    // Empty clearance still belongs to the original optical/interface duty.
+    // Qualify the complete prospective cube, not only an existing positive owner.
+    if (
+      opticalGuards.bounds.some(
+        (g) =>
+          p.x + 1 >= g.bounds[0] - 1e-10 &&
+          p.x <= g.bounds[3] + 1e-10 &&
+          p.y + 1 >= g.bounds[1] - 1e-10 &&
+          p.y <= g.bounds[4] + 1e-10 &&
+          z + 1 >= g.bounds[2] - 1e-10 &&
+          z <= g.bounds[5] + 1e-10,
+      )
+    )
+      return false;
+    const c = cells.get(visualCellKey(p.x, p.y, z));
+    const l = owner(p, z);
+    if (!c && !l) return allowEmpty;
+    if (
+      !l ||
+      l.support !== p.family ||
+      l.facet ||
+      l.normalChart ||
+      l.normalHint ||
+      (c &&
+        (c.family !== p.family ||
+          c.facet ||
+          c.normalChart ||
+          ["glass", "emit_a", "emit_b"].includes(c.slot)))
+    )
+      return false;
+    const allowed =
+      /:(roof-housed-shoulder|roof-shoulder-overlap|roof-task-case|roof-architecture-retire|roof-cluster-well|roof-cluster-vent|roof-cluster-access|shallow-case-end)(:|$)/.test(
+        l.id,
+      );
+    return (
+      allowed && (c ? ["plate", "service"].includes(c.role) : l.role === "void")
+    );
+  };
+  const supported = (p: ReferenceRoofColumnR027) =>
+    [p.hi - 5, p.hi - 4].every((z) => {
+      const c = cells.get(visualCellKey(p.x, p.y, z));
+      return (
+        c?.role === "core" &&
+        c.family === p.family &&
+        !c.facet &&
+        !["glass", "emit_a", "emit_b"].includes(c.slot)
+      );
+    });
+  const bodyPlans = new Map<string, ReferenceRoofColumnR027[]>();
+  const quiet: ReferenceRoofColumnR027[] = [];
+  const blockedBodies = new Set<string>();
+  for (const p of plans) {
+    if (!supported(p)) {
+      if (p.body && p.massing) blockedBodies.add(p.body.id);
+      continue;
+    }
+    if (p.body && p.massing) {
+      if (
+        !Array.from({ length: 7 }, (_, i) => p.hi - 3 + i).every((z) =>
+          finish(p, z, true),
+        )
+      ) {
+        blockedBodies.add(p.body.id);
+        continue;
+      }
+      const list = bodyPlans.get(p.body.id) ?? [];
+      list.push(p);
+      bodyPlans.set(p.body.id, list);
+    } else if (
+      !p.body &&
+      [p.hi - 3, p.hi - 2].every((z) => finish(p, z, false)) &&
+      [p.hi - 1, p.hi].every((z) => finish(p, z, true))
+    )
+      quiet.push(p);
+  }
+  const out: ShipVisualLayer[] = [];
+  const add = (
+    p: ReferenceRoofColumnR027,
+    part: string,
+    role: ShipVisualLayer["role"],
+    slot: ShipKitSlot,
+    low: number,
+    high: number,
+    group: string,
+  ) => {
+    if (low >= high) return;
+    out.push({
+      id: `${p.family}:r027-roof:${group}:${part}`,
+      role,
+      slot,
+      bounds: [p.x, p.y, low, p.x + 1, p.y + 1, high],
+      support: p.family,
+      surfaceRole: "roof",
+    });
+  };
+  for (const p of quiet) {
+    add(p, "retire", "void", "dark", p.hi - 3, p.hi + 1, "quiet-skin");
+    // Both closed skin courses remain above the unchanged two CORE courses.
+    const cover =
+      p.wing &&
+      Math.floor(p.x / 32) % 3 === 1 &&
+      ((p.y % 16) + 16) % 16 >= 4 &&
+      ((p.y % 16) + 16) % 16 < 12;
+    add(
+      p,
+      "closed-skin",
+      "plate",
+      cover ? "primary" : "secondary",
+      p.hi - 3,
+      p.hi - 1,
+      "quiet-skin",
+    );
+  }
+  for (const [id, ps] of bodyPlans) {
+    if (blockedBodies.has(id)) continue;
+    const map = new Map(ps.map((p) => [`${p.x},${p.y}`, p]));
+    const x0 = Math.min(...ps.map((p) => p.x)),
+      y0 = Math.min(...ps.map((p) => p.y));
+    const X = Math.max(...ps.map((p) => p.x)) + 1,
+      Y = Math.max(...ps.map((p) => p.y)) + 1;
+    const width = X - x0,
+      height = Y - y0,
+      stride = width + 1;
+    const sums = new Uint32Array((width + 1) * (height + 1));
+    for (let y = 0; y < height; y++)
+      for (let x = 0; x < width; x++) {
+        const at = (y + 1) * stride + x + 1;
+        sums[at] =
+          (map.has(`${x + x0},${y + y0}`) ? 1 : 0) +
+          sums[at - 1] +
+          sums[at - stride] -
+          sums[at - stride - 1];
+      }
+    const full = (r: readonly number[]) => {
+      if (r[0] < x0 || r[1] < y0 || r[2] > X || r[3] > Y) return false;
+      const a = r[0] - x0,
+        b = r[1] - y0,
+        A = r[2] - x0,
+        B = r[3] - y0;
+      return (
+        sums[B * stride + A] -
+          sums[B * stride + a] -
+          sums[b * stride + A] +
+          sums[b * stride + a] ===
+        (A - a) * (B - b)
+      );
+    };
+    const distance = (r: readonly number[]) =>
+      Math.min(
+        ...ps[0].body!.fixtures.map((f) =>
+          Math.max(f[0] - r[2], r[0] - f[2], f[1] - r[3], r[1] - f[3], 0),
+        ),
+      );
+    const centres = new Set<string>();
+    for (let y = y0; y + 8 <= Y; y++)
+      for (let x = x0; x + 8 <= X; x++)
+        if (full([x, y, x + 8, y + 8])) centres.add(`${x},${y}`);
+    const connected: string[] = [];
+    for (const key of centres) {
+      const [x, y] = key.split(",").map(Number);
+      const nearApron = [0, 1].some((axis) =>
+        Array.from({ length: 8 }, (_, i) => {
+          const X = x + (axis === 0 ? i : 4) + 0.5,
+            Y = y + (axis === 1 ? i : 4) + 0.5;
+          return Math.min(
+            ...ps[0].body!.fixtures.map((f) =>
+              Math.max(f[0] - X, X - f[2], f[1] - Y, Y - f[3], 0),
+            ),
+          );
+        }).every((d) => d >= 2 && d < 8),
+      );
+      if (nearApron) connected.push(key);
+    }
+    for (const key of connected) centres.delete(key);
+    for (let at = 0; at < connected.length; at++) {
+      const [x, y] = connected[at].split(",").map(Number);
+      for (const [dx, dy] of [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1],
+      ])
+        if (centres.delete(`${x + dx},${y + dy}`))
+          connected.push(`${x + dx},${y + dy}`);
+    }
+    const broad = new Set<string>();
+    for (const key of connected) {
+      const [x, y] = key.split(",").map(Number);
+      for (let dy = 0; dy < 8; dy++)
+        for (let dx = 0; dx < 8; dx++) broad.add(`${x + dx},${y + dy}`);
+    }
+    if (!broad.size) continue;
+    const broadSums = new Uint32Array(sums.length);
+    for (let y = 0; y < height; y++)
+      for (let x = 0; x < width; x++) {
+        const at = (y + 1) * stride + x + 1;
+        broadSums[at] =
+          (broad.has(`${x + x0},${y + y0}`) ? 1 : 0) +
+          broadSums[at - 1] +
+          broadSums[at - stride] -
+          broadSums[at - stride - 1];
+      }
+    const broadFull = (r: readonly number[]) => {
+      if (!full(r)) return false;
+      const a = r[0] - x0,
+        b = r[1] - y0,
+        A = r[2] - x0,
+        B = r[3] - y0;
+      return (
+        broadSums[B * stride + A] -
+          broadSums[B * stride + a] -
+          broadSums[b * stride + A] +
+          broadSums[b * stride + a] ===
+        (A - a) * (B - b)
+      );
+    };
+    let main: number[] | undefined, shoulder: number[] | undefined;
+    // Exact boxes within the broad own-apron map; no percentage-driven shell.
+    for (const [long, across] of [
+      [48, 24],
+      [40, 20],
+      [32, 16],
+      [24, 16],
+    ]) {
+      const candidates: {
+        main: number[];
+        shoulder: number[];
+        distance: number;
+      }[] = [];
+      for (const [w, h] of [
+        [long, across],
+        [across, long],
+      ])
+        for (let y = y0; y + h <= Y; y += 2)
+          for (let x = x0; x + w <= X; x += 2) {
+            const a = [x, y, x + w, y + h];
+            if (!broadFull(a)) continue;
+            // The unequal service body touches the main body by at least12 cells.
+            const neighbours = [
+              [x + w, y, x + w + 16, y + 12],
+              [x - 16, y, x, y + 12],
+              [x, y + h, x + 12, y + h + 16],
+              [x, y - 16, x + 12, y],
+            ];
+            const b = neighbours.find((r) => broadFull(r));
+            if (b)
+              candidates.push({ main: a, shoulder: b, distance: distance(a) });
+          }
+      candidates.sort(
+        (a, b) =>
+          a.distance - b.distance ||
+          a.main[1] - b.main[1] ||
+          a.main[0] - b.main[0],
+      );
+      if (candidates[0]) {
+        main = candidates[0].main;
+        shoulder = candidates[0].shoulder;
+        break;
+      }
+    }
+    // These four measured small-ship classes stay inside their ORIGINAL massing
+    // maps. The caller binds the exact canonical Wren document and catalog;
+    // whole-box and eight-wide own-apron qualification still execute here.
+    let narrowClass = false;
+    if ((!main || !shoulder) && smallWrenClasses) {
+      const finitePairs: Record<string, [number[], number[]]> = {
+        "utility:rad-a+rad-b:body:0": [
+          [4, 6, 28, 14],
+          [28, 6, 40, 14],
+        ],
+        "utility:rad-a+rad-b:body:1": [
+          [4, 50, 28, 62],
+          [28, 50, 40, 58],
+        ],
+        "utility:rad-a+rad-b:body:2": [
+          [4, 98, 28, 106],
+          [28, 98, 40, 106],
+        ],
+        "control:sensor+sensor+turret+turret:body:0": [
+          [45, 38, 61, 46],
+          [61, 38, 69, 46],
+        ],
+      };
+      const pair = finitePairs[id];
+      if (pair && pair.every((r) => broadFull(r))) {
+        [main, shoulder] = pair;
+        narrowClass = true;
+      }
+    }
+    // An unsupported complete pair retains its old local body.
+    if (!main || !shoulder) continue;
+    const inside = (r: readonly number[], x: number, y: number) =>
+      x >= r[0] && x < r[2] && y >= r[1] && y < r[3];
+    const mw = main[2] - main[0],
+      mh = main[3] - main[1];
+    const mainArea = mw * mh;
+    const inset = narrowClass ? 2 : 4;
+    const mouthH = narrowClass ? 4 : Math.min(8, mh - 8);
+    const mouthW = narrowClass
+      ? Math.min(8, mw - 4, Math.floor(mainArea / 5 / mouthH))
+      : Math.min(12, mw - 8);
+    const mouth = [
+      main[0] + inset,
+      main[1] + inset,
+      main[0] + inset + mouthW,
+      main[1] + inset + mouthH,
+    ];
+    const mouthArea = mouthW * mouthH;
+    const utility =
+      ps[0].body!.kind === "utility" &&
+      mouthW >= 6 &&
+      mouthH >= 4 &&
+      mouthArea <= Math.floor(mainArea / 5);
+    // Narrow utility access occupies the opposite end of the closed shell;
+    // the control class stays entirely closed and carries its own finite lid.
+    const coverW = narrowClass
+      ? utility
+        ? Math.min(10, mw - 2 * inset - mouthW - 2)
+        : Math.min(8, mw - 4)
+      : Math.min(16, mw - 8);
+    const coverH = narrowClass
+      ? Math.min(6, mh - 4, Math.floor(mainArea / 3 / coverW))
+      : Math.min(8, mh - 8);
+    const cover = [
+      main[2] - inset - coverW,
+      main[3] - inset - coverH,
+      main[2] - inset,
+      main[3] - inset,
+    ];
+    const coverArea = coverW * coverH;
+    for (const p of ps) {
+      if (!broad.has(`${p.x},${p.y}`)) continue;
+      const high = inside(main, p.x, p.y),
+        medium = inside(shoulder, p.x, p.y);
+      const corner = high
+        ? Math.min(p.x - main[0], main[2] - 1 - p.x) +
+          Math.min(p.y - main[1], main[3] - 1 - p.y)
+        : Infinity;
+      const top = high
+        ? p.hi + (corner >= 2 ? 4 : 2)
+        : medium
+          ? p.hi + 1
+          : p.hi - 1;
+      add(p, "retire", "void", "dark", p.hi - 3, p.hi + 4, id);
+      // Quiet apron connection is physically part of this same FINISH body.
+      add(
+        p,
+        high ? "high-case" : medium ? "service-shoulder" : "apron-body",
+        "plate",
+        "secondary",
+        p.hi - 3,
+        top,
+        id,
+      );
+      if (
+        high &&
+        corner >= 2 &&
+        inside(cover, p.x, p.y) &&
+        coverArea <= Math.floor(mainArea / 3) &&
+        !(utility && inside(mouth, p.x, p.y))
+      )
+        add(p, "closed-access", "plate", "primary", top - 1, top, id);
+      if (utility && high && inside(mouth, p.x, p.y)) {
+        // A finite PLATE hi-3 bottom; all six VOID courses belong to HIGH only.
+        add(p, "mouth", "void", "dark", p.hi - 2, p.hi + 4, id);
+        add(p, "mouth-floor", "plate", "dark", p.hi - 3, p.hi - 2, id);
+        const u = p.x - mouth[0],
+          v = p.y - mouth[1];
+        if (
+          narrowClass
+            ? (u >= 1 && u < 3 && v >= 1 && v < mouthH - 1) ||
+              (u >= mouthW - 4 && u < mouthW - 1 && v === mouthH - 2)
+            : (u >= 2 && u < 5 && v >= 2 && v < mouthH - 2) ||
+              (u >= mouthW - 4 && u < mouthW - 2 && v >= 3 && v < mouthH - 1)
+        )
+          add(p, "cooling-machine", "service", "metal", p.hi - 2, p.hi + 1, id);
+      } else if (
+        high &&
+        corner >= 2 &&
+        inside(cover, p.x, p.y) &&
+        coverArea <= Math.floor(mainArea / 3) &&
+        p.x >= cover[0] + (narrowClass ? 1 : 2) &&
+        p.x < cover[0] + (narrowClass ? 3 : 4) &&
+        p.y >= cover[1] + (narrowClass ? 1 : 2) &&
+        p.y < cover[1] + (narrowClass ? Math.min(4, coverH - 1) : 5)
+      )
+        add(p, "access-clamp", "service", "metal", top - 2, top, id);
+    }
+  }
+  return compactColumns(out);
+}
+
 const mod = (n: number, d: number) => ((n % d) + d) % d;
 export function shipVisualLayersR002(
   doc: ShipPrefabDocumentV1,
@@ -916,6 +1384,9 @@ export function shipVisualLayersR002(
       r026Certificate.documentSha256 &&
     sourceDigestR026(JSON.stringify(catalog.list())) ===
       REFERENCE_EXTERIOR_CATALOG_SHA256_R026;
+  const r027RoofColumns: ReferenceRoofColumnR027[] = [];
+  const referenceAssemblyR027 =
+    referenceFloorR026 && !!macro.architecture?.roofAssemblyR027;
   let surfaceRole: NonNullable<ShipVisualLayer["surfaceRole"]> = "hull";
   const box = (
     id: string,
@@ -1725,6 +2196,14 @@ export function shipVisualLayersR002(
     catalog,
     macro.architecture?.roofFixedPose,
   );
+  // A missing installed component or linked-tile certificate retains the entire
+  // original roof presentation, including the otherwise quiet flank skin.
+  const roofAssemblyAdmittedR027 =
+    referenceAssemblyR027 &&
+    doc.mounts
+      .filter((m) => m.attach === "top")
+      .every((m) => roofOperating.components.has(m.id)) &&
+    (doc.mountTiles ?? []).every((m) => roofOperating.tiles.has(m.id));
   const operatingBounds = [
     ...roofOperating.components.values(),
     ...roofOperating.tiles.values(),
@@ -3291,6 +3770,32 @@ export function shipVisualLayersR002(
 
             const endInset = fromEnd < 4 ? 2 : 0;
             const shoulder = distance >= 2 + endInset && !serviceBelt;
+            if (
+              roofAssemblyAdmittedR027 &&
+              shoulder &&
+              mountClear &&
+              !marked &&
+              !operatingBounds.some(
+                (r) => x + 1 > r[0] && x < r[2] && y + 1 > r[1] && y < r[3],
+              ) &&
+              (deck ? !enclosure || !!shapedCase : distance >= 4)
+            ) {
+              r027RoofColumns.push({
+                x,
+                y,
+                hi,
+                family,
+                wing: !deck,
+                body: enclosure
+                  ? {
+                      id: enclosure.id,
+                      kind: enclosure.kind,
+                      fixtures: enclosure.fixtures,
+                    }
+                  : undefined,
+                massing: !!enclosure && massingCells.has(`${x},${y}`),
+              });
+            }
             column(
               `${family}:roof-subframe`,
               "frame",
@@ -5437,12 +5942,20 @@ export function shipVisualLayersR002(
         height < (task.key === "medical" || task.key === "galley" ? 8 : 11)
       )
         continue;
+      const referenceWallAssemblyR027 = referenceAssemblyR027 && width >= 24;
       // Unequal fields share one finite casing, its lower binding and a local
       // header. Long admitted runs are never reclamped to a room-centre badge.
       const fieldWidths = macro.architecture?.wallFields;
       const fieldTotal = fieldWidths?.reduce((sum, n) => sum + n, 0) ?? 1;
-      const joints =
-        width >= 64
+      const joints = referenceWallAssemblyR027
+        ? width >= 49
+          ? [
+              0,
+              Math.max(24, Math.min(width - 24, Math.floor(width * 0.58))),
+              width,
+            ]
+          : [0, width]
+        : width >= 64
           ? [
               0,
               Math.floor(
@@ -5475,7 +5988,9 @@ export function shipVisualLayersR002(
         const edge = Math.min(u, width - 1 - u),
           edgeV = Math.min(v, height - 1 - v);
         let role: ShipVisualLayer["role"] = "plate",
-          slot: ShipKitSlot = "primary",
+          slot: ShipKitSlot = referenceWallAssemblyR027
+            ? "secondary"
+            : "primary",
           part = "joined-case";
         const use = (
           name: string,
@@ -5505,147 +6020,188 @@ export function shipVisualLayersR002(
               const openField = q >= 3 && q < W - 3 && v >= 3 && v < height - 3;
               const lowerBank = v >= 4 && v < 6;
               const upperBank = v >= height - 8 && v < height - 6;
-              switch (task.key) {
-                case "engineering":
-                  if (panel === 0 && openField) {
-                    const cassetteWidth = Math.min(
-                        24,
-                        Math.max(14, Math.floor(W * 0.36)),
-                      ),
-                      cassetteLeft = Math.floor((W - cassetteWidth) * 0.43),
-                      cassetteRight = cassetteLeft + cassetteWidth;
-                    if (q < cassetteLeft - 2 || q >= cassetteRight + 2) {
-                      use("well", "void", "dark");
-                      const blockBottom = v >= 4 && v < Math.min(height - 4, 8),
-                        blockTop =
-                          v >= Math.max(9, height - 9) && v < height - 4;
-                      if (
-                        (q < cassetteLeft - 2 && blockBottom) ||
-                        (q >= cassetteRight + 2 && blockTop)
-                      )
-                        use("cooling-machine-block", "service", "metal");
-                    } else {
-                      use("central-service-cassette", "plate", "primary");
-                      if (
-                        q >= cassetteLeft + 3 &&
-                        q < cassetteRight - 3 &&
-                        v >= 6 &&
-                        v < height - 6
-                      )
-                        use("cassette-access-field", "plate", "trim");
-                      if (
-                        q >= cassetteRight - 5 &&
-                        q < cassetteRight - 2 &&
-                        v >= 6 &&
-                        v < 9
-                      )
-                        use("cassette-actuator", "service", "metal");
+              if (referenceWallAssemblyR027) {
+                // ONE actual finish course: deep machinery remains authored in
+                // existing host footprints, never invented inside the walkway.
+                use(`${task.key}-distribution-body`, "plate", "secondary");
+                const accessWidth = Math.min(
+                  12,
+                  Math.max(6, Math.floor(W * 0.3)),
+                );
+                const accessTop = Math.min(height - 4, 14);
+                if (q >= 4 && q < 4 + accessWidth && v >= 4 && v < accessTop)
+                  use(`${task.key}-closed-access`, "plate", "primary");
+                const wellLeft = Math.max(4, W - 12),
+                  wellRight = W - 4;
+                const wellBottom = 5,
+                  wellTop = Math.min(height - 4, 13);
+                const wellArea =
+                  (wellRight - wellLeft) * Math.max(0, wellTop - wellBottom);
+                if (
+                  q >= wellLeft &&
+                  q < wellRight &&
+                  v >= wellBottom &&
+                  v < wellTop &&
+                  wellArea <= Math.floor((W * height) / 5)
+                ) {
+                  use(`${task.key}-backed-service-well`, "void", "dark");
+                  const q0 = q - wellLeft,
+                    v0 = v - wellBottom;
+                  if ((q0 < 3 && v0 < 3) || (q0 >= 4 && v0 >= 3 && v0 < 6))
+                    use(`${task.key}-machine-block`, "service", "metal");
+                }
+                if (v >= height - 5 && v < height - 3 && q >= 4 && q < W - 4)
+                  use(`${task.key}-header-return`, "plate", "trim");
+                if (q === 4 + accessWidth && v >= 5 && v < 8)
+                  use(`${task.key}-access-latch`, "service", "metal");
+              } else
+                switch (task.key) {
+                  case "engineering":
+                    if (panel === 0 && openField) {
+                      const cassetteWidth = Math.min(
+                          24,
+                          Math.max(14, Math.floor(W * 0.36)),
+                        ),
+                        cassetteLeft = Math.floor((W - cassetteWidth) * 0.43),
+                        cassetteRight = cassetteLeft + cassetteWidth;
+                      if (q < cassetteLeft - 2 || q >= cassetteRight + 2) {
+                        use("well", "void", "dark");
+                        const blockBottom =
+                            v >= 4 && v < Math.min(height - 4, 8),
+                          blockTop =
+                            v >= Math.max(9, height - 9) && v < height - 4;
+                        if (
+                          (q < cassetteLeft - 2 && blockBottom) ||
+                          (q >= cassetteRight + 2 && blockTop)
+                        )
+                          use("cooling-machine-block", "service", "metal");
+                      } else {
+                        use("central-service-cassette", "plate", "primary");
+                        if (
+                          q >= cassetteLeft + 3 &&
+                          q < cassetteRight - 3 &&
+                          v >= 6 &&
+                          v < height - 6
+                        )
+                          use("cassette-access-field", "plate", "trim");
+                        if (
+                          q >= cassetteRight - 5 &&
+                          q < cassetteRight - 2 &&
+                          v >= 6 &&
+                          v < 9
+                        )
+                          use("cassette-actuator", "service", "metal");
+                      }
+                      if (lowerBank || upperBank)
+                        use("cooling-case-shoulder", "plate", "primary");
+                    } else if (panel === 1) {
+                      use("distribution-case", "plate", "trim");
+                      if (q >= 4 && q < Math.min(W - 4, 9))
+                        use("distribution-cassette", "plate", "primary");
+                      if (q >= W - 8 && q < W - 5 && v >= 5 && v < height - 5)
+                        use(
+                          "contained-distribution-status",
+                          "service",
+                          "emit_b",
+                        );
+                    } else if (panel > 1 && v < height - 6) {
+                      use("service-access-cover", "plate", "trim");
+                      if (q >= W - 7 && q < W - 5 && v >= 5 && v < 9)
+                        use("service-access-handle", "service", "metal");
                     }
-                    if (lowerBank || upperBank)
-                      use("cooling-case-shoulder", "plate", "primary");
-                  } else if (panel === 1) {
-                    use("distribution-case", "plate", "trim");
-                    if (q >= 4 && q < Math.min(W - 4, 9))
-                      use("distribution-cassette", "plate", "primary");
-                    if (q >= W - 8 && q < W - 5 && v >= 5 && v < height - 5)
-                      use("contained-distribution-status", "service", "emit_b");
-                  } else if (panel > 1 && v < height - 6) {
-                    use("service-access-cover", "plate", "trim");
-                    if (q >= W - 7 && q < W - 5 && v >= 5 && v < 9)
-                      use("service-access-handle", "service", "metal");
-                  }
-                  break;
-                case "workshop":
-                  if (panel === 0 && openField) {
-                    use("well", "void", "dark");
-                    if (lowerBank) use("tool-power-bank", "service", "metal");
-                    if ((q >= 5 && q < 8) || (q >= W - 10 && q < W - 7))
-                      use("protected-tool-case", "plate", "trim");
-                  } else if (panel > 0) {
-                    use("workbench-distribution-cover", "plate", "trim");
-                    if (v >= 4 && v < 6)
-                      use("workbench-supply-return", "service", "metal");
-                  }
-                  break;
-                case "medical":
-                  use(
-                    low ? "low-medical-utility" : "medical-supply-face",
-                    "plate",
-                    "trim",
-                  );
-                  if (q >= 4 && q < Math.min(W - 4, 12))
-                    use("medical-removable-cassette", "plate", "primary");
-                  if (q >= W - 8 && q < W - 6 && v >= 4 && v < height - 4)
-                    use("oxygen-supply-manifold", "service", "metal");
-                  break;
-                case "galley":
-                  if (panel === 0 && openField) {
-                    use("well", "void", "dark");
-                    if (lowerBank)
-                      use("counter-utility-bank", "service", "metal");
-                  } else if (panel > 0 && v < height - 5) {
-                    use("galley-storage-cover", "plate", "primary");
-                    if (
-                      q >= Math.floor(W * 0.56) &&
-                      q < Math.floor(W * 0.56) + 3
-                    )
-                      use("galley-storage-return", "frame", "trim");
-                    if (q >= W - 7 && q < W - 5 && v >= 4 && v < 8)
-                      use("storage-pull", "service", "metal");
-                  }
-                  break;
-                case "quarters":
-                case "living":
-                  if (
-                    panel === 0 &&
-                    openField &&
-                    v < Math.floor(height * 0.58)
-                  ) {
-                    use("well", "void", "dark");
-                    if (lowerBank)
-                      use("reading-supply-bank", "service", "metal");
-                  } else if (q >= 4 && q < W - 4 && v < height - 5) {
-                    use("berth-storage-cover", "plate", "primary");
-                    if (
-                      q >= Math.floor(W * 0.59) &&
-                      q < Math.floor(W * 0.59) + 2
-                    )
-                      use("berth-storage-return", "frame", "trim");
-                    if (q >= W - 7 && q < W - 5 && v >= 5 && v < 9)
-                      use("berth-storage-pull", "service", "metal");
-                  }
-                  break;
-                case "lounge":
-                  if (panel === 0 && openField) {
-                    use("media-service-face", "plate", "trim");
-                    if (q < Math.floor(W * 0.62) && v < height - 6)
+                    break;
+                  case "workshop":
+                    if (panel === 0 && openField) {
                       use("well", "void", "dark");
-                    if (lowerBank) use("media-supply-bank", "service", "metal");
-                  }
-                  break;
-                case "bridge":
-                  if (panel === 0 && openField) {
-                    use("bridge-distribution-cover", "plate", "trim");
-                    if (lowerBank)
-                      use("bridge-supply-bank", "service", "metal");
-                  } else if (panel > 0 && v < height - 5) {
-                    use("bridge-instrument-service-cover", "plate", "trim");
-                  }
-                  break;
-                case "cargo":
-                  if ((q >= 4 && q < 7) || (q >= W - 7 && q < W - 4))
-                    use("load-restraint-case", "plate", "trim");
-                  if (v >= 4 && v < 6)
-                    use("load-restraint-anchor", "service", "metal");
-                  break;
-                case "airlock":
-                  use("pressure-control-cover", "plate", "trim");
-                  if (q >= 4 && q < Math.min(W - 4, 11))
-                    use("pressure-cassette", "plate", "primary");
-                  if (q >= W - 7 && q < W - 5 && v >= 5 && v < height - 5)
-                    use("pressure-control-handle", "service", "metal");
-                  break;
-              }
+                      if (lowerBank) use("tool-power-bank", "service", "metal");
+                      if ((q >= 5 && q < 8) || (q >= W - 10 && q < W - 7))
+                        use("protected-tool-case", "plate", "trim");
+                    } else if (panel > 0) {
+                      use("workbench-distribution-cover", "plate", "trim");
+                      if (v >= 4 && v < 6)
+                        use("workbench-supply-return", "service", "metal");
+                    }
+                    break;
+                  case "medical":
+                    use(
+                      low ? "low-medical-utility" : "medical-supply-face",
+                      "plate",
+                      "trim",
+                    );
+                    if (q >= 4 && q < Math.min(W - 4, 12))
+                      use("medical-removable-cassette", "plate", "primary");
+                    if (q >= W - 8 && q < W - 6 && v >= 4 && v < height - 4)
+                      use("oxygen-supply-manifold", "service", "metal");
+                    break;
+                  case "galley":
+                    if (panel === 0 && openField) {
+                      use("well", "void", "dark");
+                      if (lowerBank)
+                        use("counter-utility-bank", "service", "metal");
+                    } else if (panel > 0 && v < height - 5) {
+                      use("galley-storage-cover", "plate", "primary");
+                      if (
+                        q >= Math.floor(W * 0.56) &&
+                        q < Math.floor(W * 0.56) + 3
+                      )
+                        use("galley-storage-return", "frame", "trim");
+                      if (q >= W - 7 && q < W - 5 && v >= 4 && v < 8)
+                        use("storage-pull", "service", "metal");
+                    }
+                    break;
+                  case "quarters":
+                  case "living":
+                    if (
+                      panel === 0 &&
+                      openField &&
+                      v < Math.floor(height * 0.58)
+                    ) {
+                      use("well", "void", "dark");
+                      if (lowerBank)
+                        use("reading-supply-bank", "service", "metal");
+                    } else if (q >= 4 && q < W - 4 && v < height - 5) {
+                      use("berth-storage-cover", "plate", "primary");
+                      if (
+                        q >= Math.floor(W * 0.59) &&
+                        q < Math.floor(W * 0.59) + 2
+                      )
+                        use("berth-storage-return", "frame", "trim");
+                      if (q >= W - 7 && q < W - 5 && v >= 5 && v < 9)
+                        use("berth-storage-pull", "service", "metal");
+                    }
+                    break;
+                  case "lounge":
+                    if (panel === 0 && openField) {
+                      use("media-service-face", "plate", "trim");
+                      if (q < Math.floor(W * 0.62) && v < height - 6)
+                        use("well", "void", "dark");
+                      if (lowerBank)
+                        use("media-supply-bank", "service", "metal");
+                    }
+                    break;
+                  case "bridge":
+                    if (panel === 0 && openField) {
+                      use("bridge-distribution-cover", "plate", "trim");
+                      if (lowerBank)
+                        use("bridge-supply-bank", "service", "metal");
+                    } else if (panel > 0 && v < height - 5) {
+                      use("bridge-instrument-service-cover", "plate", "trim");
+                    }
+                    break;
+                  case "cargo":
+                    if ((q >= 4 && q < 7) || (q >= W - 7 && q < W - 4))
+                      use("load-restraint-case", "plate", "trim");
+                    if (v >= 4 && v < 6)
+                      use("load-restraint-anchor", "service", "metal");
+                    break;
+                  case "airlock":
+                    use("pressure-control-cover", "plate", "trim");
+                    if (q >= 4 && q < Math.min(W - 4, 11))
+                      use("pressure-cassette", "plate", "primary");
+                    if (q >= W - 7 && q < W - 5 && v >= 5 && v < height - 5)
+                      use("pressure-control-handle", "service", "metal");
+                    break;
+                }
             } else
               switch (task.key) {
                 case "engineering":
@@ -6092,17 +6648,32 @@ export function shipVisualLayersR002(
   ];
   // Resolve original exposed-face pigments before adding the finite Crest
   // casing. Its new faces must not suppress an original material overlay.
-  const appendOriginalCanopy = (ordered: ShipVisualLayer[]) => [
-    ...ordered,
-    ...referenceOriginalCanopySourceR026(
-      doc,
-      view,
-      catalog,
-      profileId,
-      ordered,
-      opticalBoxes,
-    ),
-  ];
+  const appendOriginalCanopy = (
+    ordered: ShipVisualLayer[],
+    sampled?: ReturnType<typeof sampleShipVisualLayers>,
+  ) => {
+    const roof = [
+      ...ordered,
+      ...referenceRoofAssemblyR027(
+        ordered,
+        r027RoofColumns,
+        opticalBoxes,
+        sampled,
+        referenceAssemblyR027 && doc.id === "fed.s.wren",
+      ),
+    ];
+    return [
+      ...roof,
+      ...referenceOriginalCanopySourceR026(
+        doc,
+        view,
+        catalog,
+        profileId,
+        roof,
+        opticalBoxes,
+      ),
+    ];
+  };
   if (!matingSolids.some((s) => !s.veto))
     return appendOriginalCanopy(finishedLayers);
   // A pigment cannot change source-layer grouping priority. Resolve the complete
@@ -6163,7 +6734,7 @@ export function shipVisualLayersR002(
       bounds: [c.x, c.y, c.z, c.x + 1, c.y + 1, c.z + 1],
     });
   }
-  return appendOriginalCanopy([...finishedLayers, ...overlays]);
+  return appendOriginalCanopy([...finishedLayers, ...overlays], finalCells);
 }
 
 /** Exact box compaction with dependencies only between writes to the same XYZ cells. */

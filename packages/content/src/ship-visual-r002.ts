@@ -1878,6 +1878,8 @@ export interface ShipVisualMacroProfile {
     floorCover: readonly [number, number];
     roofStep: number;
     roofThermalRibs: number;
+    /** Exact current reference documents only; finite late roof finish replacement. */
+    roofAssemblyR027?: boolean;
     roofMassing?: {
       high: number;
       medium: number;
@@ -1936,6 +1938,7 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
       floorCover: [32, 24],
       roofStep: 2,
       roofThermalRibs: 4,
+      roofAssemblyR027: true,
       roofMassing: { high: 4, medium: 1, low: -1, connection: 8 },
       roofFixedPose: REFERENCE_ROOF_FIXED_POSE_R002,
     },
