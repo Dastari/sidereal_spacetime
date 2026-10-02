@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { PREFAB_SHIPS } from "./prefabs/index";
 import { defaultPrefabComponentCatalog } from "./ship-prefab-catalog";
 import { deriveInterior } from "./ship-prefab";
+import { referenceRoomFixtureR025 } from "./ship-room-fixtures-r025";
 import {
   DECK_OBJECT_DESIGNS,
   interiorArtQuarterTurns,
@@ -9,6 +10,10 @@ import {
 } from "./ship-furniture";
 
 const catalog = defaultPrefabComponentCatalog();
+const referenceBanks = [
+  ["shipyard.equipment.workshop-bank-r025", "operator-looks-to-back", 2],
+  ["shipyard.equipment.medical-equipment-bank-r025", "access-faces-room", 0],
+] as const;
 
 describe("interior facing convention", () => {
   it("turns console art (operator on the +Y access side, looking -Y) to face its operator's view", () => {
@@ -25,12 +30,25 @@ describe("interior facing convention", () => {
       expect(interiorArtQuarterTurns(id), id).toBe(2);
     // Seats look along their access side; fixtures open into the room: no turn.
     for (const id of DECK_OBJECT_DESIGNS.filter(
-      (d) => !/console|bridge-bank/.test(d),
+      (d) =>
+        !/console|bridge-bank/.test(d) &&
+        !referenceBanks.some(([id]) => id === d),
     ))
       expect(interiorArtQuarterTurns(id), id).toBe(0);
     for (const id of ["reactor.md", "crew-bunk.sm", "fuel-tank.sm"])
       expect(interiorArtQuarterTurns(id), id).toBe(0);
     expect(isCrewStationDesign("shipyard.equipment.pilot-seat")).toBe(true);
+  });
+
+  it("uses the two reference banks' descriptor facing without granting crew stations", () => {
+    for (const [id, convention, turns] of referenceBanks) {
+      expect(DECK_OBJECT_DESIGNS).toContain(id);
+      expect(referenceRoomFixtureR025(id)?.facingConvention, id).toBe(
+        convention,
+      );
+      expect(interiorArtQuarterTurns(id), id).toBe(turns);
+      expect(isCrewStationDesign(id), id).toBe(false);
+    }
   });
 
   for (const prefab of PREFAB_SHIPS)

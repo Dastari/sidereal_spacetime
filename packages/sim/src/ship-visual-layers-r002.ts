@@ -5732,8 +5732,8 @@ export function shipVisualLayersR002(
     catalog,
     profileId,
   );
-  // Root's exact paired manufactured frame is a FINAL duty after both the
-  // accepted raw pane mask and every finish/pigment write. Unknown admission
+  // Root's exact paired manufactured frame resolves after the accepted raw
+  // pane mask and all geometric finishes, before pigment eligibility. Unknown admission
   // returns no replacement and retains the complete preceding candidate.
   const finishBow = (ordered: ShipVisualLayer[]) => {
     const previous = [
@@ -5752,12 +5752,12 @@ export function shipVisualLayersR002(
       ),
     ];
   };
-  if (!matingSolids.some((s) => !s.veto))
-    return finishBow([...finalLayers, ...cockpitAperture]);
+  const finishedLayers = finishBow([...finalLayers, ...cockpitAperture]);
+  if (!matingSolids.some((s) => !s.veto)) return finishedLayers;
   // A pigment cannot change source-layer grouping priority. Resolve the complete
   // geometry FIRST and append only slot overlays for already occupied exposed
   // final owners; never compact these overlays back across earlier voids/cases.
-  const finalCells = sampleShipVisualLayers(finalLayers);
+  const finalCells = sampleShipVisualLayers(finishedLayers);
   const candidates = [...finalCells.values()].filter(
     (c) =>
       !c.facet &&
@@ -5781,7 +5781,7 @@ export function shipVisualLayersR002(
   );
   const columns = new Map<string, ShipVisualLayer[]>();
   for (const c of candidates) columns.set(`${c.x},${c.y}`, []);
-  for (const l of finalLayers)
+  for (const l of finishedLayers)
     for (let y = l.bounds[1]; y < l.bounds[4]; y++)
       for (let x = l.bounds[0]; x < l.bounds[3]; x++)
         columns.get(`${x},${y}`)?.push(l);
@@ -5812,7 +5812,7 @@ export function shipVisualLayersR002(
       bounds: [c.x, c.y, c.z, c.x + 1, c.y + 1, c.z + 1],
     });
   }
-  return finishBow([...finalLayers, ...overlays, ...cockpitAperture]);
+  return [...finishedLayers, ...overlays];
 }
 
 /** Exact box compaction with dependencies only between writes to the same XYZ cells. */
