@@ -34,6 +34,8 @@ export const SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION =
   "sealed-r006-tactical-crown-temple-contour-010-finite-cavity";
 export const SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION =
   "sealed-r006-tactical-eye-line-cheek-jaw-011-selected-crown-adjacency";
+export const SEALED_HEAD_MARINE_CROWN_RECEIVER_DIAGNOSTIC_REVISION =
+  "sealed-r006-tactical-marine-crown-stepped-receiver-012";
 const navyVisorMaterials = new WeakSet<PBRMaterial>();
 /** Physical style owns these two responses after the generic glass finish; only owned clones qualify. */
 export function restoreOwnedTacticalVisorFinish(material: PBRMaterial): void {

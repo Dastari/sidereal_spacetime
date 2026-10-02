@@ -17,6 +17,7 @@ import {
   SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION,
   SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION,
   SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_MARINE_CROWN_RECEIVER_DIAGNOSTIC_REVISION,
 } from "../packages/render/src/crew/head-palette";
 import type { OperatorEnsembleRequest } from "../packages/render/src/crew/operator-ensemble";
 import { applySealedDiagnosticHead } from "./prefab-render-harness/operator-sealed-head";
@@ -151,6 +152,7 @@ test.each([
   SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION,
   SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION,
   SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_MARINE_CROWN_RECEIVER_DIAGNOSTIC_REVISION,
 ])(
   "sealed subset %s remains explicit: legacy does no proposal load and incomplete tactical selector retains verified legacy plan until attestation",
   async (selection) => {
@@ -180,6 +182,7 @@ test.each([
   SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION,
   SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION,
   SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_MARINE_CROWN_RECEIVER_DIAGNOSTIC_REVISION,
 ])(
   "six-node proposal %s refuses a different helmet before fetching, and unverified manifest never replaces sources",
   async (selection) => {
