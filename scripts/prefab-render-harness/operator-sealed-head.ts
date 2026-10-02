@@ -13,6 +13,7 @@ import {
   SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION,
   SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION,
   SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION,
 } from "../../packages/render/src/crew/head-palette";
 import { verifyCrewSource } from "../../packages/render/src/crew/crew-asset-cache";
 import { validateHeadArtBytes } from "../../packages/render/src/crew/head-art-revision";
@@ -104,6 +105,14 @@ const proposals = {
     glbBytes: 126548,
     glbSha: "5e380682caf0ae9d9336922b6dea585d02214a443fda53bf8cfb19195a36f5af",
   },
+  [SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION]: {
+    base: "/@fs/root/sidereal-worktrees/candidate-pilot-seat-contact/.operator-diagnostic-assets/sealed-r006-tactical-eye-line-cheek-jaw-011-selected-crown-adjacency/",
+    manifestBytes: 6600,
+    manifestSha:
+      "0bf285b7aa9f5aa37f5f214674e66af1168ce949dc6c499abc15676d02c07428",
+    glbBytes: 134168,
+    glbSha: "689fad55dd23f2db582662d762e5cd3d1eb6f6537890c03def0ade9d534a513a",
+  },
 };
 const nodes = [
   "helmet.tactical",
@@ -131,7 +140,8 @@ export async function applySealedDiagnosticHead(
     selection !== SEALED_HEAD_FUNCTIONAL_CLIPPED_DIAGNOSTIC_REVISION &&
     selection !== SEALED_HEAD_PRESSURE_CONTOUR_DIAGNOSTIC_REVISION &&
     selection !== SEALED_HEAD_WIDE_VISOR_CONTOUR_DIAGNOSTIC_REVISION &&
-    selection !== SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION
+    selection !== SEALED_HEAD_CROWN_TEMPLE_CONTOUR_DIAGNOSTIC_REVISION &&
+    selection !== SEALED_HEAD_EYE_LINE_CHEEK_JAW_DIAGNOSTIC_REVISION
   )
     return request;
   const proposal = proposals[selection];
