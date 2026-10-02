@@ -48,6 +48,8 @@ declare global {
   }
 }
 const cameraName = new URLSearchParams(location.search).get("cam") ?? "hero";
+const poolPracticals =
+  new URLSearchParams(location.search).get("lights") === "pools";
 const review: Review = { ready: false, camera: cameraName };
 window.__wayfarerAuthored = review;
 const base = "/assets/ship-study/wayfarer-authored-r001/";
@@ -129,13 +131,16 @@ async function main() {
   moldedLightRig(scene).include(candidate.meshes);
   // A matched OFF/ON pair retains three studio contributions in both modes.
   scene.getLightByName("construction-fill")?.setEnabled(false);
-  const selectedNames = [
+  const practicalOwners = [
     "LT_cockpit",
     "LT_lounge",
     "LT_quarters_a",
     "LT_cargo",
     "LT_workshop",
   ];
+  const selectedNames = poolPracticals
+    ? ["LT_pool_8", "LT_pool_9", "LT_pool_15", "LT_pool_31", "LT_pool_34"]
+    : practicalOwners;
   const sourceLights = (layout as { lights?: unknown }).lights;
   if (!Array.isArray(sourceLights))
     throw Error("Missing study practical lights");
@@ -153,7 +158,7 @@ async function main() {
     };
     if (
       row.type !== "POINT" ||
-      row.radius !== 0.45 ||
+      row.radius !== (poolPracticals ? 0.1 : 0.45) ||
       !Number.isFinite(row.watts) ||
       row.watts <= 0 ||
       !Array.isArray(row.location) ||
@@ -166,27 +171,31 @@ async function main() {
       throw Error(`Invalid practical ${name}`);
     return row;
   });
-  const practicals = practicalRows.map((row) => {
+  const practicals = practicalRows.map((row, index) => {
     const position = prefabToShipLocal(
       row.location as [number, number, number],
       origin,
     );
     const light = new PointLight(
-      `authored-study:${row.name}`,
+      `authored-study:${practicalOwners[index]}`,
       Vector3.FromArray(position),
       scene,
     );
     light.diffuse = Color3.FromArray(row.colour);
     light.specular = Color3.Black();
     // Declared artistic mapping, not physical equivalence to Blender watts.
-    light.intensity = 2 * Math.max(0.8, Math.min(3, (row.watts * 2.2) / 140));
+    light.intensity = poolPracticals
+      ? row.watts / 10
+      : 2 * Math.max(0.8, Math.min(3, (row.watts * 2.2) / 140));
     light.intensityMode = Light.INTENSITYMODE_LUMINOUSINTENSITY;
     light.falloffType = Light.FALLOFF_STANDARD;
     light.radius = row.radius;
-    light.range = 4;
+    light.range = poolPracticals ? 1.8 : 4;
+    // Keep the five owned slots stable; source rows identify this private cohort.
+    light.metadata = { reviewSourceRow: row.name };
     light.shadowEnabled = false;
     light.includedOnlyMeshes = candidate.meshes;
-    registerLocalPbrLight(light, `authored-study:${row.name}`);
+    registerLocalPbrLight(light, `authored-study:${practicalOwners[index]}`);
     light.setEnabled(false);
     return light;
   });
@@ -414,12 +423,15 @@ async function main() {
       },
       practicalLighting: {
         enabled: review.practicals,
+        mode: poolPracticals ? "source-pools" : "central-rooms",
         sourceRows: practicalRows,
-        mapping:
-          "2 * clamp(watts * 2.2 / 140, 0.8, 3); artistic standard falloff; range4; PBR diffuse/specular",
+        mapping: poolPracticals
+          ? "watts / 10; artistic standard falloff; range1.8; PBR diffuse/specular"
+          : "2 * clamp(watts * 2.2 / 140, 0.8, 3); artistic standard falloff; range4; PBR diffuse/specular",
         disabledStudioFill: "construction-fill",
         lights: practicals.map((light) => ({
           name: light.name,
+          sourceRow: light.metadata.reviewSourceRow,
           position: light.position.asArray(),
           intensity: light.intensity,
           scaledIntensity: light.getScaledIntensity(),
