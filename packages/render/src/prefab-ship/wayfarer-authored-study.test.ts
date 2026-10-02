@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
+import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { appendTransformed, type MergeGroup } from "./batch";
 import { transformPoint } from "./frames";
 import {
@@ -185,6 +187,106 @@ describe("authored material pooling", () => {
       ),
     ).toThrow("External authored image");
   });
+});
+
+it("registers retained materials for shader invalidation and removes them on disposal", async () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  try {
+    new PBRMaterial("unrelated", scene);
+    const bytes = new Uint8Array(
+      readFileSync(
+        new URL(
+          "../../../../assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.grate.glb",
+          import.meta.url,
+        ),
+      ),
+    );
+    const before = [...scene.materials];
+    const candidate = await loadAuthoredStudy(
+      scene,
+      [
+        {
+          id: "floor.grate",
+          file: "floor.grate.glb",
+          sha256:
+            "55d663ea86cef90fb3f155e3e8c436aa4ac7c4e467842066f6852c7834ee9317",
+          triangles: 1404,
+          frame: "piece-local",
+        },
+      ],
+      [
+        {
+          object: "test-grate",
+          piece: "floor.grate",
+          role: "floor",
+          matrix: identity,
+        },
+      ],
+      {
+        deck_dark: { family: "plastic-deck" },
+        secondary: { family: "plastic-dark" },
+        trim: { family: "plastic-dark" },
+      },
+      [0, 0],
+      async () => bytes,
+    );
+    const used = [...new Set(candidate.meshes.map((mesh) => mesh.material))];
+    expect(used).toHaveLength(3);
+    expect(used.every((material) => scene.materials.includes(material!))).toBe(
+      true,
+    );
+    expect(scene.meshes).toEqual(candidate.meshes);
+    candidate.dispose();
+    candidate.dispose();
+    expect(scene.meshes).toHaveLength(0);
+    expect(scene.materials).toEqual(before);
+    // A second invalid asset must release the first imported container while
+    // preserving unrelated registered resources.
+    await expect(
+      loadAuthoredStudy(
+        scene,
+        [
+          {
+            id: "floor.grate",
+            file: "floor.grate.glb",
+            sha256:
+              "55d663ea86cef90fb3f155e3e8c436aa4ac7c4e467842066f6852c7834ee9317",
+            triangles: 1404,
+            frame: "piece-local",
+          },
+          {
+            id: "broken",
+            file: "broken.glb",
+            sha256: "0".repeat(64),
+            triangles: 1,
+            frame: "piece-local",
+          },
+        ],
+        [
+          {
+            object: "test-grate",
+            piece: "floor.grate",
+            role: "floor",
+            matrix: identity,
+          },
+        ],
+        {
+          deck_dark: { family: "plastic-deck" },
+          secondary: { family: "plastic-dark" },
+          trim: { family: "plastic-dark" },
+        },
+        [0, 0],
+        async (piece) => (piece.id === "broken" ? Uint8Array.of(1) : bytes),
+      ),
+    ).rejects.toThrow("hash mismatch");
+    expect(scene.meshes).toHaveLength(0);
+    expect(scene.materials).toEqual(before);
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
 });
 
 it("cancels a pending asset fetch when its scene is disposed", async () => {
