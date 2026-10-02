@@ -22,6 +22,9 @@ import {
   restoreOwnedTacticalVisorFinish,
   SEALED_HEAD_DIAGNOSTIC_REVISION,
   SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION,
 } from "./head-palette";
 import { resolveHeadLoadout } from "@sidereal/content/crew-heads";
 import {
@@ -168,7 +171,12 @@ export function createVoxelCrewOutfit(
     const wornSlots =
       options.operatorSources &&
       (resolved.headArtRevision === SEALED_HEAD_DIAGNOSTIC_REVISION ||
-        resolved.headArtRevision === SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION)
+        resolved.headArtRevision === SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision === SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision ===
+          SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION)
         ? equippedHelmetPalette(
             equipped.helmet,
             resolveHeadLoadout(loadout).nodes.find(
@@ -188,7 +196,14 @@ export function createVoxelCrewOutfit(
           wornSlots,
           navyTacticalVisor: Boolean(
             options.operatorSources &&
-            resolved.headArtRevision === SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION,
+            (resolved.headArtRevision ===
+              SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION ||
+              resolved.headArtRevision ===
+                SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION),
           ),
         }),
       )

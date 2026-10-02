@@ -18,6 +18,9 @@ import { bytesToHex } from "@noble/hashes/utils.js";
 import {
   SEALED_HEAD_DIAGNOSTIC_REVISION,
   SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION,
 } from "../../packages/render/src/crew/head-palette";
 
 export function diagnosticOperatorAppearance(
@@ -60,7 +63,10 @@ export async function diagnosticOperatorPlan(
   if (
     headSelection === "legacy" ||
     headSelection === SEALED_HEAD_DIAGNOSTIC_REVISION ||
-    headSelection === SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION
+    headSelection === SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION ||
+    headSelection === SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION ||
+    headSelection === SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION ||
+    headSelection === SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION
   )
     return { plan };
   if (headSelection !== HEAD_ART_CANDIDATE)

@@ -5,6 +5,9 @@ import { CREW_HEAD_CATALOG } from "@sidereal/content/crew-heads";
 import {
   SEALED_HEAD_DIAGNOSTIC_REVISION,
   SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION,
 } from "../../packages/render/src/crew/head-palette";
 import { verifyCrewSource } from "../../packages/render/src/crew/crew-asset-cache";
 import { validateHeadArtBytes } from "../../packages/render/src/crew/head-art-revision";
@@ -32,6 +35,30 @@ const proposals = {
     glbBytes: 586548,
     glbSha: "f7896e1d00fad244fcfea44816ac57f23da5f9fc1044bed61eef5a615a0a5264",
   },
+  [SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION]: {
+    base: "/@fs/root/sidereal-worktrees/candidate-pilot-seat-contact/.operator-diagnostic-assets/sealed-r006-tactical-faceted-003/",
+    manifestBytes: 5372,
+    manifestSha:
+      "ebf6f444a486eb36e66a4c7be5f6f275fb200069a9c422897aa1fa3e89ff035d",
+    glbBytes: 240332,
+    glbSha: "5cddb081f70af22e75b46dcc4bd94759ccb7f5b8cfd0d6615c65d8981147c1fa",
+  },
+  [SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION]: {
+    base: "/@fs/root/sidereal-worktrees/candidate-pilot-seat-contact/.operator-diagnostic-assets/sealed-r006-tactical-functional-004/",
+    manifestBytes: 5385,
+    manifestSha:
+      "079a52dc2e7ba190dd09c4e8ed8e3372e7248b85ac38af126bc22559aed598cc",
+    glbBytes: 136604,
+    glbSha: "72076685af6b2d5412a3374f680d3c8c26be7b63f50febc76d70f52a78bc55e1",
+  },
+  [SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION]: {
+    base: "/@fs/root/sidereal-worktrees/candidate-pilot-seat-contact/.operator-diagnostic-assets/sealed-r006-tactical-functional-005-exact/",
+    manifestBytes: 5632,
+    manifestSha:
+      "b99d05f06f5c92e88b68fab040590382720b6fcbc8869f08ba668b33a084b0b9",
+    glbBytes: 162232,
+    glbSha: "a9ac50faf23853ac4133d503b7171824f91584f23a2e344e8ba77504e2912fda",
+  },
 };
 const nodes = [
   "helmet.tactical",
@@ -51,7 +78,10 @@ export async function applySealedDiagnosticHead(
 ): Promise<OperatorEnsembleRequest> {
   if (
     selection !== SEALED_HEAD_DIAGNOSTIC_REVISION &&
-    selection !== SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION
+    selection !== SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION &&
+    selection !== SEALED_HEAD_FACETED_DIAGNOSTIC_REVISION &&
+    selection !== SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION &&
+    selection !== SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION
   )
     return request;
   const proposal = proposals[selection];
