@@ -105,6 +105,58 @@ export const SHIP_VISUAL_BOW_CASE_ENVELOPE_R026 = {
     [180, 56, 24, 190, 78, 30],
   ],
 } as const;
+/** Source-derived additive Crest geometry: bounds reject cells but never
+ * authorize an AABB fill or enlarge the ordinary decoration envelope. */
+export const SHIP_VISUAL_CANOPY_SOURCE_R026 = {
+  kind: "crest-original-positive-canopy-source-r026",
+  prefab: "fed.m.crest",
+  prefabSha256:
+    "6b0aa0b105174f7f2af341ac46c16ef6d5b8b7bd9a4de4e36f8abf290bdcebf9",
+  tableSha256:
+    "493f739ed76364a4e3ea9240215444bc5d45ca4d59a3de95ce1b5c133125604a",
+  generatorSha256:
+    "169628dc548801f14637fc37e672a31fcd4df6ea4e04fa6e56473390435f7c7d",
+  tableCanonicalSha256:
+    "4e1c028e02c8154ced67331238fc1899448315420ec08cc3bc4eed3c9438017f",
+  originalSourceSha256:
+    "b067ca505c3972b59f144a49760ed2675ec0756c6ad3d56db366a7c5ace0c725",
+  grammarSha256:
+    "33f5226a142fa4687ee552ef14ed9e977ad13ddd3e1eaaf78a58d6bdccf89ea0",
+  opticalGuardSha256:
+    "a06efd4ed9098e658537833276bbf693a02a6c680504aa1d175652a4e2a31a46",
+  wholeCellBounds: [319, -18, 0, 410, 178, 43],
+  sourceMemberCells: 83696,
+  addedCells: 83056,
+  omittedInwardEmptyCells: 42,
+  placements: [
+    ["canopy.slope1.deck", 20, 1, 0, 270],
+    ["canopy.slope1.deck", 21, 2, 0, 270],
+    ["canopy.slope1.deck", 22, 3, 0, 270],
+    ["canopy.slope1.deck", 23, 4, 0, 270],
+    ["canopy.slope1.deck", 23, 6, 0, 0],
+    ["canopy.slope1.deck", 22, 7, 0, 0],
+    ["canopy.slope1.deck", 21, 8, 0, 0],
+    ["canopy.slope1.deck", 20, 9, 0, 0],
+    ["canopy.corner45.deck", 24, 4, 0, 315],
+    ["canopy.corner45.deck", 24, 6, 0, 0],
+    ["canopy.straight.w1.deck", 24, 5, 0, 270],
+    ["canopy.straight.w1.deck", 24, 6, 0, 270],
+  ],
+  navCompanions: [
+    [24, 5, 0, 270],
+    [24, 6, 0, 270],
+  ],
+  originalAssets: {
+    "canopy.slope1.deck":
+      "dff525b82261e1be04452d7c0703b841fe26d4a039e37b1bbed4cec8c3438c1a",
+    "canopy.corner45.deck":
+      "70e93b54c5e2da9884a47ba528bf910f06621cd9888bddffe09c57a466228502",
+    "canopy.straight.w1.deck":
+      "53c1a1f5e469e5703228547bcf00d9bea7093b2df5ff2113c686c2cfa0213c6b",
+    "canopy.nav.deck":
+      "71b613e304034ebf1b9a0091aa0dbf58b9e7b698c85c4d94287d0a9d4ea3bf7c",
+  },
+} as const;
 export interface ShipVisualManifest {
   schema: typeof SHIP_VISUAL_SCHEMA;
   revision: string;
@@ -119,6 +171,10 @@ export interface ShipVisualManifest {
   assets: ShipVisualAsset[];
   /** Decoration stays inside these additional outer/vertical metres; never changes gameplay bounds. */
   decorativeEnvelope: { outward: number; upward: number; inward: number };
+  /** Exact additive original-source membership, independently bound to its helper. */
+  canopySourceR026?: typeof SHIP_VISUAL_CANOPY_SOURCE_R026 & {
+    sourceSha256: string;
+  };
   /** Actual helper source pin and exact finite bodies; never a default envelope. */
   bowCaseEnvelopeR026?: {
     kind: typeof SHIP_VISUAL_BOW_CASE_ENVELOPE_R026.kind;
@@ -186,6 +242,30 @@ export function readShipVisualManifest(value: unknown): ShipVisualManifest {
     const key = `${a.kind}:${a.id}`;
     if (ids.has(key)) throw Error("Duplicate visual asset");
     ids.add(key);
+  }
+  const canopy = m.canopySourceR026;
+  if (canopy !== undefined) {
+    const expected = SHIP_VISUAL_CANOPY_SOURCE_R026;
+    if (
+      !canopy ||
+      m.revision !== "r002" ||
+      !sha.test(canopy.sourceSha256) ||
+      m.prefabs[expected.prefab] !== expected.prefabSha256 ||
+      Object.entries(expected).some(
+        ([key, value]) =>
+          JSON.stringify(
+            (canopy as unknown as Record<string, unknown>)[key],
+          ) !== JSON.stringify(value),
+      ) ||
+      Object.entries(expected.originalAssets).some(
+        ([id, pin]) =>
+          id !== "canopy.nav.deck" &&
+          !m.assets.some(
+            (a) => a.kind === "kit" && a.id === id && a.sha256 === pin,
+          ),
+      )
+    )
+      throw Error("Invalid finite R26 original canopy declaration");
   }
   const e = m.decorativeEnvelope;
   const bow = m.bowCaseEnvelopeR026;

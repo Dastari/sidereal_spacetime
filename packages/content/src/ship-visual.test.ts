@@ -5,6 +5,7 @@ import {
   SHIP_VISUAL_SCHEMA,
   SHIP_VISUAL_FRAME,
   SHIP_VISUAL_BOW_CASE_ENVELOPE_R026,
+  SHIP_VISUAL_CANOPY_SOURCE_R026,
   type ShipVisualLayer,
 } from "./ship-visual";
 import { SHIP_KIT_SLOTS } from "./ship-kit";
@@ -232,5 +233,84 @@ describe("candidate original side-plane ownership", () => {
           { ...layer, ...extra, facet: good } as ShipVisualLayer,
         ]),
       ).toThrow(/facet/);
+  });
+});
+
+describe("finite private original-source Crest projection", () => {
+  const certificate = SHIP_VISUAL_CANOPY_SOURCE_R026;
+  const candidate = {
+    schema: SHIP_VISUAL_SCHEMA,
+    revision: "r002",
+    status: "proposal",
+    frame: SHIP_VISUAL_FRAME,
+    lattice: 16,
+    compilerSha256: "a".repeat(64),
+    profilesSha256: "b".repeat(64),
+    slots: SHIP_KIT_SLOTS,
+    prefabs: { [certificate.prefab]: certificate.prefabSha256 },
+    assets: Object.entries(certificate.originalAssets)
+      .filter(([id]) => id !== "canopy.nav.deck")
+      .map(([id, sha256]) => ({
+        kind: "kit",
+        id,
+        sha256,
+        url: `/assets/ship-kit/r002/${id}.glb`,
+        bytes: 1,
+        frame: "interior",
+        bounds: [0, 0, 0, 1, 1, 1],
+      })),
+    decorativeEnvelope: { outward: 0.1875, upward: 0.1875, inward: 0 },
+    canopySourceR026: { ...certificate, sourceSha256: "c".repeat(64) },
+  };
+  it("keeps ordinary decoration limits while binding source membership and retained glass", () => {
+    expect(readShipVisualManifest(candidate).canopySourceR026?.addedCells).toBe(
+      83056,
+    );
+    for (const patch of [
+      { revision: "r001" },
+      { prefabs: { [certificate.prefab]: "d".repeat(64) } },
+      { assets: candidate.assets.slice(1) },
+      {
+        assets: candidate.assets.map((a, i) =>
+          i ? a : { ...a, sha256: "d".repeat(64) },
+        ),
+      },
+    ])
+      expect(() => readShipVisualManifest({ ...candidate, ...patch })).toThrow(
+        "original canopy",
+      );
+    for (const patch of [
+      { sourceSha256: "" },
+      { kind: "general" },
+      { tableSha256: "d".repeat(64) },
+      { generatorSha256: "d".repeat(64) },
+      { opticalGuardSha256: "d".repeat(64) },
+      { sourceMemberCells: 83697 },
+      { addedCells: 83098 },
+      { omittedInwardEmptyCells: 0 },
+      { wholeCellBounds: [318, -18, 0, 410, 178, 43] },
+      { placements: certificate.placements.slice(1) },
+      { navCompanions: [] },
+      {
+        originalAssets: {
+          ...certificate.originalAssets,
+          "canopy.nav.deck": "d".repeat(64),
+        },
+      },
+    ])
+      expect(() =>
+        readShipVisualManifest({
+          ...candidate,
+          canopySourceR026: { ...candidate.canopySourceR026, ...patch },
+        }),
+      ).toThrow("original canopy");
+    for (const decorativeEnvelope of [
+      { outward: 1.625, upward: 0.1875, inward: 0 },
+      { outward: 0.1875, upward: 0.375, inward: 0 },
+      { outward: 0.1875, upward: 0.1875, inward: 0.0625 },
+    ])
+      expect(() =>
+        readShipVisualManifest({ ...candidate, decorativeEnvelope }),
+      ).toThrow("decorative bounds");
   });
 });

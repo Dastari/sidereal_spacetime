@@ -2168,3 +2168,8 @@ export function referenceCockpitApertureSourceAdmittedR002(
     },
   );
 }
+
+export const REFERENCE_EXTERIOR_CATALOG_SHA256_R026 =
+  "04ccf564848f18e28dc6ea188dbfbf034cffcb34203129918e00cc9bddc6ada4";
+
+export { default as REFERENCE_CANOPY_SOURCE_R026 } from "./ship-canopy-source-r026.v1.json";
