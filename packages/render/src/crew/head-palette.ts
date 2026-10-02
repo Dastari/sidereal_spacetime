@@ -22,6 +22,8 @@ export const SEALED_HEAD_FUNCTIONAL_DIAGNOSTIC_REVISION =
   "sealed-r006-tactical-functional-004";
 export const SEALED_HEAD_FUNCTIONAL_DETAIL_DIAGNOSTIC_REVISION =
   "sealed-r006-tactical-functional-005-exact";
+export const SEALED_HEAD_FUNCTIONAL_MACHINE_DIAGNOSTIC_REVISION =
+  "sealed-r006-tactical-functional-006-machine-exact";
 const navyVisorMaterials = new WeakSet<PBRMaterial>();
 /** Physical style owns these two responses after the generic glass finish; only owned clones qualify. */
 export function restoreOwnedTacticalVisorFinish(material: PBRMaterial): void {
