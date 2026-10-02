@@ -433,8 +433,10 @@ export function referenceBowTransitionR002(
   profile: ShipVisualProfileId,
   finalLayers: readonly ShipVisualLayer[],
   paneLayers: readonly ShipVisualLayer[],
+  opticalContext?: { unknownVariant: boolean },
 ): ShipVisualLayer[] {
   if (
+    opticalContext?.unknownVariant !== false ||
     doc.id !== "fed.s.wren" ||
     profile !== "federation" ||
     !referenceCockpitApertureSourceAdmittedR002(profile)

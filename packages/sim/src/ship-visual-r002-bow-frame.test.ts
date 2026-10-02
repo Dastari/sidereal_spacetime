@@ -3,10 +3,12 @@ import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import type { ShipVisualLayer } from "@sidereal/content/ship-visual";
 import { referenceBowFrameR002 } from "./ship-visual-r002-bow-frame";
+import { referenceOpticalGuardBoxesR002 } from "./ship-visual-layers-r002";
 import { sampleShipVisualLayers, visualCellKey } from "./ship-visual-sampler";
 
 const doc = PREFAB_SHIPS.find((d) => d.id === "fed.s.wren")!;
 const catalog = defaultPrefabComponentCatalog();
+const opticalContext = referenceOpticalGuardBoxesR002(doc, "flight", catalog);
 const cube = (
   x: number,
   y: number,
@@ -22,6 +24,34 @@ const cube = (
 });
 
 describe("joined Wren bow-frame replacement", () => {
+  it("requires a known optical context even for an otherwise supported frame", () => {
+    const layers = [cube(167, 8, 12), cube(166, 8, 12), cube(166, 9, 12)];
+    expect(
+      referenceBowFrameR002(
+        doc,
+        "deck",
+        catalog,
+        "federation",
+        layers,
+        opticalContext,
+      ),
+    ).toHaveLength(1);
+    expect(
+      referenceBowFrameR002(doc, "deck", catalog, "federation", layers),
+    ).toEqual([]);
+    const missing = referenceOpticalGuardBoxesR002(doc, "deck", catalog, {});
+    expect(missing.unknownVariant).toBe(true);
+    expect(
+      referenceBowFrameR002(
+        doc,
+        "deck",
+        catalog,
+        "federation",
+        layers,
+        missing,
+      ),
+    ).toEqual([]);
+  });
   it("mirrors the north cross-section at the reflected lattice CORNERS", () => {
     const layers = [cube(167, 103, 12), cube(166, 103, 12), cube(166, 102, 12)];
     const replacements = referenceBowFrameR002(
@@ -30,6 +60,7 @@ describe("joined Wren bow-frame replacement", () => {
       catalog,
       "federation",
       layers,
+      opticalContext,
     );
     expect(replacements).toHaveLength(1);
     expect(replacements[0].facet).toEqual({
@@ -56,6 +87,7 @@ describe("joined Wren bow-frame replacement", () => {
       catalog,
       "federation",
       layers,
+      opticalContext,
     );
     expect(replacements).toHaveLength(1);
     const before = sampleShipVisualLayers(layers),
@@ -95,6 +127,7 @@ describe("joined Wren bow-frame replacement", () => {
       catalog,
       "federation",
       layers,
+      opticalContext,
     );
     expect(replacements).toHaveLength(1);
     const frame = replacements[0];
@@ -117,7 +150,14 @@ describe("joined Wren bow-frame replacement", () => {
   it("keeps the complete prior source on wrong prefab/profile or absent optical backing", () => {
     const layers = [cube(167, 8, 22, "glass"), cube(167, 8, 12)];
     expect(
-      referenceBowFrameR002(doc, "deck", catalog, "federation", layers),
+      referenceBowFrameR002(
+        doc,
+        "deck",
+        catalog,
+        "federation",
+        layers,
+        opticalContext,
+      ),
     ).toEqual([]);
     expect(
       referenceBowFrameR002(
@@ -126,10 +166,18 @@ describe("joined Wren bow-frame replacement", () => {
         catalog,
         "federation",
         layers,
+        opticalContext,
       ),
     ).toEqual([]);
     expect(
-      referenceBowFrameR002(doc, "deck", catalog, "riftjack", layers),
+      referenceBowFrameR002(
+        doc,
+        "deck",
+        catalog,
+        "riftjack",
+        layers,
+        opticalContext,
+      ),
     ).toEqual([]);
   });
 });

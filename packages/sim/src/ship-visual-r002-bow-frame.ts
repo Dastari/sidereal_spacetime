@@ -70,8 +70,10 @@ export function referenceBowFrameR002(
   catalog: PrefabComponentCatalog,
   profile: ShipVisualProfileId,
   finalLayers: readonly ShipVisualLayer[],
+  opticalContext?: { unknownVariant: boolean },
 ): ShipVisualLayer[] {
   if (
+    opticalContext?.unknownVariant !== false ||
     doc.id !== "fed.s.wren" ||
     profile !== "federation" ||
     !referenceCockpitApertureSourceAdmittedR002(profile)

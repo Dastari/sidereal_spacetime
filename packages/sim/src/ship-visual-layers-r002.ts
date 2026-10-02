@@ -6615,9 +6615,17 @@ export function shipVisualLayersR002(
   // pane mask and all geometric finishes, before pigment eligibility. Unknown admission
   // returns no replacement and retains the complete preceding candidate.
   const finishBow = (ordered: ShipVisualLayer[]) => {
+    if (opticalBoxes.unknownVariant) return ordered;
     const previous = [
       ...ordered,
-      ...referenceBowFrameR002(doc, view, catalog, profileId, ordered),
+      ...referenceBowFrameR002(
+        doc,
+        view,
+        catalog,
+        profileId,
+        ordered,
+        opticalBoxes,
+      ),
     ];
     return [
       ...previous,
@@ -6628,6 +6636,7 @@ export function shipVisualLayersR002(
         profileId,
         previous,
         cockpitAperture,
+        opticalBoxes,
       ),
     ];
   };

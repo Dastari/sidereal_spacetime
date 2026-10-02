@@ -4,6 +4,7 @@ import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-cat
 import type { ShipVisualLayer } from "@sidereal/content/ship-visual";
 import {
   referenceCockpitApertureR002,
+  referenceOpticalGuardBoxesR002,
   shipVisualLayersR002,
 } from "./ship-visual-layers-r002";
 import { referenceBowTransitionR002 } from "./ship-visual-r002-bow-transition";
@@ -11,6 +12,7 @@ import { sampleShipVisualLayers, visualCellKey } from "./ship-visual-sampler";
 
 const doc = PREFAB_SHIPS.find((d) => d.id === "fed.s.wren")!;
 const catalog = defaultPrefabComponentCatalog();
+const opticalContext = referenceOpticalGuardBoxesR002(doc, "flight", catalog);
 
 describe("finite actual Wren outer pressure-case transition", () => {
   for (const view of ["deck", "flight"] as const)
@@ -30,6 +32,7 @@ describe("finite actual Wren outer pressure-case transition", () => {
         "federation",
         prior,
         panes,
+        opticalContext,
       );
       const before = sampleShipVisualLayers(prior);
       const after = sampleShipVisualLayers([...prior, ...added]);
@@ -42,6 +45,29 @@ describe("finite actual Wren outer pressure-case transition", () => {
           )?.facet,
       );
       expect(newlyClipped).toHaveLength(view === "deck" ? 136 : 193);
+      expect(
+        referenceBowTransitionR002(
+          doc,
+          view,
+          catalog,
+          "federation",
+          prior,
+          panes,
+        ),
+      ).toEqual([]);
+      const missing = referenceOpticalGuardBoxesR002(doc, view, catalog, {});
+      expect(missing.unknownVariant).toBe(true);
+      expect(
+        referenceBowTransitionR002(
+          doc,
+          view,
+          catalog,
+          "federation",
+          prior,
+          panes,
+          missing,
+        ),
+      ).toEqual([]);
       expect(after.size).toBe(before.size);
       // A legal opaque finish cannot change the admitted pressure-case shape.
       // This catches the former frozen-color gate while exercising actual source
@@ -59,6 +85,7 @@ describe("finite actual Wren outer pressure-case transition", () => {
         "federation",
         recolored,
         panes,
+        opticalContext,
       );
       expect(recoloredAdded.length).toBe(added.length);
       expect(
@@ -133,6 +160,7 @@ describe("finite actual Wren outer pressure-case transition", () => {
           "federation",
           [...prior, renamed],
           panes,
+          opticalContext,
         ),
       ).toEqual([]);
       const [x, y, z] = witness.bounds;
@@ -150,6 +178,7 @@ describe("finite actual Wren outer pressure-case transition", () => {
           "federation",
           [...prior, missingBacking],
           panes,
+          opticalContext,
         ),
       ).toEqual([]);
       const optical: ShipVisualLayer = {
@@ -167,6 +196,7 @@ describe("finite actual Wren outer pressure-case transition", () => {
           "federation",
           [...prior, optical],
           panes,
+          opticalContext,
         ),
       ).toEqual([]);
     }, 20_000);
