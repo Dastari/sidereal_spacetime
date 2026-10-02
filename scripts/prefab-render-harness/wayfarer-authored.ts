@@ -179,7 +179,7 @@ async function main() {
     light.diffuse = Color3.FromArray(row.colour);
     light.specular = Color3.Black();
     // Declared artistic mapping, not physical equivalence to Blender watts.
-    light.intensity = Math.max(0.8, Math.min(3, (row.watts * 2.2) / 140));
+    light.intensity = 2 * Math.max(0.8, Math.min(3, (row.watts * 2.2) / 140));
     light.intensityMode = Light.INTENSITYMODE_LUMINOUSINTENSITY;
     light.falloffType = Light.FALLOFF_STANDARD;
     light.radius = row.radius;
@@ -416,7 +416,7 @@ async function main() {
         enabled: review.practicals,
         sourceRows: practicalRows,
         mapping:
-          "clamp(watts * 2.2 / 140, 0.8, 3); standard luminous intensity; range4; diffuse-only",
+          "2 * clamp(watts * 2.2 / 140, 0.8, 3); artistic standard falloff; range4; PBR diffuse/specular",
         disabledStudioFill: "construction-fill",
         lights: practicals.map((light) => ({
           name: light.name,
