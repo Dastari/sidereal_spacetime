@@ -20,6 +20,11 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { prefabById, PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
+import {
+  referenceRoomLayoutR025,
+  REFERENCE_ROOM_LAYOUT_R025,
+} from "@sidereal/content/ship-reference-room-layout-r025";
+import { visualPrefabSha256 } from "@sidereal/sim/ship-visual-compiler";
 
 declare global {
   interface Window {
@@ -31,7 +36,7 @@ declare global {
 }
 
 const q = new URLSearchParams(location.search);
-const doc =
+const baseDoc =
   BOW_HOSTS.find((p) => p.id === q.get("prefab")) ??
   prefabById(q.get("prefab") ?? "fed.s.wren") ??
   PREFAB_SHIPS[0];
@@ -44,6 +49,27 @@ canvas.style.width = `${width}px`;
 canvas.style.height = `${height}px`;
 
 async function main() {
+  const roomPin =
+    SHIP_REFERENCE_VISUAL_R002 as typeof SHIP_REFERENCE_VISUAL_R002 & {
+      roomLayout?: unknown;
+      roomPrefabSha256?: unknown;
+    };
+  let doc = baseDoc;
+  if (
+    q.get("visual") === "reference-r002" &&
+    roomPin.roomLayout !== undefined
+  ) {
+    if (roomPin.roomLayout !== REFERENCE_ROOM_LAYOUT_R025)
+      throw Error("Unknown reference room layout pin");
+    if (baseDoc.id === "fed.m.crest") {
+      doc = referenceRoomLayoutR025(baseDoc);
+      if (
+        typeof roomPin.roomPrefabSha256 !== "string" ||
+        visualPrefabSha256(doc) !== roomPin.roomPrefabSha256
+      )
+        throw Error("Reference room candidate document pin mismatch");
+    }
+  }
   const construction = prefabConstructionDocument(
     doc,
     defaultPrefabComponentCatalog(),

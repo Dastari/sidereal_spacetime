@@ -29,6 +29,8 @@ describe("qualified reference instrument channels", () => {
       "door.airlock.t1",
       "lamp.room",
       "shipyard.equipment.crew-bunk",
+      "shipyard.equipment.workshop-bank-r025.extra",
+      "shipyard.equipment.medical-equipment-bank-r026",
     ])
       expect(
         referenceInstrumentMaterial(
@@ -124,6 +126,54 @@ describe("qualified reference instrument channels", () => {
     expect(scene.textures.length).toBe(textures);
     expect(scene.materials.length).toBe(materials);
   });
+  it("keeps both R025 room displays behind the existing revision, slot and complete UV guards", () => {
+    const material = base(),
+      scene = material.getScene(),
+      materials = scene.materials.length,
+      textures = scene.textures.length;
+    for (const id of [
+      "shipyard.equipment.workshop-bank-r025",
+      "shipyard.equipment.medical-equipment-bank-r025",
+    ]) {
+      for (const uvs of [
+        undefined,
+        [0, 1],
+        [0, 0, 1, 0, NaN, 1],
+        [0, 0, 1, 0, 2, 1],
+      ])
+        expect(() =>
+          referenceInstrumentMaterial(
+            material,
+            { revision: "r002", id, slot: "emit_a" },
+            { uvs },
+          ),
+        ).toThrow(/display UVs/);
+      expect(() =>
+        referenceInstrumentMaterial(
+          material,
+          { revision: "r002", id, slot: "emit_a" },
+          { uvs: [0, 0, 1, 0, 1, 1], uvsComplete: false },
+        ),
+      ).toThrow(/display UVs/);
+      for (const revision of ["legacy", "r001"])
+        expect(
+          referenceInstrumentMaterial(
+            material,
+            { revision, id, slot: "emit_a" },
+            {},
+          ),
+        ).toBe(material);
+      expect(
+        referenceInstrumentMaterial(
+          material,
+          { revision: "r002", id, slot: "emit_b" },
+          {},
+        ),
+      ).toBe(material);
+    }
+    expect(scene.materials.length).toBe(materials);
+    expect(scene.textures.length).toBe(textures);
+  });
   it("shares the existing systems atlas and material with the exact workshop ID", () => {
     const material = base(),
       scene = material.getScene();
@@ -168,6 +218,18 @@ describe("qualified reference instrument channels", () => {
       );
       expect(workshop).toBe(systems);
       expect(workshop.emissiveTexture).toBe(systems.emissiveTexture);
+      for (const id of [
+        "shipyard.equipment.workshop-bank-r025",
+        "shipyard.equipment.medical-equipment-bank-r025",
+      ]) {
+        const room = referenceInstrumentMaterial(
+          material,
+          { revision: "r002", id, slot: "emit_a" },
+          channels,
+        );
+        expect(room).toBe(systems);
+        expect(room.emissiveTexture).toBe(systems.emissiveTexture);
+      }
       expect(scene.textures.length).toBe(textures);
       expect(scene.materials.length).toBe(materials);
       expect(workshop.imageProcessingConfiguration).toBe(

@@ -6,6 +6,13 @@ import { format } from "prettier";
 import { SHIP_VISUAL_FIXTURES } from "@sidereal/content/ship-visual-fixture";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import {
+  referenceRoomLayoutR025,
+  REFERENCE_ROOM_LAYOUT_R025,
+} from "@sidereal/content/ship-reference-room-layout-r025";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { validateShipPrefab } from "@sidereal/content/ship-prefab";
+import { REFERENCE_ROOM_FIXTURE_CATALOG_R025 } from "@sidereal/content/ship-room-fixtures-r025";
+import {
   REFERENCE_OPTICAL_INTERFACES_R002,
   REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
   REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
@@ -26,6 +33,30 @@ import {
 } from "@sidereal/sim/ship-visual-compiler";
 
 const root = resolve(import.meta.dirname, "../..");
+const args = process.argv.slice(2);
+if (
+  args.length &&
+  (args.length !== 2 ||
+    args[0] !== "--room-layout" ||
+    args[1] !== REFERENCE_ROOM_LAYOUT_R025)
+)
+  throw Error("Unknown reference room layout selection");
+const roomLayout = args.length ? REFERENCE_ROOM_LAYOUT_R025 : undefined;
+const reviewPrefabs = PREFAB_SHIPS.map((p) =>
+  roomLayout && p.id === "fed.m.crest" ? referenceRoomLayoutR025(p) : p,
+);
+const roomCandidate = roomLayout
+  ? reviewPrefabs.find((p) => p.id === "fed.m.crest")
+  : undefined;
+if (
+  roomCandidate &&
+  validateShipPrefab(roomCandidate, defaultPrefabComponentCatalog()).some(
+    (issue) => issue.severity === "error",
+  )
+)
+  throw Error(
+    "Reference room candidate fails normal prefab placement validation",
+  );
 const hash = (bytes: Uint8Array | string) =>
   createHash("sha256").update(bytes).digest("hex");
 const equipmentHousingSource =
@@ -43,6 +74,13 @@ const sources = [
   "packages/sim/src/ship-dresser.ts",
   "packages/content/src/ship-prefab.ts",
   "packages/content/src/ship-furniture.ts",
+  "packages/content/src/ship-room-fixtures-r025.ts",
+  "packages/content/src/ship-prefab-catalog.ts",
+  "packages/content/src/ship-reference-room-layout-r025.ts",
+  "packages/content/src/prefabs/federation.ts",
+  "packages/content/package.json",
+  "scripts/prefab-render-harness/game.ts",
+  "scripts/prefab-render-harness/main.ts",
   "packages/sim/src/ship-visual-sampler.ts",
   "packages/sim/src/ship-visual-compiler.ts",
   "packages/render/src/prefab-ship/sampled-structure.ts",
@@ -72,6 +110,17 @@ const sources = [
   "assets/runtime/ship-visual/r002/equipment-r020/reactor.lg-source.json",
   "assets/source/ship-reference/r002/equipment-r020/reactor.md.blend",
   "assets/source/ship-reference/r002/equipment-r020/reactor.lg.blend",
+  "scripts/art_library/ship_reference_r025_reactor.py",
+  "scripts/art_library/ship_reference_r025_rooms.py",
+  "scripts/art_library/ship_reference_r025_rooms_clean.py",
+  "assets/runtime/ship-objects/reference-r025-clean/shipyard.equipment.workshop-bank-r025-source.json",
+  "assets/runtime/ship-objects/reference-r025-clean/shipyard.equipment.medical-equipment-bank-r025-source.json",
+  "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.workshop-bank-r025.blend",
+  "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.medical-equipment-bank-r025.blend",
+  "assets/runtime/ship-visual/r002/equipment-r025/reactor.md-source.json",
+  "assets/runtime/ship-visual/r002/equipment-r025/reactor.lg-source.json",
+  "assets/source/ship-reference/r002/equipment-r025/reactor.md.blend",
+  "assets/source/ship-reference/r002/equipment-r025/reactor.lg.blend",
   "assets/runtime/ship-visual/r002/door-leaf-r019-source.json",
   "scripts/art_library/ship_reference_r018_equipment.py",
   "scripts/art_library/ship_reference_r021_equipment.py",
@@ -191,6 +240,87 @@ for (const [id, pin] of Object.entries(reactorPins)) {
     hash(readFileSync(resolve(root, meta.source))) !== pin.sourceSha256
   )
     throw Error(`Mounted reactor exact source/old envelope mismatch: ${id}`);
+  assets[index] = {
+    ...assets[index],
+    url: meta.url,
+    sha256: pin.sha256,
+    bytes: pin.bytes,
+  };
+}
+// Preserve the complete R020 verification above, then replace only the two
+// reviewed R025 rows. Their original bounds, floor contact and placement remain.
+const reactorR025Builder = "scripts/art_library/ship_reference_r025_reactor.py";
+if (
+  hash(readFileSync(resolve(root, reactorR025Builder))) !==
+  "e74308bda96424f86956c5621aa2a49d77686b964e55e0aee47b255bb7e155b7"
+)
+  throw Error("R025 reactor builder differs from reviewed source");
+const reactorR025Pins = {
+  "reactor.md": {
+    sha256: "88b6e9e0448247a343c919604639f924140b4aa7f50fc003d9986fe5965276ab",
+    bytes: 93320,
+    sourceSha256:
+      "f4453f1a37ad71f0d7a501227c358fc836c0573e9a8169a32c9ba0bc71e515cf",
+    metadataSha256:
+      "06b549cf02083f11afd35a7164c6be11d701b9b2d34378da15caa2235ad2b017",
+  },
+  "reactor.lg": {
+    sha256: "fbc03973b688c3d07fb58d2698c1f9f9ed5204154a59b06c08930d00d6a73b69",
+    bytes: 93348,
+    sourceSha256:
+      "18521a6e285e1feba3a8b9af683296ec625f832cb68209c6f0e6b69373250340",
+    metadataSha256:
+      "b5791fd299e948813139a36da86b1a8cdc62e78749e9ac8bcd1522bbd1430fba",
+  },
+} as const;
+for (const [id, pin] of Object.entries(reactorR025Pins)) {
+  const dir = "ship-visual/r002/equipment-r025",
+    metadataBytes = readFileSync(
+      resolve(root, "assets/runtime", dir, `${id}-source.json`),
+    ),
+    meta = JSON.parse(metadataBytes.toString()),
+    oldMeta = JSON.parse(
+      readFileSync(
+        resolve(
+          root,
+          "assets/runtime/ship-visual/r002/equipment-r020",
+          `${id}-source.json`,
+        ),
+        "utf8",
+      ),
+    ),
+    index = assets.findIndex((a) => a.kind === "component" && a.id === id),
+    bytes = readFileSync(resolve(root, "assets/runtime", dir, `${id}.glb`));
+  if (
+    index < 0 ||
+    meta.id !== id ||
+    meta.kind !== "component" ||
+    meta.frame !== assets[index].frame ||
+    meta.revision !== "r025" ||
+    meta.source !==
+      `assets/source/ship-reference/r002/equipment-r025/${id}.blend` ||
+    meta.url !== `/assets/${dir}/${id}.glb` ||
+    meta.oldAssetSha256 !== oldMeta.oldAssetSha256 ||
+    JSON.stringify(meta.bounds) !== JSON.stringify(assets[index].bounds) ||
+    JSON.stringify(meta.baseContact) !== JSON.stringify(oldMeta.baseContact) ||
+    JSON.stringify(meta.actualPlacement) !==
+      JSON.stringify(oldMeta.actualPlacement) ||
+    JSON.stringify(meta.semanticGroups) !==
+      JSON.stringify(oldMeta.semanticGroups) ||
+    meta.immutableR020SourceSha256 !==
+      "fa11e00e317f3af8bc1700fc2300239fbea2a2e88537366b7ac1f627a8919abc" ||
+    hash(metadataBytes) !== pin.metadataSha256 ||
+    hash(bytes) !== pin.sha256 ||
+    bytes.length !== pin.bytes ||
+    meta.sha256 !== pin.sha256 ||
+    meta.bytes !== pin.bytes ||
+    meta.triangles !== 1168 ||
+    meta.triangles > 1200 ||
+    meta.emissiveAreaM2 !== 0 ||
+    JSON.stringify(meta.serviceSides) !== JSON.stringify([-1, 1]) ||
+    hash(readFileSync(resolve(root, meta.source))) !== pin.sourceSha256
+  )
+    throw Error(`R025 reactor exact source/retained envelope mismatch: ${id}`);
   assets[index] = {
     ...assets[index],
     url: meta.url,
@@ -445,6 +575,113 @@ for (const [id, pin] of Object.entries(architecturePins)) {
     bytes: row.bytes,
   };
 }
+// The two finite room fixtures are admitted only with the explicit private layout.
+// Bind the corrected normal source, prior failed authoring source and actual output
+// bytes independently; never select the failed reference-r025 directory.
+const roomBuilder = "scripts/art_library/ship_reference_r025_rooms_clean.py";
+const roomPreviousBuilder = "scripts/art_library/ship_reference_r025_rooms.py";
+const roomBuilderSha256 =
+  "a1ebc2ac2142fcad372caa9adfbf0be9a0b3006db34bcbb68384251a8f90d400";
+const roomPreviousSha256 =
+  "cadd4cffaa5cf8624bb814866c1e70bd4ee1f9283dff52e5c70eb78a9a206c71";
+const roomPins = {
+  "shipyard.equipment.workshop-bank-r025": {
+    sha256: "65b2db98cff4bacf80e0632c0457b3abd80f997e69903462b711afc3ce4bf7b2",
+    bytes: 124380,
+    triangles: 1124,
+    metadataSha256:
+      "14fc0290e59154e314ef2f5dd94796f34f07e4a0a7cab9f3e16a9245cfe829a6",
+    sourceSha256:
+      "1d155d878f0ae01504a810aa6a849fd98ceee6bd0aa1438442aca3f116220981",
+  },
+  "shipyard.equipment.medical-equipment-bank-r025": {
+    sha256: "c7eff904bf0c1ea1b7c0e24a3cd02f595710570adf10a592a31965dbfa0fe393",
+    bytes: 97908,
+    triangles: 866,
+    metadataSha256:
+      "38c1e3df72b27120f3b0e6b3510950eea345d0faf787284c1757bfc8647fc4eb",
+    sourceSha256:
+      "fe635cf1dcea58764168a25dc15dacc17154a7ec2091410b9b96d8326f131e6d",
+  },
+} as const;
+if (roomCandidate) {
+  if (
+    hash(readFileSync(resolve(root, roomBuilder))) !== roomBuilderSha256 ||
+    hash(readFileSync(resolve(root, roomPreviousBuilder))) !==
+      roomPreviousSha256
+  )
+    throw Error(
+      "Finite room source differs from qualified corrected and historical builders",
+    );
+  for (const entry of REFERENCE_ROOM_FIXTURE_CATALOG_R025.entries) {
+    const id = entry.designId,
+      pin = roomPins[id],
+      dir = "ship-objects/reference-r025-clean";
+    const metadataBytes = readFileSync(
+      resolve(root, "assets/runtime", dir, `${id}-source.json`),
+    );
+    const meta = JSON.parse(metadataBytes.toString());
+    const bytes = readFileSync(
+      resolve(root, "assets/runtime", dir, `${id}.glb`),
+    );
+    const [w, d, h] = entry.texels,
+      expectedBounds = [
+        [-w / 32, -d / 32, 0],
+        [w / 32, d / 32, h / 16],
+      ];
+    if (
+      assets.some((a) => a.kind === "object" && a.id === id) ||
+      hash(metadataBytes) !== pin.metadataSha256 ||
+      meta.designId !== id ||
+      meta.revision !== "r025" ||
+      meta.generator !== roomBuilder ||
+      meta.generatorSha256 !== roomBuilderSha256 ||
+      meta.immutablePreviousSourceSha256 !== roomPreviousSha256 ||
+      meta.helperSha256 !==
+        hash(
+          readFileSync(
+            resolve(
+              root,
+              "scripts/art_library/ship_reference_r018_equipment.py",
+            ),
+          ),
+        ) ||
+      meta.semanticAuthoringSha256 !==
+        hash(
+          readFileSync(
+            resolve(root, "scripts/art_library/ship_reference_r002_art.py"),
+          ),
+        ) ||
+      meta.source !==
+        `assets/source/ship-reference/r002/rooms-r025-clean/${id}.blend` ||
+      hash(readFileSync(resolve(root, meta.source))) !== pin.sourceSha256 ||
+      meta.sourceSha256 !== pin.sourceSha256 ||
+      meta.url !== `/assets/${dir}/${id}.glb` ||
+      meta.glb !== `assets/runtime/${dir}/${id}.glb` ||
+      hash(bytes) !== pin.sha256 ||
+      meta.sha256 !== pin.sha256 ||
+      bytes.length !== pin.bytes ||
+      meta.bytes !== pin.bytes ||
+      meta.triangles !== pin.triangles ||
+      JSON.stringify(meta.sizeTexels) !== JSON.stringify(entry.texels) ||
+      JSON.stringify(meta.boundsM) !== JSON.stringify(expectedBounds) ||
+      JSON.stringify(meta.capabilities) !==
+        JSON.stringify({ seat: false, storage: false, control: false })
+    )
+      throw Error(`Finite room fixture source/catalog/output mismatch: ${id}`);
+    const [lo, hi] = meta.boundsM;
+    assets.push({
+      kind: "object",
+      id,
+      frame: "interior",
+      bounds: [lo[0], lo[2], -hi[1], hi[0], hi[2], -lo[1]],
+      url: meta.url,
+      sha256: pin.sha256,
+      bytes: pin.bytes,
+    });
+  }
+}
+
 // The candidate overrides legacy r004 catalog URLs with these exact r006 assets.
 // A fixed-pose roof certificate admits ONLY actual selected bytes/frame/bounds.
 for (const [id, certificate] of Object.entries(
@@ -609,6 +846,16 @@ assets.push({
   sha256: hash(albedo),
   bytes: albedo.length,
 });
+if (roomCandidate)
+  for (const fixture of roomCandidate.fixtures ?? [])
+    if (
+      !assets.some(
+        (asset) => asset.kind === "object" && asset.id === fixture.design,
+      )
+    )
+      throw Error(
+        `Reference room fixture lacks exact asset admission: ${fixture.design}`,
+      );
 const manifest = readShipVisualManifest({
   schema: SHIP_VISUAL_SCHEMA,
   revision: "r002",
@@ -619,7 +866,7 @@ const manifest = readShipVisualManifest({
   profilesSha256: visualProfilesSha256("r002"),
   slots: [...SHIP_KIT_SLOTS],
   prefabs: Object.fromEntries(
-    [...PREFAB_SHIPS, ...SHIP_VISUAL_FIXTURES].map((p) => [
+    [...reviewPrefabs, ...SHIP_VISUAL_FIXTURES].map((p) => [
       p.id,
       visualPrefabSha256(p),
     ]),
@@ -638,7 +885,7 @@ writeFileSync(
 writeFileSync(
   resolve(root, "scripts/art_library/ship_reference_r002_revision.ts"),
   await format(
-    `/** Generated exact proposal pin; no default renderer or live asset selection. */\nexport const SHIP_REFERENCE_VISUAL_R002 = ${JSON.stringify({ url: "/assets/ship-visual/r002/manifest.json", sha256: hash(json), compilerSha256 }, null, 2)} as const;\n`,
+    `/** Generated exact proposal pin; no default renderer or live asset selection. */\nexport const SHIP_REFERENCE_VISUAL_R002 = ${JSON.stringify({ url: "/assets/ship-visual/r002/manifest.json", sha256: hash(json), compilerSha256, ...(roomCandidate ? { roomLayout, roomPrefabSha256: visualPrefabSha256(roomCandidate) } : {}) }, null, 2)} as const;\n`,
     { parser: "typescript" },
   ),
 );

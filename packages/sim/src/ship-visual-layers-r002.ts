@@ -7,6 +7,7 @@ import {
 } from "@sidereal/content/construction-grammar";
 import { interiorArtQuarterTurns } from "@sidereal/content/ship-furniture";
 import { bowGlass, bowHeights } from "@sidereal/content/bow-profiles";
+import { mountTileAccepts } from "@sidereal/content/ship-mount-tiles";
 import {
   deriveInterior,
   deckApproachZones,
@@ -38,7 +39,135 @@ import {
   referencePlateDecals,
   referenceCockpitApertureSourceAdmittedR002,
   REFERENCE_OPTICAL_INTERFACES_R002,
+  type ShipVisualMacroProfile,
 } from "@sidereal/content/ship-visual-r002";
+
+/** Actual selected component bounds and complete linked tile occurrence admission.
+ * Only the current static renderer pose is certified; future sweep is not implied. */
+export function referenceRoofOperatingBoundsR002(
+  doc: ShipPrefabDocumentV1,
+  catalog: PrefabComponentCatalog,
+  certificates:
+    | NonNullable<ShipVisualMacroProfile["architecture"]>["roofFixedPose"]
+    | undefined,
+) {
+  const components = new Map<string, number[]>(),
+    tiles = new Map<string, number[]>();
+  if (!certificates) return { components, tiles };
+  const dressed = dressShip(doc, { catalog }).components;
+  const geoms = doc.volumes.map(volumeGeometry);
+  for (const c of dressed) {
+    const p = c.placement,
+      cert = certificates[c.component],
+      sources = doc.mounts.filter((m) => m.id === c.mount);
+    const tile =
+      p.mount.tile === undefined
+        ? undefined
+        : (doc.mountTiles ?? []).filter((t) => t.id === p.mount.tile);
+    if (
+      sources.length !== 1 ||
+      sources[0] !== p.mount ||
+      (tile !== undefined && tile.length !== 1) ||
+      p.mount.attach !== "top" ||
+      !cert ||
+      cert.frame !== "top" ||
+      cert.motion !== "fixed-pose" ||
+      !/^[a-f0-9]{64}$/.test(cert.assetSha256) ||
+      cert.bounds.length !== 6 ||
+      !cert.bounds.every(Number.isFinite) ||
+      ![0, 1, 2].every((i) => cert.bounds[i] <= cert.bounds[i + 3]) ||
+      !Number.isFinite(cert.clearanceCells) ||
+      cert.clearanceCells < 0 ||
+      !Number.isFinite(cert.muzzleCells) ||
+      cert.muzzleCells < 0 ||
+      !p.spec ||
+      p.spec.attach[0] !== "top" ||
+      p.spec.id !== c.component ||
+      !p.spec.visual ||
+      !Number.isInteger(p.quarterTurns) ||
+      ![0, 1, 2, 3].includes(p.quarterTurns) ||
+      ![...p.anchor, p.anchorZ].every(Number.isFinite)
+    )
+      continue;
+    const corners: number[][] = [];
+    const angle = (p.quarterTurns * Math.PI) / 2,
+      C = Math.round(Math.cos(angle)),
+      S = Math.round(Math.sin(angle));
+    for (const x of [cert.bounds[0], cert.bounds[3]])
+      for (const z of [
+        cert.bounds[2] - cert.muzzleCells / 16,
+        cert.bounds[5],
+      ]) {
+        const X = -z,
+          Y = -x;
+        corners.push([
+          (p.anchor[0] + C * X - S * Y) * 16,
+          (p.anchor[1] + S * X + C * Y) * 16,
+        ]);
+      }
+    components.set(c.mount, [
+      Math.min(...corners.map((p) => p[0])) - cert.clearanceCells,
+      Math.min(...corners.map((p) => p[1])) - cert.clearanceCells,
+      Math.max(...corners.map((p) => p[0])) + cert.clearanceCells,
+      Math.max(...corners.map((p) => p[1])) + cert.clearanceCells,
+    ]);
+  }
+  for (const tile of doc.mountTiles ?? []) {
+    const attached = doc.mounts.filter((m) => m.tile === tile.id);
+    if (
+      (doc.mountTiles ?? []).filter((t) => t.id === tile.id).length !== 1 ||
+      ![1, 2, 4].includes(attached.length) ||
+      new Set(attached.map((m) => m.id)).size !== attached.length ||
+      new Set(attached.map((m) => m.component)).size !== 1 ||
+      !tile.at.every(Number.isFinite) ||
+      !["fore", "port", "aft", "starboard"].includes(tile.facing) ||
+      !["fixed", "turret"].includes(tile.kind) ||
+      !["SM", "MD", "LG", "XL"].includes(tile.size) ||
+      attached.some((m) => {
+        const spec = catalog.get(m.component),
+          actual = dressed.filter((c) => c.mount === m.id);
+        return (
+          m.attach !== "top" ||
+          !spec ||
+          !mountTileAccepts(
+            tile.kind,
+            tile.size,
+            attached.length,
+            spec.sizeClass,
+          ) ||
+          !m.at.every(Number.isFinite) ||
+          m.at[0] !== tile.at[0] ||
+          m.at[1] !== tile.at[1] ||
+          actual.length !== 1 ||
+          actual[0].placement.mount !== m ||
+          !components.has(m.id)
+        );
+      })
+    )
+      continue;
+    const placement = placeMountTile(tile, geoms);
+    if (
+      !placement.host ||
+      ![...placement.rect, ...placement.z].every(Number.isFinite) ||
+      ![0, 1].every((i) => placement.rect[i] < placement.rect[i + 2]) ||
+      attached.some(
+        (m) =>
+          dressed.find((c) => c.mount === m.id)!.placement.host !==
+          placement.host,
+      )
+    )
+      continue;
+    const apron = placement.rect.map((n) => n * 16),
+      union = [apron, ...attached.map((m) => components.get(m.id)!)];
+    tiles.set(tile.id, [
+      Math.min(...union.map((b) => b[0])),
+      Math.min(...union.map((b) => b[1])),
+      Math.max(...union.map((b) => b[2])),
+      Math.max(...union.map((b) => b[3])),
+    ]);
+  }
+  return { components, tiles };
+}
 
 /** Actual source-frame + retained-glass guard union, transformed from the same
  * dresser placement used by rendering. Quantize OUTWARD before Chebyshev padding. */
@@ -1274,50 +1403,15 @@ export function shipVisualLayersR002(
       .map((m) => placeMount(m, catalog.get(m.component), geoms, doc).rect),
     ...(doc.mountTiles ?? []).map((t) => placeMountTile(t, geoms).rect),
   ].map((r) => r.map((n) => n * 16));
-  // Same GLTF_TO_ZUP -> COMPONENT_TO_PREFAB -> cardinal placement as buildComponents.
-  // Project actual fixed-pose geometry plus finite service/muzzle guards conservatively;
-  // this does not certify a hypothetical rotating or animated component.
-  const roofOperating = new Map<string, number[]>();
-  for (const c of dressShip(doc, { catalog }).components) {
-    const p = c.placement,
-      cert = macro.architecture?.roofFixedPose[c.component];
-    if (
-      p.mount.attach !== "top" ||
-      !cert ||
-      !p.spec ||
-      cert.frame !== "top" ||
-      cert.motion !== "fixed-pose" ||
-      p.spec.attach[0] !== "top" ||
-      p.spec.id !== c.component ||
-      !p.spec.visual ||
-      !Number.isInteger(p.quarterTurns) ||
-      ![0, 1, 2, 3].includes(p.quarterTurns) ||
-      ![...p.anchor, p.anchorZ, ...cert.bounds].every(Number.isFinite)
-    )
-      continue;
-    const corners: number[][] = [];
-    const angle = (p.quarterTurns * Math.PI) / 2,
-      C = Math.round(Math.cos(angle)),
-      S = Math.round(Math.sin(angle));
-    for (const x of [cert.bounds[0], cert.bounds[3]])
-      for (const z of [
-        cert.bounds[2] - cert.muzzleCells / 16,
-        cert.bounds[5],
-      ]) {
-        const X = -z,
-          Y = -x;
-        corners.push([
-          (p.anchor[0] + C * X - S * Y) * 16,
-          (p.anchor[1] + S * X + C * Y) * 16,
-        ]);
-      }
-    roofOperating.set(c.mount, [
-      Math.min(...corners.map((p) => p[0])) - cert.clearanceCells,
-      Math.min(...corners.map((p) => p[1])) - cert.clearanceCells,
-      Math.max(...corners.map((p) => p[0])) + cert.clearanceCells,
-      Math.max(...corners.map((p) => p[1])) + cert.clearanceCells,
-    ]);
-  }
+  const roofOperating = referenceRoofOperatingBoundsR002(
+    doc,
+    catalog,
+    macro.architecture?.roofFixedPose,
+  );
+  const operatingBounds = [
+    ...roofOperating.components.values(),
+    ...roofOperating.tiles.values(),
+  ];
   const roofMarkings = referencePlateDecals(
     doc,
     dressShip(doc, { catalog }).decals,
@@ -1426,6 +1520,7 @@ export function shipVisualLayersR002(
     const pendingRoofClusterLayers: ShipVisualLayer[] = [];
     const roofFixtureBounds: {
       id: string;
+      source: "component" | "tile";
       kind: "utility" | "control";
       bounds: number[];
     }[] = [];
@@ -1443,6 +1538,7 @@ export function shipVisualLayersR002(
           .filter((m) => m.attach === "top")
           .map((m) => ({
             id: m.id,
+            source: "component" as const,
             kind: m.component.startsWith("radiator.")
               ? ("utility" as const)
               : ("control" as const),
@@ -1455,6 +1551,7 @@ export function shipVisualLayersR002(
           })),
         ...(doc.mountTiles ?? []).map((m) => ({
           id: m.id,
+          source: "tile" as const,
           kind: "control" as const,
           bounds: placeMountTile(m, geoms).rect.map((n) => n * 16),
         })),
@@ -1488,7 +1585,11 @@ export function shipVisualLayersR002(
           kind,
           massing:
             !!macro.architecture?.roofMassing &&
-            items.every((m) => roofOperating.has(m.id)),
+            items.every((m) =>
+              roofOperating[m.source === "tile" ? "tiles" : "components"].has(
+                m.id,
+              ),
+            ),
           fixtures: items.map((m) => [...m.bounds]),
           broadSide: index === 2 ? "high" : "low",
           bounds: [
@@ -1829,9 +1930,7 @@ export function shipVisualLayersR002(
           .filter(([key, owner]) => {
             if (owner !== body) return false;
             const [x, y] = key.split(",").map(Number);
-            return ![...roofOperating.values()].some((r) =>
-              inRect(x + 0.5, y + 0.5, r),
-            );
+            return !operatingBounds.some((r) => inRect(x + 0.5, y + 0.5, r));
           })
           .map(([key]) => key),
       );
@@ -5733,14 +5832,14 @@ export function compactColumns(
     layer: ShipVisualLayer;
     key: string;
     pending: number;
-    successors: number[];
+    successors?: number[];
     emitted: boolean;
   };
   type Ready = { key: string; order: number; version: number; nodes: Node[] };
   type Entry = { group: Ready; version: number; count: number };
   const out: ShipVisualLayer[] = [];
   let nodes: Node[] = [],
-    columns = new Map<string, Map<number, number>>(),
+    columns = new Map<number, Map<number, number>>(),
     keys = new Map<string, string>();
   const ready = new Map<string, Ready>(),
     heap: Entry[] = [];
@@ -5851,12 +5950,13 @@ export function compactColumns(
       }
       const changed = new Set<Ready>();
       for (const node of batch)
-        for (const index of node.successors) {
-          const successor = nodes[index];
-          if (successor.pending <= 0)
-            throw Error("Visual compaction duplicate dependency decrement");
-          if (--successor.pending === 0) enqueue(successor, changed);
-        }
+        if (node.successors)
+          for (const index of node.successors) {
+            const successor = nodes[index];
+            if (successor.pending <= 0)
+              throw Error("Visual compaction duplicate dependency decrement");
+            if (--successor.pending === 0) enqueue(successor, changed);
+          }
       for (const next of changed) push(next);
     }
     if (emitted !== nodes.length)
@@ -5872,9 +5972,18 @@ export function compactColumns(
   };
   for (const l of layers) {
     const [x, y, z, X, Y, Z] = l.bounds;
+    let integerBounds = l.bounds.length === 6;
+    if (integerBounds)
+      for (let i = 0; i < 6; i++)
+        if (
+          !Number.isSafeInteger(l.bounds[i]) ||
+          Math.abs(l.bounds[i]) > 8192
+        ) {
+          integerBounds = false;
+          break;
+        }
     if (
-      l.bounds.length !== 6 ||
-      !l.bounds.every((v) => Number.isSafeInteger(v) && Math.abs(v) <= 8192) ||
+      !integerBounds ||
       !(x < X && y < Y && z < Z) ||
       X - x !== 1 ||
       Y - y !== 1 ||
@@ -5898,23 +6007,34 @@ export function compactColumns(
       key = signature;
       keys.set(key, key);
     }
-    const xy = `${x},${y}`;
+    const xy = (x + 8192) * 16385 + (y + 8192);
     let previous = columns.get(xy);
     if (!previous) {
       previous = new Map();
       columns.set(xy, previous);
     }
-    const predecessors = new Set<number>(),
-      index = nodes.length;
+    let firstPredecessor: number | undefined;
+    let predecessors: Set<number> | undefined;
+    let predecessorCount = 0;
+    const index = nodes.length;
     for (let h = z; h < Z; h++) {
       if (visits >= limits.work)
         throw Error("Visual compaction work exceeds sampling limit");
       visits++;
       const prior = previous.get(h);
-      if (prior !== undefined && !predecessors.has(prior)) {
-        if (edges + predecessors.size >= limits.edges)
+      if (
+        prior !== undefined &&
+        prior !== firstPredecessor &&
+        !predecessors?.has(prior)
+      ) {
+        if (edges + predecessorCount >= limits.edges)
           throw Error("Visual compaction edges exceed limit");
-        predecessors.add(prior);
+        if (firstPredecessor === undefined) firstPredecessor = prior;
+        else {
+          predecessors ??= new Set([firstPredecessor]);
+          predecessors.add(prior);
+        }
+        predecessorCount++;
       }
       if (prior === undefined) {
         if (xyz >= limits.xyz)
@@ -5926,13 +6046,17 @@ export function compactColumns(
     const node: Node = {
       layer: l,
       key,
-      pending: predecessors.size,
-      successors: [],
+      pending: predecessorCount,
       emitted: false,
     };
     nodes.push(node);
-    for (const prior of predecessors) {
-      nodes[prior].successors.push(index);
+    if (predecessors)
+      for (const prior of predecessors) {
+        (nodes[prior].successors ??= []).push(index);
+        edges++;
+      }
+    else if (firstPredecessor !== undefined) {
+      (nodes[firstPredecessor].successors ??= []).push(index);
       edges++;
     }
     if (node.pending === 0) enqueue(node);

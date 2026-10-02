@@ -1734,6 +1734,42 @@ export const REFERENCE_ROOF_FIXED_POSE_R002: Record<
     muzzleCells: number;
   }
 > = {
+  "autocannon.sm": {
+    assetSha256:
+      "edff79691672eaddcd9864e1b5262ff80ed0d0ccfc9bc6bcf00176895827d42c",
+    bounds: [-0.4375, 0, -1.125, 0.4375, 1.0106, 0.4375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 8,
+  },
+  "autocannon.md": {
+    assetSha256:
+      "1a03d4547068f1ea933300bdc45fc41b9e1aa7a648ae2e8a6c1e65991610f7cd",
+    bounds: [-0.9375, 0, -2.375, 0.9375, 1.7325, 0.9375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 8,
+  },
+  "laser-cannon.md": {
+    assetSha256:
+      "81423cb6696c48e249e0a534b6ed59ea3b98b18bcf299f272535a452f3b0360f",
+    bounds: [-0.9375, 0, -1.5625, 0.9375, 1.54, 0.9375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 8,
+  },
+  "point-defense.sm": {
+    assetSha256:
+      "86becfa4427cce4fb408c3e09c17d37e13e6c3c368a81cff49d713462dd949c5",
+    bounds: [-0.4375, 0, -0.6875, 0.4375, 0.9144, 0.4375],
+    frame: "top",
+    motion: "fixed-pose",
+    clearanceCells: 2,
+    muzzleCells: 8,
+  },
   "plasma-turret.lg": {
     assetSha256:
       "7129a24a4de7b6db56e28a6ea0220ca36ed4856345ce9fb4630de27444e0d86a",

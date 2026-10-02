@@ -30,6 +30,7 @@ import {
 } from "@sidereal/content/ship-visual-r002";
 import {
   referenceCockpitApertureR002,
+  referenceRoofOperatingBoundsR002,
   referenceStaticWallFittingBoundsR002,
   referenceOpticalGuardBoxesR002,
   referenceOpticalMatingSolidsR002,
@@ -204,6 +205,43 @@ describe("candidate ordered column compaction", () => {
         a.localeCompare(b),
       );
     expect(removed(actual)).toEqual(removed(intact));
+  });
+  it("keeps numeric XY keys injective at signed domain boundaries and preserves signed-zero writes", () => {
+    const points = [
+      [-8192, -8192],
+      [8191, 8191],
+      [-1, 8191],
+      [0, -8192],
+      [-8192, 8191],
+      [8191, -8192],
+    ];
+    const layers = points.map(([x, y], i) => ({
+      ...column(x, `key-${i}`),
+      bounds: [x, y, 0, x + 1, y + 1, 1] as ShipVisualLayer["bounds"],
+    }));
+    expect(compactColumns(layers)).toEqual(layers);
+    const zero = [
+      {
+        ...column(-0),
+        bounds: [-0, 0, 0, 1, 1, 3] as ShipVisualLayer["bounds"],
+      },
+      column(0, "last", "void"),
+    ];
+    expect(compactColumns(zero)).toEqual(zero);
+    expect(Object.is(compactColumns(zero)[0].bounds[0], -0)).toBe(true);
+  });
+  it("deduplicates repeated predecessor zero and preserves first-seen multiple predecessors", () => {
+    const layers = [
+      column(0, "first"),
+      {
+        ...column(0, "second"),
+        bounds: [0, 0, 1, 1, 1, 2] as ShipVisualLayer["bounds"],
+      },
+      column(0, "last", "void"),
+    ];
+    expect(compactColumns(layers)).toEqual(layers);
+    expect(cells(compactColumns(layers))).toEqual(cells(layers));
+    expect(exposed(compactColumns(layers))).toEqual(exposed(layers));
   });
   it("merges compatible adjacent columns across only spatially disjoint writes", () => {
     const layers = [column(0), column(3, "independent", "void"), column(1)];
@@ -411,6 +449,135 @@ describe("candidate ordered column compaction", () => {
         expect(r.cells.get(visualCellKey(x, y, 15))?.role).toBe("core");
     }
   }, 20000);
+});
+
+describe("actual roof occurrence operating admission", () => {
+  const catalog = defaultPrefabComponentCatalog();
+  const certificates =
+    SHIP_VISUAL_MACRO_PROFILES_R002.federation.architecture!.roofFixedPose;
+  it.each(["fed.s.wren", "fed.m.crest"])(
+    "admits every actual fixed-pose top component and its complete linked tile in %s",
+    (id) => {
+      const ship = PREFAB_SHIPS.find((s) => s.id === id)!;
+      const result = referenceRoofOperatingBoundsR002(
+        ship,
+        catalog,
+        certificates,
+      );
+      const dressed = dressShip(ship, { catalog }).components.filter(
+        (c) => c.placement.mount.attach === "top",
+      );
+      expect(result.components.size).toBe(dressed.length);
+      expect(result.tiles.size).toBe(ship.mountTiles!.length);
+      for (const c of dressed) {
+        const cert = certificates[c.component],
+          p = c.placement;
+        const matrix = multiply(
+          multiply(GLTF_TO_ZUP, mountRotation("top", "top")),
+          componentMatrix(p.anchor, p.anchorZ / 16, p.quarterTurns),
+        );
+        const points: number[][] = [];
+        for (const x of [cert.bounds[0], cert.bounds[3]])
+          for (const y of [cert.bounds[1], cert.bounds[4]])
+            for (const z of [
+              cert.bounds[2] - cert.muzzleCells / 16,
+              cert.bounds[5],
+            ])
+              points.push(transformPoint(matrix, [x, y, z]));
+        const expected = [0, 1]
+          .map(
+            (i) =>
+              Math.min(...points.map((p) => p[i])) * 16 - cert.clearanceCells,
+          )
+          .concat(
+            [0, 1].map(
+              (i) =>
+                Math.max(...points.map((p) => p[i])) * 16 + cert.clearanceCells,
+            ),
+          );
+        for (let i = 0; i < 4; i++)
+          expect(result.components.get(c.mount)![i], c.mount).toBeCloseTo(
+            expected[i],
+            10,
+          );
+      }
+      const geoms = ship.volumes.map(volumeGeometry);
+      for (const t of ship.mountTiles!) {
+        const apron = placeMountTile(t, geoms).rect.map((n) => n * 16);
+        const children = ship.mounts.filter((m) => m.tile === t.id);
+        const all = [
+          apron,
+          ...children.map((m) => result.components.get(m.id)!),
+        ];
+        expect(result.tiles.get(t.id)).toEqual([
+          Math.min(...all.map((b) => b[0])),
+          Math.min(...all.map((b) => b[1])),
+          Math.max(...all.map((b) => b[2])),
+          Math.max(...all.map((b) => b[3])),
+        ]);
+      }
+      if (id === "fed.s.wren") {
+        expect(result.components.has("guns")).toBe(false);
+        expect(
+          result.components.has("guns-a") && result.components.has("guns-b"),
+        ).toBe(true);
+        expect(result.tiles.has("guns")).toBe(true);
+      }
+    },
+  );
+  it("keeps complete tile fallback on a missing linked weapon certificate while retaining known independent exclusions", () => {
+    const ship = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
+    const missing = { ...certificates };
+    delete missing["autocannon.sm"];
+    const result = referenceRoofOperatingBoundsR002(ship, catalog, missing);
+    expect(result.tiles.has("guns")).toBe(false);
+    expect(result.tiles.has("turret")).toBe(false);
+    expect(result.tiles.has("sensor")).toBe(true);
+    expect(result.components.has("rad-a")).toBe(true);
+    expect(referenceRoofOperatingBoundsR002(ship, catalog, undefined)).toEqual({
+      components: new Map(),
+      tiles: new Map(),
+    });
+  });
+  it("rejects duplicate, moved and unmatched tile occurrences without silently admitting one child", () => {
+    const ship = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
+    const tile = ship.mountTiles!.find((t) => t.id === "guns")!;
+    const moved = {
+      ...ship,
+      mounts: ship.mounts.map((m) =>
+        m.id === "guns-b"
+          ? { ...m, at: [m.at[0] + 0.5, m.at[1]] as [number, number] }
+          : m,
+      ),
+    };
+    expect(
+      referenceRoofOperatingBoundsR002(moved, catalog, certificates).tiles.has(
+        "guns",
+      ),
+    ).toBe(false);
+    const duplicate = {
+      ...ship,
+      mountTiles: [...ship.mountTiles!, { ...tile }],
+    };
+    expect(
+      referenceRoofOperatingBoundsR002(
+        duplicate,
+        catalog,
+        certificates,
+      ).tiles.has("guns"),
+    ).toBe(false);
+    const unmatched = {
+      ...ship,
+      mounts: ship.mounts.filter((m) => m.tile !== "guns"),
+    };
+    expect(
+      referenceRoofOperatingBoundsR002(
+        unmatched,
+        catalog,
+        certificates,
+      ).tiles.has("guns"),
+    ).toBe(false);
+  });
 });
 
 describe("versioned reference recipes", () => {

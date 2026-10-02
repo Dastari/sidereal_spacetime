@@ -685,6 +685,9 @@ const withFixtures = (doc: Doc, fixtures: PrefabFixture[]): Doc => {
 export const FIXTURE_DESIGN_LABELS: Record<PrefabFixtureDesign, string> = {
   "shipyard.equipment.wall-locker": "Wall locker",
   "cargo.standard.medium": "Storage crate",
+  "pale-studless.table.standard": "Table",
+  "shipyard.equipment.workshop-bank-r025": "Workshop bank",
+  "shipyard.equipment.medical-equipment-bank-r025": "Medical equipment",
 };
 
 /** Storage tool: the footprint centred on the cursor, min corner on the 0.05 m grid. */

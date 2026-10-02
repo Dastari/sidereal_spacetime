@@ -32,11 +32,91 @@ import { prefabFlightModel } from "./prefab-flight";
 import { prefabPilotPose } from "./construction-pilot";
 import { prefabCargoSockets } from "./prefab-cargo-sockets";
 import { reachablePanel, shipLogicModel } from "./ship-logic-model";
+import { referenceRoomLayoutR025 } from "@sidereal/content/ship-reference-room-layout-r025";
+import { dressShip } from "./ship-dresser";
 
 const catalog = defaultPrefabComponentCatalog();
 const wren = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
 
 describe("prefab deck objects", () => {
+  it("keeps R025 candidate fixtures shared by objects, dressing and untrimmed blockers", () => {
+    const original = PREFAB_SHIPS.find((p) => p.id === "fed.m.crest")!;
+    const candidate = referenceRoomLayoutR025(original);
+    const sockets = deriveInterior(candidate, 0, catalog).sockets.filter(
+      (s) => s.fixture,
+    );
+    const objects = prefabShipObjects(candidate, catalog);
+    const blockers = prefabDeckBlockers(candidate, catalog);
+    const dressed = dressShip(candidate, { catalog });
+    expect(sockets).toHaveLength(3);
+    for (const socket of sockets) {
+      const object = objects.find(
+        (o) =>
+          o.designId === socket.designId &&
+          o.min[0] === socket.at[0] &&
+          o.min[1] === socket.at[1],
+      );
+      expect(object).toBeDefined();
+      expect(object!.kind).toBe("furniture");
+      expect(object!.blocks).toBe(true);
+      expect(object!.station).toBeNull();
+      expect([
+        object!.max[0] - object!.min[0],
+        object!.max[1] - object!.min[1],
+      ]).toEqual(socket.size);
+      expect(dressed.objects.find((o) => o.fixture === socket.fixture)).toEqual(
+        { ...socket, view: "deck" },
+      );
+      const blocker = blockers.find((b) => b.objectId === object!.id);
+      expect(blocker).toBeDefined();
+      expect(blocker!.trimmed).toBe(false);
+      expect(blocker!.rect).toEqual([
+        object!.min[0],
+        object!.min[1],
+        object!.max[0],
+        object!.max[1],
+      ]);
+    }
+    expect(prefabCargoSockets(candidate, 0, catalog)).toEqual(
+      prefabCargoSockets(original, 0, catalog),
+    );
+  });
+
+  it("keeps R025 candidate med, workshop and lounge aisle sweeps clear at radius .3", () => {
+    const candidate = referenceRoomLayoutR025(
+      PREFAB_SHIPS.find((p) => p.id === "fed.m.crest")!,
+    );
+    const frame = prefabWalkFrame(candidate, catalog),
+      toShip = prefabToShipMetres(candidate);
+    for (const [a, b] of [
+      [
+        [4.7, 2.1],
+        [8.3, 2.1],
+      ],
+      [
+        [9.7, 2],
+        [12.3, 2],
+      ],
+      [
+        [12.6, 8.4],
+        [16.5, 8.4],
+      ],
+    ] as const) {
+      const start = toShip(a),
+        end = toShip(b),
+        loc = { shipId: frame.shipId, deckId: frame.deckId, position: start };
+      expect(canOccupyDeck(frame, loc, 0.3)).toBe(true);
+      const swept = sweepDeckCircle(
+        frame,
+        loc,
+        [end[0] - start[0], end[1] - start[1]],
+        0.3,
+      );
+      expect(
+        Math.hypot(swept.position[0] - end[0], swept.position[1] - end[1]),
+      ).toBeLessThan(1e-5);
+    }
+  });
   it("derives Wren's modules, furniture, exterior parts and doors with stable ids", () => {
     const objects = prefabShipObjects(wren, catalog);
     const byId = new Map(objects.map((o) => [o.id, o]));

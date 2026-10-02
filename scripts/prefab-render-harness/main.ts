@@ -37,6 +37,11 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
 import {
+  referenceRoomLayoutR025,
+  REFERENCE_ROOM_LAYOUT_R025,
+} from "@sidereal/content/ship-reference-room-layout-r025";
+import { visualPrefabSha256 } from "@sidereal/sim/ship-visual-compiler";
+import {
   SHIP_THEME_IDS,
   type ShipPrefabDocumentV1,
   type ShipThemeId,
@@ -220,7 +225,7 @@ async function main() {
   }).set({ saturation: 1.3, contrast: 0.94, gamma: 1.06 });
 
   const catalog = defaultPrefabComponentCatalog();
-  const docs: ShipPrefabDocumentV1[] = lineup
+  let docs: ShipPrefabDocumentV1[] = lineup
     ? [...PREFAB_SHIPS]
     : [
         SHIP_VISUAL_FIXTURES.find((p) => p.id === q.get("prefab")) ??
@@ -228,6 +233,28 @@ async function main() {
           prefabById(q.get("prefab") ?? PREFAB_SHIPS[0].id) ??
           PREFAB_SHIPS[0],
       ];
+  const roomPin =
+    SHIP_REFERENCE_VISUAL_R002 as typeof SHIP_REFERENCE_VISUAL_R002 & {
+      roomLayout?: unknown;
+      roomPrefabSha256?: unknown;
+    };
+  if (
+    q.get("visual") === "reference-r002" &&
+    roomPin.roomLayout !== undefined
+  ) {
+    if (roomPin.roomLayout !== REFERENCE_ROOM_LAYOUT_R025)
+      throw Error("Unknown reference room layout pin");
+    docs = docs.map((base) => {
+      if (base.id !== "fed.m.crest") return base;
+      const candidate = referenceRoomLayoutR025(base);
+      if (
+        typeof roomPin.roomPrefabSha256 !== "string" ||
+        visualPrefabSha256(candidate) !== roomPin.roomPrefabSha256
+      )
+        throw Error("Reference room candidate document pin mismatch");
+      return candidate;
+    });
+  }
   const views: PrefabShipView[] = [];
   window.__prefabViews = views;
   const anchors: TransformNode[] = [];

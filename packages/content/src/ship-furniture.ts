@@ -7,6 +7,8 @@
  * the socket facing by the renderer). Unmapped designs keep the renderer's placeholder box.
  * Proposal art, not owner-approved.
  */
+import { referenceRoomFixtureR025 } from "./ship-room-fixtures-r025";
+
 export const SHIP_OBJECT_ART_REVISION = "r001";
 
 /** Socket design ids with a published object GLB. */
@@ -25,6 +27,8 @@ export const DECK_OBJECT_DESIGNS: readonly string[] = [
   "shipyard.equipment.pilot-seat",
   "shipyard.equipment.reactor",
   "shipyard.equipment.wall-locker",
+  "shipyard.equipment.workshop-bank-r025",
+  "shipyard.equipment.medical-equipment-bank-r025",
 ];
 
 /**
@@ -47,6 +51,10 @@ const OPERATOR_FACES_ART_BACK: readonly string[] = [
 /** Extra quarter turns (counter-clockwise, 0 or 2) from `facing` to an interior GLB's +Y axis.
  * `id` is a deck-object design id or a ship component id. */
 export function interiorArtQuarterTurns(id: string): 0 | 2 {
+  if (
+    referenceRoomFixtureR025(id)?.facingConvention === "operator-looks-to-back"
+  )
+    return 2;
   return id.startsWith("console.") || OPERATOR_FACES_ART_BACK.includes(id)
     ? 2
     : 0;
@@ -54,6 +62,8 @@ export function interiorArtQuarterTurns(id: string): 0 | 2 {
 
 /** Designs whose `facing` names the operator's view (see the convention above). */
 export function isCrewStationDesign(id: string): boolean {
+  // A bench's visual facing convention does not make it a control/seat station.
+  if (referenceRoomFixtureR025(id)) return false;
   return (
     interiorArtQuarterTurns(id) === 2 || id === "shipyard.equipment.pilot-seat"
   );
@@ -61,6 +71,8 @@ export function isCrewStationDesign(id: string): boolean {
 
 /** GLB URL for a deck-object design, or null when it keeps the placeholder. */
 export function deckObjectVisualUrl(designId: string): string | null {
+  if (referenceRoomFixtureR025(designId))
+    return `/assets/ship-objects/reference-r025-clean/${designId}.glb`;
   return DECK_OBJECT_DESIGNS.includes(designId)
     ? `/assets/ship-objects/${SHIP_OBJECT_ART_REVISION}/${designId}.glb`
     : null;

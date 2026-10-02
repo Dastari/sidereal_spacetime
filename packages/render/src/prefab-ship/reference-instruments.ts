@@ -34,7 +34,12 @@ function instrumentKind(id: string): InstrumentKind | undefined {
     id.startsWith("console.navigation")
   )
     return "navigation";
-  if (id.startsWith("console.") || id === "pale-studless.console.standard")
+  if (
+    id.startsWith("console.") ||
+    id === "pale-studless.console.standard" ||
+    id === "shipyard.equipment.workshop-bank-r025" ||
+    id === "shipyard.equipment.medical-equipment-bank-r025"
+  )
     return "systems";
   return undefined;
 }

@@ -1,5 +1,6 @@
 import { bowJoinErrors, bowWalkable } from "./bow-profiles";
 import { interiorArtQuarterTurns } from "./ship-furniture";
+import { referenceRoomFixtureR025 } from "./ship-room-fixtures-r025";
 /**
  * Prefab ship document v1: grammar data only (docs/shipyard_player_builder_design.md §3, §8, §12).
  *
@@ -177,15 +178,21 @@ export interface PrefabSkylight {
 }
 
 /**
- * Storage deck objects a prefab places by hand (2026-09-29, Wren r8 EVA suit locker), next to the
- * ones the room types derive. A fixture is an ordinary derived storage socket (same designs, key
- * `<room>/<design>`, collision, dressing and operator-bound container); only its place is authored.
+ * Deck furniture a prefab places by hand beside room-derived sockets. Storage remains
+ * separately restricted to the existing storage designs; authored position grants no capability.
  */
 export const PREFAB_FIXTURE_DESIGNS = [
   "shipyard.equipment.wall-locker",
   "cargo.standard.medium",
 ] as const;
-export type PrefabFixtureDesign = (typeof PREFAB_FIXTURE_DESIGNS)[number];
+/** Closed reader/catalog IDs; private candidate furniture is not a public authoring choice. */
+export const PREFAB_KNOWN_FIXTURE_DESIGNS = [
+  ...PREFAB_FIXTURE_DESIGNS,
+  "pale-studless.table.standard",
+  "shipyard.equipment.workshop-bank-r025",
+  "shipyard.equipment.medical-equipment-bank-r025",
+] as const;
+export type PrefabFixtureDesign = (typeof PREFAB_KNOWN_FIXTURE_DESIGNS)[number];
 
 export interface PrefabFixture {
   id: string;
@@ -200,6 +207,8 @@ export interface PrefabFixture {
 export function fixtureDesignTexels(
   design: PrefabFixtureDesign,
 ): [number, number, number] {
+  const reference = referenceRoomFixtureR025(design);
+  if (reference) return [...reference.texels];
   for (const spec of Object.values(G.roomTypes))
     for (const [id, w, d, h] of spec.sockets)
       if (id === design) return [w, d, h];
@@ -252,7 +261,7 @@ export interface ShipPrefabDocumentV1 {
    */
   logic?: PrefabLogic;
   /**
-   * Hand-placed storage deck objects (`PrefabFixture`). Absent = only the room-type sockets
+   * Hand-placed deck furniture (`PrefabFixture`). Absent = only the room-type sockets
    * (every prefab before Wren r8).
    */
   fixtures?: PrefabFixture[];
@@ -660,7 +669,7 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
         if (at.length !== 2) fail(`${p}.at`, "expected [x, y]");
         return {
           id: str(r.id, `${p}.id`, ID),
-          design: oneOf(r.design, `${p}.design`, PREFAB_FIXTURE_DESIGNS),
+          design: oneOf(r.design, `${p}.design`, PREFAB_KNOWN_FIXTURE_DESIGNS),
           at: [fine(at[0], `${p}.at[0]`), fine(at[1], `${p}.at[1]`)],
           facing: oneOf(r.facing, `${p}.facing`, FACE_NORMALS),
         };
@@ -1767,7 +1776,7 @@ export function deriveInterior(
         .filter((m) => m.attach === "interior" && catalog.get(m.component))
         .map((m) => placeMount(m, catalog.get(m.component), []).rect)
     : [];
-  // Hand-placed storage fixtures stand exactly where authored: never dropped under a module or
+  // Hand-placed fixtures stand exactly where authored: never dropped under a module or
   // nudged (validateShipPrefab reports one that blocks a door, button or module). Room-type
   // furniture gives way to them.
   const fixtureSockets: DerivedSocket[] = [];
