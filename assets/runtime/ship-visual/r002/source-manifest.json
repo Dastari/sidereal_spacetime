@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "2febb1b603625874bf8cc6b32d314bd55eb8964e06910c28ed8880e6d493d0ea",
+  "compilerSha256": "8b740a2a97f1d40909f2aee5550f379cb9c5b3ea478d27f242fe4b32d974a7c1",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -16,7 +16,7 @@
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "e8c2ccac1063b5c9101d156535f306408acf5c72a546c2d5c25cde0571e1e3b7"
+      "sha256": "c6bb5907ba96754289305dd7c1ed4bdab9611c2529b34c242000febef933599d"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
@@ -24,11 +24,11 @@
     },
     {
       "path": "packages/sim/src/ship-visual-r002-bow-frame.ts",
-      "sha256": "066bbb212a00b7c783467b19ab74ffa3d0fc62715329c1728e20408cfced4abf"
+      "sha256": "42df086a386e85db3775ac33e8a9056bca6eefd3fcffde56bcef8977198b7f85"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-bow-transition.ts",
-      "sha256": "cb65edbd2a4f47f04dd2347218d3aad6e3444f4e37b421a521196b51fe465fca"
+      "sha256": "58c1b02214ddbafecacd74ddcd82e7c3d8c2193b3873472ac3c5e6d1eba1c222"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-bow-cases-r026.ts",
