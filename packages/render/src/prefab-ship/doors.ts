@@ -16,6 +16,7 @@
  * Frame: the view `root` (ship-local game frame: Babylon X = game x, Y up, Z = -game y).
  */
 import type { Scene } from "@babylonjs/core/scene";
+import type { Camera } from "@babylonjs/core/Cameras/camera";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
@@ -532,17 +533,45 @@ export function createPrefabDoors(
       if (!previous || count.count > previous.count) capacities.set(key, count);
     }
   }
-  const matrixBuckets = new Map<
-    string,
-    {
-      mesh: Mesh;
-      values: Float32Array;
-      poses: Matrix[];
-      worldCache: Matrix[];
-      capacity: number;
-      count: number;
-    }
-  >();
+  // These snapshots belong to logical source parts, never to their mutable
+  // bucket row. Full/cut/flight geometry has separate identity and first-use seed.
+  type RenderedPose = { values: Float32Array; frame: number };
+  const poseHistory = new Map(
+    doors.map(({ spec }) => {
+      const recipe = recipes.get(spec)!;
+      const history = (parts: Part[]) =>
+        [-1, 1].map(() =>
+          parts.map((): RenderedPose => ({
+            values: new Float32Array(16),
+            frame: -1,
+          })),
+        );
+      return [
+        spec,
+        {
+          full: history(recipe.full),
+          cut: history(recipe.cut),
+          flight: history(recipe.flight),
+        },
+      ] as const;
+    }),
+  );
+  let renderedFrame = 0;
+  let temporalCamera: Camera | null = null;
+  let temporalPrepared = false;
+  type MatrixBucket = {
+    mesh: Mesh;
+    values: Float32Array;
+    previous: Float32Array;
+    history: (RenderedPose | null)[];
+    drawn: boolean;
+    drawObserver: ReturnType<Mesh["onAfterRenderObservable"]["add"]>;
+    poses: Matrix[];
+    worldCache: Matrix[];
+    capacity: number;
+    count: number;
+  };
+  const matrixBuckets = new Map<string, MatrixBucket>();
   for (const [key, capacity] of capacities) {
     const mesh = meshFor(capacity.slot, capacity.cut);
     if (!mesh) throw Error("Prepared door slot has no geometry");
@@ -556,20 +585,42 @@ export function createPrefabDoors(
           1;
     }
     mesh.thinInstanceSetBuffer("matrix", values, 16, false);
+    // Babylon's automatic history allocation happens AFTER first draw and assumes
+    // stable row order. Own all histories eagerly, including currently empty cuts.
+    const previous = values.slice();
+    mesh.thinInstanceSetBuffer("previousMatrix", previous, 16, false);
     const worldCache = mesh.thinInstanceGetWorldMatrices();
     // Babylon caches this public list, but bufferUpdated/count changes do not
     // invalidate it. Keep distinct preowned poses and its active prefix coherent.
     const poses = worldCache.slice();
     worldCache.length = 0;
     mesh.thinInstanceCount = 0;
-    matrixBuckets.set(key, {
+    const bucket: MatrixBucket = {
       mesh,
       values,
+      previous,
+      history: Array<RenderedPose | null>(capacity.count).fill(null),
+      drawn: false,
+      drawObserver: mesh.onAfterRenderObservable.add(() => {
+        // Render targets (glow/shadow/reflection) have their own pass id, even
+        // when they retain the primary scene.activeCamera.
+        if (
+          temporalPrepared &&
+          temporalCamera &&
+          scene.activeCamera === temporalCamera &&
+          (scene.getEngine().currentRenderPassId ===
+            temporalCamera.renderPassId ||
+            scene.getEngine().currentRenderPassId ===
+              temporalCamera.outputRenderTarget?.renderPassId)
+        )
+          bucket.drawn = true;
+      }),
       poses,
       worldCache,
       capacity: capacity.count,
       count: 0,
-    });
+    };
+    matrixBuckets.set(key, bucket);
   }
   let view: View = "deck";
   let dirty = true;
@@ -599,11 +650,12 @@ export function createPrefabDoors(
       const Z = [ay, 0, ax]; // X × (0, 1, 0)
       const cx = spec.center[0] + spec.normal[0] * offset;
       const cz = -(spec.center[1] + spec.normal[1] * offset);
-      for (const side of [-1, 1]) {
+      for (const [sideIndex, side] of [-1, 1].entries()) {
         const recipe = recipes.get(spec)!;
-        const parts =
-          view === "flight" ? recipe.flight : cut ? recipe.cut : recipe.full;
-        for (const p of parts) {
+        const mode = view === "flight" ? "flight" : cut ? "cut" : "full";
+        const parts = recipe[mode];
+        const history = poseHistory.get(spec)![mode][sideIndex];
+        for (const [partIndex, p] of parts.entries()) {
           const leafW = spec.airlock
             ? AIRLOCK_LEAF_M
             : Math.max(0.3, (spec.span - 2 * INTERIOR_JAMB_M) / 2);
@@ -617,6 +669,7 @@ export function createPrefabDoors(
           if (bucket.count >= bucket.capacity)
             throw Error("Door matrix capacity exceeded");
           const list = bucket.values;
+          bucket.history[bucket.count] = history[partIndex];
           const first = bucket.count++ * 16;
           list[first + 0] = X[0] * p.w;
           list[first + 1] = X[1] * p.w;
@@ -676,6 +729,62 @@ export function createPrefabDoors(
     instances: () => instances,
     /** An unsupported real authored section rejects the complete wall/door display cut. */
     cutawaySupported: () => !!cutGeometry,
+    /** Actual owned CPU history bytes; exposes no mutable pose or instance arrays. */
+    temporalMemory() {
+      let currentCpuBytes = 0,
+        previousCpuBytes = 0,
+        renderedPoseCpuBytes = 0;
+      for (const bucket of matrixBuckets.values()) {
+        currentCpuBytes += bucket.values.byteLength;
+        previousCpuBytes += bucket.previous.byteLength;
+      }
+      for (const recipe of poseHistory.values())
+        for (const mode of [recipe.full, recipe.cut, recipe.flight])
+          for (const side of mode)
+            for (const pose of side)
+              renderedPoseCpuBytes += pose.values.byteLength;
+      return { currentCpuBytes, previousCpuBytes, renderedPoseCpuBytes };
+    },
+    /** After the primary camera chooses its mask, before any of its draw passes. */
+    prepareTemporal(camera: Camera) {
+      if (disposed) return;
+      temporalCamera = camera;
+      temporalPrepared = true;
+      for (const bucket of matrixBuckets.values()) {
+        bucket.drawn = false;
+        if (!bucket.count) continue;
+        let changed = false;
+        for (let i = 0; i < bucket.count; i++) {
+          const last = bucket.history[i]!;
+          const source =
+            last.frame === renderedFrame ? last.values : bucket.values;
+          const sourceOffset = last.frame === renderedFrame ? 0 : i * 16;
+          for (let j = 0; j < 16; j++) {
+            const value = source[sourceOffset + j];
+            if (!Object.is(bucket.previous[i * 16 + j], value)) {
+              bucket.previous[i * 16 + j] = value;
+              changed = true;
+            }
+          }
+        }
+        if (changed) bucket.mesh.thinInstanceBufferUpdated("previousMatrix");
+      }
+    },
+    /** CPU-only snapshot of the parts genuinely drawn by that primary camera. */
+    commitTemporal(camera: Camera) {
+      if (disposed || !temporalPrepared || camera !== temporalCamera) return;
+      temporalPrepared = false;
+      renderedFrame++;
+      for (const bucket of matrixBuckets.values()) {
+        if (!bucket.drawn) continue;
+        for (let i = 0; i < bucket.count; i++) {
+          const last = bucket.history[i]!;
+          for (let j = 0; j < 16; j++)
+            last.values[j] = bucket.values[i * 16 + j];
+          last.frame = renderedFrame;
+        }
+      }
+    },
     setCutaway(ids: ReadonlySet<string>) {
       if (disposed) return;
       const next = cutGeometry ? ids : new Set<string>();
@@ -732,9 +841,14 @@ export function createPrefabDoors(
     dispose() {
       if (disposed) return;
       disposed = true;
+      temporalPrepared = false;
+      temporalCamera = null;
+      for (const bucket of matrixBuckets.values())
+        bucket.mesh.onAfterRenderObservable.remove(bucket.drawObserver);
       for (const m of meshes.values()) m.dispose();
       meshes.clear();
       matrixBuckets.clear();
+      poseHistory.clear();
       instances = 0;
     },
   };

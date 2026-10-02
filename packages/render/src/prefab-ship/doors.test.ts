@@ -3,6 +3,9 @@ import { createHash } from "node:crypto";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
+import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { bindPrefabDoorCameraHistory } from "../prefab-ship-presentation";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
@@ -578,6 +581,231 @@ it.each(["fed.s.wren", "fed.m.crest"])(
     }
   },
 );
+
+it("owns eager indexed-leaf histories and preserves last genuine main-camera poses through rebucketing", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const root = new TransformNode("actual-temporal-leaf", scene);
+  const camera = new FreeCamera("main", new Vector3(0, 9, -20), scene);
+  camera.setTarget(Vector3.Zero());
+  scene.activeCamera = camera;
+  const auxiliary = new FreeCamera("auxiliary", camera.position.clone(), scene);
+  auxiliary.setTarget(Vector3.Zero());
+  const handle = createPrefabDoors(
+    scene,
+    root,
+    wren,
+    catalog,
+    wren.theme,
+    "r002",
+    authoredLeaf("door-leaf-r019.glb"),
+  );
+  const peer = createPrefabDoors(
+    scene,
+    root,
+    wren,
+    catalog,
+    wren.theme,
+    "r002",
+    authoredLeaf("door-leaf-r019.glb"),
+  );
+  for (const mesh of peer.meshes()) mesh.setEnabled(false);
+  const material = new StandardMaterial("actual-history-draw", scene);
+  material.disableLighting = true;
+  for (const mesh of handle.meshes()) mesh.material = material;
+  const specs = prefabDoorSpecs(wren, catalog);
+  const interior = specs.filter((d) => !d.exterior);
+  expect(interior.length).toBeGreaterThan(1);
+  const resources = handle.meshes().map((mesh) => ({
+    mesh,
+    current: matrixBufferWitness(mesh),
+    previous: mesh._thinInstanceDataStorage.previousMatrixData!,
+    gpu: mesh.getVertexBuffer("previousWorld0")!.getBuffer(),
+    attributes: Array.from({ length: 4 }, (_, i) =>
+      mesh.getVertexBuffer(`previousWorld${i}`)!,
+    ),
+  }));
+  expect(
+    resources.filter((r) => r.mesh.name.includes(":cut:")).length,
+  ).toBeGreaterThan(0);
+  for (const r of resources) {
+    expect(r.previous).toBeInstanceOf(Float32Array);
+    expect(r.previous.byteLength).toBe(r.current.cpu.byteLength);
+    expect(r.previous.buffer).not.toBe(r.current.cpu.buffer);
+    expect(r.gpu).not.toBe(r.current.gpu);
+    expect(r.attributes.every((a) => a.getBuffer() === r.gpu)).toBe(true);
+  }
+  const memory = handle.temporalMemory();
+  expect(memory.currentCpuBytes).toBe(
+    resources.reduce((n, r) => n + r.current.cpu.byteLength, 0),
+  );
+  expect(memory.previousCpuBytes).toBe(
+    resources.reduce((n, r) => n + r.previous.byteLength, 0),
+  );
+  expect(memory.renderedPoseCpuBytes).toBe(
+    (specs.length * 2 * 5 +
+      interior.length * 2 * 2 +
+      specs.filter((s) => s.airlock).length * 2 * 5) *
+      64,
+  );
+  let mask = new Set<string>(),
+    desired = mask;
+  const reset = vi.fn();
+  const binding = bindPrefabDoorCameraHistory(
+    scene,
+    handle,
+    () => {
+      if (mask === desired) return false;
+      mask = desired;
+      handle.setCutaway(mask);
+      return true;
+    },
+    reset,
+  );
+  const upload = vi.spyOn(engine, "updateDynamicVertexBuffer");
+  const release = vi.spyOn(engine, "_releaseBuffer");
+  const afterStart = scene.onAfterCameraRenderObservable.add(
+    () => {
+      if (scene.activeCamera === camera)
+        uploadsAtEnd = upload.mock.calls.length;
+    },
+    -1,
+    true,
+  );
+  let uploadsAtEnd = 0;
+  const afterEnd = scene.onAfterCameraRenderObservable.add(() => {
+    if (scene.activeCamera === camera)
+      expect(upload.mock.calls.length).toBe(uploadsAtEnd);
+  });
+  const primary = (cut: boolean) =>
+    handle
+      .meshes()
+      .find((m) => m.name.endsWith(`${cut ? "cut" : "full"}:primary`))!;
+  const rows = (cut: boolean, previous = false) => {
+    const mesh = primary(cut);
+    const data = previous
+      ? mesh._thinInstanceDataStorage.previousMatrixData!
+      : mesh._thinInstanceDataStorage.matrixData!;
+    const selected = specs.filter(
+      (spec) => cut === (!spec.exterior && mask.has(spec.id)),
+    );
+    const result = new Map<string, number[]>();
+    let index = 0;
+    for (const spec of selected)
+      for (const side of [-1, 1]) {
+        result.set(
+          `${spec.id}:${side}`,
+          Array.from(data.subarray(index * 16, ++index * 16)),
+        );
+      }
+    expect(index).toBe(mesh.thinInstanceCount);
+    return result;
+  };
+  const move = (dt: number) =>
+    handle.update({
+      nowMs: 1,
+      dt,
+      actors: [],
+      logic: new Map(specs.map((d) => [d.id, true])),
+    });
+  try {
+    await scene.whenReadyAsync();
+    const dynamic = vi.spyOn(engine, "createDynamicVertexBuffer");
+    const vertex = vi.spyOn(engine, "createVertexBuffer");
+    const draw = vi.spyOn(engine, "drawElementsType");
+    // Eager histories exist even in MSAA. A later cold history switch changes no buffers.
+    scene.needsPreviousWorldMatrices = false;
+    scene.render();
+    expect(draw).toHaveBeenCalled();
+    const first = rows(false);
+    scene.needsPreviousWorldMatrices = true;
+    move(0.05);
+    move(0.1); // Neither update is a rendered frame.
+    scene.render();
+    expect(rows(false, true)).toEqual(first);
+    const moved = rows(false);
+    expect(
+      [...moved].some(([id, m]) => m.some((v, i) => v !== first.get(id)![i])),
+    ).toBe(true);
+    move(0.08);
+    desired = new Set([interior[0].id]);
+    scene.render();
+    expect(reset).toHaveBeenCalledTimes(1);
+    for (const [id, previous] of rows(false, true))
+      expect(previous).toEqual(moved.get(id));
+    // A new topology has no rendered history: seed its own current pose, not another leaf's row.
+    expect(rows(true, true)).toEqual(rows(true));
+    const beforeAuxiliary = rows(false);
+    move(0.06);
+    const beforeAuxCount = draw.mock.calls.length;
+    scene._renderForCamera(auxiliary);
+    expect(draw.mock.calls.length).toBeGreaterThan(beforeAuxCount);
+    scene.activeCamera = camera;
+    scene.render();
+    expect(rows(false, true)).toEqual(beforeAuxiliary);
+    const beforeReturn = rows(false);
+    desired = new Set();
+    move(0.06);
+    scene.render();
+    expect(reset).toHaveBeenCalledTimes(2);
+    const returned = rows(false),
+      returnedPrevious = rows(false, true);
+    for (const [id, previous] of returnedPrevious)
+      expect(previous).toEqual(beforeReturn.get(id) ?? returned.get(id));
+    for (const next of ["flight", "deck"] as const) {
+      handle.setView(next);
+      scene.render();
+      for (const r of resources) {
+        assertDoorMatrixBuffer(r.mesh, r.current);
+        expect(r.mesh._thinInstanceDataStorage.previousMatrixData).toBe(
+          r.previous,
+        );
+        expect(r.attributes.every((a) => a.getBuffer() === r.gpu)).toBe(true);
+      }
+    }
+    expect(
+      upload.mock.calls.some((call) =>
+        resources.some((r) => call[0] === r.gpu),
+      ),
+    ).toBe(true);
+    // No-op masks and disabled prefixes neither recreate nor upload histories.
+    upload.mockClear();
+    handle.setCutaway(desired);
+    expect(upload).not.toHaveBeenCalled();
+    scene.render();
+    for (const r of resources.filter((r) => !r.mesh.thinInstanceCount))
+      expect(upload.mock.calls.some((c) => c[0] === r.gpu)).toBe(false);
+    expect(dynamic).not.toHaveBeenCalled();
+    expect(vertex).not.toHaveBeenCalled();
+    handle.dispose();
+    handle.dispose();
+    expect(handle.temporalMemory()).toEqual({
+      currentCpuBytes: 0,
+      previousCpuBytes: 0,
+      renderedPoseCpuBytes: 0,
+    });
+    for (const r of resources)
+      for (const gpu of [r.current.gpu, r.gpu])
+        expect(release.mock.calls.filter((c) => c[0] === gpu)).toHaveLength(1);
+    for (const mesh of peer.meshes())
+      for (const kind of ["world0", "previousWorld0"])
+        expect(
+          release.mock.calls.some(
+            (c) => c[0] === mesh.getVertexBuffer(kind)!.getBuffer(),
+          ),
+        ).toBe(false);
+  } finally {
+    scene.onAfterCameraRenderObservable.remove(afterStart);
+    scene.onAfterCameraRenderObservable.remove(afterEnd);
+    binding.dispose();
+    handle.dispose();
+    peer.dispose();
+    vi.restoreAllMocks();
+    root.dispose();
+    scene.dispose();
+    engine.dispose();
+  }
+});
 
 describe("prefab door specs", () => {
   it("accepts the two authored core finishes and rejects missing, duplicate or ambiguous backing groups", () => {

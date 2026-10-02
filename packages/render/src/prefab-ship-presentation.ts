@@ -1,4 +1,5 @@
 import type { Scene } from "@babylonjs/core/scene";
+import type { Camera } from "@babylonjs/core/Cameras/camera";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
@@ -32,6 +33,10 @@ export interface PrefabShipViewHandle {
   ): void;
   /** Door leaf states (review diagnostics). */
   doors(): { id: string; open: number; airlock: boolean }[];
+  /** Read-only sums of actual owned current/previous/logical-pose CPU allocations. */
+  doorTemporalMemory(): ReturnType<
+    import("./prefab-ship/doors").PrefabDoors["temporalMemory"]
+  >;
   /** Per-actuator exhaust from `own_authored_flight_actuators` rows (achieved throttles). */
   updateExhaust(
     actuators: Parameters<typeof prefabExhaustJets>[2],
@@ -53,6 +58,38 @@ export interface PrefabShipViewHandle {
 const GAME_SHIP_DIRECT = 0.6;
 const GAME_INTERIOR_DIRECT = 0.9;
 
+/** Bind owned door history to the real primary-camera draw lifecycle. */
+export function bindPrefabDoorCameraHistory(
+  scene: Scene,
+  doors: Pick<
+    import("./prefab-ship/doors").PrefabDoors,
+    "prepareTemporal" | "commitTemporal"
+  >,
+  selectCut: (camera: Camera) => boolean,
+  onTemporalReset?: () => void,
+) {
+  let mainCamera = scene.activeCamera;
+  const mainCameraObserver = scene.onBeforeRenderObservable.add(() => {
+    mainCamera = scene.activeCamera;
+  });
+  const before = scene.onBeforeCameraRenderObservable.add((camera) => {
+    if (camera !== mainCamera || camera !== scene.activeCamera) return;
+    if (selectCut(camera)) onTemporalReset?.();
+    doors.prepareTemporal(camera);
+  });
+  const after = scene.onAfterCameraRenderObservable.add((camera) => {
+    if (camera === mainCamera && camera === scene.activeCamera)
+      doors.commitTemporal(camera);
+  });
+  return {
+    dispose() {
+      scene.onBeforeRenderObservable.remove(mainCameraObserver);
+      scene.onBeforeCameraRenderObservable.remove(before);
+      scene.onAfterCameraRenderObservable.remove(after);
+    },
+  };
+}
+
 /** A trusted prefab construction document carries its canonical grammar source
  * under `prefab` (admitted by readConstructionDraft). Returns undefined for any
  * other construction, so native Wayfarer/Studio instances are untouched. The
@@ -62,6 +99,7 @@ export async function loadPrefabShipPresentation(
   shipRoot: TransformNode,
   documentJson: string,
   visualVariant?: import("./prefab-ship/visual-variant").VisualVariantSelection,
+  onTemporalReset?: () => void,
 ): Promise<PrefabShipViewHandle | undefined> {
   let binding: { document?: unknown; catalog?: unknown } | undefined;
   try {
@@ -156,24 +194,24 @@ export async function loadPrefabShipPresentation(
     occluders.set(meshes.filter((m) => !emissive.has(m) && m.isEnabled()));
   };
   adapt();
-  // The actual main-camera transform is settled here, before active geometry and shadow
-  // submission. Shadow/reflection cameras must never replace this camera's chosen display mask.
-  let mainCamera = scene.activeCamera;
-  const mainCameraObserver = scene.onBeforeRenderObservable.add(() => {
-    mainCamera = scene.activeCamera;
-  });
-  const cutObserver = scene.onBeforeCameraRenderObservable.add((camera) => {
-    if (camera !== mainCamera || camera !== scene.activeCamera) return;
-    if (
-      view.updateDeckCutaway(
+  // Mask selection and history preparation precede the AA controller's main
+  // camera observer, so its existing reset is consumed before this same draw.
+  const temporal = bindPrefabDoorCameraHistory(
+    scene,
+    doors,
+    (camera) => {
+      const changed = view.updateDeckCutaway(
         interior ? camera.globalPosition : null,
         doors.cutawaySupported(),
-      )
-    ) {
-      doors.setCutaway(view.deckCutDoors());
-      adapt();
-    }
-  });
+      );
+      if (changed) {
+        doors.setCutaway(view.deckCutDoors());
+        adapt();
+      }
+      return changed;
+    },
+    onTemporalReset,
+  );
   // Draw-cost evidence: one line per presentation after its first rendered frame.
   const logMetrics = () =>
     scene.onAfterRenderObservable.addOnce(() => {
@@ -197,6 +235,7 @@ export async function loadPrefabShipPresentation(
       doors.setCutaway(view.deckCutDoors());
       panels.setView(next ? "deck" : "flight");
       adapt();
+      onTemporalReset?.();
       logMetrics();
     },
     metrics: () => view.metrics(),
@@ -216,9 +255,9 @@ export async function loadPrefabShipPresentation(
     },
     exhaust: () => exhaust.lit(),
     doors: () => doors.doors(),
+    doorTemporalMemory: () => doors.temporalMemory(),
     dispose() {
-      scene.onBeforeRenderObservable.remove(mainCameraObserver);
-      scene.onBeforeCameraRenderObservable.remove(cutObserver);
+      temporal.dispose();
       shadows?.dispose();
       exhaust.dispose();
       panels.dispose();

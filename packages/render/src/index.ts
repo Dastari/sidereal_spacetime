@@ -483,6 +483,7 @@ async function buildWorld(
           shipRoot,
           options.construction.documentJson,
           options.prefabVisualVariant,
+          () => antialiasing.resetHistory(),
         );
         if (prefabView)
           for (const mesh of imported.meshes) mesh.setEnabled(false);
