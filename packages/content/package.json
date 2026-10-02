@@ -87,7 +87,9 @@
     "./definition-references": "./src/definition-references.ts",
     "./ship-visual": "./src/ship-visual.ts",
     "./ship-visual-fixture": "./src/ship-visual-fixture.ts",
-    "./ship-visual-r002": "./src/ship-visual-r002.ts"
+    "./ship-visual-r002": "./src/ship-visual-r002.ts",
+    "./wayfarer-study-kit": "./src/wayfarer-study-kit.ts",
+    "./wayfarer-study-fixture": "./src/wayfarer-study-fixture.ts"
   },
   "dependencies": {}
 }

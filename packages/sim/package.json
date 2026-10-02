@@ -95,7 +95,8 @@
     "./ship-systems": "./src/ship-systems.ts",
     "./lifecycle-outbox": "./src/lifecycle-outbox.ts",
     "./prefab-ship-systems": "./src/prefab-ship-systems.ts",
-    "./ship-visual-compiler": "./src/ship-visual-compiler.ts"
+    "./ship-visual-compiler": "./src/ship-visual-compiler.ts",
+    "./wayfarer-study-structure": "./src/wayfarer-study-structure.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

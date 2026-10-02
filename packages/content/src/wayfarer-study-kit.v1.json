@@ -1,0 +1,112 @@
+{
+  "schema": "sidereal.wayfarer-study-kit.v1",
+  "status": "private-prototype",
+  "piece": "hull.bay.cluster.light.navy.louvre.w3.000.s0.k-2.35",
+  "sourceCommit": "271a9fa176161a1ce00bc7571ba1db7ad52e02dd",
+  "snapshotManifestSha256": "460e8546d835ae2e9549b57465f0922623a3da8ab4c236bb0031281e60d26de8",
+  "captureFileSha256": "8949456baa8ec37af5fb01937e8b3fa3b3e465fee856f60224c6b46c357ce882",
+  "captureAdapterSha256": "2fa42b31376e3dac9034350865b06fc3623b9e1a8f69948be1396482d238240a",
+  "sourceInputs": {
+    "src/sr/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitCommit": "271a9fa176161a1ce00bc7571ba1db7ad52e02dd"
+    },
+    "src/sr/layout.py": {
+      "bytes": 7526,
+      "sha256": "27a486161f94fd31f30b59e04503f8b5021fcc47fab18a6e7b49d9e5f8db2f52",
+      "gitCommit": "271a9fa176161a1ce00bc7571ba1db7ad52e02dd"
+    },
+    "src/sr/mb.py": {
+      "bytes": 12933,
+      "sha256": "89114bea5a3573c52abdd85c3e7f1de652c1d22098a51063f04eae0c957c5d24",
+      "gitCommit": "271a9fa176161a1ce00bc7571ba1db7ad52e02dd"
+    },
+    "src/sr/mats.py": {
+      "bytes": 18178,
+      "sha256": "1986193949fd7e048f716e87f283720e8ac067cfaef0915c9c7f735673bb7536",
+      "gitCommit": "271a9fa176161a1ce00bc7571ba1db7ad52e02dd"
+    },
+    "src/sr/kit.py": {
+      "bytes": 3200,
+      "sha256": "326d0f8bfc2916cc8c394284e148b3bd828d2bfebf5b291ee836607adcff317c",
+      "gitCommit": "271a9fa176161a1ce00bc7571ba1db7ad52e02dd"
+    },
+    "src/sr/kit_hull.py": {
+      "bytes": 29490,
+      "sha256": "20265e703842afbba3d7312825c9b8bb083a92e5b52534bb814ce00cd73e7a0f",
+      "gitCommit": "271a9fa176161a1ce00bc7571ba1db7ad52e02dd"
+    },
+    "src/sr/kit_hull_main.py": {
+      "bytes": 137104,
+      "sha256": "d80791bcea31455e06a37d6cef2f8f787a2f6c147fef6bf47852c7e6c61eaa4d",
+      "gitCommit": "271a9fa176161a1ce00bc7571ba1db7ad52e02dd"
+    },
+    "export/manifest.json": {
+      "bytes": 119607,
+      "sha256": "9afe368702b81891905165fe2adef6c860f23b0d3ce5672e5bf1b6ad93a4d855",
+      "currentReadOnlyExport": true
+    },
+    "export/layout.json": {
+      "bytes": 217245,
+      "sha256": "c4cd70c8742943f625d068be45f19d72ee14596483410f1bc9e11f70bab9cb34",
+      "currentReadOnlyExport": true
+    },
+    "export/glb/hull/bay/hull.bay.cluster.light.navy.louvre.w3.000.s0.k-2.35.glb": {
+      "bytes": 409348,
+      "sha256": "a5b69e941e36c50ed431b7e02a9cbcac4bbe08d4e6c068178781fe94e8a87892",
+      "currentReadOnlyExport": true
+    }
+  },
+  "placement": [-3, 6.5, 0],
+  "cellMeters": 0.0625,
+  "palette": {
+    "primary": {
+      "slot": "primary",
+      "sourceFamily": "plastic-light",
+      "colour": [0.6, 0.6, 0.63]
+    },
+    "secondary": {
+      "slot": "secondary",
+      "sourceFamily": "plastic-dark",
+      "colour": [0.03, 0.034, 0.1]
+    },
+    "accent": {
+      "slot": "accent",
+      "sourceFamily": "plastic-colour",
+      "colour": [0.3, 0.017, 0.045]
+    },
+    "trim": {
+      "slot": "trim",
+      "sourceFamily": "plastic-dark",
+      "colour": [0.075, 0.085, 0.15]
+    },
+    "dark": {
+      "slot": "dark",
+      "sourceFamily": "plastic-dark",
+      "colour": [0.008, 0.009, 0.024]
+    },
+    "emit_a": {
+      "slot": "emit_a",
+      "sourceFamily": "emissive",
+      "colour": [0.05, 0.48, 1.0]
+    },
+    "emit_b": {
+      "slot": "emit_b",
+      "sourceFamily": "emissive",
+      "colour": [1.0, 0.3, 0.025]
+    },
+    "white": {
+      "slot": "primary",
+      "sourceFamily": "plastic-light",
+      "colour": [0.8, 0.8, 0.82]
+    },
+    "yellow": {
+      "slot": "accent",
+      "sourceFamily": "plastic-colour",
+      "colour": [0.92, 0.48, 0.02]
+    }
+  },
+  "samplesFileSha256": "78108381a6e143ebf9f9e97bc7698c2dbce93efc002c4240912127b40f2911b6",
+  "samplesAdapterSha256": "25478a6411b5b34f2c073b28a33156414b1f4e58907793b5435f007cb72056cf"
+}
