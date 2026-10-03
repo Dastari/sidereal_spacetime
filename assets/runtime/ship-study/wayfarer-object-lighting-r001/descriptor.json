@@ -1,0 +1,1663 @@
+{
+  "schema": "authored-asset-lighting/v1",
+  "frame": "glTF-Y-up",
+  "producer": {
+    "file": "scripts/art_library/wayfarer_asset_lighting.py",
+    "sha256": "d3ea1eef6eb3ac540dc6e5e8e3bae1f4c2eb5e65602311e190f8b98a40536803"
+  },
+  "sources": {
+    "manifestSha256": "9afe368702b81891905165fe2adef6c860f23b0d3ce5672e5bf1b6ad93a4d855",
+    "layoutSha256": "c4cd70c8742943f625d068be45f19d72ee14596483410f1bc9e11f70bab9cb34"
+  },
+  "assets": [
+    {
+      "id": "engine.pod.w2.4.l5.z-0.75_1.6",
+      "sha256": "23a3ec8bf4c629ba2b7207d96ab2c93a0c9a5d7872a34337494d5a135a07f93e",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "aperture",
+          "position": [
+            -6.149999999999999,
+            0.237,
+            -0.0
+          ],
+          "color": [
+            0.15,
+            0.4,
+            1.0
+          ],
+          "intensity": 1.2,
+          "range": 2.4,
+          "provenance": {
+            "kind": "authored-layout-engine-socket",
+            "sourceNames": [
+              "LT_engine_far",
+              "LT_engine_mid",
+              "LT_engine_near"
+            ],
+            "watts": 300.0,
+            "radius": 0.6,
+            "gameCalibration": "bounded1.2 intensity; Blender watts are not Babylon intensity units"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prop.props_bridge.cockpit_side_panel",
+      "sha256": "30c7af633725aacc60aa078ef1809201841acd9d1789221b4bebef8a47d7714b",
+      "emissions": {
+        "SR_tex_bridge_scr_small_blue": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_small_orange": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "SR_tex_bridge_scr_dark": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_bridge.command_station",
+      "sha256": "5ec193859f56554c17886be5a6790d9660de957138a99ea0cfa1e8fcbb7faa04",
+      "emissions": {
+        "emit_b@low": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "SR_tex_bridge_scr_sill_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_gauge_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_r@high": {
+          "factor": [
+            1,
+            0.05999999865889549,
+            0.029999999329447746
+          ],
+          "strength": 6
+        },
+        "SR_tex_bridge_scr_wide_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "emit_a@low": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 1.2000000476837158
+        },
+        "SR_tex_bridge_scr_helm_main": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "SR_tex_bridge_scr_desk_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_wide_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_desk_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_mon_radar": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_mon_data": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_side_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_sill_c": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "SR_tex_bridge_scr_side_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_helm_side": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_gauge_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_bridge.pilot_chair",
+      "sha256": "9dc2f7b54152816516b8a992597af5194895b2c7c22a124c61ea33e4c0b8887e",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_bridge.screen_box",
+      "sha256": "6b0b2f80644b8f2dcfd8e2fd4c6ff9c4010ceab0ed726545203c2d3a6ea1538e",
+      "emissions": {
+        "SR_tex_bridge_scr_box": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "emit_r@high": {
+          "factor": [
+            1,
+            0.05999999865889549,
+            0.029999999329447746
+          ],
+          "strength": 6
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_bridge.wall_console",
+      "sha256": "dbdc73427388803e90e1bf22788798e19923d0ac80ae31788ed7ce2cc5b4a4cc",
+      "emissions": {
+        "emit_b@low": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 1.2000000476837158
+        },
+        "SR_tex_bridge_scr_sill_c": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "SR_tex_bridge_gauge_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_r@high": {
+          "factor": [
+            1,
+            0.05999999865889549,
+            0.029999999329447746
+          ],
+          "strength": 6
+        },
+        "emit_a@low": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 1.2000000476837158
+        },
+        "SR_tex_bridge_scr_wide_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "SR_tex_bridge_scr_desk_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_wide_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_side_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_gauge_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_bridge.wall_console_low",
+      "sha256": "4fea3b933200208ff25c2b94eb7dfa1baf6f32a9b11ef22cd32ffa8013693394",
+      "emissions": {
+        "emit_b@low": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 1.2000000476837158
+        },
+        "SR_tex_bridge_scr_sill_c": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "SR_tex_bridge_gauge_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_r@high": {
+          "factor": [
+            1,
+            0.05999999865889549,
+            0.029999999329447746
+          ],
+          "strength": 6
+        },
+        "emit_a@low": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 1.2000000476837158
+        },
+        "SR_tex_bridge_scr_mon_data": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_sill_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.7000000476837158
+        },
+        "SR_tex_bridge_scr_wide_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_scr_sill_a": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.5
+        },
+        "SR_tex_bridge_gauge_b": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_bridge.wall_light_cyan_v",
+      "sha256": "9614d20e384a9a4d4d89bcee74f319a2418263d456853ae14917d87b1d43065b",
+      "emissions": {
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": [
+        {
+          "id": "lens",
+          "position": [
+            -1.2411302678882265e-19,
+            0.5352610796192453,
+            -0.07775858010646926
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.6,
+          "provenance": {
+            "kind": "area-weighted-exported-lens-centroid",
+            "material": "emit_a",
+            "gameCalibration": "bounded shadowless real-time local proxy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prop.props_lounge.coffee_table",
+      "sha256": "d279d547eadbf0aadb8e9397d1c1b64c1511d52cd19ce9f32f72d5ff84562cc1",
+      "emissions": {
+        "emit_a@low": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_lounge.crew_chibi",
+      "sha256": "169d5233b157ca0980f8de48b20384a793aa10137dd91b54068a6bfc9c285c6c",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_lounge.fridge_cabinet",
+      "sha256": "b62e4fb17d10e3973a0790ae00071287be02ad93cbda414216994fe917f63f7b",
+      "emissions": {
+        "emit_r@low": {
+          "factor": [
+            1,
+            0.05999999865889549,
+            0.029999999329447746
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_lounge.poster_goodcrew",
+      "sha256": "70e0736880bfbf335b8a9e17248409248c89a0e6dae23ae70961edcb603ce482",
+      "emissions": {
+        "emit_r@low": {
+          "factor": [
+            1,
+            0.05999999865889549,
+            0.029999999329447746
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_c@mid": {
+          "factor": [
+            1,
+            0.10000000149011612,
+            0.550000011920929
+          ],
+          "strength": 3
+        },
+        "SR_tex_lounge_goodcrew_r5": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 2
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_lounge.selection_ring",
+      "sha256": "de0142b3eda012d8cab848cb049bdd1f4f25e742bb4407eae669d3d54365d0b0",
+      "emissions": {
+        "emit_w@mid": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_lounge.shelf_unit",
+      "sha256": "b2b63d5b0ba4b3350625fdca064ebe0ce58dd7bb9aca0f8347a2686bef04083d",
+      "emissions": {
+        "emit_b@low": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_lounge.wall_locker_door",
+      "sha256": "f4e0aa457981a56e2b11918d38cb07c6767e907febefd96542a6592ff6023e16",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_lounge.wall_screen_tall",
+      "sha256": "db5a24c9cf54ac0e79aa1c39c8d6b50da232b7d727379dccea3112f238f312d6",
+      "emissions": {
+        "SR_tex_lounge_screen_tall": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_quarters.bunk_bed",
+      "sha256": "5b95385bb74930ff17d3f3ed91c60e41719e22046ae9aa8bb46e27b3e6d6a4a1",
+      "emissions": {
+        "emit_w@high": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 6
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_quarters.cyan_wall_strip",
+      "sha256": "f86085a87c12043ed4620c0bfef58f4bb093d3676871aa99d5c3fbbb1dce8dc3",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_a@high": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 6
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_w@high": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 6
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_quarters.desk_set",
+      "sha256": "262b337b8e833b7a7962b2d2cee8c9f549c6a6f839820770a7b47722b9f4563d",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_g@mid": {
+          "factor": [
+            0.75,
+            1,
+            0.44999998807907104
+          ],
+          "strength": 3
+        },
+        "emit_a@high": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 6
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_quarters.locker_lit",
+      "sha256": "f5e7d84d772b3df4046fe8bdff4675cc7098015ab990af2112f6baeb3dde3edf",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "scr_blue@low": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_a@high": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 6
+        }
+      },
+      "sockets": [
+        {
+          "id": "lens",
+          "position": [
+            -0.0649999976158142,
+            1.2960000038146975,
+            0.015000000596046462
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.25,
+          "range": 1.2,
+          "provenance": {
+            "kind": "area-weighted-exported-lens-centroid",
+            "material": "emit_a@high",
+            "gameCalibration": "bounded shadowless real-time local proxy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prop.props_quarters.poster_planet",
+      "sha256": "3d75403d7a7d862f6a0263fabe132ee347bbc8c4efc5bf05fefb19795060e713",
+      "emissions": {
+        "SR_tex_quarters_poster": {
+          "factor": [
+            0.8999999761581421,
+            0.8999999761581421,
+            0.8999999761581421
+          ],
+          "strength": 1
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_quarters.side_table_plant",
+      "sha256": "6bb2701fb206ece58504099f1f984c3b997910b33da253387d566f2282e02682",
+      "emissions": {
+        "emit_g@mid": {
+          "factor": [
+            0.75,
+            1,
+            0.44999998807907104
+          ],
+          "strength": 3
+        },
+        "emit_a@high": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 6
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "SR_tex_quarters_wallscreen": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_quarters.wall_screen_small",
+      "sha256": "e608d54c802877f0492c5e1deeb3b11419916bc99298ace97c97411ec6098e02",
+      "emissions": {
+        "SR_tex_quarters_wallscreen": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 3
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_hall_lampcol",
+      "sha256": "51e9b14e7d34eb93176d36990f0d4a802aca021fa48fb7f4c87bcee3d0b611a2",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": [
+        {
+          "id": "lens",
+          "position": [
+            -0.010000001639127743,
+            0.8180442039916174,
+            -0.07799999826521745
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.6,
+          "provenance": {
+            "kind": "area-weighted-exported-lens-centroid",
+            "material": "emit_a",
+            "gameCalibration": "bounded shadowless real-time local proxy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prop.props_walls.walls_hall_mid",
+      "sha256": "5c1006bd8d455c2291349dc6d8d97dd6c820d76f79f91067ff14b03295f1786f",
+      "emissions": {
+        "SR_tex_walls_tex_leaf": {
+          "factor": [
+            0.30000001192092896,
+            0.30000001192092896,
+            0.30000001192092896
+          ],
+          "strength": 1
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_hall_post",
+      "sha256": "643a932f62a559351492fe12af8e1145472a42dc4afc3f50b321ecd484c52668",
+      "emissions": {
+        "SR_tex_walls_tex_hero": {
+          "factor": [
+            0.75,
+            0.75,
+            0.75
+          ],
+          "strength": 1
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_hall_screenbay",
+      "sha256": "b5cea34cbeb44b265c8e336fdce5cda5ab107d38702332d94b297f5f958b820d",
+      "emissions": {
+        "scr_blue@low": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_lounge_alcove",
+      "sha256": "5bcb3a6111a21d95fd0063f467315238e5537dbbc6cab25983522b8b657bf069",
+      "emissions": {
+        "emit_w@mid": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_qa_duct",
+      "sha256": "af9082ad63626f2e8c8cc2f13f9ac2a5b029a4be1c01dbadcf2ab18fb220f5d7",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_qa_terminal",
+      "sha256": "696793165ed310a47e7e802e8e06802e2c560a42a1d3a393ac8e57c5f193d5b3",
+      "emissions": {
+        "SR_tex_walls_tex_term": {
+          "factor": [
+            0.6000000238418579,
+            0.6000000238418579,
+            0.6000000238418579
+          ],
+          "strength": 1
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_qb_column",
+      "sha256": "635b0b8e300b0d3c177f5fb5902ac6d554226ac928addff6108cc45daed51eac",
+      "emissions": {
+        "emit_w@mid": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_qb_glyph",
+      "sha256": "bfc11cba73ddfdd89d0b09a578a474eaa1cead4948444aa641b9bafb46f9969e",
+      "emissions": {
+        "SR_tex_walls_tex_glyph": {
+          "factor": [
+            0.8999999761581421,
+            0.8999999761581421,
+            0.8999999761581421
+          ],
+          "strength": 1
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_walls.walls_qb_head",
+      "sha256": "158215ecb4c5ddad0dfd7ce4a0b03fc6a155ac98e86b319a60bc93342b927acd",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.blue_case_trolley",
+      "sha256": "1cdb6c2c1df926a00df819812b76a83b77f7e4d6d9d9f828f768cb3ea3b4b983",
+      "emissions": {
+        "emit_w@high": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 6
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.cabinet_dark",
+      "sha256": "a430605d54efbd15390cea33e5e66db7d50ba0279f3a54f9892bf2a86ad053cf",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.canister_red",
+      "sha256": "d6f33d935935ab5e524400da927b8b9b4f0124af5def8eedca8be2f4ee72e795",
+      "emissions": {
+        "emit_r@high": {
+          "factor": [
+            1,
+            0.05999999865889549,
+            0.029999999329447746
+          ],
+          "strength": 6
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.cargo_rack",
+      "sha256": "58d3b2b60f2cbf9ca16dd9d18b18de61a384cf82bc5f731273da58c8747103e3",
+      "emissions": {
+        "emit_w@high": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 6
+        },
+        "emit_b@high": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 6
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.crate_small_white",
+      "sha256": "3d9a92793f1c91bd519b98c4e97ff8f28537385ccd62e4ff76ec5588320b7ef5",
+      "emissions": {
+        "emit_a@low": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 1.2000000476837158
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.crate_white_blue",
+      "sha256": "0193096d7f367f27ca8991a769e50155b1f2e18a22bb4e7b8a2699c4679f4790",
+      "emissions": {
+        "SR_tex_wr_cratescreen": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.600000023841858
+        },
+        "emit_g@mid": {
+          "factor": [
+            0.75,
+            1,
+            0.44999998807907104
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.fabricator",
+      "sha256": "184503894f3bb758603c117a86fca779aa826da1d814fbcae9017a6d2dfe26b2",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "SR_tex_wr_fabscreen": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.350000023841858
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_g@mid": {
+          "factor": [
+            0.75,
+            1,
+            0.44999998807907104
+          ],
+          "strength": 3
+        },
+        "emit_w@mid": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.galley_floor_unit",
+      "sha256": "fa9f4befd9e9571801f157962d8f36a8e81b9c88d56b6f31a4febfa2d73af4b9",
+      "emissions": {
+        "SR_tex_wr_unitscreen": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.grow_hood",
+      "sha256": "868929e8e1fa054d565210c9725d132644b121291a38b93d47e177d6b8899319",
+      "emissions": {
+        "SR_tex_wr_growdiff_soft": {
+          "factor": [
+            0.550000011920929,
+            0.550000011920929,
+            0.550000011920929
+          ],
+          "strength": 1
+        },
+        "emit_w@high": {
+          "factor": [
+            1,
+            0.8600000143051147,
+            0.6600000262260437
+          ],
+          "strength": 6
+        },
+        "emit_g@mid": {
+          "factor": [
+            0.75,
+            1,
+            0.44999998807907104
+          ],
+          "strength": 3
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.hydro_locker",
+      "sha256": "fa13239a58dc96b137c26fb32a0d98b16fd06b0d9424879a1e31e187d7f3c029",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.machine_small",
+      "sha256": "a08ded7ab469b9329e587f6c5ae2c5046a1ddf6fdb4b8fdc78369d84333cdc83",
+      "emissions": {
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_b@low": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 1.2000000476837158
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.machine_yellow",
+      "sha256": "3a81e8f48f7594217d2baad18144b93536f22e021b5c03c1582c6fa7f2677302",
+      "emissions": {
+        "emit_g@mid": {
+          "factor": [
+            0.75,
+            1,
+            0.44999998807907104
+          ],
+          "strength": 3
+        },
+        "emit_b@high": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 6
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.planter_row",
+      "sha256": "bfb9f38ddab9acfafa1798a5e4c1e47648b8b4bfd01c746bc45a0cb5c413fa84",
+      "emissions": {
+        "emit_g@mid": {
+          "factor": [
+            0.75,
+            1,
+            0.44999998807907104
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.robot_box",
+      "sha256": "431139842acb290141e9f287c6687cdfb798fe5b565af18d1e9d7d18bc891127",
+      "emissions": {
+        "emit_r@high": {
+          "factor": [
+            1,
+            0.05999999865889549,
+            0.029999999329447746
+          ],
+          "strength": 6
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.utility_console",
+      "sha256": "bd800cae32ec80007076b748973c06455b6761977a3b554d10c69168a2351519",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.utility_twin",
+      "sha256": "3291b8239f7d7727275a5d43df9b88086a3f992a9cff9e5d8d0917681896028d",
+      "emissions": {
+        "emit_b@low": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_g@mid": {
+          "factor": [
+            0.75,
+            1,
+            0.44999998807907104
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.wall_hatch_orange",
+      "sha256": "97710788654b25d1d64247acd74447506482d40cec3cd88bd78c5ee47a74f67c",
+      "emissions": {
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.wall_lamp_amber",
+      "sha256": "cbee9d81958ba4536b04560c0b8ae5f36d3b77f43fd842c8c17c8ecb9f19c84d",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": [
+        {
+          "id": "lens",
+          "position": [
+            -1.5845516907199628e-19,
+            0.17499999890611992,
+            -0.05550000045684185
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.6,
+          "provenance": {
+            "kind": "area-weighted-exported-lens-centroid",
+            "material": "emit_b",
+            "gameCalibration": "bounded shadowless real-time local proxy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prop.props_workrooms.wall_shelf_screen",
+      "sha256": "e0e58eda40df9c3d154afeeb0f6f1bdaac3f55870f7aed7367f5ff6282a8f973",
+      "emissions": {
+        "SR_tex_wr_tablet": {
+          "factor": [
+            1,
+            1,
+            1
+          ],
+          "strength": 1.7999999523162842
+        },
+        "emit_b@high": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 6
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.wall_strip_amber",
+      "sha256": "ea9cdf18bcc60ba72a45a4bc4ba64d56d81e27293b2abbffabab823c38d1020b",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "prop.props_workrooms.workbench",
+      "sha256": "1bf2d2c71af96bf1176ea16fec0206bb0bfcc6835e739c0e613349392ee6fdf4",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": []
+    }
+  ]
+}

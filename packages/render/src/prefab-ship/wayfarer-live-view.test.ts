@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { readWayfarerAuthoredStudy } from "@sidereal/content/wayfarer-authored-study";
 import { WAYFARER_GAMEPLAY_OBJECTS } from "@sidereal/content/wayfarer-authored-gameplay";
+import { FURNISHING_DEFAULT } from "@sidereal/content/wayfarer-furnishings";
 import { wayfarerVisiblePlacements } from "./wayfarer-live-view";
 import {
   authoredInstanceMatrix,
@@ -22,6 +23,44 @@ const study = readWayfarerAuthoredStudy(
 );
 
 describe("live authored Wayfarer presentation contract", () => {
+  it("uses the same accepted rotated/moved fixture matrix for mesh and local socket, and drops deleted fixtures", () => {
+    const object = "Quarters_A_locker_lit";
+    const source = study.instances.find((row) => row.object === object)!;
+    const corrected = wayfarerVisiblePlacements(study.instances, false).find(
+      (row) => row.object === object,
+    )!;
+    const physical = WAYFARER_GAMEPLAY_OBJECTS.find(
+      (row) => row.object === object,
+    )!;
+    const row = wayfarerVisiblePlacements(study.instances, false, {
+      [object]: { ...FURNISHING_DEFAULT, dx: 1.25, dy: -0.5, yaw: Math.PI / 2 },
+    }).find((row) => row.object === object)!;
+    const socket: [number, number, number] = [0.1, 0.7, -0.3]; // Independent glTF Y-up witness.
+    const before = transformPoint(
+      authoredInstanceMatrix(corrected.frame, corrected.matrix, [0, 0]),
+      socket,
+    );
+    const after = transformPoint(
+      authoredInstanceMatrix(row.frame, row.matrix, [0, 0]),
+      socket,
+    );
+    const cx = (physical.min[0] + physical.max[0]) / 2;
+    const cy = (physical.min[1] + physical.max[1]) / 2;
+    // Renderer(x,y,z)=(-sourceY,sourceZ,-sourceX). Rotate original source XY about immutable centre.
+    const sourceX = -before[2],
+      sourceY = -before[0];
+    expect(after[0]).toBeCloseTo(-(cy + (sourceX - cx) - 0.5));
+    expect(after[2]).toBeCloseTo(-(cx - (sourceY - cy) + 1.25));
+    expect(after[1]).toBeCloseTo(before[1]);
+    expect(
+      wayfarerVisiblePlacements(study.instances, false, {
+        [object]: { ...FURNISHING_DEFAULT, deleted: true },
+      }).some((row) => row.object === object),
+    ).toBe(false);
+    expect(study.instances.find((row) => row.object === object)?.matrix).toBe(
+      source.matrix,
+    );
+  });
   it("replaces the source mannequin and ring with the actual player while retaining the frozen source", () => {
     const original = JSON.stringify(study.instances);
     const local = wayfarerVisiblePlacements(study.instances, false);

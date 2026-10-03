@@ -1,8 +1,8 @@
+import type { AuthoredPieceInput } from "./wayfarer-authored-study";
 import type {
   AuthoredStudyInstance,
   AuthoredStudyPiece,
 } from "@sidereal/content/wayfarer-authored-study";
-import type { AuthoredPieceInput } from "./wayfarer-authored-study";
 
 /** Source pins remain immutable; only live intact presentation selects these derivatives. */
 export const WAYFARER_POST_APERTURES: Readonly<
@@ -23,23 +23,6 @@ export const WAYFARER_POST_APERTURES: Readonly<
     frame: "piece-local",
   },
 };
-
-/** Isolate the two compact cyan lamp lenses and three rear pods from pooled screen/trim materials. */
-export function wayfarerEmitterStrength(
-  piece: AuthoredPieceInput,
-  material: string,
-  source: number,
-): number {
-  const limit =
-    material === "emit_a"
-      ? piece.id === "prop.props_bridge.wall_light_cyan_v"
-        ? 1.7
-        : piece.id === "engine.pod.w2.4.l5.z-0.75_1.6"
-          ? 1.55
-          : 1
-      : 1;
-  return Math.min(source, limit);
-}
 
 /** Fill the source's omitted camera-facing long wall with existing authored architectural panels.
  * These are wall dressing only: no cloned room-specific fixtures or new interactive equipment.
