@@ -15,6 +15,10 @@ import {
   type AuthoredStudyInstance,
 } from "@sidereal/content/wayfarer-authored-study";
 import {
+  readWayfarerAuthoredFlight,
+  WAYFARER_AUTHORED_FLIGHT_PINS,
+} from "@sidereal/content/wayfarer-authored-flight";
+import {
   applyWayfarerAuthoredPlacementEdits,
   assertWayfarerPrefabContract,
 } from "@sidereal/content/wayfarer-authored-gameplay";
@@ -34,6 +38,7 @@ import { loadAuthoredStudy } from "./wayfarer-authored-study";
 import type { PrefabShipView, PrefabShipViewOptions } from "./ship-view";
 
 const BASE = "/assets/ship-study/wayfarer-authored-r001/";
+const FLIGHT_BASE = "/assets/ship-study/wayfarer-dorsal-r001/";
 const RCS = {
   id: "engine.rcs.md.wayfarer-r001",
   file: "rcs.md.glb",
@@ -117,15 +122,26 @@ export async function createWayfarerLiveView(
   );
   const lights: PointLight[] = [];
   let candidate: Awaited<ReturnType<typeof loadAuthoredStudy>> | undefined;
+  let flightCandidate:
+    Awaited<ReturnType<typeof loadAuthoredStudy>> | undefined;
+  const allMeshes = () => [
+    ...(candidate?.meshes ?? []),
+    ...(flightCandidate?.meshes ?? []),
+  ];
   try {
-    const [manifestBytes, layoutBytes, descriptorBytes] = await Promise.all([
-      bytes(
-        `${BASE}manifest.json`,
-        WAYFARER_AUTHORED_STUDY_PINS.manifestSha256,
-      ),
-      bytes(`${BASE}layout.json`, WAYFARER_AUTHORED_STUDY_PINS.layoutSha256),
-      bytes(`${BASE}descriptor.json`),
-    ]);
+    const [manifestBytes, layoutBytes, descriptorBytes, flightBytes] =
+      await Promise.all([
+        bytes(
+          `${BASE}manifest.json`,
+          WAYFARER_AUTHORED_STUDY_PINS.manifestSha256,
+        ),
+        bytes(`${BASE}layout.json`, WAYFARER_AUTHORED_STUDY_PINS.layoutSha256),
+        bytes(`${BASE}descriptor.json`),
+        bytes(
+          `${FLIGHT_BASE}descriptor.json`,
+          WAYFARER_AUTHORED_FLIGHT_PINS.descriptorSha256,
+        ),
+      ]);
     const parse = (data: Uint8Array): unknown =>
       JSON.parse(new TextDecoder().decode(data));
     const layout = parse(layoutBytes);
@@ -134,6 +150,7 @@ export async function createWayfarerLiveView(
       layout,
       parse(descriptorBytes),
     );
+    const flight = readWayfarerAuthoredFlight(parse(flightBytes));
     const instances = wayfarerVisiblePlacements(
       study.instances,
       options.exteriorOnly === true,
@@ -170,35 +187,54 @@ export async function createWayfarerLiveView(
         `${options.exteriorOnly ? "exterior" : "own"}/${LOUNGE.has(row.object) || row.object === "HULL_far_bay04_cluster" ? "lounge" : "rest"}`,
       ]),
     );
-    candidate = await loadAuthoredStudy(
+    if (!options.exteriorOnly)
+      candidate = await loadAuthoredStudy(
+        scene,
+        [
+          ...study.pieces.filter((piece) => used.has(piece.id)),
+          ...(used.has(RCS.id) ? [RCS] : []),
+        ],
+        instances,
+        study.palette,
+        [0, 0],
+        (piece) => bytes(`${BASE}${piece.file}`),
+        { batchRegions: regions },
+      );
+    const flightInstances = [
+      ...flight.instances,
+      ...instances.filter((row) => row.object.startsWith("RCS_")),
+    ];
+    flightCandidate = await loadAuthoredStudy(
       scene,
-      [
-        ...study.pieces.filter((piece) => used.has(piece.id)),
-        ...(used.has(RCS.id) ? [RCS] : []),
-      ],
-      instances,
-      study.palette,
+      [...flight.pieces, ...(used.has(RCS.id) ? [RCS] : [])],
+      flightInstances,
+      flight.palette,
       [0, 0],
-      (piece) => bytes(`${BASE}${piece.file}`),
-      { batchRegions: regions },
+      (piece) =>
+        bytes(`${piece.id === RCS.id ? BASE : FLIGHT_BASE}${piece.file}`),
+      {
+        batchRegions: new Map(
+          flightInstances.map((row) => [row.object, "exterior/flight"]),
+        ),
+      },
     );
     if (scene.isDisposed || root.isDisposed())
       throw Error("Wayfarer view load cancelled");
-    for (const mesh of candidate.meshes) mesh.parent = root;
-    moldedLightRig(scene).include(candidate.meshes);
+    for (const mesh of allMeshes()) mesh.parent = root;
+    moldedLightRig(scene).include(allMeshes());
     // The game creates its construction lights after loading its ship. Configure the
     // owned surfaces when those lights exist, preserving other actors' fill lighting.
     const lightingObserver = scene.onBeforeRenderObservable.addOnce(() => {
       if (root.isDisposed() || options.exteriorOnly) return;
       const fill = scene.getLightByName("construction-fill");
-      if (fill) fill.excludedMeshes.push(...candidate!.meshes);
+      if (fill) fill.excludedMeshes.push(...allMeshes());
       const shadow = scene
         .getLightByName("construction-star")
         ?.getShadowGenerator();
       if (shadow instanceof ShadowGenerator) {
         shadow.bias = 0.0005;
         shadow.normalBias = 0.01;
-        for (const mesh of candidate!.meshes) shadow.addShadowCaster(mesh);
+        for (const mesh of allMeshes()) shadow.addShadowCaster(mesh);
       }
     });
     if (!options.exteriorOnly) {
@@ -250,7 +286,7 @@ export async function createWayfarerLiveView(
         light.radius = row.radius;
         light.range = 1.8;
         light.shadowEnabled = false;
-        light.includedOnlyMeshes = candidate.meshes.filter((mesh) => {
+        light.includedOnlyMeshes = candidate!.meshes.filter((mesh) => {
           const region = mesh.metadata.authoredStudy.receiverRegion;
           return region.endsWith("/lounge")
             ? loungeLights.has(row.name)
@@ -263,11 +299,13 @@ export async function createWayfarerLiveView(
     let view = options.exteriorOnly ? "flight" : options.view;
     const setView = (next: "deck" | "flight") => {
       view = options.exteriorOnly ? "flight" : next;
-      // This accepted source is an open cutaway without authored roof tiles. Keep
-      // the owner's furnished deck visible during flight; remote geometry was
-      // filtered before import and never contains that interior.
-      for (const mesh of candidate!.meshes) mesh.setEnabled(true);
-      for (const light of lights) light.setEnabled(true);
+      // Separate exact cohorts avoid overlaying the later grid roof on the older bow.
+      // Disabled meshes participate in neither the scene, shadow nor glow passes.
+      for (const mesh of candidate?.meshes ?? [])
+        mesh.setEnabled(view === "deck");
+      for (const mesh of flightCandidate!.meshes)
+        mesh.setEnabled(view === "flight");
+      for (const light of lights) light.setEnabled(view === "deck");
     };
     setView(view);
     return {
@@ -310,31 +348,37 @@ export async function createWayfarerLiveView(
           throw Error("Authored Wayfarer materials are pinned to its faction");
       },
       emissiveMeshes: () =>
-        candidate!.meshes.filter(
+        allMeshes().filter(
           (mesh) =>
+            mesh.isEnabled() &&
             mesh.material instanceof PBRMaterial &&
             mesh.material.emissiveColor
               .asArray()
               .some((channel) => channel > 0),
         ),
       metrics() {
-        const meshes = candidate!.meshes.filter((mesh) => mesh.isEnabled());
+        const active = view === "deck" ? candidate! : flightCandidate!;
+        const activeInstances = view === "deck" ? instances : flightInstances;
+        const meshes = active.meshes.filter((mesh) => mesh.isEnabled());
         const triangles = meshes.reduce(
           (n, mesh) => n + mesh.getTotalIndices() / 3,
           0,
         );
         return {
-          visualRevision: "wayfarer-authored-r001-live",
+          visualRevision:
+            view === "deck"
+              ? "wayfarer-authored-r001-live"
+              : "wayfarer-dorsal-r001-live",
           drawCalls: scene.getEngine()._drawCalls?.current ?? 0,
-          instances: instances.length,
+          instances: activeInstances.length,
           triangles,
-          pieces: used.size,
+          pieces: active.report.pieces,
           meshes: meshes.length,
           kitTriangles: triangles,
           generatedTriangles: 0,
           glbTriangles: triangles,
           effectTriangles: 0,
-          componentGlbs: instances.filter(
+          componentGlbs: activeInstances.filter(
             (row) => row.role === "engine-pod" && !row.piece.endsWith(".logos"),
           ).length,
           componentStandins: 0,
@@ -342,20 +386,27 @@ export async function createWayfarerLiveView(
       },
       dispose() {
         scene.onBeforeRenderObservable.remove(lightingObserver);
-        const owned = new Set<AbstractMesh>(candidate!.meshes);
+        const owned = new Set<AbstractMesh>(allMeshes());
         const fill = scene.getLightByName("construction-fill");
         if (fill)
           fill.excludedMeshes = fill.excludedMeshes.filter(
             (mesh) => !owned.has(mesh),
           );
+        const shadow = scene
+          .getLightByName("construction-star")
+          ?.getShadowGenerator();
+        if (shadow instanceof ShadowGenerator)
+          for (const mesh of owned) shadow.removeShadowCaster(mesh);
         for (const light of lights) light.dispose();
-        candidate!.dispose();
+        candidate?.dispose();
+        flightCandidate!.dispose();
         root.dispose();
       },
     };
   } catch (error) {
     for (const light of lights) light.dispose();
     candidate?.dispose();
+    flightCandidate?.dispose();
     root.dispose();
     throw error;
   }
