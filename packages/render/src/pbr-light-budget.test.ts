@@ -1,4 +1,7 @@
 import { afterEach, expect, test, vi } from "vitest";
+import { existsSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -13,7 +16,11 @@ import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { toneCrewEmissive } from "./crew/voxel-crew-outfit";
 import { createStaticMaterialFreeze } from "./static-material-freeze";
-import { createPrefabShipView } from "./prefab-ship/ship-view";
+import {
+  createPrefabShipView,
+  createLegacyPrefabShipView,
+} from "./prefab-ship/ship-view";
+import { getAuthoredAssetLightSources } from "./authored-asset-lighting";
 import { prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
@@ -486,7 +493,7 @@ test("one scene owner is enforced and policy replacement retains live lamp owner
   expect(mesh.lightSources).toEqual([key, task]);
 });
 
-test("two actual Wren views rebuild and dispose without duplicate room owner IDs", async () => {
+test("two legacy Wren room-light views rebuild and dispose without duplicate owner IDs", async () => {
   vi.stubGlobal(
     "fetch",
     vi.fn(async () => ({ ok: false })),
@@ -512,14 +519,14 @@ test("two actual Wren views rebuild and dispose without duplicate room owner IDs
   scene.useRightHandedSystem = true;
   const doc = prefabById("fed.s.wren")!,
     catalog = defaultPrefabComponentCatalog();
-  const one = await createPrefabShipView(scene, doc, {
+  const one = await createLegacyPrefabShipView(scene, doc, {
     catalog,
     view: "deck",
     standinComponents: true,
     roomLights: 2,
     parent: new TransformNode("ship-a", scene),
   });
-  const two = await createPrefabShipView(scene, doc, {
+  const two = await createLegacyPrefabShipView(scene, doc, {
     catalog,
     view: "deck",
     standinComponents: true,
@@ -539,6 +546,107 @@ test("two actual Wren views rebuild and dispose without duplicate room owner IDs
   two.dispose();
   expect(lamps()).toHaveLength(0);
 });
+
+test("two native Wren views import real assets and own independent bounded lights through rebuilds", async () => {
+  const runtime = fileURLToPath(
+    new URL("../../../assets/runtime/", import.meta.url),
+  );
+  const requests: string[] = [];
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async (url: unknown) => {
+      const name = String(url);
+      requests.push(name);
+      if (!name.startsWith("/assets/")) return { ok: false };
+      const path = join(runtime, name.slice(8));
+      if (!existsSync(path)) return { ok: false };
+      const bytes = readFileSync(path);
+      return {
+        ok: true,
+        json: async () => JSON.parse(bytes.toString()),
+        arrayBuffer: async () =>
+          bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.length),
+      };
+    }),
+  );
+  const stub: object = new Proxy(() => stub, {
+    get: (_, key) =>
+      key === "then" ? undefined : key === Symbol.toPrimitive ? () => 0 : stub,
+    apply: () => stub,
+  });
+  vi.stubGlobal(
+    "OffscreenCanvas",
+    class {
+      constructor(
+        public width: number,
+        public height: number,
+      ) {}
+      getContext() {
+        return stub;
+      }
+    },
+  );
+  const { scene, budget } = setup();
+  scene.useRightHandedSystem = true;
+  const doc = prefabById("fed.s.wren")!,
+    catalog = defaultPrefabComponentCatalog();
+  const one = await createPrefabShipView(scene, doc, {
+    catalog,
+    view: "deck",
+    parent: new TransformNode("native-a", scene),
+  });
+  const firstIds = new Set(
+    getAuthoredAssetLightSources(scene).map((source) => source.id),
+  );
+  expect(firstIds.size).toBeGreaterThan(0);
+  const two = await createPrefabShipView(scene, doc, {
+    catalog,
+    view: "deck",
+    parent: new TransformNode("native-b", scene),
+  });
+  const ids = () =>
+    getAuthoredAssetLightSources(scene)
+      .map((source) => source.id)
+      .sort();
+  const secondIds = ids().filter((id) => !firstIds.has(id));
+  expect(secondIds.length).toBe(firstIds.size);
+  expect(ids()).toHaveLength(firstIds.size * 2);
+  expect(new Set(ids()).size).toBe(ids().length);
+  expect(one.metrics().visualRevision).toBe("template-authored-r001");
+  expect(two.metrics().visualRevision).toBe("template-authored-r001");
+  expect(
+    requests.some(
+      (url) => url.includes("/template-authored-r001/") && url.endsWith(".glb"),
+    ),
+  ).toBe(true);
+  expect(requests.some((url) => url.includes("/ship-objects/"))).toBe(false);
+  // glTF import completion sees the whole scene's lamp count; the guard must still constrain every material.
+  for (const material of scene.materials)
+    if (material instanceof PBRMaterial)
+      expect(material.maxSimultaneousLights).toBeLessThanOrEqual(budget.limit);
+  const beforeObservers = scene.onBeforeRenderObservable.observers.length;
+  await one.update(doc);
+  // Babylon defers physical observer removal until the next task.
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  budget.update(focus);
+  expect(ids()).toHaveLength(firstIds.size * 2);
+  expect(ids().filter((id) => firstIds.has(id))).toEqual([]);
+  expect(ids().filter((id) => secondIds.includes(id))).toEqual(secondIds);
+  expect(scene.onBeforeRenderObservable.observers.length).toBe(beforeObservers);
+  one.setView("flight");
+  const enabledInFlight = getAuthoredAssetLightSources(scene).filter(
+    (source) => source.eligible,
+  );
+  expect(enabledInFlight.length).toBeGreaterThan(0);
+  one.setView("deck");
+  expect(ids()).toHaveLength(firstIds.size * 2);
+  one.dispose();
+  budget.update(focus);
+  expect(ids()).toEqual(secondIds);
+  two.dispose();
+  expect(ids()).toEqual([]);
+  expect(scene.lights).toHaveLength(0);
+}, 30000);
 
 test("camera motion keeps admitted slots and shaders stable when all receiver lights fit", () => {
   const { scene, mesh, budget } = setup();
