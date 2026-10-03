@@ -49,3 +49,29 @@ describe("prefab exhaust", () => {
       );
   });
 });
+
+it("authored fixed mains reject stale positive reverser telemetry in own and remote layouts", () => {
+  const doc = prefabById("fed.m.wayfarer")!;
+  const compiled = compilePrefabFlight(doc, catalog);
+  const jets = prefabExhaustJets(
+    doc,
+    catalog,
+    compiled.actuators.map((a) => ({ ...a, throttle: 1 })),
+  );
+  expect(jets).toHaveLength(15);
+  expect(jets.filter((j) => j.kind === "main")).toHaveLength(3);
+  expect(jets.filter((j) => j.kind === "rcs")).toHaveLength(12);
+  expect(jets.some((j) => j.kind === "reverser")).toBe(false);
+  const layout = prefabNozzleLayout(doc, catalog);
+  expect(layout.map((j) => j.id)).toEqual(jets.map((j) => j.id));
+  expect(
+    jetsFromLayout(layout, new Map([["mount-main-c#reverser", 1]])).every(
+      (j) => j.throttle === 0,
+    ),
+  ).toBe(true);
+  expect(
+    jets
+      .filter((j) => j.kind === "main")
+      .every((j) => j.exhaustX === 0 && j.exhaustY === -1),
+  ).toBe(true);
+});

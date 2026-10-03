@@ -1,6 +1,7 @@
 import {
   isWayfarerGameplay,
   WAYFARER_MAIN_NOZZLE,
+  WAYFARER_DISABLED_ACTUATORS,
 } from "@sidereal/content/wayfarer-authored-gameplay";
 /**
  * Flight definition for prefab ships, compiled from grammar data and component stats
@@ -217,6 +218,8 @@ export interface PrefabFlightModel {
   hull: FlightHullDefinition;
   /** Pilot station in ship-local metres. */
   station: [number, number] | null;
+  /** Code-owned installation constraints, keyed by source part (not fitting UUID). */
+  disabledActuatorSources?: readonly string[];
 }
 
 /** Everything flight needs from the grammar data, before instance identities exist. */
@@ -531,6 +534,9 @@ export function prefabFlightModel(
     fittings,
     hull,
     station,
+    ...(isWayfarerGameplay(doc)
+      ? { disabledActuatorSources: WAYFARER_DISABLED_ACTUATORS }
+      : {}),
   };
 }
 
@@ -549,6 +555,16 @@ export function prefabFlightInput(
     supply?: Readonly<Record<string, number>>;
   },
 ): FlightDefinitionInput {
+  let supply = state.supply;
+  if (model.disabledActuatorSources?.length) {
+    const disabledParts = new Set(model.disabledActuatorSources.map(identity));
+    // Supply is keyed by fitting UUID; placed-object IDs are a different identity domain.
+    const constrainedSupply = { ...state.supply };
+    for (const fitting of state.fittings)
+      if (disabledParts.has(fitting.placedObjectId))
+        constrainedSupply[fitting.id] = 0;
+    supply = constrainedSupply;
+  }
   return {
     parts: model.parts.map(({ sourceId, ...p }) => ({
       ...p,
@@ -559,7 +575,7 @@ export function prefabFlightInput(
     crew: state.crew ?? [],
     catalog: model.catalog,
     hull: model.hull,
-    ...(state.supply ? { supply: state.supply } : {}),
+    ...(supply ? { supply } : {}),
   };
 }
 

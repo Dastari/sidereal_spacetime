@@ -24,6 +24,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import { SHIP_THEMES } from "@sidereal/content/ship-themes";
+import { isWayfarerDisabledActuator } from "@sidereal/content/wayfarer-authored-gameplay";
 import type {
   PrefabComponentCatalog,
   ShipPrefabDocumentV1,
@@ -63,6 +64,7 @@ export function prefabExhaustActuator(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
 ): { kind: ExhaustKind; radius: number } | undefined {
+  if (isWayfarerDisabledActuator(doc, sourceId)) return undefined;
   if (!sourceId.startsWith("mount-")) return undefined;
   const [mountId, suffix] = sourceId.slice("mount-".length).split("#");
   const mount = doc.mounts.find((m) => m.id === mountId);

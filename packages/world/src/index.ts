@@ -1,4 +1,5 @@
 import * as passengerViews from "./construction-passenger-views";
+import { queueWayfarerFixedMainCorrection } from "./wayfarer-fixed-main-migration";
 import * as crewPresentation from "./crew-presentation";
 import * as passengers from "./construction-passenger-authority";
 import { commitFlightCharacter } from "./construction-flight-dirty";
@@ -882,6 +883,11 @@ export const stepWorld = db.reducer(
           SHARED_SYSTEM_SEED.systemId,
         )) {
           if (++count > 60) throw Error("Flight migration admission budget");
+          queueWayfarerFixedMainCorrection(
+            ctx.db,
+            ship.shipId,
+            ctx.timestamp.microsSinceUnixEpoch,
+          );
           if (!ctx.db.constructionFlightCompiled.shipId.find(ship.shipId))
             markFlightDirty(
               ctx.db,

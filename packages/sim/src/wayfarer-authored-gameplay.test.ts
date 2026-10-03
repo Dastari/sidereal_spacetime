@@ -28,10 +28,15 @@ import { readConstructionDraft } from "./construction-transactions";
 import { prefabCargoSockets } from "./prefab-cargo-sockets";
 import { canOccupyDeck, sweepDeckCircle } from "./construction-collision";
 import { prefabBedSeats, qualifyPrefabBed } from "./prefab-seats";
-import { prefabFlightModel } from "./prefab-flight";
+import { prefabFlightInput, prefabFlightModel } from "./prefab-flight";
 import { prefabActuatorSupply } from "./prefab-flight-supply";
 import { prefabDeckObstacles } from "./prefab-deck-objects";
-import type { ActuatorDefinition } from "./flight-definition";
+import {
+  compileFlightDefinition,
+  flightDefinitionInputHash,
+  type ActuatorDefinition,
+} from "./flight-definition";
+import { allocateThrust } from "./ifcs";
 const doc = PREFAB_SHIPS.find((p) => p.id === "fed.m.wayfarer")!;
 const catalog = defaultPrefabComponentCatalog();
 const spawn: [number, number] = [0, 6.875];
@@ -178,4 +183,87 @@ test("registered catalogue snapshots based on revision 4 retain exact authored s
       prefabComponentCatalogFor("ship-components-v1@3"),
     ),
   ).toThrow(/authored.catalog/);
+});
+
+test("fixed authored mains cannot reverse under full supply and retain all pinned hardware", () => {
+  const model = prefabFlightModel(doc, catalog);
+  const identity = (source: string) => `instance:${source}`;
+  const fittings = model.fittings.map((f, i) => ({
+    id: `fitting-uuid-${i}`,
+    placedObjectId: identity(f.sourceId),
+    definitionId: f.definitionId,
+    definitionRevision: f.definitionRevision,
+    installed: true,
+    powered: true,
+    availability: 1,
+  }));
+  const supply = Object.fromEntries(
+    fittings
+      .filter((_, i) => model.fittings[i].role === "actuator")
+      .map((f) => [f.id, 1]),
+  );
+  const priorInput = prefabFlightInput(
+    { ...model, disabledActuatorSources: undefined },
+    identity,
+    { fittings, supply },
+  );
+  const input = prefabFlightInput(model, identity, { fittings, supply });
+  expect(Object.values(supply)).toEqual(Array(18).fill(1));
+  expect(flightDefinitionInputHash(input)).not.toBe(
+    flightDefinitionInputHash(priorInput),
+  );
+  const prior = compileFlightDefinition(priorInput);
+  const current = compileFlightDefinition(input);
+  if (current.status !== "ready") throw Error(current.reason);
+  if (prior.status !== "ready") throw Error(prior.reason);
+  expect(current.definitionHash).toBe(prior.definitionHash);
+  expect(current.mass).toEqual(prior.mass);
+  expect(current.hull).toEqual(prior.hull);
+  expect(current.actuators.map((a) => a.id)).toEqual(
+    prior.actuators.map((a) => a.id),
+  );
+  const reversers = current.actuators.filter((a) =>
+    a.placedObjectId.endsWith("#reverser"),
+  );
+  expect(reversers).toHaveLength(3);
+  expect(reversers.every((a) => a.availability === 0)).toBe(true);
+  const mains = current.actuators.filter((a) =>
+    /:mount-main-[scp]$/.test(a.placedObjectId),
+  );
+  expect(mains).toHaveLength(3);
+  for (const main of mains) expect(main.rotation).toBeCloseTo(0, 12);
+  for (const main of mains)
+    expect(main).toMatchObject({
+      maxThrustN: 50000,
+      availability: 1,
+    });
+  expect(
+    current.actuators.filter((a) => a.placedObjectId.includes("rcs")),
+  ).toEqual(prior.actuators.filter((a) => a.placedObjectId.includes("rcs")));
+  // Actual allocator commands, including combined braking/sideways/yaw requests.
+  for (const request of [
+    { fx: 0, fy: -18000, torque: 0 },
+    { fx: 10000, fy: 0, torque: 0 },
+    { fx: 10000, fy: -18000, torque: 40000 },
+    { fx: 0, fy: 150000, torque: 40000 },
+  ]) {
+    const result = allocateThrust(current.actuators, current.mass, request);
+    for (const reverser of reversers)
+      expect(result.commands.find((c) => c.id === reverser.id)?.throttle).toBe(
+        0,
+      );
+    expect(result.achieved.fy).toBeLessThanOrEqual(150000);
+  }
+  const braking = allocateThrust(current.actuators, current.mass, {
+    fx: 0,
+    fy: -18000,
+    torque: 0,
+  });
+  expect(braking.achieved.fy).toBeLessThan(-10000);
+  for (const main of mains)
+    expect(braking.commands.find((c) => c.id === main.id)?.throttle).toBe(0);
+  const wren = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
+  expect(
+    prefabFlightModel(wren, catalog).disabledActuatorSources,
+  ).toBeUndefined();
 });
