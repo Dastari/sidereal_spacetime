@@ -1,6 +1,7 @@
 import {
   FURNISHING_DEFAULT,
   furnishingRestriction,
+  furnishingMountKind,
   effectiveWayfarerObjects,
   type FurnishingOverride,
   type FurnishingOverrides,
@@ -14,6 +15,7 @@ import {
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import { positiveOverlap, inside } from "./layout-geometry";
+import { qualifyWallFurnishingPlacement } from "./furnishing-wall-placement";
 import {
   canOccupyDeck,
   sweepDeckCircle,
@@ -52,6 +54,14 @@ export function planFurnishingEdit(
   let next: FurnishingOverride;
   if (edit.action === "delete") next = { ...old, deleted: true };
   else if (edit.action === "snap") next = { ...old, snap: edit.snap };
+  else if (furnishingMountKind(edit.sourceObjectId) === "wall")
+    next = qualifyWallFurnishingPlacement(doc, edit.sourceObjectId, {
+      dx: edit.dx,
+      dy: edit.dy,
+      yaw: edit.yaw,
+      snap: edit.snap,
+      deleted: false,
+    });
   else
     next = {
       dx: round(edit.snap ? Math.round(edit.dx / 0.25) * 0.25 : edit.dx),
@@ -279,12 +289,25 @@ export function validateFurnishingPlacement(
     (row) => row.object === sourceObjectId,
   );
   if (moved) {
+    const pose = overrides[sourceObjectId] ?? FURNISHING_DEFAULT,
+      originalWallPose =
+        furnishingMountKind(sourceObjectId) === "wall" &&
+        !pose.dx &&
+        !pose.dy &&
+        !pose.yaw;
     const polygon = moved.footprint.map(
       ([x, y]) => [-y, x] as [number, number],
     );
     for (const obstacle of after.obstacles)
       if (
         obstacle.id !== `prefab-socket:${sourceObjectId}` &&
+        // Frozen source fixtures may be recessed into their authored support.
+        // This exception never applies to a translated/rotated wall fixture or
+        // to other props, crew, floor support, approaches or route checks.
+        !(
+          originalWallPose &&
+          /^prefab-(?:bulkhead:|socket:PART_)/.test(obstacle.id)
+        ) &&
         positiveOverlap(
           polygon,
           obstacle.vertices.map((p) => [p[0], p[1]]),
@@ -299,7 +322,12 @@ export function validateFurnishingPlacement(
         (o) => o.id !== `prefab-socket:${sourceObjectId}`,
       ),
       segments: after.segments.filter(
-        (s) => !s.id.includes(`prefab-socket:${sourceObjectId}`),
+        (s) =>
+          !s.id.includes(`prefab-socket:${sourceObjectId}`) &&
+          !(
+            originalWallPose &&
+            /^obstacle:\["prefab-(?:bulkhead:|socket:PART_)/.test(s.id)
+          ),
       ),
     };
     const coverage = footprintFloorCoverage(polygon, after.floors);

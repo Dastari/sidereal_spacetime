@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -96,11 +96,12 @@
     "./lifecycle-outbox": "./src/lifecycle-outbox.ts",
     "./prefab-ship-systems": "./src/prefab-ship-systems.ts",
     "./ship-visual-compiler": "./src/ship-visual-compiler.ts",
-    "./ship-furnishings": "./src/ship-furnishings.ts"
+    "./ship-furnishings": "./src/ship-furnishings.ts",
+    "./furnishing-wall-placement": "./src/furnishing-wall-placement.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.9.0",
+    "@sidereal/content": "0.10.0",
     "@sidereal/scripting": "0.1.0"
   }
 }

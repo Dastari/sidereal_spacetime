@@ -25,6 +25,7 @@ import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings
 import { furnishingState } from "./ship-furnishings-tables";
 import { constructionCollision } from "./construction-doors";
 import { canOccupyDeck } from "@sidereal/sim/construction-collision";
+import { wallFurnishingPlacement } from "@sidereal/sim/furnishing-wall-placement";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { prefabShipObjects } from "@sidereal/sim/prefab-deck-objects";
@@ -268,6 +269,70 @@ const request = (
     operationId: "furniture-01",
     ...patch,
   }) as Parameters<typeof editShipFurnishing>[1];
+
+test("wall dragging commits supported auto-facing poses and rejects detached or reversed requests atomically", async () => {
+  const w = await wayfarerOwner(),
+    id = "Cockpit_wall_light_cyan_v";
+  const pose = wallFurnishingPlacement(w.doc, id, [0.5, 5.5], false)!;
+  expect(pose).toBeDefined();
+  standNear(w, id, { [id]: pose });
+  const initial = w.f.snapshot();
+  const args = request(w, id, { action: "move", ...pose });
+  expect(() =>
+    editShipFurnishing(w.f.ctx, {
+      ...args,
+      operationId: "detached",
+      dx: pose.dx + 0.1,
+      dy: pose.dy - 0.1,
+    }),
+  ).toThrow(/wall contact/);
+  expect(w.f.snapshot()).toBe(initial);
+  expect(() =>
+    editShipFurnishing(w.f.ctx, {
+      ...args,
+      operationId: "reversed",
+      yaw: pose.yaw + Math.PI,
+    }),
+  ).toThrow(/wall contact/);
+  expect(w.f.snapshot()).toBe(initial);
+  editShipFurnishing(w.f.ctx, args);
+  const state = furnishingState(w.f.db, w.shipId);
+  expect(state.revision).toBe(1n);
+  expect(state.overrides[id]).toEqual(pose);
+  expect(w.f.db.constructionInstance.id.find(w.shipId)).toEqual(w.instance);
+  const accepted = w.f.snapshot();
+  editShipFurnishing(w.f.ctx, args);
+  expect(w.f.snapshot()).toBe(accepted);
+  expect(() =>
+    editShipFurnishing(w.f.ctx, { ...args, operationId: "stale-wall" }),
+  ).toThrow(/revision/);
+  expect(w.f.snapshot()).toBe(accepted);
+}, 30000);
+
+test("an unchanged authored recessed lamp remains admitted without opening a wall-contact bypass", async () => {
+  const w = await wayfarerOwner(),
+    id = "Cockpit_wall_light_cyan_v";
+  standNear(w, id);
+  editShipFurnishing(w.f.ctx, request(w, id, { action: "move" }));
+  expect(furnishingState(w.f.db, w.shipId).overrides[id]).toMatchObject({
+    dx: 0,
+    dy: 0,
+    yaw: 0,
+  });
+  const accepted = w.f.snapshot();
+  expect(() =>
+    editShipFurnishing(
+      w.f.ctx,
+      request(w, id, {
+        action: "move",
+        dx: 0.01,
+        operationId: "recess-bypass",
+        expectedRevision: 1n,
+      }),
+    ),
+  ).toThrow(/wall contact/);
+  expect(w.f.snapshot()).toBe(accepted);
+}, 30000);
 
 test("furnishing state revision is independent, exact replay survives tombstones and reload", async () => {
   const w = await wayfarerOwner();

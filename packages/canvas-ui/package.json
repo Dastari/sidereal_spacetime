@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",
-    "@sidereal/content": "0.9.0",
-    "@sidereal/render": "0.11.0"
+    "@sidereal/content": "0.10.0",
+    "@sidereal/render": "0.12.0"
   }
 }

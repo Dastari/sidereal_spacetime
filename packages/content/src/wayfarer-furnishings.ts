@@ -19,7 +19,49 @@ export const FURNISHING_DEFAULT: FurnishingOverride = {
   snap: true,
   deleted: false,
 };
+/** Portable wall fixtures only. The authored front is +Y before source placement.
+ * Ship architecture and floor consoles remain fixed or floor mounted. */
+export const WAYFARER_WALL_FURNISHINGS: Readonly<
+  Record<
+    string,
+    {
+      normal: readonly [number, number];
+      minZ: number;
+      maxZ: number;
+    }
+  >
+> = Object.fromEntries(
+  [
+    "Cockpit_wall_light_cyan_v",
+    "Cockpit_wall_light_cyan_v.001",
+    "Hall_wall_locker_door",
+    "Hall_wall_screen_tall",
+    "Hydroponics_wall_lamp_amber",
+    "Hydroponics_wall_shelf_screen",
+    "Lounge_poster_goodcrew",
+    "Quarters_A_poster_planet",
+    "Quarters_B_cyan_wall_strip",
+    "Quarters_B_wall_screen_small",
+    "Utility_wall_strip_amber",
+    "Workshop_wall_strip_amber",
+  ].map((id) => {
+    const source = WAYFARER_GAMEPLAY_OBJECTS.find((row) => row.object === id)!;
+    // These explicit instances were authored at zero or -90 degrees, never mirrored.
+    const normal: [number, number] = [
+      "Cockpit_wall_light_cyan_v",
+      "Cockpit_wall_light_cyan_v.001",
+      "Hydroponics_wall_lamp_amber",
+      "Quarters_B_wall_screen_small",
+      "Utility_wall_strip_amber",
+      "Workshop_wall_strip_amber",
+    ].includes(id)
+      ? [1, 0]
+      : [0, 1];
+    return [id, { normal, minZ: source.min[2], maxZ: source.max[2] }];
+  }),
+);
 export const WAYFARER_MOVABLE_FURNISHINGS: ReadonlySet<string> = new Set([
+  ...Object.keys(WAYFARER_WALL_FURNISHINGS),
   "Cargo_blue_case_trolley",
   "Cargo_canister_red",
   "Cargo_cargo_rack",
@@ -48,6 +90,12 @@ export const WAYFARER_MOVABLE_FURNISHINGS: ReadonlySet<string> = new Set([
   "Workshop_jerry_can",
   "Workshop_parts_chest",
 ]);
+export function furnishingMountKind(
+  object: string,
+): "wall" | "floor" | undefined {
+  if (Object.hasOwn(WAYFARER_WALL_FURNISHINGS, object)) return "wall";
+  if (WAYFARER_MOVABLE_FURNISHINGS.has(object)) return "floor";
+}
 export function furnishingRestriction(object: string): string | undefined {
   if (WAYFARER_MOVABLE_FURNISHINGS.has(object)) return;
   const source = WAYFARER_GAMEPLAY_OBJECTS.find((row) => row.object === object);

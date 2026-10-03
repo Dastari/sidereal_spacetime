@@ -6,6 +6,8 @@ import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
 import { ShipSystemsPanel } from "./ShipSystemsPanel";
 import { FurnishingEditor } from "./FurnishingEditor";
+import { FurnishingPlacement } from "./FurnishingPlacement";
+import { furnishingRequest } from "./furnishing-command";
 import {
   authoredFlightPresentation,
   passengerFlightAdmitted,
@@ -146,8 +148,9 @@ export default function App({
   const [furnishingEdit, setFurnishingEdit] = useState<{
     placementId: string;
     name: string;
-    mode: "move" | "delete" | "snap";
+    mode: "move" | "delete";
   }>();
+  const furnishingCancel = useRef<(() => void) | undefined>(undefined);
   const [combatEnabled, setCombatEnabled] = useState(false);
   const [cruise] = useState(createCruiseControl);
   /** The DOM service panel opened from the system menu ("" when none). */
@@ -756,6 +759,7 @@ export default function App({
     selectedObject,
     ownsCurrentShip,
     c,
+    interior,
   ]);
   const inspectedSeat = interactions.find(
     (row) => row.placementId === selectedObject && row.kind === "seat",
@@ -969,20 +973,23 @@ export default function App({
         }
       : undefined,
     resting: !!couch || !!constructionSeat,
-    objectDetails: selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
-      ? prefabDetails
-      : objectDetails(
-          selectedObject,
-          equipmentCatalog,
-          interactions,
-          actor,
-          { seated, near: nearStation, occupied: !!station?.occupantId },
-          ready ? displayedOutputs : [],
-          inventory.containers,
-          c && constructionScene.active
-            ? [...c.db.ownAuthoredFlightFittings.iter()]
-            : [],
-        ),
+    objectDetails:
+      furnishingEdit?.mode === "move"
+        ? undefined
+        : selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
+          ? prefabDetails
+          : objectDetails(
+              selectedObject,
+              equipmentCatalog,
+              interactions,
+              actor,
+              { seated, near: nearStation, occupied: !!station?.occupantId },
+              ready ? displayedOutputs : [],
+              inventory.containers,
+              c && constructionScene.active
+                ? [...c.db.ownAuthoredFlightFittings.iter()]
+                : [],
+            ),
     interactionPrompt,
     eva: evaHud,
     inventory,
@@ -1189,15 +1196,22 @@ export default function App({
         !details.actions.some((item) => item.id === action && item.enabled)
       )
         return;
+      if (action === "furnishing-snap") {
+        void perform(() =>
+          connectionNow.reducers.editShipFurnishing(
+            furnishingRequest(
+              live.current.constructionInstance!,
+              placementId,
+              "snap",
+            ),
+          ),
+        );
+        return;
+      }
       setFurnishingEdit({
         placementId,
         name: details.name,
-        mode:
-          action === "furnishing-delete"
-            ? "delete"
-            : action === "furnishing-snap"
-              ? "snap"
-              : "move",
+        mode: action === "furnishing-delete" ? "delete" : "move",
       });
       return;
     }
@@ -1378,9 +1392,10 @@ export default function App({
                   openService: setServicePanel,
                   closeService: () => {
                     if (!servicePanelOpen.current) return false;
-                    if (servicePanelOpen.current === "furnishing-editor")
-                      setFurnishingEdit(undefined);
-                    else setServicePanel("");
+                    if (servicePanelOpen.current === "furnishing-editor") {
+                      if (furnishingCancel.current) furnishingCancel.current();
+                      else setFurnishingEdit(undefined);
+                    } else setServicePanel("");
                     return true;
                   },
                   signOut: () => onSignOutRef.current(),
@@ -1594,7 +1609,9 @@ export default function App({
             blocksCameraInput: () =>
               loadingRef.current || (gui.current?.pointerBlocked() ?? false),
             blocksObjectSelection: () =>
-              loadingRef.current || live.current.combatEnabled,
+              loadingRef.current ||
+              live.current.combatEnabled ||
+              !!servicePanelOpen.current,
             onObjectSelected: (id) => {
               if (disposed) return;
               if (id?.startsWith("ground:")) {
@@ -2332,13 +2349,37 @@ export default function App({
         {furnishingEdit &&
           constructionInstance &&
           c?.isActive &&
-          ownsCurrentShip && (
+          ownsCurrentShip &&
+          (furnishingEdit.mode === "move" ? (
+            <FurnishingPlacement
+              key={`${constructionInstance.id}:${furnishingEdit.placementId}`}
+              instance={constructionInstance}
+              placementId={furnishingEdit.placementId}
+              name={furnishingEdit.name}
+              canvas={canvas.current}
+              renderer={() => view.current ?? undefined}
+              cancelRef={furnishingCancel}
+              submit={(request) => {
+                const current = connection.current;
+                if (
+                  !current?.isActive ||
+                  !live.current.actor?.connected ||
+                  live.current.constructionInstance?.id !== request.instanceId
+                )
+                  return Promise.reject(new Error("Ship edit context changed"));
+                return current.reducers.editShipFurnishing(request);
+              }}
+              close={() => {
+                setFurnishingEdit(undefined);
+                setSelectedObject(undefined);
+              }}
+            />
+          ) : (
             <FurnishingEditor
               key={`${constructionInstance.id}:${furnishingEdit.placementId}:${furnishingEdit.mode}`}
               instance={constructionInstance}
               placementId={furnishingEdit.placementId}
               name={furnishingEdit.name}
-              mode={furnishingEdit.mode}
               submit={(request) => {
                 const current = connection.current;
                 if (
@@ -2351,7 +2392,7 @@ export default function App({
               }}
               close={() => setFurnishingEdit(undefined)}
             />
-          )}
+          ))}
         {!awaitingShip && (
           <>
             <ShipSystemsPanel
