@@ -33,6 +33,9 @@ import { constructionPresentation } from "./construction-presentation";
 import { groundItemsForScene } from "./ground-items";
 import { createMovementControl } from "./movement-control";
 import { createIntentTransmitter } from "./intent-transmitter";
+import { createCruiseControl } from "./flight-controls";
+import { shipComponentIntegrity } from "./ship-hud";
+import { SHIP_FLIGHT_SPEED } from "@sidereal/content/physical-definitions";
 import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
 import { ConstructionReview, testShipCount } from "./ConstructionReview";
 import { PILOT_LAYOUT } from "../../../packages/content/src/pilot-layout";
@@ -140,6 +143,7 @@ export default function App({
   const localShipId = useRef<string | undefined>(undefined);
   const [selectedObject, setSelectedObject] = useState<string>();
   const [combatEnabled, setCombatEnabled] = useState(false);
+  const [cruise] = useState(createCruiseControl);
   /** The DOM service panel opened from the system menu ("" when none). */
   const [servicePanel, setServicePanel] = useState("");
   const servicePanelOpen = useRef("");
@@ -788,6 +792,46 @@ export default function App({
           (row) => row.characterId === actor.id,
         )
       : undefined;
+  const flightComputer =
+    c && ship
+      ? [...c.db.ownAuthoredFlightPowerFittings.iter()].find(
+          (row) => row.shipId === ship.id && row.kind === "computer",
+        )
+      : undefined;
+  const shipPower =
+    c && ship
+      ? [...c.db.ownShipPower.iter()].find(
+          (row) =>
+            row.shipId === ship.id &&
+            row.instanceRevision === constructionInstance?.revision,
+        )
+      : undefined;
+  // Presentation eligibility is deliberately narrower than a readable ship view.
+  // setIntent and scheduled consumption remain the authoritative validators.
+  const cruiseRelation =
+    ready &&
+    actor?.connected &&
+    ownVitals?.state === "active" &&
+    !evaBody &&
+    seated &&
+    station?.operational &&
+    station.occupantId === actor.id &&
+    authoredFlight.admitted &&
+    authoredFlight.status?.seatState === "seated" &&
+    compiledPhysics?.status === "ready" &&
+    (availableForwardThrust ?? 0) > 0 &&
+    flightComputer?.powered &&
+    shipPower?.corePowered
+      ? [
+          c?.connectionId?.toHexString(),
+          actor.id,
+          ship?.id,
+          station.id,
+          authoredFlight.status.seatRevision,
+          authoredFlight.status.admissionRevision,
+          constructionInstance?.revision,
+        ].join(":")
+      : undefined;
   const lastHit = combatImpact
     ? {
         shotSequence: combatImpact.shotSequence,
@@ -861,6 +905,29 @@ export default function App({
       ...ownVitals,
       respawnAboard: gameShipAccess ? ship?.name : undefined,
     },
+    shipHud: actor?.shipId
+      ? {
+          integrity: shipComponentIntegrity(
+            actor.shipId,
+            !!gameShipAccess,
+            prefabShip,
+            c && ready ? [...c.db.ownShipComponentDamage.iter()] : [],
+          ),
+          flight:
+            compiledPhysics?.status === "ready"
+              ? flightComputer?.powered && shipPower?.corePowered
+                ? "Core powered"
+                : "IFCS unavailable"
+              : compiledPhysics
+                ? `Flight ${compiledPhysics.status}`
+                : "Flight telemetry unavailable",
+          cruiseAvailable: !!cruiseRelation,
+          cruiseActive: cruise.active && !!cruiseRelation,
+          cruiseSpeed: cruise.active
+            ? cruise.throttle * SHIP_FLIGHT_SPEED.forward
+            : undefined,
+        }
+      : undefined,
     resting: !!couch || !!constructionSeat,
     objectDetails: selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
       ? prefabDetails
@@ -919,6 +986,7 @@ export default function App({
     ready,
     pending,
     uiState,
+    cruiseRelation,
     contextObject,
     couch: couch ?? constructionSeat,
     combat,
@@ -940,6 +1008,7 @@ export default function App({
     ready,
     pending,
     uiState,
+    cruiseRelation,
     contextObject,
     couch: couch ?? constructionSeat,
     combat,
@@ -967,6 +1036,30 @@ export default function App({
     { facing: number; mode: string; active: boolean; at: number } | undefined
   >(undefined);
   const suitMode = useRef<string | undefined>(undefined);
+  const toggleCruise = () => {
+    const current = live.current;
+    const conn = connection.current;
+    const eligible =
+      conn?.isActive &&
+      movementControl.current?.canSend(conn) &&
+      document.hasFocus() &&
+      !document.hidden &&
+      !loadingRef.current &&
+      !servicePanelOpen.current &&
+      !isEditableTarget(document.activeElement) &&
+      !gui.current?.blocked();
+    const motion = current.ship;
+    const forwardSpeed = motion
+      ? -Math.sin(motion.heading) * motion.vx +
+        Math.cos(motion.heading) * motion.vy
+      : 0;
+    cruise.toggle(
+      eligible ? current.cruiseRelation : undefined,
+      forwardSpeed,
+      SHIP_FLIGHT_SPEED.forward,
+    );
+    refresh((v) => v + 1);
+  };
   const perform = async (action: () => Promise<unknown>) => {
     if (actionPending.current || !live.current.ready) return;
     actionPending.current = true;
@@ -1213,6 +1306,7 @@ export default function App({
                   },
                   interact,
                   combat: () => setCombatEnabled((v) => !v),
+                  cruise: () => toggleCruise(),
                   openService: setServicePanel,
                   closeService: () => {
                     if (!servicePanelOpen.current) return false;
@@ -1748,13 +1842,32 @@ export default function App({
       send: (c, intent) => {
         const control = movementControl.current;
         if (!control?.canSend(c)) return Promise.resolve();
-        return c.reducers.setIntent({
-          ...intent,
-          sequence: control.nextSequence(c),
-        });
+        return c.reducers
+          .setIntent({
+            ...intent,
+            sequence: control.nextSequence(c),
+          })
+          .catch((error) => {
+            // A delayed rejection can belong to an earlier heartbeat. The
+            // transmitter ignores obsolete ACKs, but a rejected current-socket
+            // pilot command must still cancel this local latch and show refusal.
+            if (connection.current === c && cruise.active) {
+              cruise.cancel();
+              refresh((v) => v + 1);
+              setError(String(error));
+            }
+            throw error;
+          });
       },
-      onError: (e) => setError(String(e)),
-      onStalled: (c) => c.disconnect(),
+      onError: (e) => {
+        cruise.cancel();
+        refresh((v) => v + 1);
+        setError(String(e));
+      },
+      onStalled: (c) => {
+        cruise.cancel();
+        c.disconnect();
+      },
     });
     const send = () => {
       const c = connection.current,
@@ -1766,9 +1879,17 @@ export default function App({
         document.hasFocus() &&
         !document.hidden;
       control?.activate(active ? c : null);
-      if (!active || !c || !control?.canSend(c)) return;
+      if (!active || !c || !control?.canSend(c)) {
+        if (cruise.active) {
+          cruise.cancel();
+          refresh((v) => v + 1);
+        }
+        return;
+      }
       const blocked =
         loadingRef.current ||
+        !!servicePanelOpen.current ||
+        isEditableTarget(document.activeElement) ||
         (gui.current?.blocked() ?? true) ||
         document.hidden ||
         !!live.current.couch;
@@ -1822,6 +1943,13 @@ export default function App({
       suitSent.current = undefined;
       suitMode.current = undefined;
       const intent = gameplayIntent(keys, seated, interior, blocked);
+      const wasCruising = cruise.active;
+      const throttle = cruise.demand(
+        intent.throttle,
+        live.current.cruiseRelation,
+        blocked,
+      );
+      if (wasCruising !== cruise.active) refresh((v) => v + 1);
       const walk = view.current?.screenToDeck(
         intent.horizontal,
         intent.vertical,
@@ -1829,7 +1957,7 @@ export default function App({
       transmitter.offer(
         c,
         {
-          throttle: intent.throttle,
+          throttle,
           turn: intent.turn,
           dx: walk.dx,
           dy: walk.dy,
@@ -1871,6 +1999,12 @@ export default function App({
         send();
         return;
       }
+      if (e.code === "KeyX" && !e.repeat && live.current.cruiseRelation) {
+        e.preventDefault();
+        toggleCruise();
+        send();
+        return;
+      }
       if (e.code === "KeyB" && !e.repeat && live.current.evaBeaconAvailable) {
         e.preventDefault();
         const current = connection.current;
@@ -1894,6 +2028,10 @@ export default function App({
         )
       ) {
         e.preventDefault();
+        if (e.code === "KeyW" || e.code === "KeyS") {
+          cruise.cancel();
+          refresh((v) => v + 1);
+        }
         keys.add(e.code);
         send();
       }
@@ -1904,10 +2042,14 @@ export default function App({
     };
     const blur = () => {
       keys.clear();
+      cruise.cancel();
+      refresh((v) => v + 1);
       movementControl.current?.activate(null);
     };
     const visibility = () => {
       keys.clear();
+      cruise.cancel();
+      refresh((v) => v + 1);
       send();
     };
     window.addEventListener("keydown", down);
