@@ -1,5 +1,6 @@
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
+import { SenderError } from "spacetimedb/server";
 vi.mock("spacetimedb/server", () => {
   const chain: any = new Proxy({}, { get: () => () => chain });
   return {
@@ -20,6 +21,7 @@ import { onboardNewCharacter } from "./ship-policy";
 import { ensureCanonicalSystem } from "./shared-world";
 import { assignPrefabShip, prefabShipSpawner } from "./ship-assign";
 import { editShipFurnishing } from "./ship-furnishings";
+import * as furnishingRules from "@sidereal/sim/ship-furnishings";
 import { readConstructionFlightInput } from "./construction-flight-input";
 import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { furnishingState } from "./ship-furnishings-tables";
@@ -278,14 +280,15 @@ test("wall dragging commits supported auto-facing poses and rejects detached or 
   standNear(w, id, { [id]: pose });
   const initial = w.f.snapshot();
   const args = request(w, id, { action: "move", ...pose });
-  expect(() =>
+  const detached = () =>
     editShipFurnishing(w.f.ctx, {
       ...args,
       operationId: "detached",
       dx: pose.dx + 0.1,
       dy: pose.dy - 0.1,
-    }),
-  ).toThrow(/wall contact/);
+    });
+  expect(detached).toThrow(SenderError);
+  expect(detached).toThrow(/wall contact/);
   expect(w.f.snapshot()).toBe(initial);
   expect(() =>
     editShipFurnishing(w.f.ctx, {
@@ -472,7 +475,7 @@ test("occupied beds reject movement/deletion without rewriting UUIDs", async () 
   expect(w.f.snapshot()).toBe(baseline);
 });
 
-test("free movement commits one accepted pose and off-floor or crew-overlap proposals roll back", async () => {
+test("free movement commits one accepted pose and invalid destinations return sender errors with no writes", async () => {
   const w = await wayfarerOwner(),
     id = "Lounge_coffee_table";
   standNear(w, id, {
@@ -495,14 +498,15 @@ test("free movement commits one accepted pose and off-floor or crew-overlap prop
   });
   expect(w.f.db.constructionInstance.id.find(w.shipId)).toEqual(original);
   const baseline = w.f.snapshot();
-  expect(() =>
+  const outside = () =>
     editShipFurnishing(w.f.ctx, {
       ...args,
       operationId: "outside",
       expectedRevision: 1n,
       dx: 31,
-    }),
-  ).toThrow(/supported|overlap/);
+    });
+  expect(outside).toThrow(SenderError);
+  expect(outside).toThrow(/supported|overlap/);
   expect(w.f.snapshot()).toBe(baseline);
   const object = prefabShipObjects(
       w.doc,
@@ -512,17 +516,43 @@ test("free movement commits one accepted pose and off-floor or crew-overlap prop
     actor = w.f.db.character.id.find(w.characterId),
     cx = (object.min[0] + object.max[0]) / 2,
     cy = (object.min[1] + object.max[1]) / 2;
-  expect(() =>
+  const crewOverlap = () =>
     editShipFurnishing(w.f.ctx, {
       ...args,
       operationId: "crew",
       expectedRevision: 1n,
       dx: args.dx + actor.localY - cx,
       dy: args.dy - actor.localX - cy,
-    }),
-  ).toThrow(/crew|overlap/);
+    });
+  expect(crewOverlap).toThrow(SenderError);
+  expect(crewOverlap).toThrow(/crew|overlap/);
   expect(w.f.snapshot()).toBe(baseline);
 }, 30000);
+
+test("unexpected qualification error subclasses are not disguised as placement rejections", async () => {
+  const w = await wayfarerOwner();
+  standNear(w, "Lounge_coffee_table");
+  const baseline = w.f.snapshot(),
+    unexpected = new TypeError("Unexpected qualification bug"),
+    plan = vi
+      .spyOn(furnishingRules, "planFurnishingEdit")
+      .mockImplementationOnce(() => {
+        throw unexpected;
+      });
+  try {
+    let caught: unknown;
+    try {
+      editShipFurnishing(w.f.ctx, request(w));
+    } catch (error) {
+      caught = error;
+    }
+    expect(caught).toBe(unexpected);
+    expect(caught).not.toBeInstanceOf(SenderError);
+    expect(w.f.snapshot()).toBe(baseline);
+  } finally {
+    plan.mockRestore();
+  }
+});
 
 test("uncertain furnishing operation cannot replay as a replacement source instance", async () => {
   const w = await wayfarerOwner();

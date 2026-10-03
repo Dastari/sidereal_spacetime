@@ -20,7 +20,7 @@ import {
   furnishingRequest,
   type FurnishingRequest,
 } from "./furnishing-command";
-import "./furnishing-editor.css";
+import type { ObjectPlacementState } from "@sidereal/canvas-ui";
 export interface FurnishingPlacementView {
   previewFurnishing(
     id: string,
@@ -39,23 +39,25 @@ interface Props {
     furnishingRevision?: bigint;
   };
   placementId: string;
-  name: string;
   canvas: HTMLCanvasElement | null;
   renderer: () => FurnishingPlacementView | undefined;
   submit: (request: FurnishingRequest) => Promise<unknown>;
   close: () => void;
   cancelRef: RefObject<(() => void) | undefined>;
+  actionRef: RefObject<((action: string) => void) | undefined>;
+  onState: (state: ObjectPlacementState) => void;
 }
 /** Pointer samples are transient presentation; only an intentional drop sends a revisioned intent. */
 export function FurnishingPlacement({
   instance,
   placementId,
-  name,
   canvas,
   renderer,
   submit,
   close,
   cancelRef,
+  actionRef,
+  onState,
 }: Props) {
   const id = placementId.slice("prefab:socket:".length);
   const source = WAYFARER_GAMEPLAY_OBJECTS.find((o) => o.object === id)!;
@@ -341,64 +343,30 @@ export function FurnishingPlacement({
     const next = { ...old, yaw };
     preview(next, floorPreviewIssue(source, next, frame));
   };
-  return (
-    <aside className="furnishing-placement" aria-label={`Moving ${name}`}>
-      <div className="furnishing-placement__controls">
-        <strong>{name}</strong>
-        {!wall && (
-          <>
-            <button
-              disabled={pending || !!error}
-              aria-label="Rotate left"
-              onClick={() => rotate(-1)}
-            >
-              ↶
-            </button>
-            <button
-              disabled={pending || !!error}
-              aria-label="Rotate right"
-              onClick={() => rotate(1)}
-            >
-              ↷
-            </button>
-          </>
-        )}
-        <button
-          disabled={pending || !!error}
-          aria-pressed={pose.snap}
-          onClick={() => preview({ ...pose, snap: !pose.snap }, issue)}
-        >
-          Snapping {pose.snap ? "on" : "off"}
-        </button>
-        <button
-          disabled={pending || !!issue || !!error}
-          onClick={() => void apply()}
-        >
-          {pending ? "Placing…" : "Place"}
-        </button>
-        <button disabled={pending} onClick={close}>
-          Cancel
-        </button>
-      </div>
-      <small>
-        {wall
-          ? "Drag onto any suitable wall · release to place"
-          : "Drag the object · release to place · R to rotate"}{" "}
-        · Esc to cancel
-      </small>
-      {(issue || error) && (
-        <p role={error ? "alert" : "status"}>{error || issue}</p>
-      )}
-      {error && (
-        <div>
-          <button disabled={pending} onClick={() => void apply(true)}>
-            Retry same placement
-          </button>
-          <button disabled={pending} onClick={reset}>
-            Use current placement
-          </button>
-        </div>
-      )}
-    </aside>
-  );
+  useEffect(() => {
+    onState({ pending, snap: pose.snap, wall, issue, error });
+  }, [pending, pose.snap, wall, issue, error, onState]);
+  useEffect(() => {
+    const action = (id: string) => {
+      if (current.current.pending) return;
+      if (id === "placement-cancel") close();
+      else if (id === "placement-retry") void apply(true);
+      else if (id === "placement-reset") reset();
+      else if (!current.current.error) {
+        if (id === "placement-place") void apply();
+        else if (id === "placement-snap")
+          preview(
+            { ...current.current.pose, snap: !current.current.pose.snap },
+            current.current.issue,
+          );
+        else if (!wall && id === "placement-left") rotate(-1);
+        else if (!wall && id === "placement-right") rotate(1);
+      }
+    };
+    actionRef.current = action;
+    return () => {
+      if (actionRef.current === action) actionRef.current = undefined;
+    };
+  });
+  return null;
 }

@@ -31,6 +31,7 @@ import {
 export type {
   ObjectDetailsState,
   ObjectDetailsActions,
+  ObjectPlacementState,
 } from "./object-details";
 import { destinationPagination } from "./destinations";
 import {

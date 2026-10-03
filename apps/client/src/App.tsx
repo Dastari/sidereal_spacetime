@@ -6,6 +6,7 @@ import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
 import { ShipSystemsPanel } from "./ShipSystemsPanel";
 import { FurnishingEditor } from "./FurnishingEditor";
+import type { ObjectPlacementState } from "@sidereal/canvas-ui";
 import { FurnishingPlacement } from "./FurnishingPlacement";
 import { furnishingRequest } from "./furnishing-command";
 import {
@@ -150,6 +151,10 @@ export default function App({
     name: string;
     mode: "move" | "delete";
   }>();
+  const [placementState, setPlacementState] = useState<ObjectPlacementState>();
+  const placementAction = useRef<((action: string) => void) | undefined>(
+    undefined,
+  );
   const furnishingCancel = useRef<(() => void) | undefined>(undefined);
   const [combatEnabled, setCombatEnabled] = useState(false);
   const [cruise] = useState(createCruiseControl);
@@ -973,23 +978,24 @@ export default function App({
         }
       : undefined,
     resting: !!couch || !!constructionSeat,
-    objectDetails:
-      furnishingEdit?.mode === "move"
-        ? undefined
-        : selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
-          ? prefabDetails
-          : objectDetails(
-              selectedObject,
-              equipmentCatalog,
-              interactions,
-              actor,
-              { seated, near: nearStation, occupied: !!station?.occupantId },
-              ready ? displayedOutputs : [],
-              inventory.containers,
-              c && constructionScene.active
-                ? [...c.db.ownAuthoredFlightFittings.iter()]
-                : [],
-            ),
+    objectDetails: selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
+      ? prefabDetails && {
+          ...prefabDetails,
+          placement:
+            furnishingEdit?.mode === "move" ? placementState : undefined,
+        }
+      : objectDetails(
+          selectedObject,
+          equipmentCatalog,
+          interactions,
+          actor,
+          { seated, near: nearStation, occupied: !!station?.occupantId },
+          ready ? displayedOutputs : [],
+          inventory.containers,
+          c && constructionScene.active
+            ? [...c.db.ownAuthoredFlightFittings.iter()]
+            : [],
+        ),
     interactionPrompt,
     eva: evaHud,
     inventory,
@@ -1180,6 +1186,10 @@ export default function App({
     );
   };
   const objectCommand = (action: string, placementId?: string) => {
+    if (action.startsWith("placement-")) {
+      placementAction.current?.(action);
+      return;
+    }
     const connectionNow = connection.current;
     if (
       ["furnishing-move", "furnishing-delete", "furnishing-snap"].includes(
@@ -1405,7 +1415,16 @@ export default function App({
                         action,
                         live.current.uiState.objectDetails?.placementId,
                       ),
-                    close: () => setSelectedObject(undefined),
+                    close: () => {
+                      if (
+                        servicePanelOpen.current === "furnishing-editor" &&
+                        furnishingCancel.current
+                      ) {
+                        furnishingCancel.current();
+                        return;
+                      }
+                      setSelectedObject(undefined);
+                    },
                   },
                   view: () => {
                     // No ship: there is no exterior/flight view to switch to.
@@ -2355,10 +2374,11 @@ export default function App({
               key={`${constructionInstance.id}:${furnishingEdit.placementId}`}
               instance={constructionInstance}
               placementId={furnishingEdit.placementId}
-              name={furnishingEdit.name}
               canvas={canvas.current}
               renderer={() => view.current ?? undefined}
               cancelRef={furnishingCancel}
+              actionRef={placementAction}
+              onState={setPlacementState}
               submit={(request) => {
                 const current = connection.current;
                 if (
@@ -2371,7 +2391,7 @@ export default function App({
               }}
               close={() => {
                 setFurnishingEdit(undefined);
-                setSelectedObject(undefined);
+                setPlacementState(undefined);
               }}
             />
           ) : (

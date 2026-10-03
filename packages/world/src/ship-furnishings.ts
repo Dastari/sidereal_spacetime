@@ -40,6 +40,18 @@ type Context = ReducerCtx<InferSchema<typeof world>>;
 function fail(message: string): never {
   throw new SenderError(message);
 }
+/** Pure furnishing rules use plain Error for a rejected proposal. Only adapt
+ * qualification calls; error subclasses (such as TypeError) and database writes
+ * still fail normally instead of becoming editable placement rejections. */
+function qualify<T>(check: () => T): T {
+  try {
+    return check();
+  } catch (error) {
+    if (error instanceof Error && error.constructor === Error)
+      fail(error.message);
+    throw error;
+  }
+}
 export function editShipFurnishing(
   ctx: Context,
   args: FurnishingEdit & {
@@ -147,7 +159,9 @@ export function editShipFurnishing(
     )
   )
     fail("Stand on clear supported deck before editing");
-  const overrides = planFurnishingEdit(doc, state.overrides, args);
+  const overrides = qualify(() =>
+    planFurnishingEdit(doc, state.overrides, args),
+  );
   const seatId = `${instance.id}:seat:prefab:socket:${args.sourceObjectId}`,
     seatBinding = ctx.db.constructionInteractionBinding.objectId.find(seatId);
   if (
@@ -222,13 +236,15 @@ export function editShipFurnishing(
     if (qualifyPrefabBed(before, bed))
       anchors.push([bed.approachX, bed.approachY]);
   if (args.action !== "snap")
-    validateFurnishingPlacement(
-      args.sourceObjectId,
-      overrides,
-      before,
-      after,
-      crew,
-      anchors,
+    qualify(() =>
+      validateFurnishingPlacement(
+        args.sourceObjectId,
+        overrides,
+        before,
+        after,
+        crew,
+        anchors,
+      ),
     );
   const socket = newSockets.find((s) => s.key === args.sourceObjectId);
   const bed = newBeds.find(
@@ -237,14 +253,16 @@ export function editShipFurnishing(
   let approach: [number, number] | undefined;
   if (binding && args.action !== "delete") {
     if (!socket) fail("Current furnishing storage socket required");
-    approach = reachableFurnishingApproach(after, crew, socket.approachesM);
+    approach = qualify(() =>
+      reachableFurnishingApproach(after, crew, socket.approachesM),
+    );
     if (!approach) fail("Storage needs an accessible standing approach");
   }
   if (bed && !qualifyPrefabBed(after, bed))
     fail("Bed needs clear supported seating access");
   if (args.action === "move" && (approach || bed)) {
     const target = approach ?? [bed!.approachX, bed!.approachY];
-    const groups = deckRouteGroups(after, [...crew, target]);
+    const groups = qualify(() => deckRouteGroups(after, [...crew, target]));
     if (
       groups[crew.length] < 0 ||
       !groups

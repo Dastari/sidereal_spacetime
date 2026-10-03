@@ -2,7 +2,46 @@ import { CanvasUI, palette } from "./toolkit";
 import { WindowStack } from "./windows";
 import type { Rect } from "./layout";
 
+export interface ObjectPlacementState {
+  pending: boolean;
+  snap: boolean;
+  wall: boolean;
+  issue: string;
+  error: string;
+}
+export function placementActionRows(state: ObjectPlacementState) {
+  const enabled = !state.pending;
+  const editable = enabled && !state.error;
+  const rows = [];
+  if (!state.wall)
+    rows.push([
+      { id: "placement-left", label: "Rotate left", enabled: editable },
+      { id: "placement-right", label: "Rotate right", enabled: editable },
+    ]);
+  rows.push([
+    {
+      id: "placement-snap",
+      label: `Snapping: ${state.snap ? "on" : "off"}`,
+      enabled: editable,
+    },
+  ]);
+  rows.push([
+    {
+      id: "placement-place",
+      label: state.pending ? "Placing…" : "Place",
+      enabled: editable && !state.issue,
+    },
+    { id: "placement-cancel", label: "Cancel", enabled },
+  ]);
+  if (state.error)
+    rows.push([
+      { id: "placement-retry", label: "Retry same", enabled },
+      { id: "placement-reset", label: "Use current", enabled },
+    ]);
+  return rows;
+}
 export interface ObjectDetailsState {
+  placement?: ObjectPlacementState;
   placementId: string;
   name: string;
   image?: string;
@@ -31,10 +70,15 @@ export function objectActionEnabled(
   );
 }
 /** Shared layout leaves interaction controls visible while long inspection data scroll. */
-export function objectDetailsLayout(r: Rect, stats: number, actions: number) {
+export function objectDetailsLayout(
+  r: Rect,
+  stats: number,
+  actions: number,
+  placementFooter?: number,
+) {
   const footer = Math.min(
-    Math.max(46, 74 + actions * 38),
-    Math.max(46, r.h - 110),
+    placementFooter ?? Math.max(46, 74 + actions * 38),
+    Math.max(46, r.h - (placementFooter ? 65 : 110)),
   );
   const viewport = {
     x: r.x + 16,
@@ -68,6 +112,7 @@ export function createObjectDetailsUI(
     disposed = false;
   const invalidate = () => ui.invalidate();
   function close() {
+    if (current?.placement?.pending) return;
     dismissedId = selectedId;
     stack.close("object-details");
     actions.close();
@@ -139,10 +184,21 @@ export function createObjectDetailsUI(
         },
         close,
       );
+      const placementRows = state.placement
+        ? placementActionRows(state.placement)
+        : undefined;
       const layout = objectDetailsLayout(
           r,
           state.stats.length,
-          state.actions.length,
+          placementRows
+            ? placementRows.length +
+                (state.placement!.issue || state.placement!.error ? 2 : 1)
+            : state.actions.length,
+          placementRows
+            ? 73 +
+                placementRows.length * 34 +
+                (state.placement!.issue || state.placement!.error ? 40 : 0)
+            : undefined,
         ),
         v = layout.viewport,
         c = ui.ctx;
@@ -247,6 +303,61 @@ export function createObjectDetailsUI(
       c.moveTo(r.x + 16, layout.footerY);
       c.lineTo(r.x + r.w - 16, layout.footerY);
       c.stroke();
+      if (state.placement && placementRows) {
+        const placement = state.placement;
+        const message = placement.error || placement.issue;
+        ui.text(
+          "Arrange this furnishing",
+          r.x + 16,
+          layout.footerY + 9,
+          14,
+          palette.text,
+          r.w - 32,
+        );
+        ui.paragraph(
+          placement.wall
+            ? "Drag onto a wall; release to place. Esc cancels."
+            : "Drag to place. R rotates; Esc cancels.",
+          { x: r.x + 16, y: layout.footerY + 31, w: r.w - 32, h: 30 },
+          12,
+          palette.muted,
+        );
+        if (message)
+          ui.paragraph(
+            message.replace(/^(SenderError|Error):\s*/, ""),
+            { x: r.x + 16, y: layout.footerY + 65, w: r.w - 32, h: 36 },
+            12,
+            palette.gold,
+          );
+        const top = layout.footerY + (message ? 104 : 64);
+        placementRows.forEach((row, i) =>
+          row.forEach((action, j) => {
+            const width = (r.w - 32 - (row.length - 1) * 8) / row.length;
+            ui.button(
+              "object-action-" + action.id,
+              action.label,
+              {
+                x: r.x + 16 + j * (width + 8),
+                y: top + i * 34,
+                w: width,
+                h: 29,
+              },
+              () => {
+                const latest = current?.placement;
+                if (
+                  latest &&
+                  placementActionRows(latest)
+                    .flat()
+                    .some((a) => a.id === action.id && a.enabled)
+                )
+                  actions.action(action.id);
+              },
+              { disabled: !action.enabled, selected: action.enabled },
+            );
+          }),
+        );
+        return;
+      }
       const finiteDistance =
         state.distance !== undefined && Number.isFinite(state.distance);
       ui.text(
