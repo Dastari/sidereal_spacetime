@@ -127,8 +127,13 @@ import {
   createPrefabBeamClip,
   createPrefabObjectPicker,
   prefabBindingOf,
+  invalidatePrefabShipTriangles,
   type PrefabObjectPicker,
 } from "./prefab-ship-interaction";
+import {
+  createAcceptedFurnishings,
+  type AcceptedFurnishings,
+} from "./accepted-furnishings";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreateTorus } from "@babylonjs/core/Meshes/Builders/torusBuilder";
 import { Material } from "@babylonjs/core/Materials/material";
@@ -147,6 +152,8 @@ import { createSpaceEnvironment, type SpaceBodyState } from "./environment";
 import { DEFAULT_SPACE_VISTA } from "../../content/src/environment";
 import "@babylonjs/loaders/glTF";
 export type SceneState = {
+  /** Server-accepted instance overlay; independent of the immutable ship document. */
+  furnishings?: AcceptedFurnishings;
   groundItems?: readonly GroundItem[];
   combat?: {
     active: boolean;
@@ -562,7 +569,7 @@ async function buildWorld(
     ),
   );
   const fixturePlacements = shipEquipment;
-  const debugCollision = createDebugCollisionSource(options.construction);
+  let debugCollision = createDebugCollisionSource(options.construction);
   const debugFeatures = createDebugFeatures(
     scene,
     [
@@ -671,7 +678,7 @@ async function buildWorld(
         options.construction?.furnishingsJson,
       )
     : undefined;
-  const prefabPicker: PrefabObjectPicker | undefined = prefabBinding
+  let prefabPicker: PrefabObjectPicker | undefined = prefabBinding
     ? createPrefabObjectPicker(
         scene,
         canvas,
@@ -687,6 +694,27 @@ async function buildWorld(
         antialiasing.resetHistory();
       })
     : undefined;
+  const acceptedFurnishings =
+    prefabBinding && options.construction
+      ? createAcceptedFurnishings(
+          scene,
+          shipRoot,
+          prefabBinding,
+          {
+            instanceId: options.construction.instanceId,
+            revision: options.construction.furnishingRevision ?? 0n,
+            json: options.construction.furnishingsJson ?? "{}",
+          },
+          () => furnishingPreview?.clear(),
+          (meshes) => {
+            invalidatePrefabShipTriangles(meshes);
+            invalidateStaticMaterials(scene);
+            fastSnapshot?.invalidate();
+            flightActiveSet.invalidate();
+            antialiasing.resetHistory();
+          },
+        )
+      : undefined;
   const impactFlash = createImpactFlash(scene, shipRoot);
   let lastImpactSequence: bigint | undefined;
   const objects = createObjectPresentation(
@@ -698,7 +726,7 @@ async function buildWorld(
       (options.blocksCameraInput?.() ?? false) ||
       (options.blocksObjectSelection?.() ?? false),
     options.onObjectSelected,
-    prefabPicker ? (event) => prefabPicker.pick(event) : undefined,
+    prefabPicker ? (event) => prefabPicker?.pick(event) : undefined,
   );
   const groundItems = createGroundItems(scene, shipRoot);
   const graphics = createGraphicsSettings(scene);
@@ -758,7 +786,7 @@ async function buildWorld(
   /** Last pointer position (client pixels) for the EVA facing. */
   let pointerClient: { x: number; y: number } | undefined;
   for (const mesh of combatAim.meshes) glow.addIncludedOnlyMesh(mesh);
-  const prefabBeamClip = prefabBinding
+  let prefabBeamClip = prefabBinding
     ? createPrefabBeamClip(shipRoot, prefabBinding)
     : undefined;
   if (crewOutfit && !assetFailure)
@@ -1337,7 +1365,27 @@ async function buildWorld(
       state.combat?.range ?? 60,
     );
   });
+  const updateFurnishings = (next: AcceptedFurnishings) => {
+    if (acceptedFurnishings?.apply(next) && prefabBinding) {
+      prefabPicker?.dispose();
+      prefabPicker = createPrefabObjectPicker(
+        scene,
+        canvas,
+        shipRoot,
+        prefabBinding,
+        () => state.interior,
+      );
+      prefabPicker.select(state.selectedObject);
+      prefabBeamClip = createPrefabBeamClip(shipRoot, prefabBinding);
+      debugCollision = createDebugCollisionSource({
+        ...options.construction!,
+        furnishingsJson: next.json,
+        furnishingRevision: next.revision,
+      });
+    }
+  };
   return {
+    updateFurnishings,
     /** Presentation-only crew handle for review harnesses (never simulation state). */
     getCrewVisual() {
       return crew;
@@ -1528,6 +1576,7 @@ async function buildWorld(
     }),
     groundItemLabels: () => groundItems.labels(),
     update(next: SceneState) {
+      if (next.furnishings) updateFurnishings(next.furnishings);
       if (
         next.interior !== state.interior ||
         next.inspect !== state.inspect ||

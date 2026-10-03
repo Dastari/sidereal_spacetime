@@ -16,16 +16,10 @@ import { markShipFlightDirty } from "./construction-flight-dirty";
 import {
   planFurnishingEdit,
   validateFurnishingPlacement,
-  deckRouteGroups,
-  furnishingDoorwayAnchors,
-  reachableFurnishingApproach,
+  furnishingAccessPoint,
   type FurnishingEdit,
 } from "@sidereal/sim/ship-furnishings";
 import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
-import {
-  prefabBedsOfDocument,
-  qualifyPrefabBed,
-} from "@sidereal/sim/prefab-seats";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { prefabShipObjects } from "@sidereal/sim/prefab-deck-objects";
 import { canOccupyDeck } from "@sidereal/sim/construction-collision";
@@ -211,65 +205,17 @@ export function editShipFurnishing(
     .map((a) => [a.localX, a.localY] as [number, number]);
   if (crew.length > 128)
     fail("Furnishing edit crew validation budget exceeded");
-  const oldBeds = prefabBedsOfDocument(instance.documentJson, state.overrides),
-    newBeds = prefabBedsOfDocument(instance.documentJson, overrides);
-  const oldSockets = prefabCargoSockets(doc, 0, catalog, state.overrides),
-    newSockets = prefabCargoSockets(doc, 0, catalog, overrides);
-  const anchors: [number, number][] = [
-    ...furnishingDoorwayAnchors(doc, before),
-    [0, 6.85],
-    [0, 5.5],
-    [0, -9.5],
-  ];
-  for (const socket of oldSockets.filter(
-    (s) => s.key !== args.sourceObjectId,
-  )) {
-    const b = ctx.db.instanceInventoryBinding.placedObjectId.find(
-        `${instance.id}:${visit.deckId}:${socket.key}`,
-      ),
-      s = b && ctx.db.inventoryContainerScope.containerId.find(b.containerId);
-    if (s?.lifecycle === "active") anchors.push([s.accessX, s.accessY]);
-  }
-  for (const bed of oldBeds.filter(
-    (b) => b.placementId !== `prefab:socket:${args.sourceObjectId}`,
-  ))
-    if (qualifyPrefabBed(before, bed))
-      anchors.push([bed.approachX, bed.approachY]);
+  const newSockets = prefabCargoSockets(doc, 0, catalog, overrides);
   if (args.action !== "snap")
     qualify(() =>
-      validateFurnishingPlacement(
-        args.sourceObjectId,
-        overrides,
-        before,
-        after,
-        crew,
-        anchors,
-      ),
+      validateFurnishingPlacement(args.sourceObjectId, overrides, after, crew),
     );
   const socket = newSockets.find((s) => s.key === args.sourceObjectId);
-  const bed = newBeds.find(
-    (b) => b.placementId === `prefab:socket:${args.sourceObjectId}`,
-  );
   let approach: [number, number] | undefined;
   if (binding && args.action !== "delete") {
     if (!socket) fail("Current furnishing storage socket required");
-    approach = qualify(() =>
-      reachableFurnishingApproach(after, crew, socket.approachesM),
-    );
-    if (!approach) fail("Storage needs an accessible standing approach");
-  }
-  if (bed && !qualifyPrefabBed(after, bed))
-    fail("Bed needs clear supported seating access");
-  if (args.action === "move" && (approach || bed)) {
-    const target = approach ?? [bed!.approachX, bed!.approachY];
-    const groups = qualify(() => deckRouteGroups(after, [...crew, target]));
-    if (
-      groups[crew.length] < 0 ||
-      !groups
-        .slice(0, crew.length)
-        .some((g) => g > 0 && g === groups[crew.length])
-    )
-      fail("Furniture approach must be reachable by crew");
+    approach = qualify(() => furnishingAccessPoint(after, socket.approachesM));
+    if (!approach) fail("Current furnishing storage source approach required");
   }
   // Every qualification precedes these atomic writes. UUIDs and payload rows stay intact.
   const row = {

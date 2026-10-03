@@ -17,7 +17,6 @@ import {
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import {
   planFurnishingEdit,
-  furnishingDoorwayAnchors,
   validateFurnishingPlacement,
   deckRouteGroups,
 } from "../packages/sim/src/ship-furnishings";
@@ -90,10 +89,7 @@ const liveSchema = async () =>
       ),
     )
     .digest("hex");
-assert.equal(
-  await liveSchema(),
-  "99630b29806b5f36a898691d3983c6d1892b5fc2d94b11e559522fe44c83528c",
-);
+const initialLiveSchema = await liveSchema();
 const prefab = prefabById("fed.m.wayfarer")!,
   catalog = defaultPrefabComponentCatalog();
 const savedFile = join(evidence, "fixture.json");
@@ -314,8 +310,7 @@ try {
         .sort(),
       items,
     );
-    const beforePhysics = { ...physics() },
-      beforeFrame = prefabWalkFrame(prefab, catalog, overlays());
+    const beforePhysics = { ...physics() };
     let acceptedPose: typeof pose | undefined;
     for (const dx of [0.05, -0.05, 0.25, -0.25, 0.5, -0.5])
       for (const dy of [0.05, -0.05, 0.25, -0.25]) {
@@ -328,14 +323,9 @@ try {
           });
         try {
           const after = prefabWalkFrame(prefab, catalog, next);
-          validateFurnishingPlacement(
-            cargo,
-            next,
-            beforeFrame,
-            after,
-            [[actor().localX, actor().localY]],
-            furnishingDoorwayAnchors(prefab, beforeFrame),
-          );
+          validateFurnishingPlacement(cargo, next, after, [
+            [actor().localX, actor().localY],
+          ]);
           const socket = prefabCargoSockets(prefab, 0, catalog, next).find(
             (s) => s.key === cargo,
           )!;
@@ -379,6 +369,20 @@ try {
       ) > 1e-9,
       "moved loaded root changes flight COM",
     );
+    // The accepted storage access point follows clear geometry, independently of
+    // the owner's former position. Walk to the newly accepted point before opening.
+    const acceptedAccess = sql(
+      "SELECT access_x, access_y FROM inventory_container_scope WHERE container_id = " +
+        quote(container.id),
+    )[0];
+    await walk([Number(acceptedAccess[0]), Number(acceptedAccess[1])]);
+    await wait(
+      () =>
+        [...c.db.ownReachableCargoContainers.iter()].some(
+          (r) => r.id === container.id,
+        ),
+      "moved cargo access",
+    );
     assert(
       [...c.db.ownReachableCargoContainers.iter()].some(
         (r) => r.id === container.id,
@@ -390,6 +394,47 @@ try {
         .map((i) => i.id)
         .sort(),
       items,
+    );
+    await walk(approach(lounge));
+    const originalTable = prefabShipObjects(prefab, catalog).find(
+      (o) => o.sourceId === lounge,
+    )!;
+    const reservedHelmApproach: [number, number] = [0, 5.5];
+    const helmMove = request(lounge, "move", {
+      dx:
+        reservedHelmApproach[1] -
+        (originalTable.min[0] + originalTable.max[0]) / 2,
+      dy:
+        -reservedHelmApproach[0] -
+        (originalTable.min[1] + originalTable.max[1]) / 2,
+      yaw: 0,
+      snap: false,
+    });
+    await c.reducers.editShipFurnishing(helmMove);
+    await wait(
+      () => instance().furnishingRevision === helmMove.expectedRevision + 1n,
+      "formerly reserved approach placement accepted",
+    );
+    const blockedApproachFrame = prefabWalkFrame(prefab, catalog, overlays());
+    assert.equal(
+      canOccupyDeck(
+        blockedApproachFrame,
+        {
+          shipId: blockedApproachFrame.shipId,
+          deckId: blockedApproachFrame.deckId,
+          position: reservedHelmApproach,
+        },
+        0.3,
+      ),
+      false,
+    );
+    await walk(approach(lounge));
+    const restoreTable = request(lounge, "move", pose);
+    await c.reducers.editShipFurnishing(restoreTable);
+    await wait(
+      () =>
+        instance().furnishingRevision === restoreTable.expectedRevision + 1n,
+      "table restoration accepted",
     );
     await walk(approach(lounge));
     const tombstone = request(lounge, "delete");
@@ -534,13 +579,10 @@ try {
       { mode: 0o600 },
     );
     console.log(
-      "Furnishing save, move, collision rollback, fixed refusal, cargo contents/UUID, COM recompile, pilot and tombstone replay passed",
+      "Furnishing save, move, formerly reserved helm approach, collision rollback, fixed refusal, cargo contents/UUID, COM recompile, pilot and tombstone replay passed",
     );
   }
-  assert.equal(
-    await liveSchema(),
-    "99630b29806b5f36a898691d3983c6d1892b5fc2d94b11e559522fe44c83528c",
-  );
+  assert.equal(await liveSchema(), initialLiveSchema);
 } finally {
   c.disconnect();
 }

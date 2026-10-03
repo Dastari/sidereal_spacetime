@@ -10,10 +10,7 @@ import {
   isWayfarerGameplay,
   WAYFARER_GAMEPLAY_OBJECTS,
 } from "@sidereal/content/wayfarer-authored-gameplay";
-import {
-  deriveInterior,
-  type ShipPrefabDocumentV1,
-} from "@sidereal/content/ship-prefab";
+import { type ShipPrefabDocumentV1 } from "@sidereal/content/ship-prefab";
 import { positiveOverlap, inside } from "./layout-geometry";
 import { qualifyWallFurnishingPlacement } from "./furnishing-wall-placement";
 import {
@@ -172,21 +169,13 @@ export function deckRouteGroups(
   return points.map(resolve);
 }
 
-/** Choose a supported interaction socket in a crew-connected component, not merely the first clear point. */
-export function reachableFurnishingApproach(
+/** Prefer a physically clear source access point without reserving crew routes.
+ * A cramped furnishing may have no clear approach; that affects later use, not placement. */
+export function furnishingAccessPoint(
   frame: DeckCollisionFrame,
-  crew: readonly (readonly number[])[],
   points: readonly (readonly [number, number])[],
 ): [number, number] | undefined {
-  const candidates = points.filter((p) => clear(frame, p)),
-    routes = deckRouteGroups(frame, [...crew, ...candidates]);
-  const point = candidates.find(
-    (_p, i) =>
-      routes[crew.length + i] > 0 &&
-      routes
-        .slice(0, crew.length)
-        .some((g) => g > 0 && g === routes[crew.length + i]),
-  );
+  const point = points.find((p) => clear(frame, p)) ?? points[0];
   return point ? [point[0], point[1]] : undefined;
 }
 
@@ -248,42 +237,12 @@ export function footprintFloorCoverage(
     ),
   };
 }
-/** Source-room floor thresholds qualify actual existing physical apertures without inventing doors. */
-export function furnishingDoorwayAnchors(
-  doc: ShipPrefabDocumentV1,
-  frame: DeckCollisionFrame,
-): [number, number][] {
-  const floors = deriveInterior(doc, 0).floors.filter((f) => !f.partial),
-    map = new Map(floors.map((f) => [f.cell.join(","), f]));
-  const points: [number, number][] = [];
-  for (const floor of floors)
-    for (const [dx, dy] of [
-      [1, 0],
-      [0, 1],
-    ]) {
-      const [x, y] = floor.cell,
-        neighbor = map.get(`${x + dx},${y + dy}`);
-      if (!neighbor || neighbor.room === floor.room) continue;
-      for (const along of [0.125, 0.375, 0.625, 0.875]) {
-        const px = x + (dx ? 1 : along),
-          py = y + (dy ? 1 : along),
-          a: [number, number] = [-(py - dy * 0.4), px - dx * 0.4],
-          b: [number, number] = [-(py + dy * 0.4), px + dx * 0.4];
-        if (clear(frame, a) && clear(frame, b) && sweep(frame, a, b))
-          points.push(a, b);
-      }
-    }
-  return points;
-}
-
-/** All geometry and paths use server frames; no rendered transform enters these checks. */
+/** Physical placement uses the server frame; crew route connectivity is not a placement rule. */
 export function validateFurnishingPlacement(
   sourceObjectId: string,
   overrides: FurnishingOverrides,
-  before: DeckCollisionFrame,
   after: DeckCollisionFrame,
   crew: readonly (readonly number[])[],
-  anchors: readonly (readonly number[])[],
 ) {
   const moved = effectiveWayfarerObjects(overrides).find(
     (row) => row.object === sourceObjectId,
@@ -303,7 +262,7 @@ export function validateFurnishingPlacement(
         obstacle.id !== `prefab-socket:${sourceObjectId}` &&
         // Frozen source fixtures may be recessed into their authored support.
         // This exception never applies to a translated/rotated wall fixture or
-        // to other props, crew, floor support, approaches or route checks.
+        // to other props, crew or floor support.
         !(
           originalWallPose &&
           /^prefab-(?:bulkhead:|socket:PART_)/.test(obstacle.id)
@@ -368,22 +327,5 @@ export function validateFurnishingPlacement(
         })
       )
         throw Error("Move crew clear of the furniture destination");
-  }
-  const required = anchors.filter((p) => clear(before, p));
-  for (const p of required)
-    if (!clear(after, p))
-      throw Error(
-        "Furniture blocks a required door, helm or interaction approach",
-      );
-  // Never strand crew or break any route that existed before this edit.
-  const points = [...crew, ...required],
-    old = deckRouteGroups(before, points),
-    next = deckRouteGroups(after, points);
-  for (let i = 0; i < crew.length; i++) {
-    if (old[i] > 0 && next[i] < 0)
-      throw Error("Furniture destination blocks crew standing support");
-    for (let j = crew.length; j < points.length; j++)
-      if (old[i] > 0 && old[i] === old[j] && next[i] !== next[j])
-        throw Error("Furniture would strand crew from a required approach");
   }
 }

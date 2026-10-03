@@ -234,6 +234,10 @@ const shipTriangleCache = new WeakMap<
   Mesh,
   { positions: Float32Array; indices: IndicesArray }
 >();
+/** Accepted furniture edits preserve batch identities but replace their geometry. */
+export function invalidatePrefabShipTriangles(meshes: readonly Mesh[]) {
+  for (const mesh of meshes) shipTriangleCache.delete(mesh);
+}
 function shipTriangles(mesh: Mesh, shipRoot: TransformNode) {
   let hit = shipTriangleCache.get(mesh);
   if (hit) return hit;

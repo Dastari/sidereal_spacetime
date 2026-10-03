@@ -48,6 +48,7 @@ import { createConnectionSession } from "./connection-session";
 import React, {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -407,21 +408,11 @@ export default function App({
   const constructionInstance = constructionScene.instance;
   const sceneDocument = useRef({
     json: undefined as string | undefined,
-    furnishings: undefined as string | undefined,
-    furnishingRevision: undefined as bigint | undefined,
     version: 0,
   });
-  if (
-    sceneDocument.current.json !== constructionInstance?.documentJson ||
-    sceneDocument.current.furnishings !==
-      constructionInstance?.furnishingsJson ||
-    sceneDocument.current.furnishingRevision !==
-      constructionInstance?.furnishingRevision
-  ) {
+  if (sceneDocument.current.json !== constructionInstance?.documentJson) {
     sceneDocument.current = {
       json: constructionInstance?.documentJson,
-      furnishings: constructionInstance?.furnishingsJson,
-      furnishingRevision: constructionInstance?.furnishingRevision,
       version: sceneDocument.current.version + 1,
     };
   }
@@ -1710,8 +1701,6 @@ export default function App({
     sceneKey,
     constructionInstance?.id,
     constructionInstance?.documentJson,
-    constructionInstance?.furnishingsJson,
-    constructionInstance?.furnishingRevision,
     constructionVisit?.visitId,
     constructionScene.egress?.proofHash,
     constructionScene.egress?.stairId,
@@ -1758,8 +1747,29 @@ export default function App({
       window.removeEventListener("resize", draw);
     };
   }, [rendererFailed]);
+  // Child placement effects restore/recreate their transient ghost from this revision.
+  // Commit the retained world's accepted baseline before those passive effects run.
+  useLayoutEffect(() => {
+    if (constructionInstance)
+      view.current?.updateFurnishings({
+        instanceId: constructionInstance.id,
+        revision: constructionInstance.furnishingRevision ?? 0n,
+        json: constructionInstance.furnishingsJson ?? "{}",
+      });
+  }, [
+    constructionInstance?.id,
+    constructionInstance?.furnishingsJson,
+    constructionInstance?.furnishingRevision,
+  ]);
   useEffect(() => {
     sceneState.current = {
+      furnishings: constructionInstance
+        ? {
+            instanceId: constructionInstance.id,
+            revision: constructionInstance.furnishingRevision ?? 0n,
+            json: constructionInstance.furnishingsJson ?? "{}",
+          }
+        : undefined,
       selectedObject,
       groundItems:
         ready && c
@@ -1931,6 +1941,9 @@ export default function App({
     gui.current?.update(uiState);
   }, [
     revision,
+    constructionInstance?.id,
+    constructionInstance?.furnishingsJson,
+    constructionInstance?.furnishingRevision,
     systemScape?.regionsJson,
     interior,
     seated,

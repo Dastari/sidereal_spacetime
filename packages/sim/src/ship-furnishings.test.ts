@@ -12,7 +12,7 @@ import {
   footprintFloorCoverage,
   deckRouteGroups,
   validateFurnishingPlacement,
-  reachableFurnishingApproach,
+  furnishingAccessPoint,
 } from "./ship-furnishings";
 import { prefabShipObjects, prefabDeckObstacles } from "./prefab-deck-objects";
 import { prefabCargoSockets } from "./prefab-cargo-sockets";
@@ -186,50 +186,45 @@ const open: DeckCollisionFrame = {
   obstacles: [],
   segments: [],
 };
-test("dynamic crew routes are evaluated through clear floor paths and refuse a new partition barrier", () => {
-  const before = deckRouteGroups(open, [
-    [-2, 0],
-    [2, 0],
-  ]);
-  expect(before[0]).toBe(before[1]);
-  const blocked = {
+test("physical furniture placement may block passage and a formerly clear approach", () => {
+  const id = "Lounge_coffee_table",
+    row = effectiveWayfarerObjects().find((o) => o.object === id)!,
+    vertices = row.footprint.map(([x, y]) => [-y, x] as [number, number]);
+  const left = Math.min(...vertices.map((p) => p[0])) - 0.2,
+    right = Math.max(...vertices.map((p) => p[0])) + 0.2,
+    bottom = Math.min(...vertices.map((p) => p[1])),
+    top = Math.max(...vertices.map((p) => p[1])),
+    cx = (left + right) / 2;
+  const before = {
     ...open,
-    segments: [
-      {
-        id: "new",
-        a: [0, -3] as [number, number],
-        b: [0, 3] as [number, number],
-        halfWidthM: 0.2,
-      },
+    floors: [
+      [
+        [left, bottom - 1],
+        [right, bottom - 1],
+        [right, top + 1],
+        [left, top + 1],
+      ] as [number, number][],
     ],
   };
-  expect(
-    deckRouteGroups(blocked, [
-      [-2, 0],
-      [2, 0],
-    ])[0],
-  ).not.toBe(
-    deckRouteGroups(blocked, [
-      [-2, 0],
-      [2, 0],
-    ])[1],
-  );
-  // Tombstone has no destination polygon; route preservation still evaluates living crew.
-  const tombstone = planFurnishingEdit(
-    doc,
-    {},
-    edit("Lounge_coffee_table", { action: "delete" }),
-  );
+  const after: DeckCollisionFrame = {
+    ...before,
+    obstacles: [{ id: `prefab-socket:${id}`, definitionId: "table", vertices }],
+    segments: vertices.map((a, i) => ({
+      id: `obstacle:prefab-socket:${id}:${i}`,
+      a,
+      b: vertices[(i + 1) % vertices.length],
+      halfWidthM: 0,
+    })),
+  };
+  const crew: [number, number] = [cx, bottom - 0.6],
+    approach: [number, number] = [cx, top + 0.6];
+  const oldGroups = deckRouteGroups(before, [crew, approach]),
+    newGroups = deckRouteGroups(after, [crew, approach]);
+  expect(oldGroups[0]).toBe(oldGroups[1]);
+  expect(newGroups[0]).not.toBe(newGroups[1]);
   expect(() =>
-    validateFurnishingPlacement(
-      "Lounge_coffee_table",
-      tombstone,
-      open,
-      blocked,
-      [[-2, 0]],
-      [[2, 0]],
-    ),
-  ).toThrow(/strand/);
+    validateFurnishingPlacement(id, {}, after, [crew]),
+  ).not.toThrow();
 });
 
 test("complete floor coverage rejects an unsupported sliver narrower than a sampling interval", () => {
@@ -295,37 +290,31 @@ test("placement validation rejects unsupported sub-sample slivers and living cre
       ...whole,
       floors: [rect(left, cx - 0.001), rect(cx + 0.001, right)],
     };
-  expect(() =>
-    validateFurnishingPlacement(id, {}, whole, slit, [], []),
-  ).toThrow(/complete supported/);
-  expect(() =>
-    validateFurnishingPlacement(id, {}, whole, whole, [[cx, cy]], []),
-  ).toThrow(/crew/);
+  expect(() => validateFurnishingPlacement(id, {}, slit, [])).toThrow(
+    /complete supported/,
+  );
+  expect(() => validateFurnishingPlacement(id, {}, whole, [[cx, cy]])).toThrow(
+    /crew/,
+  );
 });
 
-test("a disconnected first clear storage approach does not hide a connected alternate", () => {
-  const frame = {
+test("storage access points prefer clear geometry without reserving a route and retain a canonical fallback", () => {
+  const frame: DeckCollisionFrame = {
     ...open,
-    segments: [
-      {
-        id: "wall",
-        a: [0, -3] as [number, number],
-        b: [0, 3] as [number, number],
-        halfWidthM: 0.2,
-      },
-    ],
+    segments: [{ id: "wall", a: [0, -3], b: [0, 3], halfWidthM: 0.2 }],
   };
   expect(
-    reachableFurnishingApproach(
-      frame,
-      [[-2, 0]],
-      [
-        [2, 0],
-        [-1, 0],
-      ],
-    ),
-  ).toEqual([-1, 0]);
+    furnishingAccessPoint(frame, [
+      [2, 0],
+      [-1, 0],
+    ]),
+  ).toEqual([2, 0]);
   expect(
-    reachableFurnishingApproach(frame, [[-2, 0]], [[2, 0]]),
-  ).toBeUndefined();
+    furnishingAccessPoint(frame, [
+      [0, 0],
+      [-1, 0],
+    ]),
+  ).toEqual([-1, 0]);
+  expect(furnishingAccessPoint(frame, [[0, 0]])).toEqual([0, 0]);
+  expect(furnishingAccessPoint(frame, [])).toBeUndefined();
 });
