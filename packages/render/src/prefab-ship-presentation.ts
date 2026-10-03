@@ -129,7 +129,13 @@ export async function loadPrefabShipPresentation(
   const glow = new GlowLayer("prefab-ship-glow", scene, {
     mainTextureFixedSize: SHIP_GLOW_PROFILE.mainTextureFixedSize,
     blurKernelSize: SHIP_GLOW_PROFILE.blurKernelSize,
-    ...(halo.assetHalo ? { mainTextureType: halo.mainTextureType } : {}),
+    ...(halo.assetHalo
+      ? {
+          mainTextureType: halo.mainTextureType,
+          alphaBlendingMode: halo.alphaBlendingMode,
+          blurKernelSize: halo.blurKernelSize,
+        }
+      : {}),
   });
   applyShipGlowProfile(glow, { assetHalo: halo.assetHalo });
   // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind

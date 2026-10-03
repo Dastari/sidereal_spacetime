@@ -95,6 +95,9 @@ def main():
             placement = next(x for x in layout['placements'] if x['object'] == 'ENGINE_pod_mid')
             local = [source_light['location'][i] - placement['matrix'][i][3] for i in range(3)]
             sockets.append({'id': 'aperture', 'position': [local[0], local[2], -local[1]], 'color': source_light['colour'], 'intensity': 1.2, 'range': 2.4, 'provenance': {'kind': 'authored-layout-engine-socket', 'sourceNames': ['LT_engine_far', 'LT_engine_mid', 'LT_engine_near'], 'watts': source_light['watts'], 'radius': source_light['radius'], 'gameCalibration': 'bounded1.2 intensity; Blender watts are not Babylon intensity units'}})
+        if piece['id'] in fixtures and piece['id'] != 'prop.props_quarters.locker_lit':
+            sockets[0]['direction'] = [0, 0, -1]
+            sockets[0]['angle'] = math.pi * 0.8
         assets.append({'id': piece['id'], 'sha256': pin, 'emissions': emissions, 'sockets': sockets})
     payload = {'schema': 'authored-asset-lighting/v1', 'frame': 'glTF-Y-up', 'producer': {'file': 'scripts/art_library/wayfarer_asset_lighting.py', 'sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}, 'sources': {'manifestSha256': hashlib.sha256(manifest_bytes).hexdigest(), 'layoutSha256': hashlib.sha256(layout_bytes).hexdigest()}, 'assets': assets}
     args.out.parent.mkdir(parents=True, exist_ok=True)

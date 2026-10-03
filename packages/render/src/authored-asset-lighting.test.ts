@@ -1,3 +1,5 @@
+import { Light } from "@babylonjs/core/Lights/light";
+import { SpotLight } from "@babylonjs/core/Lights/spotLight";
 import { expect, test } from "vitest";
 import { readFileSync } from "node:fs";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -17,7 +19,7 @@ import {
 const base = new URL("../../../assets/runtime/ship-study/", import.meta.url);
 const descriptor = JSON.parse(
   readFileSync(
-    new URL("wayfarer-object-lighting-r001/descriptor.json", base),
+    new URL("wayfarer-object-lighting-r002/descriptor.json", base),
     "utf8",
   ),
 );
@@ -109,6 +111,7 @@ test("generic standalone object sockets follow accepted transforms, retain stabl
   budget.update(sources, { focus: { x: 113, y: 222, z: 329 } });
   expect(rig.lights[0].isEnabled()).toBe(true);
   expect(rig.lights[0].shadowEnabled).toBe(false);
+  expect(rig.lights[0].falloffType).toBe(Light.FALLOFF_STANDARD);
   parent.position.x += 10;
   expect(getAuthoredAssetLightSources(scene)[0].position.x).toBe(123);
   rig.setEnabled(false);
@@ -123,6 +126,37 @@ test("generic standalone object sockets follow accepted transforms, retain stabl
   expect(getAuthoredAssetLightSources(scene)).toEqual([]);
   empty.dispose();
   budget.dispose();
+  scene.dispose();
+  engine.dispose();
+});
+
+test("fixture cones rotate with the asset and exclude the opposite wall hemisphere", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const parent = new TransformNode("arbitrary-fixture-context", scene);
+  const fixture = [...readAuthoredAssetLighting(descriptor).values()].find(
+    (asset) => asset.sockets.some((socket) => socket.direction),
+  )!;
+  const matrix = [0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 10, 20, 30, 1];
+  const rig = createAuthoredAssetLighting(scene, parent, [
+    { id: "rotated-fixture", matrix, asset: fixture, receivers: [] },
+  ]);
+  parent.computeWorldMatrix(true);
+  rig.lights[0].parent!.computeWorldMatrix(true);
+  const light = rig.lights[0] as SpotLight;
+  expect(light).toBeInstanceOf(SpotLight);
+  light.computeTransformedInformation();
+  // Source outward -Z rotated 90 degrees about Y is world -X.
+  expect(light.transformedDirection.x).toBeCloseTo(-1);
+  expect(light.transformedDirection.y).toBeCloseTo(0);
+  expect(light.transformedDirection.z).toBeCloseTo(0);
+  expect(light.angle).toBeCloseTo(Math.PI * 0.8);
+  expect(Math.cos(light.angle / 2)).toBeGreaterThan(0);
+  expect(light.falloffType).toBe(Light.FALLOFF_STANDARD);
+  // The parent owns disposal, including registry removal.
+  parent.dispose();
+  expect(getAuthoredAssetLightSources(scene)).toEqual([]);
+  expect(light.isDisposed()).toBe(true);
   scene.dispose();
   engine.dispose();
 });

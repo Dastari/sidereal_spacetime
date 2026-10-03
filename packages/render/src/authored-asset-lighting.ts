@@ -2,6 +2,8 @@ import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { PointLight } from "@babylonjs/core/Lights/pointLight";
+import { SpotLight } from "@babylonjs/core/Lights/spotLight";
+import { Light } from "@babylonjs/core/Lights/light";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Matrix, Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ManagedLocalLight } from "./local-light-budget";
@@ -15,6 +17,8 @@ export type AssetLightSocket = {
   color: readonly number[];
   intensity: number;
   range: number;
+  direction?: readonly number[];
+  angle?: number;
 };
 export type AuthoredAssetLighting = {
   id: string;
@@ -65,6 +69,15 @@ export function readAuthoredAssetLighting(input: unknown) {
       )
         throw Error("Invalid authored asset light socket");
       ids.add(socket.id);
+      if (
+        socket.direction &&
+        (!vector3(socket.direction) ||
+          Math.hypot(...socket.direction) < 1e-6 ||
+          !Number.isFinite(socket.angle) ||
+          socket.angle! <= 0 ||
+          socket.angle! > Math.PI)
+      )
+        throw Error("Invalid authored socket cone");
     }
     result.set(asset.sha256, asset);
   }
@@ -86,7 +99,7 @@ export function authoredHaloColor(
 }
 
 type RegisteredSource = {
-  light: PointLight;
+  light: PointLight | SpotLight;
   parent: TransformNode;
   intensity: number;
   apply: ManagedLocalLight["apply"];
@@ -150,7 +163,7 @@ export function createAuthoredAssetLighting(
   placements: readonly AssetLightingPlacement[],
 ) {
   const nodes: TransformNode[] = [],
-    lights: PointLight[] = [],
+    lights: (PointLight | SpotLight)[] = [],
     ids: string[] = [];
   let enabled = true;
   const entries = registry(scene);
@@ -171,15 +184,22 @@ export function createAuthoredAssetLighting(
     for (const socket of placement.asset.sockets) {
       const id = `${parent.metadata?.partId ?? `instance:${parent.uniqueId}`}:${placement.id}:${socket.id}`;
       if (entries.has(id)) throw Error("Duplicate authored asset light owner");
-      const light = new PointLight(
-        id,
-        Vector3.FromArray(Array.from(socket.position)),
-        scene,
-      );
+      const position = Vector3.FromArray(Array.from(socket.position));
+      const light = socket.direction
+        ? new SpotLight(
+            id,
+            position,
+            Vector3.FromArray(Array.from(socket.direction)).normalize(),
+            socket.angle!,
+            1,
+            scene,
+          )
+        : new PointLight(id, position, scene);
       light.parent = node;
       light.diffuse = Color3.FromArray(Array.from(socket.color));
       light.specular = Color3.Black();
       light.range = socket.range;
+      light.falloffType = Light.FALLOFF_STANDARD;
       light.radius = 0.06;
       light.intensity = socket.intensity;
       light.shadowEnabled = false;
