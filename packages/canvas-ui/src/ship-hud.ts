@@ -89,8 +89,21 @@ export function drawShipActions(
     {
       id: "ship-cruise",
       label: state.cruiseActive ? "Cancel cruise" : "Cruise",
-      action: actions.cruise,
-      disabled: !state.cruiseAvailable,
+      action: actions.cruise
+        ? () => {
+            if (
+              ui.modal ||
+              ui.hits.some((hit) => hit.id === ui.focus && hit.edit)
+            )
+              return;
+            // Deliberate engagement returns keyboard control to gameplay;
+            // otherwise the paused interface mode would reject its own button.
+            ui.keyboard = false;
+            ui.focus = "";
+            actions.cruise?.();
+          }
+        : undefined,
+      disabled: !state.cruiseAvailable || !actions.cruise,
       selected: state.cruiseActive,
     },
     {

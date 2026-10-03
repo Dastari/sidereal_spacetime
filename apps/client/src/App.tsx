@@ -1045,6 +1045,8 @@ export default function App({
       document.hasFocus() &&
       !document.hidden &&
       !loadingRef.current &&
+      !servicePanelOpen.current &&
+      !isEditableTarget(document.activeElement) &&
       !gui.current?.blocked();
     const motion = current.ship;
     const forwardSpeed = motion
@@ -1886,6 +1888,8 @@ export default function App({
       }
       const blocked =
         loadingRef.current ||
+        !!servicePanelOpen.current ||
+        isEditableTarget(document.activeElement) ||
         (gui.current?.blocked() ?? true) ||
         document.hidden ||
         !!live.current.couch;
