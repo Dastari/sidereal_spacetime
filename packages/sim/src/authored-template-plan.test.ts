@@ -1,4 +1,10 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import {
+  readAuthoredTemplateKit,
+  AUTHORED_TEMPLATE_KIT_MANIFEST_SHA256,
+} from "@sidereal/content/authored-template-kit";
 import { EDITABLE_PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
@@ -527,5 +533,100 @@ describe("authored template presentation", () => {
     }
     expect(originalCaps).toBeGreaterThan(0);
     expect(cutCaps).toBeGreaterThan(0);
+  });
+
+  for (const shape of ["square", "arc3"] as const)
+    it(`assigns coincident ${shape} facades and corner seams to one volume`, () => {
+      const tile = { x: 0, y: 0, shape, rot: 0, reflected: false } as const;
+      const doc = simple(
+          [tile],
+          [
+            {
+              id: "duplicate",
+              kind: "hull",
+              height: "deck",
+              deck: 0,
+              tiles: [tile],
+            },
+          ],
+        ),
+        before = signature(doc),
+        plan = compileAuthoredTemplatePlan(doc, { catalog });
+      expect(
+        plan.instances.filter(
+          (r) =>
+            r.object.startsWith("duplicate:") &&
+            (r.piece.startsWith("hull.") || r.object.includes(":corner")),
+        ),
+      ).toEqual([]);
+      expect(signature(doc)).toEqual(before);
+      expect(plan).toEqual(compileAuthoredTemplatePlan(doc, { catalog }));
+    });
+
+  it("keeps the uncovered lower and upper facade bands around a coincident low owner", () => {
+    const tile = {
+      x: 0,
+      y: 0,
+      shape: "square",
+      rot: 0,
+      reflected: false,
+    } as const;
+    const doc = simple(
+      [tile],
+      [{ id: "tall", kind: "hull", height: "deck", deck: 0, tiles: [tile] }],
+    );
+    doc.volumes[0].height = "wing";
+    doc.volumes[0].kind = "plate";
+    const plan = compileAuthoredTemplatePlan(doc, { catalog });
+    const bands = plan.instances
+      .filter((r) => r.object.startsWith("tall:edge0:"))
+      .map((r) => [r.matrix[2][3], r.matrix[2][3] + r.matrix[2][2]]);
+    expect(bands).toEqual([
+      [0, 10 / 16],
+      [28 / 16, 43 / 16],
+    ]);
+    expect(
+      plan.instances
+        .filter((r) => r.object.startsWith("tall:corner0:"))
+        .map((r) => [r.matrix[2][3], r.matrix[2][3] + r.matrix[2][2]]),
+    ).toEqual(bands);
+  });
+
+  it("uses predominantly light roof fields with sparse native service modules", () => {
+    const all = EDITABLE_PREFAB_SHIPS.flatMap(
+        (doc) => compileAuthoredTemplatePlan(doc, { catalog }).instances,
+      ),
+      roofs = all.filter(
+        (r) => r.role === "roof" && r.piece.startsWith("roof."),
+      ),
+      light = roofs.filter((r) => r.piece.endsWith(".light")),
+      raised = roofs.filter((r) =>
+        /^roof\.square\.(vent|hatch|fan|box)$/.test(r.piece),
+      );
+    expect(light.length).toBeGreaterThan(roofs.length * 0.6);
+    expect(raised.length).toBeGreaterThan(0);
+    expect(raised.length).toBeLessThan(roofs.length * 0.1);
+    expect(roofs.some((r) => r.piece.endsWith(".accent"))).toBe(true);
+    for (const r of raised) expect(r.verticalProfile).toBeUndefined();
+  });
+
+  it("resolves every default template placement to the pinned native source pack", () => {
+    const bytes = readFileSync(
+        new URL(
+          "../../../assets/runtime/ship-study/template-authored-r001/manifest.json",
+          import.meta.url,
+        ),
+      ),
+      kit = readAuthoredTemplateKit(JSON.parse(bytes.toString("utf8"))),
+      ids = new Set(kit.pieces.map((p) => p.id));
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe(
+      AUTHORED_TEMPLATE_KIT_MANIFEST_SHA256,
+    );
+    for (const doc of EDITABLE_PREFAB_SHIPS)
+      for (const row of compileAuthoredTemplatePlan(doc, { catalog }).instances)
+        expect(
+          ids.has(row.piece),
+          `${doc.id}: ${row.object} -> ${row.piece}`,
+        ).toBe(true);
   });
 });

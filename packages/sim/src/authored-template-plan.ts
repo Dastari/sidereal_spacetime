@@ -189,6 +189,29 @@ function subtractConvex(poly: readonly Pt[], cut: readonly Pt[]): Pt[][] {
 }
 const variant = (doc: ShipPrefabDocumentV1, ...keys: (number | string)[]) =>
   ["a", "b", "c"][Math.floor(hash01(doc.id, ...keys) * 3)];
+/** Coherent maintenance spine and sparse service fields, independent of tile iteration. */
+const roofFinish = (
+  doc: ShipPrefabDocumentV1,
+  shape: string,
+  x: number,
+  y: number,
+  centreY: number,
+) => {
+  const distance = Math.abs(y + 0.5 - centreY),
+    fieldX = Math.floor(x / 4),
+    fieldY = Math.floor(distance / 4),
+    localX = ((x % 4) + 4) % 4,
+    localY = Math.floor(distance) % 4,
+    service = hash01(doc.id, "roof-service", fieldX, fieldY);
+  if (shape === "square" && localX === 1 && localY === 1) {
+    if (service < 0.28)
+      return ["vent", "hatch", "fan", "box"][
+        Math.floor(hash01(doc.id, "roof-module", fieldX, fieldY) * 4)
+      ];
+    if (service < 0.37) return "accent";
+  }
+  return distance <= 0.65 ? "plate" : "light";
+};
 
 /** Exact grammar tile transform, including reflection before quarter turns. */
 export function authoredTemplateTileMatrix(
@@ -258,16 +281,44 @@ function exposedBands(
   p: Pt,
   lo: number,
   hi: number,
+  face?: { boundary: Pt; outward: Pt },
 ): [number, number][] {
   const hidden = geoms
-    .filter((w) => w !== g && w.outline && insideOutline(w.outline, ...p))
-    .map(
-      (w) =>
-        [
-          (w.z[0] + w.volume.deck * G.deck.pitchTexels) * TEXEL,
-          (w.z[1] + w.volume.deck * G.deck.pitchTexels) * TEXEL,
-        ] as [number, number],
-    )
+    .flatMap((w, index) => {
+      if (w === g || !w.outline) return [];
+      const inside = insideOutline(w.outline, ...p);
+      const coincident =
+        face &&
+        index < geoms.indexOf(g) &&
+        [w.outline.outer, ...w.outline.holes].some((loop) =>
+          loop.some((a, i) =>
+            onSegment(face.boundary, a, loop[(i + 1) % loop.length]),
+          ),
+        ) &&
+        insideOutline(
+          w.outline,
+          face.boundary[0] - face.outward[0] * 0.001,
+          face.boundary[1] - face.outward[1] * 0.001,
+        ) &&
+        !insideOutline(
+          w.outline,
+          face.boundary[0] + face.outward[0] * 0.001,
+          face.boundary[1] + face.outward[1] * 0.001,
+        );
+      if (!inside && !coincident) return [];
+      // Exterior samples cannot distinguish coincident surfaces. The earlier
+      // volume owns only its actual visible height, including its backing skirt.
+      const offset = w.volume.deck * G.deck.pitchTexels * TEXEL;
+      const low = coincident
+        ? Math.max(
+            0,
+            w.z[0] - (w.volume.kind === "hull" ? G.tierRule.skirtTexels : 0),
+          )
+        : w.z[0];
+      return [
+        [low * TEXEL + offset, w.z[1] * TEXEL + offset] as [number, number],
+      ];
+    })
     .sort((a, b) => a[0] - b[0]);
   let bands: [number, number][] = [[lo, hi]];
   for (const [a, b] of hidden)
@@ -384,6 +435,10 @@ export function compileAuthoredTemplatePlan(
     const ztop = g.z[1] * TEXEL + deckOffset;
     const roofView = inhabited ? "flight" : "both";
     const loops = [g.outline!.outer, ...g.outline!.holes];
+    const centreY =
+      (Math.min(...g.outline!.outer.map((p) => p[1])) +
+        Math.max(...g.outline!.outer.map((p) => p[1]))) /
+      2;
     const glassRuns = loops.flatMap((loop) => canopySegments(doc, loop));
     const doors = interior?.doors.filter((d) => d.exterior) ?? [];
     const arcFacets: {
@@ -484,7 +539,9 @@ export function compileAuthoredTemplatePlan(
             if (!skylightCells.has(cell) && !bowGlass(t))
               add({
                 object: `${prefix}:roof`,
-                piece: `${reserved.has(cell) ? "floor" : "roof"}.${t.shape}.plate`,
+                piece: reserved.has(cell)
+                  ? `floor.${t.shape}.plate`
+                  : `roof.${t.shape}.${roofFinish(doc, t.shape, x, y, centreY)}`,
                 role: "roof",
                 matrix: horizontalMatrix(t, profile.top),
                 view: roofView,
@@ -554,6 +611,13 @@ export function compileAuthoredTemplatePlan(
           [centre[0] + radial[0] * r, centre[1] + radial[1] * r],
           zbase,
           ztop,
+          {
+            boundary: p,
+            outward: [
+              radial[0] * (spec.concave ? -1 : 1),
+              radial[1] * (spec.concave ? -1 : 1),
+            ],
+          },
         );
       });
       for (let i = 0; i < fs.length; i++) {
@@ -673,7 +737,10 @@ export function compileAuthoredTemplatePlan(
             high = profile
               ? Math.max(atHeight(profile.top, pa), atHeight(profile.top, pb))
               : ztop;
-          for (const [lo, hi] of exposedBands(g, geoms, sample, low, high)) {
+          for (const [lo, hi] of exposedBands(g, geoms, sample, low, high, {
+            boundary: p,
+            outward: [u[1], -u[0]],
+          })) {
             const base: AuthoredTemplateInstance = {
               object: `${v.id}:edge${ei}:${si}:${lo}${loops.indexOf(loop) ? `:loop${loops.indexOf(loop)}` : ""}`,
               piece: `hull.straight.${variant(doc, v.id, ei, si)}`,
@@ -743,6 +810,10 @@ export function compileAuthoredTemplatePlan(
             ],
             zbase,
             ztop,
+            {
+              boundary: [p[0] - u[0] * 0.02, p[1] - u[1] * 0.02],
+              outward: [u[1], -u[0]],
+            },
           ),
           bandsB = exposedBands(
             g,
@@ -753,6 +824,10 @@ export function compileAuthoredTemplatePlan(
             ],
             zbase,
             ztop,
+            {
+              boundary: [p[0] + w[0] * 0.02, p[1] + w[1] * 0.02],
+              outward: [w[1], -w[0]],
+            },
           );
         const tile = v.tiles.find(
           (t) =>
@@ -777,7 +852,7 @@ export function compileAuthoredTemplatePlan(
               {
                 object: `${v.id}:corner${i}:${lo}${loops.indexOf(loop) ? `:loop${loops.indexOf(loop)}` : ""}`,
                 piece: "post.normal",
-                role: "post",
+                role: "hull",
                 view: "both",
                 region: v.id,
                 matrix: [
