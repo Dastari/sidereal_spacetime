@@ -5,6 +5,7 @@ import {
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
 import { ShipSystemsPanel } from "./ShipSystemsPanel";
+import { FurnishingEditor } from "./FurnishingEditor";
 import {
   authoredFlightPresentation,
   passengerFlightAdmitted,
@@ -142,12 +143,19 @@ export default function App({
   )[0];
   const localShipId = useRef<string | undefined>(undefined);
   const [selectedObject, setSelectedObject] = useState<string>();
+  const [furnishingEdit, setFurnishingEdit] = useState<{
+    placementId: string;
+    name: string;
+    mode: "move" | "delete" | "snap";
+  }>();
   const [combatEnabled, setCombatEnabled] = useState(false);
   const [cruise] = useState(createCruiseControl);
   /** The DOM service panel opened from the system menu ("" when none). */
   const [servicePanel, setServicePanel] = useState("");
   const servicePanelOpen = useRef("");
-  servicePanelOpen.current = servicePanel;
+  servicePanelOpen.current = furnishingEdit
+    ? "furnishing-editor"
+    : servicePanel;
   const closeServicePanel = useCallback(() => setServicePanel(""), []);
   const onSignOutRef = useRef(onSignOut);
   onSignOutRef.current = onSignOut;
@@ -391,11 +399,21 @@ export default function App({
   const constructionInstance = constructionScene.instance;
   const sceneDocument = useRef({
     json: undefined as string | undefined,
+    furnishings: undefined as string | undefined,
+    furnishingRevision: undefined as bigint | undefined,
     version: 0,
   });
-  if (sceneDocument.current.json !== constructionInstance?.documentJson) {
+  if (
+    sceneDocument.current.json !== constructionInstance?.documentJson ||
+    sceneDocument.current.furnishings !==
+      constructionInstance?.furnishingsJson ||
+    sceneDocument.current.furnishingRevision !==
+      constructionInstance?.furnishingRevision
+  ) {
     sceneDocument.current = {
       json: constructionInstance?.documentJson,
+      furnishings: constructionInstance?.furnishingsJson,
+      furnishingRevision: constructionInstance?.furnishingRevision,
       version: sceneDocument.current.version + 1,
     };
   }
@@ -689,8 +707,12 @@ export default function App({
   // Prefab ships: inspect placed objects from the visited document (owner: full stats and live
   // power/throttle; accepted passenger: what is visibly installed only).
   const prefabShip = useMemo(
-    () => prefabShipOf(constructionInstance?.documentJson),
-    [constructionInstance?.documentJson],
+    () =>
+      prefabShipOf(
+        constructionInstance?.documentJson,
+        constructionInstance?.furnishingsJson,
+      ),
+    [constructionInstance?.documentJson, constructionInstance?.furnishingsJson],
   );
   const ownsCurrentShip =
     !!c &&
@@ -719,8 +741,22 @@ export default function App({
             }
           : {},
         actor,
+        prefabShip?.furnishings,
       )
     : undefined;
+  useEffect(() => {
+    setFurnishingEdit(undefined);
+  }, [
+    actor?.id,
+    actor?.connected,
+    actor?.shipId,
+    constructionInstance?.id,
+    constructionInstance?.revision,
+    constructionInstance?.blueprintSha256,
+    selectedObject,
+    ownsCurrentShip,
+    c,
+  ]);
   const inspectedSeat = interactions.find(
     (row) => row.placementId === selectedObject && row.kind === "seat",
   );
@@ -734,6 +770,7 @@ export default function App({
           inspectedSeat.reachable &&
           (!inspectedSeat.occupied || inspectedSeat.seatedByYou),
       },
+      ...prefabDetails.actions,
     ];
     prefabDetails.status = inspectedSeat.seatedByYou
       ? "You are seated here"
@@ -792,6 +829,9 @@ export default function App({
           (row) => row.characterId === actor.id,
         )
       : undefined;
+  useEffect(() => {
+    if (ownVitals?.state !== "active") setFurnishingEdit(undefined);
+  }, [ownVitals?.state]);
   const flightComputer =
     c && ship
       ? [...c.db.ownAuthoredFlightPowerFittings.iter()].find(
@@ -1135,6 +1175,33 @@ export default function App({
   const objectCommand = (action: string, placementId?: string) => {
     const connectionNow = connection.current;
     if (
+      ["furnishing-move", "furnishing-delete", "furnishing-snap"].includes(
+        action,
+      )
+    ) {
+      const details = live.current.uiState.objectDetails;
+      if (
+        !connectionNow?.isActive ||
+        !live.current.actor?.connected ||
+        !live.current.constructionInstance ||
+        !placementId ||
+        details?.placementId !== placementId ||
+        !details.actions.some((item) => item.id === action && item.enabled)
+      )
+        return;
+      setFurnishingEdit({
+        placementId,
+        name: details.name,
+        mode:
+          action === "furnishing-delete"
+            ? "delete"
+            : action === "furnishing-snap"
+              ? "snap"
+              : "move",
+      });
+      return;
+    }
+    if (
       action === "open-storage" &&
       connectionNow &&
       live.current.actor?.connected
@@ -1147,6 +1214,7 @@ export default function App({
           live.current.constructionInstance && {
             ...visit,
             documentJson: live.current.constructionInstance.documentJson,
+            furnishingsJson: live.current.constructionInstance.furnishingsJson,
           },
       );
       setSelectedObject(undefined);
@@ -1310,7 +1378,9 @@ export default function App({
                   openService: setServicePanel,
                   closeService: () => {
                     if (!servicePanelOpen.current) return false;
-                    setServicePanel("");
+                    if (servicePanelOpen.current === "furnishing-editor")
+                      setFurnishingEdit(undefined);
+                    else setServicePanel("");
                     return true;
                   },
                   signOut: () => onSignOutRef.current(),
@@ -1548,6 +1618,8 @@ export default function App({
                       ...visit,
                       documentJson:
                         live.current.constructionInstance.documentJson,
+                      furnishingsJson:
+                        live.current.constructionInstance.furnishingsJson,
                     }
                   : undefined,
               );
@@ -1602,6 +1674,8 @@ export default function App({
     sceneKey,
     constructionInstance?.id,
     constructionInstance?.documentJson,
+    constructionInstance?.furnishingsJson,
+    constructionInstance?.furnishingRevision,
     constructionVisit?.visitId,
     constructionScene.egress?.proofHash,
     constructionScene.egress?.stairId,
@@ -1969,6 +2043,7 @@ export default function App({
     const down = (e: KeyboardEvent) => {
       if (
         isEditableTarget(e.target) ||
+        !!servicePanelOpen.current ||
         loadingRef.current ||
         gui.current?.blocked() ||
         !actor?.connected ||
@@ -2088,6 +2163,8 @@ export default function App({
             (liveState.uiState.interior || !!liveState.evaPhase),
           blocked:
             loadingRef.current ||
+            !!servicePanelOpen.current ||
+            isEditableTarget(document.activeElement) ||
             !focused ||
             document.hidden ||
             (gui.current?.blocked() ?? true) ||
@@ -2140,6 +2217,7 @@ export default function App({
       if (
         event.button === 0 &&
         live.current.combatEnabled &&
+        !servicePanelOpen.current &&
         !gui.current?.pointerBlocked()
       )
         input.trigger(true);
@@ -2154,6 +2232,8 @@ export default function App({
         event.code === "KeyR" &&
         !event.repeat &&
         live.current.combatEnabled &&
+        !servicePanelOpen.current &&
+        !isEditableTarget(event.target) &&
         !gui.current?.blocked()
       )
         void input.reload();
@@ -2249,6 +2329,29 @@ export default function App({
             </small>
           </aside>
         )}
+        {furnishingEdit &&
+          constructionInstance &&
+          c?.isActive &&
+          ownsCurrentShip && (
+            <FurnishingEditor
+              key={`${constructionInstance.id}:${furnishingEdit.placementId}:${furnishingEdit.mode}`}
+              instance={constructionInstance}
+              placementId={furnishingEdit.placementId}
+              name={furnishingEdit.name}
+              mode={furnishingEdit.mode}
+              submit={(request) => {
+                const current = connection.current;
+                if (
+                  !current?.isActive ||
+                  !live.current.actor?.connected ||
+                  live.current.constructionInstance?.id !== request.instanceId
+                )
+                  return Promise.reject(new Error("Ship edit context changed"));
+                return current.reducers.editShipFurnishing(request);
+              }}
+              close={() => setFurnishingEdit(undefined)}
+            />
+          )}
         {!awaitingShip && (
           <>
             <ShipSystemsPanel
