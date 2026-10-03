@@ -269,7 +269,15 @@ export async function loadAuthoredStudy(
   palette: Readonly<Record<string, AuthoredPaletteInput>>,
   origin: readonly [number, number],
   fetchPiece: (piece: AuthoredPieceInput) => Promise<Uint8Array>,
-  options: { batchRegions?: ReadonlyMap<string, string> } = {},
+  options: {
+    batchRegions?: ReadonlyMap<string, string>;
+    /** A bounded per-piece policy also partitions material identity/pooling. */
+    emissiveStrength?: (
+      piece: AuthoredPieceInput,
+      material: string,
+      source: number,
+    ) => number;
+  } = {},
 ) {
   if (!scene.useRightHandedSystem)
     throw Error("Authored study needs the normal right-handed game scene");
@@ -351,26 +359,43 @@ export async function loadAuthoredStudy(
             throw Error(
               `Imported authored material lost its source definition: ${original.name}`,
             );
-          const family = materialFamily(definition, palette),
-            key = authoredMaterialIdentity(document, definition, family);
+          const family = materialFamily(definition, palette);
+          const sourceStrength = definition.extensions
+            ? (object(
+                object(definition.extensions).KHR_materials_emissive_strength ??
+                  {},
+              ).emissiveStrength ?? 1)
+            : 1;
+          if (
+            typeof sourceStrength !== "number" ||
+            !Number.isFinite(sourceStrength) ||
+            sourceStrength < 0
+          )
+            throw Error("Invalid authored emission strength");
+          const gameStrength =
+            options.emissiveStrength?.(piece, original.name, sourceStrength) ??
+            Math.min(sourceStrength, 1);
+          if (
+            !Number.isFinite(gameStrength) ||
+            gameStrength < 0 ||
+            gameStrength > sourceStrength
+          )
+            throw Error("Invalid authored game emission strength");
+          const sourceKey = authoredMaterialIdentity(
+            document,
+            definition,
+            family,
+          );
+          const key =
+            gameStrength === Math.min(sourceStrength, 1)
+              ? sourceKey
+              : canonical([sourceKey, gameStrength]);
           let pooled = materials.get(key);
           if (!pooled) {
             pooled = original;
             materials.set(key, pooled);
-            const sourceStrength = definition.extensions
-              ? (object(
-                  object(definition.extensions)
-                    .KHR_materials_emissive_strength ?? {},
-                ).emissiveStrength ?? 1)
-              : 1;
-            if (
-              typeof sourceStrength !== "number" ||
-              !Number.isFinite(sourceStrength) ||
-              sourceStrength < 0
-            )
-              throw Error("Invalid authored emission strength");
             applySurfaceFinish(pooled, family);
-            pooled.emissiveIntensity = Math.min(sourceStrength, 1);
+            pooled.emissiveIntensity = gameStrength;
             setPbrLightBudget(pooled, GAME_PBR_LIGHT_LIMIT);
             materialPolicy.push({
               name: original.name,

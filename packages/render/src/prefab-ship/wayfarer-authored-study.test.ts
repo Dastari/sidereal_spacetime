@@ -463,3 +463,70 @@ it("cancels a pending asset fetch when its scene is disposed", async () => {
   expect(scene.textures).toHaveLength(0);
   engine.dispose();
 });
+
+it("bounded piece emission partitions shared cyan materials without brightening unrelated source uses", async () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  const source = new Uint8Array(
+    readFileSync(
+      new URL(
+        "../../../../assets/runtime/ship-study/wayfarer-authored-r001/glb/props/bridge/prop.props_bridge.wall_light_cyan_v.glb",
+        import.meta.url,
+      ),
+    ),
+  );
+  const manifest = JSON.parse(
+    readFileSync(
+      new URL(
+        "../../../../assets/runtime/ship-study/wayfarer-authored-r001/manifest.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  const palette = manifest.palette;
+  const lamp = {
+    id: "lamp",
+    file: "",
+    sha256: "9614d20e384a9a4d4d89bcee74f319a2418263d456853ae14917d87b1d43065b",
+    triangles: 1080,
+    frame: "piece-local" as const,
+  };
+  const pieces = [lamp, { ...lamp, id: "unrelated" }];
+  const candidate = await loadAuthoredStudy(
+    scene,
+    pieces,
+    pieces.map((piece) => ({
+      object: piece.id,
+      piece: piece.id,
+      role: "room-content",
+      matrix: identity,
+    })),
+    palette,
+    [0, 0],
+    async () => source,
+    {
+      emissiveStrength: (piece, material, strength) =>
+        Math.min(
+          strength,
+          material === "emit_a" && piece.id === "lamp" ? 1.7 : 1,
+        ),
+    },
+  );
+  const cyan = candidate.meshes.filter(
+    (mesh) => mesh.material?.name === "emit_a",
+  );
+  expect(cyan).toHaveLength(2);
+  expect(
+    cyan.map((mesh) => (mesh.material as PBRMaterial).emissiveIntensity).sort(),
+  ).toEqual([1, 1.7]);
+  expect(cyan[0].material).not.toBe(cyan[1].material);
+  expect(
+    candidate.meshes.filter((mesh) => mesh.material?.name === "emit_b"),
+  ).toHaveLength(1);
+  expect(candidate.report.placedTriangles).toBe(2160);
+  candidate.dispose();
+  scene.dispose();
+  engine.dispose();
+});
