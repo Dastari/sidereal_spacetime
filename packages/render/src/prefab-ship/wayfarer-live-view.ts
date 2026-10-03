@@ -35,10 +35,20 @@ import {
   prefabToShipLocal,
 } from "./frames";
 import { loadAuthoredStudy } from "./wayfarer-authored-study";
+import {
+  applyFurnishingMatrix,
+  type FurnishingOverrides,
+} from "@sidereal/content/wayfarer-furnishings";
+import {
+  WAYFARER_POST_APERTURES,
+  wayfarerEmitterStrength,
+  wayfarerNearWallPlacements,
+} from "./wayfarer-authored-details";
 import type { PrefabShipView, PrefabShipViewOptions } from "./ship-view";
 
 const BASE = "/assets/ship-study/wayfarer-authored-r001/";
 const FLIGHT_BASE = "/assets/ship-study/wayfarer-dorsal-r001/";
+const DETAILS_BASE = "/assets/ship-study/wayfarer-details-r001/";
 const RCS = {
   id: "engine.rcs.md.wayfarer-r001",
   file: "rcs.md.glb",
@@ -80,16 +90,21 @@ const LOUNGE = new Set([
 export function wayfarerVisiblePlacements(
   instances: readonly AuthoredStudyInstance[],
   exteriorOnly: boolean,
-) {
+  furnishings: FurnishingOverrides = {},
+): AuthoredStudyInstance[] {
   return instances
     .filter(
       (row) =>
         !OMITTED.has(row.object) && (!exteriorOnly || EXTERIOR.has(row.role)),
     )
-    .map((row) => ({
-      ...row,
-      matrix: applyWayfarerAuthoredPlacementEdits(row.object, row.matrix),
-    }));
+    .flatMap((row) => {
+      const matrix = applyFurnishingMatrix(
+        row.object,
+        applyWayfarerAuthoredPlacementEdits(row.object, row.matrix),
+        furnishings,
+      );
+      return matrix ? [{ ...row, matrix }] : [];
+    });
 }
 
 async function bytes(url: string, pin?: string) {
@@ -105,7 +120,7 @@ async function bytes(url: string, pin?: string) {
 export async function createWayfarerLiveView(
   scene: Scene,
   doc: ShipPrefabDocumentV1,
-  options: PrefabShipViewOptions,
+  options: PrefabShipViewOptions & { furnishings?: FurnishingOverrides },
 ): Promise<PrefabShipView> {
   assertWayfarerPrefabContract(doc);
   const root = new TransformNode(`prefab-ship:${doc.id}`, scene);
@@ -154,7 +169,10 @@ export async function createWayfarerLiveView(
     const instances = wayfarerVisiblePlacements(
       study.instances,
       options.exteriorOnly === true,
+      options.furnishings,
     );
+    if (!options.exteriorOnly)
+      instances.push(...wayfarerNearWallPlacements(study.pieces));
     const geometries = doc.volumes.map(volumeGeometry);
     for (const mount of doc.mounts.filter((mount) =>
       mount.component.startsWith("rcs."),
@@ -191,14 +209,19 @@ export async function createWayfarerLiveView(
       candidate = await loadAuthoredStudy(
         scene,
         [
-          ...study.pieces.filter((piece) => used.has(piece.id)),
+          ...study.pieces
+            .filter((piece) => used.has(piece.id))
+            .map((piece) => WAYFARER_POST_APERTURES[piece.id] ?? piece),
           ...(used.has(RCS.id) ? [RCS] : []),
         ],
         instances,
         study.palette,
         [0, 0],
-        (piece) => bytes(`${BASE}${piece.file}`),
-        { batchRegions: regions },
+        (piece) =>
+          bytes(
+            `${WAYFARER_POST_APERTURES[piece.id] ? DETAILS_BASE : BASE}${piece.file}`,
+          ),
+        { batchRegions: regions, emissiveStrength: wayfarerEmitterStrength },
       );
     const flightInstances = [
       ...flight.instances,
@@ -213,6 +236,7 @@ export async function createWayfarerLiveView(
       (piece) =>
         bytes(`${piece.id === RCS.id ? BASE : FLIGHT_BASE}${piece.file}`),
       {
+        emissiveStrength: wayfarerEmitterStrength,
         batchRegions: new Map(
           flightInstances.map((row) => [row.object, "exterior/flight"]),
         ),
