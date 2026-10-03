@@ -13,6 +13,11 @@ export const SHIP_GLOW_PROFILE = {
   mainTextureFixedSize: 512,
 } as const;
 
+export const AUTHORED_ASSET_GLOW_PROFILE = {
+  blurKernelSize: 32,
+  unrelatedRadianceCompensation: 2 * SHIP_GLOW_PROFILE.intensity,
+} as const;
+
 /** Eligible authored assets in any context; keep one target/pass and an explicit capability fallback. */
 export function authoredGlowTargetOptions(scene: Scene, eligible: boolean) {
   const caps = scene.getEngine().getCaps();
@@ -22,7 +27,13 @@ export function authoredGlowTargetOptions(scene: Scene, eligible: boolean) {
     caps.textureHalfFloatLinearFiltering;
   return {
     assetHalo,
-    ...(assetHalo ? { mainTextureType: Constants.TEXTURETYPE_HALF_FLOAT } : {}),
+    ...(assetHalo
+      ? {
+          mainTextureType: Constants.TEXTURETYPE_HALF_FLOAT,
+          alphaBlendingMode: Constants.ALPHA_ONEONE,
+          blurKernelSize: AUTHORED_ASSET_GLOW_PROFILE.blurKernelSize,
+        }
+      : {}),
   };
 }
 
@@ -48,7 +59,11 @@ export function applyShipGlowProfile(
       (source.emissiveIntensity ?? 1) *
       (/emit_b|radiator/.test(`${material.name} ${mesh.name}`) ? 0.3 : 0.85);
     // Descriptor HDR must not release the previous UNORM ceiling on unrelated fixtures.
-    const channel = (n: number) => (options.assetHalo ? Math.min(1, n) : n);
+    const channel = (n: number) =>
+      options.assetHalo
+        ? Math.min(1, n) *
+          AUTHORED_ASSET_GLOW_PROFILE.unrelatedRadianceCompensation
+        : n;
     result.set(
       channel(color.r * gain),
       channel(color.g * gain),

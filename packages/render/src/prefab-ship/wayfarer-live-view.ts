@@ -53,9 +53,9 @@ import type { PrefabShipView, PrefabShipViewOptions } from "./ship-view";
 const BASE = "/assets/ship-study/wayfarer-authored-r001/";
 const FLIGHT_BASE = "/assets/ship-study/wayfarer-dorsal-r001/";
 const OBJECT_LIGHTING_URL =
-  "/assets/ship-study/wayfarer-object-lighting-r001/descriptor.json";
+  "/assets/ship-study/wayfarer-object-lighting-r002/descriptor.json";
 const OBJECT_LIGHTING_PIN =
-  "aa844b39918aaaf4d42ff6c160944d323b180fe7a8b28b5619c06faabc4c54fb";
+  "58e7ab323edbadc488dcbc707e40a431249011bebf59ecfe205df1359540a017";
 const DETAILS_BASE = "/assets/ship-study/wayfarer-details-r001/";
 const RCS = {
   id: "engine.rcs.md.wayfarer-r001",
