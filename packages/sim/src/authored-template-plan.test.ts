@@ -484,4 +484,48 @@ describe("authored template presentation", () => {
       ),
     ).toHaveLength(4);
   });
+
+  it("partitions the Wren bow at the deck cut while retaining both native cap profiles", () => {
+    const doc = prefabById("fed.s.wren")!,
+      plan = compileAuthoredTemplatePlan(doc, { catalog });
+    let originalCaps = 0,
+      cutCaps = 0;
+    const capPoint = (r: AuthoredTemplateInstance, x: number, y: number) => {
+      const p = sourcePoint(r, x, y, 1),
+        h = r.verticalProfile!.top;
+      p[2] = h[0] * p[0] + h[1] * p[1] + h[2];
+      return p;
+    };
+    for (const flight of plan.instances.filter(
+      (r) =>
+        r.view === "flight" &&
+        r.verticalProfile &&
+        r.piece.startsWith("hull.straight."),
+    )) {
+      const prefix = flight.object.replace(/:flight$/, ":deck"),
+        rows = plan.instances.filter((r) => r.object.startsWith(prefix)),
+        volume = doc.volumes.find((v) => v.id === flight.region)!,
+        cut = (G.deck.shellCutTexels + volume.deck * G.deck.pitchTexels) / 16;
+      expect(rows).not.toHaveLength(0);
+      for (const row of rows)
+        expect((row.clipPlanes ?? []).every((p) => p[2] >= 0)).toBe(true);
+      for (let i = 0; i <= 20; i++) {
+        const x = i / 20,
+          original = capPoint(flight, x, -0.1);
+        if (!kept(flight, original)) continue;
+        const matching = rows.filter((r) => kept(r, capPoint(r, x, -0.1)));
+        expect(matching.length).toBeGreaterThanOrEqual(1);
+        for (const row of matching) {
+          expect(capPoint(row, x, -0.1)[2]).toBeCloseTo(
+            Math.min(original[2], cut),
+            8,
+          );
+          if (row.object.endsWith(":below")) originalCaps++;
+          if (row.object.endsWith(":above")) cutCaps++;
+        }
+      }
+    }
+    expect(originalCaps).toBeGreaterThan(0);
+    expect(cutCaps).toBeGreaterThan(0);
+  });
 });

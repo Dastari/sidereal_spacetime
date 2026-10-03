@@ -422,12 +422,34 @@ export function compileAuthoredTemplatePlan(
       const top = Math.min(hi, G.deck.shellCutTexels * TEXEL + deckOffset);
       if (top <= lo + EPS) return;
       if (row.verticalProfile) {
-        add({
-          ...row,
-          object: row.object + ":deck",
-          view: "deck",
-          clipPlanes: [...(row.clipPlanes ?? []), [0, 0, -1, top]],
-        });
+        const profile = row.verticalProfile,
+          [ax, ay, c] = profile.top;
+        const clips = (row.clipPlanes ?? []).filter((p) => p[2] >= 0);
+        if (Math.abs(ax) + Math.abs(ay) < EPS) {
+          add({
+            ...row,
+            object: row.object + ":deck",
+            view: "deck",
+            clipPlanes: clips,
+            verticalProfile: { ...profile, top: [0, 0, Math.min(c, top)] },
+          });
+        } else {
+          // Partition in XY at the bow/cut intersection. Each half keeps its
+          // complete native cap; both profiles meet at exactly the same height.
+          add({
+            ...row,
+            object: row.object + ":deck:below",
+            view: "deck",
+            clipPlanes: [...clips, [-ax, -ay, 0, top - c]],
+          });
+          add({
+            ...row,
+            object: row.object + ":deck:above",
+            view: "deck",
+            clipPlanes: [...clips, [ax, ay, 0, c - top]],
+            verticalProfile: { ...profile, top: [0, 0, top] },
+          });
+        }
       } else {
         const matrix = row.matrix.map((r) => [...r]) as AuthoredTemplateMatrix;
         matrix[2][2] = top - lo;
