@@ -53,6 +53,7 @@ test("glow batches retain triangle placement lookup, independent hidden decks, f
     expect(wall.layerMask).toBe(0);
     expect(wall.isPickable).toBe(false);
     expect(wall.metadata.role).toBe("proxy");
+    expect(wall.metadata.glowOccluder).toBe(true);
     expect(a.material).toBe(mat);
     expect(a.getVerticesData("position")).toEqual(originalPositions);
     root.position.x = 20;

@@ -4,6 +4,7 @@ import type { Material } from "@babylonjs/core/Materials/material";
 import type { SubMesh } from "@babylonjs/core/Meshes/subMesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { PBRBaseMaterial } from "@babylonjs/core/Materials/PBR/pbrBaseMaterial";
+import type { Light } from "@babylonjs/core/Lights/light";
 
 const staticRoles = new Set([
   "hull",
@@ -33,6 +34,8 @@ export function createStaticMaterialFreeze(scene: Scene) {
       dirty: boolean;
       owned: boolean;
       bindings: Set<SubMesh>;
+      lights?: readonly Light[];
+      frameLights?: readonly Light[];
     }
   >();
   let epoch = 0,
@@ -103,6 +106,7 @@ export function createStaticMaterialFreeze(scene: Scene) {
           entry.used = false;
           entry.dirty = false;
           entry.bindings.clear();
+          entry.frameLights = undefined;
           entry.eligible =
             !!eligible &&
             (material instanceof StandardMaterial ||
@@ -124,6 +128,32 @@ export function createStaticMaterialFreeze(scene: Scene) {
             : sub;
         if (mesh instanceof InstancedMesh) entry.bindings.add(binding);
         if (mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0) {
+          const lit = material as Material & {
+            maxSimultaneousLights?: number;
+            disableLighting?: boolean;
+          };
+          const lights =
+            scene.lightsEnabled && !lit.disableLighting
+              ? mesh.lightSources.slice(0, lit.maxSimultaneousLights ?? 4)
+              : [];
+          const sameLights = (a: readonly Light[], b: readonly Light[]) =>
+            a.length === b.length && a.every((light, i) => light === b[i]);
+          if (entry.frameLights && !sameLights(entry.frameLights, lights))
+            entry.eligible = false;
+          else if (!entry.frameLights) {
+            entry.frameLights = lights;
+            // WebGL can skip binding frozen material uniforms on an adjacent
+            // draw with the same effect. Never carry a previous receiver's UBO.
+            if (
+              entry.owned &&
+              entry.lights &&
+              !sameLights(entry.lights, lights)
+            ) {
+              material.unfreeze();
+              entry.owned = false;
+            }
+            entry.lights = lights;
+          }
           entry.used = true;
           // A new/off-screen copy has no ready draw wrapper yet. Babylon still
           // compiles that first use while the shared material is frozen.

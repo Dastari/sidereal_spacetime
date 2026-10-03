@@ -3,6 +3,8 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { PointLight } from "@babylonjs/core/Lights/pointLight";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { MaterialDefines } from "@babylonjs/core/Materials/materialDefines";
 import type { Effect } from "@babylonjs/core/Materials/effect";
 import {
@@ -150,6 +152,64 @@ test("instances use the source shader readiness even when the prototype is outsi
   owner.dispose();
   source.subMeshes[0].setEffect(null);
   source.dispose();
+  scene.dispose();
+  engine.dispose();
+});
+
+test("shared compiled static material stays live across different receiver light bindings", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const material = new StandardMaterial("pooled", scene);
+  material.maxSimultaneousLights = 1;
+  const a = CreateBox("room-a", {}, scene),
+    b = CreateBox("room-b", {}, scene);
+  for (const mesh of [a, b]) {
+    mesh.material = material;
+    mesh.metadata = { role: "hull" };
+    const defines = new MaterialDefines();
+    defines.markAsProcessed();
+    mesh.subMeshes[0].setEffect({ isReady: () => true } as Effect, defines);
+  }
+  const ownA = new PointLight("light-a", Vector3.Zero(), scene);
+  const ownB = new PointLight("light-b", Vector3.Zero(), scene);
+  ownA.includedOnlyMeshes = [a];
+  ownB.includedOnlyMeshes = [b];
+  const owner = createStaticMaterialFreeze(scene);
+  const tick = () => {
+    // NullEngine has no real shader compilation; model its completed frame.
+    for (const mesh of [a, b]) {
+      const defines = mesh.subMeshes[0]._drawWrapper.defines;
+      if (defines && typeof defines !== "string") defines.markAsProcessed();
+    }
+    owner.prepare();
+    scene.onBeforeRenderObservable.notifyObservers(scene);
+    scene.onAfterRenderObservable.notifyObservers(scene);
+  };
+  tick();
+  expect(material.isFrozen).toBe(false);
+  // Sharing is safe again when the actual ordered contribution matches.
+  ownA.includedOnlyMeshes = [a, b];
+  ownB.setEnabled(false);
+  a._resyncLightSources();
+  b._resyncLightSources();
+  tick();
+  expect(material.isFrozen).toBe(true);
+  ownB.setEnabled(true);
+  ownB.includedOnlyMeshes = [b];
+  ownA.includedOnlyMeshes = [a];
+  a._resyncLightSources();
+  b._resyncLightSources();
+  scene.onBeforeRenderObservable.notifyObservers(scene);
+  expect(material.isFrozen).toBe(false);
+  // A light change in a single shared use must also release the previous UBO.
+  b.isVisible = false;
+  tick();
+  expect(material.isFrozen).toBe(true);
+  a.lightSources.splice(0, a.lightSources.length, ownB);
+  scene.onBeforeRenderObservable.notifyObservers(scene);
+  expect(material.isFrozen).toBe(false);
+  owner.dispose();
+  for (const mesh of [a, b]) mesh.subMeshes[0].setEffect(null);
   scene.dispose();
   engine.dispose();
 });

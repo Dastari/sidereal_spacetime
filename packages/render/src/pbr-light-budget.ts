@@ -1,5 +1,6 @@
 import type { AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import type { Scene } from "@babylonjs/core/scene";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Light } from "@babylonjs/core/Lights/light";
 import { ShadowLight } from "@babylonjs/core/Lights/shadowLight";
 import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
@@ -139,7 +140,10 @@ export function createPbrLightBudget(scene: Scene) {
     throw new Error("Scene already owns a PBR light budget");
   activeControllers.add(scene);
   const r = registry(scene);
-  let previous: ReadonlySet<string> = new Set();
+  const previous = new WeakMap<
+    AbstractMesh,
+    Map<number, ReadonlySet<string>>
+  >();
   let disposed = false;
   const limit = pbrLightLimit(pbrLightCapabilities(scene.getEngine()));
   const guards = new Map<Material, () => void>();
@@ -280,25 +284,12 @@ export function createPbrLightBudget(scene: Scene) {
             shadowEligible: false,
           };
         });
-      // Selection ranks only; the existing Graphics/power/shadow owners retain
-      // enabled state. selectedIds is rank ordered; decisions is input ordered.
-      const ranked = [
-        ...selectLocalLights(candidates, { focus }, "all", previous)
-          .selectedIds,
-      ];
-      previous = new Set(ranked.slice(0, Math.max(0, limit - globals.length)));
-      const rank = new Map(ranked.map((id, index) => [id, index]));
       const locals = enabled
         .filter((light) => r.locals.has(light))
-        .sort(
-          (a, b) =>
-            (rank.get(r.locals.get(a)!) ?? Infinity) -
-            (rank.get(r.locals.get(b)!) ?? Infinity),
-        );
+        .sort((a, b) => (r.locals.get(a)! < r.locals.get(b)! ? -1 : 1));
       const other = enabled.filter(
         (light) => !r.protected.has(light) && !r.locals.has(light),
       );
-      const ordered = [...globals, ...locals, ...other];
       // InstancedMesh.lightSources delegates to its prototype, as does shader
       // preparation. Visit that owner once even when the prototype is detached.
       const owners = new Set(
@@ -311,7 +302,75 @@ export function createPbrLightBudget(scene: Scene) {
           ),
       );
       for (const mesh of owners) {
-        const next = ordered.filter((light) => light.canAffectMesh(mesh));
+        const boundMaterials =
+          mesh.material instanceof MultiMaterial
+            ? mesh.material.subMaterials
+            : [mesh.material];
+        const contributionCaps = [
+          ...new Set(
+            boundMaterials.map((material) => {
+              const configured = material as
+                | (Material & {
+                    maxSimultaneousLights?: number;
+                    disableLighting?: boolean;
+                  })
+                | null;
+              if (configured?.disableLighting) return 0;
+              const cap = configured?.maxSimultaneousLights;
+              return typeof cap === "number" && Number.isFinite(cap)
+                ? Math.max(0, Math.floor(cap))
+                : limit;
+            }),
+          ),
+        ].sort((a, b) => a - b);
+        const visibleLimit = Math.max(0, ...contributionCaps);
+        const meshGlobals = globals.filter((light) =>
+            light.canAffectMesh(mesh),
+          ),
+          meshLocals = locals.filter((light) => light.canAffectMesh(mesh));
+        const incumbents =
+          previous.get(mesh) ?? new Map<number, ReadonlySet<string>>();
+        const admitted = new Set<string>(),
+          admittedLights: Light[] = [];
+        // A multi-material's smaller cap needs its own relevant prefix. Build
+        // nested admitted sets, each stable until that prefix's membership changes.
+        for (const cap of contributionCaps) {
+          const slots = Math.max(0, cap - meshGlobals.length - admitted.size);
+          const remaining = meshLocals.filter(
+            (light) => !admitted.has(r.locals.get(light)!),
+          );
+          const ids = new Set(remaining.map((light) => r.locals.get(light)!));
+          const selected =
+            remaining.length <= slots
+              ? ids
+              : new Set(
+                  [
+                    ...selectLocalLights(
+                      candidates.filter((candidate) => ids.has(candidate.id)),
+                      { focus },
+                      "all",
+                      incumbents.get(cap),
+                    ).selectedIds,
+                  ].slice(0, slots),
+                );
+          // Camera relevance controls admission, never ordinal churn within an
+          // unchanged set. Every fitting fixture therefore keeps the same slot.
+          for (const light of remaining)
+            if (selected.has(r.locals.get(light)!)) {
+              admitted.add(r.locals.get(light)!);
+              admittedLights.push(light);
+            }
+          incumbents.set(cap, new Set(admitted));
+        }
+        for (const cap of incumbents.keys())
+          if (!contributionCaps.includes(cap)) incumbents.delete(cap);
+        previous.set(mesh, incumbents);
+        const next = [
+          ...meshGlobals,
+          ...admittedLights,
+          ...meshLocals.filter((light) => !admitted.has(r.locals.get(light)!)),
+          ...other.filter((light) => light.canAffectMesh(mesh)),
+        ];
         const old = mesh.lightSources;
         const capChanged =
           mesh.material instanceof MultiMaterial
@@ -325,9 +384,6 @@ export function createPbrLightBudget(scene: Scene) {
           old.every((light, i) => light === next[i])
         )
           continue;
-        const visibleLimit = isBudgetMaterial(mesh.material)
-          ? mesh.material.maxSimultaneousLights
-          : limit;
         const effectiveChanged =
           capChanged ||
           old.slice(0, visibleLimit).length !==
@@ -344,7 +400,6 @@ export function createPbrLightBudget(scene: Scene) {
     dispose() {
       if (disposed) return;
       disposed = true;
-      previous = new Set();
       activeControllers.delete(scene);
       scene.onNewMaterialAddedObservable.remove(newMaterial);
       Material.OnEventObservable.remove(createdMaterial);

@@ -40,7 +40,9 @@ export function createRenderEngine(
 ) {
   return chooseRenderEngine(requested, {
     webgl: () =>
-      new Engine(canvas, true, {
+      // Scene AA is owned by antialiasing-pipeline. The presentation pass is a
+      // resolved full-screen image, so a second multisampled target adds cost.
+      new Engine(canvas, false, {
         preserveDrawingBuffer: true,
         stencil: true,
         useLargeWorldRendering: true,

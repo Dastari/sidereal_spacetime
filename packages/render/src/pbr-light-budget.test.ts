@@ -254,7 +254,7 @@ test("protected globals beat actual shadow-priority locals, with four nearest ta
     globals[3],
     globals[0],
   ]);
-  expect(mesh.lightSources.slice(4, 8)).toEqual(tasks.slice(4).reverse());
+  expect(mesh.lightSources.slice(4, 8)).toEqual(tasks.slice(4));
   expect(tasks.every((l) => l.isEnabled())).toBe(true);
   expect(tasks[0].shadowEnabled).toBe(true);
   expect(globals.every((l) => !l.shadowEnabled)).toBe(true);
@@ -400,8 +400,8 @@ test("does not change authored receivers, power or shadow decisions", () => {
   expect(only.includedOnlyMeshes[0]).toBe(other);
 });
 
-test("stable owner ties ignore creation order and parent motion uses current world position", () => {
-  const { scene, mesh, budget } = setup();
+test("stable slots ignore creation order; over-budget admission uses current parent position", () => {
+  const { scene, mesh, material, budget } = setup();
   const z = local(scene, "owner-z", 0),
     a = local(scene, "owner-a", 0);
   const parent = new TransformNode("ship", scene);
@@ -409,6 +409,9 @@ test("stable owner ties ignore creation order and parent motion uses current wor
   budget.update(focus);
   expect(mesh.lightSources).toEqual([a, z]);
   parent.position.x = 100;
+  expect(budget.update(focus)).toBe(false);
+  expect(mesh.lightSources).toEqual([a, z]);
+  material.maxSimultaneousLights = 1;
   budget.update(focus);
   expect(mesh.lightSources).toEqual([z, a]);
 });
@@ -423,7 +426,7 @@ test("owner replacement and same-prefab instances dispose independently", () => 
   one.dispose();
   const replacement = local(scene, "ship-a:room-bridge", 2);
   budget.update(focus);
-  expect(mesh.lightSources).toEqual([two, replacement]);
+  expect(mesh.lightSources).toEqual([replacement, two]);
   replacement.dispose();
   budget.update(focus);
   expect(mesh.lightSources).toEqual([two]);
@@ -535,4 +538,62 @@ test("two actual Wren views rebuild and dispose without duplicate room owner IDs
   expect(lamps()).toEqual(second);
   two.dispose();
   expect(lamps()).toHaveLength(0);
+});
+
+test("camera motion keeps admitted slots and shaders stable when all receiver lights fit", () => {
+  const { scene, mesh, budget } = setup();
+  global(scene, 0);
+  const a = local(scene, "a", -100),
+    b = local(scene, "b", 100);
+  budget.update(focus);
+  const original = [...mesh.lightSources];
+  const dirty = vi.spyOn(mesh, "_markSubMeshesAsLightDirty");
+  for (const x of [-100, 100, -1, 1, 0])
+    expect(budget.update(new Vector3(x, 0, 0))).toBe(false);
+  expect(mesh.lightSources).toEqual(original);
+  expect(mesh.lightSources).toEqual([
+    scene.lights.find((l) => l.name === "global-0"),
+    a,
+    b,
+  ]);
+  expect(dirty).not.toHaveBeenCalled();
+});
+
+test("receiver-local admission cannot spend its slots on another room's lamps", () => {
+  const { scene, mesh, material, budget } = setup();
+  material.maxSimultaneousLights = 1;
+  const ownFar = local(scene, "own-far", 100),
+    ownNear = local(scene, "own-near", 10);
+  for (let i = 0; i < 8; i++)
+    local(scene, `excluded-${i}`, i).excludedMeshes = [mesh];
+  budget.update(focus);
+  expect(mesh.lightSources).toEqual([ownNear, ownFar]);
+  // Small movements retain the incumbent; a genuinely closer challenger wins.
+  expect(budget.update(new Vector3(12, 0, 0))).toBe(false);
+  expect(budget.update(new Vector3(100, 0, 0))).toBe(true);
+  expect(mesh.lightSources).toEqual([ownFar, ownNear]);
+});
+
+test("standard and mixed-cap submaterials receive relevant stable prefixes", () => {
+  const { scene, mesh, material, budget } = setup();
+  const far = local(scene, "a-far", 100),
+    near = local(scene, "z-near", 0),
+    middle = local(scene, "b-middle", 10);
+  const standard = new StandardMaterial("lower-cap", scene);
+  standard.maxSimultaneousLights = 1;
+  mesh.material = standard;
+  budget.update(focus);
+  expect(mesh.lightSources[0]).toBe(near);
+  expect(budget.update(new Vector3(0.01, 0, 0))).toBe(false);
+  const multi = new MultiMaterial("mixed", scene);
+  material.maxSimultaneousLights = 2;
+  multi.subMaterials = [standard, material];
+  mesh.material = multi;
+  budget.update(focus);
+  expect(mesh.lightSources).toEqual([near, middle, far]);
+  expect(budget.update(new Vector3(0.01, 0, 0))).toBe(false);
+  expect(budget.update(new Vector3(100, 0, 0))).toBe(true);
+  expect(mesh.lightSources).toEqual([far, middle, near]);
+  expect(standard.maxSimultaneousLights).toBe(1);
+  expect(material.maxSimultaneousLights).toBe(2);
 });

@@ -21,7 +21,8 @@ export async function createWebGPUEngine(
 ) {
   if (!(await WebGPUEngine.IsSupportedAsync)) return undefined;
   const engine = new WebGPUEngine(canvas, {
-    antialias: true,
+    // Preserve scene-target MSAA; the resolved presentation image needs no MSAA.
+    antialias: false,
     stencil: true,
     useLargeWorldRendering: true,
     // Request the adapter's limits rather than the WebGPU defaults: per-stage uniform
