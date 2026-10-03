@@ -3,7 +3,6 @@ import { readFileSync } from "node:fs";
 import { readWayfarerAuthoredStudy } from "@sidereal/content/wayfarer-authored-study";
 import {
   WAYFARER_POST_APERTURES,
-  wayfarerEmitterStrength,
   wayfarerNearWallPlacements,
 } from "./wayfarer-authored-details";
 import {
@@ -80,31 +79,4 @@ test("post derivatives bind actual bytes/counts while original material definiti
       ),
     ).toBe(piece.triangles);
   }
-});
-
-test("compact emitters are bounded without raising screen, amber, RCS or other cyan trim", () => {
-  const piece = {
-    id: "prop.props_bridge.wall_light_cyan_v",
-    file: "",
-    sha256: "",
-    triangles: 0,
-    frame: "piece-local" as const,
-  };
-  expect(wayfarerEmitterStrength(piece, "emit_a", 5)).toBe(1.7);
-  expect(
-    wayfarerEmitterStrength(
-      { ...piece, id: "engine.pod.w2.4.l5.z-0.75_1.6" },
-      "emit_a",
-      5,
-    ),
-  ).toBe(1.55);
-  expect(wayfarerEmitterStrength(piece, "emit_a", 0.65)).toBe(0.65);
-  for (const id of [
-    "int.doorbeam.emit_a.l1",
-    "engine.rcs.md.wayfarer-r001",
-    "prop.props_bridge.command_station",
-  ])
-    expect(wayfarerEmitterStrength({ ...piece, id }, "emit_a", 5)).toBe(1);
-  for (const name of ["emit_b", "scr_blue@mid"])
-    expect(wayfarerEmitterStrength(piece, name, 5)).toBe(1);
 });

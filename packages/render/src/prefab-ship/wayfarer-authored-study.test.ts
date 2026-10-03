@@ -464,7 +464,7 @@ it("cancels a pending asset fetch when its scene is disposed", async () => {
   engine.dispose();
 });
 
-it("bounded piece emission partitions shared cyan materials without brightening unrelated source uses", async () => {
+it("pinned object emission preserves source strength without changing unrelated pooled uses", async () => {
   const engine = new NullEngine();
   const scene = new Scene(engine);
   scene.useRightHandedSystem = true;
@@ -493,7 +493,7 @@ it("bounded piece emission partitions shared cyan materials without brightening 
     triangles: 1080,
     frame: "piece-local" as const,
   };
-  const pieces = [lamp, { ...lamp, id: "unrelated" }];
+  const pieces = [lamp];
   const candidate = await loadAuthoredStudy(
     scene,
     pieces,
@@ -507,25 +507,36 @@ it("bounded piece emission partitions shared cyan materials without brightening 
     [0, 0],
     async () => source,
     {
-      emissiveStrength: (piece, material, strength) =>
-        Math.min(
-          strength,
-          material === "emit_a" && piece.id === "lamp" ? 1.7 : 1,
-        ),
+      assetLighting: new Map([
+        [
+          lamp.sha256,
+          {
+            id: "reusable-fixture",
+            sha256: lamp.sha256,
+            emissions: {
+              emit_a: {
+                factor: [0.05000000074505806, 0.47999998927116394, 1],
+                strength: 5,
+              },
+            },
+            sockets: [],
+          },
+        ],
+      ]),
     },
   );
   const cyan = candidate.meshes.filter(
     (mesh) => mesh.material?.name === "emit_a",
   );
-  expect(cyan).toHaveLength(2);
+  expect(cyan).toHaveLength(1);
   expect(
     cyan.map((mesh) => (mesh.material as PBRMaterial).emissiveIntensity).sort(),
-  ).toEqual([1, 1.7]);
-  expect(cyan[0].material).not.toBe(cyan[1].material);
+  ).toEqual([5]);
+  expect(cyan[0].material?.metadata.authoredAssetEmission.strength).toBe(5);
   expect(
     candidate.meshes.filter((mesh) => mesh.material?.name === "emit_b"),
   ).toHaveLength(1);
-  expect(candidate.report.placedTriangles).toBe(2160);
+  expect(candidate.report.placedTriangles).toBe(1080);
   candidate.dispose();
   scene.dispose();
   engine.dispose();

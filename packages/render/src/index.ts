@@ -1,3 +1,4 @@
+import { getAuthoredAssetLightSources } from "./authored-asset-lighting";
 import { createPbrLightBudget } from "./pbr-light-budget";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
@@ -1240,6 +1241,7 @@ async function buildWorld(
     localLights.update(
       [
         ...lighting.getLocalLightSources(lightingAllowed),
+        ...getAuthoredAssetLightSources(scene, lightingAllowed),
         ...shipEquipment.flatMap((placement) =>
           placement.lighting.getLocalLightSources(lightingAllowed),
         ),

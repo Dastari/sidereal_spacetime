@@ -31,6 +31,7 @@ PUBLISHED_RUNTIME = (
     "ship-logic/r001",
     "ship-study/wayfarer-authored-r001",
     "ship-study/wayfarer-details-r001",
+    "ship-study/wayfarer-object-lighting-r001",
     "ship-study/wayfarer-dorsal-r001",
     "construction/boundary-r001",
     "construction/boundary-r004",
