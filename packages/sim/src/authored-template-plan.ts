@@ -54,6 +54,11 @@ export interface AuthoredTemplatePlan {
   retainedLegacyPieces: string[];
 }
 const EPS = 1e-6;
+// The native facade's outermost authored detail, measured from the structural edge.
+// Corner spans must reach the outside miter before their planes trim them.
+const FACADE_OUTSIDE = 0.431;
+const FACADE_INSIDE = 0.25;
+const SEAM_WIDTH = 0.04;
 const unit = (a: Pt, b: Pt): Pt => {
   const l = Math.hypot(b[0] - a[0], b[1] - a[1]);
   return [(b[0] - a[0]) / l, (b[1] - a[1]) / l];
@@ -407,6 +412,29 @@ export function compileAuthoredTemplatePlan(
     }
     const isArc = (a: Pt, b: Pt) =>
       arcFacets.some((f) => onSegment(mid(a, b), f.a, f.b));
+    const addFacade = (
+      row: AuthoredTemplateInstance,
+      lo: number,
+      hi: number,
+    ) => {
+      if (!inhabited) return add(row);
+      add({ ...row, object: row.object + ":flight", view: "flight" });
+      const top = Math.min(hi, G.deck.shellCutTexels * TEXEL + deckOffset);
+      if (top <= lo + EPS) return;
+      if (row.verticalProfile) {
+        add({
+          ...row,
+          object: row.object + ":deck",
+          view: "deck",
+          clipPlanes: [...(row.clipPlanes ?? []), [0, 0, -1, top]],
+        });
+      } else {
+        const matrix = row.matrix.map((r) => [...r]) as AuthoredTemplateMatrix;
+        matrix[2][2] = top - lo;
+        // Scale the complete closed native module: cutting at Z destroys its top cap.
+        add({ ...row, object: row.object + ":deck", view: "deck", matrix });
+      }
+    };
     // Native tile surfaces are clipped per lattice cell to retain room floor finishes and roof reservations.
     for (let ti = 0; ti < v.tiles.length; ti++) {
       const t = v.tiles[ti],
@@ -536,22 +564,11 @@ export function compileAuthoredTemplatePlan(
             region: v.id,
             clipPlanes: wedge,
           };
-          if (inhabited) {
-            add({ ...row, object: row.object + ":flight", view: "flight" });
-            add({
-              ...row,
-              object: row.object + ":deck",
-              view: "deck",
-              clipPlanes: [
-                ...wedge,
-                [0, 0, -1, G.deck.shellCutTexels * TEXEL + deckOffset],
-              ],
-            });
-          } else add(row);
+          addFacade(row, lo, hi);
         }
       }
     }
-    // Facades split at the grid and at other-volume boundaries; miter planes seal sharp corners.
+    // Facades extend to their outside miter, then trim to the common seam.
     for (const loop of loops)
       for (let ei = 0; ei < loop.length; ei++) {
         const a = loop[ei],
@@ -606,6 +623,25 @@ export function compileAuthoredTemplatePlan(
             ),
           ];
           const sample: Pt = [p[0] + u[1] * 0.02, p[1] - u[0] * 0.02];
+          const extension = (other: Pt) => {
+            const dot = Math.max(
+              -1,
+              Math.min(1, other[0] * u[0] + other[1] * u[1]),
+            );
+            return (
+              FACADE_OUTSIDE * Math.sqrt((1 - dot) / Math.max(EPS, 1 + dot))
+            );
+          };
+          const startExtension = s < EPS ? extension(prev) : 0,
+            endExtension = e > length - EPS ? extension(next) : 0;
+          const spanStart: Pt = [
+              pa[0] - u[0] * startExtension,
+              pa[1] - u[1] * startExtension,
+            ],
+            spanEnd: Pt = [
+              pb[0] + u[0] * endExtension,
+              pb[1] + u[1] * endExtension,
+            ];
           const low = profile
               ? Math.min(
                   atHeight(profile.bottom, pa),
@@ -617,34 +653,141 @@ export function compileAuthoredTemplatePlan(
               : ztop;
           for (const [lo, hi] of exposedBands(g, geoms, sample, low, high)) {
             const base: AuthoredTemplateInstance = {
-              object: `${v.id}:edge${ei}:${si}:${lo}`,
+              object: `${v.id}:edge${ei}:${si}:${lo}${loops.indexOf(loop) ? `:loop${loops.indexOf(loop)}` : ""}`,
               piece: `hull.straight.${variant(doc, v.id, ei, si)}`,
               role: "hull",
               matrix: spanMatrix(
-                pa,
-                pb,
+                spanStart,
+                spanEnd,
                 profile ? 0 : lo,
                 profile ? 1 : hi - lo,
               ),
               view: "both",
               region: v.id,
-              clipPlanes: [...clips, [0, 0, 1, -lo], [0, 0, -1, hi]],
+              clipPlanes: profile
+                ? [...clips, [0, 0, 1, -lo], [0, 0, -1, hi]]
+                : clips,
               ...(profile ? { verticalProfile: profile } : {}),
             };
-            if (inhabited) {
-              add({ ...base, object: base.object + ":flight", view: "flight" });
-              add({
-                ...base,
-                object: base.object + ":deck",
-                view: "deck",
-                clipPlanes: [
-                  ...base.clipPlanes!,
-                  [0, 0, -1, G.deck.shellCutTexels * TEXEL + deckOffset],
-                ],
-              });
-            } else add(base);
+            addFacade(base, lo, hi);
           }
         }
+      }
+    // A closed native column covers the vertical cut seam. It spans the exact
+    // inward/outward miter band, rather than leaving open ends at sharp tips.
+    for (const loop of loops)
+      for (let i = 0; i < loop.length; i++) {
+        const a = loop[(i - 1 + loop.length) % loop.length],
+          p = loop[i],
+          b = loop[(i + 1) % loop.length],
+          u = unit(a, p),
+          w = unit(p, b);
+        if (
+          arcFacets.some(
+            (f) =>
+              onSegment(mid(a, p), f.a, f.b) &&
+              arcFacets.some(
+                (h) => h.tile === f.tile && onSegment(mid(p, b), h.a, h.b),
+              ),
+          )
+        )
+          continue;
+        const dot = Math.max(-1, Math.min(1, u[0] * w[0] + u[1] * w[1]));
+        if (dot > 1 - EPS) continue;
+        if (
+          glassRuns.some(
+            ([ga, gb]) =>
+              onSegment(mid(a, p), ga, gb) || onSegment(mid(p, b), ga, gb),
+          ) ||
+          doors.some((d) => onSegment(p, d.a, d.b))
+        )
+          continue;
+        const cosine = Math.sqrt((1 + dot) / 2);
+        if (cosine < EPS) continue;
+        const n: Pt = [
+            (u[0] + w[0]) / (2 * cosine),
+            (u[1] + w[1]) / (2 * cosine),
+          ],
+          tangent: Pt = [n[1], -n[0]],
+          inner = -FACADE_INSIDE / cosine,
+          outer = FACADE_OUTSIDE / cosine,
+          centre = (inner + outer) / 2;
+        const bandsA = exposedBands(
+            g,
+            geoms,
+            [
+              p[0] + u[1] * 0.02 - u[0] * 0.02,
+              p[1] - u[0] * 0.02 - u[1] * 0.02,
+            ],
+            zbase,
+            ztop,
+          ),
+          bandsB = exposedBands(
+            g,
+            geoms,
+            [
+              p[0] + w[1] * 0.02 + w[0] * 0.02,
+              p[1] - w[0] * 0.02 + w[1] * 0.02,
+            ],
+            zbase,
+            ztop,
+          );
+        const tile = v.tiles.find(
+          (t) =>
+            t.bow &&
+            insidePolygon(
+              placedTilePolygon(t),
+              p[0] - w[1] * 0.02,
+              p[1] + w[0] * 0.02,
+            ),
+        );
+        const profile = tile ? affineHeights(tile, v.height) : undefined;
+        if (profile) {
+          profile.bottom[2] += deckOffset;
+          profile.top[2] += deckOffset;
+        }
+        for (const [a0, a1] of bandsA)
+          for (const [b0, b1] of bandsB) {
+            const lo = Math.max(a0, b0),
+              hi = Math.min(a1, b1);
+            if (hi <= lo + EPS) continue;
+            addFacade(
+              {
+                object: `${v.id}:corner${i}:${lo}${loops.indexOf(loop) ? `:loop${loops.indexOf(loop)}` : ""}`,
+                piece: "post.normal",
+                role: "post",
+                view: "both",
+                region: v.id,
+                matrix: [
+                  [
+                    (n[0] * SEAM_WIDTH) / 0.25,
+                    (tangent[0] * (outer - inner)) / 0.25,
+                    0,
+                    p[0] + tangent[0] * centre,
+                  ],
+                  [
+                    (n[1] * SEAM_WIDTH) / 0.25,
+                    (tangent[1] * (outer - inner)) / 0.25,
+                    0,
+                    p[1] + tangent[1] * centre,
+                  ],
+                  [0, 0, profile ? 1 : hi - lo, profile ? 0 : lo],
+                  [0, 0, 0, 1],
+                ],
+                ...(profile
+                  ? {
+                      verticalProfile: profile,
+                      clipPlanes: [
+                        [0, 0, 1, -lo],
+                        [0, 0, -1, hi],
+                      ] as AuthoredTemplateClipPlane[],
+                    }
+                  : {}),
+              },
+              lo,
+              hi,
+            );
+          }
       }
   }
   for (const interior of interiors) {

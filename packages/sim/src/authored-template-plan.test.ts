@@ -328,4 +328,160 @@ describe("authored template presentation", () => {
       compileAuthoredTemplatePlan(prefabById("fed.m.wayfarer")!, { catalog }),
     ).toThrow("own presentation");
   });
+
+  it("retains the native top caps at every constant deck facade cut", () => {
+    let checked = 0;
+    for (const doc of EDITABLE_PREFAB_SHIPS) {
+      const plan = compileAuthoredTemplatePlan(doc, { catalog });
+      for (const row of plan.instances.filter(
+        (r) =>
+          r.view === "deck" &&
+          !r.verticalProfile &&
+          (r.piece.startsWith("hull.") || r.object.includes(":corner")),
+      )) {
+        const full = plan.instances.find(
+          (r) => r.object === row.object.replace(/:deck$/, ":flight"),
+        )!;
+        expect(full).toBeDefined();
+        const volume = doc.volumes.find((v) => v.id === row.region)!;
+        const top = Math.min(
+          full.matrix[2][3] + full.matrix[2][2],
+          (G.deck.shellCutTexels + volume.deck * G.deck.pitchTexels) / 16,
+        );
+        expect(sourcePoint(row, 0, 0, 1)[2]).toBeCloseTo(top, 9);
+        expect((row.clipPlanes ?? []).every((p) => p[2] === 0)).toBe(true);
+        if (row.piece.startsWith("hull.straight.")) {
+          // Independently clip the native closed core's top cap. Corner overrun
+          // can move the surviving cap away from the source span's midpoint.
+          let cap = [
+            [0, -0.2],
+            [1, -0.2],
+            [1, 0],
+            [0, 0],
+          ].map(([x, y]) => sourcePoint(row, x, y, 1));
+          for (const [nx, ny, nz, d] of row.clipPlanes ?? []) {
+            const result: number[][] = [];
+            for (let i = 0; i < cap.length; i++) {
+              const a = cap[i],
+                b = cap[(i + 1) % cap.length],
+                da = nx * a[0] + ny * a[1] + nz * a[2] + d,
+                db = nx * b[0] + ny * b[1] + nz * b[2] + d;
+              if (da >= -1e-9) result.push(a);
+              if (da >= -1e-9 !== db >= -1e-9) {
+                const t = da / (da - db);
+                result.push(a.map((n, j) => n + t * (b[j] - n)));
+              }
+            }
+            cap = result;
+          }
+          const area = Math.abs(
+            cap.reduce((sum, a, i) => {
+              const b = cap[(i + 1) % cap.length];
+              return sum + a[0] * b[1] - a[1] * b[0];
+            }, 0) / 2,
+          );
+          expect(area).toBeGreaterThan(1e-9);
+        }
+        checked++;
+      }
+    }
+    expect(checked).toBeGreaterThan(100);
+  });
+
+  for (const shape of ["square", "slope1", "slope4"] as const)
+    it(`closes ${shape} facade miters through the full authored outward band`, () => {
+      const doc = simple([{ x: 0, y: 0, shape, rot: 0, reflected: false }]),
+        plan = compileAuthoredTemplatePlan(doc, { catalog }),
+        loop = volumeGeometry(doc.volumes[0]).outline!.outer;
+      const inSource = (r: AuthoredTemplateInstance, p: Pt, post: boolean) => {
+        const m = r.matrix,
+          dx = p[0] - m[0][3],
+          dy = p[1] - m[1][3],
+          det = m[0][0] * m[1][1] - m[0][1] * m[1][0],
+          x = (dx * m[1][1] - dy * m[0][1]) / det,
+          y = (dy * m[0][0] - dx * m[1][0]) / det;
+        return post
+          ? Math.abs(x) <= 0.125 + 1e-6 && Math.abs(y) <= 0.125 + 1e-6
+          : x >= -1e-6 &&
+              x <= 1 + 1e-6 &&
+              y >= -0.25 - 1e-6 &&
+              y <= 0.431 + 1e-6;
+      };
+      for (let i = 0; i < loop.length; i++) {
+        const prev = loop[(i - 1 + loop.length) % loop.length],
+          p = loop[i],
+          next = loop[(i + 1) % loop.length],
+          a = [p[0] - prev[0], p[1] - prev[1]],
+          b = [next[0] - p[0], next[1] - p[1]];
+        const al = Math.hypot(...a),
+          bl = Math.hypot(...b);
+        a[0] /= al;
+        a[1] /= al;
+        b[0] /= bl;
+        b[1] /= bl;
+        const cosine = Math.sqrt((1 + a[0] * b[0] + a[1] * b[1]) / 2);
+        if (cosine > 1 - 1e-6) continue;
+        const n = [(a[0] + b[0]) / (2 * cosine), (a[1] + b[1]) / (2 * cosine)],
+          trim = plan.instances.find((r) => r.object === `hull:corner${i}:0`)!;
+        expect(trim).toBeDefined();
+        expect(trim.clipPlanes ?? []).toEqual([]);
+        for (const depth of [-0.249, 0, 0.43]) {
+          const seam: Pt = [
+            p[0] + (n[1] * depth) / cosine,
+            p[1] - (n[0] * depth) / cosine,
+          ];
+          expect(inSource(trim, seam, true)).toBe(true);
+          const candidates = plan.instances.filter(
+            (r) =>
+              r.piece.startsWith("hull.straight.") &&
+              inSource(r, seam, false) &&
+              kept(r, [...seam, 1]),
+          );
+          // Both adjoining native bands reach the shared miter; the closed post covers its cut.
+          expect(candidates.length).toBeGreaterThanOrEqual(2);
+        }
+      }
+    });
+
+  it("adds concave seam caps without repeating columns along smooth native arcs", () => {
+    const square = { shape: "square", rot: 0, reflected: false } as const;
+    const doc = simple([
+        { ...square, x: 0, y: 0 },
+        { ...square, x: 1, y: 0 },
+        { ...square, x: 0, y: 1 },
+      ]),
+      plan = compileAuthoredTemplatePlan(doc, { catalog });
+    expect(
+      plan.instances.filter((r) => r.object.includes(":corner")),
+    ).toHaveLength(6);
+    const arc = compileAuthoredTemplatePlan(
+      simple([{ x: 0, y: 0, shape: "arc4", rot: 0, reflected: false }]),
+      { catalog },
+    );
+    expect(
+      arc.instances.filter((r) => r.object.includes(":corner")),
+    ).toHaveLength(3);
+    expect(
+      arc.instances.filter((r) => r.piece.startsWith("hull.arc4.")),
+    ).toHaveLength(1);
+  });
+
+  it("keeps hole-boundary seams and facades uniquely identified", () => {
+    const tiles: ShapeTilePlacement[] = [];
+    for (let x = 0; x < 3; x++)
+      for (let y = 0; y < 3; y++)
+        if (x !== 1 || y !== 1)
+          tiles.push({ x, y, shape: "square", rot: 0, reflected: false });
+    const doc = simple(tiles),
+      plan = compileAuthoredTemplatePlan(doc, { catalog });
+    expect(volumeGeometry(doc.volumes[0]).outline!.holes).toHaveLength(1);
+    expect(new Set(plan.instances.map((r) => r.object)).size).toBe(
+      plan.instances.length,
+    );
+    expect(
+      plan.instances.filter(
+        (r) => r.object.includes(":corner") && r.object.includes(":loop1"),
+      ),
+    ).toHaveLength(4);
+  });
 });
