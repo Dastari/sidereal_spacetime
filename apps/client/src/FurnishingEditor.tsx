@@ -16,7 +16,7 @@ export interface FurnishingEditorProps {
   };
   placementId: string;
   name: string;
-  mode: "move" | "delete";
+  mode: "move" | "delete" | "snap";
   submit: (request: FurnishingRequest) => Promise<unknown>;
   close: () => void;
 }
@@ -33,12 +33,16 @@ export function FurnishingEditor({
     accepted =
       readFurnishingOverrides(instance.furnishingsJson)[sourceId] ??
       FURNISHING_DEFAULT;
+  const title =
+    mode === "delete" ? "Delete" : mode === "snap" ? "Snapping for" : "Arrange";
   const [dx, setDx] = useState(String(accepted.dx)),
     [dy, setDy] = useState(String(accepted.dy)),
     [yaw, setYaw] = useState(
       String(Math.round(((accepted.yaw * 180) / Math.PI) * 100) / 100),
     ),
-    [snap, setSnap] = useState(accepted.snap),
+    [snap, setSnap] = useState(
+      mode === "snap" ? !accepted.snap : accepted.snap,
+    ),
     [pending, setPending] = useState(false),
     [error, setError] = useState("");
   const previous = useRef<FurnishingRequest | undefined>(undefined);
@@ -53,9 +57,9 @@ export function FurnishingEditor({
       retry && previous.current
         ? previous.current
         : furnishingRequest(instance, placementId, mode, {
-            dx: Number(dx),
-            dy: Number(dy),
-            yaw: (Number(yaw) * Math.PI) / 180,
+            dx: mode === "move" ? Number(dx) : accepted.dx,
+            dy: mode === "move" ? Number(dy) : accepted.dy,
+            yaw: mode === "move" ? (Number(yaw) * Math.PI) / 180 : accepted.yaw,
             snap,
           });
     previous.current = request;
@@ -82,7 +86,7 @@ export function FurnishingEditor({
     <section
       role="dialog"
       aria-modal="true"
-      aria-label={`${mode === "move" ? "Arrange" : "Delete"} ${name}`}
+      aria-label={`${title} ${name}`}
       className="furnishing-editor"
       onKeyDown={(event) => {
         event.stopPropagation();
@@ -92,7 +96,7 @@ export function FurnishingEditor({
     >
       <header>
         <h2>
-          {mode === "move" ? "Arrange" : "Delete"} {name}
+          {title} {name}
         </h2>
         <button
           aria-label="Close furniture editor"
@@ -102,51 +106,57 @@ export function FurnishingEditor({
           ×
         </button>
       </header>
-      {mode === "move" ? (
+      {mode !== "delete" ? (
         <form
           onSubmit={(e) => {
             e.preventDefault();
             void apply();
           }}
         >
-          <p>Position and rotation on the ship’s deck.</p>
-          <label>
-            Fore / aft offset <span>m</span>
-            <input
-              autoFocus
-              type="number"
-              step={snap ? 0.25 : "any"}
-              min={-32}
-              max={32}
-              value={dx}
-              disabled={pending || !!error}
-              onChange={(e) => setDx(e.target.value)}
-            />
-          </label>
-          <label>
-            Port / starboard offset <span>m</span>
-            <input
-              type="number"
-              step={snap ? 0.25 : "any"}
-              min={-32}
-              max={32}
-              value={dy}
-              disabled={pending || !!error}
-              onChange={(e) => setDy(e.target.value)}
-            />
-          </label>
-          <label>
-            Rotation <span>°</span>
-            <input
-              type="number"
-              step={snap ? 15 : "any"}
-              min={-360}
-              max={360}
-              value={yaw}
-              disabled={pending || !!error}
-              onChange={(e) => setYaw(e.target.value)}
-            />
-          </label>
+          {mode === "move" ? (
+            <>
+              <p>Position and rotation on the ship’s deck.</p>
+              <label>
+                Fore / aft offset <span>m</span>
+                <input
+                  autoFocus
+                  type="number"
+                  step={snap ? 0.25 : "any"}
+                  min={-32}
+                  max={32}
+                  value={dx}
+                  disabled={pending || !!error}
+                  onChange={(e) => setDx(e.target.value)}
+                />
+              </label>
+              <label>
+                Port / starboard offset <span>m</span>
+                <input
+                  type="number"
+                  step={snap ? 0.25 : "any"}
+                  min={-32}
+                  max={32}
+                  value={dy}
+                  disabled={pending || !!error}
+                  onChange={(e) => setDy(e.target.value)}
+                />
+              </label>
+              <label>
+                Rotation <span>°</span>
+                <input
+                  type="number"
+                  step={snap ? 15 : "any"}
+                  min={-360}
+                  max={360}
+                  value={yaw}
+                  disabled={pending || !!error}
+                  onChange={(e) => setYaw(e.target.value)}
+                />
+              </label>
+            </>
+          ) : (
+            <p>Choose how the next placement edit snaps.</p>
+          )}
           <label className="furnishing-editor__snap">
             <input
               type="checkbox"
@@ -166,7 +176,11 @@ export function FurnishingEditor({
               Cancel
             </button>
             <button type="submit" disabled={pending || !valid || !!error}>
-              {pending ? "Applying…" : "Apply placement"}
+              {pending
+                ? "Applying…"
+                : mode === "snap"
+                  ? "Apply snapping"
+                  : "Apply placement"}
             </button>
           </footer>
         </form>
