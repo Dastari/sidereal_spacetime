@@ -1,4 +1,8 @@
 import {
+  effectiveWayfarerObjects,
+  type FurnishingOverrides,
+} from "@sidereal/content/wayfarer-furnishings";
+import {
   isWayfarerGameplay,
   WAYFARER_GAMEPLAY_OBJECTS,
   WAYFARER_STORAGE_OBJECTS,
@@ -53,6 +57,7 @@ export function prefabCargoSockets(
   doc: ShipPrefabDocumentV1,
   deck: number,
   catalog?: PrefabComponentCatalog,
+  furnishings: FurnishingOverrides = {},
 ): PrefabCargoSocket[] {
   const [ox, oy] = prefabOrigin(doc);
   // Micrometre rounding keeps plan decimals (0.05 m sockets) exact and deterministic.
@@ -63,39 +68,43 @@ export function prefabCargoSockets(
   ];
   if (isWayfarerGameplay(doc))
     return deck === 0
-      ? WAYFARER_STORAGE_OBJECTS.map((id) => {
-          const o = WAYFARER_GAMEPLAY_OBJECTS.find((row) => row.object === id)!;
-          const cx = (o.min[0] + o.max[0]) / 2,
-            cy = (o.min[1] + o.max[1]) / 2;
-          const approachesM: [number, number][] = [];
-          for (const [nx, ny] of [
-            [0, -1],
-            [0, 1],
-            [-1, 0],
-            [1, 0],
-          ])
-            for (const gap of APPROACH_GAPS_M) {
-              const half =
-                (Math.abs(nx) * (o.max[0] - o.min[0]) +
-                  Math.abs(ny) * (o.max[1] - o.min[1])) /
-                2;
-              for (const along of [0, -0.3, 0.3])
-                approachesM.push(
-                  local(
-                    cx + nx * (half + gap) + ny * along,
-                    cy + ny * (half + gap) - nx * along,
-                  ),
-                );
-            }
-          return {
-            key: id,
-            designId: wayfarerStorageDesign(id),
-            room: o.room ?? "hall",
-            centreM: local(cx, cy),
-            facing: "starboard" as const,
-            approachesM,
-          };
-        })
+      ? WAYFARER_STORAGE_OBJECTS.filter((id) => !furnishings[id]?.deleted).map(
+          (id) => {
+            const o = effectiveWayfarerObjects(furnishings).find(
+              (row) => row.object === id,
+            )!;
+            const cx = (o.min[0] + o.max[0]) / 2,
+              cy = (o.min[1] + o.max[1]) / 2;
+            const approachesM: [number, number][] = [];
+            for (const [nx, ny] of [
+              [0, -1],
+              [0, 1],
+              [-1, 0],
+              [1, 0],
+            ])
+              for (const gap of APPROACH_GAPS_M) {
+                const half =
+                  (Math.abs(nx) * (o.max[0] - o.min[0]) +
+                    Math.abs(ny) * (o.max[1] - o.min[1])) /
+                  2;
+                for (const along of [0, -0.3, 0.3])
+                  approachesM.push(
+                    local(
+                      cx + nx * (half + gap) + ny * along,
+                      cy + ny * (half + gap) - nx * along,
+                    ),
+                  );
+              }
+            return {
+              key: id,
+              designId: wayfarerStorageDesign(id),
+              room: o.room ?? "hall",
+              centreM: local(cx, cy),
+              facing: "starboard" as const,
+              approachesM,
+            };
+          },
+        )
       : [];
   const seen = new Map<string, number>();
   const out: PrefabCargoSocket[] = [];

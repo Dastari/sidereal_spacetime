@@ -1,4 +1,9 @@
 import {
+  effectiveWayfarerObjects,
+  transformFurnishingPoint,
+  type FurnishingOverrides,
+} from "@sidereal/content/wayfarer-furnishings";
+import {
   isWayfarerGameplay,
   WAYFARER_GAMEPLAY_OBJECTS,
   WAYFARER_BED_OBJECTS,
@@ -47,28 +52,44 @@ const normals = {
 export function prefabBedSeats(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
+  furnishings: FurnishingOverrides = {},
 ): PrefabSeatDefinition[] {
   if (isWayfarerGameplay(doc))
-    return WAYFARER_BED_OBJECTS.map((id) => {
-      const o = WAYFARER_GAMEPLAY_OBJECTS.find((row) => row.object === id)!;
-      const cx = (o.min[0] + o.max[0]) / 2,
-        cy = (o.min[1] + o.max[1]) / 2;
-      return {
-        placementId: `prefab:socket:${id}`,
-        assetId: "shipyard.equipment.crew-bunk",
-        name: id.includes("single") ? "Crew bed" : "Crew bunk",
-        kind: "seat" as const,
-        x: -cy,
-        y: cx,
-        seatX: -(o.max[1] - 0.1),
-        seatY: cx,
-        approachX: -(o.max[1] + 0.45),
-        approachY: cx,
-        obstacleId: `prefab-socket:${id}`,
-        facing: Math.PI / 2,
-        supportHeight: id.includes("single") ? 0.48 : 0.465,
-      };
-    });
+    return WAYFARER_BED_OBJECTS.filter((id) => !furnishings[id]?.deleted).map(
+      (id) => {
+        const o = WAYFARER_GAMEPLAY_OBJECTS.find((row) => row.object === id)!;
+        const cx = (o.min[0] + o.max[0]) / 2,
+          cy = (o.min[1] + o.max[1]) / 2;
+        const effective = effectiveWayfarerObjects(furnishings).find(
+          (row) => row.object === id,
+        )!;
+        const seat = transformFurnishingPoint(
+          o,
+          [cx, o.max[1] - 0.1],
+          furnishings[id],
+        );
+        const approach = transformFurnishingPoint(
+          o,
+          [cx, o.max[1] + 0.45],
+          furnishings[id],
+        );
+        return {
+          placementId: `prefab:socket:${id}`,
+          assetId: "shipyard.equipment.crew-bunk",
+          name: id.includes("single") ? "Crew bed" : "Crew bunk",
+          kind: "seat" as const,
+          x: -(effective.min[1] + effective.max[1]) / 2,
+          y: (effective.min[0] + effective.max[0]) / 2,
+          seatX: -seat[1],
+          seatY: seat[0],
+          approachX: -approach[1],
+          approachY: approach[0],
+          obstacleId: `prefab-socket:${id}`,
+          facing: Math.PI / 2 + (furnishings[id]?.yaw ?? 0),
+          supportHeight: id.includes("single") ? 0.48 : 0.465,
+        };
+      },
+    );
   const sockets = deriveInterior(doc, 0, catalog).sockets;
   const toShip = prefabToShipMetres(doc);
   return prefabShipObjects(doc, catalog).flatMap((o) => {
@@ -124,7 +145,10 @@ export function prefabBedSeats(
     ];
   });
 }
-export function prefabBedsOfDocument(json: string): PrefabSeatDefinition[] {
+export function prefabBedsOfDocument(
+  json: string,
+  furnishings: FurnishingOverrides = {},
+): PrefabSeatDefinition[] {
   const binding = (
     JSON.parse(json) as { prefab?: { document?: unknown; catalog?: string } }
   ).prefab;
@@ -132,6 +156,7 @@ export function prefabBedsOfDocument(json: string): PrefabSeatDefinition[] {
   return prefabBedSeats(
     readShipPrefab(binding.document),
     prefabComponentCatalogFor(binding.catalog),
+    furnishings,
   );
 }
 /** Only the exact own bed collider is exempt for seat transitions. Other geometry stays solid. */

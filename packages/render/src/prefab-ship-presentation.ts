@@ -1,3 +1,4 @@
+import { readFurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -59,6 +60,7 @@ export async function loadPrefabShipPresentation(
   shipRoot: TransformNode,
   documentJson: string,
   visualVariant?: import("./prefab-ship/visual-variant").VisualVariantSelection,
+  furnishingsJson?: string,
 ): Promise<PrefabShipViewHandle | undefined> {
   let binding: { document?: unknown; catalog?: unknown } | undefined;
   try {
@@ -83,6 +85,7 @@ export async function loadPrefabShipPresentation(
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.
   const view = await createPrefabShipView(scene, doc, {
     catalog,
+    furnishings: readFurnishingOverrides(furnishingsJson),
     visualVariant,
     view: "deck",
     parent: shipRoot,

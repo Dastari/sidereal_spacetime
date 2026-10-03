@@ -13,6 +13,8 @@ interface Instance {
   name: string;
   documentJson: string;
   blueprintSha256?: string;
+  furnishingsJson?: string;
+  furnishingRevision?: bigint;
 }
 interface Stair {
   characterId: string;
@@ -61,6 +63,8 @@ export function constructionPresentation(
         ? {
             instanceId: instance.id,
             documentJson: instance.documentJson,
+            furnishingsJson: instance.furnishingsJson,
+            furnishingRevision: instance.furnishingRevision,
             deckId: visit.deckId,
             visitId: visit.visitId,
           }

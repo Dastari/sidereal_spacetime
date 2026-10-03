@@ -1,4 +1,8 @@
 import {
+  effectiveWayfarerObjects,
+  type FurnishingOverrides,
+} from "@sidereal/content/wayfarer-furnishings";
+import {
   isWayfarerGameplay,
   WAYFARER_GAMEPLAY_OBJECTS,
   WAYFARER_STORAGE_OBJECTS,
@@ -190,9 +194,10 @@ const cache = new WeakMap<ShipPrefabDocumentV1, PrefabShipObject[]>();
 export function prefabShipObjects(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
+  furnishings: FurnishingOverrides = {},
 ): PrefabShipObject[] {
   if (isWayfarerGameplay(doc))
-    return WAYFARER_GAMEPLAY_OBJECTS.map((o) => ({
+    return effectiveWayfarerObjects(furnishings).map((o) => ({
       id:
         o.object === "Cockpit_command_station"
           ? "mount:helm"
@@ -414,23 +419,26 @@ export function planRectToShip(
 export function prefabDeckObstacles(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
+  furnishings: FurnishingOverrides = {},
 ): DeckObstacle[] {
   if (isWayfarerGameplay(doc)) {
     const toShip = ([x, y]: readonly number[]): [number, number] => [
       -y + 0,
       x + 0,
     ];
-    const obstacles: DeckObstacle[] = WAYFARER_GAMEPLAY_OBJECTS.filter(
-      (o) =>
-        o.max[2] > 0.3 &&
-        o.min[2] < 1.9875 &&
-        o.object !== "Cockpit_command_station" &&
-        o.object !== "Cockpit_pilot_chair",
-    ).map((o) => ({
-      id: `prefab-socket:${o.object}`,
-      definitionId: o.piece,
-      vertices: o.footprint.map(toShip),
-    }));
+    const obstacles: DeckObstacle[] = effectiveWayfarerObjects(furnishings)
+      .filter(
+        (o) =>
+          o.max[2] > 0.3 &&
+          o.min[2] < 1.9875 &&
+          o.object !== "Cockpit_command_station" &&
+          o.object !== "Cockpit_pilot_chair",
+      )
+      .map((o) => ({
+        id: `prefab-socket:${o.object}`,
+        definitionId: o.piece,
+        vertices: o.footprint.map(toShip),
+      }));
     wayfarerConsoleFootprints().forEach((polygon, i) =>
       obstacles.push({
         id: `prefab-mount:helm:${i}`,
@@ -464,15 +472,19 @@ export function prefabDeckObstacles(
  * Undefined for any non-prefab document. Launch prefabs are single-deck, so the obstacles belong
  * to the one playable deck.
  */
-export function prefabConstructionObstacles(document: {
-  prefab?: unknown;
-}): DeckObstacle[] | undefined {
+export function prefabConstructionObstacles(
+  document: {
+    prefab?: unknown;
+  },
+  furnishings: FurnishingOverrides = {},
+): DeckObstacle[] | undefined {
   const binding = document.prefab as
     { document?: unknown; catalog?: unknown } | undefined;
   if (!binding || typeof binding !== "object") return undefined;
   return prefabDeckObstacles(
     readShipPrefab(binding.document),
     prefabComponentCatalogFor(String(binding.catalog)),
+    furnishings,
   );
 }
 

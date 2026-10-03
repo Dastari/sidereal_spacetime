@@ -49,6 +49,7 @@ import ClaimInputControlReducer from "./claim_input_control_reducer";
 import ClaimStarterKitReducer from "./claim_starter_kit_reducer";
 import DiscardDefinitionDraftReducer from "./discard_definition_draft_reducer";
 import DropInventoryItemReducer from "./drop_inventory_item_reducer";
+import EditShipFurnishingReducer from "./edit_ship_furnishing_reducer";
 import EnterAuthoredPilotReducer from "./enter_authored_pilot_reducer";
 import EnterConstructionReviewReducer from "./enter_construction_review_reducer";
 import EnterLabReducer from "./enter_lab_reducer";
@@ -739,6 +740,7 @@ const reducersSchema = __reducers(
   __reducerSchema("claim_starter_kit", ClaimStarterKitReducer),
   __reducerSchema("discard_definition_draft", DiscardDefinitionDraftReducer),
   __reducerSchema("drop_inventory_item", DropInventoryItemReducer),
+  __reducerSchema("edit_ship_furnishing", EditShipFurnishingReducer),
   __reducerSchema("enter_authored_pilot", EnterAuthoredPilotReducer),
   __reducerSchema("enter_construction_review", EnterConstructionReviewReducer),
   __reducerSchema("enter_lab", EnterLabReducer),

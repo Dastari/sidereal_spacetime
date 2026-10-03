@@ -60,6 +60,8 @@ import type { ManagedLocalLight } from "./local-light-budget";
 export interface ConstructionRenderInput {
   instanceId: string;
   documentJson: string;
+  furnishingsJson?: string;
+  furnishingRevision?: bigint;
   deckId: string;
 }
 /** Native authored floors use exact server placement IDs. */

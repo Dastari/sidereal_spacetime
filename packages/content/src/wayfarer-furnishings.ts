@@ -146,7 +146,7 @@ export function applyFurnishingMatrix(
   const state = overrides[object];
   if (state?.deleted) return;
   const matrix = input.map((row) => [...row]);
-  if (!state) return matrix;
+  if (!state || (!state.dx && !state.dy && !state.yaw)) return matrix;
   const source = WAYFARER_GAMEPLAY_OBJECTS.find((row) => row.object === object);
   if (!source) throw Error("Unknown furniture source");
   const c = Math.cos(state.yaw),

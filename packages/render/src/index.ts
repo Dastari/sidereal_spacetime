@@ -483,6 +483,7 @@ async function buildWorld(
           shipRoot,
           options.construction.documentJson,
           options.prefabVisualVariant,
+          options.construction.furnishingsJson,
         );
         if (prefabView)
           for (const mesh of imported.meshes) mesh.setEnabled(false);
@@ -662,7 +663,10 @@ async function buildWorld(
   // Prefab ships (SHIP-INTERACTION): geometric object picking over the batched dressed view,
   // beam clipping against the compiled structure, and the authoritative impact flash.
   const prefabBinding = prefabView
-    ? prefabBindingOf(options.construction?.documentJson)
+    ? prefabBindingOf(
+        options.construction?.documentJson,
+        options.construction?.furnishingsJson,
+      )
     : undefined;
   const prefabPicker: PrefabObjectPicker | undefined = prefabBinding
     ? createPrefabObjectPicker(
