@@ -37,9 +37,7 @@ export function FurnishingEditor({
     mode === "delete" ? "Delete" : mode === "snap" ? "Snapping for" : "Arrange";
   const [dx, setDx] = useState(String(accepted.dx)),
     [dy, setDy] = useState(String(accepted.dy)),
-    [yaw, setYaw] = useState(
-      String(Math.round(((accepted.yaw * 180) / Math.PI) * 100) / 100),
-    ),
+    [yaw, setYaw] = useState(String((accepted.yaw * 180) / Math.PI)),
     [snap, setSnap] = useState(
       mode === "snap" ? !accepted.snap : accepted.snap,
     ),
@@ -77,7 +75,7 @@ export function FurnishingEditor({
   const reset = () => {
     setDx(String(accepted.dx));
     setDy(String(accepted.dy));
-    setYaw(String(Math.round(((accepted.yaw * 180) / Math.PI) * 100) / 100));
+    setYaw(String((accepted.yaw * 180) / Math.PI));
     setSnap(accepted.snap);
     previous.current = undefined;
     setError("");

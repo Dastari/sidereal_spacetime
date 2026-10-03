@@ -18,6 +18,7 @@ import {
   validateFurnishingPlacement,
   deckRouteGroups,
   furnishingDoorwayAnchors,
+  reachableFurnishingApproach,
   type FurnishingEdit,
 } from "@sidereal/sim/ship-furnishings";
 import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
@@ -236,13 +237,7 @@ export function editShipFurnishing(
   let approach: [number, number] | undefined;
   if (binding && args.action !== "delete") {
     if (!socket) fail("Current furnishing storage socket required");
-    approach = socket.approachesM.find((p) =>
-      canOccupyDeck(
-        after,
-        { shipId: instance.id, deckId: visit.deckId, position: p },
-        0.3,
-      ),
-    );
+    approach = reachableFurnishingApproach(after, crew, socket.approachesM);
     if (!approach) fail("Storage needs an accessible standing approach");
   }
   if (bed && !qualifyPrefabBed(after, bed))

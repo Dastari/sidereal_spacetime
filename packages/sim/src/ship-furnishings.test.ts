@@ -12,6 +12,7 @@ import {
   footprintFloorCoverage,
   deckRouteGroups,
   validateFurnishingPlacement,
+  reachableFurnishingApproach,
 } from "./ship-furnishings";
 import { prefabShipObjects, prefabDeckObstacles } from "./prefab-deck-objects";
 import { prefabCargoSockets } from "./prefab-cargo-sockets";
@@ -300,4 +301,31 @@ test("placement validation rejects unsupported sub-sample slivers and living cre
   expect(() =>
     validateFurnishingPlacement(id, {}, whole, whole, [[cx, cy]], []),
   ).toThrow(/crew/);
+});
+
+test("a disconnected first clear storage approach does not hide a connected alternate", () => {
+  const frame = {
+    ...open,
+    segments: [
+      {
+        id: "wall",
+        a: [0, -3] as [number, number],
+        b: [0, 3] as [number, number],
+        halfWidthM: 0.2,
+      },
+    ],
+  };
+  expect(
+    reachableFurnishingApproach(
+      frame,
+      [[-2, 0]],
+      [
+        [2, 0],
+        [-1, 0],
+      ],
+    ),
+  ).toEqual([-1, 0]);
+  expect(
+    reachableFurnishingApproach(frame, [[-2, 0]], [[2, 0]]),
+  ).toBeUndefined();
 });
