@@ -162,6 +162,24 @@ export function deckRouteGroups(
   return points.map(resolve);
 }
 
+/** Choose a supported interaction socket in a crew-connected component, not merely the first clear point. */
+export function reachableFurnishingApproach(
+  frame: DeckCollisionFrame,
+  crew: readonly (readonly number[])[],
+  points: readonly (readonly [number, number])[],
+): [number, number] | undefined {
+  const candidates = points.filter((p) => clear(frame, p)),
+    routes = deckRouteGroups(frame, [...crew, ...candidates]);
+  const point = candidates.find(
+    (_p, i) =>
+      routes[crew.length + i] > 0 &&
+      routes
+        .slice(0, crew.length)
+        .some((g) => g > 0 && g === routes[crew.length + i]),
+  );
+  return point ? [point[0], point[1]] : undefined;
+}
+
 const polygonArea = (p: readonly (readonly number[])[]) =>
   Math.abs(
     p.reduce(
