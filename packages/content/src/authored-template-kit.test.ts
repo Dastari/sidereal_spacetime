@@ -21,7 +21,7 @@ describe("complete source-derived authored template kit", () => {
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       AUTHORED_TEMPLATE_KIT_MANIFEST_SHA256,
     );
-    expect(kit.pieces).toHaveLength(85);
+    expect(kit.pieces).toHaveLength(115);
     for (const piece of kit.pieces) {
       const bytes = readFileSync(new URL(piece.file, base));
       expect(createHash("sha256").update(bytes).digest("hex")).toBe(
@@ -100,6 +100,51 @@ describe("complete source-derived authored template kit", () => {
         expect(socket.position.every(Number.isFinite)).toBe(true);
       }
     }
+  });
+
+  it("retains dark recesses and native light armor across every roof shape", () => {
+    for (const shape of AUTHORED_TEMPLATE_SHAPES) {
+      const pieces = ["plate", "light", "accent"].map((finish) =>
+        raw.pieces.find(
+          (p: { id: string }) => p.id === `roof.${shape}.${finish}`,
+        ),
+      );
+      expect(pieces.map((p) => p.triangles)).toEqual([
+        pieces[0].triangles,
+        pieces[0].triangles,
+        pieces[0].triangles,
+      ]);
+      expect(pieces[1].boundsMin).toEqual(pieces[0].boundsMin);
+      expect(pieces[1].boundsMax).toEqual(pieces[0].boundsMax);
+      expect(pieces[1].materials).toContain("primary");
+      expect(pieces[1].materials).toContain("dark");
+      expect(pieces[2].materials).toContain("accent");
+      expect(
+        pieces[1].source.some((s: { id: string }) => s.id === "roof.small.box"),
+      ).toBe(true);
+    }
+    for (const [module, height] of [
+      ["vent", 0.141],
+      ["hatch", 0.185],
+      ["fan", 0.225],
+      ["box", 0.34],
+    ] as const) {
+      const piece = raw.pieces.find(
+        (p: { id: string }) => p.id === `roof.square.${module}`,
+      );
+      expect(piece.occupancy).toEqual([1, 1]);
+      expect(piece.topDatum).toBe(0);
+      expect(piece.boundsMax[2]).toBeCloseTo(height, 5);
+      expect(
+        piece.source.some(
+          (s: { id: string }) => s.id === `roof.small.${module}`,
+        ),
+      ).toBe(true);
+    }
+    expect(
+      raw.pieces.find((p: { id: string }) => p.id === "roof.square.hatch")
+        .materials,
+    ).toContain("accent");
   });
 
   it.each([

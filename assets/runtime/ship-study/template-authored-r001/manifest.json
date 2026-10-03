@@ -73,6 +73,16 @@
       ],
       "strength": 5.0
     },
+    "emit_a@high": {
+      "kind": "emissive",
+      "family": "emissive",
+      "colour": [
+        0.05,
+        0.48,
+        1.0
+      ],
+      "strength": 6.0
+    },
     "emit_a@low": {
       "kind": "emissive",
       "family": "emissive",
@@ -93,166 +103,6 @@
       ],
       "strength": 4.2
     },
-    "emit_b@low": {
-      "kind": "emissive",
-      "family": "emissive",
-      "colour": [
-        1.0,
-        0.3,
-        0.025
-      ],
-      "strength": 1.2
-    },
-    "emit_r@high": {
-      "kind": "emissive",
-      "family": "emissive",
-      "colour": [
-        1.0,
-        0.06,
-        0.03
-      ],
-      "strength": 6.0
-    },
-    "emit_w@high": {
-      "kind": "emissive",
-      "family": "emissive",
-      "colour": [
-        1.0,
-        0.86,
-        0.66
-      ],
-      "strength": 6.0
-    },
-    "glass_dark": {
-      "kind": "shared",
-      "family": "glass",
-      "colour": [
-        0.02,
-        0.05,
-        0.12
-      ],
-      "strength": 0.0
-    },
-    "hazard": {
-      "kind": "shared",
-      "family": "plastic-colour",
-      "colour": [
-        0.9,
-        0.42,
-        0.04
-      ],
-      "strength": 0.0
-    },
-    "metal": {
-      "kind": "slot",
-      "family": "metal",
-      "colour": [
-        0.4,
-        0.41,
-        0.45
-      ],
-      "strength": 0.0
-    },
-    "primary": {
-      "kind": "slot",
-      "family": "plastic-light",
-      "colour": [
-        0.6,
-        0.6,
-        0.63
-      ],
-      "strength": 0.0
-    },
-    "rubber": {
-      "kind": "shared",
-      "family": "rubber",
-      "colour": [
-        0.012,
-        0.012,
-        0.016
-      ],
-      "strength": 0.0
-    },
-    "scr_blue@mid": {
-      "kind": "emissive",
-      "family": "emissive",
-      "colour": [
-        0.06,
-        0.35,
-        1.0
-      ],
-      "strength": 3.0
-    },
-    "secondary": {
-      "kind": "slot",
-      "family": "plastic-dark",
-      "colour": [
-        0.03,
-        0.034,
-        0.1
-      ],
-      "strength": 0.0
-    },
-    "trim": {
-      "kind": "slot",
-      "family": "plastic-dark",
-      "colour": [
-        0.075,
-        0.085,
-        0.15
-      ],
-      "strength": 0.0
-    },
-    "wall": {
-      "kind": "shared",
-      "family": "plastic-light",
-      "colour": [
-        0.26,
-        0.255,
-        0.29
-      ],
-      "strength": 0.0
-    },
-    "wall_dark": {
-      "kind": "shared",
-      "family": "plastic-dark",
-      "colour": [
-        0.13,
-        0.13,
-        0.17
-      ],
-      "strength": 0.0
-    },
-    "white": {
-      "kind": "shared",
-      "family": "plastic-light",
-      "colour": [
-        0.8,
-        0.8,
-        0.82
-      ],
-      "strength": 0.0
-    },
-    "yellow": {
-      "kind": "shared",
-      "family": "plastic-colour",
-      "colour": [
-        0.92,
-        0.48,
-        0.02
-      ],
-      "strength": 0.0
-    },
-    "emit_a@high": {
-      "kind": "emissive",
-      "family": "emissive",
-      "colour": [
-        0.05,
-        0.48,
-        1.0
-      ],
-      "strength": 6.0
-    },
     "emit_b@high": {
       "kind": "emissive",
       "family": "emissive",
@@ -262,6 +112,16 @@
         0.025
       ],
       "strength": 6.0
+    },
+    "emit_b@low": {
+      "kind": "emissive",
+      "family": "emissive",
+      "colour": [
+        1.0,
+        0.3,
+        0.025
+      ],
+      "strength": 1.2
     },
     "emit_c@mid": {
       "kind": "emissive",
@@ -283,6 +143,16 @@
       ],
       "strength": 3.0
     },
+    "emit_r@high": {
+      "kind": "emissive",
+      "family": "emissive",
+      "colour": [
+        1.0,
+        0.06,
+        0.03
+      ],
+      "strength": 6.0
+    },
     "emit_r@low": {
       "kind": "emissive",
       "family": "emissive",
@@ -292,6 +162,16 @@
         0.03
       ],
       "strength": 1.2
+    },
+    "emit_w@high": {
+      "kind": "emissive",
+      "family": "emissive",
+      "colour": [
+        1.0,
+        0.86,
+        0.66
+      ],
+      "strength": 6.0
     },
     "emit_w@mid": {
       "kind": "emissive",
@@ -333,6 +213,26 @@
       ],
       "strength": 0.5
     },
+    "glass_dark": {
+      "kind": "shared",
+      "family": "glass",
+      "colour": [
+        0.02,
+        0.05,
+        0.12
+      ],
+      "strength": 0.0
+    },
+    "hazard": {
+      "kind": "shared",
+      "family": "plastic-colour",
+      "colour": [
+        0.9,
+        0.42,
+        0.04
+      ],
+      "strength": 0.0
+    },
     "leaf": {
       "kind": "shared",
       "family": "plastic-colour",
@@ -350,6 +250,16 @@
         0.2,
         0.6,
         0.05
+      ],
+      "strength": 0.0
+    },
+    "metal": {
+      "kind": "slot",
+      "family": "metal",
+      "colour": [
+        0.4,
+        0.41,
+        0.45
       ],
       "strength": 0.0
     },
@@ -373,6 +283,26 @@
       ],
       "strength": 0.0
     },
+    "primary": {
+      "kind": "slot",
+      "family": "plastic-light",
+      "colour": [
+        0.6,
+        0.6,
+        0.63
+      ],
+      "strength": 0.0
+    },
+    "rubber": {
+      "kind": "shared",
+      "family": "rubber",
+      "colour": [
+        0.012,
+        0.012,
+        0.016
+      ],
+      "strength": 0.0
+    },
     "scr_blue@low": {
       "kind": "emissive",
       "family": "emissive",
@@ -382,6 +312,26 @@
         1.0
       ],
       "strength": 1.2
+    },
+    "scr_blue@mid": {
+      "kind": "emissive",
+      "family": "emissive",
+      "colour": [
+        0.06,
+        0.35,
+        1.0
+      ],
+      "strength": 3.0
+    },
+    "secondary": {
+      "kind": "slot",
+      "family": "plastic-dark",
+      "colour": [
+        0.03,
+        0.034,
+        0.1
+      ],
+      "strength": 0.0
     },
     "skin": {
       "kind": "shared",
@@ -410,6 +360,46 @@
         0.55,
         0.16,
         0.06
+      ],
+      "strength": 0.0
+    },
+    "trim": {
+      "kind": "slot",
+      "family": "plastic-dark",
+      "colour": [
+        0.075,
+        0.085,
+        0.15
+      ],
+      "strength": 0.0
+    },
+    "wall": {
+      "kind": "shared",
+      "family": "plastic-light",
+      "colour": [
+        0.26,
+        0.255,
+        0.29
+      ],
+      "strength": 0.0
+    },
+    "wall_dark": {
+      "kind": "shared",
+      "family": "plastic-dark",
+      "colour": [
+        0.13,
+        0.13,
+        0.17
+      ],
+      "strength": 0.0
+    },
+    "white": {
+      "kind": "shared",
+      "family": "plastic-light",
+      "colour": [
+        0.8,
+        0.8,
+        0.82
       ],
       "strength": 0.0
     },
@@ -772,11 +762,22 @@
         0.05
       ],
       "strength": 0.0
+    },
+    "yellow": {
+      "kind": "shared",
+      "family": "plastic-colour",
+      "colour": [
+        0.92,
+        0.48,
+        0.02
+      ],
+      "strength": 0.0
     }
   },
   "sourcePins": {
     "export": "9afe368702b81891905165fe2adef6c860f23b0d3ce5672e5bf1b6ad93a4d855",
-    "export_tiles": "c8ecd4383ceee5f10fd409207d135af88c706245fd648abd492c3773e07d648a"
+    "export_tiles": "c8ecd4383ceee5f10fd409207d135af88c706245fd648abd492c3773e07d648a",
+    "export_flight": "03bede58180b1b24a0643dbab44bcff0ce882ab299c9d48bb5a39d39c637466d"
   },
   "sourceRevision": "333bd9b718078e4e8e064054af9abffee817a9a0",
   "pieces": [
@@ -823,7 +824,7 @@
     {
       "id": "canopy.straight",
       "file": "canopy.straight.glb",
-      "sha256": "768ac019ca012805584819e293b82bb2663f20a8ef523af0e1f7c7136bc04e15",
+      "sha256": "1047b6033337bdf264fc4579f26853b6e57b607ea1d2a0d6a24227a4744c914c",
       "triangles": 6060,
       "frame": "piece-local",
       "boundsMin": [
@@ -870,7 +871,7 @@
     {
       "id": "floor.arc1.grate",
       "file": "floor.arc1.grate.glb",
-      "sha256": "ebbf24e8c71f17b70af43e7c92eff1d708fe697e0d507a32e6c2379a0e424680",
+      "sha256": "75e34965755a886d6a2c6cd16b0677590752aaf8c11fb08d31a30534becf8b7c",
       "triangles": 1402,
       "frame": "piece-local",
       "boundsMin": [
@@ -1134,7 +1135,7 @@
     {
       "id": "floor.arc2.grate",
       "file": "floor.arc2.grate.glb",
-      "sha256": "720c015116494bf108e27d2dfe26d6bcce475cd211f9d0b61ba0be7767b51731",
+      "sha256": "f8d272dbec04374aa4e20aacc3376134cc0c6fffd80add488d293a7136b3dc49",
       "triangles": 5166,
       "frame": "piece-local",
       "boundsMin": [
@@ -1462,7 +1463,7 @@
     {
       "id": "floor.arc3.grate",
       "file": "floor.arc3.grate.glb",
-      "sha256": "5cc49ccf1a66b97aeacee93fbff17eeba3d6426489ca1985e3fa192d10482792",
+      "sha256": "72ebd9bffba6f40036da4368ce9fcca32f9de9c13d28e1302ddca20d6fc4c753",
       "triangles": 11162,
       "frame": "piece-local",
       "boundsMin": [
@@ -1854,7 +1855,7 @@
     {
       "id": "floor.arc4.grate",
       "file": "floor.arc4.grate.glb",
-      "sha256": "5766a1ddfaf049d41bc9292d06ed81fd3738dbfde49a636bfdbf94e726dd4e7f",
+      "sha256": "ec9dab4a446b5374d3e7ccac39b536026ae9a3b70ee1d03d9d6066387486c0c0",
       "triangles": 19396,
       "frame": "piece-local",
       "boundsMin": [
@@ -2310,7 +2311,7 @@
     {
       "id": "floor.slope1.grate",
       "file": "floor.slope1.grate.glb",
-      "sha256": "659df2b401180b0854471b07b74a84103a8e996c7a69c3b6d366f646dbc28298",
+      "sha256": "d2efd403133b2965fb2e18e06403eb1625143ec053f12446455960615ac9cf22",
       "triangles": 1146,
       "frame": "piece-local",
       "boundsMin": [
@@ -2418,7 +2419,7 @@
     {
       "id": "floor.slope2.grate",
       "file": "floor.slope2.grate.glb",
-      "sha256": "826012ec048c621be61934fead99f81af91e567364be673d9975cc567a123900",
+      "sha256": "6ad1352cdb2fe667787551df09be1fe675fe2b8a0698787ded33f06bfdc794b8",
       "triangles": 2030,
       "frame": "piece-local",
       "boundsMin": [
@@ -2526,7 +2527,7 @@
     {
       "id": "floor.slope3.grate",
       "file": "floor.slope3.grate.glb",
-      "sha256": "ac753b2d5ed09ab07d35327b2e7f6579d1308ae57bbde5e40922d2cc1664219c",
+      "sha256": "44423a6e3179ede354df0fff461a8bcdaf7c34207c83771df75ca3e6d39faf57",
       "triangles": 2896,
       "frame": "piece-local",
       "boundsMin": [
@@ -2634,7 +2635,7 @@
     {
       "id": "floor.slope4.grate",
       "file": "floor.slope4.grate.glb",
-      "sha256": "469d765953bdaccf946742f1c448208431358bcc01d6e6af6013c3c645a82218",
+      "sha256": "4a3c5c5292444a0964596ba10399691c45ea7744b4842a2aab1561733b440c79",
       "triangles": 3764,
       "frame": "piece-local",
       "boundsMin": [
@@ -2858,7 +2859,7 @@
     {
       "id": "hull.arc1.a",
       "file": "hull.arc1.a.glb",
-      "sha256": "cf4f0366f385fb03cc245e6fed5bfbaf39339ec7c9bd4a273824deb328e3fbbb",
+      "sha256": "7c88fdd123fee338e9925bf96539efc64fa9edadf3bbaf6162f434593aa6b7f2",
       "triangles": 14004,
       "frame": "piece-local",
       "boundsMin": [
@@ -2916,17 +2917,17 @@
     {
       "id": "hull.arc1.b",
       "file": "hull.arc1.b.glb",
-      "sha256": "44e697013aca35c17cbdd657afeb9317acc01085464e2420a796c505b48aa05e",
-      "triangles": 18920,
+      "sha256": "e981907206be9d055682fd7c3b651694c1bb209ceef2d438c749d90752af2fa0",
+      "triangles": 15596,
       "frame": "piece-local",
       "boundsMin": [
-        -6.317502965202948e-08,
+        -6.578564182291302e-08,
         0.0,
         0.0
       ],
       "boundsMax": [
-        1.3961683511734009,
-        1.445276141166687,
+        1.516837477684021,
+        1.5049999952316284,
         1.0
       ],
       "materials": [
@@ -2936,15 +2937,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -2975,8 +2975,8 @@
     {
       "id": "hull.arc1.c",
       "file": "hull.arc1.c.glb",
-      "sha256": "2752d782f1e8a0c25f4ccdc184f28bb0abd5a2d7155972ec6d3b864bf44b85de",
-      "triangles": 22404,
+      "sha256": "6b1b02075bfb857f69cd5812bcee699e06582edea955d01a5726aec08d903ad5",
+      "triangles": 22010,
       "frame": "piece-local",
       "boundsMin": [
         -6.381863215665362e-08,
@@ -3001,9 +3001,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -3034,7 +3034,7 @@
     {
       "id": "hull.arc1c.a",
       "file": "hull.arc1c.a.glb",
-      "sha256": "3bcc51acd7e86fc7de6d7152627f33f1dd80d7920b00fb0da9a4c41a0aebbdc6",
+      "sha256": "65687c6d19a8d3eca0d3d8860d45b6dc67cedb4ee44759c1491603034e459909",
       "triangles": 14004,
       "frame": "piece-local",
       "boundsMin": [
@@ -3092,8 +3092,8 @@
     {
       "id": "hull.arc1c.b",
       "file": "hull.arc1c.b.glb",
-      "sha256": "b11fcf1c0aac5db8f7fa7f43b4a399cdec9cfb0a2af192e17ed63286c80cd45e",
-      "triangles": 18920,
+      "sha256": "2c4de2e11f1fcf6c6e8c8b9d6b96af74c937066c88be1cd33579652061216680",
+      "triangles": 15596,
       "frame": "piece-local",
       "boundsMin": [
         5.596635864851311e-17,
@@ -3112,15 +3112,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -3151,8 +3150,8 @@
     {
       "id": "hull.arc1c.c",
       "file": "hull.arc1c.c.glb",
-      "sha256": "3df19f08320f39df28fb8c5ffd8d4178f63da6e44ddb01f5ab8c15c8aac07186",
-      "triangles": 22406,
+      "sha256": "2bb0a971a55be8bdf2e53c1cb9fe64d8a320810e3866a656f697650e9161f436",
+      "triangles": 22010,
       "frame": "piece-local",
       "boundsMin": [
         5.596635864851311e-17,
@@ -3177,9 +3176,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -3210,7 +3209,7 @@
     {
       "id": "hull.arc2.a",
       "file": "hull.arc2.a.glb",
-      "sha256": "4e7feb12f183a4493f66e4e96d6facdac658d22c9cc9aa7e437bcc334f37dd9f",
+      "sha256": "f28cb79adf85b8118753ba43bb2a58a60e62708bb82c63f2be0c861e1fea4d26",
       "triangles": 26136,
       "frame": "piece-local",
       "boundsMin": [
@@ -3268,17 +3267,17 @@
     {
       "id": "hull.arc2.b",
       "file": "hull.arc2.b.glb",
-      "sha256": "8303d9a46716be87edc26357b38d9d42b6068a421c48fb96e46e748c97132e7e",
-      "triangles": 36036,
+      "sha256": "10a983d971e03baf9f66d24dbdea8738d5208f0e35dcdc9855b52adf49b613b9",
+      "triangles": 28496,
       "frame": "piece-local",
       "boundsMin": [
-        -1.035575323271587e-07,
+        -1.1019641732445962e-07,
         0.0,
         0.0
       ],
       "boundsMax": [
-        2.424995183944702,
-        2.572387456893921,
+        2.5192747116088867,
+        2.5209999084472656,
         1.0
       ],
       "materials": [
@@ -3288,15 +3287,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -3327,8 +3325,8 @@
     {
       "id": "hull.arc2.c",
       "file": "hull.arc2.c.glb",
-      "sha256": "544ba1a85f09ebf6f1c1f2a0ce98a7a6aa973e1856606637a168ffc865b4dba9",
-      "triangles": 41766,
+      "sha256": "f2e60ca9d0818f74dd9d0306af3f2ca99c671880891a1fe03d68cc316666712f",
+      "triangles": 41186,
       "frame": "piece-local",
       "boundsMin": [
         -1.0975929853884736e-07,
@@ -3353,9 +3351,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -3386,7 +3384,7 @@
     {
       "id": "hull.arc2c.a",
       "file": "hull.arc2c.a.glb",
-      "sha256": "663b7b35f6d5c9ea8855785995e73c7b103aa474752fe3ba072feaff26f8f9e5",
+      "sha256": "79bd9bcc517e9b27971653fcd45d3cf0adc367a4d8bdbda6083ab15ef0a470a4",
       "triangles": 26136,
       "frame": "piece-local",
       "boundsMin": [
@@ -3444,8 +3442,8 @@
     {
       "id": "hull.arc2c.b",
       "file": "hull.arc2c.b.glb",
-      "sha256": "8675fc9aa671191a4f4d9c9a0cb4ebf1f12359764d68d2cda8bda9a28a3660a8",
-      "triangles": 36036,
+      "sha256": "45baa33d42ae6bb4f7c0c2094d2446e7e29fa3aedd7231e07a2de607c274a33a",
+      "triangles": 28496,
       "frame": "piece-local",
       "boundsMin": [
         1.171986946603266e-16,
@@ -3464,15 +3462,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -3503,8 +3500,8 @@
     {
       "id": "hull.arc2c.c",
       "file": "hull.arc2c.c.glb",
-      "sha256": "79ea47a23a3cea1c3f8a064010ace720fab748b9d3107c961e41136bcabcbbb6",
-      "triangles": 41770,
+      "sha256": "3471516e2cb451a7fe986194b6ff3e0c60781cb8a43bc4aa511f75ea0ec24000",
+      "triangles": 41186,
       "frame": "piece-local",
       "boundsMin": [
         1.171986946603266e-16,
@@ -3529,9 +3526,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -3562,7 +3559,7 @@
     {
       "id": "hull.arc3.a",
       "file": "hull.arc3.a.glb",
-      "sha256": "94415b39cfa3f61ea6cb48cf1bb84c12ba24a81746cfc67bd882300090c01ff1",
+      "sha256": "5f8b3b7a9215cca3de94cb5a2e4afa67b6b271abd6b43745e56b18c1f6232912",
       "triangles": 38068,
       "frame": "piece-local",
       "boundsMin": [
@@ -3620,17 +3617,17 @@
     {
       "id": "hull.arc3.b",
       "file": "hull.arc3.b.glb",
-      "sha256": "13218e828bb0679dc70360dcf604bce22d2e60eb1b1554bc3fad214a2ba6268e",
-      "triangles": 53204,
+      "sha256": "99fe8b524dc7f8c4a616250fdbae7dde542419871d3aad5dd8f5547ce9aeb17e",
+      "triangles": 42076,
       "frame": "piece-local",
       "boundsMin": [
-        -1.3694835487854107e-08,
+        -1.3912360152801284e-08,
         0.0,
         0.0
       ],
       "boundsMax": [
-        3.432940721511841,
-        3.4784176349639893,
+        3.5199289321899414,
+        3.5048646926879883,
         1.0
       ],
       "materials": [
@@ -3640,15 +3637,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -3679,8 +3675,8 @@
     {
       "id": "hull.arc3.c",
       "file": "hull.arc3.c.glb",
-      "sha256": "66c198c5fca61e858fbe9e466d2acfec3612ba9752a02cfde52d8cde2a5dc879",
-      "triangles": 62018,
+      "sha256": "6e3b875de826d12282c6c0448318e8b34611bb9dff8368283a1353efe12f1e46",
+      "triangles": 61256,
       "frame": "piece-local",
       "boundsMin": [
         -1.3773236773317876e-08,
@@ -3705,9 +3701,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -3738,7 +3734,7 @@
     {
       "id": "hull.arc3c.a",
       "file": "hull.arc3c.a.glb",
-      "sha256": "be94018922e00fe70136278372514323b81ec9a1fb022ffcb5255d25d68d9c0e",
+      "sha256": "646c858abde4ab64c0b4b1af358dd080ac1d3bbc718f189ea32b1ced175e4d75",
       "triangles": 38068,
       "frame": "piece-local",
       "boundsMin": [
@@ -3796,8 +3792,8 @@
     {
       "id": "hull.arc3c.b",
       "file": "hull.arc3c.b.glb",
-      "sha256": "0912321523b286cb2fe7282b4bf752b9e8c00b8129376ab1b536e2dce243cd1f",
-      "triangles": 53204,
+      "sha256": "6c8a52f072040a408b290ac2a581fed752b00ecb8543f7cee21a97101262e935",
+      "triangles": 42076,
       "frame": "piece-local",
       "boundsMin": [
         1.78431037289585e-16,
@@ -3816,15 +3812,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -3855,8 +3850,8 @@
     {
       "id": "hull.arc3c.c",
       "file": "hull.arc3c.c.glb",
-      "sha256": "456ecc6a8b5000eb7a53caa5809ab01132ca73e73ae02df050999d75c9462085",
-      "triangles": 62016,
+      "sha256": "ffe8a6392c8491eaeea4174ab6e3182441697cd281ba6128538e474e1fecfe1e",
+      "triangles": 61256,
       "frame": "piece-local",
       "boundsMin": [
         1.78431037289585e-16,
@@ -3881,9 +3876,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -3914,7 +3909,7 @@
     {
       "id": "hull.arc4.a",
       "file": "hull.arc4.a.glb",
-      "sha256": "5c80f9010d536b16f54ebe1d4568499b89fc8f8e74f4357e6481292d65e7f8d2",
+      "sha256": "8b37c192745423081af69daf264496f7fa2e9b1e6780a4f3b1377c33214ab47d",
       "triangles": 51252,
       "frame": "piece-local",
       "boundsMin": [
@@ -3972,17 +3967,17 @@
     {
       "id": "hull.arc4.b",
       "file": "hull.arc4.b.glb",
-      "sha256": "0be1db007897fd7f968b32c5047a93197844006f713b6e73578e596df16c580d",
-      "triangles": 72308,
+      "sha256": "17b6b230bcf7a1b14ff8a792fb1c5bd49bdd89efe6a9808c168a5300fd0008fa",
+      "triangles": 56188,
       "frame": "piece-local",
       "boundsMin": [
-        -1.9435290710134723e-07,
+        -1.9670125084303436e-07,
         0.0,
         0.0
       ],
       "boundsMax": [
-        4.4497761726379395,
-        4.56737756729126,
+        4.52022647857666,
+        4.518561363220215,
         1.0
       ],
       "materials": [
@@ -3992,15 +3987,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -4031,8 +4025,8 @@
     {
       "id": "hull.arc4.c",
       "file": "hull.arc4.c.glb",
-      "sha256": "ebb1a8cd1b5860e28baef0e3ed5a62a8610392615fd7ce21b6c4d0fc1edcf282",
-      "triangles": 83402,
+      "sha256": "f33f4d05c408193df7c77b3c4233298792774978d9d175b206a8983938ffb103",
+      "triangles": 82052,
       "frame": "piece-local",
       "boundsMin": [
         -1.9555079688871047e-07,
@@ -4057,9 +4051,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -4090,7 +4084,7 @@
     {
       "id": "hull.arc4c.a",
       "file": "hull.arc4c.a.glb",
-      "sha256": "221f8a3003187404fb54633130096cacf239b8e1ecdca5fa3de92c77361983d1",
+      "sha256": "a8373054a8d210fe278e04210dfc9175c1afc3519222b71badea99a58910075b",
       "triangles": 51252,
       "frame": "piece-local",
       "boundsMin": [
@@ -4148,8 +4142,8 @@
     {
       "id": "hull.arc4c.b",
       "file": "hull.arc4c.b.glb",
-      "sha256": "015caf4c5a928c2b048d03a652d4c0e48f0a9ac469f4c4ff4b93a4c6a3473f41",
-      "triangles": 72308,
+      "sha256": "df59c689b40d93a2c7e8005981d8844a9e766bb5c09908f4259b164a186dc169",
+      "triangles": 56188,
       "frame": "piece-local",
       "boundsMin": [
         2.396633666839536e-16,
@@ -4168,15 +4162,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -4207,8 +4200,8 @@
     {
       "id": "hull.arc4c.c",
       "file": "hull.arc4c.c.glb",
-      "sha256": "cbee9c9f0143305f503e398a13372812758475c5864e78e334ea86b9ec16b3c2",
-      "triangles": 83402,
+      "sha256": "4fee1dd6467044d36980b8fbe54e9058505c6ac668dfaf848077e977705395d3",
+      "triangles": 82052,
       "frame": "piece-local",
       "boundsMin": [
         2.396633666839536e-16,
@@ -4233,9 +4226,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -4321,8 +4314,8 @@
     {
       "id": "hull.straight.b",
       "file": "hull.straight.b.glb",
-      "sha256": "b9b25c826a868f2fc163ea756bafa74289121b2fb1dc56f0ea42a61ac2339d40",
-      "triangles": 6600,
+      "sha256": "72721f14658d06f592c35fafff308163290cc9d8c77325e2a67cfd92b79216f1",
+      "triangles": 4924,
       "frame": "piece-local",
       "boundsMin": [
         0.0,
@@ -4330,8 +4323,8 @@
         0.0
       ],
       "boundsMax": [
-        1.0000001192092896,
-        0.5788475275039673,
+        1.0,
+        0.5210000276565552,
         1.0
       ],
       "materials": [
@@ -4341,15 +4334,14 @@
         "primary",
         "secondary",
         "trim",
-        "wall_dark",
-        "white"
+        "wall_dark"
       ],
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-          "file": "glb/face/straight/face.straight.navy.navy.mixed.mixed.w2.s0.deck.glb",
-          "sha256": "753c4a4482cbe23bba74429531c94ea7a6550ddfeb0a9f264281fa5d1e512408"
+          "id": "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+          "file": "glb/face/straight/face.straight.pilaster.light.mixed.louvre.w1.s1.deck.glb",
+          "sha256": "b918e9092a555300a30f363575cbf95ef32e770ec03302ee4142ff71d2ddcc8e"
         },
         {
           "collection": "export",
@@ -4362,9 +4354,9 @@
       "operation": "native facade; inward backing compressed to .25m; height normalized",
       "sourceHeight": [
         -2.069999933242798,
-        1.8700000047683716
+        1.9259999990463257
       ],
-      "sourceWidth": 2.0,
+      "sourceWidth": 1.0,
       "normalizedHeight": true,
       "inwardDepth": 0.25,
       "length": 1,
@@ -4377,8 +4369,8 @@
     {
       "id": "hull.straight.c",
       "file": "hull.straight.c.glb",
-      "sha256": "ef1c69c47b6cea30b465b268a531e01333c686cc803dbad5d8a10f29b8bf1d0c",
-      "triangles": 7124,
+      "sha256": "5b2facadb4bbba237472ca61c624c92a19b559841a0d31cdd716b2a7fc8a169f",
+      "triangles": 6918,
       "frame": "piece-local",
       "boundsMin": [
         0.0,
@@ -4403,9 +4395,9 @@
       "source": [
         {
           "collection": "export_tiles",
-          "id": "face.straight.vent.amber.navy.louvre.w2.s1.deck",
-          "file": "glb/face/straight/face.straight.vent.amber.navy.louvre.w2.s1.deck.glb",
-          "sha256": "48993a3a040e63a1e70db0fe93abda9c94b79fb174732c75e3b7ff71d85886b1"
+          "id": "face.straight.vent.light.navy.plate.w2.s0.deck",
+          "file": "glb/face/straight/face.straight.vent.light.navy.plate.w2.s0.deck.glb",
+          "sha256": "c0faaf6c8afdd63ae36fa8739b4f1ad11c1fead10c1db9764bf8cc610de313a6"
         },
         {
           "collection": "export",
@@ -4417,7 +4409,7 @@
       "family": "hull",
       "operation": "native facade; inward backing compressed to .25m; height normalized",
       "sourceHeight": [
-        -2.059999942779541,
+        -2.069999933242798,
         1.9259999990463257
       ],
       "sourceWidth": 2.0,
@@ -4472,9 +4464,83 @@
       }
     },
     {
+      "id": "roof.arc1.accent",
+      "file": "roof.arc1.accent.glb",
+      "sha256": "8de24af30cc34d4ba532d4aa4a55a4303c0c8a27c82b444e15d47bf06c1bca6d",
+      "triangles": 564,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc1",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.923879533,
+          0.382683432
+        ],
+        [
+          0.707106781,
+          0.707106781
+        ],
+        [
+          0.382683432,
+          0.923879533
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc1.grate",
       "file": "roof.arc1.grate.glb",
-      "sha256": "104a80e07cd16a3a7ef6b6afdd5d26d583359236c85dcb3f30bd92f4d69e2631",
+      "sha256": "0d4a057453d65548da39b98552b6d0e13afeb5b3268c74834c859552d5abcd59",
       "triangles": 1402,
       "frame": "piece-local",
       "boundsMin": [
@@ -4538,9 +4604,83 @@
       }
     },
     {
+      "id": "roof.arc1.light",
+      "file": "roof.arc1.light.glb",
+      "sha256": "cf2fa43d4804f436425798231d3d33f762ebf08155be9d789eafd364279fb56b",
+      "triangles": 564,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc1",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.923879533,
+          0.382683432
+        ],
+        [
+          0.707106781,
+          0.707106781
+        ],
+        [
+          0.382683432,
+          0.923879533
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc1.plate",
       "file": "roof.arc1.plate.glb",
-      "sha256": "f88a7fa0c3227072bf25e67730a709f04af5febd763957d32ef0d123c8b3a8b8",
+      "sha256": "f0e5c3c5be46202b06280d6d8fae4e8ca57f99a9506a4fe58aea0ef059870958",
       "triangles": 564,
       "frame": "piece-local",
       "boundsMin": [
@@ -4597,6 +4737,80 @@
         ]
       ],
       "topDatum": 0,
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.arc1c.accent",
+      "file": "roof.arc1c.accent.glb",
+      "sha256": "366481331ad84f0fa127068bc51db044855efdff44cbf4595b1980b72e4c6b5b",
+      "triangles": 302,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc1c",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0.382683432,
+          0.923879533
+        ],
+        [
+          0.707106781,
+          0.707106781
+        ],
+        [
+          0.923879533,
+          0.382683432
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
       "qualification": {
         "finiteVertices": true,
         "zeroAreaTriangles": 0,
@@ -4670,9 +4884,83 @@
       }
     },
     {
+      "id": "roof.arc1c.light",
+      "file": "roof.arc1c.light.glb",
+      "sha256": "cf3d8410edbc5dd7c27774468bc655fb6f7eefd1de4d80731783388737c74bb1",
+      "triangles": 302,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc1c",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0.382683432,
+          0.923879533
+        ],
+        [
+          0.707106781,
+          0.707106781
+        ],
+        [
+          0.923879533,
+          0.382683432
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc1c.plate",
       "file": "roof.arc1c.plate.glb",
-      "sha256": "44ab111c1b2d5940c64ac13ce3e102311d11b61aa7bf5b71ce96654348fcc86b",
+      "sha256": "d8268d4bc9054cfe45d2f9a990e247fee3e490cb813b4d09535199627f426b98",
       "triangles": 302,
       "frame": "piece-local",
       "boundsMin": [
@@ -4736,9 +5024,99 @@
       }
     },
     {
+      "id": "roof.arc2.accent",
+      "file": "roof.arc2.accent.glb",
+      "sha256": "f5069cdf51a1b83935e80674ca75dfa7238f1df5df3cadda8da5a2e2293d10d1",
+      "triangles": 1980,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        2.0,
+        2.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc2",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          1.961570561,
+          0.390180644
+        ],
+        [
+          1.847759065,
+          0.765366865
+        ],
+        [
+          1.662939225,
+          1.111140466
+        ],
+        [
+          1.414213562,
+          1.414213562
+        ],
+        [
+          1.111140466,
+          1.662939225
+        ],
+        [
+          0.765366865,
+          1.847759065
+        ],
+        [
+          0.390180644,
+          1.961570561
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc2.grate",
       "file": "roof.arc2.grate.glb",
-      "sha256": "344a9f899bdc8055405db694fac864283a79bbdd2c3226f937dd7e6c3bd207e4",
+      "sha256": "e8fd105ffedc8dc1e7821c3f98d69d044113d44789eb5db8718ec22fc2862413",
       "triangles": 5166,
       "frame": "piece-local",
       "boundsMin": [
@@ -4818,9 +5196,99 @@
       }
     },
     {
+      "id": "roof.arc2.light",
+      "file": "roof.arc2.light.glb",
+      "sha256": "a15d83d518e106bca1e5a005b2aa39fcb850cdf20c81699cbfe1d39149a766ed",
+      "triangles": 1980,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        2.0,
+        2.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc2",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          1.961570561,
+          0.390180644
+        ],
+        [
+          1.847759065,
+          0.765366865
+        ],
+        [
+          1.662939225,
+          1.111140466
+        ],
+        [
+          1.414213562,
+          1.414213562
+        ],
+        [
+          1.111140466,
+          1.662939225
+        ],
+        [
+          0.765366865,
+          1.847759065
+        ],
+        [
+          0.390180644,
+          1.961570561
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc2.plate",
       "file": "roof.arc2.plate.glb",
-      "sha256": "205c300c54f81e9c1889f41d111487fa3566bbc0a6cd4f836899cca42745d0eb",
+      "sha256": "ec163852a912aa1da79921b48dcd9768159afc495e2d144d28f77005de19f30a",
       "triangles": 1980,
       "frame": "piece-local",
       "boundsMin": [
@@ -4893,6 +5361,96 @@
         ]
       ],
       "topDatum": 0,
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.arc2c.accent",
+      "file": "roof.arc2c.accent.glb",
+      "sha256": "665150761747ceca706b3b02280a624dca05ff6f35215185810b2f2e66dabdb6",
+      "triangles": 1234,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        2.0,
+        2.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc2c",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0.390180644,
+          1.961570561
+        ],
+        [
+          0.765366865,
+          1.847759065
+        ],
+        [
+          1.111140466,
+          1.662939225
+        ],
+        [
+          1.414213562,
+          1.414213562
+        ],
+        [
+          1.662939225,
+          1.111140466
+        ],
+        [
+          1.847759065,
+          0.765366865
+        ],
+        [
+          1.961570561,
+          0.390180644
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
       "qualification": {
         "finiteVertices": true,
         "zeroAreaTriangles": 0,
@@ -4982,9 +5540,99 @@
       }
     },
     {
+      "id": "roof.arc2c.light",
+      "file": "roof.arc2c.light.glb",
+      "sha256": "4d0a74208e1df1244877efc9accb203078a5460c68f9ea5b4f5d6ff4bb53fe91",
+      "triangles": 1234,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        2.0,
+        2.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc2c",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0.390180644,
+          1.961570561
+        ],
+        [
+          0.765366865,
+          1.847759065
+        ],
+        [
+          1.111140466,
+          1.662939225
+        ],
+        [
+          1.414213562,
+          1.414213562
+        ],
+        [
+          1.662939225,
+          1.111140466
+        ],
+        [
+          1.847759065,
+          0.765366865
+        ],
+        [
+          1.961570561,
+          0.390180644
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc2c.plate",
       "file": "roof.arc2c.plate.glb",
-      "sha256": "4064282af1a375a3d7be3b285c7fcfa772f65be98025997101712c306e957e25",
+      "sha256": "bb71d5598256dff116988f27866ec599791cab5f73ba934e37d3a11c320172a2",
       "triangles": 1234,
       "frame": "piece-local",
       "boundsMin": [
@@ -5064,9 +5712,115 @@
       }
     },
     {
+      "id": "roof.arc3.accent",
+      "file": "roof.arc3.accent.glb",
+      "sha256": "fdf2569ee2d6f8008e99e519a7b7cd09c8b5330fcccb19942d00da86d786df54",
+      "triangles": 4754,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        3.0,
+        3.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc3",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          3.0,
+          0.0
+        ],
+        [
+          2.974334584,
+          0.391578577
+        ],
+        [
+          2.897777479,
+          0.776457135
+        ],
+        [
+          2.771638598,
+          1.148050297
+        ],
+        [
+          2.598076211,
+          1.5
+        ],
+        [
+          2.380060021,
+          1.826284287
+        ],
+        [
+          2.121320344,
+          2.121320344
+        ],
+        [
+          1.826284287,
+          2.380060021
+        ],
+        [
+          1.5,
+          2.598076211
+        ],
+        [
+          1.148050297,
+          2.771638598
+        ],
+        [
+          0.776457135,
+          2.897777479
+        ],
+        [
+          0.391578577,
+          2.974334584
+        ],
+        [
+          0.0,
+          3.0
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc3.grate",
       "file": "roof.arc3.grate.glb",
-      "sha256": "452c92734d41a69ead40a10b6ecd0456d3c8a435f63c2e220c4531137af2d141",
+      "sha256": "8a66a754e615711108ea24a23da238c23495164cf6ecf5091d2ab4c91f4d5bda",
       "triangles": 11162,
       "frame": "piece-local",
       "boundsMin": [
@@ -5162,9 +5916,115 @@
       }
     },
     {
+      "id": "roof.arc3.light",
+      "file": "roof.arc3.light.glb",
+      "sha256": "ceb648a9bf7420b688532df7dc2d7322f164257001d1fbea1fba160b22cc8baf",
+      "triangles": 4754,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        3.0,
+        3.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc3",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          3.0,
+          0.0
+        ],
+        [
+          2.974334584,
+          0.391578577
+        ],
+        [
+          2.897777479,
+          0.776457135
+        ],
+        [
+          2.771638598,
+          1.148050297
+        ],
+        [
+          2.598076211,
+          1.5
+        ],
+        [
+          2.380060021,
+          1.826284287
+        ],
+        [
+          2.121320344,
+          2.121320344
+        ],
+        [
+          1.826284287,
+          2.380060021
+        ],
+        [
+          1.5,
+          2.598076211
+        ],
+        [
+          1.148050297,
+          2.771638598
+        ],
+        [
+          0.776457135,
+          2.897777479
+        ],
+        [
+          0.391578577,
+          2.974334584
+        ],
+        [
+          0.0,
+          3.0
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc3.plate",
       "file": "roof.arc3.plate.glb",
-      "sha256": "c731dd787314e37ceae25da62b927eb86b22b96f97d7ce233b914311f83c39c0",
+      "sha256": "14f2ec191072f39dd90f91684c6e77fc659a791c4438dc32199b384322262e59",
       "triangles": 4754,
       "frame": "piece-local",
       "boundsMin": [
@@ -5253,6 +6113,112 @@
         ]
       ],
       "topDatum": 0,
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.arc3c.accent",
+      "file": "roof.arc3c.accent.glb",
+      "sha256": "d04102e9907fe473a9115d05886ac855c7bdd398881976461f7b46c12127716d",
+      "triangles": 2296,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        3.0,
+        3.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc3c",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0.391578577,
+          2.974334584
+        ],
+        [
+          0.776457135,
+          2.897777479
+        ],
+        [
+          1.148050297,
+          2.771638598
+        ],
+        [
+          1.5,
+          2.598076211
+        ],
+        [
+          1.826284287,
+          2.380060021
+        ],
+        [
+          2.121320344,
+          2.121320344
+        ],
+        [
+          2.380060021,
+          1.826284287
+        ],
+        [
+          2.598076211,
+          1.5
+        ],
+        [
+          2.771638598,
+          1.148050297
+        ],
+        [
+          2.897777479,
+          0.776457135
+        ],
+        [
+          2.974334584,
+          0.391578577
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
       "qualification": {
         "finiteVertices": true,
         "zeroAreaTriangles": 0,
@@ -5358,9 +6324,115 @@
       }
     },
     {
+      "id": "roof.arc3c.light",
+      "file": "roof.arc3c.light.glb",
+      "sha256": "bfd5428e552932851c9f63f726dfd28ac79725db2da5a88e304880f446877130",
+      "triangles": 2296,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        3.0,
+        3.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc3c",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0.391578577,
+          2.974334584
+        ],
+        [
+          0.776457135,
+          2.897777479
+        ],
+        [
+          1.148050297,
+          2.771638598
+        ],
+        [
+          1.5,
+          2.598076211
+        ],
+        [
+          1.826284287,
+          2.380060021
+        ],
+        [
+          2.121320344,
+          2.121320344
+        ],
+        [
+          2.380060021,
+          1.826284287
+        ],
+        [
+          2.598076211,
+          1.5
+        ],
+        [
+          2.771638598,
+          1.148050297
+        ],
+        [
+          2.897777479,
+          0.776457135
+        ],
+        [
+          2.974334584,
+          0.391578577
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc3c.plate",
       "file": "roof.arc3c.plate.glb",
-      "sha256": "03df34a9f728c091bef2cf2c36b7910fb6de5dbb61c2205e73cfc6c707849456",
+      "sha256": "8b500c849e190161c4b5f3e53f262614f0d74edc9ddeda67b8837cec05b71700",
       "triangles": 2296,
       "frame": "piece-local",
       "boundsMin": [
@@ -5456,9 +6528,131 @@
       }
     },
     {
+      "id": "roof.arc4.accent",
+      "file": "roof.arc4.accent.glb",
+      "sha256": "29c86f2d3081db664bc60de79e5e315f8db10aa4e487891d3e3e714fb6dd2c4a",
+      "triangles": 8068,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        4.0,
+        4.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc4",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          3.980738907,
+          0.392068561
+        ],
+        [
+          3.923141122,
+          0.780361288
+        ],
+        [
+          3.827761343,
+          1.161138709
+        ],
+        [
+          3.69551813,
+          1.530733729
+        ],
+        [
+          3.527685057,
+          1.885586947
+        ],
+        [
+          3.325878449,
+          2.222280932
+        ],
+        [
+          3.092041813,
+          2.537573137
+        ],
+        [
+          2.828427125,
+          2.828427125
+        ],
+        [
+          2.537573137,
+          3.092041813
+        ],
+        [
+          2.222280932,
+          3.325878449
+        ],
+        [
+          1.885586947,
+          3.527685057
+        ],
+        [
+          1.530733729,
+          3.69551813
+        ],
+        [
+          1.161138709,
+          3.827761343
+        ],
+        [
+          0.780361288,
+          3.923141122
+        ],
+        [
+          0.392068561,
+          3.980738907
+        ],
+        [
+          0.0,
+          4.0
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc4.grate",
       "file": "roof.arc4.grate.glb",
-      "sha256": "1a9fa6f50f0ab64755daac21af30480114c50dc81895c89d55225fbc92d14dc7",
+      "sha256": "5966e31c507711776b87953500a5f022777d670530aa1161a10cc583d0c01c01",
       "triangles": 19396,
       "frame": "piece-local",
       "boundsMin": [
@@ -5570,9 +6764,131 @@
       }
     },
     {
+      "id": "roof.arc4.light",
+      "file": "roof.arc4.light.glb",
+      "sha256": "17d187deb9a79d44e4301d8ba9a372a4f55f4983fcdd88cbb48c62232942d79d",
+      "triangles": 8068,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        4.0,
+        4.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc4",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          3.980738907,
+          0.392068561
+        ],
+        [
+          3.923141122,
+          0.780361288
+        ],
+        [
+          3.827761343,
+          1.161138709
+        ],
+        [
+          3.69551813,
+          1.530733729
+        ],
+        [
+          3.527685057,
+          1.885586947
+        ],
+        [
+          3.325878449,
+          2.222280932
+        ],
+        [
+          3.092041813,
+          2.537573137
+        ],
+        [
+          2.828427125,
+          2.828427125
+        ],
+        [
+          2.537573137,
+          3.092041813
+        ],
+        [
+          2.222280932,
+          3.325878449
+        ],
+        [
+          1.885586947,
+          3.527685057
+        ],
+        [
+          1.530733729,
+          3.69551813
+        ],
+        [
+          1.161138709,
+          3.827761343
+        ],
+        [
+          0.780361288,
+          3.923141122
+        ],
+        [
+          0.392068561,
+          3.980738907
+        ],
+        [
+          0.0,
+          4.0
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc4.plate",
       "file": "roof.arc4.plate.glb",
-      "sha256": "9dec3f9d33859dbff257eba2eeb7740c389ec9200bce6e9c5f8c56de82429289",
+      "sha256": "1cfb1530a53bc81efeef486d8de6b832afb0df1cc40cb94b38e373096a168cf7",
       "triangles": 8068,
       "frame": "piece-local",
       "boundsMin": [
@@ -5677,6 +6993,128 @@
         ]
       ],
       "topDatum": 0,
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.arc4c.accent",
+      "file": "roof.arc4c.accent.glb",
+      "sha256": "d7c5f0f4dac7955bd7de4592867c50cb6e807ac401caa7750cacb8c11767a072",
+      "triangles": 3738,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        4.0,
+        4.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc4c",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0.392068561,
+          3.980738907
+        ],
+        [
+          0.780361288,
+          3.923141122
+        ],
+        [
+          1.161138709,
+          3.827761343
+        ],
+        [
+          1.530733729,
+          3.69551813
+        ],
+        [
+          1.885586947,
+          3.527685057
+        ],
+        [
+          2.222280932,
+          3.325878449
+        ],
+        [
+          2.537573137,
+          3.092041813
+        ],
+        [
+          2.828427125,
+          2.828427125
+        ],
+        [
+          3.092041813,
+          2.537573137
+        ],
+        [
+          3.325878449,
+          2.222280932
+        ],
+        [
+          3.527685057,
+          1.885586947
+        ],
+        [
+          3.69551813,
+          1.530733729
+        ],
+        [
+          3.827761343,
+          1.161138709
+        ],
+        [
+          3.923141122,
+          0.780361288
+        ],
+        [
+          3.980738907,
+          0.392068561
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
       "qualification": {
         "finiteVertices": true,
         "zeroAreaTriangles": 0,
@@ -5798,9 +7236,131 @@
       }
     },
     {
+      "id": "roof.arc4c.light",
+      "file": "roof.arc4c.light.glb",
+      "sha256": "2064dbc3d47d25b9c753bb1f0e4111a8723d464e19b06048923d30ed63c952f3",
+      "triangles": 3738,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        4.0,
+        4.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "arc4c",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0.392068561,
+          3.980738907
+        ],
+        [
+          0.780361288,
+          3.923141122
+        ],
+        [
+          1.161138709,
+          3.827761343
+        ],
+        [
+          1.530733729,
+          3.69551813
+        ],
+        [
+          1.885586947,
+          3.527685057
+        ],
+        [
+          2.222280932,
+          3.325878449
+        ],
+        [
+          2.537573137,
+          3.092041813
+        ],
+        [
+          2.828427125,
+          2.828427125
+        ],
+        [
+          3.092041813,
+          2.537573137
+        ],
+        [
+          3.325878449,
+          2.222280932
+        ],
+        [
+          3.527685057,
+          1.885586947
+        ],
+        [
+          3.69551813,
+          1.530733729
+        ],
+        [
+          3.827761343,
+          1.161138709
+        ],
+        [
+          3.923141122,
+          0.780361288
+        ],
+        [
+          3.980738907,
+          0.392068561
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.arc4c.plate",
       "file": "roof.arc4c.plate.glb",
-      "sha256": "e4327e1480c803dfc0fa8a3a21181b31ef3895c0e74eef1d1a0c40e6f5f02b41",
+      "sha256": "3a1898421b90a8ef44bd23c5c257c7d298257320e61c2e54f8414376bd3f5f20",
       "triangles": 3738,
       "frame": "piece-local",
       "boundsMin": [
@@ -5912,9 +7472,71 @@
       }
     },
     {
+      "id": "roof.slope1.accent",
+      "file": "roof.slope1.accent.glb",
+      "sha256": "5692336f01ac9976b23d203ef92a776531e17193b1042049f77ee7995474d619",
+      "triangles": 374,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "slope1",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.slope1.grate",
       "file": "roof.slope1.grate.glb",
-      "sha256": "63b4cf24f79f9347d679eb8c021fc83e7dcc150c9f857ed7108a761baa258bcc",
+      "sha256": "622506798a74fdf5bbb030e01b265e88225cabeb7bf90d23c06e41ea5c552a03",
       "triangles": 1146,
       "frame": "piece-local",
       "boundsMin": [
@@ -5966,9 +7588,71 @@
       }
     },
     {
+      "id": "roof.slope1.light",
+      "file": "roof.slope1.light.glb",
+      "sha256": "f1ce3bf0f93597cdb4505712f139d600f37085bce6e13365338e3365bf6654d6",
+      "triangles": 374,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "slope1",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.slope1.plate",
       "file": "roof.slope1.plate.glb",
-      "sha256": "daa15e3eb3cea5cc55e5b2de54597292c516a7959f4a5f827824096fff82fbbc",
+      "sha256": "f087613704910b4fdc6e2922fd3de64a53775dcef3f2c5e5bca90c29e0e4d3ef",
       "triangles": 374,
       "frame": "piece-local",
       "boundsMin": [
@@ -6020,9 +7704,71 @@
       }
     },
     {
+      "id": "roof.slope2.accent",
+      "file": "roof.slope2.accent.glb",
+      "sha256": "5a6365fbd57d9af9c1e542f437600bd6dbf2b1b2569ceac21b1662e4ff44e043",
+      "triangles": 767,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        2.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "slope2",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.slope2.grate",
       "file": "roof.slope2.grate.glb",
-      "sha256": "ee578c93c18e2ca8c33345931298ff0983cff1ad00f6a5e6d19402a9e3b959ce",
+      "sha256": "9272622802c3a208a6773a00b9d6eca4dcc269cafd3911849afa3d1550921ed1",
       "triangles": 2030,
       "frame": "piece-local",
       "boundsMin": [
@@ -6074,9 +7820,71 @@
       }
     },
     {
+      "id": "roof.slope2.light",
+      "file": "roof.slope2.light.glb",
+      "sha256": "7269cada22ca0c0bb7e6fe2485958f54ecbd41477f4bf336ceb879a544c52065",
+      "triangles": 767,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        2.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "slope2",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.slope2.plate",
       "file": "roof.slope2.plate.glb",
-      "sha256": "d9bbd37ac7b41d726aeb67525fe7d686096464e44d242ab30c6d36df19e8acbb",
+      "sha256": "704a3f8bd28066b687ef8d692ab4c69f4ec88d75f74c1bda6625598908f79aa1",
       "triangles": 767,
       "frame": "piece-local",
       "boundsMin": [
@@ -6128,9 +7936,71 @@
       }
     },
     {
+      "id": "roof.slope3.accent",
+      "file": "roof.slope3.accent.glb",
+      "sha256": "ccbf44ccc87fc08da62d1400d6047cf07c197a1794ff94ca30982463ff969a4a",
+      "triangles": 1154,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        3.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "slope3",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.slope3.grate",
       "file": "roof.slope3.grate.glb",
-      "sha256": "c8298f4c4876371925b7403f20fac562232f12219321fd2a4e11bfb2660c78e3",
+      "sha256": "8a6bfd9d5f1ea008041b98f8eabb0180b5e0b912c3d776f8aad6201589d5979d",
       "triangles": 2896,
       "frame": "piece-local",
       "boundsMin": [
@@ -6182,9 +8052,71 @@
       }
     },
     {
+      "id": "roof.slope3.light",
+      "file": "roof.slope3.light.glb",
+      "sha256": "70caa6fccb82684d174a3d82d9b37e9ee5cc2b352198dbabafbdd7a7c7e4cdef",
+      "triangles": 1154,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        3.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "slope3",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.slope3.plate",
       "file": "roof.slope3.plate.glb",
-      "sha256": "7cae81988c467d1424b19434ff27c24b37c61a9d2fcd6e1c0adca25518743e69",
+      "sha256": "2510335d67f6ceb0de365994c74cb8ff327ee20e2541a55ebc84a726c4d3c60c",
       "triangles": 1154,
       "frame": "piece-local",
       "boundsMin": [
@@ -6236,9 +8168,71 @@
       }
     },
     {
+      "id": "roof.slope4.accent",
+      "file": "roof.slope4.accent.glb",
+      "sha256": "f1ee5a02373a3238ca71b594fb67e444b5929c95ddce5ba151d96e96e1972e96",
+      "triangles": 1537,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        4.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "slope4",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.slope4.grate",
       "file": "roof.slope4.grate.glb",
-      "sha256": "cb7fa11876a4c7f61c4b9bc3953fcb5b1bac372a7b55fbfd38f8240f6c1f160e",
+      "sha256": "997cfa5d4c5f5d4b813f373cfe40bec3dfcbc79ec64f02ee9806b58237e716ad",
       "triangles": 3764,
       "frame": "piece-local",
       "boundsMin": [
@@ -6290,9 +8284,71 @@
       }
     },
     {
+      "id": "roof.slope4.light",
+      "file": "roof.slope4.light.glb",
+      "sha256": "310cbd539decc05e5e0fee360887cc2873c2c18536eb7371b89e6725d9f17846",
+      "triangles": 1537,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        4.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "slope4",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.slope4.plate",
       "file": "roof.slope4.plate.glb",
-      "sha256": "eccdb84aad6439708d83d94999207a556c4facb84985f30efde31647a8da7338",
+      "sha256": "82676b1c4485aeb1874ee0b7214e57b175b7c86c12527d24c1a423130f586c0a",
       "triangles": 1537,
       "frame": "piece-local",
       "boundsMin": [
@@ -6337,6 +8393,232 @@
         ]
       ],
       "topDatum": 0,
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.square.accent",
+      "file": "roof.square.accent.glb",
+      "sha256": "94532d412a5531cb1494075160758b8791b62b50c1ac6e66d49dcc4ac7f39803",
+      "triangles": 612,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "square",
+      "finish": "accent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "accent",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.square.box",
+      "file": "roof.square.box.glb",
+      "sha256": "43d769289dfc0ab96b50d8c0beb75d1e7ae162b929e79ebd5060f31ce2fcd101",
+      "triangles": 2880,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        0.3400000035762787
+      ],
+      "materials": [
+        "dark",
+        "emit_b@low",
+        "metal",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "square",
+      "finish": "box",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "module": "box",
+      "occupancy": [
+        1,
+        1
+      ],
+      "moduleOperation": "source-native dorsal module above plate datum",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.square.fan",
+      "file": "roof.square.fan.glb",
+      "sha256": "a2a3a6410c23caf9ca9cdbb109a8dc208ea07766a75b6146f9815cd39370fd7e",
+      "triangles": 1824,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        0.22499999403953552
+      ],
+      "materials": [
+        "dark",
+        "metal",
+        "primary",
+        "secondary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.fan",
+          "file": "glb/roof/small/roof.small.fan.glb",
+          "sha256": "b0b9a865b1557e5c6c422a570676fc299544d5fe9e2bbd2e3703e4e982c0acb9"
+        }
+      ],
+      "family": "roof",
+      "shape": "square",
+      "finish": "fan",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "module": "fan",
+      "occupancy": [
+        1,
+        1
+      ],
+      "moduleOperation": "source-native dorsal module above plate datum",
       "qualification": {
         "finiteVertices": true,
         "zeroAreaTriangles": 0,
@@ -6402,6 +8684,160 @@
       }
     },
     {
+      "id": "roof.square.hatch",
+      "file": "roof.square.hatch.glb",
+      "sha256": "bb0ca736f154a87b2dd948ea0402aedb6fae603c4ac071d1ba8fd8866d66908a",
+      "triangles": 1624,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        0.1850000023841858
+      ],
+      "materials": [
+        "accent",
+        "dark",
+        "hazard",
+        "metal",
+        "primary",
+        "secondary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.hatch",
+          "file": "glb/roof/small/roof.small.hatch.glb",
+          "sha256": "8ec4c5c3b403708b78f41bbcf786d1b71a180af24b3f4ce27961c78090dd4bd6"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.accent.w2.d2.v1",
+          "file": "glb/roof/accent/roof.accent.w2.d2.v1.glb",
+          "sha256": "d86a1aa3773d9482b3b74205d55b7021754a14106334e738f439b135db3c1365"
+        }
+      ],
+      "family": "roof",
+      "shape": "square",
+      "finish": "hatch",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "module": "hatch",
+      "occupancy": [
+        1,
+        1
+      ],
+      "moduleOperation": "source-native dorsal module above plate datum",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.square.light",
+      "file": "roof.square.light.glb",
+      "sha256": "c92707f9eedf358b6d641a0044eab9053592bc1c9e89c1ae8dace60f67117d3e",
+      "triangles": 612,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        -3.051757957450718e-08
+      ],
+      "materials": [
+        "dark",
+        "primary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        }
+      ],
+      "family": "roof",
+      "shape": "square",
+      "finish": "light",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
       "id": "roof.square.plate",
       "file": "roof.square.plate.glb",
       "sha256": "c7c2f010de6caa9a28fb8d45ea4036fc4e4f0583844a9eccc4d51ac9b8774f94",
@@ -6453,6 +8889,86 @@
         ]
       ],
       "topDatum": 0,
+      "qualification": {
+        "finiteVertices": true,
+        "zeroAreaTriangles": 0,
+        "openBoundaryEdges": 0
+      }
+    },
+    {
+      "id": "roof.square.vent",
+      "file": "roof.square.vent.glb",
+      "sha256": "03e61d9fad8558370ba87d25357ab72b185563debdb4eb064c55d7345d579564",
+      "triangles": 2712,
+      "frame": "piece-local",
+      "boundsMin": [
+        0.0,
+        0.0,
+        -0.1700000911951065
+      ],
+      "boundsMax": [
+        1.0,
+        1.0,
+        0.14100000262260437
+      ],
+      "materials": [
+        "dark",
+        "emit_b@low",
+        "primary",
+        "secondary",
+        "trim"
+      ],
+      "source": [
+        {
+          "collection": "export_tiles",
+          "id": "roof.skin.square.WESN",
+          "file": "glb/roof/skin/roof.skin.square.WESN.glb",
+          "sha256": "45efe7340ea09ad4ee6036e0c31abd8578aed4fbbdfe385c01ca5982b8a407fd"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.box",
+          "file": "glb/roof/small/roof.small.box.glb",
+          "sha256": "0a9aadc048b3b2bdd8dfbcffdfc4657790db8fc9edb6004a6331f2bcd6f97c85"
+        },
+        {
+          "collection": "export_flight",
+          "id": "roof.small.vent",
+          "file": "glb/roof/small/roof.small.vent.glb",
+          "sha256": "1af263c8604b94356969c46fbd04c699ff9ad5071a9b6395bc7bd20a36d5d4c3"
+        }
+      ],
+      "family": "roof",
+      "shape": "square",
+      "finish": "vent",
+      "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "topDatum": 0,
+      "paintSlot": "primary",
+      "paintOperation": "native secondary panel slot replaced by pinned source PBR donor",
+      "module": "vent",
+      "occupancy": [
+        1,
+        1
+      ],
+      "moduleOperation": "source-native dorsal module above plate datum",
       "qualification": {
         "finiteVertices": true,
         "zeroAreaTriangles": 0,
@@ -6581,12 +9097,12 @@
     }
   ],
   "totals": {
-    "pieces": 85,
-    "triangles": 1254740
+    "pieces": 115,
+    "triangles": 1234258
   },
   "producer": {
     "file": "scripts/art/build_authored_template_kit.py",
-    "sha256": "7d0085560be108e7262829db352fb7981787a316cfb591673d22d247cc816313"
+    "sha256": "40c75ff131a3f3b6822209224bcb0dc744965aaded50ef062268cb0c4e9a0327"
   },
   "lighting": {
     "schema": "authored-asset-lighting/v1",
@@ -6637,7 +9153,7 @@
       },
       {
         "id": "canopy.straight",
-        "sha256": "768ac019ca012805584819e293b82bb2663f20a8ef523af0e1f7c7136bc04e15",
+        "sha256": "1047b6033337bdf264fc4579f26853b6e57b607ea1d2a0d6a24227a4744c914c",
         "emissions": {
           "glass_canopy": {
             "factor": [
@@ -6688,7 +9204,7 @@
       },
       {
         "id": "floor.arc1.grate",
-        "sha256": "ebbf24e8c71f17b70af43e7c92eff1d708fe697e0d507a32e6c2379a0e424680",
+        "sha256": "75e34965755a886d6a2c6cd16b0677590752aaf8c11fb08d31a30534becf8b7c",
         "emissions": {},
         "sockets": []
       },
@@ -6712,7 +9228,7 @@
       },
       {
         "id": "floor.arc2.grate",
-        "sha256": "720c015116494bf108e27d2dfe26d6bcce475cd211f9d0b61ba0be7767b51731",
+        "sha256": "f8d272dbec04374aa4e20aacc3376134cc0c6fffd80add488d293a7136b3dc49",
         "emissions": {},
         "sockets": []
       },
@@ -6736,7 +9252,7 @@
       },
       {
         "id": "floor.arc3.grate",
-        "sha256": "5cc49ccf1a66b97aeacee93fbff17eeba3d6426489ca1985e3fa192d10482792",
+        "sha256": "72ebd9bffba6f40036da4368ce9fcca32f9de9c13d28e1302ddca20d6fc4c753",
         "emissions": {},
         "sockets": []
       },
@@ -6760,7 +9276,7 @@
       },
       {
         "id": "floor.arc4.grate",
-        "sha256": "5766a1ddfaf049d41bc9292d06ed81fd3738dbfde49a636bfdbf94e726dd4e7f",
+        "sha256": "ec9dab4a446b5374d3e7ccac39b536026ae9a3b70ee1d03d9d6066387486c0c0",
         "emissions": {},
         "sockets": []
       },
@@ -6784,7 +9300,7 @@
       },
       {
         "id": "floor.slope1.grate",
-        "sha256": "659df2b401180b0854471b07b74a84103a8e996c7a69c3b6d366f646dbc28298",
+        "sha256": "d2efd403133b2965fb2e18e06403eb1625143ec053f12446455960615ac9cf22",
         "emissions": {},
         "sockets": []
       },
@@ -6796,7 +9312,7 @@
       },
       {
         "id": "floor.slope2.grate",
-        "sha256": "826012ec048c621be61934fead99f81af91e567364be673d9975cc567a123900",
+        "sha256": "6ad1352cdb2fe667787551df09be1fe675fe2b8a0698787ded33f06bfdc794b8",
         "emissions": {},
         "sockets": []
       },
@@ -6808,7 +9324,7 @@
       },
       {
         "id": "floor.slope3.grate",
-        "sha256": "ac753b2d5ed09ab07d35327b2e7f6579d1308ae57bbde5e40922d2cc1664219c",
+        "sha256": "44423a6e3179ede354df0fff461a8bcdaf7c34207c83771df75ca3e6d39faf57",
         "emissions": {},
         "sockets": []
       },
@@ -6820,7 +9336,7 @@
       },
       {
         "id": "floor.slope4.grate",
-        "sha256": "469d765953bdaccf946742f1c448208431358bcc01d6e6af6013c3c645a82218",
+        "sha256": "4a3c5c5292444a0964596ba10399691c45ea7744b4842a2aab1561733b440c79",
         "emissions": {},
         "sockets": []
       },
@@ -6844,7 +9360,7 @@
       },
       {
         "id": "hull.arc1.a",
-        "sha256": "cf4f0366f385fb03cc245e6fed5bfbaf39339ec7c9bd4a273824deb328e3fbbb",
+        "sha256": "7c88fdd123fee338e9925bf96539efc64fa9edadf3bbaf6162f434593aa6b7f2",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -6887,7 +9403,7 @@
       },
       {
         "id": "hull.arc1.b",
-        "sha256": "44e697013aca35c17cbdd657afeb9317acc01085464e2420a796c505b48aa05e",
+        "sha256": "e981907206be9d055682fd7c3b651694c1bb209ceef2d438c749d90752af2fa0",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -6930,16 +9446,8 @@
       },
       {
         "id": "hull.arc1.c",
-        "sha256": "2752d782f1e8a0c25f4ccdc184f28bb0abd5a2d7155972ec6d3b864bf44b85de",
+        "sha256": "6b1b02075bfb857f69cd5812bcee699e06582edea955d01a5726aec08d903ad5",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -6947,6 +9455,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -6981,7 +9497,7 @@
       },
       {
         "id": "hull.arc1c.a",
-        "sha256": "3bcc51acd7e86fc7de6d7152627f33f1dd80d7920b00fb0da9a4c41a0aebbdc6",
+        "sha256": "65687c6d19a8d3eca0d3d8860d45b6dc67cedb4ee44759c1491603034e459909",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7024,7 +9540,7 @@
       },
       {
         "id": "hull.arc1c.b",
-        "sha256": "b11fcf1c0aac5db8f7fa7f43b4a399cdec9cfb0a2af192e17ed63286c80cd45e",
+        "sha256": "2c4de2e11f1fcf6c6e8c8b9d6b96af74c937066c88be1cd33579652061216680",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7067,16 +9583,8 @@
       },
       {
         "id": "hull.arc1c.c",
-        "sha256": "3df19f08320f39df28fb8c5ffd8d4178f63da6e44ddb01f5ab8c15c8aac07186",
+        "sha256": "2bb0a971a55be8bdf2e53c1cb9fe64d8a320810e3866a656f697650e9161f436",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -7084,6 +9592,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -7118,7 +9634,7 @@
       },
       {
         "id": "hull.arc2.a",
-        "sha256": "4e7feb12f183a4493f66e4e96d6facdac658d22c9cc9aa7e437bcc334f37dd9f",
+        "sha256": "f28cb79adf85b8118753ba43bb2a58a60e62708bb82c63f2be0c861e1fea4d26",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7161,7 +9677,7 @@
       },
       {
         "id": "hull.arc2.b",
-        "sha256": "8303d9a46716be87edc26357b38d9d42b6068a421c48fb96e46e748c97132e7e",
+        "sha256": "10a983d971e03baf9f66d24dbdea8738d5208f0e35dcdc9855b52adf49b613b9",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7204,16 +9720,8 @@
       },
       {
         "id": "hull.arc2.c",
-        "sha256": "544ba1a85f09ebf6f1c1f2a0ce98a7a6aa973e1856606637a168ffc865b4dba9",
+        "sha256": "f2e60ca9d0818f74dd9d0306af3f2ca99c671880891a1fe03d68cc316666712f",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -7221,6 +9729,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -7255,7 +9771,7 @@
       },
       {
         "id": "hull.arc2c.a",
-        "sha256": "663b7b35f6d5c9ea8855785995e73c7b103aa474752fe3ba072feaff26f8f9e5",
+        "sha256": "79bd9bcc517e9b27971653fcd45d3cf0adc367a4d8bdbda6083ab15ef0a470a4",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7298,7 +9814,7 @@
       },
       {
         "id": "hull.arc2c.b",
-        "sha256": "8675fc9aa671191a4f4d9c9a0cb4ebf1f12359764d68d2cda8bda9a28a3660a8",
+        "sha256": "45baa33d42ae6bb4f7c0c2094d2446e7e29fa3aedd7231e07a2de607c274a33a",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7341,16 +9857,8 @@
       },
       {
         "id": "hull.arc2c.c",
-        "sha256": "79ea47a23a3cea1c3f8a064010ace720fab748b9d3107c961e41136bcabcbbb6",
+        "sha256": "3471516e2cb451a7fe986194b6ff3e0c60781cb8a43bc4aa511f75ea0ec24000",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -7358,6 +9866,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -7392,7 +9908,7 @@
       },
       {
         "id": "hull.arc3.a",
-        "sha256": "94415b39cfa3f61ea6cb48cf1bb84c12ba24a81746cfc67bd882300090c01ff1",
+        "sha256": "5f8b3b7a9215cca3de94cb5a2e4afa67b6b271abd6b43745e56b18c1f6232912",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7435,7 +9951,7 @@
       },
       {
         "id": "hull.arc3.b",
-        "sha256": "13218e828bb0679dc70360dcf604bce22d2e60eb1b1554bc3fad214a2ba6268e",
+        "sha256": "99fe8b524dc7f8c4a616250fdbae7dde542419871d3aad5dd8f5547ce9aeb17e",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7478,16 +9994,8 @@
       },
       {
         "id": "hull.arc3.c",
-        "sha256": "66c198c5fca61e858fbe9e466d2acfec3612ba9752a02cfde52d8cde2a5dc879",
+        "sha256": "6e3b875de826d12282c6c0448318e8b34611bb9dff8368283a1353efe12f1e46",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -7495,6 +10003,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -7529,7 +10045,7 @@
       },
       {
         "id": "hull.arc3c.a",
-        "sha256": "be94018922e00fe70136278372514323b81ec9a1fb022ffcb5255d25d68d9c0e",
+        "sha256": "646c858abde4ab64c0b4b1af358dd080ac1d3bbc718f189ea32b1ced175e4d75",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7572,7 +10088,7 @@
       },
       {
         "id": "hull.arc3c.b",
-        "sha256": "0912321523b286cb2fe7282b4bf752b9e8c00b8129376ab1b536e2dce243cd1f",
+        "sha256": "6c8a52f072040a408b290ac2a581fed752b00ecb8543f7cee21a97101262e935",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7615,16 +10131,8 @@
       },
       {
         "id": "hull.arc3c.c",
-        "sha256": "456ecc6a8b5000eb7a53caa5809ab01132ca73e73ae02df050999d75c9462085",
+        "sha256": "ffe8a6392c8491eaeea4174ab6e3182441697cd281ba6128538e474e1fecfe1e",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -7632,6 +10140,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -7666,7 +10182,7 @@
       },
       {
         "id": "hull.arc4.a",
-        "sha256": "5c80f9010d536b16f54ebe1d4568499b89fc8f8e74f4357e6481292d65e7f8d2",
+        "sha256": "8b37c192745423081af69daf264496f7fa2e9b1e6780a4f3b1377c33214ab47d",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7709,7 +10225,7 @@
       },
       {
         "id": "hull.arc4.b",
-        "sha256": "0be1db007897fd7f968b32c5047a93197844006f713b6e73578e596df16c580d",
+        "sha256": "17b6b230bcf7a1b14ff8a792fb1c5bd49bdd89efe6a9808c168a5300fd0008fa",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7752,16 +10268,8 @@
       },
       {
         "id": "hull.arc4.c",
-        "sha256": "ebb1a8cd1b5860e28baef0e3ed5a62a8610392615fd7ce21b6c4d0fc1edcf282",
+        "sha256": "f33f4d05c408193df7c77b3c4233298792774978d9d175b206a8983938ffb103",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -7769,6 +10277,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -7803,7 +10319,7 @@
       },
       {
         "id": "hull.arc4c.a",
-        "sha256": "221f8a3003187404fb54633130096cacf239b8e1ecdca5fa3de92c77361983d1",
+        "sha256": "a8373054a8d210fe278e04210dfc9175c1afc3519222b71badea99a58910075b",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7846,7 +10362,7 @@
       },
       {
         "id": "hull.arc4c.b",
-        "sha256": "015caf4c5a928c2b048d03a652d4c0e48f0a9ac469f4c4ff4b93a4c6a3473f41",
+        "sha256": "df59c689b40d93a2c7e8005981d8844a9e766bb5c09908f4259b164a186dc169",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -7889,16 +10405,8 @@
       },
       {
         "id": "hull.arc4c.c",
-        "sha256": "cbee9c9f0143305f503e398a13372812758475c5864e78e334ea86b9ec16b3c2",
+        "sha256": "4fee1dd6467044d36980b8fbe54e9058505c6ac668dfaf848077e977705395d3",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -7906,6 +10414,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -7983,7 +10499,7 @@
       },
       {
         "id": "hull.straight.b",
-        "sha256": "b9b25c826a868f2fc163ea756bafa74289121b2fb1dc56f0ea42a61ac2339d40",
+        "sha256": "72721f14658d06f592c35fafff308163290cc9d8c77325e2a67cfd92b79216f1",
         "emissions": {
           "emit_b": {
             "factor": [
@@ -8026,16 +10542,8 @@
       },
       {
         "id": "hull.straight.c",
-        "sha256": "ef1c69c47b6cea30b465b268a531e01333c686cc803dbad5d8a10f29b8bf1d0c",
+        "sha256": "5b2facadb4bbba237472ca61c624c92a19b559841a0d31cdd716b2a7fc8a169f",
         "emissions": {
-          "emit_b": {
-            "factor": [
-              1,
-              0.30000001192092896,
-              0.02500000037252903
-            ],
-            "strength": 4.199999809265137
-          },
           "emit_a": {
             "factor": [
               0.05000000074505806,
@@ -8043,6 +10551,14 @@
               1
             ],
             "strength": 5
+          },
+          "emit_b": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 4.199999809265137
           },
           "scr_blue@mid": {
             "factor": [
@@ -8111,14 +10627,32 @@
         ]
       },
       {
+        "id": "roof.arc1.accent",
+        "sha256": "8de24af30cc34d4ba532d4aa4a55a4303c0c8a27c82b444e15d47bf06c1bca6d",
+        "emissions": {},
+        "sockets": []
+      },
+      {
         "id": "roof.arc1.grate",
-        "sha256": "104a80e07cd16a3a7ef6b6afdd5d26d583359236c85dcb3f30bd92f4d69e2631",
+        "sha256": "0d4a057453d65548da39b98552b6d0e13afeb5b3268c74834c859552d5abcd59",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc1.light",
+        "sha256": "cf2fa43d4804f436425798231d3d33f762ebf08155be9d789eafd364279fb56b",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.arc1.plate",
-        "sha256": "f88a7fa0c3227072bf25e67730a709f04af5febd763957d32ef0d123c8b3a8b8",
+        "sha256": "f0e5c3c5be46202b06280d6d8fae4e8ca57f99a9506a4fe58aea0ef059870958",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc1c.accent",
+        "sha256": "366481331ad84f0fa127068bc51db044855efdff44cbf4595b1980b72e4c6b5b",
         "emissions": {},
         "sockets": []
       },
@@ -8129,20 +10663,44 @@
         "sockets": []
       },
       {
+        "id": "roof.arc1c.light",
+        "sha256": "cf3d8410edbc5dd7c27774468bc655fb6f7eefd1de4d80731783388737c74bb1",
+        "emissions": {},
+        "sockets": []
+      },
+      {
         "id": "roof.arc1c.plate",
-        "sha256": "44ab111c1b2d5940c64ac13ce3e102311d11b61aa7bf5b71ce96654348fcc86b",
+        "sha256": "d8268d4bc9054cfe45d2f9a990e247fee3e490cb813b4d09535199627f426b98",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc2.accent",
+        "sha256": "f5069cdf51a1b83935e80674ca75dfa7238f1df5df3cadda8da5a2e2293d10d1",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.arc2.grate",
-        "sha256": "344a9f899bdc8055405db694fac864283a79bbdd2c3226f937dd7e6c3bd207e4",
+        "sha256": "e8fd105ffedc8dc1e7821c3f98d69d044113d44789eb5db8718ec22fc2862413",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc2.light",
+        "sha256": "a15d83d518e106bca1e5a005b2aa39fcb850cdf20c81699cbfe1d39149a766ed",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.arc2.plate",
-        "sha256": "205c300c54f81e9c1889f41d111487fa3566bbc0a6cd4f836899cca42745d0eb",
+        "sha256": "ec163852a912aa1da79921b48dcd9768159afc495e2d144d28f77005de19f30a",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc2c.accent",
+        "sha256": "665150761747ceca706b3b02280a624dca05ff6f35215185810b2f2e66dabdb6",
         "emissions": {},
         "sockets": []
       },
@@ -8153,20 +10711,44 @@
         "sockets": []
       },
       {
+        "id": "roof.arc2c.light",
+        "sha256": "4d0a74208e1df1244877efc9accb203078a5460c68f9ea5b4f5d6ff4bb53fe91",
+        "emissions": {},
+        "sockets": []
+      },
+      {
         "id": "roof.arc2c.plate",
-        "sha256": "4064282af1a375a3d7be3b285c7fcfa772f65be98025997101712c306e957e25",
+        "sha256": "bb71d5598256dff116988f27866ec599791cab5f73ba934e37d3a11c320172a2",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc3.accent",
+        "sha256": "fdf2569ee2d6f8008e99e519a7b7cd09c8b5330fcccb19942d00da86d786df54",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.arc3.grate",
-        "sha256": "452c92734d41a69ead40a10b6ecd0456d3c8a435f63c2e220c4531137af2d141",
+        "sha256": "8a66a754e615711108ea24a23da238c23495164cf6ecf5091d2ab4c91f4d5bda",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc3.light",
+        "sha256": "ceb648a9bf7420b688532df7dc2d7322f164257001d1fbea1fba160b22cc8baf",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.arc3.plate",
-        "sha256": "c731dd787314e37ceae25da62b927eb86b22b96f97d7ce233b914311f83c39c0",
+        "sha256": "14f2ec191072f39dd90f91684c6e77fc659a791c4438dc32199b384322262e59",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc3c.accent",
+        "sha256": "d04102e9907fe473a9115d05886ac855c7bdd398881976461f7b46c12127716d",
         "emissions": {},
         "sockets": []
       },
@@ -8177,20 +10759,44 @@
         "sockets": []
       },
       {
+        "id": "roof.arc3c.light",
+        "sha256": "bfd5428e552932851c9f63f726dfd28ac79725db2da5a88e304880f446877130",
+        "emissions": {},
+        "sockets": []
+      },
+      {
         "id": "roof.arc3c.plate",
-        "sha256": "03df34a9f728c091bef2cf2c36b7910fb6de5dbb61c2205e73cfc6c707849456",
+        "sha256": "8b500c849e190161c4b5f3e53f262614f0d74edc9ddeda67b8837cec05b71700",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc4.accent",
+        "sha256": "29c86f2d3081db664bc60de79e5e315f8db10aa4e487891d3e3e714fb6dd2c4a",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.arc4.grate",
-        "sha256": "1a9fa6f50f0ab64755daac21af30480114c50dc81895c89d55225fbc92d14dc7",
+        "sha256": "5966e31c507711776b87953500a5f022777d670530aa1161a10cc583d0c01c01",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc4.light",
+        "sha256": "17d187deb9a79d44e4301d8ba9a372a4f55f4983fcdd88cbb48c62232942d79d",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.arc4.plate",
-        "sha256": "9dec3f9d33859dbff257eba2eeb7740c389ec9200bce6e9c5f8c56de82429289",
+        "sha256": "1cfb1530a53bc81efeef486d8de6b832afb0df1cc40cb94b38e373096a168cf7",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.arc4c.accent",
+        "sha256": "d7c5f0f4dac7955bd7de4592867c50cb6e807ac401caa7750cacb8c11767a072",
         "emissions": {},
         "sockets": []
       },
@@ -8201,56 +10807,137 @@
         "sockets": []
       },
       {
+        "id": "roof.arc4c.light",
+        "sha256": "2064dbc3d47d25b9c753bb1f0e4111a8723d464e19b06048923d30ed63c952f3",
+        "emissions": {},
+        "sockets": []
+      },
+      {
         "id": "roof.arc4c.plate",
-        "sha256": "e4327e1480c803dfc0fa8a3a21181b31ef3895c0e74eef1d1a0c40e6f5f02b41",
+        "sha256": "3a1898421b90a8ef44bd23c5c257c7d298257320e61c2e54f8414376bd3f5f20",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.slope1.accent",
+        "sha256": "5692336f01ac9976b23d203ef92a776531e17193b1042049f77ee7995474d619",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.slope1.grate",
-        "sha256": "63b4cf24f79f9347d679eb8c021fc83e7dcc150c9f857ed7108a761baa258bcc",
+        "sha256": "622506798a74fdf5bbb030e01b265e88225cabeb7bf90d23c06e41ea5c552a03",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.slope1.light",
+        "sha256": "f1ce3bf0f93597cdb4505712f139d600f37085bce6e13365338e3365bf6654d6",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.slope1.plate",
-        "sha256": "daa15e3eb3cea5cc55e5b2de54597292c516a7959f4a5f827824096fff82fbbc",
+        "sha256": "f087613704910b4fdc6e2922fd3de64a53775dcef3f2c5e5bca90c29e0e4d3ef",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.slope2.accent",
+        "sha256": "5a6365fbd57d9af9c1e542f437600bd6dbf2b1b2569ceac21b1662e4ff44e043",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.slope2.grate",
-        "sha256": "ee578c93c18e2ca8c33345931298ff0983cff1ad00f6a5e6d19402a9e3b959ce",
+        "sha256": "9272622802c3a208a6773a00b9d6eca4dcc269cafd3911849afa3d1550921ed1",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.slope2.light",
+        "sha256": "7269cada22ca0c0bb7e6fe2485958f54ecbd41477f4bf336ceb879a544c52065",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.slope2.plate",
-        "sha256": "d9bbd37ac7b41d726aeb67525fe7d686096464e44d242ab30c6d36df19e8acbb",
+        "sha256": "704a3f8bd28066b687ef8d692ab4c69f4ec88d75f74c1bda6625598908f79aa1",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.slope3.accent",
+        "sha256": "ccbf44ccc87fc08da62d1400d6047cf07c197a1794ff94ca30982463ff969a4a",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.slope3.grate",
-        "sha256": "c8298f4c4876371925b7403f20fac562232f12219321fd2a4e11bfb2660c78e3",
+        "sha256": "8a6bfd9d5f1ea008041b98f8eabb0180b5e0b912c3d776f8aad6201589d5979d",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.slope3.light",
+        "sha256": "70caa6fccb82684d174a3d82d9b37e9ee5cc2b352198dbabafbdd7a7c7e4cdef",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.slope3.plate",
-        "sha256": "7cae81988c467d1424b19434ff27c24b37c61a9d2fcd6e1c0adca25518743e69",
+        "sha256": "2510335d67f6ceb0de365994c74cb8ff327ee20e2541a55ebc84a726c4d3c60c",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.slope4.accent",
+        "sha256": "f1ee5a02373a3238ca71b594fb67e444b5929c95ddce5ba151d96e96e1972e96",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.slope4.grate",
-        "sha256": "cb7fa11876a4c7f61c4b9bc3953fcb5b1bac372a7b55fbfd38f8240f6c1f160e",
+        "sha256": "997cfa5d4c5f5d4b813f373cfe40bec3dfcbc79ec64f02ee9806b58237e716ad",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.slope4.light",
+        "sha256": "310cbd539decc05e5e0fee360887cc2873c2c18536eb7371b89e6725d9f17846",
         "emissions": {},
         "sockets": []
       },
       {
         "id": "roof.slope4.plate",
-        "sha256": "eccdb84aad6439708d83d94999207a556c4facb84985f30efde31647a8da7338",
+        "sha256": "82676b1c4485aeb1874ee0b7214e57b175b7c86c12527d24c1a423130f586c0a",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.square.accent",
+        "sha256": "94532d412a5531cb1494075160758b8791b62b50c1ac6e66d49dcc4ac7f39803",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.square.box",
+        "sha256": "43d769289dfc0ab96b50d8c0beb75d1e7ae162b929e79ebd5060f31ce2fcd101",
+        "emissions": {
+          "emit_b@low": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 1.2000000476837158
+          }
+        },
+        "sockets": []
+      },
+      {
+        "id": "roof.square.fan",
+        "sha256": "a2a3a6410c23caf9ca9cdbb109a8dc208ea07766a75b6146f9815cd39370fd7e",
         "emissions": {},
         "sockets": []
       },
@@ -8261,9 +10948,36 @@
         "sockets": []
       },
       {
+        "id": "roof.square.hatch",
+        "sha256": "bb0ca736f154a87b2dd948ea0402aedb6fae603c4ac071d1ba8fd8866d66908a",
+        "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.square.light",
+        "sha256": "c92707f9eedf358b6d641a0044eab9053592bc1c9e89c1ae8dace60f67117d3e",
+        "emissions": {},
+        "sockets": []
+      },
+      {
         "id": "roof.square.plate",
         "sha256": "c7c2f010de6caa9a28fb8d45ea4036fc4e4f0583844a9eccc4d51ac9b8774f94",
         "emissions": {},
+        "sockets": []
+      },
+      {
+        "id": "roof.square.vent",
+        "sha256": "03e61d9fad8558370ba87d25357ab72b185563debdb4eb064c55d7345d579564",
+        "emissions": {
+          "emit_b@low": {
+            "factor": [
+              1,
+              0.30000001192092896,
+              0.02500000037252903
+            ],
+            "strength": 1.2000000476837158
+          }
+        },
         "sockets": []
       },
       {

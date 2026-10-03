@@ -8,7 +8,7 @@ export const AUTHORED_TEMPLATE_KIT_BASE =
   "/assets/ship-study/template-authored-r001/";
 export const AUTHORED_TEMPLATE_KIT_REVISION = "template-authored-r001";
 export const AUTHORED_TEMPLATE_KIT_MANIFEST_SHA256 =
-  "576906d9932e6d171f406f6058d3efb8540c1359f9c47e52da3e3fe9deb816d6";
+  "554c46e354d719460d0a730e06822f71fe5d23932fb779012344fa601df88cec";
 
 export const AUTHORED_TEMPLATE_SHAPES = [
   "square",
@@ -208,6 +208,8 @@ export function readAuthoredTemplateKit(input: unknown): AuthoredTemplateKit {
       `floor.${shape}.grate`,
       `roof.${shape}.plate`,
       `roof.${shape}.grate`,
+      `roof.${shape}.light`,
+      `roof.${shape}.accent`,
     ])
       requireValue(ids.has(id), `missing ${id}`);
   for (const variant of ["a", "b", "c"]) {
@@ -222,6 +224,8 @@ export function readAuthoredTemplateKit(input: unknown): AuthoredTemplateKit {
   }
   for (const id of ["post.normal", "beam.normal", "canopy.straight"])
     requireValue(ids.has(id), `missing ${id}`);
+  for (const module of ["vent", "hatch", "fan", "box"])
+    requireValue(ids.has(`roof.square.${module}`), "native dorsal module");
   return {
     revision: AUTHORED_TEMPLATE_KIT_REVISION,
     pieces,

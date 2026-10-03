@@ -133,6 +133,33 @@ class NativeKitQualification(unittest.TestCase):
             self.assertEqual(piece["qualification"]["openBoundaryEdges"], 0)
             self.assertEqual(piece["qualification"]["zeroAreaTriangles"], 0)
 
+    def test_roof_paint_variants_retain_native_shape_and_uv_coordinates(self):
+        def native_vertex_uv(piece_id):
+            doc, chunks = BUILDER.read_glb(BASE / f"{piece_id}.glb")
+            binary = next(data for kind, data in chunks if kind == 0x004E4942)
+            return {tuple(round(v, 6) for v in (*position, *uv))
+                    for mesh in doc["meshes"] for primitive in mesh["primitives"]
+                    for position, uv in zip(
+                        accessor(doc, binary, primitive["attributes"]["POSITION"]),
+                        accessor(doc, binary, primitive["attributes"]["TEXCOORD_0"]))}
+        for shape in BUILDER.SHAPES:
+            with self.subTest(shape=shape):
+                original = native_vertex_uv(f"roof.{shape}.plate")
+                self.assertEqual(native_vertex_uv(f"roof.{shape}.light"), original)
+                self.assertEqual(native_vertex_uv(f"roof.{shape}.accent"), original)
+
+    def test_light_and_service_paint_use_the_actual_pinned_source_pbr(self):
+        source_manifest = json.loads((BUILDER.ARCHIVE / "export_flight/manifest.json").read_text())
+        for piece_id, slot in [("roof.small.box", "primary"), ("roof.accent.w2.d2.v1", "accent")]:
+            source = next(p for p in source_manifest["pieces"] if p["id"] == piece_id)
+            source_doc, _ = BUILDER.read_glb(BUILDER.ARCHIVE / "export_flight" / source["file"])
+            source_pbr = next(m for m in source_doc["materials"] if m["name"] == slot)["pbrMetallicRoughness"]
+            for shape in BUILDER.SHAPES:
+                finish = "light" if slot == "primary" else "accent"
+                derived_doc, _ = BUILDER.read_glb(BASE / f"roof.{shape}.{finish}.glb")
+                actual_pbr = next(m for m in derived_doc["materials"] if m["name"] == slot)["pbrMetallicRoughness"]
+                self.assertEqual(actual_pbr, source_pbr)
+
 
 if __name__ == "__main__":
     unittest.main()

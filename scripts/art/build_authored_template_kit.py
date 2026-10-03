@@ -20,6 +20,7 @@ ARCHIVE = Path("/root/sidereal-art-archive/wayfarer-study-catalogue-20261003")
 PINS = {
     "export": "9afe368702b81891905165fe2adef6c860f23b0d3ce5672e5bf1b6ad93a4d855",
     "export_tiles": "c8ecd4383ceee5f10fd409207d135af88c706245fd648abd492c3773e07d648a",
+    "export_flight": "03bede58180b1b24a0643dbab44bcff0ce882ab299c9d48bb5a39d39c637466d",
 }
 SHAPES = ["square", *[f"slope{r}" for r in range(1, 5)],
           *[f"arc{r}{c}" for c in ("", "c") for r in range(1, 5)]]
@@ -122,8 +123,9 @@ class Builder:
             if sha(path) != pin:
                 raise ValueError(f"Archive manifest pin mismatch: {folder}")
             self.manifests[folder] = json.loads(path.read_text())
-        self.palette = self.manifests["export_tiles"]["palette"]
-        self.palette.update(self.manifests["export"]["palette"])
+        self.palette = {}
+        for manifest in self.manifests.values():
+            self.palette.update(manifest["palette"])
         self.cache = {}
         self.pieces = []
         self.lights = []
@@ -266,11 +268,27 @@ class Builder:
         obj.data.update()
         return open_edges
 
-    def surface(self, shape, source_id, folder, z_offset, finish, family):
+    def native_material(self, piece, name):
+        """Use the donor's actual native PBR material, never a guessed colour."""
+        obj, source = self.source("export_flight", piece)
+        material = next(m for m in obj.data.materials if m.get("authored_source_name") == name)
+        self.bpy.data.objects.remove(obj, do_unlink=True)
+        return material, source
+
+    def surface(self, shape, source_id, folder, z_offset, finish, family,
+                paint=None, module=None):
         polygon = shape_polygon(shape)
         width = math.ceil(max(p[0] for p in polygon))
         height = math.ceil(max(p[1] for p in polygon))
         native, provenance = self.source(folder, source_id)
+        sources = [provenance]
+        if paint:
+            donor_id = "roof.small.box" if paint == "primary" else "roof.accent.w2.d2.v1"
+            donor, donor_source = self.native_material(donor_id, paint)
+            sources.append(donor_source)
+            for index, material in enumerate(native.data.materials):
+                if material.get("authored_source_name") == "secondary":
+                    native.data.materials[index] = donor
         # Repair existing open source trim loops before the footprint boolean.
         self.cleanup(native)
         instances = []
@@ -295,10 +313,22 @@ class Builder:
         low = min(v.co.z for v in obj.data.vertices) - .003
         backing = self.prism(polygon, low, low + .018, material)
         obj = self.join([obj, backing])
-        self.emit(f"{family}.{shape}.{finish}", obj, [provenance],
+        if module:
+            dressing, module_source = self.source("export_flight", f"roof.small.{module}")
+            sources.append(module_source)
+            if module == "hatch":
+                donor, donor_source = self.native_material("roof.accent.w2.d2.v1", "accent")
+                sources.append(donor_source)
+                for index, material in enumerate(dressing.data.materials):
+                    if material.get("authored_source_name") == "primary":
+                        dressing.data.materials[index] = donor
+            obj = self.join([obj, dressing])
+        self.emit(f"{family}.{shape}.{finish}", obj, sources,
                   {"family": family, "shape": shape, "finish": finish,
                    "operation": "native unit repetition; exact grammar polygon solid clip; closed dark border backing",
-                   "polygon": polygon, "topDatum": 0})
+                   "polygon": polygon, "topDatum": 0,
+                   **({"paintSlot": paint, "paintOperation": "native secondary panel slot replaced by pinned source PBR donor"} if paint else {}),
+                   **({"module": module, "occupancy": [1, 1], "moduleOperation": "source-native dorsal module above plate datum"} if module else {})})
 
     def straight_hull(self, source_id, variant, inner_id):
         obj, provenance = self.source("export_tiles", source_id)
@@ -528,9 +558,14 @@ class Builder:
             self.surface(shape, "floor.grate", "export_tiles", 0, "grate", "floor")
             self.surface(shape, "roof.skin.square.WESN", "export_tiles", 2.507, "plate", "roof")
             self.surface(shape, "floor.grate", "export_tiles", 0, "grate", "roof")
+            self.surface(shape, "roof.skin.square.WESN", "export_tiles", 2.507, "light", "roof", paint="primary")
+            self.surface(shape, "roof.skin.square.WESN", "export_tiles", 2.507, "accent", "roof", paint="accent")
+        for module in ("vent", "hatch", "fan", "box"):
+            self.surface("square", "roof.skin.square.WESN", "export_tiles", 2.507,
+                         module, "roof", paint="primary", module=module)
         seeds = ["face.straight.column.split.navy.plate.w1.s1.deck",
-                 "face.straight.navy.navy.mixed.mixed.w2.s0.deck",
-                 "face.straight.vent.amber.navy.louvre.w2.s1.deck"]
+                 "face.straight.pilaster.light.mixed.louvre.w1.s1.deck",
+                 "face.straight.vent.light.navy.plate.w2.s0.deck"]
         inner_seeds = ["int.wallpanel.cockpit+cyanbox.w1.s0.i1",
                        "int.wallpanel.cockpit+amber.w1.s0.i1",
                        "int.wallpanel.machinery.w1.s0.i0.25"]
