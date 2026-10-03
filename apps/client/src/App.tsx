@@ -916,7 +916,7 @@ export default function App({
           flight:
             compiledPhysics?.status === "ready"
               ? flightComputer?.powered && shipPower?.corePowered
-                ? "IFCS powered"
+                ? "Core powered"
                 : "IFCS unavailable"
               : compiledPhysics
                 ? `Flight ${compiledPhysics.status}`
@@ -1840,10 +1840,22 @@ export default function App({
       send: (c, intent) => {
         const control = movementControl.current;
         if (!control?.canSend(c)) return Promise.resolve();
-        return c.reducers.setIntent({
-          ...intent,
-          sequence: control.nextSequence(c),
-        });
+        return c.reducers
+          .setIntent({
+            ...intent,
+            sequence: control.nextSequence(c),
+          })
+          .catch((error) => {
+            // A delayed rejection can belong to an earlier heartbeat. The
+            // transmitter ignores obsolete ACKs, but a rejected current-socket
+            // pilot command must still cancel this local latch and show refusal.
+            if (connection.current === c && cruise.active) {
+              cruise.cancel();
+              refresh((v) => v + 1);
+              setError(String(error));
+            }
+            throw error;
+          });
       },
       onError: (e) => {
         cruise.cancel();
