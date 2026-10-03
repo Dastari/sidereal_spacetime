@@ -36,3 +36,12 @@ test("cruise stays inside existing speed intent limits and toggles off", () => {
   c.toggle("helm", 90, 30);
   expect(c.active).toBe(false);
 });
+test.each([Infinity, NaN])(
+  "non-finite speed cap %s cannot engage cruise",
+  (maximum) => {
+    const c = createCruiseControl();
+    c.toggle("helm", 15, maximum);
+    expect(c.active).toBe(false);
+    expect(c.demand(0, "helm", false)).toBe(0);
+  },
+);

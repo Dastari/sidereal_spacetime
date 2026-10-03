@@ -5,7 +5,8 @@ import type {
 import { prefabComponentDefinition } from "@sidereal/sim/prefab-deck-objects";
 
 /** Mirrors damageComponent: undamaged mounts have no damage row. This aggregate
- * describes installed components, never structural hull HP or an owner permission. */
+ * describes the configured prefab mounts, never live installation state,
+ * structural hull HP or an owner permission. */
 export function shipComponentIntegrity(
   shipId: string,
   owned: boolean,

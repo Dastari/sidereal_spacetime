@@ -41,7 +41,7 @@ export function drawShipStatus(
   }
   ui.text(
     integrity
-      ? `${integrity.damaged} damaged / ${integrity.count} installed`
+      ? `${integrity.damaged} damaged / ${integrity.count} configured`
       : "Status not disclosed",
     r.x,
     r.y + 43,

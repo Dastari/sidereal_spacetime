@@ -29,6 +29,7 @@ export function createCruiseControl() {
       if (
         !currentRelation ||
         !Number.isFinite(forwardSpeed) ||
+        !Number.isFinite(maximumSpeed) ||
         !(maximumSpeed > 0)
       )
         return;
