@@ -9,7 +9,7 @@ import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import { prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
-import { createPrefabShipView } from "./ship-view";
+import { createLegacyPrefabShipView as createPrefabShipView } from "./ship-view";
 
 const engines: NullEngine[] = [];
 afterEach(() => {

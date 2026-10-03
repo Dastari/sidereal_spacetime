@@ -1,4 +1,9 @@
 import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
+import { buildAuthoredTemplateView } from "./authored-template-view";
+import {
+  TEMPLATE_OBJECT_PIECES,
+  authoredInteriorComponentPiece,
+} from "./authored-template-objects";
 import { registerLocalPbrLight } from "../pbr-light-budget";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 /**
@@ -258,6 +263,7 @@ interface StaticEntry {
 }
 
 interface Built {
+  authored?: Awaited<ReturnType<typeof buildAuthoredTemplateView>>;
   variant: VerifiedVisualVariant | null;
   dressed: DressedShip;
   instanced: InstancedEntry[];
@@ -401,6 +407,24 @@ export async function createPrefabShipView(
   doc: ShipPrefabDocumentV1,
   options: PrefabShipViewOptions,
 ): Promise<PrefabShipView> {
+  return createPrefabShipViewImpl(scene, doc, options, false);
+}
+
+/** Explicit historical review renderer. Normal game/editor callers use createPrefabShipView. */
+export async function createLegacyPrefabShipView(
+  scene: Scene,
+  doc: ShipPrefabDocumentV1,
+  options: PrefabShipViewOptions,
+): Promise<PrefabShipView> {
+  return createPrefabShipViewImpl(scene, doc, options, true);
+}
+
+async function createPrefabShipViewImpl(
+  scene: Scene,
+  doc: ShipPrefabDocumentV1,
+  options: PrefabShipViewOptions,
+  legacyReview: boolean,
+): Promise<PrefabShipView> {
   if (doc.id === "fed.m.wayfarer") {
     const { createWayfarerLiveView } = await import("./wayfarer-live-view");
     return createWayfarerLiveView(scene, doc, options);
@@ -489,6 +513,22 @@ export async function createPrefabShipView(
       componentStandins: 0,
     };
     try {
+      // Historical explicitly pinned studies remain isolated review paths. The normal game
+      // and Shipyard both use the native authored kit over the same authoritative grammar.
+      if (!legacyReview && !variant && !options.visualVariant) {
+        out.authored = await buildAuthoredTemplateView(
+          scene,
+          root,
+          d,
+          dressed,
+          {
+            catalog: options.catalog,
+            exteriorOnly: options.exteriorOnly,
+            theme,
+            standinComponents: options.standinComponents,
+          },
+        );
+      }
       const loads = await Promise.allSettled([
         buildKit(out),
         buildComponents(out),
@@ -497,8 +537,8 @@ export async function createPrefabShipView(
       const failed = loads.find((r) => r.status === "rejected");
       if (failed?.status === "rejected") throw failed.reason;
       if (variant && sampled) buildSampled(out, sampled);
-      else buildGenerated(out);
-      buildLightPools(out);
+      else if (!out.authored) buildGenerated(out);
+      if (!out.authored) buildLightPools(out);
       buildContactShadows(out);
       buildLabels(out, prefabOrigin(d));
       out.decals = buildDecals(scene, frame, dressed, theme).map((h) => ({
@@ -748,6 +788,11 @@ export async function createPrefabShipView(
     );
     const byPiece = new Map<string, Buckets>();
     for (const k of out.dressed.kit) {
+      if (
+        out.authored &&
+        !out.authored.plan.retainedLegacyPieces.includes(k.piece)
+      )
+        continue;
       let b = byPiece.get(k.piece);
       if (!b) byPiece.set(k.piece, (b = buckets()));
       pushMatrix(
@@ -932,6 +977,14 @@ export async function createPrefabShipView(
     const glbs = new Map<string, { list: ComponentPlacement[] }>();
     const standins: ComponentPlacement[] = [];
     for (const c of out.dressed.components) {
+      if (
+        out.authored &&
+        !options.standinComponents &&
+        ((c.placement.mount.attach === "interior" &&
+          authoredInteriorComponentPiece(c.component)) ||
+          out.authored.replacedMounts.has(c.placement.mount.id))
+      )
+        continue;
       const url = options.standinComponents
         ? null
         : componentUrl(c, options.componentsBaseUrl);
@@ -1114,6 +1167,12 @@ export async function createPrefabShipView(
     const byUrl = new Map<string, DeckObject[]>();
     const placeholders: DeckObject[] = [];
     for (const o of out.dressed.objects) {
+      if (
+        out.authored &&
+        !options.standinComponents &&
+        TEMPLATE_OBJECT_PIECES[o.designId]
+      )
+        continue;
       const url = options.standinComponents ? null : objectUrl(o.designId);
       if (!url) placeholders.push(o);
       else byUrl.set(url, [...(byUrl.get(url) ?? []), o]);
@@ -1466,6 +1525,7 @@ export async function createPrefabShipView(
   }
 
   function apply(b: Built) {
+    b.authored?.setView(view);
     for (const e of b.instanced) {
       const m = e.matrices;
       const data = new Float32Array(m.both.length + m[view].length);
@@ -1490,6 +1550,7 @@ export async function createPrefabShipView(
   }
 
   function release(b: Built) {
+    b.authored?.dispose();
     b.variant?.release();
     for (const e of b.instanced) e.mesh.dispose();
     for (const s of b.statics) s.mesh.dispose();
@@ -1512,7 +1573,13 @@ export async function createPrefabShipView(
     apply(next);
   }
 
-  await rebuild(doc);
+  try {
+    await rebuild(doc);
+  } catch (error) {
+    frame.dispose();
+    root.dispose();
+    throw error;
+  }
 
   const handle: PrefabShipView = {
     root,
@@ -1528,6 +1595,7 @@ export async function createPrefabShipView(
     setTheme(t) {
       theme = t;
       if (!built) return;
+      built.authored?.setTheme(t);
       for (const e of built.instanced)
         if (e.slot)
           e.mesh.material = e.mesh.material?.metadata?.shipAuthoredPalette
@@ -1595,6 +1663,21 @@ export async function createPrefabShipView(
       let triangles = 0;
       let meshes = 0;
       const pieces = new Set<string>();
+      if (b.authored) {
+        const bank = b.authored.banks.find((bank) => bank.tag === view);
+        if (bank) {
+          instances += bank.loaded.report.instances;
+          const nativeTriangles = bank.loaded.report.placedTriangles;
+          triangles += nativeTriangles;
+          kitTriangles += bank.loaded.report.placementRanges
+            .filter((r) => r.role !== "equipment")
+            .reduce((sum, r) => sum + r.indexCount / 3, 0);
+          glbTriangles += nativeTriangles;
+          meshes += bank.loaded.meshes.length;
+          for (const range of bank.loaded.report.placementRanges)
+            pieces.add(range.piece);
+        }
+      }
       for (const e of b.instanced)
         if (e.mesh.isEnabled() && e.count) {
           instances += e.count;
@@ -1623,7 +1706,7 @@ export async function createPrefabShipView(
           triangles += 2;
         }
       return {
-        visualRevision: b.variant?.manifest.revision,
+        visualRevision: b.authored?.revision ?? b.variant?.manifest.revision,
         drawCalls,
         instances,
         triangles,
@@ -1633,13 +1716,15 @@ export async function createPrefabShipView(
         generatedTriangles,
         glbTriangles,
         effectTriangles,
-        componentGlbs: b.componentGlbs,
+        componentGlbs:
+          b.componentGlbs + (b.authored?.nativeComponentCount ?? 0),
         componentStandins: b.componentStandins,
       };
     },
     emissiveMeshes() {
       if (!built) return [];
       return [
+        ...(built.authored?.emissiveMeshes() ?? []),
         ...built.instanced
           .filter((e) => e.slot && EMISSIVE.has(e.slot))
           .map((e) => e.mesh),

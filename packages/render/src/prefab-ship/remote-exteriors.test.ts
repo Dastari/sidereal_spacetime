@@ -6,7 +6,7 @@ import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
 import { PointLight } from "@babylonjs/core/Lights/pointLight";
 import { prefabById } from "@sidereal/content/prefabs";
-import { createPrefabShipView } from "./ship-view";
+import { createLegacyPrefabShipView as createPrefabShipView } from "./ship-view";
 import { prefabNozzleLayout } from "./exhaust";
 import {
   createRemoteShipExteriors,
@@ -15,6 +15,13 @@ import {
   type RemoteShipSnapshot,
 } from "./remote-exteriors";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+
+// This suite qualifies the retained historical batching/proxy path; native template
+// admission and lifecycle are covered separately by authored-template-view.test.ts.
+vi.mock("./ship-view", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./ship-view")>();
+  return { ...actual, createPrefabShipView: actual.createLegacyPrefabShipView };
+});
 
 const engines: NullEngine[] = [];
 afterEach(() => {

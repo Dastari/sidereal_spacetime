@@ -34,6 +34,7 @@ PUBLISHED_RUNTIME = (
     "ship-study/wayfarer-object-lighting-r001",
     "ship-study/wayfarer-object-lighting-r002",
     "ship-study/wayfarer-dorsal-r001",
+    "ship-study/template-authored-r001",
     "construction/boundary-r001",
     "construction/boundary-r004",
     "construction/floor-finishes",

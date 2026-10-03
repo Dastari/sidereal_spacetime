@@ -25,7 +25,7 @@ import {
   type PrefabComponentSpec,
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
-import { SHIP_KIT_REVISION, kitId } from "@sidereal/content/ship-kit";
+import { AUTHORED_TEMPLATE_KIT_REVISION } from "@sidereal/content/authored-template-kit";
 import {
   mountTileConfigs,
   mountTileRequired,
@@ -223,27 +223,36 @@ function VolumePanel({ doc, tools, setTools, commit }: Props) {
   );
 }
 
-/** The Blender kit modules (kit r002, by their exported names) a tile of this shape is dressed with. */
+/** Reusable native authored surfaces used by the common game/Shipyard compiler. */
 export function tileModules(
   shape: ShapeTileId,
   heightClass: HeightClassId,
 ): string[] {
-  const hull = G.heightClasses[heightClass].kinds.includes("hull");
-  const out = [kitId.hull(shape, heightClass)];
-  if (hull) out.push(kitId.hull(shape, heightClass, true));
-  if (shape !== "square") {
+  const out = [
+    `floor.${shape}.plate`,
+    `roof.${shape}.light`,
+    `roof.${shape}.plate`,
+    `roof.${shape}.grate`,
+    `roof.${shape}.accent`,
+    ...["a", "b", "c"].map(
+      (style) =>
+        `hull.${G.shapeTiles[shape].kind === "arc" ? shape : "straight"}.${style}`,
+    ),
+  ];
+  if (shape === "square")
     out.push(
-      kitId.face(shape, heightClass, false),
-      kitId.canopy(shape, heightClass, false),
+      "roof.square.vent",
+      "roof.square.hatch",
+      "roof.square.fan",
+      "roof.square.box",
     );
-    if (G.heightClasses[heightClass].walkable)
-      out.push(
-        kitId.face(shape, "deck", true),
-        kitId.canopy(shape, "deck", true),
-        kitId.shellWall(shape),
-        kitId.floorPart(shape),
-      );
-  }
+  if (G.heightClasses[heightClass].walkable)
+    out.push(
+      `floor.${shape}.grate`,
+      "wall.straight.a",
+      "wall.straight.b",
+      "wall.straight.c",
+    );
   return out;
 }
 
@@ -347,21 +356,10 @@ function TilePicker({
       </p>
       <div className="pf-modules" aria-label="Blender kit modules">
         <h3>
-          Blender modules ({SHIP_KIT_REVISION}, {heightClass})
+          Blender modules ({AUTHORED_TEMPLATE_KIT_REVISION}, {heightClass})
         </h3>
         <ul>
-          {(tools.bowStep === undefined
-            ? tileModules(tools.shape, heightClass)
-            : [
-                kitId.bow(
-                  tools.shape,
-                  heightClass,
-                  tools.bowStep,
-                  tools.bowAxis ?? 0,
-                  "roof",
-                ),
-              ]
-          ).map((id) => (
+          {tileModules(tools.shape, heightClass).map((id) => (
             <li key={id}>
               <code>{id}</code>
             </li>

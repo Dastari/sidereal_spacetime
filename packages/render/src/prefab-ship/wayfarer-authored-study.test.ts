@@ -541,3 +541,87 @@ it("pinned object emission preserves source strength without changing unrelated 
   scene.dispose();
   engine.dispose();
 });
+
+it("accounts for clipped native placement ranges and disposes an entirely removed placement", async () => {
+  const { clipAuthoredGeometry } = await import("./authored-template-geometry");
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  const data = new Uint8Array(
+    readFileSync(
+      new URL(
+        "../../../../assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.grate.glb",
+        import.meta.url,
+      ),
+    ),
+  );
+  const source = [
+    {
+      id: "floor.grate",
+      file: "floor.grate.glb",
+      sha256:
+        "55d663ea86cef90fb3f155e3e8c436aa4ac7c4e467842066f6852c7834ee9317",
+      triangles: 1404,
+      frame: "piece-local" as const,
+    },
+  ];
+  try {
+    const candidate = await loadAuthoredStudy(
+      scene,
+      source,
+      [
+        {
+          object: "half",
+          piece: "floor.grate",
+          role: "floor",
+          matrix: identity,
+        },
+        {
+          object: "removed",
+          piece: "floor.grate",
+          role: "floor",
+          matrix: identity,
+        },
+      ],
+      {
+        deck_dark: { family: "plastic-deck" },
+        secondary: { family: "plastic-dark" },
+        trim: { family: "plastic-dark" },
+      },
+      [0, 0],
+      async () => data,
+      {
+        transformGeometry: (row, geometry, transform) => ({
+          geometry: clipAuthoredGeometry(
+            geometry,
+            transform,
+            row.object === "half" ? [[1, 0, 0, 0.5]] : [[1, 0, 0, -10]],
+          ),
+          transform: Matrix.Identity(),
+        }),
+      },
+    );
+    expect(candidate.report.uniqueTriangles).toBe(1404);
+    expect(candidate.report.placedTriangles).toBeGreaterThan(0);
+    expect(candidate.report.placedTriangles).toBeLessThan(1404);
+    expect(
+      candidate.report.placementRanges
+        .filter((r) => r.object === "removed")
+        .every((r) => r.indexCount === 0),
+    ).toBe(true);
+    expect(
+      candidate.report.placementRanges.reduce(
+        (n, r) => n + r.indexCount / 3,
+        0,
+      ),
+    ).toBe(candidate.report.placedTriangles);
+    for (const mesh of candidate.meshes)
+      expect(mesh.getTotalIndices()).toBeGreaterThan(0);
+    candidate.dispose();
+    expect(scene.meshes).toHaveLength(0);
+    expect(scene.materials).toHaveLength(0);
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
+});

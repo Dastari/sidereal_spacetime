@@ -6,8 +6,8 @@
   "exports": "./src/index.ts",
   "dependencies": {
     "spacetimedb": "2.10.0",
-    "@sidereal/content": "0.10.0",
-    "@sidereal/sim": "0.7.0",
+    "@sidereal/content": "0.11.0",
+    "@sidereal/sim": "0.8.0",
     "@sidereal/scripting": "0.1.0"
   },
   "scripts": {
