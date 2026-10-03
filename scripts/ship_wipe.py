@@ -25,7 +25,7 @@ BACKUP_DIR = ROOT / '.runtime/ship-wipe-backups'
 # Must mirror WIPED_SHIP_TABLES in packages/world/src/ship-wipe.ts
 # (checked by packages/world/src/ship-wipe-tooling.test.ts).
 WIPED_SHIP_TABLES = [
-    'ship', 'station', 'ship_world_motion', 'construction_instance', 'construction_deck',
+    'ship', 'station', 'ship_world_motion', 'construction_instance', 'ship_furnishing_state', 'construction_deck',
     'game_ship_access', 'construction_flight_binding', 'construction_flight_station',
     'construction_flight_fitting', 'construction_flight_compiled', 'construction_flight_dirty',
     'construction_flight_damage_event', 'ship_component_damage', 'ship_power_device', 'ship_power_installation', 'ship_power_state', 'ship_systems_state', 'ship_systems_dirty',

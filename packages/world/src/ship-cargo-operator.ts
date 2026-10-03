@@ -11,6 +11,7 @@
  * `issueSocketStock` runs the same plan and commit inside the prefab spawner's issuing
  * transaction (a pin's `issueStock`, e.g. the EVA suit in a new Wren r8's suit locker).
  */
+import { furnishingState } from "./ship-furnishings-tables";
 import {
   SenderError,
   type InferSchema,
@@ -117,9 +118,12 @@ function prefabStorageSocket(
     ...ctx.db.constructionDeck.by_instance.filter(instance.id),
   ].find((d) => d.sourceDeckId === PREFAB_DECK_ID);
   if (!deck) fail("Prefab deck not found");
-  const socket = prefabCargoSockets(prefab, 0, catalog).find(
-    (s) => s.key === socketKey,
-  );
+  const socket = prefabCargoSockets(
+    prefab,
+    0,
+    catalog,
+    furnishingState(ctx.db, instance.id).overrides,
+  ).find((s) => s.key === socketKey);
   if (!socket) fail("Unknown storage socket: " + socketKey);
   return { deck, socket };
 }

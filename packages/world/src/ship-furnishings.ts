@@ -94,6 +94,8 @@ export function editShipFurnishing(
     args.operationId,
     {
       kind: "ship-furnishing",
+      sourceInstanceRevision: instance.revision.toString(),
+      sourceBlueprintSha256: instance.blueprintSha256,
       ...args,
       expectedRevision: args.expectedRevision.toString(),
     },

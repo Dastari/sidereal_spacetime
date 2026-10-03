@@ -458,3 +458,23 @@ test("free movement commits one accepted pose and off-floor or crew-overlap prop
   ).toThrow(/crew|overlap/);
   expect(w.f.snapshot()).toBe(baseline);
 }, 30000);
+
+test("uncertain furnishing operation cannot replay as a replacement source instance", async () => {
+  const w = await wayfarerOwner();
+  standNear(w, "Lounge_coffee_table");
+  const args = request(w);
+  editShipFurnishing(w.f.ctx, args);
+  w.f.db.constructionInstance.id.update({
+    ...w.instance,
+    revision: w.instance.revision + 1n,
+  });
+  const access = w.f.db.gameShipAccess.shipId.find(w.shipId);
+  w.f.db.gameShipAccess.shipId.update({
+    ...access,
+    instanceRevision: w.instance.revision + 1n,
+  });
+  w.f.db.shipFurnishingState.shipId.delete(w.shipId);
+  expect(() => editShipFurnishing(w.f.ctx, args)).toThrow(
+    /Operation ID|operation/,
+  );
+});

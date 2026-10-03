@@ -9,7 +9,12 @@ import { prefabShipOf, PREFAB_OBJECT_PREFIX } from "./prefab-objects";
 export function containerSelection(
   selectedId: string | undefined,
   containers: readonly { id: string; placementId?: string; kind: string }[],
-  visit?: { instanceId: string; deckId: string; documentJson: string },
+  visit?: {
+    instanceId: string;
+    deckId: string;
+    documentJson: string;
+    furnishingsJson?: string;
+  },
 ): { storage: boolean; containerId?: string } {
   if (!selectedId) return { storage: false };
   const direct = containers.find(
@@ -20,16 +25,23 @@ export function containerSelection(
     return { storage: true };
   if (!selectedId.startsWith(PREFAB_OBJECT_PREFIX) || !visit)
     return { storage: false };
-  const ship = prefabShipOf(visit.documentJson);
+  const ship = prefabShipOf(visit.documentJson, visit.furnishingsJson);
   if (!ship) return { storage: false };
-  const object = prefabShipObjects(ship.doc, ship.catalog).find(
-    (o) => PREFAB_OBJECT_PREFIX + o.id === selectedId,
-  );
+  const object = prefabShipObjects(
+    ship.doc,
+    ship.catalog,
+    ship.furnishings,
+  ).find((o) => PREFAB_OBJECT_PREFIX + o.id === selectedId);
   if (!object || object.kind !== "furniture") return { storage: false };
   const [ox, oy] = prefabOrigin(ship.doc);
   const x = -((object.min[1] + object.max[1]) / 2 - oy);
   const y = (object.min[0] + object.max[0]) / 2 - ox;
-  const socket = prefabCargoSockets(ship.doc, 0, ship.catalog).find(
+  const socket = prefabCargoSockets(
+    ship.doc,
+    0,
+    ship.catalog,
+    ship.furnishings,
+  ).find(
     (s) =>
       s.designId === object.designId &&
       s.room === object.room &&
