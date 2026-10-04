@@ -1,0 +1,22 @@
+{
+  "schema": "sidereal.wayfarer-details.r001",
+  "operation": "Blender trim aperture; recessed dark backing; unchanged source caps/body/lenses/materials",
+  "pieces": [
+    {
+      "id": "int.post.pink",
+      "file": "int.post.pink.aperture.glb",
+      "sha256": "91fbb20830f0dcdb1178b9062370ef9c6851e7a48ce43edcf781d1ad274fc562",
+      "sourceSha256": "68d982ae6adf2ffd624509f4a0e3e43ef885ffc5915e17210199cdc5d944e8a1",
+      "triangles": 1052,
+      "frame": "piece-local"
+    },
+    {
+      "id": "int.post.white",
+      "file": "int.post.white.aperture.glb",
+      "sha256": "83c180a53c954c9e6566858c0694ed8fdde991ccebf5ebb5885bc90adf16b1ed",
+      "sourceSha256": "ad5be49bcc75908fcd6888ab54cb1dc21062594117e0f149b9111d9cbf25933d",
+      "triangles": 1052,
+      "frame": "piece-local"
+    }
+  ]
+}

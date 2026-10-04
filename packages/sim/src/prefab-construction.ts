@@ -11,6 +11,7 @@
  * frame) is x = starboard, y = fore, in integer 1/32 m units, centred on `prefabOrigin`:
  *   gx = -(py - oy) * 32,  gy = (px - ox) * 32.
  */
+import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import {
   CONSTRUCTION_COMPILER,
   CONSTRUCTION_SCHEMA,
@@ -512,13 +513,14 @@ export function restorePrefabSourceIdentities(
 export function prefabWalkFrame(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
+  furnishings: FurnishingOverrides = {},
 ): DeckCollisionFrame {
   return resolveDeckCollision(
     compileDeckCollision(prefabLayout(doc, catalog), PREFAB_DECK_ID, {
       shipId: `prefab.${doc.id}`,
       perimeterHalfWidthM: 0,
       partitionHalfWidthM: 0,
-      obstacles: prefabDeckObstacles(doc, catalog),
+      obstacles: prefabDeckObstacles(doc, catalog, furnishings),
     }),
     [],
   );
@@ -536,8 +538,9 @@ export function prefabWalkRoute(
   from: readonly [number, number],
   to: readonly [number, number],
   radiusM = 0.3,
+  furnishings: FurnishingOverrides = {},
 ): [number, number][] {
-  const frame = prefabWalkFrame(doc, catalog);
+  const frame = prefabWalkFrame(doc, catalog, furnishings);
   const pad = radiusM + 0.002;
   const step = 0.025;
   const loc = (p: readonly [number, number]) => ({

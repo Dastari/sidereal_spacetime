@@ -1,3 +1,4 @@
+import type { AuthoredAssetLighting } from "../authored-asset-lighting";
 /** Private intact authored-kit trial. No catalog, collision or damage integration. */
 import type { Scene } from "@babylonjs/core/scene";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
@@ -269,7 +270,11 @@ export async function loadAuthoredStudy(
   palette: Readonly<Record<string, AuthoredPaletteInput>>,
   origin: readonly [number, number],
   fetchPiece: (piece: AuthoredPieceInput) => Promise<Uint8Array>,
-  options: { batchRegions?: ReadonlyMap<string, string> } = {},
+  options: {
+    batchRegions?: ReadonlyMap<string, string>;
+    /** Source-pinned reusable object metadata; independent of scene and placement names. */
+    assetLighting?: ReadonlyMap<string, AuthoredAssetLighting>;
+  } = {},
 ) {
   if (!scene.useRightHandedSystem)
     throw Error("Authored study needs the normal right-handed game scene");
@@ -351,26 +356,50 @@ export async function loadAuthoredStudy(
             throw Error(
               `Imported authored material lost its source definition: ${original.name}`,
             );
-          const family = materialFamily(definition, palette),
-            key = authoredMaterialIdentity(document, definition, family);
+          const family = materialFamily(definition, palette);
+          const sourceStrength = definition.extensions
+            ? (object(
+                object(definition.extensions).KHR_materials_emissive_strength ??
+                  {},
+              ).emissiveStrength ?? 1)
+            : 1;
+          if (
+            typeof sourceStrength !== "number" ||
+            !Number.isFinite(sourceStrength) ||
+            sourceStrength < 0
+          )
+            throw Error("Invalid authored emission strength");
+          const ownedEmission = options.assetLighting?.get(piece.sha256)
+            ?.emissions[original.name];
+          if (
+            ownedEmission &&
+            (ownedEmission.strength !== sourceStrength ||
+              canonical(ownedEmission.factor) !==
+                canonical(definition.emissiveFactor))
+          )
+            throw Error("Changed authored asset emission definition");
+          const gameStrength = ownedEmission
+            ? sourceStrength
+            : Math.min(sourceStrength, 1);
+          const sourceKey = authoredMaterialIdentity(
+            document,
+            definition,
+            family,
+          );
+          const key = !ownedEmission
+            ? sourceKey
+            : canonical([sourceKey, "asset-owned-emission"]);
           let pooled = materials.get(key);
           if (!pooled) {
             pooled = original;
             materials.set(key, pooled);
-            const sourceStrength = definition.extensions
-              ? (object(
-                  object(definition.extensions)
-                    .KHR_materials_emissive_strength ?? {},
-                ).emissiveStrength ?? 1)
-              : 1;
-            if (
-              typeof sourceStrength !== "number" ||
-              !Number.isFinite(sourceStrength) ||
-              sourceStrength < 0
-            )
-              throw Error("Invalid authored emission strength");
             applySurfaceFinish(pooled, family);
-            pooled.emissiveIntensity = Math.min(sourceStrength, 1);
+            pooled.emissiveIntensity = gameStrength;
+            if (ownedEmission)
+              pooled.metadata = {
+                ...pooled.metadata,
+                authoredAssetEmission: ownedEmission,
+              };
             setPbrLightBudget(pooled, GAME_PBR_LIGHT_LIMIT);
             materialPolicy.push({
               name: original.name,
@@ -378,6 +407,7 @@ export async function loadAuthoredStudy(
               family,
               sourceStrength,
               gameStrength: pooled.emissiveIntensity,
+              assetOwnedEmission: Boolean(ownedEmission),
               textureNames: pooled.getActiveTextures().map((t) => t.name),
             });
           }

@@ -1,3 +1,4 @@
+import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { registerLocalPbrLight } from "../pbr-light-budget";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 /**
@@ -148,6 +149,7 @@ export const coplanarPriority = (role: MeshRole, slot: ShipKitSlot) =>
 export type PrefabShipPresentation = "flight" | "deck";
 
 export interface PrefabShipViewOptions {
+  furnishings?: FurnishingOverrides;
   catalog: PrefabComponentCatalog;
   /** Explicit exact proposal pin; absent preserves all legacy art/defaults. */
   visualVariant?: VisualVariantSelection;

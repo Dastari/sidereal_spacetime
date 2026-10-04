@@ -463,3 +463,81 @@ it("cancels a pending asset fetch when its scene is disposed", async () => {
   expect(scene.textures).toHaveLength(0);
   engine.dispose();
 });
+
+it("pinned object emission preserves source strength without changing unrelated pooled uses", async () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  const source = new Uint8Array(
+    readFileSync(
+      new URL(
+        "../../../../assets/runtime/ship-study/wayfarer-authored-r001/glb/props/bridge/prop.props_bridge.wall_light_cyan_v.glb",
+        import.meta.url,
+      ),
+    ),
+  );
+  const manifest = JSON.parse(
+    readFileSync(
+      new URL(
+        "../../../../assets/runtime/ship-study/wayfarer-authored-r001/manifest.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  const palette = manifest.palette;
+  const lamp = {
+    id: "lamp",
+    file: "",
+    sha256: "9614d20e384a9a4d4d89bcee74f319a2418263d456853ae14917d87b1d43065b",
+    triangles: 1080,
+    frame: "piece-local" as const,
+  };
+  const pieces = [lamp];
+  const candidate = await loadAuthoredStudy(
+    scene,
+    pieces,
+    pieces.map((piece) => ({
+      object: piece.id,
+      piece: piece.id,
+      role: "room-content",
+      matrix: identity,
+    })),
+    palette,
+    [0, 0],
+    async () => source,
+    {
+      assetLighting: new Map([
+        [
+          lamp.sha256,
+          {
+            id: "reusable-fixture",
+            sha256: lamp.sha256,
+            emissions: {
+              emit_a: {
+                factor: [0.05000000074505806, 0.47999998927116394, 1],
+                strength: 5,
+              },
+            },
+            sockets: [],
+          },
+        ],
+      ]),
+    },
+  );
+  const cyan = candidate.meshes.filter(
+    (mesh) => mesh.material?.name === "emit_a",
+  );
+  expect(cyan).toHaveLength(1);
+  expect(
+    cyan.map((mesh) => (mesh.material as PBRMaterial).emissiveIntensity).sort(),
+  ).toEqual([5]);
+  expect(cyan[0].material?.metadata.authoredAssetEmission.strength).toBe(5);
+  expect(
+    candidate.meshes.filter((mesh) => mesh.material?.name === "emit_b"),
+  ).toHaveLength(1);
+  expect(candidate.report.placedTriangles).toBe(1080);
+  candidate.dispose();
+  scene.dispose();
+  engine.dispose();
+});

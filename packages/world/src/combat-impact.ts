@@ -1,3 +1,4 @@
+import { furnishingState } from "./ship-furnishings-tables";
 /**
  * Authoritative end point of an accepted handheld shot. The server casts the beam from the
  * shooter's committed deck position along the accepted aim; nothing here trusts a client hit.
@@ -28,8 +29,12 @@ type Context = ReducerCtx<InferSchema<typeof world>>;
 type Instance = { id: string; revision: bigint; documentJson: string };
 
 const models = new Map<string, PrefabBeamModel | null>();
-function beamModelFor(instance: Instance): PrefabBeamModel | null {
-  const key = instance.id + ":" + instance.revision;
+function beamModelFor(
+  ctx: Pick<Context, "db">,
+  instance: Instance,
+): PrefabBeamModel | null {
+  const furnishing = furnishingState(ctx.db, instance.id);
+  const key = instance.id + ":" + instance.revision + ":" + furnishing.revision;
   if (models.has(key)) return models.get(key)!;
   if (models.size >= 64) models.clear();
   let model: PrefabBeamModel | null = null;
@@ -43,6 +48,7 @@ function beamModelFor(instance: Instance): PrefabBeamModel | null {
       model = prefabBeamModel(
         readShipPrefab(binding.document),
         prefabComponentCatalogFor(String(binding.catalog)),
+        furnishing.overrides,
       );
   } catch {
     model = null;
@@ -101,7 +107,7 @@ function resolveStructureImpact(
   });
   const instance = ctx.db.constructionInstance.id.find(actor.shipId);
   if (!instance) return none();
-  const model = beamModelFor(instance);
+  const model = beamModelFor(ctx, instance);
   if (model) {
     const own = ctx.db.ship.id.find(actor.shipId);
     if (!own) return castPrefabBeam(model, origin, angle, rangeM);
@@ -114,7 +120,7 @@ function resolveStructureImpact(
       )
         continue;
       const other = ctx.db.constructionInstance.id.find(ship.id);
-      const otherModel = other && beamModelFor(other);
+      const otherModel = other && beamModelFor(ctx, other);
       if (otherModel)
         others.push({
           id: ship.id,

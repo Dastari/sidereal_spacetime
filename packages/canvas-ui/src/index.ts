@@ -31,6 +31,7 @@ import {
 export type {
   ObjectDetailsState,
   ObjectDetailsActions,
+  ObjectPlacementState,
 } from "./object-details";
 import { destinationPagination } from "./destinations";
 import {
@@ -55,6 +56,12 @@ import {
 } from "./combat-feedback";
 export type { CombatHitFeedback, VitalsFeedback } from "./combat-feedback";
 import { actionBarRect, playerStatusRect } from "./action-bar";
+import {
+  drawShipStatus,
+  drawShipActions,
+  shipHudContext,
+  type ShipHudState,
+} from "./ship-hud";
 import { createDiagnosticsUI } from "./diagnostics";
 import type { RenderDiagnostics } from "../../render/src/diagnostics";
 import {
@@ -102,6 +109,7 @@ export type GameUIState = {
   };
   /** Own authoritative health (own_character_vitals). */
   vitals?: VitalsFeedback;
+  shipHud?: ShipHudState;
   inventory?: InventoryState;
   objectDetails?: ObjectDetailsState;
   interactionPrompt?: string;
@@ -157,6 +165,7 @@ export type GameUIActions = {
   applyRenderBackend?: () => void;
   localLightLimit?: (limit: LocalLightLimit) => void;
   combat?: () => void;
+  cruise?: () => void;
   /** Open a DOM service panel by id ("account", "ship-systems", …). */
   openService?: (id: string) => void;
   /** Close the open DOM service panel; true when one was open. */
@@ -188,6 +197,7 @@ export const CONTROL_KEYS: readonly (readonly [string, string])[] = [
   ["WASD", "Walk (camera relative) · Shift sprint"],
   ["E", "Use · control seat · leave seat"],
   ["W S · A D", "Helm: thrust · turn"],
+  ["X", "Helm: cruise toggle · W/S overrides"],
   ["Mouse", "Aim · left click fire · R reload"],
   ["1–5 · 9 0", "Action bar · quick slots"],
   ["Right-drag", "Orbit · wheel zooms"],
@@ -286,11 +296,21 @@ export function createGameUI(
     }
     if (!menu && inventory.isOpen() && code === "KeyR")
       return inventory.rotate();
-    if (!menu && !inventory.isOpen() && /^Digit[1-5]$/.test(code)) {
+    if (
+      !menu &&
+      !inventory.isOpen() &&
+      !shipHudContext(state.interior, state.eva, !!state.shipHud) &&
+      /^Digit[1-5]$/.test(code)
+    ) {
       actions.inventory?.activateHotbar(Number(code.slice(-1)) - 1);
       return true;
     }
-    if (!menu && (code === "Digit9" || code === "Digit0")) {
+    if (
+      !menu &&
+      (inventory.isOpen() ||
+        !shipHudContext(state.interior, state.eva, !!state.shipHud)) &&
+      (code === "Digit9" || code === "Digit0")
+    ) {
       inventory.quickSlot(
         code === "Digit9" ? 0 : 1,
         state.inventory,
@@ -403,14 +423,26 @@ export function createGameUI(
       }),
     );
     if (state.hasActor && !inventory?.isOpen() && !menu) {
+      const shipContext = shipHudContext(
+        state.interior,
+        state.eva,
+        !!state.shipHud,
+      );
       const r = playerStatusRect(w, h);
       const hintX = r.x + r.w + 20;
       ui.panel(r);
-      ui.text(state.actorName, r.x + 12, r.y + 8, 17, palette.text, r.w - 24);
+      ui.text(
+        shipContext ? state.shipName : state.actorName,
+        r.x + 12,
+        r.y + 8,
+        17,
+        palette.text,
+        r.w - 24,
+      );
       ui.text(
         state.eva
           ? state.eva.label
-          : `${state.seated ? "Helm" : state.resting ? "Seated" : "On foot"}   /   ${num(state.speed)} m/s   /   ${num(state.heading, 0)}°`,
+          : `${shipContext ? (state.seated ? "Helm" : "Coasting") : state.seated ? "Helm" : state.resting ? "Seated" : "On foot"}   /   ${num(state.speed)} m/s   /   ${num(state.heading, 0)}°`,
         r.x + 12,
         r.y + 32,
         12,
@@ -438,12 +470,20 @@ export function createGameUI(
           actions.interact ?? actions.station,
           { accent: true, disabled: !state.connected },
         );
-      drawVitalBars(
-        ui,
-        { x: r.x + 12, y: r.y + 45, w: r.w - 24, h: 90 },
-        true,
-        state.vitals,
-      );
+      if (shipContext && state.shipHud)
+        drawShipStatus(
+          ui,
+          { x: r.x + 12, y: r.y + 53, w: r.w - 24, h: 90 },
+          state.shipHud,
+          state.mass,
+        );
+      else
+        drawVitalBars(
+          ui,
+          { x: r.x + 12, y: r.y + 45, w: r.w - 24, h: 90 },
+          true,
+          state.vitals,
+        );
       if (state.eva && state.vitals?.state !== "dead") {
         const offer = state.eva.beacon
           ? "B   Cancel rescue beacon"
@@ -459,13 +499,17 @@ export function createGameUI(
         ui.text(
           state.eva
             ? state.eva.help
-            : state.resting
-              ? "Stand up to walk · C character · I inventory"
-              : state.seated
-                ? "W / S thrust · A / D turn · Release to brake"
-                : state.combat?.enabled
-                  ? "Mouse aim · Left click fire · R reload · Right-drag orbit · V leave combat"
-                  : "WASD walk · Shift sprint · E use · C character · I inventory · N map · V combat · Esc menu",
+            : shipContext && !state.seated
+              ? "Take the helm to fly · N navigation · Esc menu"
+              : state.resting
+                ? "Stand up to walk · C character · I inventory"
+                : state.seated
+                  ? state.shipHud?.cruiseActive
+                    ? "A / D turn · W / S overrides cruise · X cancels"
+                    : "W / S thrust · A / D turn · X cruise · Release to brake"
+                  : state.combat?.enabled
+                    ? "Mouse aim · Left click fire · R reload · Right-drag orbit · V leave combat"
+                    : "WASD walk · Shift sprint · E use · C character · I inventory · N map · V combat · Esc menu",
           hintX,
           h - 116,
           12,
@@ -473,7 +517,12 @@ export function createGameUI(
           w - hintX - 30,
         );
     }
-    if (state.combat?.enabled && !inventory?.isOpen() && !menu) {
+    if (
+      state.combat?.enabled &&
+      !shipHudContext(state.interior, state.eva, !!state.shipHud) &&
+      !inventory?.isOpen() &&
+      !menu
+    ) {
       const r = {
         x: Math.max(16, (w - 300) / 2),
         y: h - 170,
@@ -1182,12 +1231,29 @@ export function createGameUI(
       state.status === "ready"
     ) {
       if (!menu && !inventory.isOpen()) {
-        inventory.hotbar(
-          state.inventory,
-          actionBarRect(w, h),
-          false,
-          state.pending,
-        );
+        if (
+          shipHudContext(state.interior, state.eva, !!state.shipHud) &&
+          state.shipHud
+        )
+          drawShipActions(ui, actionBarRect(w, h), state.shipHud, {
+            cruise: actions.cruise,
+            systems: state.vesselServices?.some(
+              (service) => service.id === "ship-systems",
+            )
+              ? () => actions.openService?.("ship-systems")
+              : undefined,
+            navigation: () => {
+              navVisible = !navVisible;
+              ui.invalidate();
+            },
+          });
+        else
+          inventory.hotbar(
+            state.inventory,
+            actionBarRect(w, h),
+            false,
+            state.pending,
+          );
       }
       if (inventory.isOpen() && !menu)
         inventory.draw(

@@ -1,3 +1,7 @@
+import {
+  readFurnishingOverrides,
+  type FurnishingOverrides,
+} from "@sidereal/content/wayfarer-furnishings";
 /**
  * Presentation helpers for prefab ships (SHIP-INTERACTION): beam clipping against the same
  * compiled structure the server uses, the shot impact flash, and object picking/highlighting.
@@ -50,10 +54,12 @@ const FLOOR_TOP = G.deck.floorTopTexels / 16;
 export interface PrefabShipBinding {
   doc: ShipPrefabDocumentV1;
   catalog: PrefabComponentCatalog;
+  furnishings?: FurnishingOverrides;
 }
 /** The trusted prefab binding of a construction document, or undefined. */
 export function prefabBindingOf(
   documentJson: string | undefined,
+  furnishingsJson?: string,
 ): PrefabShipBinding | undefined {
   if (!documentJson) return;
   try {
@@ -66,6 +72,7 @@ export function prefabBindingOf(
     return {
       doc: readShipPrefab(binding.document),
       catalog: prefabComponentCatalogFor(binding.catalog),
+      furnishings: readFurnishingOverrides(furnishingsJson),
     };
   } catch {
     return;
@@ -80,7 +87,11 @@ export function createPrefabBeamClip(
   shipRoot: TransformNode,
   binding: PrefabShipBinding,
 ) {
-  const model: PrefabBeamModel = prefabBeamModel(binding.doc, binding.catalog);
+  const model: PrefabBeamModel = prefabBeamModel(
+    binding.doc,
+    binding.catalog,
+    binding.furnishings,
+  );
   return (origin: Vector3, direction: Vector3, range: number) => {
     const inverse = Matrix.Invert(shipRoot.computeWorldMatrix(true));
     const o = Vector3.TransformCoordinates(origin, inverse);
@@ -407,7 +418,11 @@ export function createPrefabObjectPicker(
   isDeckView: () => boolean,
 ) {
   const origin = prefabOrigin(binding.doc);
-  const objects = prefabShipObjects(binding.doc, binding.catalog).map((o) => ({
+  const objects = prefabShipObjects(
+    binding.doc,
+    binding.catalog,
+    binding.furnishings,
+  ).map((o) => ({
     object: o,
     box: localBox(o, origin),
   }));

@@ -19,4 +19,6 @@ export default __t.row({
   revision: __t.u64(),
   documentJson: __t.string().name("document_json"),
   spawnDeckId: __t.string().name("spawn_deck_id"),
+  furnishingRevision: __t.u64().name("furnishing_revision"),
+  furnishingsJson: __t.string().name("furnishings_json"),
 });

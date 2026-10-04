@@ -35,6 +35,7 @@ import { planPrefabReplacement, replacePrefabShip } from "./ship-replace";
 const HEAVY = { timeout: 120_000 };
 type Row = Record<string, any>;
 const PRIMARY: Record<string, string> = {
+  shipFurnishingState: "shipId",
   shipPowerInstallation: "shipId",
   shipPowerState: "shipId",
   shipSystemsDirty: "shipId",
@@ -528,5 +529,52 @@ test(
         ),
       ).toHaveLength(0);
     }
+  },
+);
+
+test(
+  "source replacement cycle clears furnishing overrides while retaining ship identity and archives",
+  HEAVY,
+  () => {
+    const { f, args, shipId } = sourceShip();
+    const change = (pin: typeof FED_WAYFARER_PIN, op: string) => {
+      const source = f.db.constructionInstance.id.find(shipId);
+      replacePrefabShip(f.ctx, {
+        ...args,
+        operationId: op,
+        expectedSourceBlueprintSha256: source.blueprintSha256,
+        expectedInstanceRevision: source.revision,
+        targetPrefabId: pin.prefabId,
+        expectedTargetCatalogRevision: pin.catalogRevision,
+        expectedTargetBlueprintSha256: pin.blueprintSha256,
+      });
+    };
+    change(FED_WAYFARER_PIN, "source-cycle-wayfarer-1");
+    const overlay = {
+      shipId,
+      revision: 9n,
+      overridesJson: JSON.stringify({
+        Lounge_coffee_table: {
+          dx: 1,
+          dy: 0,
+          yaw: 0,
+          snap: false,
+          deleted: false,
+        },
+      }),
+    };
+    f.db.shipFurnishingState.insert(overlay);
+    change(FED_WREN_PIN, "source-cycle-wren");
+    expect(f.db.shipFurnishingState.shipId.find(shipId)).toBeUndefined();
+    expect(
+      f.db.shipWipeArchive.rows.some(
+        (r: Row) =>
+          r.tableName === "shipFurnishingState" &&
+          r.rowJson.includes("Lounge_coffee_table"),
+      ),
+    ).toBe(true);
+    change(FED_WAYFARER_PIN, "source-cycle-wayfarer-2");
+    expect(f.db.shipFurnishingState.shipId.find(shipId)).toBeUndefined();
+    expect(f.db.constructionInstance.id.find(shipId).revision).toBe(4n);
   },
 );

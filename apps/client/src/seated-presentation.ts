@@ -1,3 +1,4 @@
+import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import type {
   ShipPrefabDocumentV1,
   PrefabComponentCatalog,
@@ -8,7 +9,12 @@ import { prefabBedSeats } from "@sidereal/sim/prefab-seats";
  * actor position and seated status still come from private server views. */
 export function prefabSeatPresentation(
   ship:
-    { doc: ShipPrefabDocumentV1; catalog: PrefabComponentCatalog } | undefined,
+    | {
+        doc: ShipPrefabDocumentV1;
+        catalog: PrefabComponentCatalog;
+        furnishings?: FurnishingOverrides;
+      }
+    | undefined,
   x: number,
   y: number,
 ):
@@ -16,7 +22,7 @@ export function prefabSeatPresentation(
   | undefined {
   const bed =
     ship &&
-    prefabBedSeats(ship.doc, ship.catalog).find(
+    prefabBedSeats(ship.doc, ship.catalog, ship.furnishings).find(
       (bed) => Math.hypot(bed.seatX - x, bed.seatY - y) < 1e-4,
     );
   // Both published r005 bodies: actual seated pelvis underside .301635 m.

@@ -1,3 +1,13 @@
+import {
+  furnishingState,
+  emptyFurnishingStorage,
+} from "./ship-furnishings-tables";
+import {
+  isWayfarerGameplay,
+  assertWayfarerPrefabContract,
+  WAYFARER_STORAGE_OBJECTS,
+} from "@sidereal/content/wayfarer-authored-gameplay";
+import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import type { ConstructionDocument } from "@sidereal/content/construction";
@@ -45,6 +55,7 @@ const PREFAB_SOCKET_MEMO = new Map<
 function prefabStorageSocketCentres(
   key: string,
   document: unknown,
+  furnishings: FurnishingOverrides = {},
 ): ReadonlyMap<string, [number, number]> {
   const hit = PREFAB_SOCKET_MEMO.get(key);
   if (hit) return hit;
@@ -54,6 +65,7 @@ function prefabStorageSocketCentres(
       readShipPrefab(document.prefab.document),
       0,
       prefabComponentCatalogFor(document.prefab.catalog),
+      furnishings,
     ).map((s) => [s.key, s.centreM] as const),
   );
   if (PREFAB_SOCKET_MEMO.size >= 64) PREFAB_SOCKET_MEMO.clear();
@@ -166,6 +178,7 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
   // retired on 2026-09-29).
   if (!prefab) throw Error("unqualified-flight-structure");
   const document = JSON.parse(instance.documentJson) as ConstructionDocument;
+  const furnishing = furnishingState(ctx.db, shipId);
   const mappings = JSON.parse(
     instance.idMapJson,
   ) as ConstructionInstanceMappings;
@@ -218,6 +231,37 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     const scope = ctx.db.inventoryContainerScope.containerId.find(
       binding.containerId,
     );
+    const prefix = `${shipId}:${binding.deckId}:`;
+    const sourceObject = binding.placedObjectId.startsWith(prefix)
+      ? binding.placedObjectId.slice(prefix.length)
+      : "";
+    // Only a preserved, empty, exact authored-source deletion can leave a retired root.
+    if (
+      root &&
+      scope &&
+      scope.lifecycle === "retired" &&
+      scope.rootContainerId === root.id &&
+      scope.instanceId === shipId &&
+      scope.deckId === binding.deckId &&
+      root.shipId === shipId &&
+      scope.placedObjectId === binding.placedObjectId &&
+      scope.rootKind === "instance" &&
+      scope.instanceRevision === instance.revision &&
+      !roots.has(root.id) &&
+      furnishing.overrides[sourceObject]?.deleted &&
+      WAYFARER_STORAGE_OBJECTS.some((id) => id === sourceObject) &&
+      isPrefabConstruction(document) &&
+      isWayfarerGameplay(readShipPrefab(document.prefab.document)) &&
+      emptyFurnishingStorage(ctx.db, root.id)
+    ) {
+      assertWayfarerPrefabContract(
+        readShipPrefab(
+          (document as { prefab: { document: unknown } }).prefab.document,
+        ),
+      );
+      roots.add(root.id);
+      continue;
+    }
     if (
       !root ||
       root.parentItemId ||
@@ -281,8 +325,9 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
           deck.sourceDeckId === PREFAB_DECK_ID &&
           binding.placedObjectId.startsWith(prefix)
             ? prefabStorageSocketCentres(
-                `${instance.id}:${instance.blueprintSha256}`,
+                `${instance.id}:${instance.blueprintSha256}:${furnishing.revision}`,
                 document,
+                furnishing.overrides,
               ).get(binding.placedObjectId.slice(prefix.length))
             : undefined;
         if (!centre) throw Error("missing-flight-cargo-shell");

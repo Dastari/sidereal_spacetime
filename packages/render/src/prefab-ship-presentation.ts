@@ -1,3 +1,4 @@
+import { readFurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -9,7 +10,11 @@ import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { createGlowOccluders } from "./glow-occluders";
 import { createShipGlowOccluders } from "./ship-glow-occluders";
 import { moldedLightRig } from "./molded-plastic";
-import { applyShipGlowProfile, SHIP_GLOW_PROFILE } from "./ship-glow-profile";
+import {
+  applyShipGlowProfile,
+  SHIP_GLOW_PROFILE,
+  authoredGlowTargetOptions,
+} from "./ship-glow-profile";
 import {
   createShipExhaust,
   prefabExhaustJets,
@@ -59,6 +64,7 @@ export async function loadPrefabShipPresentation(
   shipRoot: TransformNode,
   documentJson: string,
   visualVariant?: import("./prefab-ship/visual-variant").VisualVariantSelection,
+  furnishingsJson?: string,
 ): Promise<PrefabShipViewHandle | undefined> {
   let binding: { document?: unknown; catalog?: unknown } | undefined;
   try {
@@ -83,6 +89,7 @@ export async function loadPrefabShipPresentation(
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.
   const view = await createPrefabShipView(scene, doc, {
     catalog,
+    furnishings: readFurnishingOverrides(furnishingsJson),
     visualVariant,
     view: "deck",
     parent: shipRoot,
@@ -116,11 +123,24 @@ export async function loadPrefabShipPresentation(
       mesh.setEnabled(false);
   // Bloom: a ship-owned glow layer over the ship's emissive meshes only (light strips, canopy
   // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
+  const halo = authoredGlowTargetOptions(
+    scene,
+    view
+      .emissiveMeshes()
+      .some((mesh) => mesh.material?.metadata?.authoredAssetEmission),
+  );
   const glow = new GlowLayer("prefab-ship-glow", scene, {
     mainTextureFixedSize: SHIP_GLOW_PROFILE.mainTextureFixedSize,
     blurKernelSize: SHIP_GLOW_PROFILE.blurKernelSize,
+    ...(halo.assetHalo
+      ? {
+          mainTextureType: halo.mainTextureType,
+          alphaBlendingMode: halo.alphaBlendingMode,
+          blurKernelSize: halo.blurKernelSize,
+        }
+      : {}),
   });
-  applyShipGlowProfile(glow);
+  applyShipGlowProfile(glow, { assetHalo: halo.assetHalo });
   // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
   // housings, walls and hull plates do not bloom through them.
   const occluders = createGlowOccluders(glow);

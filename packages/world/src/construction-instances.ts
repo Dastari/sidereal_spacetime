@@ -1,3 +1,4 @@
+import { furnishingState } from "./ship-furnishings-tables";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
 import { recordSpawn } from "./lifecycle";
 import { commitFlightCharacter } from "./construction-flight-dirty";
@@ -210,6 +211,8 @@ export const instanceProjection = t.row("ConstructionInstanceStatus", {
   revision: t.u64(),
   documentJson: t.string(),
   spawnDeckId: t.string(),
+  furnishingRevision: t.u64(),
+  furnishingsJson: t.string(),
 });
 export function ownInstances(ctx: ReadContext) {
   return readableInstances(ctx).map(
@@ -231,6 +234,8 @@ export function ownInstances(ctx: ReadContext) {
       revision,
       documentJson,
       spawnDeckId,
+      furnishingRevision: furnishingState(ctx.db, id).revision,
+      furnishingsJson: furnishingState(ctx.db, id).overridesJson,
     }),
   );
 }

@@ -1,3 +1,4 @@
+import { furnishingState } from "./ship-furnishings-tables";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
 import { commitFlightCharacter } from "./construction-flight-dirty";
 import {
@@ -101,9 +102,10 @@ function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
   const instance = ctx.db.constructionInstance.id.find(binding.instanceId),
     object = ctx.db.interactionObject.id.find(binding.objectId),
     definition = binding.sourceId.startsWith("prefab:")
-      ? prefabBedsOfDocument(instance?.documentJson ?? "{}").find(
-          (d) => d.placementId === binding.sourceId,
-        )
+      ? prefabBedsOfDocument(
+          instance?.documentJson ?? "{}",
+          furnishingState(ctx.db, binding.instanceId).overrides,
+        ).find((d) => d.placementId === binding.sourceId)
       : LAB_INTERACTIONS.find((d) => d.placementId === binding.sourceId),
     deck = ctx.db.constructionDeck.id.find(binding.deckId);
   if (
@@ -401,9 +403,10 @@ export function interactWithConstructionObject(
       actor.shipId === instance.id &&
       visit.deckId === instance.spawnDeckId
     ) {
-      const definition = prefabBedsOfDocument(instance.documentJson).find(
-        (d) => `${instance.id}:seat:${d.placementId}` === args.objectId,
-      );
+      const definition = prefabBedsOfDocument(
+        instance.documentJson,
+        furnishingState(ctx.db, instance.id).overrides,
+      ).find((d) => `${instance.id}:seat:${d.placementId}` === args.objectId);
       if (definition) {
         // These writes share the reducer transaction with all access/CAS/collision checks below.
         // Refused first use rolls back registration; a read-only view never mutates the world.
@@ -653,48 +656,49 @@ export function constructionInteractionView(ctx: ReadContext) {
   if (visit.deckId !== instance.spawnDeckId) return registered;
   const known = new Set(registered.map((r) => r.id));
   const frame = constructionCollision(ctx, instance, visit.deckId);
-  const beds = prefabBedsOfDocument(instance.documentJson).flatMap(
-    (definition) => {
-      const id = `${instance.id}:seat:${definition.placementId}`;
-      if (
-        known.has(id) ||
-        ctx.db.constructionInteractionBinding.objectId.find(id) ||
-        !qualifyPrefabBed(frame, definition)
-      )
-        return [];
-      const binding = {
-        instanceId: instance.id,
-        deckId: visit.deckId,
-      } as ConstructionInteractionBinding;
-      return [
-        {
-          id,
-          placementId: definition.placementId,
-          assetId: definition.assetId,
-          name: definition.name,
-          kind: "seat",
-          localX: definition.x,
-          localY: definition.y,
-          revision: 1n,
-          enabled: !prefabBed(definition) || !hasBedGear(ctx, actor.id),
-          occupied: false,
-          seatedByYou: false,
-          reachable:
-            canInteract &&
-            Math.hypot(
-              actor.localX - definition.x,
-              actor.localY - definition.y,
-            ) <= DEFAULT_INTERACTION_REACH_M &&
-            unobstructed(
-              frame,
-              binding,
-              [actor.localX, actor.localY],
-              [definition.approachX, definition.approachY],
-            ),
-        },
-      ];
-    },
-  );
+  const beds = prefabBedsOfDocument(
+    instance.documentJson,
+    furnishingState(ctx.db, instance.id).overrides,
+  ).flatMap((definition) => {
+    const id = `${instance.id}:seat:${definition.placementId}`;
+    if (
+      known.has(id) ||
+      ctx.db.constructionInteractionBinding.objectId.find(id) ||
+      !qualifyPrefabBed(frame, definition)
+    )
+      return [];
+    const binding = {
+      instanceId: instance.id,
+      deckId: visit.deckId,
+    } as ConstructionInteractionBinding;
+    return [
+      {
+        id,
+        placementId: definition.placementId,
+        assetId: definition.assetId,
+        name: definition.name,
+        kind: "seat",
+        localX: definition.x,
+        localY: definition.y,
+        revision: 1n,
+        enabled: !prefabBed(definition) || !hasBedGear(ctx, actor.id),
+        occupied: false,
+        seatedByYou: false,
+        reachable:
+          canInteract &&
+          Math.hypot(
+            actor.localX - definition.x,
+            actor.localY - definition.y,
+          ) <= DEFAULT_INTERACTION_REACH_M &&
+          unobstructed(
+            frame,
+            binding,
+            [actor.localX, actor.localY],
+            [definition.approachX, definition.approachY],
+          ),
+      },
+    ];
+  });
   return [...registered, ...beds];
 }
 export const constructionSeatProjection = t.row("OwnConstructionSeatStatus", {

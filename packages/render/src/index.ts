@@ -1,3 +1,6 @@
+import { createFurnishingPreview } from "./furnishing-preview";
+import type { FurnishingOverride } from "@sidereal/content/wayfarer-furnishings";
+import { getAuthoredAssetLightSources } from "./authored-asset-lighting";
 import { createPbrLightBudget } from "./pbr-light-budget";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
@@ -483,6 +486,7 @@ async function buildWorld(
           shipRoot,
           options.construction.documentJson,
           options.prefabVisualVariant,
+          options.construction.furnishingsJson,
         );
         if (prefabView)
           for (const mesh of imported.meshes) mesh.setEnabled(false);
@@ -662,7 +666,10 @@ async function buildWorld(
   // Prefab ships (SHIP-INTERACTION): geometric object picking over the batched dressed view,
   // beam clipping against the compiled structure, and the authoritative impact flash.
   const prefabBinding = prefabView
-    ? prefabBindingOf(options.construction?.documentJson)
+    ? prefabBindingOf(
+        options.construction?.documentJson,
+        options.construction?.furnishingsJson,
+      )
     : undefined;
   const prefabPicker: PrefabObjectPicker | undefined = prefabBinding
     ? createPrefabObjectPicker(
@@ -672,6 +679,13 @@ async function buildWorld(
         prefabBinding,
         () => state.interior,
       )
+    : undefined;
+  const furnishingPreview = prefabBinding
+    ? createFurnishingPreview(scene, canvas, shipRoot, prefabBinding, () => {
+        fastSnapshot?.invalidate();
+        flightActiveSet.invalidate();
+        antialiasing.resetHistory();
+      })
     : undefined;
   const impactFlash = createImpactFlash(scene, shipRoot);
   let lastImpactSequence: bigint | undefined;
@@ -1236,6 +1250,7 @@ async function buildWorld(
     localLights.update(
       [
         ...lighting.getLocalLightSources(lightingAllowed),
+        ...getAuthoredAssetLightSources(scene, lightingAllowed),
         ...shipEquipment.flatMap((placement) =>
           placement.lighting.getLocalLightSources(lightingAllowed),
         ),
@@ -1251,7 +1266,11 @@ async function buildWorld(
     staticMaterials.prepare();
     const snapshotCandidate =
       fastSnapshot?.prepare({
-        ready: !firstFrame && !state.inspect && !focusedBodyId,
+        ready:
+          !firstFrame &&
+          !state.inspect &&
+          !focusedBodyId &&
+          !furnishingPreview?.active,
         reducedMotion: !!state.reducedMotion,
         temporal: antialiasing.snapshot().effective.mode === "taa",
         displayRevision: 0,
@@ -1400,6 +1419,22 @@ async function buildWorld(
       invalidateStaticMaterials(scene);
       localLights.setLimit(limit);
     },
+    previewFurnishing(
+      sourceObjectId: string,
+      pose: FurnishingOverride,
+      valid = true,
+    ) {
+      return furnishingPreview?.show(sourceObjectId, pose, valid) ?? false;
+    },
+    clearFurnishingPreview() {
+      furnishingPreview?.clear();
+    },
+    pickFurnishingPreview(x: number, y: number) {
+      return furnishingPreview?.pick(x, y) ?? false;
+    },
+    furnishingRay(x: number, y: number) {
+      return furnishingPreview?.ray(x, y);
+    },
     setAimPointer(x: number, y: number) {
       pointerClient =
         Number.isFinite(x) && Number.isFinite(y) ? { x, y } : undefined;
@@ -1521,8 +1556,12 @@ async function buildWorld(
         y: next.localY,
       });
       evaCrew?.sync(next.evaBodies ?? [], { x: next.localX, y: next.localY });
-      objects.select(next.selectedObject);
-      prefabPicker?.select(next.selectedObject);
+      objects.select(
+        furnishingPreview?.active ? undefined : next.selectedObject,
+      );
+      prefabPicker?.select(
+        furnishingPreview?.active ? undefined : next.selectedObject,
+      );
       combatFx?.sync(next.combatActions ?? []);
       const impact = combatFx ? undefined : next.combat?.impact;
       if (impact && lastImpactSequence === undefined)
@@ -1563,6 +1602,7 @@ async function buildWorld(
     dispose() {
       if (disposed) return;
       disposed = true;
+      furnishingPreview?.dispose();
       remoteShips?.dispose();
       fastSnapshot?.dispose();
       flightActiveSet.dispose();

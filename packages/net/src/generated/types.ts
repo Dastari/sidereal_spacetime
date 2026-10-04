@@ -724,6 +724,8 @@ export const ConstructionInstanceStatus = __t.object("ConstructionInstanceStatus
   revision: __t.u64(),
   documentJson: __t.string(),
   spawnDeckId: __t.string(),
+  furnishingRevision: __t.u64(),
+  furnishingsJson: __t.string(),
 });
 export type ConstructionInstanceStatus = __Infer<typeof ConstructionInstanceStatus>;
 
@@ -2053,6 +2055,13 @@ export const ShipComponentDamageStatus = __t.object("ShipComponentDamageStatus",
   revision: __t.u64(),
 });
 export type ShipComponentDamageStatus = __Infer<typeof ShipComponentDamageStatus>;
+
+export const ShipFurnishingState = __t.object("ShipFurnishingState", {
+  shipId: __t.string(),
+  revision: __t.u64(),
+  overridesJson: __t.string(),
+});
+export type ShipFurnishingState = __Infer<typeof ShipFurnishingState>;
 
 export const ShipLogicDeviceStatus = __t.object("ShipLogicDeviceStatus", {
   key: __t.string(),

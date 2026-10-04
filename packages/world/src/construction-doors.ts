@@ -1,3 +1,5 @@
+import { furnishingState } from "./ship-furnishings-tables";
+import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
 import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
 import { planPinnedInsetBoundaries } from "@sidereal/sim/construction-inset-boundaries";
@@ -105,9 +107,12 @@ export function installDoors(
       });
   }
 }
-function safePrefabObstacles(document: { prefab?: unknown }) {
+function safePrefabObstacles(
+  document: { prefab?: unknown },
+  furnishings: FurnishingOverrides = {},
+) {
   try {
-    return prefabConstructionObstacles(document) ?? [];
+    return prefabConstructionObstacles(document, furnishings) ?? [];
   } catch {
     return [];
   }
@@ -116,6 +121,7 @@ export function constructionCollision(
   ctx: Pick<ReadContext, "db">,
   instance: { id: string; revision: bigint; documentJson: string },
   deckId: string,
+  previewFurnishings?: { revision: bigint; overrides: FurnishingOverrides },
 ) {
   if ((JSON.parse(instance.documentJson) as ConstructionDocument).airlockRoom)
     return acceptedNativeAirlockCollision(
@@ -124,8 +130,16 @@ export function constructionCollision(
       deckId,
       compilePublishedNativeExternalAirlock,
     );
-  const key = instance.id + ":" + instance.revision + ":" + deckId;
-  let base = baseCache.get(key);
+  const furnishing = previewFurnishings ?? furnishingState(ctx.db, instance.id);
+  const key =
+    instance.id +
+    ":" +
+    instance.revision +
+    ":" +
+    deckId +
+    ":" +
+    furnishing.revision;
+  let base = previewFurnishings ? undefined : baseCache.get(key);
   if (!base) {
     if (baseCache.size >= 32) baseCache.clear();
     const document = JSON.parse(instance.documentJson) as ConstructionDocument;
@@ -139,7 +153,7 @@ export function constructionCollision(
           ? // Trusted prefab ships: furniture and modules from the embedded grammar + catalog.
             // An unreadable binding (e.g. a retired catalog revision) must never abort the
             // world tick; walls, floors and doors still apply.
-            safePrefabObstacles(document)
+            safePrefabObstacles(document, furnishing.overrides)
           : document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
             ? planPinnedInsetBoundaries(document, deckId).obstacles
             : document.stairRoom
@@ -152,7 +166,7 @@ export function constructionCollision(
                     ? pinnedFamilyCollision(document.layout, deckId)
                     : [],
     });
-    baseCache.set(key, base);
+    if (!previewFurnishings) baseCache.set(key, base);
   }
   const doors = [...ctx.db.constructionDoor.by_deck.filter(deckId)].filter(
     (d) => d.instanceId === instance.id,

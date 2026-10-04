@@ -1,3 +1,7 @@
+import {
+  effectiveWayfarerObjects,
+  type FurnishingOverrides,
+} from "@sidereal/content/wayfarer-furnishings";
 /**
  * Planar beam hit test against a prefab ship's compiled structure (authority for handheld lasers).
  *
@@ -74,8 +78,9 @@ const cache = new WeakMap<ShipPrefabDocumentV1, PrefabBeamModel>();
 export function prefabBeamModel(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
+  furnishings?: FurnishingOverrides,
 ): PrefabBeamModel {
-  const hit = cache.get(doc);
+  const hit = furnishings ? undefined : cache.get(doc);
   if (hit) return hit;
   const [ox, oy] = prefabOrigin(doc);
   const toShip = (p: Pt | readonly number[]): P2 => [
@@ -175,17 +180,22 @@ export function prefabBeamModel(
         },
       })),
   );
-  const objects = prefabShipObjects(doc, catalog)
+  const effective = new Map(
+    effectiveWayfarerObjects(furnishings).map((o) => [o.object, o]),
+  );
+  const objects = prefabShipObjects(doc, catalog, furnishings)
     .filter((o) => o.kind !== "door" && o.view !== "flight")
     .filter((o) => o.attach === "interior" || o.attach === "socket")
     .map((o) => ({
       id: o.id,
-      polygon: [
-        toShip([o.min[0], o.max[1]]),
-        toShip([o.min[0], o.min[1]]),
-        toShip([o.max[0], o.min[1]]),
-        toShip([o.max[0], o.max[1]]),
-      ],
+      polygon: effective.has(o.sourceId)
+        ? effective.get(o.sourceId)!.footprint.map(toShip)
+        : [
+            toShip([o.min[0], o.max[1]]),
+            toShip([o.min[0], o.min[1]]),
+            toShip([o.max[0], o.min[1]]),
+            toShip([o.max[0], o.max[1]]),
+          ],
       z: [o.min[2], o.max[2]] as [number, number],
     }));
   const pts = segments.flatMap((s) => [s.a, s.b]);
@@ -202,7 +212,7 @@ export function prefabBeamModel(
       Math.max(...pts.map((p) => p[1])),
     ],
   };
-  cache.set(doc, model);
+  if (!furnishings) cache.set(doc, model);
   return model;
 }
 

@@ -32,6 +32,7 @@ export const WIPED_SHIP_TABLES = [
   "station",
   "shipWorldMotion",
   "constructionInstance",
+  "shipFurnishingState",
   "constructionDeck",
   "gameShipAccess",
   "constructionFlightBinding",

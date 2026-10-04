@@ -1,3 +1,8 @@
+import {
+  createAuthoredAssetLighting,
+  readAuthoredAssetLighting,
+} from "../authored-asset-lighting";
+import { authoredInstanceMatrix } from "./wayfarer-authored-study";
 import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -35,10 +40,23 @@ import {
   prefabToShipLocal,
 } from "./frames";
 import { loadAuthoredStudy } from "./wayfarer-authored-study";
+import {
+  applyFurnishingMatrix,
+  type FurnishingOverrides,
+} from "@sidereal/content/wayfarer-furnishings";
+import {
+  WAYFARER_POST_APERTURES,
+  wayfarerNearWallPlacements,
+} from "./wayfarer-authored-details";
 import type { PrefabShipView, PrefabShipViewOptions } from "./ship-view";
 
 const BASE = "/assets/ship-study/wayfarer-authored-r001/";
 const FLIGHT_BASE = "/assets/ship-study/wayfarer-dorsal-r001/";
+const OBJECT_LIGHTING_URL =
+  "/assets/ship-study/wayfarer-object-lighting-r002/descriptor.json";
+const OBJECT_LIGHTING_PIN =
+  "58e7ab323edbadc488dcbc707e40a431249011bebf59ecfe205df1359540a017";
+const DETAILS_BASE = "/assets/ship-study/wayfarer-details-r001/";
 const RCS = {
   id: "engine.rcs.md.wayfarer-r001",
   file: "rcs.md.glb",
@@ -80,16 +98,21 @@ const LOUNGE = new Set([
 export function wayfarerVisiblePlacements(
   instances: readonly AuthoredStudyInstance[],
   exteriorOnly: boolean,
-) {
+  furnishings: FurnishingOverrides = {},
+): AuthoredStudyInstance[] {
   return instances
     .filter(
       (row) =>
         !OMITTED.has(row.object) && (!exteriorOnly || EXTERIOR.has(row.role)),
     )
-    .map((row) => ({
-      ...row,
-      matrix: applyWayfarerAuthoredPlacementEdits(row.object, row.matrix),
-    }));
+    .flatMap((row) => {
+      const matrix = applyFurnishingMatrix(
+        row.object,
+        applyWayfarerAuthoredPlacementEdits(row.object, row.matrix),
+        furnishings,
+      );
+      return matrix ? [{ ...row, matrix }] : [];
+    });
 }
 
 async function bytes(url: string, pin?: string) {
@@ -105,7 +128,7 @@ async function bytes(url: string, pin?: string) {
 export async function createWayfarerLiveView(
   scene: Scene,
   doc: ShipPrefabDocumentV1,
-  options: PrefabShipViewOptions,
+  options: PrefabShipViewOptions & { furnishings?: FurnishingOverrides },
 ): Promise<PrefabShipView> {
   assertWayfarerPrefabContract(doc);
   const root = new TransformNode(`prefab-ship:${doc.id}`, scene);
@@ -124,11 +147,19 @@ export async function createWayfarerLiveView(
   let candidate: Awaited<ReturnType<typeof loadAuthoredStudy>> | undefined;
   let flightCandidate:
     Awaited<ReturnType<typeof loadAuthoredStudy>> | undefined;
+  const assetRigs: ReturnType<typeof createAuthoredAssetLighting>[] = [];
   const allMeshes = () => [
     ...(candidate?.meshes ?? []),
     ...(flightCandidate?.meshes ?? []),
   ];
   try {
+    const assetLighting = readAuthoredAssetLighting(
+      JSON.parse(
+        new TextDecoder().decode(
+          await bytes(OBJECT_LIGHTING_URL, OBJECT_LIGHTING_PIN),
+        ),
+      ),
+    );
     const [manifestBytes, layoutBytes, descriptorBytes, flightBytes] =
       await Promise.all([
         bytes(
@@ -154,7 +185,10 @@ export async function createWayfarerLiveView(
     const instances = wayfarerVisiblePlacements(
       study.instances,
       options.exteriorOnly === true,
+      options.furnishings,
     );
+    if (!options.exteriorOnly)
+      instances.push(...wayfarerNearWallPlacements(study.pieces));
     const geometries = doc.volumes.map(volumeGeometry);
     for (const mount of doc.mounts.filter((mount) =>
       mount.component.startsWith("rcs."),
@@ -191,14 +225,19 @@ export async function createWayfarerLiveView(
       candidate = await loadAuthoredStudy(
         scene,
         [
-          ...study.pieces.filter((piece) => used.has(piece.id)),
+          ...study.pieces
+            .filter((piece) => used.has(piece.id))
+            .map((piece) => WAYFARER_POST_APERTURES[piece.id] ?? piece),
           ...(used.has(RCS.id) ? [RCS] : []),
         ],
         instances,
         study.palette,
         [0, 0],
-        (piece) => bytes(`${BASE}${piece.file}`),
-        { batchRegions: regions },
+        (piece) =>
+          bytes(
+            `${WAYFARER_POST_APERTURES[piece.id] ? DETAILS_BASE : BASE}${piece.file}`,
+          ),
+        { batchRegions: regions, assetLighting },
       );
     const flightInstances = [
       ...flight.instances,
@@ -213,6 +252,7 @@ export async function createWayfarerLiveView(
       (piece) =>
         bytes(`${piece.id === RCS.id ? BASE : FLIGHT_BASE}${piece.file}`),
       {
+        assetLighting,
         batchRegions: new Map(
           flightInstances.map((row) => [row.object, "exterior/flight"]),
         ),
@@ -222,6 +262,45 @@ export async function createWayfarerLiveView(
       throw Error("Wayfarer view load cancelled");
     for (const mesh of allMeshes()) mesh.parent = root;
     moldedLightRig(scene).include(allMeshes());
+    const attachLighting = (
+      rows: typeof instances,
+      meshes: NonNullable<typeof flightCandidate>["meshes"],
+      pieces: readonly { id: string; sha256: string }[],
+      cohort: string,
+    ) =>
+      createAuthoredAssetLighting(
+        scene,
+        root,
+        rows.flatMap((row) => {
+          const piece = pieces.find((piece) => piece.id === row.piece);
+          const asset = piece && assetLighting.get(piece.sha256);
+          if (!asset?.sockets.length) return [];
+          const region =
+            cohort === "deck" ? regions.get(row.object) : "exterior/flight";
+          return [
+            {
+              id: `${cohort}:${row.object}`,
+              matrix: authoredInstanceMatrix(row.frame, row.matrix, [0, 0]),
+              asset,
+              receivers: meshes.filter(
+                (mesh) => mesh.metadata.authoredStudy.receiverRegion === region,
+              ),
+            },
+          ];
+        }),
+      );
+    const deckRig = candidate
+      ? attachLighting(instances, candidate.meshes, study.pieces, "deck")
+      : undefined;
+    const flightRig = attachLighting(
+      flightInstances,
+      flightCandidate.meshes,
+      flight.pieces,
+      "flight",
+    );
+    if (deckRig) assetRigs.push(deckRig);
+    assetRigs.push(flightRig);
+
     // The game creates its construction lights after loading its ship. Configure the
     // owned surfaces when those lights exist, preserving other actors' fill lighting.
     const lightingObserver = scene.onBeforeRenderObservable.addOnce(() => {
@@ -306,6 +385,8 @@ export async function createWayfarerLiveView(
       for (const mesh of flightCandidate!.meshes)
         mesh.setEnabled(view === "flight");
       for (const light of lights) light.setEnabled(view === "deck");
+      deckRig?.setEnabled(view === "deck");
+      flightRig.setEnabled(view === "flight");
     };
     setView(view);
     return {
@@ -397,6 +478,7 @@ export async function createWayfarerLiveView(
           ?.getShadowGenerator();
         if (shadow instanceof ShadowGenerator)
           for (const mesh of owned) shadow.removeShadowCaster(mesh);
+        for (const rig of assetRigs) rig.dispose();
         for (const light of lights) light.dispose();
         candidate?.dispose();
         flightCandidate!.dispose();
@@ -404,6 +486,7 @@ export async function createWayfarerLiveView(
       },
     };
   } catch (error) {
+    for (const rig of assetRigs) rig.dispose();
     for (const light of lights) light.dispose();
     candidate?.dispose();
     flightCandidate?.dispose();

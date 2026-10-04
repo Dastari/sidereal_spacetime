@@ -36,6 +36,7 @@ function fixture() {
       options?: { disabled?: boolean },
     ) => buttons.set(id, { action, disabled: options?.disabled, rect: r }),
     text: () => {},
+    paragraph: () => {},
     invalidate: () => {},
     windowFrame: (
       _id: string,
@@ -141,4 +142,55 @@ it("objects without a rendered image show a measured schematic, not 'Preview una
   texts.length = 0;
   details.draw({ ...state, placementId: "other" });
   expect(texts).toContain("Preview unavailable");
+});
+
+it("keeps movement, retry and cancellation in the same inspector and guards pending dismissal", () => {
+  const f = fixture(),
+    action = vi.fn(),
+    close = vi.fn();
+  const panel = createObjectDetailsUI(f.ui, { action, close });
+  panel.draw(state);
+  f.move(-90, 10);
+  const placement = {
+    pending: false,
+    wall: false,
+    snap: true,
+    issue: "",
+    error: "",
+  };
+  panel.draw({ ...state, placement });
+  const original = f.rect();
+  expect(original.x).toBe(464);
+  f.buttons.get("object-action-placement-left")!.action();
+  expect(action).toHaveBeenLastCalledWith("placement-left");
+  panel.draw({ ...state, placement: { ...placement, pending: true } });
+  f.buttons.get("object-action-placement-cancel")!.action();
+  panel.close();
+  expect(panel.isOpen()).toBe(true);
+  expect(close).not.toHaveBeenCalled();
+  expect(action).toHaveBeenCalledTimes(1);
+  f.ui.width = 390;
+  f.ui.height = 420;
+  panel.draw({
+    ...state,
+    placement: { ...placement, error: "Move crew clear of the destination." },
+  });
+  for (const id of [
+    "placement-place",
+    "placement-cancel",
+    "placement-retry",
+    "placement-reset",
+  ]) {
+    const b = f.buttons.get("object-action-" + id)!;
+    expect(b.rect.y + b.rect.h).toBeLessThanOrEqual(f.rect().y + f.rect().h);
+  }
+  expect(f.buttons.get("object-action-placement-place")!.disabled).toBe(true);
+  f.buttons.get("object-action-placement-retry")!.action();
+  expect(action).toHaveBeenLastCalledWith("placement-retry");
+  panel.draw({ ...state, placement: { ...placement, wall: true } });
+  // A stale floor rotation callback cannot rotate a wall-mounted object.
+  f.buttons.get("object-action-placement-left")!.action();
+  expect(action).toHaveBeenCalledTimes(2);
+  panel.close();
+  expect(close).toHaveBeenCalledOnce();
 });

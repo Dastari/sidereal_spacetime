@@ -1,3 +1,5 @@
+import { shipFurnishingState } from "./ship-furnishings-tables";
+import { editShipFurnishing as editFurnishing } from "./ship-furnishings";
 import * as passengerViews from "./construction-passenger-views";
 import { queueWayfarerFixedMainCorrection } from "./wayfarer-fixed-main-migration";
 import * as crewPresentation from "./crew-presentation";
@@ -452,6 +454,7 @@ const db = schema({
   scopedInventoryReceipt,
   constructionReviewOrigin,
   constructionAirlock: nativeAirlock.constructionAirlock,
+  shipFurnishingState,
   constructionInteractionBinding:
     constructionInteractions.constructionInteractionBinding,
   character,
@@ -2001,4 +2004,19 @@ export const ownShipZones = db.view(
   { name: "own_ship_zones", public: true },
   t.array(shipZoneProjection),
   auth.gameView(readOwnShipZones),
+);
+
+export const editShipFurnishing = db.reducer(
+  {
+    instanceId: t.string(),
+    sourceObjectId: t.string(),
+    action: t.string(),
+    dx: t.f64(),
+    dy: t.f64(),
+    yaw: t.f64(),
+    snap: t.bool(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(editFurnishing, true),
 );

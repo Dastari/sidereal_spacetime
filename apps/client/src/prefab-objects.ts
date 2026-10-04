@@ -1,3 +1,10 @@
+import {
+  readFurnishingOverrides,
+  furnishingRestriction,
+  FURNISHING_DEFAULT,
+  type FurnishingOverrides,
+} from "@sidereal/content/wayfarer-furnishings";
+import { isWayfarerGameplay } from "@sidereal/content/wayfarer-authored-gameplay";
 /**
  * Details panel state for a selected prefab-ship object (component, module, furniture, door).
  *
@@ -27,7 +34,14 @@ export const PREFAB_OBJECT_PREFIX = "prefab:";
 /** The trusted prefab binding of the visited construction instance, if it is a prefab ship. */
 export function prefabShipOf(
   documentJson: string | undefined,
-): { doc: ShipPrefabDocumentV1; catalog: PrefabComponentCatalog } | undefined {
+  furnishingsJson?: string,
+):
+  | {
+      doc: ShipPrefabDocumentV1;
+      catalog: PrefabComponentCatalog;
+      furnishings: FurnishingOverrides;
+    }
+  | undefined {
   if (!documentJson) return;
   try {
     const binding = (
@@ -39,6 +53,7 @@ export function prefabShipOf(
     return {
       doc: readShipPrefab(binding.document),
       catalog: prefabComponentCatalogFor(binding.catalog),
+      furnishings: readFurnishingOverrides(furnishingsJson),
     };
   } catch {
     return;
@@ -111,6 +126,7 @@ export function prefabObjectDetails(
   access: PrefabInspectAccess | undefined,
   live: PrefabLiveState = {},
   actor?: { localX: number; localY: number },
+  furnishings: FurnishingOverrides = {},
 ): ObjectDetailsState | undefined {
   if (
     !selectedId?.startsWith(PREFAB_OBJECT_PREFIX) ||
@@ -120,7 +136,9 @@ export function prefabObjectDetails(
   )
     return;
   const objectId = selectedId.slice(PREFAB_OBJECT_PREFIX.length);
-  const object = prefabShipObjects(doc, catalog).find((o) => o.id === objectId);
+  const object = prefabShipObjects(doc, catalog, furnishings).find(
+    (o) => o.id === objectId,
+  );
   if (!object) return;
   const room = (id: string | null) =>
     doc.rooms.find((r) => r.id === id)?.label ?? null;
@@ -161,11 +179,23 @@ export function prefabObjectDetails(
     };
   }
   if (object.kind === "furniture") {
+    const restriction = isWayfarerGameplay(doc)
+      ? furnishingRestriction(object.sourceId)
+      : "Furniture editing is not available for this ship";
+    const state = furnishings[object.sourceId] ?? FURNISHING_DEFAULT;
+    const px = actor?.localY ?? Infinity,
+      py = -(actor?.localX ?? Infinity);
+    const reach = Math.hypot(
+      Math.max(object.min[0] - px, 0, px - object.max[0]),
+      Math.max(object.min[1] - py, 0, py - object.max[1]),
+    );
+    const editable = owner && !restriction;
     return {
       placementId: selectedId,
       schematic: schematic(object),
       name: furnitureName(object.designId ?? "furniture"),
-      category: "Furniture",
+      category:
+        restriction && isWayfarerGameplay(doc) ? restriction : "Furniture",
       stats: [
         ...(room(object.room)
           ? [{ label: "Room", value: room(object.room)! }]
@@ -177,8 +207,28 @@ export function prefabObjectDetails(
         },
       ],
       distance,
-      status: "Inspection only",
-      actions: [],
+      status:
+        restriction ??
+        (!owner
+          ? "Only the ship owner can arrange furniture"
+          : reach > 3
+            ? "Move within 3 m to arrange this furniture"
+            : "Arrange this furnishing"),
+      actions: editable
+        ? [
+            {
+              id: "furnishing-move",
+              label: "Move / rotate",
+              enabled: reach <= 3,
+            },
+            { id: "furnishing-delete", label: "Delete", enabled: reach <= 3 },
+            {
+              id: "furnishing-snap",
+              label: `Snapping: ${state.snap ? "on" : "off"}`,
+              enabled: reach <= 3,
+            },
+          ]
+        : [],
     };
   }
   const def = prefabComponentDefinition(
