@@ -47,13 +47,10 @@ export function GameLoadingScreen({
       <HangarShell
         className="loading-hangar"
         header={<SiderealWordmark subtitle="Loading game" />}
-        footer={
-          <>
-            <span>{awaitingShip ? "Character" : shipName || "Sidereal"}</span>
-            <GameButton variant="ghost" onClick={onSignOut}>
-              Sign out
-            </GameButton>
-          </>
+        actions={
+          <GameButton variant="ghost" onClick={onSignOut}>
+            Sign out
+          </GameButton>
         }
       >
         <div className="loading-space" aria-hidden="true" />

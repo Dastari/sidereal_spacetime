@@ -27,11 +27,11 @@ export function ComponentGallery({ onClose }: { onClose: () => void }) {
     <HangarShell
       className="ui-gallery"
       header={<SiderealWordmark subtitle="Interface library" />}
-      footer={
+      actions={
         <>
           <span>Interactive component samples · No world changes</span>
           <GameButton variant="ghost" onClick={onClose}>
-            Back to crew access
+            Back
           </GameButton>
         </>
       }

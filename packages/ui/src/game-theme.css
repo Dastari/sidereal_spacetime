@@ -45,14 +45,12 @@
   padding: clamp(20px, 3vw, 52px);
   padding-bottom: 12px;
 }
-.ui-hangar__motto {
-  color: var(--ui-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font: 600 0.85em var(--ui-font-title);
-  line-height: 1.5;
-  border-bottom: 3px solid var(--ui-secondary);
-  padding-bottom: 10px;
+.ui-hangar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
 }
 .ui-hangar__content {
   flex: 1;
@@ -60,18 +58,6 @@
   align-items: center;
   min-height: 0;
   padding: 24px;
-}
-.ui-hangar__footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 18px 36px;
-  font-size: 0.7em;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ui-text-secondary);
-  border-top: 1px solid var(--ui-border);
-  background: #031126ee;
 }
 .ui-wordmark {
   max-width: 650px;
@@ -472,17 +458,14 @@
   .ui-hangar__header {
     padding: 20px;
   }
-  .ui-hangar__motto {
-    display: none;
+  .ui-hangar__header {
+    flex-wrap: wrap;
+  }
+  .ui-hangar__actions {
+    justify-content: flex-start;
   }
   .ui-hangar__content {
     padding: 12px;
-  }
-  .ui-hangar__footer {
-    padding: 14px 20px;
-  }
-  .ui-hangar__footer > span:last-child {
-    display: none;
   }
   .ui-panel {
     padding: 20px;

@@ -88,18 +88,8 @@ export function CharacterSelect({
     <HangarShell
       className="character-select"
       header={<SiderealWordmark subtitle="Character select" />}
-      footer={
-        <div className="character-select-footer">
-          <div>
-            <span className="character-footer-label">
-              {actor ? actor.name : "Create character"}
-            </span>
-            <span>
-              {actor
-                ? "Selected character"
-                : "Enter a character name to continue"}
-            </span>
-          </div>
+      actions={
+        <div className="character-select-actions">
           {actor && (
             <GameButton
               className="character-enter"

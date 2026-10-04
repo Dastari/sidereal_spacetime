@@ -324,12 +324,12 @@ export function HangarShell({
   children,
   className = "",
   header,
-  footer,
+  actions,
 }: {
   children: ReactNode;
   className?: string;
   header?: ReactNode;
-  footer?: ReactNode;
+  actions?: ReactNode;
 }) {
   return (
     <main
@@ -339,11 +339,9 @@ export function HangarShell({
       <div className="ui-hangar__art" aria-hidden="true" />
       <header className="ui-hangar__header">
         {header ?? <SiderealWordmark />}
+        {actions && <div className="ui-hangar__actions">{actions}</div>}
       </header>
       <div className="ui-hangar__content">{children}</div>
-      <footer className="ui-hangar__footer">
-        {footer ?? <span>SIDEREAL</span>}
-      </footer>
     </main>
   );
 }
