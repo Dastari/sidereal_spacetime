@@ -38,6 +38,8 @@ import {
 } from "@sidereal/sim/ship-logic-model";
 import { prefabEvaModel, type EvaShipModel } from "@sidereal/sim/eva";
 import { isDead } from "./combat-damage";
+import { ownedGameShipAccess } from "./game-ship-access-authority";
+import { acceptedPassengerAccess } from "./construction-passenger-access";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -509,13 +511,23 @@ export const visibleShipLogicProjection = t.row("ShipLogicDeviceStatus", {
 export function visibleShipLogic(ctx: ReadContext) {
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
   if (!actor?.connected) return [];
-  // Interior presence: aboard now, or the ship this spacewalker left through its airlock.
+  // Retained physical location after blocked recovery is not interior read access.
   const inside = new Set<string>();
   const ships = new Set<string>();
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
-  if (location) inside.add(location.instanceId);
+  if (
+    location &&
+    (ownedGameShipAccess(ctx, location.instanceId, location.deckId)
+      .readInterior ||
+      acceptedPassengerAccess(ctx, actor.id).readInterior)
+  )
+    inside.add(location.instanceId);
   const body = ctx.db.evaBody.characterId.find(actor.id);
-  if (body?.exitShipId) inside.add(body.exitShipId);
+  if (
+    body?.exitShipId &&
+    ownedGameShipAccess(ctx, body.exitShipId, body.deckId).readInterior
+  )
+    inside.add(body.exitShipId);
   for (const id of inside) ships.add(id);
   if (body?.anchorShipId) ships.add(body.anchorShipId);
   const out = [];

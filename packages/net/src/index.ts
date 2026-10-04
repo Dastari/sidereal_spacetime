@@ -1,3 +1,4 @@
+import { gameViewKeys } from "./game-subscriptions";
 export type { SharedWorldReadiness } from "./bind-shared-world";
 import { bindSharedWorld } from "./bind-shared-world";
 export { SharedWorldStore } from "./shared-world-store";
@@ -105,74 +106,11 @@ export function connect(
           onChange();
         })
         .onError((e) => onStatus("offline", subscriptionErrorMessage(e)))
-        .subscribe([
-          // Gameplay reads are server-filtered for accepted owned ships and reviews.
-          tables.ownGameShipAccess,
-          tables.ownConstructionInstances,
-          tables.ownConstructionDecks,
-          tables.ownConstructionLocation,
-          tables.ownConstructionSeat,
-          tables.ownAuthoredFlights,
-          tables.ownAuthoredFlightFittings,
-          tables.ownAuthoredFlightPhysics,
-          tables.ownAuthoredFlightActuators,
-          tables.ownAuthoredFlightPowerFittings,
-          tables.ownPassengerGrants,
-          tables.ownPassengerVisit,
-          tables.currentPassengerInterior,
-          tables.currentInteriorCrew,
-          tables.visibleCrewPresentation,
-          // EVA (own state and discovery-filtered space bodies).
-          tables.ownEvaBody,
-          tables.ownEvaAirlockCycle,
-          tables.visibleEvaBodies,
-          // Ship logic (door, button and airlock states of the ships the viewer is at).
-          tables.visibleShipLogic,
-          tables.ownEvaSuit,
-          // Firing thrusters of perceived ships (remote plumes; exterior only).
-          tables.visibleActuatorExhaust,
-          tables.visibleCombatActions,
-          tables.ownConstructionDoors,
-          tables.ownConstructionNativePressure,
-          tables.ownNativeAirlocks,
-          tables.ownConstructionTraversals,
-          tables.ownConstructionTraversalLinks,
-          tables.ownConstructionStairWalks,
-          tables.ownConstructionStairEgressGeometry,
-          ...(new URLSearchParams(location.search).has("constructionReview")
-            ? [tables.ownConstructionGrants]
-            : []),
-          tables.ownIdentityLinks,
-          tables.ownAppearance,
-          tables.ownCharacters,
-          tables.ownShips,
-          tables.ownStations,
-          tables.ownEditReceipts,
-          tables.ownSpaceBodies,
-          tables.admittedSystemScapes,
-          tables.ownShipZones,
-          tables.nearbyFieldAsteroids,
-          tables.ownActuatorOutputs,
-          tables.ownInteractions,
-          tables.ownCombat,
-          tables.ownCombatImpact,
-          tables.ownCharacterVitals,
-          tables.ownShipComponentDamage,
-          tables.ownShipPower,
-          tables.ownGroundItems,
-          tables.ownInventoryState,
-          tables.ownInventoryItems,
-          tables.ownInventoryContainers,
-          tables.ownInventoryHotbar,
-          tables.ownReachableCargoContainers,
-          tables.ownReachableCargoItems,
-          tables.ownCarriedInventoryRevisions,
-          // X-2: published item/weapon revisions and the pins of the viewer's items.
-          tables.publishedItemDefinitions,
-          tables.ownItemDefinitionPins,
-          // X-3b: composed component catalogues pinned by ships.
-          tables.componentCatalogSnapshots,
-        ]);
+        .subscribe(
+          gameViewKeys(
+            new URLSearchParams(location.search).has("constructionReview"),
+          ).map((key) => tables[key]),
+        );
       resources.retain("game", subscription);
     })
     .onConnectError((_context, error) => onStatus("offline", String(error)))
