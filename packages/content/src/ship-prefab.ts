@@ -1,6 +1,10 @@
 import { bowJoinErrors, bowWalkable } from "./bow-profiles";
 import { interiorArtQuarterTurns } from "./ship-furniture";
 import {
+  isWayfarerAccessProfile,
+  wayfarerAccessInterior,
+} from "./wayfarer-access-profile";
+import {
   assertWayfarerPrefabContract,
   isWayfarerGameplay,
   WAYFARER_MOUNT_POSES,
@@ -229,7 +233,7 @@ export interface PrefabMarkings {
 
 export interface ShipPrefabDocumentV1 {
   /** Exact code-owned geometry profile; never caller-supplied collider data. */
-  authoredGameplay?: { id: "wayfarer-authored-r001"; revision: 1 };
+  authoredGameplay?: { id: "wayfarer-authored-r001"; revision: 1 | 2 };
   schema: typeof SHIP_PREFAB_SCHEMA;
   id: string;
   name: string;
@@ -446,13 +450,13 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
             ]);
             if (
               p.id !== "wayfarer-authored-r001" ||
-              p.revision !== 1 ||
+              (p.revision !== 1 && p.revision !== 2) ||
               o.id !== "fed.m.wayfarer"
             )
               fail("authoredGameplay", "unknown profile or prefab");
             return {
               id: "wayfarer-authored-r001" as const,
-              revision: 1 as const,
+              revision: p.revision as 1 | 2,
             };
           })(),
         }),
@@ -935,7 +939,22 @@ export function placeMount(
   ctx?: MountTileContext,
 ): MountPlacement {
   if (ctx?.id && isWayfarerGameplay(ctx as ShipPrefabDocumentV1)) {
-    const pose = WAYFARER_MOUNT_POSES[mount.id];
+    const accessOuter =
+      isWayfarerAccessProfile(ctx as ShipPrefabDocumentV1) &&
+      (mount.id === "personnel-outer" || mount.id === "cargo-outer");
+    const nativePose = WAYFARER_MOUNT_POSES[mount.id];
+    const accessRcs =
+      isWayfarerAccessProfile(ctx as ShipPrefabDocumentV1) &&
+      mount.id === "rcs-stern-p" &&
+      mount.attach === "face" &&
+      mount.normal === "port";
+    const pose =
+      (accessRcs && nativePose
+        ? { ...nativePose, at: mount.at }
+        : nativePose) ??
+      (accessOuter && mount.attach === "edge"
+        ? { at: mount.at, z: 0.1875, quarterTurns: 3 as const }
+        : undefined);
     if (!pose) throw Error(`Unknown authored Wayfarer mount ${mount.id}`);
     const width = spec?.cells[0] ?? 1,
       depth = spec?.cells[1] ?? 1;
@@ -943,10 +962,10 @@ export function placeMount(
       mount,
       spec,
       rect: [
-        pose.at[0] - depth / 2,
-        pose.at[1] - width / 2,
-        pose.at[0] + depth / 2,
-        pose.at[1] + width / 2,
+        pose.at[0] - (accessOuter ? width : depth) / 2,
+        pose.at[1] - (accessOuter ? depth : width) / 2,
+        pose.at[0] + (accessOuter ? width : depth) / 2,
+        pose.at[1] + (accessOuter ? depth : width) / 2,
       ],
       z: [pose.z * 16, pose.z * 16 + (spec?.heightTexels ?? 16)],
       quarterTurns: pose.quarterTurns,
@@ -1246,6 +1265,8 @@ export interface DerivedDoor {
   type: EdgeTypeId;
   rooms: [string | null, string | null];
   exterior: boolean;
+  /** Code-owned native profile clear width; absent retains the generic jamb rule. */
+  clearWidthM?: number;
 }
 export interface DerivedSocket {
   designId: string;
@@ -1382,7 +1403,12 @@ export function deriveInterior(
   deck = 0,
   catalog?: PrefabComponentCatalog,
 ): DerivedInterior {
-  if (isWayfarerGameplay(doc)) return wayfarerInterior(deck);
+  if (isWayfarerGameplay(doc)) {
+    const native = wayfarerInterior(deck);
+    return isWayfarerAccessProfile(doc)
+      ? wayfarerAccessInterior(native)
+      : native;
+  }
   const empty: DerivedInterior = {
     deck,
     volume: null,

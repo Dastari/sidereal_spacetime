@@ -1,4 +1,5 @@
 import { readFurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
+import { isWayfarerAccessProfile } from "@sidereal/content/wayfarer-access-profile";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -65,6 +66,9 @@ export async function loadPrefabShipPresentation(
   documentJson: string,
   visualVariant?: import("./prefab-ship/visual-variant").VisualVariantSelection,
   furnishingsJson?: string,
+  accessResolver?: (
+    piece: import("@sidereal/content/ship-access-doors").ShipAccessDoorPiece,
+  ) => Promise<Uint8Array>,
 ): Promise<PrefabShipViewHandle | undefined> {
   let binding: { document?: unknown; catalog?: unknown } | undefined;
   try {
@@ -97,20 +101,25 @@ export async function loadPrefabShipPresentation(
     externalDoorLeaves: true,
     // Engines glow only while the server fires them (exhaust.ts), not as a baked idle plume.
     staticPlumes: false,
+    accessResolver,
   });
   const exhaust = createShipExhaust(
     scene,
     doc.id === "fed.m.wayfarer" ? shipRoot : view.root,
     doc.theme,
   );
-  const doors = createPrefabDoors(
-    scene,
-    view.root,
-    doc,
-    catalog,
-    doc.theme,
-    view.metrics().visualRevision !== undefined,
-  );
+  const doors = isWayfarerAccessProfile(doc)
+    ? await (
+        await import("./prefab-ship/wayfarer-access-doors")
+      ).createWayfarerAccessDoors(scene, view.root, accessResolver!)
+    : createPrefabDoors(
+        scene,
+        view.root,
+        doc,
+        catalog,
+        doc.theme,
+        view.metrics().visualRevision !== undefined,
+      );
   // Ship logic wall buttons (wiki Systems/Ship Logic): lights follow `visible_ship_logic`.
   const panels = createLogicPanels(scene, view.root, doc, catalog);
   // The native construction loader also builds boundary guide meshes for the same layout; the

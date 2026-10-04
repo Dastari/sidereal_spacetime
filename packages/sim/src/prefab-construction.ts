@@ -40,6 +40,7 @@ import {
   type Point,
 } from "@sidereal/content/ship-layout";
 import { bindConstructionLayout } from "./construction-layout";
+import { isWayfarerAccessProfile } from "@sidereal/content/wayfarer-access-profile";
 import {
   canOccupyDeck,
   compileDeckCollision,
@@ -156,11 +157,28 @@ export function prefabLayout(
     a: Pt;
     b: Pt;
     seal: Partition["seal"];
-    door?: { id: string; kind: Opening["kind"] };
+    door?: { id: string; kind: Opening["kind"]; clearWidthM?: number };
   };
   const segs: Seg[] = [];
   const walkable = new Set(full.map((f) => `${f.cell[0]},${f.cell[1]}`));
   const bothSidesFloor = (a: Pt, b: Pt) => {
+    if (isWayfarerAccessProfile(doc)) {
+      const dx = b[0] - a[0],
+        dy = b[1] - a[1],
+        length = Math.hypot(dx, dy);
+      const center: Pt = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      return [-1, 1].every((side) => {
+        const x = center[0] - ((side * dy) / length) * 0.02;
+        const y = center[1] + ((side * dx) / length) * 0.02;
+        return full.some(
+          (f) =>
+            x >= f.cell[0] &&
+            x <= f.cell[0] + 1 &&
+            y >= f.cell[1] &&
+            y <= f.cell[1] + 1,
+        );
+      });
+    }
     const horizontal = a[1] === b[1];
     const x = Math.min(a[0], b[0]);
     const y = Math.min(a[1], b[1]);
@@ -169,6 +187,25 @@ export function prefabLayout(
       : walkable.has(`${x},${y}`) && walkable.has(`${x - 1},${y}`);
   };
   for (const w of interior.partitions) {
+    if (isWayfarerAccessProfile(doc)) {
+      const length = Math.hypot(w.b[0] - w.a[0], w.b[1] - w.a[1]);
+      const count = Math.round(length * 2);
+      for (let i = 0; i < count; i++) {
+        const point = (t: number): Pt => [
+          w.a[0] + ((w.b[0] - w.a[0]) * t) / count,
+          w.a[1] + ((w.b[1] - w.a[1]) * t) / count,
+        ];
+        const a = point(i),
+          b = point(i + 1);
+        if (bothSidesFloor(a, b))
+          segs.push({
+            a,
+            b,
+            seal: w.type === "wall.half" ? "open-divider" : "design-sealed",
+          });
+      }
+      continue;
+    }
     if (!bothSidesFloor(w.a, w.b)) continue;
     segs.push({
       a: w.a,
@@ -191,6 +228,7 @@ export function prefabLayout(
           door: {
             id: d.id,
             kind: d.type === "door.airlock" ? "airlock" : "door",
+            clearWidthM: d.clearWidthM,
           },
         });
     }
@@ -226,7 +264,7 @@ export function prefabLayout(
       partitions.push({ id, deckId, a: toL(A), b: toL(B), seal: run[0].seal });
       const doors = new Map<
         string,
-        { kind: Opening["kind"]; lo: number; hi: number }
+        { kind: Opening["kind"]; lo: number; hi: number; clearWidthM?: number }
       >();
       for (const s of run)
         if (s.door) {
@@ -234,6 +272,7 @@ export function prefabLayout(
             kind: s.door.kind,
             lo: Infinity,
             hi: -Infinity,
+            clearWidthM: s.door.clearWidthM,
           };
           d.lo = Math.min(d.lo, along(s.a), along(s.b));
           d.hi = Math.max(d.hi, along(s.a), along(s.b));
@@ -248,8 +287,13 @@ export function prefabLayout(
         const pa = toL(a);
         const pb = toL(b);
         const inset = (p: Point, q: Point): [Point, Point] => {
-          const dx = Math.sign(q[0] - p[0]) * 8;
-          const dy = Math.sign(q[1] - p[1]) * 8;
+          const span = Math.hypot(q[0] - p[0], q[1] - p[1]);
+          const jamb =
+            d.clearWidthM === undefined
+              ? 8
+              : Math.ceil((span - Math.floor(d.clearWidthM * U)) / 2);
+          const dx = Math.sign(q[0] - p[0]) * jamb;
+          const dy = Math.sign(q[1] - p[1]) * jamb;
           return [
             [p[0] + dx, p[1] + dy],
             [q[0] - dx, q[1] - dy],

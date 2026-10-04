@@ -1,6 +1,11 @@
 /** Pinned authored Wayfarer geometry. Source originals remain immutable. */
 import source from "./wayfarer-authored-gameplay.v1.json";
 import prefabContract from "./wayfarer-prefab.v1.json";
+import {
+  assertWayfarerAccessAdmission,
+  isWayfarerAccessProfile,
+  WAYFARER_ACCESS_SOURCE,
+} from "./wayfarer-access-profile";
 import type { AuthoredStudyInstance } from "./wayfarer-authored-study";
 import type { DerivedInterior, ShipPrefabDocumentV1 } from "./ship-prefab";
 
@@ -196,11 +201,12 @@ export function isWayfarerGameplay(
   return (
     doc.id === WAYFARER_PREFAB_ID &&
     doc.authoredGameplay?.id === WAYFARER_GAMEPLAY_PROFILE.id &&
-    doc.authoredGameplay.revision === 1
+    (doc.authoredGameplay.revision === 1 || isWayfarerAccessProfile(doc))
   );
 }
 
 export function assertWayfarerPrefabContract(doc: ShipPrefabDocumentV1): void {
+  if (isWayfarerAccessProfile(doc)) assertWayfarerAccessAdmission();
   // Recursive key ordering compares the entire admitted source; clients cannot change physical
   // components or keep this profile attached to a different hull revision.
   const sort = (value: unknown): unknown =>
@@ -213,7 +219,10 @@ export function assertWayfarerPrefabContract(doc: ShipPrefabDocumentV1): void {
               .map(([key, v]) => [key, sort(v)]),
           )
         : value;
-  if (JSON.stringify(sort(doc)) !== JSON.stringify(sort(prefabContract)))
+  const expected = isWayfarerAccessProfile(doc)
+    ? WAYFARER_ACCESS_SOURCE
+    : prefabContract;
+  if (JSON.stringify(sort(doc)) !== JSON.stringify(sort(expected)))
     throw Error(
       "Authored Wayfarer profile requires its exact registered prefab document",
     );

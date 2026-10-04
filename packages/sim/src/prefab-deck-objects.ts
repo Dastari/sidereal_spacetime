@@ -3,6 +3,12 @@ import {
   type FurnishingOverrides,
 } from "@sidereal/content/wayfarer-furnishings";
 import {
+  isWayfarerAccessProfile,
+  wayfarerAccessObjects,
+  WAYFARER_ACCESS_PHYSICAL,
+  WAYFARER_ACCESS_MODULES,
+} from "@sidereal/content/wayfarer-access-profile";
+import {
   isWayfarerGameplay,
   WAYFARER_GAMEPLAY_OBJECTS,
   WAYFARER_STORAGE_OBJECTS,
@@ -185,6 +191,15 @@ function doorBox(d: DerivedDoor): {
 }
 
 const cache = new WeakMap<ShipPrefabDocumentV1, PrefabShipObject[]>();
+const nativeObjects = (
+  doc: ShipPrefabDocumentV1,
+  furnishings: FurnishingOverrides,
+) => {
+  const objects = effectiveWayfarerObjects(furnishings);
+  return isWayfarerAccessProfile(doc)
+    ? wayfarerAccessObjects(objects)
+    : objects;
+};
 
 /**
  * Every placed object of the ship (deck 0). Interior components block walking unless they are the
@@ -197,7 +212,7 @@ export function prefabShipObjects(
   furnishings: FurnishingOverrides = {},
 ): PrefabShipObject[] {
   if (isWayfarerGameplay(doc))
-    return effectiveWayfarerObjects(furnishings).map((o) => ({
+    return nativeObjects(doc, furnishings).map((o) => ({
       id:
         o.object === "Cockpit_command_station"
           ? "mount:helm"
@@ -426,7 +441,7 @@ export function prefabDeckObstacles(
       -y + 0,
       x + 0,
     ];
-    const obstacles: DeckObstacle[] = effectiveWayfarerObjects(furnishings)
+    const obstacles: DeckObstacle[] = nativeObjects(doc, furnishings)
       .filter(
         (o) =>
           o.max[2] > 0.3 &&
@@ -434,11 +449,81 @@ export function prefabDeckObstacles(
           o.object !== "Cockpit_command_station" &&
           o.object !== "Cockpit_pilot_chair",
       )
-      .map((o) => ({
-        id: `prefab-socket:${o.object}`,
-        definitionId: o.piece,
-        vertices: o.footprint.map(toShip),
-      }));
+      .flatMap((o) => {
+        const replacements = isWayfarerAccessProfile(doc)
+          ? (
+              WAYFARER_ACCESS_PHYSICAL.collisionReplacements as Record<
+                string,
+                number[][]
+              >
+            )[o.object]
+          : undefined;
+        if (replacements)
+          return replacements.map((r, i) => ({
+            id: `prefab-socket:${o.object}:${i}`,
+            definitionId: o.piece,
+            vertices: planRectToShip(doc, r as Rect),
+          }));
+        return [
+          {
+            id: `prefab-socket:${o.object}`,
+            definitionId: o.piece,
+            vertices: o.footprint.map(toShip),
+          },
+        ];
+      });
+    if (isWayfarerAccessProfile(doc)) {
+      for (const source of WAYFARER_ACCESS_PHYSICAL.newBlockers)
+        obstacles.push({
+          id: `prefab-access:${source.id}`,
+          definitionId: "wayfarer.access.bulkhead",
+          vertices: planRectToShip(doc, source.rect as Rect),
+        });
+      for (const [object, rects] of Object.entries(
+        WAYFARER_ACCESS_PHYSICAL.collisionReplacements,
+      ))
+        if (object.startsWith("WALL_near_") || object.startsWith("LINER_near_"))
+          rects.forEach((r, i) =>
+            obstacles.push({
+              id: `prefab-access:${object}:${i}`,
+              definitionId: "wayfarer.access.native-cut",
+              vertices: planRectToShip(doc, r as Rect),
+            }),
+          );
+      for (const module of WAYFARER_ACCESS_MODULES)
+        for (const [side, y] of [
+          ["outer", 7],
+          ["inner", 3],
+        ] as const) {
+          const variant =
+            module.id === "cargo"
+              ? "cargo.4m"
+              : side === "inner"
+                ? "personnel.reverse"
+                : "personnel";
+          const sign = side === "outer" ? 1 : -1;
+          for (const [i, source] of WAYFARER_ACCESS_PHYSICAL.frameBlockers[
+            variant
+          ].entries()) {
+            const corners = [source.min[0], source.max[0]].flatMap((x) =>
+              [source.min[1], source.max[1]].map((dy) => [
+                module.center + sign * x,
+                y + sign * dy,
+              ]),
+            );
+            obstacles.push({
+              id: `prefab-access-frame:${module.id}:${side}:${i}`,
+              definitionId: "wayfarer.access.frame",
+              vertices: planRectToShip(doc, [
+                Math.min(...corners.map((p) => p[0])),
+                Math.min(...corners.map((p) => p[1])),
+                Math.max(...corners.map((p) => p[0])),
+                Math.max(...corners.map((p) => p[1])),
+              ]),
+            });
+          }
+        }
+    }
     wayfarerConsoleFootprints().forEach((polygon, i) =>
       obstacles.push({
         id: `prefab-mount:helm:${i}`,

@@ -154,6 +154,10 @@ export const coplanarPriority = (role: MeshRole, slot: ShipKitSlot) =>
 export type PrefabShipPresentation = "flight" | "deck";
 
 export interface PrefabShipViewOptions {
+  /** Unpublished native access proposal bytes; never resolved implicitly or by a public URL. */
+  accessResolver?: (
+    piece: import("@sidereal/content/ship-access-doors").ShipAccessDoorPiece,
+  ) => Promise<Uint8Array>;
   furnishings?: FurnishingOverrides;
   catalog: PrefabComponentCatalog;
   /** Explicit exact proposal pin; absent preserves all legacy art/defaults. */
