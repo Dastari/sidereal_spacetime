@@ -3,6 +3,60 @@ from pathlib import Path
 import json,subprocess,time,shlex,tomllib
 ROOT=Path(__file__).resolve().parents[1]
 HOST='root@10.0.1.253';CT=116;MARKER='dastari-auth-managed';REMOTE='/root/dastari-keycloak-provision'
+def build_theme():
+ import gzip,hashlib,io,tarfile
+ source=ROOT/'ops/keycloak/themes/sidereal'
+ payload={str(path.relative_to(source)):path.read_bytes() for path in source.rglob('*') if path.is_file()}
+ generated=subprocess.run(['node','--import','tsx','--input-type=module','-e',
+  'import { uiThemeCssText } from "./packages/ui/src/theme.ts"; process.stdout.write(uiThemeCssText());'],
+  cwd=ROOT,check=True,text=True,stdout=subprocess.PIPE).stdout
+ payload['login/resources/css/tokens.css']=generated.encode()
+ payload['login/resources/img/hangar-r001.webp']=(ROOT/'assets/runtime/ui/hangar-r001.webp').read_bytes()
+ for family,weight in [('barlow',400),('barlow',600),('barlow-condensed',700)]:
+  name=f'{family}-latin-{weight}-normal.woff2'
+  payload['login/resources/fonts/'+name]=(ROOT/'node_modules/@fontsource'/family/'files'/name).read_bytes()
+ for family in ('barlow','barlow-condensed'):
+  payload['login/resources/fonts/'+family+'-LICENSE.txt']=(ROOT/'node_modules/@fontsource'/family/'LICENSE').read_bytes()
+ fingerprint=hashlib.sha256()
+ for name,data in sorted(payload.items()):
+  fingerprint.update(name.encode()+b'\0'+hashlib.sha256(data).digest())
+ revision='sidereal-'+fingerprint.hexdigest()[:16]
+ private=ROOT/'.runtime/keycloak';private.mkdir(parents=True,exist_ok=True,mode=0o700)
+ archive=private/(revision+'.tar.gz')
+ with archive.open('wb') as output:
+  with gzip.GzipFile(fileobj=output,mode='wb',filename='',mtime=0) as compressed:
+   with tarfile.open(fileobj=compressed,mode='w') as package:
+    for name,data in sorted(payload.items()):
+     member=tarfile.TarInfo(name);member.size=len(data);member.mode=0o640;member.mtime=0
+     package.addfile(member,io.BytesIO(data))
+ archive.chmod(0o600)
+ digest=hashlib.sha256(archive.read_bytes()).hexdigest()
+ return archive,revision,digest
+
+def theme_command(action,revision=None,expected=None,digest=None,operation=None):
+ owned();ssh(['mkdir','-p',REMOTE]);ssh(['chmod','700',REMOTE])
+ source=ROOT/'ops/keycloak/configure-theme.py'
+ subprocess.run(['scp','-q',str(source),f'{HOST}:{REMOTE}/{source.name}'],check=True)
+ script='/root/dastari-keycloak/'+source.name
+ ssh(['pct','push',str(CT),f'{REMOTE}/{source.name}',script,'--perms','0600'])
+ if action=='theme-status':
+  ssh(['pct','exec',str(CT),'--','python3',script,'status'])
+ elif action=='theme-stage':
+  archive,revision,digest=build_theme()
+  subprocess.run(['scp','-q',str(archive),f'{HOST}:{REMOTE}/{archive.name}'],check=True)
+  remote='/root/dastari-keycloak/'+archive.name
+  ssh(['pct','push',str(CT),f'{REMOTE}/{archive.name}',remote,'--perms','0600'])
+  ssh(['pct','exec',str(CT),'--','python3',script,'install','--revision',revision,'--archive',remote,'--archive-sha256',digest])
+  receipt=ROOT/'.runtime/keycloak/theme-stage.json'
+  receipt.write_text(json.dumps({'theme':revision,'archiveSha256':digest,'artifact':str(archive),'activated':False},indent=2));receipt.chmod(0o600)
+  print('Immutable theme staged without changing any client. Local receipt: '+str(receipt))
+ else:
+  import re
+  if not revision or not re.fullmatch(r'sidereal-[0-9a-f]{16}',revision) or not expected or not digest or not re.fullmatch(r'[0-9a-f]{64}',digest) or not operation or not re.fullmatch(r'[0-9a-f]{32}',operation):
+   raise ValueError('Theme activation/rollback require revision, reviewed archive digest, expected client theme and 32-character operation ID')
+  ssh(['pct','exec',str(CT),'--','python3',script,action.removeprefix('theme-'),'--revision',revision,
+   '--archive-sha256',digest,'--expected-theme',expected,'--operation-id',operation])
+
 def ssh(args,**kwargs):
  return subprocess.run(['ssh','-o','BatchMode=yes','-o','ConnectTimeout=10',HOST,shlex.join(args)],check=True,text=True,**kwargs)
 def capture(args):return ssh(args,stdout=subprocess.PIPE).stdout
@@ -18,8 +72,10 @@ def realm():
  game['webOrigins'].append('https://sidereal.dastari.net')
  game['attributes']['post.logout.redirect.uris']+='##https://sidereal.dastari.net/'
  return {'realm':'dastari','displayName':'Dastari','enabled':True,'sslRequired':'all','registrationAllowed':True,'registrationEmailAsUsername':False,'loginWithEmailAllowed':True,'duplicateEmailsAllowed':False,'verifyEmail':False,'resetPasswordAllowed':False,'rememberMe':True,'bruteForceProtected':True,'failureFactor':5,'waitIncrementSeconds':60,'maxFailureWaitSeconds':900,'passwordPolicy':'length(12)','clients':clients,'accessTokenLifespan':300,'ssoSessionIdleTimeout':1800,'ssoSessionMaxLifespan':36000,'eventsEnabled':True,'eventsExpiration':604800}
-def command(action):
- if action=='setup':
+def command(action,*,theme_revision=None,expected_client_theme=None,theme_artifact_sha256=None,theme_operation_id=None):
+ if action in ('theme-status','theme-stage','theme-activate','theme-rollback'):
+  theme_command(action,theme_revision,expected_client_theme,theme_artifact_sha256,theme_operation_id)
+ elif action=='setup':
   # Never attach to or repurpose another workload's CT.
   exists=subprocess.run(['ssh','-o','BatchMode=yes',HOST,'test','-f',f'/etc/pve/lxc/{CT}.conf']).returncode==0
   if exists:owned()
