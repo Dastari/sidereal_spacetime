@@ -308,7 +308,7 @@ const as = (who: Identity) => ({
 });
 function tick(ms = 50) {
   now += BigInt(ms) * 1000n;
-  stepShipLogic(ctx);
+  stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
   stepEva(ctx);
 }
 function ticks(n: number, before?: () => void) {
@@ -451,6 +451,88 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     expect(doorOpen("door-outer")).toBe(true);
   });
 
+  it("closes a clear doorway with more than 256 aboard bodies", () => {
+    for (let n = 0; n < 300; n++)
+      addCharacter("crowd-" + n, third, "wren", [0, 0]);
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    expect(doorOpen("door-inner")).toBe(false);
+    expect(device("lock")).toBe("depressurising");
+  });
+
+  it("waits for a late disconnected doorway body in a large aboard crowd", () => {
+    for (let n = 0; n < 300; n++)
+      addCharacter("crowd-" + n, third, "wren", [0, 0]);
+    addCharacter("late", third, "wren", innerDoor.center);
+    const late = ctx.db.character.id.find("late");
+    ctx.db.character.id.update({ ...late, connected: false });
+    suitUp("cap");
+    suitUp("late");
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(doorOpen("door-inner")).toBe(true);
+    expect(doorOpen("door-outer")).toBe(false);
+    place("late", [0, 0]);
+    for (let n = 0; n < 70; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(doorOpen("door-inner")).toBe(false);
+    expect(doorOpen("door-outer")).toBe(true);
+  });
+
+  it("checks a late local-EVA obstruction beyond 512 bodies and clears it normally", () => {
+    for (let n = 0; n < 600; n++)
+      ctx.db.evaBody.insert({
+        characterId: "eva-crowd-" + n,
+        phase: "local",
+        anchorShipId: "wren",
+        localX: 0,
+        localY: 0,
+      });
+    const late = ctx.db.evaBody.characterId.find("eva-crowd-599");
+    ctx.db.evaBody.characterId.update({
+      ...late,
+      localX: innerDoor.center[0],
+      localY: innerDoor.center[1],
+    });
+    ctx.db.evaBody.insert({
+      characterId: "free-body",
+      phase: "free",
+      anchorShipId: "wren",
+      localX: innerDoor.center[0],
+      localY: innerDoor.center[1],
+    });
+    ctx.db.evaBody.insert({
+      characterId: "other-anchor",
+      phase: "local",
+      anchorShipId: "kite",
+      localX: innerDoor.center[0],
+      localY: innerDoor.center[1],
+    });
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(doorOpen("door-inner")).toBe(true);
+    expect(doorOpen("door-outer")).toBe(false);
+    ctx.db.evaBody.characterId.update(late);
+    for (let n = 0; n < 70; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(doorOpen("door-inner")).toBe(false);
+    expect(doorOpen("door-outer")).toBe(true);
+  });
+
   it("shows device states only for the ship the viewer is at", () => {
     expect(visibleShipLogic(ctx).length).toBe(6);
     addShip("kite", other, "mate");
@@ -541,6 +623,113 @@ describe("the EVA suit (vacuum needs suit, helmet and jetpack)", () => {
     place("mate", panel("btn-hall").front);
     press("btn-lock-in");
     expect(device("lock")).toBe("depressurising");
+  });
+
+  it("rejects a late unsuited chamber body without writing states or timers", () => {
+    for (let n = 0; n < 300; n++)
+      addCharacter("crowd-" + n, third, "wren", [0, 0]);
+    addCharacter(
+      "late",
+      third,
+      "wren",
+      plusN(panel("btn-lock-in").front, [0, -1], 1),
+    );
+    const late = ctx.db.character.id.find("late");
+    ctx.db.character.id.update({ ...late, connected: false });
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    const states = [...ctx.db.shipLogicState.iter()];
+    const timers = [...ctx.db.shipLogicTimer.iter()];
+    expect(() => press("btn-lock-in")).toThrow("no EVA suit");
+    expect(ctx.db.shipLogicState.iter()).toEqual(states);
+    expect(ctx.db.shipLogicTimer.iter()).toEqual(timers);
+    expect(device("lock")).toBe("pressurised");
+    place("late", [0, 0]);
+    press("btn-lock-in");
+    expect(device("lock")).toBe("depressurising");
+  });
+
+  it("retains a door retry when a late unsuited occupant enters before sealing", () => {
+    addCharacter("blocker", third, "wren", innerDoor.center);
+    suitUp("cap");
+    suitUp("blocker");
+    for (let n = 0; n < 300; n++)
+      addCharacter("crowd-" + n, third, "wren", [0, 0]);
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    const states = [...ctx.db.shipLogicState.iter()];
+    const pending = ctx.db.shipLogicTimer
+      .iter()
+      .find((row: any) => row.deviceId === "door-inner");
+    expect(pending).toBeDefined();
+    addCharacter(
+      "late-unsuited",
+      other,
+      "wren",
+      plusN(panel("btn-lock-in").front, [0, -1], 1),
+    );
+    const late = ctx.db.character.id.find("late-unsuited");
+    ctx.db.character.id.update({ ...late, connected: false });
+    place("blocker", [0, 0]);
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(ctx.db.shipLogicState.iter()).toEqual(states);
+    expect(doorOpen("door-inner")).toBe(true);
+    expect(doorOpen("door-outer")).toBe(false);
+    const after = ctx.db.shipLogicTimer.key.find(pending.key);
+    expect(after).toMatchObject({
+      key: pending.key,
+      instanceRevision: pending.instanceRevision,
+    });
+    expect(after.dueMicros).toBeGreaterThan(now);
+    place("late-unsuited", [0, 0]);
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(device("lock")).toBe("vacuum");
+    expect(doorOpen("door-inner")).toBe(false);
+    expect(doorOpen("door-outer")).toBe(true);
+  });
+
+  it("rechecks a removed suit during countdown without stalling another ship", () => {
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    const states = [...ctx.db.shipLogicState.iter()];
+    const pending = ctx.db.shipLogicTimer
+      .iter()
+      .find((row: any) => row.shipId === "wren" && row.deviceId === "lock");
+    const suit = ctx.db.inventoryItem.id.find("cap-suit-body");
+    ctx.db.inventoryItem.id.update({ ...suit, equipmentSlot: "" });
+    addShip("kite", other, "mate");
+    addCharacter("mate", other, "kite", panel("btn-lock-in").front);
+    suitUp("mate");
+    press("btn-lock-in", other, "kite");
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(
+      ctx.db.shipLogicState.iter().filter((row: any) => row.shipId === "wren"),
+    ).toEqual(states);
+    expect(device("lock")).toBe("depressurising");
+    expect(doorOpen("door-outer")).toBe(false);
+    expect(
+      ctx.db.shipLogicTimer.key.find(pending.key).dueMicros,
+    ).toBeGreaterThan(now);
+    expect(
+      logicDeviceState(ctx.db, shipPrefabBinding(ctx.db, "kite")!, "lock"),
+    ).toMatchObject({ phase: "vacuum" });
+    ctx.db.inventoryItem.id.update(suit);
+    for (let n = 0; n < 6; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(device("lock")).toBe("vacuum");
+    expect(doorOpen("door-outer")).toBe(true);
   });
 });
 

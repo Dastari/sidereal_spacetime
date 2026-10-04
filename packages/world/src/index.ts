@@ -933,7 +933,7 @@ export const stepWorld = db.reducer(
     });
     // Ship logic timers (airlock stages, door close retries), then EVA after the ships moved:
     // ride-along, jetpack flight, hull contact and doorway hand-offs (eva.ts).
-    shipLogic.stepShipLogic(ctx);
+    shipLogic.stepShipLogic(ctx, (id) => eva.evaSuitRefusal(ctx, id));
     eva.stepEva(ctx);
     // Legacy rows remain preserved for explicit validated migration. A missing
     // shared admission/compiled definition may never invoke fixture flight.
