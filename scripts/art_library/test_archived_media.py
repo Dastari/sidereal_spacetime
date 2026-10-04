@@ -5,6 +5,7 @@ import sys
 import tempfile
 import types
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -50,6 +51,12 @@ class ArchivedMediaTest(unittest.TestCase):
         copy.write_bytes(b"tampered")
         self.assertFalse(art_catalog.present(self.lib / self.rel, self.sha))
 
+    def test_inaccessible_optional_archive_uses_only_matching_receipt(self):
+        with patch.object(Path, "is_file", side_effect=PermissionError("off-host archive")):
+            self.assertTrue(art_catalog.present(self.lib / self.rel, self.sha))
+            self.assertFalse(art_catalog.present(self.lib / self.rel, "0" * 64))
+            self.assertFalse(art_catalog.present(self.lib / "unknown.png", self.sha))
+
     def test_file_in_tree_is_hashed_directly(self):
         path = self.lib / "designs/demo/revisions/r001/in-tree.png"
         path.write_bytes(b"in tree")
@@ -92,6 +99,12 @@ class ArchivedReferenceBoardTest(unittest.TestCase):
         self.assertTrue(art_catalog.source_present(self.rel, self.sha))
         copy.write_bytes(b"tampered")
         self.assertFalse(art_catalog.source_present(self.rel, self.sha))
+
+    def test_inaccessible_optional_archive_uses_only_matching_receipt(self):
+        with patch.object(Path, "is_file", side_effect=PermissionError("off-host archive")):
+            self.assertTrue(art_catalog.source_present(self.rel, self.sha))
+            self.assertFalse(art_catalog.source_present(self.rel, "0" * 64))
+            self.assertFalse(art_catalog.source_present("reference/art/unknown.png", self.sha))
 
     def test_local_board_is_preferred_and_hashed_directly(self):
         local = self.root / self.rel
