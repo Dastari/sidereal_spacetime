@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CharacterRow, InventoryItemRow, ShipRow } from "@sidereal/net";
 import type { CrewAppearance } from "@sidereal/render/crew/appearance";
+import { itemRarity } from "@sidereal/ui/item-frame";
 import { itemDefinitionOf } from "@sidereal/content/item-presentation";
 import {
   GameButton,
@@ -8,6 +9,7 @@ import {
   GameNotice,
   GamePanel,
   HangarShell,
+  ItemSlot,
   SiderealWordmark,
   StatBar,
 } from "@sidereal/ui/game";
@@ -244,16 +246,19 @@ export function CharacterSelect({
                     const definition = itemDefinitionOf(item);
                     return (
                       <li key={item.id}>
-                        {definition?.iconUrl ? (
-                          <img src={definition.iconUrl} alt="" loading="lazy" />
-                        ) : (
-                          <span
-                            className="character-item-placeholder"
-                            aria-hidden="true"
-                          >
-                            ◇
-                          </span>
-                        )}
+                        <ItemSlot
+                          label={definition?.name ?? "Equipment"}
+                          rarity={itemRarity(item.definitionId)}
+                          disabled
+                        >
+                          {definition?.iconUrl ? (
+                            <img
+                              src={definition.iconUrl}
+                              alt=""
+                              loading="lazy"
+                            />
+                          ) : undefined}
+                        </ItemSlot>
                         <span>
                           <strong>{definition?.name ?? "Equipment"}</strong>
                           <small>{item.equipmentSlot.replace(/-/g, " ")}</small>

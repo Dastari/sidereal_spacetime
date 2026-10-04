@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   logicalUiScale,
+  panelFrameGeometry,
   resolveControlStyle,
   uiTheme,
   uiThemeCss,
@@ -8,6 +9,23 @@ import {
 } from "./theme";
 
 describe("Shared UI contract", () => {
+  it("keeps the gameplay shell chamfers and traces within tiny/native viewport bounds", () => {
+    for (const [width, height] of [
+      [480, 600],
+      [16, 10],
+      [0, 0],
+    ]) {
+      const frame = panelFrameGeometry(width, height);
+      for (const [x, y] of [...frame.outline, ...frame.accents.flat()]) {
+        expect(x).toBeGreaterThanOrEqual(0);
+        expect(x).toBeLessThanOrEqual(width);
+        expect(y).toBeGreaterThanOrEqual(0);
+        expect(y).toBeLessThanOrEqual(height);
+      }
+    }
+    // The bottom-left remains square, unlike the rejected all-corner CSS approximation.
+    expect(panelFrameGeometry(480, 600).outline).toContainEqual([0, 600]);
+  });
   it("blocks pending controls without losing selection/focus feedback", () => {
     const style = resolveControlStyle({
       selected: true,

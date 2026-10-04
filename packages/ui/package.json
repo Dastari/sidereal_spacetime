@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/ui",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -12,7 +12,8 @@
     "./theme": "./src/theme.ts",
     "./game-theme.css": "./src/game-theme.css",
     "./service-theme.css": "./src/service-theme.css",
-    "./gallery": "./src/component-gallery.tsx"
+    "./gallery": "./src/component-gallery.tsx",
+    "./item-frame": "./src/item-frame.ts"
   },
   "dependencies": {
     "react": "19.2.8"

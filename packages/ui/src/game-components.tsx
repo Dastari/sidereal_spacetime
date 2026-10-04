@@ -1,11 +1,72 @@
 import React, {
   useId,
+  useEffect,
+  useRef,
+  useState,
   type ButtonHTMLAttributes,
   type CSSProperties,
   type InputHTMLAttributes,
   type ReactNode,
 } from "react";
-import { uiThemeCss, type ControlVariant } from "./theme";
+import { drawItemFrame, type ItemRarity } from "./item-frame";
+import {
+  panelFrameGeometry,
+  uiTheme,
+  uiThemeCss,
+  type ControlVariant,
+} from "./theme";
+
+/** Code-native frame using exactly the gameplay shell, without stretching its corners. */
+function PanelFrame() {
+  const host = useRef<SVGSVGElement>(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const gradient = useId();
+  useEffect(() => {
+    const node = host.current;
+    if (!node) return;
+    const update = () =>
+      setSize({ width: node.clientWidth, height: node.clientHeight });
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+  const frame = panelFrameGeometry(size.width, size.height);
+  const points = (vertices: number[][]) =>
+    vertices.map(([x, y]) => `${x},${y}`).join(" ");
+  return (
+    <svg ref={host} className="ui-panel__frame" aria-hidden="true">
+      <defs>
+        <linearGradient id={gradient} x1="0" y1="0" x2="0" y2="1">
+          <stop
+            offset="0"
+            stopColor={uiTheme.colors.panel}
+            stopOpacity="0.995"
+          />
+          <stop
+            offset="1"
+            stopColor={uiTheme.colors.background}
+            stopOpacity="0.985"
+          />
+        </linearGradient>
+      </defs>
+      <polygon
+        points={points(frame.outline)}
+        fill={`url(#${gradient})`}
+        stroke={uiTheme.colors.border}
+      />
+      {frame.accents.map((vertices, i) => (
+        <polyline
+          key={i}
+          points={points(vertices)}
+          className="ui-panel__trace"
+          fill="none"
+        />
+      ))}
+      <path d={`M12 3 H${Math.max(12, size.width - 14)}`} stroke="#759ad044" />
+    </svg>
+  );
+}
 
 export function GameButton({
   variant = "secondary",
@@ -51,6 +112,7 @@ export function GamePanel({
 }) {
   return (
     <section className={`ui-panel ${className}`}>
+      <PanelFrame />
       {(title || eyebrow || actions) && (
         <header className="ui-panel__heading">
           <div>
@@ -161,22 +223,73 @@ export function ItemSlot({
   label,
   children,
   selected,
+  rarity = "common",
+  disabled,
+  onPointerEnter,
+  onPointerLeave,
+  onFocus,
+  onBlur,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string;
   selected?: boolean;
+  rarity?: ItemRarity;
 }) {
+  const frame = useRef<HTMLCanvasElement>(null);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  useEffect(() => {
+    const canvas = frame.current;
+    if (!canvas) return;
+    const paint = () => {
+      const width = canvas.clientWidth,
+        height = canvas.clientHeight;
+      const ratio = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      drawItemFrame(
+        { ctx },
+        { x: 0, y: 0, w: width, h: height },
+        { rarity, selected, hovered, focused, disabled, empty: !children },
+      );
+    };
+    paint();
+    const observer = new ResizeObserver(paint);
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, [rarity, selected, hovered, focused, disabled, children]);
   return (
     <button
       {...props}
       type="button"
       className={`ui-item-slot ${props.className ?? ""}`}
+      disabled={disabled}
       aria-label={label}
       title={label}
       aria-pressed={selected}
       data-selected={selected || undefined}
+      onPointerEnter={(event) => {
+        setHovered(true);
+        onPointerEnter?.(event);
+      }}
+      onPointerLeave={(event) => {
+        setHovered(false);
+        onPointerLeave?.(event);
+      }}
+      onFocus={(event) => {
+        setFocused(true);
+        onFocus?.(event);
+      }}
+      onBlur={(event) => {
+        setFocused(false);
+        onBlur?.(event);
+      }}
     >
-      {children ?? <span className="ui-item-slot__empty" aria-hidden="true" />}
+      <canvas ref={frame} className="ui-item-slot__frame" aria-hidden="true" />
+      {children}
     </button>
   );
 }

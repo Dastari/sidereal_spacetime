@@ -1,26 +1,62 @@
 /** Rendering-independent UI contract used by DOM, canvas and the auth theme. */
 export const uiTheme = {
   colors: {
-    background: "#030b19",
-    panel: "#08182e",
+    background: "#02091b",
+    panel: "#051736",
     raised: "#102947",
-    input: "#061326",
-    border: "#28628a",
-    primary: "#24dcff",
-    secondary: "#aa76ff",
-    text: "#edf6ff",
-    textSecondary: "#b6cee5",
+    input: "#091a30",
+    border: "#277fbd",
+    primary: "#47dfff",
+    secondary: "#47dfff",
+    text: "#eff6ff",
+    textSecondary: "#a7c5e8",
     textMuted: "#8aaac7",
-    danger: "#ff6686",
-    warning: "#ffd36c",
-    success: "#58e6b2",
+    danger: "#ff8eaa",
+    warning: "#ffd26d",
+    success: "#74dcbb",
+    glow: "#169bff",
   },
   fonts: {
     body: 'Barlow, "Segoe UI", sans-serif',
     title: '"Barlow Condensed", Barlow, "Segoe UI", sans-serif',
   },
-  frame: { cornerCut: 10, borderWidth: 1, focusWidth: 2 },
+  frame: { cornerCut: 8, topRightCut: 10, borderWidth: 1, focusWidth: 2 },
 } as const;
+
+/** The established character/inventory shell, in logical pixels for both adapters. */
+export function panelFrameGeometry(width: number, height: number) {
+  const w = Math.max(0, Number.isFinite(width) ? width : 0);
+  const h = Math.max(0, Number.isFinite(height) ? height : 0);
+  const cut = Math.min(uiTheme.frame.cornerCut, w / 2, h / 2);
+  const right = Math.min(uiTheme.frame.topRightCut, w / 2, h / 2);
+  const edge = Math.min(46, w / 3);
+  const rise = Math.min(28, h / 3);
+  return {
+    outline: [
+      [cut, 0],
+      [w - right, 0],
+      [w, right],
+      [w, h - cut],
+      [w - cut, h],
+      [0, h],
+      [0, cut],
+    ],
+    accents: [
+      [
+        [0, Math.min(22, h / 3)],
+        [0, cut],
+        [cut, 0],
+        [edge, 0],
+      ],
+      [
+        [w - edge, h],
+        [w - cut, h],
+        [w, h - cut],
+        [w, h - rise],
+      ],
+    ],
+  };
+}
 
 export type ControlVariant =
   "primary" | "secondary" | "ghost" | "danger" | "warning" | "success";
@@ -75,6 +111,7 @@ export const uiThemeCss = {
   "--ui-font-body": uiTheme.fonts.body,
   "--ui-font-title": uiTheme.fonts.title,
   "--ui-corner-cut": `${uiTheme.frame.cornerCut}px`,
+  "--ui-panel-clip": `polygon(${uiTheme.frame.cornerCut}px 0, calc(100% - ${uiTheme.frame.topRightCut}px) 0, 100% ${uiTheme.frame.topRightCut}px, 100% calc(100% - ${uiTheme.frame.cornerCut}px), calc(100% - ${uiTheme.frame.cornerCut}px) 100%, 0 100%, 0 ${uiTheme.frame.cornerCut}px)`,
   "--ui-scale": "1",
 } as Record<string, string>;
 

@@ -64,14 +64,39 @@ body#keycloak-bg {
 .sidereal-tagline { display: block; margin-top: 16px; font-family: var(--ui-font-body); font-size: clamp(12px, 1.15vw, 18px); letter-spacing: .2em; color: var(--ui-primary); }
 .pf-v5-c-login__main {
   --pf-v5-c-login__main--BackgroundColor: transparent;
-  background: rgba(8, 22, 41, .95);
-  border: 1px solid var(--ui-primary);
-  box-shadow: 0 0 0 1px rgba(67, 220, 255, .16), 0 0 24px rgba(67, 220, 255, .18), 0 12px 40px rgba(0, 0, 0, .4);
-  clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px), 0 16px);
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   padding: 8px 0;
 }
-.pf-v5-c-login__main-header { border: 0; padding: 22px 32px 12px; }
-#kc-page-title { font-family: var(--ui-font-title); color: var(--ui-primary); font-size: 36px; font-weight: 700; letter-spacing: .04em; }
+.pf-v5-c-login__main::before, .pf-v5-c-login__main::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  clip-path: var(--ui-panel-clip);
+}
+.pf-v5-c-login__main::before {
+  inset: 0;
+  background:
+    linear-gradient(135deg, var(--ui-primary) 12px, var(--ui-border) 12px) top left / 46px 28px no-repeat,
+    linear-gradient(315deg, var(--ui-primary) 12px, var(--ui-border) 12px) bottom right / 46px 28px no-repeat,
+    var(--ui-border);
+  filter: drop-shadow(0 0 3px var(--ui-glow));
+}
+.pf-v5-c-login__main::after {
+  inset: 1px;
+  background:
+    linear-gradient(90deg, var(--ui-primary) 46px, transparent 46px) top left / 100% 2px no-repeat,
+    linear-gradient(var(--ui-primary) 22px, transparent 22px) top left / 2px 100% no-repeat,
+    linear-gradient(270deg, var(--ui-primary) 46px, transparent 46px) bottom right / 100% 2px no-repeat,
+    linear-gradient(0deg, var(--ui-primary) 28px, transparent 28px) bottom right / 2px 100% no-repeat,
+    linear-gradient(180deg, rgb(5 23 54 / .995), rgb(2 9 27 / .985));
+}
+.pf-v5-c-login__main-header { border-bottom: 1px solid var(--ui-text); padding: 22px 0 12px; margin: 0 24px; box-shadow: 0 1px 3px #47dfff28; }
+#kc-page-title { font-family: var(--ui-font-title); color: var(--ui-text); font-size: 28px; font-weight: 700; letter-spacing: .04em; }
 .pf-v5-c-login__main-body { padding: 16px 32px 24px; }
 .pf-v5-c-form { gap: 20px; }
 .pf-v5-c-form__label, .pf-v5-c-check__label { font-family: var(--ui-font-body); color: var(--ui-text); font-size: 18px; font-weight: 600; }
@@ -137,7 +162,7 @@ body#keycloak-bg {
 }
 .pf-v5-c-button.pf-m-primary {
   --pf-v5-c-button--m-primary--BackgroundColor: #123b58;
-  --pf-v5-c-button--m-primary--Color: var(--ui-primary);
+  --pf-v5-c-button--m-primary--Color: var(--ui-text);
   --pf-v5-c-button--m-primary--hover--BackgroundColor: #1b4b69;
   --pf-v5-c-button--m-primary--focus--BackgroundColor: #1b4b69;
   --pf-v5-c-button--m-primary--active--BackgroundColor: var(--ui-panel);
@@ -145,7 +170,8 @@ body#keycloak-bg {
   min-height: 52px;
   font-family: var(--ui-font-title);
   font-size: 24px;
-  letter-spacing: .06em;
+  letter-spacing: 0;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
   box-shadow: inset 0 0 16px rgba(67, 220, 255, .14), 0 0 12px rgba(67, 220, 255, .1);
 }
 .pf-v5-c-button:is(:disabled, .pf-m-disabled) { opacity: .55; box-shadow: none; }

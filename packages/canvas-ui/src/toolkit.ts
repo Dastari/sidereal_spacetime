@@ -3,7 +3,7 @@ import { Layer } from "@babylonjs/core/Layers/layer";
 import type { Scene } from "@babylonjs/core/scene";
 import { contains, type Rect } from "./layout";
 import { gameCursors } from "./cursors";
-import { uiTheme } from "@sidereal/ui/theme";
+import { panelFrameGeometry, uiTheme } from "@sidereal/ui/theme";
 import {
   canvasControlState,
   controlAction,
@@ -546,7 +546,13 @@ export class CanvasUI {
     this.panels.push(r);
     const c = this.ctx;
     c.save();
-    this.framePath(r, 0.5);
+    const frame = panelFrameGeometry(r.w, r.h);
+    c.beginPath();
+    frame.outline.forEach(([x, y], i) => {
+      if (i === 0) c.moveTo(r.x + x, r.y + y);
+      else c.lineTo(r.x + x, r.y + y);
+    });
+    c.closePath();
     const gradient = c.createLinearGradient(0, r.y, 0, r.y + r.h);
     gradient.addColorStop(
       0,
@@ -554,7 +560,7 @@ export class CanvasUI {
     );
     gradient.addColorStop(
       1,
-      rgba(uiTheme.colors.background, strong ? 0.99 : this.opacity),
+      rgba(uiTheme.colors.background, strong ? 0.985 : this.opacity * 0.9),
     );
     c.fillStyle = gradient;
     c.fill();
@@ -562,22 +568,24 @@ export class CanvasUI {
     c.lineWidth = uiTheme.frame.borderWidth;
     c.stroke();
     // Glow is confined to two small edge segments, never the whole window.
-    const cut = controlCornerCut(r.w, r.h, uiTheme.frame.cornerCut);
-    const edge = Math.min(46, r.w / 3),
-      rise = Math.min(28, r.h / 3);
     c.strokeStyle = palette.blue;
     c.lineWidth = uiTheme.frame.focusWidth;
-    c.shadowColor = palette.blue;
+    c.shadowColor = uiTheme.colors.glow;
     c.shadowBlur = strong ? 6 : 3;
     c.beginPath();
-    c.moveTo(r.x, r.y + rise);
-    c.lineTo(r.x, r.y + cut);
-    c.lineTo(r.x + cut, r.y);
-    c.lineTo(r.x + edge, r.y);
-    c.moveTo(r.x + r.w - edge, r.y + r.h);
-    c.lineTo(r.x + r.w - cut, r.y + r.h);
-    c.lineTo(r.x + r.w, r.y + r.h - cut);
-    c.lineTo(r.x + r.w, r.y + r.h - rise);
+    frame.accents.forEach((vertices) =>
+      vertices.forEach(([x, y], i) => {
+        if (i === 0) c.moveTo(r.x + x, r.y + y);
+        else c.lineTo(r.x + x, r.y + y);
+      }),
+    );
+    c.stroke();
+    c.shadowBlur = 0;
+    c.strokeStyle = "#759ad044";
+    c.lineWidth = 1;
+    c.beginPath();
+    c.moveTo(r.x + 12, r.y + 3);
+    c.lineTo(r.x + r.w - 14, r.y + 3);
     c.stroke();
     c.restore();
   }

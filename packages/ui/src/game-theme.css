@@ -109,47 +109,38 @@
 }
 .ui-panel {
   position: relative;
-  border: 1px solid var(--ui-border);
-  background: linear-gradient(135deg, #0b2240f5, #041027f5);
-  padding: 24px;
-  clip-path: polygon(
-    0 10px,
-    10px 0,
-    calc(100% - 10px) 0,
-    100% 10px,
-    100% calc(100% - 10px),
-    calc(100% - 10px) 100%,
-    10px 100%,
-    0 calc(100% - 10px)
-  );
+  isolation: isolate;
+  padding: 20px;
 }
-.ui-panel::before {
-  content: "";
+.ui-panel__frame {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, var(--ui-primary) 0 38px, transparent 38px) top
-      left / 100% 2px no-repeat,
-    linear-gradient(var(--ui-primary) 0 38px, transparent 38px) top left / 2px
-      100% no-repeat,
-    linear-gradient(270deg, var(--ui-primary) 0 38px, transparent 38px) bottom
-      right / 100% 2px no-repeat,
-    linear-gradient(0deg, var(--ui-primary) 0 38px, transparent 38px) bottom
-      right / 2px 100% no-repeat;
+  z-index: -1;
+}
+.ui-panel__trace {
+  stroke: var(--ui-primary);
+  stroke-width: 2px;
+  filter: drop-shadow(0 0 3px var(--ui-glow));
 }
 .ui-panel__heading {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ui-text);
+  box-shadow: 0 1px 3px #47dfff28;
 }
 .ui-panel h2 {
   margin: 0;
-  font: 600 1.9em var(--ui-font-title);
-  letter-spacing: 0.05em;
-  color: var(--ui-primary);
+  font: 600 25px var(--ui-font-title);
+  letter-spacing: 0;
+  color: var(--ui-text);
 }
 .ui-eyebrow {
   margin: 0 0 6px;
@@ -167,20 +158,30 @@
   align-items: center;
   min-height: 44px;
   padding: 10px 20px;
-  border: 1px solid var(--ui-border);
-  background: var(--ui-input);
+  border: 1px solid var(--ui-primary);
+  background: #0b2d49;
   color: var(--ui-text);
   font: 600 1em var(--ui-font-title);
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 0;
+  clip-path: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  );
 }
 .ui-button--primary {
   border-color: var(--ui-primary);
-  color: var(--ui-primary);
-  background: linear-gradient(180deg, #0d4266, #082844);
-  box-shadow: inset 0 0 12px #24dcff20;
+  color: var(--ui-text);
+  background: #0b2d49;
+  box-shadow: inset 0 0 12px #47dfff20;
 }
 .ui-button--secondary {
   --ui-button-accent: var(--ui-secondary);
@@ -201,14 +202,14 @@
   border-color: var(--ui-success);
 }
 .ui-button--ghost {
-  border-color: transparent;
-  background: transparent;
+  border-color: var(--ui-border);
+  background: var(--ui-input);
 }
 .ui-button:not(:disabled):hover,
 .ui-button[data-selected] {
   border-color: var(--ui-button-accent);
   background: var(--ui-raised);
-  box-shadow: inset 0 0 6px #24dcff30;
+  box-shadow: inset 0 0 6px #47dfff30;
 }
 .ui-button:not(:disabled):active {
   transform: translateY(1px);
@@ -334,33 +335,33 @@
   --ui-stat-color: var(--ui-secondary);
 }
 .ui-item-slot {
+  position: relative;
+  isolation: isolate;
   width: 68px;
   aspect-ratio: 1;
-  border: 1px solid var(--ui-border);
-  border-radius: 3px;
-  background: var(--ui-input);
+  border: 0;
+  background: transparent;
   display: grid;
   place-items: center;
-  padding: 6px;
+  padding: 8px;
   color: var(--ui-text);
   cursor: pointer;
+}
+.ui-item-slot__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
 }
 .ui-item-slot img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
-.ui-item-slot[data-selected] {
-  border-color: var(--ui-primary);
-}
 .ui-item-slot:disabled {
   cursor: default;
-}
-.ui-item-slot__empty {
-  height: 16px;
-  width: 16px;
-  border: 1px solid var(--ui-border);
-  transform: rotate(45deg);
 }
 .ui-key-hint {
   display: inline-grid;
@@ -495,4 +496,8 @@
   .ui-button:active {
     transform: none;
   }
+}
+
+.ui-button:focus-visible {
+  outline-offset: -4px;
 }
