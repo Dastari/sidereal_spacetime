@@ -71,7 +71,10 @@ import {
 import { SPACE_VISTAS, DEFAULT_SPACE_VISTA } from "@sidereal/content";
 import { LAB_BODIES } from "../../../packages/content/src/space";
 import { LAB_INTERACTIONS } from "../../../packages/content/src/interactions";
-import { containerSelection } from "./container-selection";
+import {
+  containerSelection,
+  storageObjectDetails,
+} from "./container-selection";
 import { prefabSeatPresentation } from "./seated-presentation";
 import { inventoryView, inventoryAppearance } from "./inventory";
 import { createCombatInput } from "./combat-input";
@@ -717,7 +720,7 @@ export default function App({
     !!c &&
     !!actor &&
     [...c.db.ownShips.iter()].some((row) => row.id === actor.shipId);
-  const prefabDetails = selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
+  const prefabBaseDetails = selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
     ? prefabObjectDetails(
         selectedObject,
         prefabShip?.doc,
@@ -743,6 +746,20 @@ export default function App({
         prefabShip?.furnishings,
       )
     : undefined;
+  const prefabDetails = storageObjectDetails(
+    prefabBaseDetails,
+    containerSelection(
+      selectedObject,
+      inventory.containers,
+      constructionVisit && constructionInstance
+        ? {
+            ...constructionVisit,
+            documentJson: constructionInstance.documentJson,
+            furnishingsJson: constructionInstance.furnishingsJson,
+          }
+        : undefined,
+    ),
+  );
   useEffect(() => {
     setFurnishingEdit(undefined);
   }, [
@@ -1232,10 +1249,10 @@ export default function App({
             furnishingsJson: live.current.constructionInstance.furnishingsJson,
           },
       );
-      setSelectedObject(undefined);
-      if (selected.containerId)
+      if (selected.containerId) {
+        setSelectedObject(undefined);
         gui.current?.openContainer(selected.containerId);
-      else
+      } else
         setError(
           "Move closer to this storage. Its inventory must be available to open it.",
         );
@@ -1634,25 +1651,7 @@ export default function App({
                 );
                 return;
               }
-              const current = connection.current;
-              const visit =
-                current && [...current.db.ownConstructionLocation.iter()][0];
-              const selected = containerSelection(
-                id,
-                current ? inventoryView(current, true).containers : [],
-                visit && live.current.constructionInstance
-                  ? {
-                      ...visit,
-                      documentJson:
-                        live.current.constructionInstance.documentJson,
-                      furnishingsJson:
-                        live.current.constructionInstance.furnishingsJson,
-                    }
-                  : undefined,
-              );
-              if (selected.storage) {
-                objectCommand("open-storage", id);
-              } else setSelectedObject(id);
+              setSelectedObject(id);
             },
             onLoadError: (text) => {
               if (!disposed) {
