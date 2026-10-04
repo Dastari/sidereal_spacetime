@@ -80,6 +80,14 @@ export async function enterNativePilot(c: DbConnection) {
   await acquireNativePilot(c);
 }
 export async function acquireNativePilot(c: DbConnection) {
+  // Installation/flight admission can precede the scheduled systems/power solve.
+  // Wait for its accepted readiness projection; send one pilot command and let
+  // any real authority failure fail the smoke, rather than retrying that error.
+  await wait(() => {
+    const flight = [...c.db.ownAuthoredFlights.iter()][0];
+    const power = flight && c.db.ownShipPower.shipId.find(flight.shipId);
+    return !!flight?.active && flight.flightAdmitted && !!power?.corePowered;
+  }, "starter current flight power ready");
   const f = [...c.db.ownAuthoredFlights.iter()][0]!;
   assert(
     f?.active && f.flightAdmitted,

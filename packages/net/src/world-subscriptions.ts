@@ -23,6 +23,15 @@ export const SHARED_VIEW_SQL = Object.freeze({
   bodyDescriptions: "visible_body_descriptions",
 });
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+/** Accepted world coordinates from the actor-scoped own_eva_body view. */
+export interface AcceptedEvaObserver {
+  characterId: string;
+  systemId: string;
+  x: number;
+  y: number;
+  serverTick: bigint;
+  revision: bigint;
+}
 function quotedId(id: string): string {
   if (!uuid.test(id)) throw Error("Invalid shared-world UUID");
   return `'${id}'`;
@@ -84,7 +93,17 @@ export function createWorldSubscriptions(options: {
     pumping = false;
   let admission: SharedAdmission | undefined;
   let ownMotion: SharedShipMotion | undefined;
+  let ownEva: AcceptedEvaObserver | undefined;
   let desiredCell: string | undefined;
+  const selectObserver = () => {
+    const point = ownEva ?? ownMotion;
+    if (!admission || !point) {
+      desiredCell = undefined;
+      return;
+    }
+    const cell = spatialCell(point);
+    desiredCell = `${admission.systemId}/${cell.cellX}/${cell.cellY}`;
+  };
   const contextKey = (a: SharedAdmission) =>
     `${a.characterId}/${a.shipId}/${a.systemId}/${a.revision}`;
   const end = (scope: Scope) => {
@@ -106,6 +125,7 @@ export function createWorldSubscriptions(options: {
     running = false;
     admission = undefined;
     ownMotion = undefined;
+    ownEva = undefined;
     desiredCell = undefined;
     for (const scope of [...scopes]) retire(scope);
     clearStore();
@@ -190,6 +210,7 @@ export function createWorldSubscriptions(options: {
       if (!own) {
         open("own", contextKey(admission), [
           `SELECT * FROM ${SHARED_VIEW_SQL.ships} WHERE ship_id = ${quotedId(admission.shipId)} AND system_id = ${quotedId(admission.systemId)}`,
+          `SELECT * FROM own_eva_body WHERE character_id = ${quotedId(admission.characterId)} AND system_id = ${quotedId(admission.systemId)}`,
         ]);
         own = [...scopes].find((s) => s.kind === "own");
       }
@@ -213,7 +234,7 @@ export function createWorldSubscriptions(options: {
       open(
         "cells",
         desiredCell,
-        sharedCellQueries(admission.systemId, ownMotion),
+        sharedCellQueries(admission.systemId, ownEva ?? ownMotion),
       );
     } finally {
       pumping = false;
@@ -224,6 +245,7 @@ export function createWorldSubscriptions(options: {
     running = false;
     admission = undefined;
     ownMotion = undefined;
+    ownEva = undefined;
     desiredCell = undefined;
     for (const scope of [...scopes]) retire(scope);
     const epoch = clearStore();
@@ -297,15 +319,49 @@ export function createWorldSubscriptions(options: {
           return false;
         if (ownMotion && motion.serverTick < ownMotion.serverTick) return false;
         ownMotion = { ...motion };
-        desiredCell = `${next.systemId}/${cell.cellX}/${cell.cellY}`;
       }
       admission = { ...next };
+      selectObserver();
       // Admission replacement cleared the cache epoch. Keep these accepted source
       // rows present; onEpoch lets the parent rehydrate other aggregate SDK rows.
       store.batch(() => {
         store.upsert("admission", admission!);
         if (ownMotion) store.upsert("shipMotion", ownMotion);
       });
+      pump();
+      return true;
+    },
+    /** Independent EVA ordering: home-ship updates must neither displace the EVA
+     * observer nor reject it against a different source's tick cursor. Undefined is
+     * an authoritative row deletion, not an empty un-applied cache observation. */
+    acceptEvaObserver(
+      next: AcceptedEvaObserver | undefined,
+      epoch = store.getEpoch(),
+    ): boolean {
+      if (disposed || !running || epoch !== store.getEpoch() || !admission)
+        return false;
+      if (next) {
+        if (
+          next.characterId !== admission.characterId ||
+          next.systemId !== admission.systemId ||
+          typeof next.serverTick !== "bigint" ||
+          next.serverTick < 0n ||
+          typeof next.revision !== "bigint" ||
+          next.revision < 0n ||
+          ![next.x, next.y].every(Number.isFinite) ||
+          (ownEva &&
+            (next.serverTick < ownEva.serverTick ||
+              next.revision < ownEva.revision))
+        )
+          return false;
+        try {
+          spatialCell(next);
+        } catch {
+          return false;
+        }
+        ownEva = { ...next };
+      } else ownEva = undefined;
+      selectObserver();
       pump();
       return true;
     },

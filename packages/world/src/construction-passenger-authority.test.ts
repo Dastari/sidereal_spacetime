@@ -20,7 +20,12 @@ vi.mock("../../sim/src/construction-collision", () => ({
   canOccupyDeck: () => true,
 }));
 vi.mock("./construction-standing-support", () => ({
-  createConstructionStandingSupport: () => () => 0,
+  createConstructionStandingSupport:
+    () => (scope: { actor: { localX: number; localY: number } }) => {
+      if (![scope.actor.localX, scope.actor.localY].every(Number.isFinite))
+        throw Error("Invalid support");
+      return 0;
+    },
 }));
 vi.mock("./construction-flight-input", () => ({
   readConstructionFlightInput: () => ({}),
@@ -507,5 +512,74 @@ test("crew presentation pose: aim, seat, death and the latest shot on this ship"
   });
   expect(visibleCrewPresentation(f.ctx).map((r) => r.characterId)).toEqual([
     "passenger",
+  ]);
+});
+
+function addPhysicalCrew(
+  f: ReturnType<typeof fixture>,
+  id: string,
+  deckId = "captain-deck",
+) {
+  f.db.character.insert({
+    ...f.db.character.id.find("passenger"),
+    id,
+    name: id,
+    shipId: "captain-ship",
+    localX: 0,
+    localY: 0,
+  });
+  f.db.constructionLocation.insert({
+    ...f.db.constructionLocation.characterId.find("captain"),
+    characterId: id,
+    deckId,
+  });
+}
+test("every authorized physical crew body remains represented beyond 256, including disconnected bodies", () => {
+  const f = fixture();
+  for (let i = 0; i < 300; i++) addPhysicalCrew(f, `crowd-${i}`);
+  const body = f.db.character.id.find("crowd-0");
+  f.db.character.id.update({ ...body, connected: false });
+  const shipScan = vi
+    .spyOn(f.db.character.by_ship, "filter")
+    .mockImplementation(() => {
+      throw Error("Hot whole-ship scan");
+    });
+  expect(currentInteriorCrew(f.ctx)).toHaveLength(301);
+  expect(visibleCrewPresentation(f.ctx)).toHaveLength(300);
+  expect(
+    currentInteriorCrew(f.ctx).find((r) => r.characterId === "crowd-0")
+      ?.connected,
+  ).toBe(false);
+  expect(shipScan).not.toHaveBeenCalled();
+  expect(currentInteriorCrew(f.sctx)).toEqual([]);
+  expect(visibleCrewPresentation(f.sctx)).toEqual([]);
+});
+test("other decks and malformed individual bodies never erase valid current-deck crew", () => {
+  const f = fixture();
+  addPhysicalCrew(f, "valid-peer");
+  for (let i = 0; i < 400; i++)
+    addPhysicalCrew(f, `other-deck-${i}`, "another-deck");
+  addPhysicalCrew(f, "bad-support");
+  f.db.character.id.update({
+    ...f.db.character.id.find("bad-support"),
+    localX: NaN,
+  });
+  addPhysicalCrew(f, "stale-ship");
+  f.db.character.id.update({
+    ...f.db.character.id.find("stale-ship"),
+    shipId: "passenger-ship",
+  });
+  addPhysicalCrew(f, "missing-body");
+  f.db.character.id.delete("missing-body");
+  addPhysicalCrew(f, "on-stairs");
+  f.db.constructionStairWalk.insert({ characterId: "on-stairs" });
+  addPhysicalCrew(f, "in-transit");
+  f.db.constructionTraversal.insert({ characterId: "in-transit" });
+  expect(currentInteriorCrew(f.ctx).map((r) => r.characterId)).toEqual([
+    "captain",
+    "valid-peer",
+  ]);
+  expect(visibleCrewPresentation(f.ctx).map((r) => r.characterId)).toEqual([
+    "valid-peer",
   ]);
 });

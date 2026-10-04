@@ -34,6 +34,7 @@ import {
   qualifyPrefabBed,
 } from "../packages/sim/src/prefab-seats";
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
+import { observerVisibilitySmoke } from "./observer-visibility-smoke";
 import { evaSmoke } from "./eva-smoke-steps";
 import { blastDamage, pelletAngles } from "../packages/sim/src/combat";
 import { LAB_WEAPONS } from "../packages/content/src/weapons";
@@ -1236,6 +1237,16 @@ try {
         { eva: await evaSmoke(again, shipId, prefab, catalog) },
         (_, v) => (typeof v === "bigint" ? v.toString() : v),
       ),
+    );
+    console.log(
+      JSON.stringify({
+        observerVisibility: await observerVisibilitySmoke(
+          again,
+          DbConnection,
+          host,
+          database,
+        ),
+      }),
     );
   } finally {
     again.disconnect();

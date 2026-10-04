@@ -107,6 +107,72 @@ export const exercisePrefabPowerSmoke = db.reducer({action:t.string()},auth.game
 '''
 
 
+VISIBILITY_TABLE = """
+const observerVisibilitySmokeSnapshot = table({name:"observer_visibility_smoke_snapshot",public:false},{
+  characterId:t.string().primaryKey(),locationJson:t.string(),hadTimer:t.bool(),crewIds:t.array(t.string()),deckId:t.string(),shipIds:t.array(t.string())
+});
+"""
+VISIBILITY_ADDON = r'''
+// Density and observer fixtures exist only in the reserved test-module copy. World time is
+// paused for stable wire assertions; cleanup restores the accepted location and timer.
+export const exerciseObserverVisibilitySmoke = db.reducer({phase:t.string()},auth.gameAction((ctx,args)=>{
+  const actors=[...ctx.db.character.by_owner.filter(ctx.sender)];
+  if(actors.length!==1)throw new SenderError("One owned smoke character required");
+  const actor=actors[0], motion=ctx.db.shipWorldMotion.shipId.find(actor.shipId), ship=ctx.db.ship.id.find(actor.shipId);
+  if(!motion||!ship?.owner.isEqual(ctx.sender))throw new SenderError("Own admitted smoke ship required");
+  let saved=ctx.db.observerVisibilitySmokeSnapshot.characterId.find(actor.id);
+  const encode=(v:unknown)=>JSON.stringify(v,(_key,value)=>typeof value==="bigint"?value.toString()+"n":value);
+  const decode=(v:string)=>JSON.parse(v,(_key,value)=>typeof value==="string"&&/^-?\d+n$/.test(value)?BigInt(value.slice(0,-1)):value);
+  if(args.phase==="prepare"){
+    if(saved||ctx.db.evaBody.characterId.find(actor.id))throw new SenderError("Fresh aboard fixture required");
+    const location=ctx.db.constructionLocation.characterId.find(actor.id), deck=location&&ctx.db.constructionDeck.id.find(location.deckId);
+    if(!location||!deck)throw new SenderError("Accepted deck required");
+    if(Math.abs(motion.x)>=400)throw new SenderError("Home fixture must remain near world origin");
+    const hadTimer=ctx.db.movementTimer.count()>0n;
+    for(const timer of ctx.db.movementTimer.iter())ctx.db.movementTimer.scheduledId.delete(timer.scheduledId);
+    const deckId=ctx.newUuidV4().toString();
+    ctx.db.constructionDeck.insert({...deck,id:deckId,name:"Visibility fixture other deck",elevation:deck.elevation+3});
+    const crewIds:string[]=[];
+    for(let i=0;i<600;i++){
+      const id=ctx.newUuidV4().toString();crewIds.push(id);
+      ctx.db.character.insert({...actor,id,owner:ctx.identity,name:"Visibility fixture "+i,connected:false,sprinting:false});
+      ctx.db.constructionLocation.insert({...location,characterId:id,visitId:ctx.newUuidV4().toString(),deckId:i<300?location.deckId:deckId});
+    }
+    const shipIds:string[]=[];
+    for(const [name,id,x] of [["home","00000000-0000-4000-8000-000000000001",motion.x+200],["positive","00000000-0000-4000-8000-000000000002",1300],["negative","00000000-0000-4000-8000-000000000003",-1300]] as const){
+      shipIds.push(id);
+      ctx.db.ship.insert({...ship,id,owner:ctx.identity,name:"Visibility fixture "+name,x,y:motion.y});
+      ctx.db.shipWorldMotion.insert({...motion,shipId:id,x,cellX:BigInt(Math.floor(x/400))});
+    }
+    ctx.db.observerVisibilitySmokeSnapshot.insert({characterId:actor.id,locationJson:encode(location),hadTimer,crewIds,deckId,shipIds});
+    return;
+  }
+  if(!saved)throw new SenderError("Prepared visibility fixture required");
+  const restoreLocation=()=>{
+    ctx.db.evaBody.characterId.delete(actor.id);
+    if(!ctx.db.constructionLocation.characterId.find(actor.id))ctx.db.constructionLocation.insert(decode(saved!.locationJson));
+  };
+  if(args.phase==="positive"||args.phase==="negative"){
+    const location=decode(saved.locationJson), x=args.phase==="positive"?1200:-1200, before=ctx.db.evaBody.characterId.find(actor.id);
+    ctx.db.constructionLocation.characterId.delete(actor.id);
+    const next={characterId:actor.id,owner:ctx.sender,systemId:motion.systemId,cellX:BigInt(Math.floor(x/400)),cellY:motion.cellY,
+      phase:"free",x,y:motion.y,vx:0,vy:0,heading:0,anchorShipId:"",localX:0,localY:0,localHeading:0,refShipId:"",refVx:0,refVy:0,
+      forward:0,strafe:0,turn:0,walking:false,exitShipId:actor.shipId,visitId:location.visitId,deckId:location.deckId,returnEndsMicros:0n,
+      serverTick:motion.serverTick,revision:(before?.revision??0n)+1n};
+    if(before)ctx.db.evaBody.characterId.update(next);else ctx.db.evaBody.insert(next);
+  }else if(args.phase==="return")restoreLocation();
+  else if(args.phase==="cleanup"){
+    restoreLocation();
+    for(const id of saved.crewIds){ctx.db.constructionLocation.characterId.delete(id);ctx.db.character.id.delete(id);}
+    ctx.db.constructionDeck.id.delete(saved.deckId);
+    for(const id of saved.shipIds){ctx.db.shipWorldMotion.shipId.delete(id);ctx.db.ship.id.delete(id);}
+    ctx.db.observerVisibilitySmokeSnapshot.characterId.delete(actor.id);
+    if(saved.hadTimer&&ctx.db.movementTimer.count()===0n)ctx.db.movementTimer.insert({scheduledId:0n,scheduledAt:ScheduleAt.interval(50000n)});
+  }else throw new SenderError("Known visibility fixture phase required");
+}));
+'''
+
+
 def publish(dev, database, evidence):
     prefix = dev.CFG['project']['database'] + '-'
     if not database.startswith(prefix) or not database.endswith('-smoke') or database == dev.CFG['project']['database'] or not evidence:
@@ -129,7 +195,8 @@ def publish(dev, database, evidence):
     text = index.read_text()
     if text.count('const db = schema({') != 1:
         raise RuntimeError('World schema integration marker changed')
-    index.write_text(text + '\n' + ADDON)
+    text = text.replace('const db = schema({', VISIBILITY_TABLE + '\nconst db = schema({\n  observerVisibilitySmokeSnapshot,', 1)
+    index.write_text(text + '\n' + ADDON + '\n' + VISIBILITY_ADDON)
     dev.cli('publish', database, '--server', dev.DB_URL, '--module-path', str(world), '--yes', '--no-config', '--delete-data=never')
     bindings = stage / 'generated'
     dev.cli('generate', '--lang', 'typescript', '--out-dir', str(bindings), '--module-path', str(world), '--yes')

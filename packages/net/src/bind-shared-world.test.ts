@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { DbConnection } from "./generated";
 import { bindSharedWorld } from "./bind-shared-world";
 import { createConnectionResources } from "./connection-resources";
+import type { AcceptedEvaObserver } from "./world-subscriptions";
 import type { SharedAdmission, SharedShipMotion } from "./shared-world-store";
 
 const admission: SharedAdmission = {
@@ -57,6 +58,7 @@ const flush = async () => {
 };
 function fixture(seeded = false) {
   const db = {
+    ownEvaBody: table<AcceptedEvaObserver>("characterId"),
     ownWorldAdmission: table<SharedAdmission>(
       "characterId",
       seeded ? [admission] : [],
@@ -152,7 +154,7 @@ describe("shared world SDK aggregate binding", () => {
     expect(f.store.getSnapshot().admission).toEqual([admission]);
     expect(f.store.getSnapshot().shipMotion).toEqual([motion()]);
     expect(f.store.getSnapshot().bodyDescription).toHaveLength(1);
-    expect(f.queries.map((q) => q.sql.length)).toEqual([4, 1, 9]);
+    expect(f.queries.map((q) => q.sql.length)).toEqual([4, 2, 9]);
     const unrelated = vi.fn();
     f.store.subscribeTable("admission", unrelated);
     f.db.visibleShipMotion.put({ ...motion(800, 2n), shipId: "remote" });
@@ -236,4 +238,74 @@ describe("shared world SDK aggregate binding", () => {
     expect(f.store.getSnapshot().admission).toEqual([]);
     expect(f.store.getSnapshot().shipMotion).toEqual([]);
   });
+});
+
+const eva = (
+  x = 1600,
+  serverTick = 2n,
+  revision = 1n,
+): AcceptedEvaObserver => ({
+  characterId: admission.characterId,
+  systemId: admission.systemId,
+  x,
+  y: -401,
+  serverTick,
+  revision,
+});
+it("follows accepted EVA world cells, retains home motion and returns on authoritative deletion", async () => {
+  const f = fixture(true);
+  await flush();
+  f.db.ownEvaBody.put(eva());
+  await flush();
+  expect(f.queries.at(-1)!.sql[0]).toContain("cell_x = 3 AND cell_y = -3");
+  f.db.visibleShipMotion.put(motion(-800, 50n));
+  await flush();
+  expect(f.subscriptions.getState().desiredCell).toBe(
+    `${admission.systemId}/4/-2`,
+  );
+  expect(f.store.getSnapshot().shipMotion[0].x).toBe(-800);
+  f.db.ownEvaBody.put(eva(2000, 3n, 2n));
+  await flush();
+  expect(f.subscriptions.getState().desiredCell).toBe(
+    `${admission.systemId}/5/-2`,
+  );
+  f.db.ownEvaBody.put(eva(8000, 2n, 1n));
+  await flush();
+  expect(f.subscriptions.getState().desiredCell).toBe(
+    `${admission.systemId}/5/-2`,
+  );
+  f.db.ownEvaBody.drop(eva());
+  await flush();
+  expect(f.subscriptions.getState().desiredCell).toBe(
+    `${admission.systemId}/-2/0`,
+  );
+  f.db.ownEvaBody.put(eva(-401, 51n, 1n));
+  await flush();
+  expect(f.subscriptions.getState().desiredCell).toBe(
+    `${admission.systemId}/-2/-2`,
+  );
+  f.dispose();
+});
+it("hydrates EVA received before admission and ignores old-epoch EVA callbacks after replacement", async () => {
+  const f = fixture();
+  f.db.ownEvaBody.put(eva());
+  f.db.visibleShipMotion.put(motion());
+  f.db.ownWorldAdmission.put(admission);
+  await flush();
+  expect(f.subscriptions.getState().desiredCell).toBe(
+    `${admission.systemId}/4/-2`,
+  );
+  const old = [...f.db.ownEvaBody.updates][0];
+  f.db.ownWorldAdmission.put({ ...admission, revision: 2n });
+  await flush();
+  old({}, eva(), eva(8000, 99n, 100n));
+  expect(f.subscriptions.getState().desiredCell).toBe(
+    `${admission.systemId}/4/-2`,
+  );
+  f.db.ownWorldAdmission.drop({ ...admission, revision: 2n });
+  await flush();
+  f.db.ownEvaBody.put(eva(8000, 99n, 100n));
+  expect(f.subscriptions.getState().running).toBe(false);
+  expect(f.subscriptions.getState().desiredCell).toBeUndefined();
+  f.dispose();
 });
