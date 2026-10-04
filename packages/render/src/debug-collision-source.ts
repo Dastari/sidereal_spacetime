@@ -1,4 +1,5 @@
 import type { ConstructionDocument } from "@sidereal/content/construction";
+import { readFurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { CABIN_COLLIDERS } from "@sidereal/content/interior";
 import {
   constrainLabDeck,
@@ -181,7 +182,10 @@ export function createDebugCollisionSource(
         ],
       });
     }
-    const prefab = prefabConstructionObstacles(d as { prefab?: unknown });
+    const prefab = prefabConstructionObstacles(
+      d as { prefab?: unknown },
+      readFurnishingOverrides(input?.furnishingsJson),
+    );
     const obstacles = prefab
       ? prefab
       : d.stairRoom

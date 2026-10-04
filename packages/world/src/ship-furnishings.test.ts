@@ -573,3 +573,40 @@ test("uncertain furnishing operation cannot replay as a replacement source insta
     /Operation ID|operation/,
   );
 });
+
+test("an owner may move furniture over a formerly reserved helm approach without rebuilding the instance", async () => {
+  const w = await wayfarerOwner(),
+    id = "Lounge_coffee_table";
+  const source = prefabShipObjects(w.doc, w.catalog).find(
+    (o) => o.sourceId === id,
+  )!;
+  const centreX = (source.min[0] + source.max[0]) / 2,
+    centreY = (source.min[1] + source.max[1]) / 2,
+    approach: [number, number] = [0, 5.5];
+  const before = constructionCollision(w.f.ctx, w.instance, w.visit.deckId);
+  expect(
+    canOccupyDeck(
+      before,
+      { shipId: w.shipId, deckId: w.visit.deckId, position: approach },
+      0.3,
+    ),
+  ).toBe(true);
+  const args = request(w, id, {
+    action: "move",
+    dx: approach[1] - centreX,
+    dy: -approach[0] - centreY,
+  });
+  const proposal = furnishingRules.planFurnishingEdit(w.doc, {}, args);
+  standNear(w, id, proposal);
+  editShipFurnishing(w.f.ctx, args);
+  const after = constructionCollision(w.f.ctx, w.instance, w.visit.deckId);
+  expect(
+    canOccupyDeck(
+      after,
+      { shipId: w.shipId, deckId: w.visit.deckId, position: approach },
+      0.3,
+    ),
+  ).toBe(false);
+  expect(furnishingState(w.f.db, w.shipId).revision).toBe(1n);
+  expect(w.f.db.constructionInstance.id.find(w.shipId)).toEqual(w.instance);
+});

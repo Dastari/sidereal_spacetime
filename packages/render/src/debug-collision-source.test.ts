@@ -45,7 +45,40 @@ import { planNativeBoundaries } from "@sidereal/sim/construction-boundaries";
 import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import { canonicalPolygon, inside } from "@sidereal/sim/layout-geometry";
 import { createDebugCollisionSource } from "./debug-collision-source";
+import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
+import { prefabDeckObstacles } from "@sidereal/sim/prefab-deck-objects";
+import { FURNISHING_DEFAULT } from "@sidereal/content/wayfarer-furnishings";
 import type { ConstructionRenderInput } from "./construction-instance";
+
+test("Wayfarer collision debug uses the same accepted moved/deleted furniture as authority", () => {
+  const doc = PREFAB_SHIPS.find((p) => p.id === "fed.m.wayfarer")!;
+  const catalog = defaultPrefabComponentCatalog();
+  const source = prefabConstructionDocument(doc, catalog);
+  const pose = { ...FURNISHING_DEFAULT, dx: 0.5, dy: 0.75, yaw: Math.PI / 2 };
+  const id = "Lounge_coffee_table";
+  for (const accepted of [pose, { ...pose, deleted: true }]) {
+    const overlays = { [id]: accepted };
+    const debug = createDebugCollisionSource({
+      ...input(source),
+      furnishingsJson: JSON.stringify(overlays),
+    }).resolve();
+    expect(debug.supported).toBe(true);
+    const actual = debug.frames[0].obstacles.find(
+      (o) => o.id === `prefab-socket:${id}`,
+    );
+    const expected = prefabDeckObstacles(doc, catalog, overlays).find(
+      (o) => o.id === `prefab-socket:${id}`,
+    );
+    if (expected)
+      expect(actual).toEqual({
+        ...expected,
+        vertices: canonicalPolygon(expected.vertices),
+      });
+    else expect(actual).toBeUndefined();
+  }
+});
 
 const input = (
   document: ConstructionDocument,
