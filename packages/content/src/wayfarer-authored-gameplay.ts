@@ -246,6 +246,22 @@ export const WAYFARER_MOUNT_POSES: Readonly<
 
 /** Frozen source engine aperture: pod length5, last ring .65, aperture recess .06. */
 export const WAYFARER_MAIN_NOZZLE = { offset: 5.59, height: 0.237 } as const;
+/** These authored pods have fixed aft apertures, not the generic drive's reverse jets.
+ * Keep their installed hardware identities and mass; disable only the virtual channels. */
+export const WAYFARER_DISABLED_ACTUATORS = [
+  "mount-main-s#reverser",
+  "mount-main-c#reverser",
+  "mount-main-p#reverser",
+] as const;
+export function isWayfarerDisabledActuator(
+  doc: ShipPrefabDocumentV1,
+  sourceId: string,
+): boolean {
+  return (
+    isWayfarerGameplay(doc) &&
+    WAYFARER_DISABLED_ACTUATORS.some((id) => id === sourceId)
+  );
+}
 /** Five console segments preserve the authored U and its central chair pocket. */
 export function wayfarerConsoleFootprints(): [number, number][][] {
   type Segment = { x: number; y: number; rotation: number; width: number };
