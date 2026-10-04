@@ -55,7 +55,7 @@ function table<R extends object>(key: keyof R, seed: R[] = []) {
 const flush = async () => {
   for (let i = 0; i < 6; i++) await Promise.resolve();
 };
-function fixture(seeded = false) {
+function fixture(seeded = false, aggregateUnsubscribeDeletes = false) {
   const db = {
     ownWorldAdmission: table<SharedAdmission>(
       "characterId",
@@ -108,7 +108,16 @@ function fixture(seeded = false) {
           let ended = false;
           const unsubscribe = vi.fn((cb?: () => void) => {
             ended = true;
-            cb?.();
+            if (
+              aggregateUnsubscribeDeletes &&
+              sql.some((q) => q.includes("own_world_admission"))
+            ) {
+              queueMicrotask(() => {
+                for (const row of [...db.ownWorldAdmission.iter()])
+                  db.ownWorldAdmission.drop(row);
+                cb?.();
+              });
+            } else cb?.();
           });
           queries.push({
             sql,
@@ -207,6 +216,39 @@ describe("shared world SDK aggregate binding", () => {
     expect(
       f.store.getSnapshot().shipMotion.some((r) => r.shipId === "late"),
     ).toBe(false);
+  });
+  it("preserves baseline admission across ship handover while real server deletion still revokes", async () => {
+    const f = fixture(true, true);
+    await flush();
+    const firstBaseline = f.queries[0],
+      oldEpoch = f.store.getEpoch();
+    const next = {
+      ...admission,
+      shipId: "57eec72d-c53f-4df1-893a-adb83c25ba83",
+      revision: 2n,
+    };
+    f.db.visibleShipMotion.put({ ...motion(), shipId: next.shipId });
+    f.db.ownWorldAdmission.put(next);
+    await flush();
+    expect(f.subscriptions.getState().running).toBe(true);
+    expect(f.store.getEpoch()).toBeGreaterThan(oldEpoch);
+    expect(f.store.getSnapshot().admission).toEqual([next]);
+    expect(firstBaseline.unsubscribe).not.toHaveBeenCalled();
+    expect(
+      f.queries.filter((q) =>
+        q.sql.some((sql) => sql.includes("own_world_admission")),
+      ),
+    ).toHaveLength(1);
+    expect(f.readiness.getSnapshot()).toBe(true);
+    expect(f.queries[1].unsubscribe).toHaveBeenCalledOnce();
+    f.db.ownWorldAdmission.drop(next);
+    await flush();
+    expect(f.subscriptions.getState().running).toBe(false);
+    expect(f.store.getSnapshot().admission).toEqual([]);
+    expect(f.readiness.getSnapshot()).toBe(false);
+    expect(firstBaseline.unsubscribe).toHaveBeenCalledOnce();
+    f.db.ownWorldAdmission.put(next);
+    expect(f.store.getSnapshot().admission).toEqual([]);
   });
   it("isolates overlapping sockets and removes every SDK listener on disposal", async () => {
     const old = fixture(true),

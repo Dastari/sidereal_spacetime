@@ -64,6 +64,8 @@ import {
   visibleShipLogic,
 } from "./ship-logic";
 import { shipLogicModel } from "@sidereal/sim/ship-logic-model";
+import { acceptedPassengerAccess } from "./construction-passenger-access";
+import { GAME_OWNED_TEMPLATE_NAMESPACE } from "./game-ship-access-authority";
 import { characterTargets, damageCharacter, isDead } from "./combat-damage";
 import { stepRespawns } from "./character-death";
 import {
@@ -175,6 +177,7 @@ function addShip(id: string, who: Identity, characterId: string) {
   db.constructionInstance.insert({
     id,
     owner: who,
+    workspaceId: GAME_OWNED_TEMPLATE_NAMESPACE,
     revision: 1n,
     blueprintId: "trusted-prefab:fed.s.wren@4",
     blueprintSha256: "wren-sha",
@@ -199,6 +202,10 @@ function addShip(id: string, who: Identity, characterId: string) {
     shipId: id,
     instanceId: id,
     owner: who,
+    deckId: id + "-deck",
+    instanceRevision: 1n,
+    blueprintSha256: "wren-sha",
+    lifecycle: "active",
   });
   setShip(id, { x: 0, y: 0 });
 }
@@ -259,6 +266,7 @@ function fixture() {
     constructionLocation: table("characterId", { by_instance: "instanceId" }),
     constructionPilotSeat: table("characterId"),
     constructionPassengerVisit: table("characterId"),
+    constructionPassengerGrant: table("id"),
     constructionTraversal: table("characterId"),
     constructionStairWalk: table("characterId"),
     constructionFlightBinding: table("shipId"),
@@ -455,6 +463,12 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     expect(visibleShipLogic(ctx).length).toBe(6);
     addShip("kite", other, "mate");
     addCharacter("mate", other, "kite", lock.inside);
+    ctx.db.authSession.insert({
+      connectionId: "kite-session",
+      owner: other,
+      game: true,
+    });
+    expect(visibleShipLogic(as(other))).toHaveLength(6);
     expect(visibleShipLogic(as(other)).every((r) => r.shipId === "kite")).toBe(
       true,
     );
@@ -463,10 +477,90 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
       expect(row[secret]).toBeUndefined();
   });
 
+  it.each([
+    "revoked",
+    "blocked-recovery",
+    "admission-lost",
+    "revision-changed",
+  ])("removes interior logic for a retained passenger when %s", (reason) => {
+    addCharacter("guest", other, "wren", lock.inside);
+    ctx.db.authSession.insert({
+      connectionId: "guest-session",
+      owner: other,
+      game: true,
+    });
+    ctx.db.constructionPassengerGrant.insert({
+      id: "guest-grant",
+      owner,
+      granteeOwner: other,
+      granteeId: "guest",
+      shipId: "wren",
+      deckId: "wren-deck",
+      instanceRevision: 1n,
+      revision: 1n,
+      expiresMicros: now + 1_000_000n,
+    });
+    ctx.db.constructionPassengerVisit.insert({
+      characterId: "guest",
+      owner: other,
+      shipId: "wren",
+      deckId: "wren-deck",
+      grantId: "guest-grant",
+      grantRevision: 1n,
+      visitId: "v-guest",
+      admissionRevision: 1n,
+      recoveryReason: "",
+    });
+    expect(acceptedPassengerAccess(as(other), "guest").readInterior).toBe(true);
+    expect(visibleShipLogic(as(other)).length).toBe(6);
+    if (reason === "revoked")
+      ctx.db.constructionPassengerGrant.id.delete("guest-grant");
+    if (reason === "blocked-recovery") {
+      const visit = ctx.db.constructionPassengerVisit.characterId.find("guest");
+      ctx.db.constructionPassengerVisit.characterId.update({
+        ...visit,
+        recoveryReason: "Original return unavailable",
+      });
+    }
+    if (reason === "admission-lost")
+      ctx.db.worldAdmission.characterId.delete("guest");
+    if (reason === "revision-changed") {
+      const instance = ctx.db.constructionInstance.id.find("wren");
+      ctx.db.constructionInstance.id.update({ ...instance, revision: 2n });
+    }
+    expect(acceptedPassengerAccess(as(other), "guest").readInterior).toBe(
+      false,
+    );
+    expect(
+      ctx.db.constructionLocation.characterId.find("guest").instanceId,
+    ).toBe("wren");
+    expect(ctx.db.character.id.find("guest").connected).toBe(true);
+    expect(visibleShipLogic(as(other))).toEqual([]);
+  });
+
+  it.each(["admission-lost", "disconnected"])(
+    "removes owned interior logic when %s",
+    (reason) => {
+      expect(visibleShipLogic(ctx).length).toBe(6);
+      if (reason === "admission-lost")
+        ctx.db.worldAdmission.characterId.delete("cap");
+      else {
+        const actor = ctx.db.character.id.find("cap");
+        ctx.db.character.id.update({ ...actor, connected: false });
+      }
+      expect(visibleShipLogic(ctx)).toEqual([]);
+    },
+  );
+
   it("a spacewalker in another player's ship frame sees that ship's exterior devices only", () => {
     // Mate left their own Kite and floats in the frame of Cap's Wren (no interior presence there).
     addShip("kite", other, "mate");
     addCharacter("mate", other, "kite", lock.inside);
+    ctx.db.authSession.insert({
+      connectionId: "kite-session",
+      owner: other,
+      game: true,
+    });
     ctx.db.constructionLocation.characterId.delete("mate");
     ctx.db.evaBody.insert({
       characterId: "mate",
@@ -475,6 +569,8 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
       phase: "local",
       anchorShipId: "wren",
       exitShipId: "kite",
+      visitId: "v-mate",
+      deckId: "kite-deck",
     });
     const rows = visibleShipLogic(as(other));
     const wrenRows = rows.filter((r) => r.shipId === "wren");
@@ -495,6 +591,16 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     expect(rows.filter((r) => r.shipId === "kite").length).toBe(
       visibleShipLogic(ctx).length,
     );
+    // Losing the home admission cannot retain its interior state through the EVA row.
+    ctx.db.worldAdmission.characterId.delete("mate");
+    const denied = visibleShipLogic(as(other));
+    expect(denied.filter((r) => r.shipId === "kite")).toEqual([]);
+    expect(
+      denied
+        .filter((r) => r.shipId === "wren")
+        .map((r) => r.deviceId)
+        .sort(),
+    ).toEqual([...exterior].sort());
   });
 });
 
