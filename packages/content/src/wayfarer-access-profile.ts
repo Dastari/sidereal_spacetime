@@ -1,7 +1,7 @@
 /** Proposed private native derivative. No catalogue/default/live activation. */
 import contract from "./wayfarer-access-contract.v2.json";
 import physical from "./wayfarer-access-profile.v2.json";
-import doors from "../../../assets/runtime/wayfarer-access/r001/doors.json";
+import doors from "../../../assets/runtime/wayfarer-access/r002/doors.json";
 import type { DerivedInterior, ShipPrefabDocumentV1 } from "./ship-prefab";
 import {
   snapshotShipAccessDoorPack,
