@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -89,7 +89,8 @@
     "./wayfarer-authored-gameplay": "./src/wayfarer-authored-gameplay.ts",
     "./wayfarer-authored-flight": "./src/wayfarer-authored-flight.ts",
     "./wayfarer-furnishings": "./src/wayfarer-furnishings.ts",
-    "./authored-template-kit": "./src/authored-template-kit.ts"
+    "./authored-template-kit": "./src/authored-template-kit.ts",
+    "./ship-access-doors": "./src/ship-access-doors.ts"
   },
   "dependencies": {}
 }
