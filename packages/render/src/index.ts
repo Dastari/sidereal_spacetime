@@ -150,6 +150,7 @@ import {
 } from "./camera";
 import { createSpaceEnvironment, type SpaceBodyState } from "./environment";
 import { DEFAULT_SPACE_VISTA } from "../../content/src/environment";
+import { createPresentationFrameGate } from "./presentation-suspension";
 import "@babylonjs/loaders/glTF";
 export type SceneState = {
   /** Server-accepted instance overlay; independent of the immutable ship document. */
@@ -257,6 +258,9 @@ export interface WorldOptions {
   onScene?: (scene: Scene) => void;
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
+  /** Skip hidden world frames only after first usable-frame readiness completes.
+   * Does not pause subscriptions, authoritative simulation, or another preview engine. */
+  isPresentationSuspended?: () => boolean;
   onLoadError?: (message: string) => void;
   onLoadStage?: (
     stage: "ship" | "environment" | "crew" | "equipment" | "finishing",
@@ -982,7 +986,10 @@ async function buildWorld(
   const flightActiveSet = createFlightActiveSet(scene);
   const fastSnapshot = engine.isWebGPU ? createFastSnapshot(scene) : undefined;
   let firstFrame = true;
-  engine.runRenderLoop(() => {
+  const presentationFrames = createPresentationFrameGate(
+    options.isPresentationSuspended,
+  );
+  const renderWorldFrame = () => {
     // A failed initial load stays covered by Retry/Sign out. Do not keep
     // submitting the hidden scene while the user recovers from that failure.
     if (assetFailure) return;
@@ -1323,8 +1330,10 @@ async function buildWorld(
     ) {
       firstFrame = false;
       onReady("Vessel ready");
+      presentationFrames.ready();
     }
-  });
+  };
+  engine.runRenderLoop(presentationFrames.wrap(renderWorldFrame));
   resize();
   let disposed = false;
   function customizeCrew(next: CrewAppearance) {

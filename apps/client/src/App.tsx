@@ -4,6 +4,7 @@ import {
 } from "@sidereal/content/item-presentation";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
+import { CharacterSelect } from "./CharacterSelect";
 import { ShipSystemsPanel } from "./ShipSystemsPanel";
 import { FurnishingEditor } from "./FurnishingEditor";
 import type { ObjectPlacementState } from "@sidereal/canvas-ui";
@@ -187,6 +188,9 @@ export default function App({
   const [loadStage, setLoadStage] = useState("connecting");
   const [loadFailure, setLoadFailure] = useState<string>();
   const loadingRef = useRef(true);
+  const [enteredWorld, setEnteredWorld] = useState(false);
+  const entryBlocked = useRef(true);
+  entryBlocked.current = !enteredWorld;
   // HUD-only reload label timing (see combat-status.ts).
   const reloadingUntil = useRef(0);
   const reloadSeen = useRef<bigint | undefined>(undefined);
@@ -1106,6 +1110,7 @@ export default function App({
       document.hasFocus() &&
       !document.hidden &&
       !loadingRef.current &&
+      !entryBlocked.current &&
       !servicePanelOpen.current &&
       !isEditableTarget(document.activeElement) &&
       !gui.current?.blocked();
@@ -1121,8 +1126,16 @@ export default function App({
     );
     refresh((v) => v + 1);
   };
-  const perform = async (action: () => Promise<unknown>) => {
-    if (actionPending.current || !live.current.ready) return;
+  const perform = async (
+    action: () => Promise<unknown>,
+    allowDuringEntry = false,
+  ) => {
+    if (
+      actionPending.current ||
+      !live.current.ready ||
+      (entryBlocked.current && !allowDuringEntry)
+    )
+      return;
     actionPending.current = true;
     setPending(true);
     setError("");
@@ -1326,7 +1339,7 @@ export default function App({
     )
       return;
     issuedKit.current = actor.id;
-    void perform(() => connection.current!.reducers.claimStarterKit({}));
+    void perform(() => connection.current!.reducers.claimStarterKit({}), true);
   }, [
     ready,
     actor?.id,
@@ -1634,8 +1647,13 @@ export default function App({
               if (!disposed) setError(text);
             },
             blocksCameraInput: () =>
-              loadingRef.current || (gui.current?.pointerBlocked() ?? false),
+              entryBlocked.current ||
+              loadingRef.current ||
+              (gui.current?.pointerBlocked() ?? false),
+            isPresentationSuspended: () =>
+              entryBlocked.current && !loadingRef.current,
             blocksObjectSelection: () =>
+              entryBlocked.current ||
               loadingRef.current ||
               live.current.combatEnabled ||
               !!servicePanelOpen.current,
@@ -2009,6 +2027,7 @@ export default function App({
         return;
       }
       const blocked =
+        entryBlocked.current ||
         loadingRef.current ||
         !!servicePanelOpen.current ||
         isEditableTarget(document.activeElement) ||
@@ -2023,7 +2042,8 @@ export default function App({
         const mode = suitMode.current ?? live.current.evaSuitMode;
         const free = mode === "free";
         // Free (Newtonian) mode: no pointer facing; thrust along the body and A/D spin it.
-        const pointer = free ? undefined : view.current?.pointerDirection();
+        const pointer =
+          free || blocked ? undefined : view.current?.pointerDirection();
         const aim = pointer
           ? Math.atan2(-pointer[0], pointer[1]) +
             (live.current.evaLocal ? 0 : live.current.shipHeading)
@@ -2092,6 +2112,7 @@ export default function App({
       if (
         isEditableTarget(e.target) ||
         !!servicePanelOpen.current ||
+        entryBlocked.current ||
         loadingRef.current ||
         gui.current?.blocked() ||
         !actor?.connected ||
@@ -2210,6 +2231,7 @@ export default function App({
             !liveState.couch &&
             (liveState.uiState.interior || !!liveState.evaPhase),
           blocked:
+            entryBlocked.current ||
             loadingRef.current ||
             !!servicePanelOpen.current ||
             isEditableTarget(document.activeElement) ||
@@ -2264,6 +2286,8 @@ export default function App({
       move(event);
       if (
         event.button === 0 &&
+        !entryBlocked.current &&
+        !loadingRef.current &&
         live.current.combatEnabled &&
         !servicePanelOpen.current &&
         !gui.current?.pointerBlocked()
@@ -2278,6 +2302,8 @@ export default function App({
     const key = (event: KeyboardEvent) => {
       if (
         event.code === "KeyR" &&
+        !entryBlocked.current &&
+        !loadingRef.current &&
         !event.repeat &&
         live.current.combatEnabled &&
         !servicePanelOpen.current &&
@@ -2322,13 +2348,16 @@ export default function App({
   }, []);
   return (
     <>
-      <div className="game-surface" inert={loadingRef.current}>
+      <div
+        className="game-surface"
+        inert={loadingRef.current || entryBlocked.current}
+      >
         <canvas
           key={rendererFailed ? "fallback" : "webgl"}
           className="game-canvas"
           ref={canvas}
-          tabIndex={loadingRef.current ? -1 : 0}
-          aria-hidden={loadingRef.current}
+          tabIndex={loadingRef.current || entryBlocked.current ? -1 : 0}
+          aria-hidden={loadingRef.current || entryBlocked.current}
           aria-label={
             rendererFailed
               ? "Graphics renderer failed. Enable WebGL, then press Enter to retry."
@@ -2466,7 +2495,48 @@ export default function App({
           onSignOut={onSignOut}
         />
       </div>
-      {loadingRef.current && (
+      {!enteredWorld && ready && (!actor || !loadingRef.current) && (
+        <CharacterSelect
+          actor={actor ?? null}
+          items={c ? [...c.db.ownInventoryItems.iter()] : []}
+          ship={
+            c
+              ? ([...c.db.ownShips.iter()].find(
+                  (row) => row.id === actor?.shipId,
+                ) ?? null)
+              : null
+          }
+          appearance={cosmetics}
+          vitals={ownVitals}
+          pending={pending}
+          error={error}
+          onEnter={() => {
+            if (!actor || loadingRef.current || pending) return;
+            setEnteredWorld(true);
+            requestAnimationFrame(() => canvas.current?.focus());
+          }}
+          onCreate={async (name) => {
+            const current = connection.current;
+            if (
+              !current?.isActive ||
+              !live.current.ready ||
+              actionPending.current
+            )
+              throw new Error("Reconnect before creating a character.");
+            actionPending.current = true;
+            setPending(true);
+            setError("");
+            try {
+              await current.reducers.enterLab({ name });
+            } finally {
+              actionPending.current = false;
+              setPending(false);
+            }
+          }}
+          onSignOut={onSignOut}
+        />
+      )}
+      {loadingRef.current && (enteredWorld || !ready || !!actor) && (
         <GameLoadingScreen
           stage={status === "ready" ? loadStage : "connecting"}
           shipName={ship?.name ?? ""}

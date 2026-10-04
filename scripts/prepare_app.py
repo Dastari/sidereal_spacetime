@@ -20,6 +20,7 @@ PUBLISHED_RUNTIME = (
     "assembly/floor-manifest.json",
     "assembly/floor",
     "crew",
+    "ui",
     "equipment",
     "environment",
     "materials",
