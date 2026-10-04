@@ -143,7 +143,7 @@ for instance,tag,offset in placements:
   o=source.copy();o.data=source.data.copy();fixture.objects.link(o);o.parent=None;o.matrix_world=source.matrix_world.copy();o.location+=Vector(offset);o.hide_render=False;o.name='GEO-FIXTURE-'+instance+'-'+source.name
  # sockets/placement records intentionally preserve distinct instance identity.
 # Native approved small crates fit at centered cell positions with no scale change.
-manifest=json.loads((ROOT/'docs/handoffs/cargo_grid_model_audit.json').read_text())
+manifest=json.loads((ROOT/'assets/ci/cargo-grid-model-audit.json').read_text())
 payloads=[]
 for i,(instance,tag,offset) in enumerate(placements):
  appearance=['standard-small','standard-small-red'][i%2]

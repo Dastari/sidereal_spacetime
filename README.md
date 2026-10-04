@@ -1,12 +1,8 @@
 # Sidereal Spacetime
 
-Status: Runnable development scaffold
-Last updated: 2026-09-08
-Owners: Sidereal project
+Browser space RPG with one authoritative SpacetimeDB server, Babylon.js rendering, Blender-authored assets and React interfaces. The game client and Studio are independent applications.
 
-A browser-first, single-server space RPG foundation with SpacetimeDB authority, Babylon.js top-down 3D, original Blender assets and a new React UI.
-
-**Start with [PIVOT.md](https://wiki.sidereal.dastari.net/Vision/Documents/Sidereal%20Spacetime%20-%20concrete%20pivot%20and%20startup%20plan).** It carries the game scope, architecture decisions, authoring rebuild and phased acceptance gates.
+The [Sidereal wiki](https://wiki.sidereal.dastari.net/Home) is the source of truth for design, implementation status, decisions and operations. Start with [Agents](https://wiki.sidereal.dastari.net/Agents), the [current roadmap](https://wiki.sidereal.dastari.net/Roadmap) and [releases](https://wiki.sidereal.dastari.net/History/Releases). A merged PR and a public deployment are separate events; check release receipts for deployed source pins.
 
 ```sh
 git lfs pull
@@ -16,16 +12,12 @@ npm run setup
 npm run dev
 ```
 
-Clean-checkout native inputs and CI prerequisites are documented in [CI reproducibility](https://wiki.sidereal.dastari.net/Architecture/Documents/CI%20reproducibility%20repair%20%E2%80%94%202026-09-15). The bootstrap verifies exact native hashes and refuses to overwrite local edits.
+Setup uses `dev.toml`; secrets and local database state remain outside git. The managed client and Studio use ports 5173 and 5174 by default. See [same-box operations](https://wiki.sidereal.dastari.net/Operations/Documents/Same-box%20setup%2C%20lifecycle%20and%20recovery) for configuration and service lifecycle. `npm run status` and `npm run stop` manage this project.
 
-Open http://localhost:5173 (LAN http://10.0.1.200:5173). Create a local test character. WASD pilots from the seat; TAB changes exterior/interior view; E leaves/enters the seat; WASD walks while unseated in the interior. The same voxel-built Blender ship is used in flight and on foot. E transitions smoothly between the seat’s overhead camera and a fixed-elevation isometric camera; right-drag orbits and the wheel zooms. Rooms and furnishings have server-side collision in this lab fixture. Full modular gameplay, replay prediction, account login, inventory and authoring tools are planned phases.
+The code includes account authentication, stable character identities, inventory and equipment, walking/EVA, control stations and component-based flight, ship construction, live furnishing edits, resource and logic foundations, and Studio authoring. The [systems roadmap](https://wiki.sidereal.dastari.net/Architecture/Game%20Systems%20Roadmap) separates implemented foundations from remaining gameplay. Current ship visuals follow the [authored surface trial](https://wiki.sidereal.dastari.net/Decisions/2026-10-02%20Authored%20Ship%20Surface%20Trial); occupancy and damage authority remain separate.
 
-`npm run status` / `npm run stop` manage only this project. `npm run check`, `npm run build`, `npm run smoke` verify the scaffold. See [operations](https://wiki.sidereal.dastari.net/Operations/Documents/Same-box%20setup%2C%20lifecycle%20and%20recovery), [scope](https://wiki.sidereal.dastari.net/Vision/Documents/Complete%20game%20scope%20carried%20into%20the%20pivot), [milestones](https://wiki.sidereal.dastari.net/Architecture/Documents/Implementation%20sequence%20and%20acceptance%20gates) and [validation](https://wiki.sidereal.dastari.net/Architecture/Documents/Verification%20record).
+Before a PR, run `npm run check` and `npm run build`. Authority changes also require `npm run smoke` against an isolated database; UI changes require a browser review. Runtime art checks use `npm run art:check`. [CI bootstrap](https://wiki.sidereal.dastari.net/Architecture/Documents/CI%20reproducibility%20repair%20%E2%80%94%202026-09-15) verifies exact native asset hashes and refuses to overwrite local edits.
 
-The old `/root/sidereal` source and database volume are preserved and stopped. Its design documents are summarised on the wiki ([Bevy era reference](https://wiki.sidereal.dastari.net/History/Bevy%20Era%20Reference)); exact originals are in `/root/sidereal-art-archive` and git history. No old account credentials were imported. No production host has been repointed.
+Keep source, runtime assets, tests and tooling in git. Project documents and release reports belong in the wiki; exact review originals are preserved in `/root/sidereal-art-archive` with hash receipts. Required machine fixtures live in `assets/ci/`, and generated reports in ignored `output/`. `scripts/check_docs.py` enforces these boundaries. See [what lives where](https://wiki.sidereal.dastari.net/Agents/What%20Lives%20Where).
 
-The repository has no blanket license grant over imported material; original/third-party asset and vendored skill terms remain attached to their sources.
-
-Game: http://10.0.1.200:5173 · Dashboard: http://10.0.1.200:5174. Independent app commands: `dev:client`, `dev:dashboard`, `build:client`, `build:dashboard`, `stop:client`, `stop:dashboard`. [Shared OIDC](https://wiki.sidereal.dastari.net/Architecture/Documents/Dedicated%20account%20authentication) and [owner-managed scripting/lifecycles](https://wiki.sidereal.dastari.net/Architecture/Documents/Object%20lifecycles%20and%20owner-managed%20scripting) are specified with clear implementation status.
-
-2026-09-08 visual prototype: [theme and art direction](https://wiki.sidereal.dastari.net/Art/Documents/Sidereal%20visual%20theme%20%E2%80%94%20the%20inhabited%20frontier), [voxel construction/destruction](https://wiki.sidereal.dastari.net/Systems/Construction/Voxel%20construction%2C%20rendering%20and%20destruction), [IFCS implementation and next integration](https://wiki.sidereal.dastari.net/Systems/Flight/Component-driven%20IFCS%20integration). `npm run art:voxels` builds the Blender ship/asteroid and baked metal materials; `npm run art:check` validates them.
+The stopped Bevy project's design is preserved as [historical reference](https://wiki.sidereal.dastari.net/History/Bevy%20Era%20Reference). This repository has no blanket license grant over imported material; original and third-party asset and vendored skill terms remain attached to their sources.

@@ -112,7 +112,7 @@ def validate(directory):
         assets.append({'assetId': tag, 'glbSha256': digest(directory/(tag+'.glb')), 'interfaceSha256': digest(directory/(tag+'-interface.json')),
                        'boundsM': bounds, 'triangles': len(tris), 'materialCount': len(doc['materials']), 'bearingEvidence': evidence,
                        'contactGeometryQualified': True, 'collisionRepresentation': 'Conservative component boxes; bevel clearance is intentionally not walkable.', 'loadApproval': False})
-    audit = json.loads((ROOT/'docs/handoffs/cargo_grid_model_audit.json').read_text())
+    audit = json.loads((ROOT/'assets/ci/cargo-grid-model-audit.json').read_text())
     rows = [payload_fit(row, interface) for row in audit['rows']]
     fixture = json.loads((directory/'fixture.json').read_text())
     assert fixture['stackTopM']+fixture['handlingClearanceM'] <= fixture['roofUndersideM']

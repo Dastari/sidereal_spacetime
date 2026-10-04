@@ -79,6 +79,8 @@ class PrepareAppTests(unittest.TestCase):
                          "assets/runtime/crew/looks/views/captain-front.png",
                          "assets/runtime/crew/browser-walk.png",
                          "assets/runtime/equipment/contact-sheet.png",
+                         "assets/runtime/equipment/icons/contact-sheet.png",
+                         "assets/runtime/equipment/equipment-review.glb",
                          "assets/runtime/equipment/carbine.glb"):
                 write(root, name)
             # A previously published file that is no longer listed must disappear.
@@ -90,7 +92,8 @@ class PrepareAppTests(unittest.TestCase):
                 self.assertTrue((assets / published).is_file(), published)
             for private in ("wayfarer.glb", "construction/complex-preview-r000/join.glb", "wayfarer-rebuild-r002",
                             "crew/looks/views", "crew/browser-walk.png",
-                            "equipment/contact-sheet.png", "stale"):
+                            "equipment/contact-sheet.png", "equipment/icons/contact-sheet.png",
+                            "equipment/equipment-review.glb", "stale"):
                 self.assertFalse((assets / private).exists(), private)
 
     def test_published_manifest_may_not_reference_unpublished_assets(self):

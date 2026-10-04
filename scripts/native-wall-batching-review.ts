@@ -17,7 +17,7 @@ export async function createWallBatchingReview(canvas: HTMLCanvasElement) {
   const base = "/@fs/root/sidereal_spacetime/";
   const response = await fetch(
     base +
-      "docs/releases/usable-wall-readiness-20260910/geometry-comparison.json",
+      "output/releases/usable-wall-readiness-20260910/geometry-comparison.json",
   );
   const input = (await response.json()) as {
     entries: {

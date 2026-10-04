@@ -56,3 +56,17 @@ reference/
 *.mp4
 *.webm
 *.mov
+
+# Generated historical release reports and review sheets belong in the wiki/archive.
+docs/releases/
+docs/shipyard_player_builder/
+assets/runtime/equipment/browser-review.png
+assets/runtime/equipment/contact-sheet.png
+assets/runtime/equipment/icons/contact-sheet.png
+assets/runtime/equipment/equipment-review.glb
+assets/art-library/designs/cargo.carrier.grid-support/revisions/r000/a003/mixed-stack-top.png
+assets/art-library/designs/cargo.carrier.grid-support/revisions/r000/a003/mixed-stack.png
+assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r001/cutout.png
+assets/art-library/designs/shipyard.structure.roof-closure/revisions/r000/a001/native-kit.png
+assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/cutout.png
+assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/cutout.png

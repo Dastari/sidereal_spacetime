@@ -929,6 +929,162 @@
   "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/uplink_lossy/20260522_080701_movement_only_100c/phase0_headless_summary_20260521_220921.txt": {
    "sha256": "3f76c04fb93a4a9895ed247657f49d201c96cf7873e32e9875098f499a1ad630",
    "bytes": 37956
+  },
+  "docs/releases/bridge-bed-fix/browser-validation.json": {
+   "sha256": "8d42bb760f50efb0d6083273d52047e54606c38caa754d8a6501f25b5c929709",
+   "bytes": 256,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/bridge-bed-fix/publication.json": {
+   "sha256": "2eb657d017554fe05f476b431016ed3c5ca74adbe6d64a2fb6816d45ac06129f",
+   "bytes": 1668,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/construction-walking-2026-09-09.json": {
+   "sha256": "3be25aa9e369ecab45c87bac63a41c72584255fd027aeb99707aef02cd64842f",
+   "bytes": 2670,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/native-ship-2026-09-08/asset-validation.json": {
+   "sha256": "a763da48e2d5ac0c459d14f4cfd6367532b50af2866c241e407e95691983fc79",
+   "bytes": 19682,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/native-ship-2026-09-08/build-artifacts.json": {
+   "sha256": "3e77ed7e56457265fc10dee607b52b93b2bd1507e7b91f5fa9fe8b8037586f93",
+   "bytes": 763019,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/native-ship-2026-09-08/cargo-installation.json": {
+   "sha256": "78b7517139b041b538a5bb266610661355afa33754e7e17196aeb14b4c862bee",
+   "bytes": 4340,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/native-ship-2026-09-08/finish-installation.json": {
+   "sha256": "e9fec68b167a7f52386077fe4632f23c5ac4b3e8c69adcf621c4b025f6fcdb36",
+   "bytes": 17529,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/native-ship-2026-09-08/floor-installation.json": {
+   "sha256": "18979c2062bfe386cbf62231dd8c5ef40fbc3b5ecf78fce2ca01c6f2c99b20d0",
+   "bytes": 44629,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/native-ship-2026-09-08/hull-installation.json": {
+   "sha256": "80642c938b7b6602fb66817bbef6155ede90d08a05cb3e5aef8ea3a79a8eea20",
+   "bytes": 2965,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/native-ship-2026-09-08/planet-asset-validation.json": {
+   "sha256": "869c688cecde5e1a27cd1506e8ad79e6a135347d2191527d7d4597be9b2ae788",
+   "bytes": 555,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/native-ship-2026-09-08/validation-collision-f3.json": {
+   "sha256": "044f65b0228a00002f14fc999ab83111af674729ff3ed8c857c82e393c007963",
+   "bytes": 1593,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/roof-r004/browser-validation.json": {
+   "sha256": "33b808c21b71a4a49f4be56c14448b95d98141e06da82903c3a5cbad5b756627",
+   "bytes": 2696,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/roof-r004/publication.json": {
+   "sha256": "d263d0863e3799885ce9575d0e986cf588d5473011db173d98d5045e6f035093",
+   "bytes": 593,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/shipyard-shared-view-20260910/candidate.json": {
+   "sha256": "02a4db4c8b6ce75bb168b0a59a3395252b6f29170e55d481a0640fe3790e9feb",
+   "bytes": 6559,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/side-hull-r003/browser-validation.json": {
+   "sha256": "8cff9a7cf7a69a2f7a0fe820863ce834453a6d32e38bc7f6fe49d215ce8cddc1",
+   "bytes": 1628,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/side-hull-r003/publication.json": {
+   "sha256": "6a408f1b07088b795b51ce8883a39f4363a8dddacc7d34e24397bc658b38f98a",
+   "bytes": 562,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/usable-wall-readiness-20260910/authority-gates.json": {
+   "sha256": "27898a3cef874fe14438ea7d261c8920a8092e65809b4da6886f75a554f1a0a9",
+   "bytes": 1631,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/usable-wall-readiness-20260910/batching-comparison.json": {
+   "sha256": "5279070aadc88ce033b5ad134e3067556ba269cf294e625e2c8a897cfdebac9c",
+   "bytes": 79995,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/releases/usable-wall-readiness-20260910/geometry-comparison.json": {
+   "sha256": "b662f65d87a5e21072b39f91f3f59b92ae2700821acf15bef39b5df537427daa",
+   "bytes": 227006,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/handoffs/native_external_airlock_integration.patch": {
+   "sha256": "e70d0fb086cce79c14c76c743185b997f14613a0acadfe937bde49207f005685",
+   "bytes": 15119,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/handoffs/native_external_airlock_patch_inputs.json": {
+   "sha256": "c58b42a580d5fdbf1d8ceaf7d74c694ab4b868072632ecd1b4a66a0f4edaee6b",
+   "bytes": 2966,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "docs/shipyard_player_builder/kit_r004.json": {
+   "sha256": "2abda50b1845572ee51d72b308aead8288321643c429d11317939f8f1f4516d8",
+   "bytes": 16065,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "assets/runtime/equipment/browser-review.png": {
+   "sha256": "566c33d57ab0a78088fc392c61fb772e439300efce2630f4576d6ef029b75efe",
+   "bytes": 65619,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "assets/runtime/equipment/contact-sheet.png": {
+   "sha256": "cad5954cbd2a2bbec9bf9c271598a169d54cfdbfb3f9d5083ff68bb3d9050da5",
+   "bytes": 3841349,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "assets/runtime/equipment/icons/contact-sheet.png": {
+   "sha256": "f0bc03d965b731f1d739f7d5716c26cdedd99d45488ded630ba33ab4163ee2a8",
+   "bytes": 453566,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "assets/runtime/equipment/equipment-review.glb": {
+   "sha256": "b2ebabd50a3d8a09e6f3eda9147b072a3ad2c9cb43299ae3abfbf81978ca4ca2",
+   "bytes": 1296440,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
   }
  },
  "batches": {
@@ -939,5 +1095,10 @@
    "manifest": "/root/sidereal-art-archive/manifests/repo-cleanup-20260929.sha256",
    "details": "/root/sidereal-art-archive/manifest-repo-cleanup-20260929.json"
   }
+ },
+ "latest_cleanup": {
+  "date": "2026-10-05",
+  "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+  "manifest": "/root/sidereal-art-archive/manifests/relevance-20261005.sha256"
  }
 }

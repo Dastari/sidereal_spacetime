@@ -17100,6 +17100,42 @@
   "prompts/REDESIGN_CURRENT_EQUIPMENT.md": {
    "sha256": "7b52e8474440fbddaf426f4ccd8f85cae948c66700bc8e488beb13acba4c3720",
    "bytes": 12085
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a003/mixed-stack-top.png": {
+   "sha256": "16bedbfd6b601f276eb6e9ea8ec73067e1d32b381d8321ab4fbc7acd394b76e5",
+   "bytes": 2240163,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a003/mixed-stack.png": {
+   "sha256": "0cec549af960a0abcb858dd9c815317da8bef3bbb5281d80170baf5418608c99",
+   "bytes": 2201835,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "designs/shipyard.structure.boundary-kit/revisions/r001/cutout.png": {
+   "sha256": "65df8f5d9c09f9a9aac15fff54249d0b0da792fddeb5b2f399ee4e00f7dc3da4",
+   "bytes": 813554,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a001/native-kit.png": {
+   "sha256": "bd3ef72e08ea3b6884a1f03a02aa6635c5d0545a34c212620934cda808827fa8",
+   "bytes": 1400225,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "designs/shipyard.structure.stair-dogleg/revisions/r000/a003/cutout.png": {
+   "sha256": "ee33af503f6ca4447876be81859492b5becff16beb88b834ebb64f792149317c",
+   "bytes": 1783453,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
+  },
+  "designs/shipyard.structure.traversal-ladder/revisions/r000/a003/cutout.png": {
+   "sha256": "db63cf522da3cf878659d29604780709106c4d4887f7f341e1de7481bd5d5094",
+   "bytes": 1035424,
+   "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+   "archived_at": "2026-10-05"
   }
  },
  "batches": {
@@ -17120,5 +17156,10 @@
    "what": "art-library evidence logs and Markdown notes already on the wiki (REPO-CLEANUP PR D)",
    "manifest": "/root/sidereal-art-archive/manifests/repo-cleanup-20260929.sha256"
   }
+ },
+ "latest_cleanup": {
+  "date": "2026-10-05",
+  "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
+  "manifest": "/root/sidereal-art-archive/manifests/relevance-20261005.sha256"
  }
 }

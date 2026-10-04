@@ -15,7 +15,7 @@ def validate(directory):
     for box in spec['collisionBoxes']:
         points = by_name[box['id']]
         assert all(abs(min(p[i] for p in points)-box['min'][i]) < 1e-6 and abs(max(p[i] for p in points)-box['max'][i]) < 1e-6 for i in range(3))
-    audit = json.loads((ROOT/'docs/handoffs/cargo_grid_model_audit.json').read_text())
+    audit = json.loads((ROOT/'assets/ci/cargo-grid-model-audit.json').read_text())
     proofs = []
     for appearance in spec['payloadAppearances']:
         row = next(r for r in audit['rows'] if r['appearance'] == appearance)

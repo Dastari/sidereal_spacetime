@@ -20,4 +20,4 @@ record={'schema':'sidereal.release-checkpoint.v1','date':'2026-09-09','status':'
  'authorization':'owner requested full construction implementation and authorized coordinated integrations; this checkpoint grants no final art approval'}
 for item in record['browser']:
  assert (ROOT/item).is_file(),item
-path=ROOT/'docs/releases/construction-walking-2026-09-09.json';path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(record,indent=2)+'\n');print(json.dumps({k:record[k] for k in ['world','client','dashboard']},indent=2))
+path=ROOT/'output/releases/construction-walking-2026-09-09.json';path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(record,indent=2)+'\n');print(json.dumps({k:record[k] for k in ['world','client','dashboard']},indent=2))

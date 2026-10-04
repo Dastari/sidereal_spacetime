@@ -49,7 +49,7 @@ def stage(output):
                 'activationStatus':'staged-only','sourceAndEvidencePublic':False,
                 'qualifiedPayloads': []}
     # Resolve the payload pins from the reviewed report, avoiding a second hand-maintained mapping.
-    audit=json.loads((ROOT/'docs/handoffs/cargo_grid_model_audit.json').read_text())
+    audit=json.loads((ROOT/'assets/ci/cargo-grid-model-audit.json').read_text())
     manifest['qualifiedPayloads']=[{'assetId':r['assetId'],'sha256':r['glbSha256'],'appearance':r['appearance']} for r in audit['rows'] if r['appearance'] in ['standard-small','standard-small-red']]
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     return manifest
