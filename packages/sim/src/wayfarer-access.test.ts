@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { FED_WAYFARER } from "../../content/src/prefabs/wayfarer";
+import { prefabById } from "@sidereal/content/prefabs";
 import { WAYFARER_ACCESS_SOURCE as proposed } from "@sidereal/content/wayfarer-access-profile";
 import { deriveInterior } from "@sidereal/content/ship-prefab";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
@@ -25,6 +25,8 @@ import {
 } from "./eva";
 import { shipLogicModel } from "./ship-logic-model";
 
+const FED_WAYFARER = prefabById("fed.m.wayfarer");
+if (!FED_WAYFARER) throw new Error("Canonical Wayfarer template is missing");
 const catalog = defaultPrefabComponentCatalog();
 const hash = (v: unknown) =>
   createHash("sha256").update(JSON.stringify(v)).digest("hex");
