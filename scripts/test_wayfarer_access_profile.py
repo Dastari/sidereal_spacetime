@@ -11,7 +11,7 @@ import struct
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / 'assets/runtime/wayfarer-access/r001'
+ASSETS = ROOT / 'assets/runtime/wayfarer-access/r002'
 
 
 def multiply(a,b): return [[sum(a[r][k]*b[k][c] for k in range(4)) for c in range(4)] for r in range(4)]

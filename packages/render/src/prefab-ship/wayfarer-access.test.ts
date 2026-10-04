@@ -47,7 +47,7 @@ describe("native profile2 access presentation", () => {
           new Uint8Array(
             readFileSync(
               new URL(
-                `../../../../assets/runtime/wayfarer-access/r001/${piece.file}`,
+                `../../../../assets/runtime/wayfarer-access/r002/${piece.file}`,
                 import.meta.url,
               ),
             ),
