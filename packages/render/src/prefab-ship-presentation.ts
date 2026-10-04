@@ -7,6 +7,7 @@ import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { createGlowOccluders } from "./glow-occluders";
+import { createShipGlowOccluders } from "./ship-glow-occluders";
 import { moldedLightRig } from "./molded-plastic";
 import { applyShipGlowProfile, SHIP_GLOW_PROFILE } from "./ship-glow-profile";
 import {
@@ -123,11 +124,14 @@ export async function loadPrefabShipPresentation(
   // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
   // housings, walls and hull plates do not bloom through them.
   const occluders = createGlowOccluders(glow);
+  const glowBatches = createShipGlowOccluders(scene, view.root, glow);
   // Shared molded light rig (cool fill + camera-relative rim), also lighting the crew.
   const rig = moldedLightRig(scene);
   const glowing = new Set<AbstractMesh>();
   const adapt = () => {
-    const meshes = view.root.getChildMeshes();
+    const meshes = view.root
+      .getChildMeshes()
+      .filter((mesh) => !glowBatches.proxies.includes(mesh as Mesh));
     rig.include(meshes);
     for (const mesh of meshes) {
       const m = mesh.material;
@@ -138,10 +142,13 @@ export async function loadPrefabShipPresentation(
           : GAME_SHIP_DIRECT;
     }
     const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
-    for (const mesh of emissive)
-      if (!glowing.has(mesh))
-        (glowing.add(mesh), glow.addIncludedOnlyMesh(mesh as Mesh));
-    occluders.set(meshes.filter((m) => !emissive.has(m) && m.isEnabled()));
+    for (const mesh of emissive) glowing.add(mesh);
+    const opaque = meshes.filter((m) => !glowing.has(m));
+    occluders.set(opaque);
+    glowBatches.set(opaque);
+    // A previously hidden cohort can have been owned by the black-mask set.
+    // Re-admit its emitters after those owners release their old memberships.
+    for (const mesh of emissive) glow.addIncludedOnlyMesh(mesh as Mesh);
   };
   adapt();
   // Draw-cost evidence: one line per presentation after its first rendered frame.
@@ -184,6 +191,7 @@ export async function loadPrefabShipPresentation(
       exhaust.dispose();
       panels.dispose();
       doors.dispose();
+      glowBatches.dispose();
       occluders.dispose();
       glow.dispose();
       view.dispose();

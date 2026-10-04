@@ -34,6 +34,53 @@ export interface GlowPlacementRange {
   placementId: string;
   sourceMeshId: number;
 }
+
+/** Authored batches have several placement identities instead of a single partId.
+ * Require complete, ordered triangle coverage before admitting the static surface. */
+function placementRanges(mesh: AbstractMesh): GlowPlacementRange[] | undefined {
+  const sourceMeshId = mesh.uniqueId;
+  if (typeof mesh.metadata?.partId === "string" && mesh.metadata.partId)
+    return [
+      {
+        start: 0,
+        count: mesh.getTotalIndices() / 3,
+        placementId: mesh.metadata.partId,
+        sourceMeshId,
+      },
+    ];
+  const authored = mesh.metadata?.authoredStudy;
+  if (
+    typeof authored?.materialKey !== "string" ||
+    !authored.materialKey ||
+    !Array.isArray(authored.placementRanges) ||
+    !authored.placementRanges.length
+  )
+    return;
+  let cursor = 0;
+  const ranges: GlowPlacementRange[] = [];
+  for (const range of authored.placementRanges) {
+    if (
+      !range ||
+      ![range.object, range.piece, range.role, range.material].every(
+        (value) => typeof value === "string" && value.length > 0,
+      ) ||
+      !Number.isSafeInteger(range.indexStart) ||
+      range.indexStart !== cursor ||
+      !Number.isSafeInteger(range.indexCount) ||
+      range.indexCount <= 0 ||
+      range.indexCount % 3 !== 0
+    )
+      return;
+    ranges.push({
+      start: cursor / 3,
+      count: range.indexCount / 3,
+      placementId: range.object,
+      sourceMeshId,
+    });
+    cursor += range.indexCount;
+  }
+  return cursor === mesh.getTotalIndices() ? ranges : undefined;
+}
 /** Offscreen-only copies. Original surfaces, materials and picking stay untouched. */
 export function createShipGlowOccluders(
   scene: Scene,
@@ -64,10 +111,13 @@ export function createShipGlowOccluders(
       role: unknown;
       deckId: unknown;
       partId: unknown;
+      placements: string | undefined;
+      region: unknown;
       group: number;
       orientation: number;
       cull: boolean | undefined;
       cullBack: boolean | undefined;
+      depth: number | undefined;
       receives: boolean;
     }
   >();
@@ -79,24 +129,47 @@ export function createShipGlowOccluders(
     oldCustom = layer.mainTexture.getCustomRenderList;
   const materials = new Map<string, StandardMaterial>();
   const renderList: AbstractMesh[] = [];
+  const batched = new Set<AbstractMesh>();
+  const ownedList: AbstractMesh[] = [];
   // Explicit RTT lists bypass the main camera's layer mask. Proxy layer 0 never
   // enters the main pass or its picking/lighting/shadow lists.
-  layer.mainTexture.renderList = [];
-  layer.mainTexture.getCustomRenderList = () => {
+  layer.mainTexture.renderList = ownedList;
+  const customRenderList: NonNullable<
+    typeof layer.mainTexture.getCustomRenderList
+  > = (face, current, length) => {
     renderList.length = 0;
     const active = scene.getActiveMeshes();
-    for (let i = 0; i < active.length; i++)
-      if (retainedSet.has(active.data[i])) renderList.push(active.data[i]);
+    const previous = oldCustom?.(
+      face,
+      oldList ?? current,
+      oldList?.length ?? length,
+    );
+    const candidates = previous ?? active.data;
+    const count = previous ? previous.length : active.length;
+    // Included meshes can arrive after set(): actor masks and firing exhaust
+    // belong to independent owners. Exclude only surfaces replaced by a proxy.
+    for (let i = 0; i < count; i++) {
+      const mesh = candidates[i];
+      if (
+        !batched.has(mesh) &&
+        !proxies.includes(mesh as Mesh) &&
+        (retainedSet.has(mesh) || layer.hasMesh(mesh))
+      )
+        renderList.push(mesh);
+    }
     renderList.push(...proxies);
     return renderList;
   };
+  layer.mainTexture.getCustomRenderList = customRenderList;
   function eligible(mesh: AbstractMesh): mesh is Mesh {
     if (
       !(mesh instanceof Mesh) ||
-      !mesh.metadata?.partId ||
+      !placementRanges(mesh) ||
       !mergeRoles.has(mesh.metadata?.role) ||
       mesh.skeleton ||
       mesh.morphTargetManager ||
+      mesh.bakedVertexAnimationManager ||
+      mesh.animations.length > 0 ||
       mesh.hasVertexAlpha ||
       mesh.visibility !== 1 ||
       mesh.billboardMode !== 0
@@ -107,6 +180,7 @@ export function createShipGlowOccluders(
       !mat ||
       !["PBRMaterial", "StandardMaterial"].includes(mat.getClassName()) ||
       mat.disableDepthWrite ||
+      mat.fillMode !== 0 ||
       mat.stencil.enabled ||
       mat.needAlphaBlendingForMesh(mesh) ||
       mat.needAlphaTestingForMesh(mesh) ||
@@ -143,6 +217,7 @@ export function createShipGlowOccluders(
       proxy.dispose(false, false);
     }
     proxies = [];
+    batched.clear();
   }
   function rememberTransforms() {
     transforms.clear();
@@ -199,15 +274,18 @@ export function createShipGlowOccluders(
       const key = JSON.stringify([
         source.metadata.role,
         source.metadata.deckId ?? null,
+        source.metadata.authoredStudy?.receiverRegion ?? null,
         source.renderingGroupId,
         source.sideOrientation,
         mat.backFaceCulling,
         mat.cullBackFaces,
+        mat.depthFunction,
         source.receiveShadows,
       ]);
       const group = groups.get(key) ?? [];
       group.push(source);
       groups.set(key, group);
+      batched.add(source);
     }
     for (const source of sources)
       if (
@@ -237,12 +315,9 @@ export function createShipGlowOccluders(
         part.indices = Array.from(source.getIndices()!);
         part.transform(source.computeWorldMatrix(true).multiply(inverse));
         const offset = data.positions.length / 3;
-        ranges.push({
-          start: data.indices.length / 3,
-          count: part.indices!.length / 3,
-          placementId: source.metadata.partId,
-          sourceMeshId: source.uniqueId,
-        });
+        const start = data.indices.length / 3;
+        for (const range of placementRanges(source)!)
+          ranges.push({ ...range, start: start + range.start });
         for (const value of part.positions!) data.positions.push(value);
         for (const index of part.indices!) data.indices.push(index + offset);
       }
@@ -256,11 +331,13 @@ export function createShipGlowOccluders(
         black.emissiveColor = Color3.Black();
         black.backFaceCulling = mat.backFaceCulling;
         black.cullBackFaces = mat.cullBackFaces;
+        black.depthFunction = mat.depthFunction;
         materials.set(key, black);
       }
       const proxy = new Mesh("ship-glow-occluder", scene);
       proxy.metadata = {
         role: "proxy",
+        glowOccluder: true,
         staticMaterial: true,
         structuralRole: source.metadata.role,
         deckId: source.metadata.deckId,
@@ -287,6 +364,9 @@ export function createShipGlowOccluders(
         !source.isDisposed() && source.isEnabled() && source.isVisible;
       const canMerge = enabled && eligible(source);
       const geometry = source instanceof Mesh ? source.geometry : null;
+      const placements = canMerge
+        ? JSON.stringify(placementRanges(source))
+        : undefined;
       const previous = states.get(source),
         indices = source.isDisposed() ? 0 : source.getTotalIndices();
       if (
@@ -299,11 +379,15 @@ export function createShipGlowOccluders(
             previous.role !== source.metadata?.role ||
             previous.deckId !== source.metadata?.deckId ||
             previous.partId !== source.metadata?.partId ||
+            previous.placements !== placements ||
+            previous.region !==
+              source.metadata?.authoredStudy?.receiverRegion ||
             previous.group !== source.renderingGroupId ||
             previous.orientation !==
               (source instanceof Mesh ? source.sideOrientation : 0) ||
             previous.cull !== source.material?.backFaceCulling ||
             previous.cullBack !== source.material?.cullBackFaces ||
+            previous.depth !== source.material?.depthFunction ||
             previous.receives !== source.receiveShadows))
       ) {
         dirty = true;
@@ -316,10 +400,13 @@ export function createShipGlowOccluders(
           role: source.metadata?.role,
           deckId: source.metadata?.deckId,
           partId: source.metadata?.partId,
+          placements,
+          region: source.metadata?.authoredStudy?.receiverRegion,
           group: source.renderingGroupId,
           orientation: source instanceof Mesh ? source.sideOrientation : 0,
           cull: source.material?.backFaceCulling,
           cullBack: source.material?.cullBackFaces,
+          depth: source.material?.depthFunction,
           receives: source.receiveShadows,
         });
       }
@@ -356,8 +443,10 @@ export function createShipGlowOccluders(
         layer.removeIncludedOnlyMesh(source as Mesh);
       for (const material of materials.values()) material.dispose();
       releaseGeometryCallbacks();
-      layer.mainTexture.renderList = oldList;
-      layer.mainTexture.getCustomRenderList = oldCustom;
+      if (layer.mainTexture.renderList === ownedList)
+        layer.mainTexture.renderList = oldList;
+      if (layer.mainTexture.getCustomRenderList === customRenderList)
+        layer.mainTexture.getCustomRenderList = oldCustom;
     },
   };
 }

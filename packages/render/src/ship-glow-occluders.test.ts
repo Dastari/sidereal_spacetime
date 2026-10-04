@@ -6,6 +6,11 @@ import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { Color4 } from "@babylonjs/core/Maths/math.color";
+import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
+import { Matrix } from "@babylonjs/core/Maths/math.vector";
+import { Constants } from "@babylonjs/core/Engines/constants";
+import { createGlowOccluders, setGlowOccludingActors } from "./glow-occluders";
 import {
   createShipGlowOccluders,
   glowPlacementAtTriangle,
@@ -48,6 +53,7 @@ test("glow batches retain triangle placement lookup, independent hidden decks, f
     expect(wall.layerMask).toBe(0);
     expect(wall.isPickable).toBe(false);
     expect(wall.metadata.role).toBe("proxy");
+    expect(wall.metadata.glowOccluder).toBe(true);
     expect(a.material).toBe(mat);
     expect(a.getVerticesData("position")).toEqual(originalPositions);
     root.position.x = 20;
@@ -97,6 +103,171 @@ test("glow batches retain triangle placement lookup, independent hidden decks, f
   } finally {
     batch.dispose();
     expect(layer.mainTexture.renderList).toBeNull();
+    scene.dispose();
+    engine.dispose();
+  }
+});
+
+test("authored ranges batch exact transformed triangles while receiver cohorts and malformed identity remain independent", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine),
+    root = new TransformNode("ship", scene),
+    layer = new GlowLayer("glow", scene),
+    material = new PBRMaterial("source-finish", scene);
+  material.backFaceCulling = false;
+  material.cullBackFaces = false;
+  material.depthFunction = Constants.LEQUAL;
+  const meshes = ["a", "b", "flight", "invalid"].map((id, i) => {
+    const mesh = CreateBox(id, {}, scene);
+    mesh.parent = root;
+    mesh.material = material;
+    mesh.position.x = i * 3;
+    mesh.metadata = {
+      role: "hull",
+      authoredStudy: {
+        materialKey: "source-palette-primary",
+        receiverRegion: i === 2 ? "exterior/flight" : "own/rest",
+        placementRanges: [0, 1].map((n) => ({
+          object: `${id}-${n}`,
+          piece: "hull.panel",
+          role: "hull-bay",
+          material: "primary",
+          indexStart: n * 18,
+          indexCount: 18,
+        })),
+      },
+    };
+    return mesh;
+  });
+  meshes[1].scaling.x = -1;
+  meshes[3].metadata.authoredStudy.placementRanges[1].indexStart = 17;
+  const originalPositions = meshes.map((m) =>
+    Array.from(m.getVerticesData("position")!),
+  );
+  const originalIndices = meshes.map((m) => Array.from(m.getIndices()!));
+  const batch = createShipGlowOccluders(scene, root, layer);
+  try {
+    batch.set(meshes);
+    expect(batch.proxies).toHaveLength(2);
+    expect(batch.retained).toEqual([meshes[3]]);
+    const deck = batch.proxies.find((m) => m.getTotalIndices() === 72)!;
+    expect(
+      [0, 5, 6, 11, 12, 17, 18, 23].map((i) =>
+        glowPlacementAtTriangle(deck, i),
+      ),
+    ).toEqual(["a-0", "a-0", "a-1", "a-1", "b-0", "b-0", "b-1", "b-1"]);
+    const expectedPositions: number[] = [],
+      expectedIndices: number[] = [];
+    for (const mesh of meshes.slice(0, 2)) {
+      const part = new VertexData();
+      part.positions = Array.from(mesh.getVerticesData("position")!);
+      part.indices = Array.from(mesh.getIndices()!);
+      root.computeWorldMatrix(true);
+      part.transform(
+        mesh
+          .computeWorldMatrix(true)
+          .multiply(Matrix.Invert(root.getWorldMatrix())),
+      );
+      const offset = expectedPositions.length / 3;
+      expectedPositions.push(...part.positions);
+      expectedIndices.push(...part.indices.map((i) => i + offset));
+    }
+    expect(Array.from(deck.getVerticesData("position")!)).toEqual(
+      expectedPositions,
+    );
+    expect(Array.from(deck.getIndices()!)).toEqual(expectedIndices);
+    expect(deck.material!.backFaceCulling).toBe(material.backFaceCulling);
+    expect(deck.material!.cullBackFaces).toBe(material.cullBackFaces);
+    expect(deck.material!.depthFunction).toBe(material.depthFunction);
+    expect(
+      meshes.map((m) => Array.from(m.getVerticesData("position")!)),
+    ).toEqual(originalPositions);
+    expect(meshes.map((m) => Array.from(m.getIndices()!))).toEqual(
+      originalIndices,
+    );
+    expect(meshes.every((m) => m.material === material)).toBe(true);
+    meshes[2].setEnabled(false);
+    batch.update();
+    expect(batch.proxies).toHaveLength(1);
+    meshes[0].setEnabled(false);
+    meshes[1].setEnabled(false);
+    meshes[2].setEnabled(true);
+    batch.update();
+    expect(batch.proxies).toHaveLength(1);
+    expect(batch.proxies[0].getTotalIndices()).toBe(36);
+    expect(glowPlacementAtTriangle(batch.proxies[0], 0)).toBe("flight-0");
+  } finally {
+    batch.dispose();
+    scene.dispose();
+    engine.dispose();
+  }
+});
+
+test("custom mask retains late registered actors and emitters, suppresses only batched originals and restores prior ownership", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine),
+    root = new TransformNode("ship", scene),
+    layer = new GlowLayer("glow", scene),
+    material = new PBRMaterial("source", scene),
+    wall = CreateBox("wall", {}, scene);
+  wall.parent = root;
+  wall.material = material;
+  wall.metadata = { role: "wall", partId: "wall" };
+  const priorList = [wall];
+  layer.mainTexture.renderList = priorList;
+  const priorCustom = () => null;
+  layer.mainTexture.getCustomRenderList = priorCustom;
+  const black = createGlowOccluders(layer),
+    batch = createShipGlowOccluders(scene, root, layer);
+  black.set([wall]);
+  batch.set([wall]);
+  const actor = CreateBox("late-crew", {}, scene),
+    jet = CreateBox("late-exhaust", {}, scene),
+    unrelated = CreateBox("unrelated", {}, scene);
+  const actorMaterial = new PBRMaterial("crew-emission", scene);
+  actorMaterial.emissiveColor = Color3.White();
+  actor.material = actorMaterial;
+  jet.material = actorMaterial;
+  unrelated.material = material;
+  setGlowOccludingActors(scene, [actor]);
+  layer.addIncludedOnlyMesh(jet);
+  const active = scene.getActiveMeshes();
+  active.push(wall);
+  active.push(actor);
+  active.push(jet);
+  active.push(unrelated);
+  try {
+    const list = layer.mainTexture.getCustomRenderList!(0, null, 0)!;
+    expect(list).toContain(actor);
+    expect(list).toContain(jet);
+    expect(list).toContain(batch.proxies[0]);
+    expect(list).not.toContain(wall);
+    expect(list).not.toContain(unrelated);
+    const color = new Color4();
+    layer.customEmissiveColorSelector!(
+      actor,
+      actor.subMeshes[0],
+      actorMaterial,
+      color,
+    );
+    expect(color.asArray()).toEqual([0, 0, 0, 1]);
+    layer.customEmissiveColorSelector!(
+      jet,
+      jet.subMeshes[0],
+      actorMaterial,
+      color,
+    );
+    expect(color.asArray()).toEqual([1, 1, 1, 1]);
+    const proxy = batch.proxies[0];
+    batch.dispose();
+    expect(proxy.isDisposed()).toBe(true);
+    expect(layer.mainTexture.renderList).toBe(priorList);
+    expect(layer.mainTexture.getCustomRenderList).toBe(priorCustom);
+    expect(layer.hasMesh(actor)).toBe(true);
+    expect(layer.hasMesh(jet)).toBe(true);
+  } finally {
+    batch.dispose();
+    black.dispose();
     scene.dispose();
     engine.dispose();
   }

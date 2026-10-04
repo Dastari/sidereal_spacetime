@@ -33,12 +33,14 @@ class PrepareAppTests(unittest.TestCase):
             seed_runtime(root)
             selected = "ship-study/wayfarer-authored-r001"
             for name in (f"{selected}/glb/props/crate.glb", f"{selected}/rcs.md.glb",
+                         "ship-study/wayfarer-dorsal-r001/glb/roof/skin.glb",
                          "ship-study/unselected-roof/roof.glb"):
                 write(root, f"assets/runtime/{name}")
             prepare("client", root)
             public = root / "apps/client/public/assets"
             self.assertTrue((public / selected / "glb/props/crate.glb").is_file())
             self.assertTrue((public / selected / "rcs.md.glb").is_file())
+            self.assertTrue((public / "ship-study/wayfarer-dorsal-r001/glb/roof/skin.glb").is_file())
             self.assertFalse((public / "ship-study/unselected-roof").exists())
 
     def test_only_allowlisted_help_and_runtime_survive(self):

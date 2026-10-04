@@ -427,14 +427,29 @@ export function createConstructionLighting(
   );
   sun.position.set(18, 30, -18);
   sun.intensity = 2.1;
+  // Fit to the complete caster list in light space. Camera near/far change on
+  // zoom and must not alter shadow depth precision or the effective bias.
+  sun.autoCalcShadowZBounds = true;
   protectPbrLight(sun, 0);
   protectPbrLight(fill, 1);
   const shadow = new ShadowGenerator(1024, sun);
   shadow.usePercentageCloserFiltering = true;
   shadow.bias = 0.0035;
   shadow.normalBias = 0.015;
+  const refreshCasterBounds = scene.onBeforeRenderObservable.add(() => {
+    if (!scene.shadowsEnabled || !sun.shadowEnabled) return;
+    // Disabled deck/roof banks aren't evaluated by Scene, but the directional
+    // fit still visits the complete registered list. Keep their world bounds
+    // current too, so a view switch or ship rotation cannot change precision.
+    for (const mesh of shadow.getShadowMap()?.renderList ?? [])
+      if (!mesh.isDisposed()) mesh.computeWorldMatrix(true);
+  });
+  scene.onDisposeObservable.addOnce(() =>
+    scene.onBeforeRenderObservable.remove(refreshCasterBounds),
+  );
   const addActor = (actors: AbstractMesh[]) => {
     for (const mesh of actors) {
+      if (mesh.metadata?.glowOccluder === true) continue;
       mesh.receiveShadows = true;
       shadow.addShadowCaster(mesh);
     }
