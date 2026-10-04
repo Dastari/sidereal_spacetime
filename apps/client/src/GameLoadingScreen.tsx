@@ -9,12 +9,12 @@ import {
 import "./game-loading.css";
 
 const stages: Record<string, string> = {
-  connecting: "Connecting to your world",
-  ship: "Loading your ship",
-  environment: "Preparing the surrounding space",
-  crew: "Loading your character",
+  connecting: "Connecting to server",
+  ship: "Loading ship",
+  environment: "Loading environment",
+  crew: "Loading character",
   equipment: "Loading equipped items",
-  finishing: "Preparing the first frame",
+  finishing: "Rendering first frame",
 };
 
 /** Covers, but never display:none's, the live canvas while its GPU assets load. */
@@ -46,10 +46,10 @@ export function GameLoadingScreen({
     >
       <HangarShell
         className="loading-hangar"
-        header={<SiderealWordmark subtitle="Your next voyage" />}
+        header={<SiderealWordmark subtitle="Loading game" />}
         footer={
           <>
-            <span>{awaitingShip ? "Your crew" : shipName || "Sidereal"}</span>
+            <span>{awaitingShip ? "Character" : shipName || "Sidereal"}</span>
             <GameButton variant="ghost" onClick={onSignOut}>
               Sign out
             </GameButton>
@@ -59,16 +59,16 @@ export function GameLoadingScreen({
         <div className="loading-space" aria-hidden="true" />
         <GamePanel
           className="loading-manifest"
-          title={failure ? "Unable to board" : "Preparing to board"}
+          title={failure ? "Loading failed" : "Loading game"}
           eyebrow={
-            awaitingShip ? "No ship assigned" : shipName || "Your next voyage"
+            awaitingShip ? "No ship assigned" : shipName || "Loading game"
           }
         >
           <p className="loading-stage" role="status" aria-live="polite">
             {failure
-              ? "The game could not finish loading."
+              ? "Loading could not complete."
               : awaitingShip && stage === "ship"
-                ? "Preparing your character"
+                ? "Loading character"
                 : (stages[stage] ?? stages.ship)}
           </p>
           {failure ? (
@@ -80,10 +80,10 @@ export function GameLoadingScreen({
           )}
           <p className="loading-hint">
             {failure
-              ? "Your saved character and cargo remain in your account. Retry to download the required assets again."
+              ? "Retry to load the required assets again."
               : awaitingShip
-                ? "Your character and personal kit are ready. A ship will be assigned to your account."
-                : "Your ship and equipment will be ready before you enter."}
+                ? "No ship is assigned to this character."
+                : "Loading ship and equipment."}
           </p>
           {failure && (
             <GameButton variant="primary" onClick={() => location.reload()}>

@@ -92,12 +92,12 @@ export function CharacterSelect({
         <div className="character-select-footer">
           <div>
             <span className="character-footer-label">
-              {actor ? actor.name : "Your crew begins here"}
+              {actor ? actor.name : "Create character"}
             </span>
             <span>
               {actor
-                ? "Ready for your next voyage"
-                : "Create your first character to continue"}
+                ? "Selected character"
+                : "Enter a character name to continue"}
             </span>
           </div>
           {actor && (
@@ -117,11 +117,7 @@ export function CharacterSelect({
       }
     >
       <div className="character-select-layout">
-        <GamePanel
-          className="character-roster"
-          title="Your crew"
-          eyebrow="Select a crew member"
-        >
+        <GamePanel className="character-roster" title="Characters">
           {actor ? (
             <button
               type="button"
@@ -141,13 +137,8 @@ export function CharacterSelect({
             </button>
           ) : (
             <p className="character-empty-copy">
-              Your account does not have a character yet. Choose a name to start
-              your journey.
-            </p>
-          )}
-          {actor && (
-            <p className="character-roster-note">
-              Your saved character and equipment are ready to continue.
+              No character is linked to this account. Enter a name to create
+              one.
             </p>
           )}
         </GamePanel>
@@ -167,11 +158,7 @@ export function CharacterSelect({
               </div>
             </>
           ) : (
-            <GamePanel
-              className="character-create"
-              title="New crew member"
-              eyebrow="A new adventure awaits"
-            >
+            <GamePanel className="character-create" title="Create character">
               <form
                 onSubmit={(event) => {
                   event.preventDefault();
@@ -219,7 +206,7 @@ export function CharacterSelect({
             <GamePanel
               className="character-details"
               title={actor.name}
-              eyebrow="Crew manifest"
+              eyebrow="Character details"
             >
               <dl className="character-manifest">
                 <div>

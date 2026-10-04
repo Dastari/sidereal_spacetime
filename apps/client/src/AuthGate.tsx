@@ -128,30 +128,9 @@ export default function AuthGate() {
       />
     );
   return (
-    <HangarShell
-      className="auth-screen"
-      header={
-        <SiderealWordmark subtitle="Explore · Build · Survive · Belong" />
-      }
-      footer={
-        <>
-          <span>A universe of possibilities</span>
-          <span>Explore · Build · Survive · Belong</span>
-        </>
-      }
-    >
-      <section className="auth-story" aria-label="Sidereal crew access">
-        <p className="auth-story-line">A brighter galaxy. Together.</p>
-        <p>Your ship. Your crew. Your next journey.</p>
-      </section>
-      <GamePanel
-        className="auth-panel"
-        title="Crew login"
-        eyebrow="Access your journey"
-      >
-        <p className="auth-description">
-          Sign in with your Dastari account to join your crew.
-        </p>
+    <HangarShell className="auth-screen" header={<SiderealWordmark />}>
+      <GamePanel className="auth-panel" title="Sign in">
+        <p className="auth-description">Sign in with your Dastari account.</p>
         {error && <GameNotice kind="danger">{error}</GameNotice>}
         <GameButton
           className="auth-primary"
@@ -161,15 +140,15 @@ export default function AuthGate() {
           onClick={() => void signIn()}
         >
           {signingIn
-            ? "Opening secure sign-in…"
+            ? "Opening sign-in…"
             : ready
-              ? "Sign in / Create account"
+              ? "Sign in"
               : "Preparing sign-in…"}
         </GameButton>
         <p className="auth-note" role={signingIn ? "status" : undefined}>
           {signingIn
-            ? "Continue at Dastari to access your saved character."
-            : "Your character, equipment and appearance stay with your account."}
+            ? "Continue on the Dastari sign-in page."
+            : "Account registration is available on the sign-in page."}
         </p>
         {import.meta.env.DEV && (
           <details className="auth-development">

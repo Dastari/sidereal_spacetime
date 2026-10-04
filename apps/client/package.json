@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/client",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -13,8 +13,8 @@
     "oidc-client-ts": "^3.4.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "@sidereal/canvas-ui": "0.3.1",
-    "@sidereal/ui": "0.6.1"
+    "@sidereal/canvas-ui": "0.3.2",
+    "@sidereal/ui": "0.6.2"
   },
   "scripts": {
     "build": "python3 ../../scripts/prepare_app.py client && vite build && node ../../scripts/precompress_assets.mjs dist",

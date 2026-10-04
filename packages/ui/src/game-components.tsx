@@ -315,7 +315,7 @@ export function SiderealWordmark({ subtitle }: { subtitle?: string }) {
         </svg>
         <span>SIDEREAL</span>
       </div>
-      <p>{subtitle ?? "Explore · Build · Survive · Belong"}</p>
+      {subtitle && <p>{subtitle}</p>}
     </div>
   );
 }
@@ -339,20 +339,10 @@ export function HangarShell({
       <div className="ui-hangar__art" aria-hidden="true" />
       <header className="ui-hangar__header">
         {header ?? <SiderealWordmark />}
-        <span className="ui-hangar__motto">
-          A brighter galaxy.
-          <br />
-          Together.
-        </span>
       </header>
       <div className="ui-hangar__content">{children}</div>
       <footer className="ui-hangar__footer">
-        {footer ?? (
-          <>
-            <span>SIDEREAL // A universe of possibilities</span>
-            <span>Explore · Build · Survive · Belong</span>
-          </>
-        )}
+        {footer ?? <span>SIDEREAL</span>}
       </footer>
     </main>
   );
