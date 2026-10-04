@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -102,7 +102,7 @@
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.12.0",
+    "@sidereal/content": "0.13.0",
     "@sidereal/scripting": "0.1.0"
   }
 }

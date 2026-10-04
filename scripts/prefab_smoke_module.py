@@ -9,6 +9,82 @@ packages/world or publishes to a shared database.
 from pathlib import Path
 import shutil
 
+ACCESS_TABLE = '''
+const wayfarerAccessSmokeCrew = table({name:"wayfarer_access_smoke_crew",public:false},{
+  characterId:t.string().primaryKey(),crewId:t.string(),shipId:t.string()
+});
+'''
+
+ACCESS_ADDON = r'''
+// Proposed profile qualification uses the real trusted installer and validators.
+// Only the copied code-owned admission constant is enabled; no live catalogue changes.
+import { trustedPrefabTemplateFor as accessSmokeTemplate } from "./prefab-ship-authority";
+import { WAYFARER_ACCESS_SOURCE as accessSmokeSource } from "@sidereal/content/wayfarer-access-profile";
+import { defaultPrefabComponentCatalog as accessSmokeCatalog } from "@sidereal/content/ship-prefab-catalog";
+export const assignWayfarerAccessSmokeShip = db.reducer({},auth.gameAction((ctx)=>{
+  const actors=[...ctx.db.character.by_owner.filter(ctx.sender)];
+  if(actors.length!==1)throw new SenderError("One owned smoke character required");
+  installPrefabShip(ctx,actors[0],{prefabId:accessSmokeSource.id,pose:{kind:"berth"}},
+    {template:accessSmokeTemplate(accessSmokeSource,accessSmokeCatalog())});
+},true));
+import { constructionCollision as accessSmokeCollision } from "./construction-doors";
+import { canOccupyDeck as accessSmokeStanding } from "@sidereal/sim/construction-collision";
+export const exerciseWayfarerAccessSmokeCrew = db.reducer({phase:t.string(),x:t.f64(),y:t.f64()},auth.gameAction((ctx,args)=>{
+  const actors=[...ctx.db.character.by_owner.filter(ctx.sender)];
+  if(actors.length!==1)throw new SenderError("One owned smoke character required");
+  const actor=actors[0],ship=ctx.db.ship.id.find(actor.shipId),location=ctx.db.constructionLocation.characterId.find(actor.id),instance=ctx.db.constructionInstance.id.find(actor.shipId);
+  if(!ship?.owner.isEqual(ctx.sender)||!instance)throw new SenderError("Own smoke instance required");
+  if(JSON.parse(instance.documentJson).prefab?.document?.authoredGameplay?.revision!==2)throw new SenderError("Proposed access fixture only");
+  const saved=ctx.db.wayfarerAccessSmokeCrew.characterId.find(actor.id);
+  if(args.phase==="clear"){
+    if(saved){for(const item of ctx.db.inventoryItem.by_character.filter(saved.crewId))ctx.db.inventoryItem.id.delete(item.id);
+      ctx.db.constructionLocation.characterId.delete(saved.crewId);ctx.db.character.id.delete(saved.crewId);ctx.db.wayfarerAccessSmokeCrew.characterId.delete(actor.id);}
+    return;
+  }
+  if(!location)throw new SenderError("Accepted smoke deck required");
+  if(args.phase!=="spawn"&&args.phase!=="move"&&args.phase!=="unsuit")throw new SenderError("Known access fixture action required");
+  if(args.phase==="unsuit"){
+    if(!saved)throw new SenderError("Existing fixture crew required");
+    for(const item of ctx.db.inventoryItem.by_character.filter(saved.crewId))if(item.equipmentSlot==="helmet")ctx.db.inventoryItem.id.delete(item.id);
+    return;
+  }
+  const point:[number,number]=[args.x,args.y],frame=accessSmokeCollision(ctx,instance,location.deckId);
+  if(!accessSmokeStanding(frame,{shipId:ship.id,deckId:location.deckId,position:point},.3))throw new SenderError("Fixture crew needs actual admitted standing support");
+  if(args.phase==="move"){
+    const crew=saved&&ctx.db.character.id.find(saved.crewId);if(!crew)throw new SenderError("Existing fixture crew required");
+    ctx.db.character.id.update({...crew,localX:args.x,localY:args.y});return;
+  }
+  if(saved)throw new SenderError("Clear previous fixture crew first");
+  const crewId=ctx.newUuidV4().toString();ctx.db.character.insert({...actor,id:crewId,owner:ctx.identity,name:"Access fixture crew",connected:false,sprinting:false,localX:args.x,localY:args.y});
+  ctx.db.constructionLocation.insert({...location,characterId:crewId,visitId:ctx.newUuidV4().toString()});
+  for(const item of ctx.db.inventoryItem.by_character.filter(actor.id))if(/^wardrobe-suit-/.test(item.definitionId)&&item.equipmentSlot)ctx.db.inventoryItem.insert({...item,id:ctx.newUuidV4().toString(),characterId:crewId,containerId:""});
+  ctx.db.wayfarerAccessSmokeCrew.insert({characterId:actor.id,crewId,shipId:ship.id});
+},true));
+'''
+
+
+def stage_access_dependencies(root, stage, packages):
+    """Never flip a symlink to production source; resolve workspace imports locally."""
+    for name in ['content', 'sim']:
+        shutil.copytree(root / 'packages' / name, packages / name,
+                        ignore=shutil.ignore_patterns('node_modules', 'dist'))
+    admission = packages / 'content/src/wayfarer-access-profile.ts'
+    marker = 'export const WAYFARER_ACCESS_REVIEW_ENABLED = false;'
+    text = admission.read_text()
+    if text.count(marker) != 1:
+        raise RuntimeError('Expected exactly one disabled Wayfarer access admission constant')
+    admission.write_text(text.replace(marker, marker.replace('false', 'true'), 1))
+    (stage / 'assets').symlink_to(root / 'assets', target_is_directory=True)
+    modules = stage / 'node_modules'
+    modules.mkdir()
+    for dependency in (root / 'node_modules').iterdir():
+        if dependency.name != '@sidereal':
+            (modules / dependency.name).symlink_to(dependency, target_is_directory=dependency.is_dir())
+    workspace = modules / '@sidereal'
+    workspace.mkdir()
+    for package in packages.iterdir():
+        (workspace / package.name).symlink_to(package, target_is_directory=True)
+
 ADDON = '''
 import { installPrefabShip } from "./prefab-ship-authority";
 import { itemDefinitions as smokeItemDefinitions, commitPin as commitSmokePin } from "./item-definitions";
@@ -188,15 +264,20 @@ def publish(dev, database, evidence):
     shutil.copy2(dev.ROOT / 'packages/world/package.json', world / 'package.json')
     shutil.copy2(dev.ROOT / 'packages/world/tsconfig.json', world / 'tsconfig.json')
     shutil.copy2(dev.ROOT / 'tsconfig.json', stage / 'tsconfig.json')
+    access_review = __import__('os').environ.get('SIDEREAL_ACCESS_PROFILE_SMOKE') == '1'
     for source in (dev.ROOT / 'packages').iterdir():
-        if source.is_dir() and source.name != 'world':
+        if source.is_dir() and source.name != 'world' and not (access_review and source.name in {'content', 'sim'}):
             (packages / source.name).symlink_to(source, target_is_directory=True)
+    if access_review:
+        stage_access_dependencies(dev.ROOT, stage, packages)
     index = world / 'src/index.ts'
     text = index.read_text()
     if text.count('const db = schema({') != 1:
         raise RuntimeError('World schema integration marker changed')
+    if access_review:
+        text = text.replace('const db = schema({', ACCESS_TABLE + '\nconst db = schema({\n  wayfarerAccessSmokeCrew,', 1)
     text = text.replace('const db = schema({', VISIBILITY_TABLE + '\nconst db = schema({\n  observerVisibilitySmokeSnapshot,', 1)
-    index.write_text(text + '\n' + ADDON + '\n' + VISIBILITY_ADDON)
+    index.write_text(text + '\n' + ADDON + '\n' + VISIBILITY_ADDON + ('\n' + ACCESS_ADDON if access_review else ''))
     dev.cli('publish', database, '--server', dev.DB_URL, '--module-path', str(world), '--yes', '--no-config', '--delete-data=never')
     bindings = stage / 'generated'
     dev.cli('generate', '--lang', 'typescript', '--out-dir', str(bindings), '--module-path', str(world), '--yes')

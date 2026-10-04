@@ -8,6 +8,8 @@ import "@babylonjs/loaders/glTF";
 import {
   SHIP_ACCESS_DOOR_PACK,
   shipAccessDoorVariant,
+  snapshotShipAccessDoorPack,
+  type ShipAccessDoorPack,
   type ShipAccessDoorVariant,
   type ShipAccessDoorPart,
   type ShipAccessDoorPiece,
@@ -92,13 +94,14 @@ async function sourcePart(
   scene: Scene,
   id: string,
   fetchBytes: (piece: ShipAccessDoorPiece) => Promise<Uint8Array>,
+  pack: ShipAccessDoorPack,
 ) {
   let library = libraries.get(scene);
   if (!library) {
     library = new Map();
     libraries.set(scene, library);
   }
-  const piece = SHIP_ACCESS_DOOR_PACK.pieces.find((piece) => piece.id === id);
+  const piece = pack.pieces.find((piece) => piece.id === id);
   if (!piece) throw Error(`Missing authored access door part: ${id}`);
   // Snapshot the trusted pin before caller code runs. A resolver receives metadata,
   // never the mutable catalogue object or its nested arrays.
@@ -108,7 +111,8 @@ async function sourcePart(
     boundsMin: Object.freeze([...piece.boundsMin]),
     boundsMax: Object.freeze([...piece.boundsMax]),
   });
-  let pending = library.get(id);
+  const cacheKey = `${id}:${expectedSha}`;
+  let pending = library.get(cacheKey);
   if (!pending) {
     pending = (async () => {
       const bytes = Uint8Array.from(await fetchBytes(request));
@@ -124,9 +128,9 @@ async function sourcePart(
       scene.onDisposeObservable.addOnce(() => container.dispose());
       return container;
     })();
-    library.set(id, pending);
+    library.set(cacheKey, pending);
     pending.catch(() => {
-      if (library!.get(id) === pending) library!.delete(id);
+      if (library!.get(cacheKey) === pending) library!.delete(cacheKey);
     });
   }
   return pending;
@@ -139,7 +143,10 @@ export async function loadAuthoredAccessDoors(
   scene: Scene,
   parent: TransformNode,
   placements: readonly AuthoredAccessDoorPlacement[],
-  options: { fetchBytes: (piece: ShipAccessDoorPiece) => Promise<Uint8Array> },
+  options: {
+    fetchBytes: (piece: ShipAccessDoorPiece) => Promise<Uint8Array>;
+    pack?: ShipAccessDoorPack;
+  },
 ) {
   if (!options || typeof options.fetchBytes !== "function")
     throw Error(
@@ -147,6 +154,9 @@ export async function loadAuthoredAccessDoors(
     );
   if (!scene.useRightHandedSystem)
     throw Error("Authored access doors require the game frame");
+  const pack = snapshotShipAccessDoorPack(
+    options.pack ?? SHIP_ACCESS_DOOR_PACK,
+  );
   const parentMatrix = parent.computeWorldMatrix(true);
   const values = parentMatrix.asArray();
   const bases = [0, 4, 8].map((offset) => [
@@ -172,7 +182,7 @@ export async function loadAuthoredAccessDoors(
     if (!placement.id || ids.has(placement.id))
       throw Error("Duplicate authored access door identity");
     ids.add(placement.id);
-    shipAccessDoorVariant(placement.variant);
+    shipAccessDoorVariant(placement.variant, pack);
     accessDoorMatrix(placement);
   }
   const rows: {
@@ -194,7 +204,7 @@ export async function loadAuthoredAccessDoors(
   const observer = scene.onDisposeObservable.addOnce(dispose);
   try {
     for (const placement of placements) {
-      const variant = shipAccessDoorVariant(placement.variant);
+      const variant = shipAccessDoorVariant(placement.variant, pack);
       const parts: ShipAccessDoorPart[] =
         variant.motion === "single-sliding"
           ? ["frame", "leaf"]
@@ -207,6 +217,7 @@ export async function loadAuthoredAccessDoors(
               part
             ]!,
             options.fetchBytes,
+            pack,
           ),
         ),
       );
@@ -245,12 +256,20 @@ export async function loadAuthoredAccessDoors(
               id: placement.id,
               variant: placement.variant,
               part,
-              revision: SHIP_ACCESS_DOOR_PACK.revision,
+              revision: pack.revision,
             },
           };
         }
         if (part !== "frame")
-          leaves.push({ node: group, direction: part === "right" ? 1 : -1 });
+          leaves.push({
+            node: group,
+            direction:
+              part === "leaf"
+                ? (variant.leafDirection ?? -1)
+                : part === "right"
+                  ? 1
+                  : -1,
+          });
       }
     }
   } catch (error) {
