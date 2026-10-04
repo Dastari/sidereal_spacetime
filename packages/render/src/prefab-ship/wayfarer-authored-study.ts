@@ -262,6 +262,8 @@ function primitive(mesh: Mesh, indexStart: number, indexCount: number) {
   };
 }
 
+export type AuthoredPrimitive = ReturnType<typeof primitive>;
+
 /** Own imported materials/textures until all candidate draws have been disposed. */
 export async function loadAuthoredStudy(
   scene: Scene,
@@ -274,6 +276,13 @@ export async function loadAuthoredStudy(
     batchRegions?: ReadonlyMap<string, string>;
     /** Source-pinned reusable object metadata; independent of scene and placement names. */
     assetLighting?: ReadonlyMap<string, AuthoredAssetLighting>;
+    /** Optional grammar clipping/deformation, after the native node and instance transforms.
+     * The returned channels retain the native material, UVs and placement provenance. */
+    transformGeometry?: (
+      row: AuthoredInstanceInput,
+      geometry: AuthoredPrimitive,
+      transform: Matrix,
+    ) => { geometry: AuthoredPrimitive; transform: Matrix };
   } = {},
 ) {
   if (!scene.useRightHandedSystem)
@@ -438,19 +447,25 @@ export async function loadAuthoredStudy(
               };
               groups.set(batchKey, group);
             }
-            const transform = nodeMatrix.multiply(
+            let transform = nodeMatrix.multiply(
               Matrix.FromArray(
                 authoredInstanceMatrix(piece.frame, row.matrix, origin),
               ),
             );
+            let placed = data;
+            if (options.transformGeometry) {
+              const adjusted = options.transformGeometry(row, data, transform);
+              placed = adjusted.geometry;
+              transform = adjusted.transform;
+            }
             const start = group.geometry.indices.length;
             appendTransformed(
               group.geometry,
-              data.positions,
-              data.normals,
-              data.indices,
+              placed.positions,
+              placed.normals,
+              placed.indices,
               transform.asArray(),
-              data,
+              placed,
               { correctNormals: true },
             );
             group.ranges.push({
@@ -459,7 +474,7 @@ export async function loadAuthoredStudy(
               role: row.role,
               material: original.name,
               indexStart: start,
-              indexCount: data.indices.length,
+              indexCount: placed.indices.length,
             });
           }
         }
@@ -482,6 +497,7 @@ export async function loadAuthoredStudy(
     for (const material of usedMaterials)
       if (!scene.materials.includes(material)) scene.addMaterial(material);
     for (const [key, group] of groups) {
+      if (!group.geometry.indices.length) continue;
       const mesh = new Mesh(`authored-study:${key}`, scene),
         data = new VertexData();
       data.positions = Float32Array.from(group.geometry.positions);

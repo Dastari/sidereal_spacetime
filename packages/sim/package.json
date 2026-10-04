@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -97,11 +97,12 @@
     "./prefab-ship-systems": "./src/prefab-ship-systems.ts",
     "./ship-visual-compiler": "./src/ship-visual-compiler.ts",
     "./ship-furnishings": "./src/ship-furnishings.ts",
-    "./furnishing-wall-placement": "./src/furnishing-wall-placement.ts"
+    "./furnishing-wall-placement": "./src/furnishing-wall-placement.ts",
+    "./authored-template-plan": "./src/authored-template-plan.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.10.0",
+    "@sidereal/content": "0.11.0",
     "@sidereal/scripting": "0.1.0"
   }
 }

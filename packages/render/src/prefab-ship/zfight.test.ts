@@ -22,7 +22,10 @@ import {
   defaultPrefabComponentCatalog,
   prefabComponentCatalogAt,
 } from "@sidereal/content/ship-prefab-catalog";
-import { createPrefabShipView, type PrefabShipView } from "./ship-view";
+import {
+  createLegacyPrefabShipView as createPrefabShipView,
+  type PrefabShipView,
+} from "./ship-view";
 import { findCoplanarOverlaps, type TriangleSource } from "./coplanar";
 
 const repo = fileURLToPath(new URL("../../../..", import.meta.url));

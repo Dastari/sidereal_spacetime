@@ -1,0 +1,1991 @@
+{
+  "schema": "authored-asset-lighting/v1",
+  "frame": "glTF-Y-up",
+  "assets": [
+    {
+      "id": "beam.normal",
+      "sha256": "9e1fcfd178f8aa76c47a161541752da2d860a38b1d74863a3a29c6d6f5908291",
+      "emissions": {
+        "emit_a@low": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.6369444131851196,
+            0.4927033483982086,
+            0.10499999672174454
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "beam.normal"
+          }
+        }
+      ]
+    },
+    {
+      "id": "canopy.straight",
+      "sha256": "1047b6033337bdf264fc4579f26853b6e57b607ea1d2a0d6a24227a4744c914c",
+      "emissions": {
+        "glass_canopy": {
+          "factor": [
+            0.15000000596046448,
+            0.2750000059604645,
+            0.5
+          ],
+          "strength": 1
+        },
+        "emit_a@low": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 1.2000000476837158
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.34833332896232605,
+            0.3449999988079071,
+            0.02500000037252903
+          ],
+          "color": [
+            0.15000000596046448,
+            0.2750000059604645,
+            0.5
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "canopy.straight"
+          }
+        }
+      ]
+    },
+    {
+      "id": "floor.arc1.grate",
+      "sha256": "75e34965755a886d6a2c6cd16b0677590752aaf8c11fb08d31a30534becf8b7c",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc1.plate",
+      "sha256": "ee7802a9375fab02926afa14c8ab00af0e249456951e9f8b67240f075709f9e1",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc1c.grate",
+      "sha256": "2c0d79f0d2c4dbf15821f37ee4da4b4af61967a2788ed96986598d1d57f4f246",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc1c.plate",
+      "sha256": "7fa39cfa96e33aca65dd642aff242369e1fe672b6958b27e97e18977d1afc5ed",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc2.grate",
+      "sha256": "f8d272dbec04374aa4e20aacc3376134cc0c6fffd80add488d293a7136b3dc49",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc2.plate",
+      "sha256": "465e2d0cc7f9ec2edb5860277eb318aa04aa8574fa743e71c11f89e874cf78ef",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc2c.grate",
+      "sha256": "2293fc74cfdc60513f28824723adf15aa995b13775be347a7dc2a6acbe42f52b",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc2c.plate",
+      "sha256": "264b5646700da87adf79bc273013bad26a811985181d7145a0dfa532c7a7f97c",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc3.grate",
+      "sha256": "72ebd9bffba6f40036da4368ce9fcca32f9de9c13d28e1302ddca20d6fc4c753",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc3.plate",
+      "sha256": "a0b40b4edbc4426c5e6753f4868fb96f662843f97f20efeb2cbfb6d52c96da41",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc3c.grate",
+      "sha256": "399d58cf582c94e3932a2df627d160ade84a4cf84d2b9c9a8299d4eaf996fedb",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc3c.plate",
+      "sha256": "826e5533631b5beca1440ae7859b4379c838abdf9d1e9af43fee0b8849aba9e1",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc4.grate",
+      "sha256": "ec9dab4a446b5374d3e7ccac39b536026ae9a3b70ee1d03d9d6066387486c0c0",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc4.plate",
+      "sha256": "1364dfa356eaf3f864374d15977cda18719723c63bb0fa4410d28033e845a989",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc4c.grate",
+      "sha256": "f9232b69ddae71158cbf67ff03ea65f7e1c24faadac42fc83bd8c0f6ad6a35ee",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.arc4c.plate",
+      "sha256": "66511a2d22c53197ca5ff8573e74e3d75788f855e02e6567234abc82d795e600",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.slope1.grate",
+      "sha256": "d2efd403133b2965fb2e18e06403eb1625143ec053f12446455960615ac9cf22",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.slope1.plate",
+      "sha256": "923afcd762d1bd1343f22822f33be7fe496839ebf967162def6898c4d213f6c6",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.slope2.grate",
+      "sha256": "6ad1352cdb2fe667787551df09be1fe675fe2b8a0698787ded33f06bfdc794b8",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.slope2.plate",
+      "sha256": "d8e1636215299ae3e13779addc4e95c78da04268a600c1d8076e3ed781f625a5",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.slope3.grate",
+      "sha256": "44423a6e3179ede354df0fff461a8bcdaf7c34207c83771df75ca3e6d39faf57",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.slope3.plate",
+      "sha256": "9b86faa6219ca0df14faeb586429796d9870a378401fd4d2c89090f171411540",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.slope4.grate",
+      "sha256": "4a3c5c5292444a0964596ba10399691c45ea7744b4842a2aab1561733b440c79",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.slope4.plate",
+      "sha256": "03b6ea2ed2c24bee685959c02885fac54bf8bfc0c5eb70c2e7946c64d9b1e1f6",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.square.grate",
+      "sha256": "bdc1e9290e76027068f4e48dd9abcf1491e92297e69400decff479969f1455c1",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "floor.square.plate",
+      "sha256": "c1b3a6ce890230738bdf3440b335c48139d6feca455e3a2eade949a8e7318aa6",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "hull.arc1.a",
+      "sha256": "7c88fdd123fee338e9925bf96539efc64fa9edadf3bbaf6162f434593aa6b7f2",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.5932206511497498,
+            0.8233180046081543,
+            -0.4669577181339264
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc1.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc1.b",
+      "sha256": "e981907206be9d055682fd7c3b651694c1bb209ceef2d438c749d90752af2fa0",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.6282296776771545,
+            0.8171427845954895,
+            -0.4267624616622925
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc1.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc1.c",
+      "sha256": "6b1b02075bfb857f69cd5812bcee699e06582edea955d01a5726aec08d903ad5",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.7414644360542297,
+            0.5525000095367432,
+            -0.12522488832473755
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc1.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc1c.a",
+      "sha256": "65687c6d19a8d3eca0d3d8860d45b6dc67cedb4ee44759c1491603034e459909",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.7677929401397705,
+            0.8281106352806091,
+            -0.9754001498222351
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc1c.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc1c.b",
+      "sha256": "2c4de2e11f1fcf6c6e8c8b9d6b96af74c937066c88be1cd33579652061216680",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.48941925168037415,
+            0.8171427845954895,
+            -1.1470314264297485
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc1c.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc1c.c",
+      "sha256": "2bb0a971a55be8bdf2e53c1cb9fe64d8a320810e3866a656f697650e9161f436",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.20780736207962036,
+            0.533214271068573,
+            -1.2304404973983765
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc1c.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc2.a",
+      "sha256": "f28cb79adf85b8118753ba43bb2a58a60e62708bb82c63f2be0c861e1fea4d26",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.41331180930137634,
+            0.8233180046081543,
+            -1.707872748374939
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc2.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc2.b",
+      "sha256": "10a983d971e03baf9f66d24dbdea8738d5208f0e35dcdc9855b52adf49b613b9",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            1.6824660301208496,
+            0.8171427845954895,
+            -0.5173855423927307
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc2.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc2.c",
+      "sha256": "f2e60ca9d0818f74dd9d0306af3f2ca99c671880891a1fe03d68cc316666712f",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            1.4623740911483765,
+            0.5525000095367432,
+            -0.9657773971557617
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc2.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc2c.a",
+      "sha256": "79bd9bcc517e9b27971653fcd45d3cf0adc367a4d8bdbda6083ab15ef0a470a4",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            2.1830780506134033,
+            0.8281106352806091,
+            -0.5283133387565613
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc2c.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc2c.b",
+      "sha256": "45baa33d42ae6bb4f7c0c2094d2446e7e29fa3aedd7231e07a2de607c274a33a",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.4504070580005646,
+            0.8171427845954895,
+            -2.2031166553497314
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc2c.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc2c.c",
+      "sha256": "3471516e2cb451a7fe986194b6ff3e0c60781cb8a43bc4aa511f75ea0ec24000",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            1.987427830696106,
+            0.533214271068573,
+            -1.0527616739273071
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc2c.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc3.a",
+      "sha256": "5f8b3b7a9215cca3de94cb5a2e4afa67b6b271abd6b43745e56b18c1f6232912",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            1.7383450269699097,
+            0.8233180046081543,
+            -2.141322135925293
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc3.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc3.b",
+      "sha256": "99fe8b524dc7f8c4a616250fdbae7dde542419871d3aad5dd8f5547ce9aeb17e",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            1.0031553506851196,
+            0.8171427845954895,
+            -2.5718133449554443
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc3.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc3.c",
+      "sha256": "6e3b875de826d12282c6c0448318e8b34611bb9dff8368283a1353efe12f1e46",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.49738550186157227,
+            0.5525000095367432,
+            -2.7074193954467773
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc3.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc3c.a",
+      "sha256": "646c858abde4ab64c0b4b1af358dd080ac1d3bbc718f189ea32b1ced175e4d75",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            1.3962591886520386,
+            0.8233180046081543,
+            -2.9320077896118164
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc3c.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc3c.b",
+      "sha256": "6c8a52f072040a408b290ac2a581fed752b00ecb8543f7cee21a97101262e935",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            2.33331298828125,
+            0.8171427845954895,
+            -2.2611210346221924
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc3c.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc3c.c",
+      "sha256": "ffe8a6392c8491eaeea4174ab6e3182441697cd281ba6128538e474e1fecfe1e",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            2.82788348197937,
+            0.533214271068573,
+            -1.6004892587661743
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc3c.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc4.a",
+      "sha256": "8b37c192745423081af69daf264496f7fa2e9b1e6780a4f3b1377c33214ab47d",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            2.2869789600372314,
+            0.8233180046081543,
+            -2.9827449321746826
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc4.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc4.b",
+      "sha256": "17b6b230bcf7a1b14ff8a792fb1c5bd49bdd89efe6a9808c168a5300fd0008fa",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            3.1020710468292236,
+            0.8171427845954895,
+            -2.126035451889038
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc4.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc4.c",
+      "sha256": "f33f4d05c408193df7c77b3c4233298792774978d9d175b206a8983938ffb103",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.10868000984191895,
+            0.5525000095367432,
+            -3.7512762546539307
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc4.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc4c.a",
+      "sha256": "a8373054a8d210fe278e04210dfc9175c1afc3519222b71badea99a58910075b",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.7047651410102844,
+            0.8281106352806091,
+            -4.1892876625061035
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc4c.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc4c.b",
+      "sha256": "df59c689b40d93a2c7e8005981d8844a9e766bb5c09908f4259b164a186dc169",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            2.5688488483428955,
+            0.8171427845954895,
+            -3.385002374649048
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc4c.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.arc4c.c",
+      "sha256": "4fee1dd6467044d36980b8fbe54e9058505c6ac668dfaf848077e977705395d3",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            2.1915218830108643,
+            0.533214271068573,
+            -3.640861749649048
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.arc4c.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.straight.a",
+      "sha256": "4f137c7d0f4c3afb100d49a42e141cb56d314a9913af908717f66df7394478bf",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.6033332943916321,
+            0.8380952477455139,
+            0.25
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.straight.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.straight.b",
+      "sha256": "72721f14658d06f592c35fafff308163290cc9d8c77325e2a67cfd92b79216f1",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.5483333468437195,
+            0.8276190757751465,
+            0.25
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.straight.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hull.straight.c",
+      "sha256": "5b2facadb4bbba237472ca61c624c92a19b559841a0d31cdd716b2a7fc8a169f",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        },
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.21133333444595337,
+            0.5531428456306458,
+            0.25
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "hull.straight.c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "post.normal",
+      "sha256": "2e7cbec6386dd7582236c334d472b85d063e2ad72383f133b9df7b7d7d6d2c7c",
+      "emissions": {
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.0077179488725960255,
+            0.36596640944480896,
+            0.11944442987442017
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "post.normal"
+          }
+        }
+      ]
+    },
+    {
+      "id": "roof.arc1.accent",
+      "sha256": "8de24af30cc34d4ba532d4aa4a55a4303c0c8a27c82b444e15d47bf06c1bca6d",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc1.grate",
+      "sha256": "0d4a057453d65548da39b98552b6d0e13afeb5b3268c74834c859552d5abcd59",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc1.light",
+      "sha256": "cf2fa43d4804f436425798231d3d33f762ebf08155be9d789eafd364279fb56b",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc1.plate",
+      "sha256": "f0e5c3c5be46202b06280d6d8fae4e8ca57f99a9506a4fe58aea0ef059870958",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc1c.accent",
+      "sha256": "366481331ad84f0fa127068bc51db044855efdff44cbf4595b1980b72e4c6b5b",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc1c.grate",
+      "sha256": "b393c5e7e7d014cd49137956681a6f7b096385a02941f2a03e7e4c147a4fccf9",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc1c.light",
+      "sha256": "cf3d8410edbc5dd7c27774468bc655fb6f7eefd1de4d80731783388737c74bb1",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc1c.plate",
+      "sha256": "d8268d4bc9054cfe45d2f9a990e247fee3e490cb813b4d09535199627f426b98",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc2.accent",
+      "sha256": "f5069cdf51a1b83935e80674ca75dfa7238f1df5df3cadda8da5a2e2293d10d1",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc2.grate",
+      "sha256": "e8fd105ffedc8dc1e7821c3f98d69d044113d44789eb5db8718ec22fc2862413",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc2.light",
+      "sha256": "a15d83d518e106bca1e5a005b2aa39fcb850cdf20c81699cbfe1d39149a766ed",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc2.plate",
+      "sha256": "ec163852a912aa1da79921b48dcd9768159afc495e2d144d28f77005de19f30a",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc2c.accent",
+      "sha256": "665150761747ceca706b3b02280a624dca05ff6f35215185810b2f2e66dabdb6",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc2c.grate",
+      "sha256": "3462154560be7c6bf78198d8a89135d271658e5fdb1546265aada5a74616f286",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc2c.light",
+      "sha256": "4d0a74208e1df1244877efc9accb203078a5460c68f9ea5b4f5d6ff4bb53fe91",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc2c.plate",
+      "sha256": "bb71d5598256dff116988f27866ec599791cab5f73ba934e37d3a11c320172a2",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc3.accent",
+      "sha256": "fdf2569ee2d6f8008e99e519a7b7cd09c8b5330fcccb19942d00da86d786df54",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc3.grate",
+      "sha256": "8a66a754e615711108ea24a23da238c23495164cf6ecf5091d2ab4c91f4d5bda",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc3.light",
+      "sha256": "ceb648a9bf7420b688532df7dc2d7322f164257001d1fbea1fba160b22cc8baf",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc3.plate",
+      "sha256": "14f2ec191072f39dd90f91684c6e77fc659a791c4438dc32199b384322262e59",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc3c.accent",
+      "sha256": "d04102e9907fe473a9115d05886ac855c7bdd398881976461f7b46c12127716d",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc3c.grate",
+      "sha256": "156bf5551f48afbdc63cb539d69448ce596513ab713a3cfeb85cb7500f6016e9",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc3c.light",
+      "sha256": "bfd5428e552932851c9f63f726dfd28ac79725db2da5a88e304880f446877130",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc3c.plate",
+      "sha256": "8b500c849e190161c4b5f3e53f262614f0d74edc9ddeda67b8837cec05b71700",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc4.accent",
+      "sha256": "29c86f2d3081db664bc60de79e5e315f8db10aa4e487891d3e3e714fb6dd2c4a",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc4.grate",
+      "sha256": "5966e31c507711776b87953500a5f022777d670530aa1161a10cc583d0c01c01",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc4.light",
+      "sha256": "17d187deb9a79d44e4301d8ba9a372a4f55f4983fcdd88cbb48c62232942d79d",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc4.plate",
+      "sha256": "1cfb1530a53bc81efeef486d8de6b832afb0df1cc40cb94b38e373096a168cf7",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc4c.accent",
+      "sha256": "d7c5f0f4dac7955bd7de4592867c50cb6e807ac401caa7750cacb8c11767a072",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc4c.grate",
+      "sha256": "1db23757fc109033bb6287154c4cbcd3d754ed50ab99bb909e553c84e4995137",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc4c.light",
+      "sha256": "2064dbc3d47d25b9c753bb1f0e4111a8723d464e19b06048923d30ed63c952f3",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.arc4c.plate",
+      "sha256": "3a1898421b90a8ef44bd23c5c257c7d298257320e61c2e54f8414376bd3f5f20",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope1.accent",
+      "sha256": "5692336f01ac9976b23d203ef92a776531e17193b1042049f77ee7995474d619",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope1.grate",
+      "sha256": "622506798a74fdf5bbb030e01b265e88225cabeb7bf90d23c06e41ea5c552a03",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope1.light",
+      "sha256": "f1ce3bf0f93597cdb4505712f139d600f37085bce6e13365338e3365bf6654d6",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope1.plate",
+      "sha256": "f087613704910b4fdc6e2922fd3de64a53775dcef3f2c5e5bca90c29e0e4d3ef",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope2.accent",
+      "sha256": "5a6365fbd57d9af9c1e542f437600bd6dbf2b1b2569ceac21b1662e4ff44e043",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope2.grate",
+      "sha256": "9272622802c3a208a6773a00b9d6eca4dcc269cafd3911849afa3d1550921ed1",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope2.light",
+      "sha256": "7269cada22ca0c0bb7e6fe2485958f54ecbd41477f4bf336ceb879a544c52065",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope2.plate",
+      "sha256": "704a3f8bd28066b687ef8d692ab4c69f4ec88d75f74c1bda6625598908f79aa1",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope3.accent",
+      "sha256": "ccbf44ccc87fc08da62d1400d6047cf07c197a1794ff94ca30982463ff969a4a",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope3.grate",
+      "sha256": "8a6bfd9d5f1ea008041b98f8eabb0180b5e0b912c3d776f8aad6201589d5979d",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope3.light",
+      "sha256": "70caa6fccb82684d174a3d82d9b37e9ee5cc2b352198dbabafbdd7a7c7e4cdef",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope3.plate",
+      "sha256": "2510335d67f6ceb0de365994c74cb8ff327ee20e2541a55ebc84a726c4d3c60c",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope4.accent",
+      "sha256": "f1ee5a02373a3238ca71b594fb67e444b5929c95ddce5ba151d96e96e1972e96",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope4.grate",
+      "sha256": "997cfa5d4c5f5d4b813f373cfe40bec3dfcbc79ec64f02ee9806b58237e716ad",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope4.light",
+      "sha256": "310cbd539decc05e5e0fee360887cc2873c2c18536eb7371b89e6725d9f17846",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.slope4.plate",
+      "sha256": "82676b1c4485aeb1874ee0b7214e57b175b7c86c12527d24c1a423130f586c0a",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.square.accent",
+      "sha256": "94532d412a5531cb1494075160758b8791b62b50c1ac6e66d49dcc4ac7f39803",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.square.box",
+      "sha256": "43d769289dfc0ab96b50d8c0beb75d1e7ae162b929e79ebd5060f31ce2fcd101",
+      "emissions": {
+        "emit_b@low": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 1.2000000476837158
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "roof.square.fan",
+      "sha256": "a2a3a6410c23caf9ca9cdbb109a8dc208ea07766a75b6146f9815cd39370fd7e",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.square.grate",
+      "sha256": "c3c6bc90b504517487afcd1f997c901f2d6ae6da3472fec899a791caa4e718a3",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.square.hatch",
+      "sha256": "bb0ca736f154a87b2dd948ea0402aedb6fae603c4ac071d1ba8fd8866d66908a",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.square.light",
+      "sha256": "c92707f9eedf358b6d641a0044eab9053592bc1c9e89c1ae8dace60f67117d3e",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.square.plate",
+      "sha256": "c7c2f010de6caa9a28fb8d45ea4036fc4e4f0583844a9eccc4d51ac9b8774f94",
+      "emissions": {},
+      "sockets": []
+    },
+    {
+      "id": "roof.square.vent",
+      "sha256": "03e61d9fad8558370ba87d25357ab72b185563debdb4eb064c55d7345d579564",
+      "emissions": {
+        "emit_b@low": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 1.2000000476837158
+        }
+      },
+      "sockets": []
+    },
+    {
+      "id": "wall.straight.a",
+      "sha256": "1ef836cc1408e1207a39ded25eb3bbecfbacf61139d803dff09413e7b93e8863",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.6033332943916321,
+            0.8380952477455139,
+            -0.125
+          ],
+          "color": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "wall.straight.a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "wall.straight.b",
+      "sha256": "7943eb6ce89e5a4aa0a5357f9bdbe47a847af67a1d1716fa285d1aaa4c1e793f",
+      "emissions": {
+        "emit_a": {
+          "factor": [
+            0.05000000074505806,
+            0.47999998927116394,
+            1
+          ],
+          "strength": 5
+        },
+        "emit_b": {
+          "factor": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "strength": 4.199999809265137
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.5483333468437195,
+            0.8276190757751465,
+            -0.125
+          ],
+          "color": [
+            1,
+            0.30000001192092896,
+            0.02500000037252903
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "wall.straight.b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "wall.straight.c",
+      "sha256": "24ad0f7342673dab54f852274de9e262080535e809edcee6a9b1614a1a44a5bd",
+      "emissions": {
+        "scr_blue@mid": {
+          "factor": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "strength": 3
+        }
+      },
+      "sockets": [
+        {
+          "id": "source-strip",
+          "position": [
+            0.21133333444595337,
+            0.5531428456306458,
+            -0.125
+          ],
+          "color": [
+            0.05999999865889549,
+            0.3499999940395355,
+            1
+          ],
+          "intensity": 0.35,
+          "range": 1.75,
+          "provenance": {
+            "kind": "source-emissive-surface",
+            "piece": "wall.straight.c"
+          }
+        }
+      ]
+    }
+  ]
+}
