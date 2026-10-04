@@ -33,7 +33,9 @@ describe("prefab construction documents", () => {
       expect(
         errors.map((d) => `${d.code}:${d.ids?.join?.(",") ?? ""}`),
       ).toEqual([]);
-      expect(doc.layout.openings.length).toBeGreaterThan(0);
+      if (!prefab.authoredGameplay)
+        expect(doc.layout.openings.length).toBeGreaterThan(0);
+      // Authored source openings are exact convex prop/partition gaps, not grammar edges.
       const snapshot = compileConstruction(JSON.stringify(doc));
       expect(snapshot.readiness.geometry).toBe(true);
       // Deterministic derivation.

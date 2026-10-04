@@ -16,6 +16,7 @@ import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
 import { stockShipCargo } from "./ship-cargo-operator";
 import { upgradePrefabShip } from "./ship-upgrade";
+import { replacePrefabShip } from "./ship-replace";
 import {
   isAwaitingShip,
   onboardNewCharacter,
@@ -1829,6 +1830,23 @@ export const operatorUpgradePrefabShip = db.reducer(
     expectedTargetBlueprintSha256: t.string(),
   },
   withComponentSnapshots(upgradePrefabShip),
+);
+
+/** Operator-only targeted replacement; ship storage loss must be explicit. */
+export const operatorReplacePrefabShip = db.reducer(
+  {
+    operationId: t.string(),
+    dryRun: t.bool(),
+    characterId: t.string(),
+    shipId: t.string(),
+    expectedSourceBlueprintSha256: t.string(),
+    expectedInstanceRevision: t.u64(),
+    targetPrefabId: t.string(),
+    expectedTargetCatalogRevision: t.string(),
+    expectedTargetBlueprintSha256: t.string(),
+    discardShipStorage: t.bool(),
+  },
+  withComponentSnapshots(replacePrefabShip),
 );
 
 export const setConstructionEnginePower = db.reducer(

@@ -1,4 +1,9 @@
 import {
+  isWayfarerGameplay,
+  WAYFARER_GAMEPLAY_OBJECTS,
+  WAYFARER_BED_OBJECTS,
+} from "@sidereal/content/wayfarer-authored-gameplay";
+import {
   deriveInterior,
   readShipPrefab,
   type ShipPrefabDocumentV1,
@@ -43,6 +48,27 @@ export function prefabBedSeats(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
 ): PrefabSeatDefinition[] {
+  if (isWayfarerGameplay(doc))
+    return WAYFARER_BED_OBJECTS.map((id) => {
+      const o = WAYFARER_GAMEPLAY_OBJECTS.find((row) => row.object === id)!;
+      const cx = (o.min[0] + o.max[0]) / 2,
+        cy = (o.min[1] + o.max[1]) / 2;
+      return {
+        placementId: `prefab:socket:${id}`,
+        assetId: "shipyard.equipment.crew-bunk",
+        name: id.includes("single") ? "Crew bed" : "Crew bunk",
+        kind: "seat" as const,
+        x: -cy,
+        y: cx,
+        seatX: -(o.max[1] - 0.1),
+        seatY: cx,
+        approachX: -(o.max[1] + 0.45),
+        approachY: cx,
+        obstacleId: `prefab-socket:${id}`,
+        facing: Math.PI / 2,
+        supportHeight: id.includes("single") ? 0.48 : 0.465,
+      };
+    });
   const sockets = deriveInterior(doc, 0, catalog).sockets;
   const toShip = prefabToShipMetres(doc);
   return prefabShipObjects(doc, catalog).flatMap((o) => {

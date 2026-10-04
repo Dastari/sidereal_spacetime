@@ -48,7 +48,7 @@ def main():
     parser.add_argument('--label', required=True, help='new lowercase smoke label, e.g. wipe-r003')
     parser.add_argument('--stage', choices=['all', 'seed', 'wipe'], default='all',
                         help='"wipe" is the post-publication stage (it runs the --smoke script)')
-    parser.add_argument('--smoke', choices=['wipe', 'upgrade'], default='wipe',
+    parser.add_argument('--smoke', choices=['wipe', 'upgrade', 'replacement'], default='wipe',
                         help='post-publication rehearsal: ship wipe (default) or in-place prefab upgrade')
     parser.add_argument('--full-seed', action='store_true', help='also run the full standard smoke before seeding')
     parser.add_argument('--keep-baseline', action='store_true', help='keep the scratch baseline copy after the wipe stage')

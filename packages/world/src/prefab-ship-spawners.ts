@@ -1,7 +1,7 @@
 /**
  * Registered prefab ship spawners for the live authority (SHIPS-PREFABS).
  *
- * Only `fed.s.wren` is registered: the owner picked it as the starter for their account.
+ * Wren remains the starter; authored Wayfarer is separately pinned for explicit owner replacement.
  * The other prefabs in `@sidereal/content/prefabs` stay unregistered until each is
  * separately chosen, pinned and smoke-tested.
  *
@@ -19,8 +19,12 @@ import {
   installPrefabShip,
   trustedPrefabTemplateFor,
 } from "./prefab-ship-authority";
-import { issueSocketStock } from "./ship-cargo-operator";
+import {
+  issueSocketStock,
+  issueEmptySocketStorage,
+} from "./ship-cargo-operator";
 import { prefabById } from "@sidereal/content/prefabs";
+import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
 import {
   currentComponentCatalog,
   effectivePrefabPin,
@@ -89,6 +93,14 @@ function registerPinned(pin: PinnedPrefabShip) {
           JSON.stringify(kit),
         );
       }
+      if (pin.issueEmptyStorage)
+        for (const socket of prefabCargoSockets(prefab, 0, current))
+          issueEmptySocketStorage(
+            ctx,
+            result.shipId,
+            socket.key,
+            "Storage crate",
+          );
       return result;
     },
   });

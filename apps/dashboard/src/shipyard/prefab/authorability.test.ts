@@ -1,7 +1,7 @@
 /**
  * Owner requirement: "whatever you produce, the shipyard should be able to produce."
  *
- * Every developer prefab is rebuilt from the "New ship" document using only what the
+ * Every editable grammar preset is rebuilt from the "New ship" document using only what the
  * editor's UI calls: the plan tools' gesture functions (`tool-actions.ts`: cursor snapping,
  * the live placement gate that turns the ghost red, then the document command) and the
  * panel commands (`commands.ts`: Ship panel, Volumes list, Inspector id/height fields).
@@ -21,7 +21,7 @@ import {
   type Pt,
   type QuarterTurn,
 } from "@sidereal/content/construction-grammar";
-import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { PREFAB_SHIPS, EDITABLE_PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   EMBLEM_IDS,
@@ -64,6 +64,8 @@ import {
   roomToolLabel,
   skylightPlace,
 } from "./tool-actions";
+
+import { buildLibrary, writeDraft } from "./usePrefabDocument";
 
 type Doc = ShipPrefabDocumentV1;
 const catalog = defaultPrefabComponentCatalog();
@@ -415,11 +417,11 @@ function rebuild(t: Doc): Doc {
   return doc;
 }
 
-describe("every developer prefab is authorable with the Shipyard tools", () => {
+describe("every editable grammar preset is authorable with the Shipyard tools", () => {
   it("covers all twelve templates", () => {
-    expect(PREFAB_SHIPS.length).toBe(12);
+    expect(EDITABLE_PREFAB_SHIPS.length).toBe(12);
   });
-  for (const t of PREFAB_SHIPS)
+  for (const t of EDITABLE_PREFAB_SHIPS)
     it(`rebuilds ${t.id} exactly`, () => {
       const doc = rebuild(t);
       expect(doc).toStrictEqual(t);
@@ -628,4 +630,20 @@ describe("every grammar construct is reachable from the tools", () => {
       markings: { emblem: EMBLEM_IDS.at(-1) },
     });
   });
+});
+
+it("keeps registered authored trial ships out of editable templates, drafts and copies", () => {
+  const authored = PREFAB_SHIPS.find((ship) => ship.id === "fed.m.wayfarer")!;
+  expect(authored.authoredGameplay).toBeDefined();
+  expect(EDITABLE_PREFAB_SHIPS).not.toContain(authored);
+  expect(
+    buildLibrary([
+      {
+        schema: "sidereal.prefab-draft.v1",
+        savedAt: "2026-10-03",
+        doc: authored,
+      },
+    ]).some((entry) => entry.id === authored.id),
+  ).toBe(false);
+  expect(() => writeDraft(authored)).toThrow(/outside the grammar editor/);
 });

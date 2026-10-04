@@ -397,6 +397,26 @@ export function issueSocketStock(
   return commitSocketStock(ctx, instance, deck, socket, plan, name, defs);
 }
 
+/** Trusted issuing/replacement helper: allocate an EMPTY, collision-qualified socket container.
+ * Operator stocking still requires a nonempty item list. Reusing a valid binding is a no-op. */
+export function issueEmptySocketStorage(
+  ctx: Context,
+  shipId: string,
+  socketKey: string,
+  containerName: string,
+) {
+  const name = containerName.trim();
+  if (!name || name.length > 40) fail("Container name must be 1-40 characters");
+  const instance = ctx.db.constructionInstance.id.find(shipId);
+  if (!instance || instance.workspaceId !== GAME_OWNED_TEMPLATE_NAMESPACE)
+    fail("Game-owned construction instance required");
+  const { deck, socket } = prefabStorageSocket(ctx, instance, socketKey),
+    defs = itemDefinitions(ctx);
+  const plan = planSocketStock(ctx, instance, deck, socket, [], defs);
+  if (plan.root) return plan.root.id;
+  return commitSocketStock(ctx, instance, deck, socket, plan, name, defs);
+}
+
 /** Plans and (unless dryRun) commits the stock. Throws, rolling back, on any failed check. */
 export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   requireShipOperator(ctx);

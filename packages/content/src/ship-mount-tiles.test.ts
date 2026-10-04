@@ -71,7 +71,7 @@ describe("roof mount tile size table (owner 2026-09-29)", () => {
 });
 
 describe("mount rules in prefab documents", () => {
-  it("all 12 developer prefabs follow the roof rules and stay valid", () => {
+  it("all registered developer prefabs follow their mounting rules and stay valid", () => {
     for (const p of PREFAB_SHIPS) {
       expect(p.mountTiles, p.id).toBeDefined();
       expect(codes(p), p.id).toEqual([]);
@@ -79,7 +79,7 @@ describe("mount rules in prefab documents", () => {
         const spec = catalog.get(m.component)!;
         if (spec.category === "weapon" || spec.category === "sensor")
           expect(m.tile, `${p.id}/${m.id}`).toBeDefined();
-        if (m.attach === "face")
+        if (m.attach === "face" && !p.authoredGameplay)
           expect(spec.category, `${p.id}/${m.id}`).toBe("propulsion");
       }
       // Strict parse (the construction admission path) round-trips.

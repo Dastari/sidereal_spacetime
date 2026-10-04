@@ -1,9 +1,9 @@
 /**
- * Prefab document store: developer templates (PREFAB_SHIPS) plus browser drafts in
+ * Prefab document store: editable grammar templates (EDITABLE_PREFAB_SHIPS) plus browser drafts in
  * localStorage, an immutable command history and autosave. Drafts never overwrite
  * templates; "revert to template" is itself an undoable command.
  */
-import { PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
+import { EDITABLE_PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
 import {
   SHIP_PREFAB_LIMITS,
   blankShipPrefab,
@@ -96,6 +96,8 @@ export function listDrafts(): DraftRecord[] {
 }
 
 export function writeDraft(doc: Doc): string {
+  if (doc.authoredGameplay)
+    throw Error("Authored ships are managed outside the grammar editor");
   const savedAt = new Date().toISOString();
   const record: DraftRecord = {
     schema: "sidereal.prefab-draft.v1",
@@ -114,8 +116,8 @@ export function deleteDraftRecord(id: string) {
 }
 
 export function buildLibrary(drafts: readonly DraftRecord[]): LibraryEntry[] {
-  const out: LibraryEntry[] = PREFAB_SHIPS.map((t) => {
-    const d = drafts.find((x) => x.doc.id === t.id);
+  const out: LibraryEntry[] = EDITABLE_PREFAB_SHIPS.map((t) => {
+    const d = drafts.find((x) => x.doc.id === t.id && !x.doc.authoredGameplay);
     return {
       id: t.id,
       doc: d?.doc ?? t,
@@ -124,7 +126,7 @@ export function buildLibrary(drafts: readonly DraftRecord[]): LibraryEntry[] {
     };
   });
   for (const d of drafts)
-    if (!prefabById(d.doc.id))
+    if (!d.doc.authoredGameplay && !prefabById(d.doc.id))
       out.push({
         id: d.doc.id,
         doc: d.doc,
@@ -162,6 +164,10 @@ export function usePrefabDocument() {
 
   const openDoc = useCallback(
     (doc: Doc, options: { push?: boolean; draftSavedAt?: string } = {}) => {
+      if (doc.authoredGameplay) {
+        setError("Authored ships are managed outside the grammar editor");
+        return;
+      }
       loaded.current = doc;
       setHist(createHistory(doc));
       setSaveState(options.draftSavedAt ? "saved" : "template");
@@ -176,6 +182,10 @@ export function usePrefabDocument() {
     (id: string, push = true) => {
       const draft = listDrafts().find((d) => d.doc.id === id);
       const template = prefabById(id);
+      if (template?.authoredGameplay || draft?.doc.authoredGameplay) {
+        setError("Authored ships are managed outside the grammar editor");
+        return false;
+      }
       if (draft) openDoc(draft.doc, { push, draftSavedAt: draft.savedAt });
       else if (template) openDoc(structuredClone(template) as Doc, { push });
       else {
@@ -212,7 +222,7 @@ export function usePrefabDocument() {
   const commit = useCallback(
     (label: string, next: Doc | ((doc: Doc) => Doc)) => {
       setHist((h) =>
-        h
+        h && !h.present.authoredGameplay
           ? applyCommand(
               h,
               label,
@@ -304,7 +314,7 @@ export function usePrefabDocument() {
 
   const duplicate = useCallback(
     (source: Doc | null = doc) => {
-      if (!source) return;
+      if (!source || source.authoredGameplay) return;
       const id = freeId(source.id);
       const name = `${source.name} copy`.slice(0, 32);
       const next: Doc = { ...structuredClone(source), id, name, revision: 1 };
@@ -319,6 +329,8 @@ export function usePrefabDocument() {
   const changeId = useCallback(
     (id: string) => {
       if (!doc) return "No document";
+      if (doc.authoredGameplay)
+        return "Authored ships are managed outside the grammar editor";
       if (!ID.test(id))
         return "Use lower-case letters, digits, dots and dashes for the id";
       if (id !== doc.id && idTaken(id))
@@ -365,6 +377,8 @@ export function usePrefabDocument() {
       } catch (e) {
         return `Import refused: ${String(e instanceof Error ? e.message : e)}`;
       }
+      if (parsed.authoredGameplay)
+        return "Import refused: authored ships are managed outside the grammar editor";
       const next = idTaken(parsed.id)
         ? { ...parsed, id: freeId(parsed.id) }
         : parsed;

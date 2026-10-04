@@ -25,6 +25,7 @@ import { flightDefinitionCatalogHash } from "@sidereal/sim/flight-definition";
 import { prefabShipSpawner, prefabShipSpawners } from "./ship-assign";
 import { FED_WREN_PIN, REGISTERED_PREFAB_PINS } from "./prefab-ship-spawners";
 import {
+  FED_WAYFARER_PIN,
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,
@@ -41,14 +42,18 @@ import { trustedPrefabTemplate } from "./prefab-ship-authority";
 const HEAVY = { timeout: 60_000 };
 
 test(
-  "only fed.s.wren is registered as a non-legacy prefab spawner",
+  "Wren starter and explicit authored Wayfarer are registered as non-legacy spawners",
   HEAVY,
   () => {
     expect(REGISTERED_PREFAB_PINS.map((p) => p.prefabId)).toEqual([
       "fed.s.wren",
+      "fed.m.wayfarer",
     ]);
     const nonLegacy = prefabShipSpawners().filter((s) => !s.legacy);
-    expect(nonLegacy.map((s) => s.prefabId)).toEqual(["fed.s.wren"]);
+    expect(nonLegacy.map((s) => s.prefabId)).toEqual([
+      "fed.s.wren",
+      "fed.m.wayfarer",
+    ]);
     expect(prefabShipSpawner("fed.s.wren")).toMatchObject({
       catalogRevision: FED_WREN_PIN.catalogRevision,
       blueprintSha256: FED_WREN_PIN.blueprintSha256,
@@ -348,5 +353,26 @@ test(
       revision: 8,
       mounts: current.mounts.filter((m) => m.id !== "battery"),
     }).toEqual(legacy);
+  },
+);
+
+test(
+  "authored Wayfarer pins equal its strict contract derivation",
+  HEAVY,
+  () => {
+    const prefab = prefabById(FED_WAYFARER_PIN.prefabId)!,
+      catalog = defaultPrefabComponentCatalog();
+    expect(
+      compileConstruction(
+        JSON.stringify(prefabConstructionDocument(prefab, catalog)),
+      ).sha256,
+    ).toBe(FED_WAYFARER_PIN.blueprintSha256);
+    expect(trustedPrefabTemplate(prefab.id).snapshot.sha256).toBe(
+      FED_WAYFARER_PIN.blueprintSha256,
+    );
+    expect(
+      flightDefinitionCatalogHash(prefabFlightModel(prefab, catalog).catalog),
+    ).toBe(FED_WAYFARER_PIN.flightDefinitionSha256);
+    expect(FED_WAYFARER_PIN.issueEmptyStorage).toBe(true);
   },
 );

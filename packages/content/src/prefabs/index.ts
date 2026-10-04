@@ -1,12 +1,13 @@
 /**
- * Developer prefab ships (grammar documents). Each is ordinary Shipyard data: it can be
- * opened, edited, validated and published from the dashboard Shipyard.
+ * Registered developer ships. Grammar presets are editable Shipyard data; authored
+ * gameplay profiles remain exact code-owned trial ships outside the grammar editor.
  */
 import type { ShipPrefabDocumentV1 } from "../ship-prefab";
 import { AU_CATHEDRAL, AU_CRESCENT, AU_LUMEN } from "./aurelian";
 import { FED_BASTION, FED_CREST, FED_MERIDIAN, FED_WREN } from "./federation";
 import { CRY_SHARD, IND_MULE } from "./frontier";
 import { RJ_JACKAL, RJ_MARAUDER, RJ_MAW } from "./riftjack";
+import { FED_WAYFARER } from "./wayfarer";
 
 export const PREFAB_SHIPS: readonly ShipPrefabDocumentV1[] = [
   FED_WREN,
@@ -21,7 +22,13 @@ export const PREFAB_SHIPS: readonly ShipPrefabDocumentV1[] = [
   AU_CATHEDRAL,
   IND_MULE,
   CRY_SHARD,
+  FED_WAYFARER,
 ];
+
+/** Templates expressible and editable with the ordinary Shipyard grammar tools. */
+export const EDITABLE_PREFAB_SHIPS = PREFAB_SHIPS.filter(
+  (ship) => !ship.authoredGameplay,
+);
 
 /** Small ships offered to the owner as starter candidates (one per faction). */
 export const STARTER_CANDIDATES: readonly string[] = [

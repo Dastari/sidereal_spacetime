@@ -1,5 +1,11 @@
 import { bowJoinErrors, bowWalkable } from "./bow-profiles";
 import { interiorArtQuarterTurns } from "./ship-furniture";
+import {
+  assertWayfarerPrefabContract,
+  isWayfarerGameplay,
+  WAYFARER_MOUNT_POSES,
+  wayfarerInterior,
+} from "./wayfarer-authored-gameplay";
 /**
  * Prefab ship document v1: grammar data only (docs/shipyard_player_builder_design.md §3, §8, §12).
  *
@@ -222,6 +228,8 @@ export interface PrefabMarkings {
 }
 
 export interface ShipPrefabDocumentV1 {
+  /** Exact code-owned geometry profile; never caller-supplied collider data. */
+  authoredGameplay?: { id: "wayfarer-authored-r001"; revision: 1 };
   schema: typeof SHIP_PREFAB_SCHEMA;
   id: string;
   name: string;
@@ -417,7 +425,7 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
       "skylights",
       "markings",
     ],
-    ["mountTiles", "logic", "fixtures"],
+    ["mountTiles", "logic", "fixtures", "authoredGameplay"],
   );
   if (o.schema !== SHIP_PREFAB_SCHEMA)
     fail("schema", `expected ${SHIP_PREFAB_SCHEMA}`);
@@ -428,6 +436,26 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
   };
   let tileCount = 0;
   const doc: ShipPrefabDocumentV1 = {
+    ...(o.authoredGameplay === undefined
+      ? {}
+      : {
+          authoredGameplay: (() => {
+            const p = obj(o.authoredGameplay, "authoredGameplay", [
+              "id",
+              "revision",
+            ]);
+            if (
+              p.id !== "wayfarer-authored-r001" ||
+              p.revision !== 1 ||
+              o.id !== "fed.m.wayfarer"
+            )
+              fail("authoredGameplay", "unknown profile or prefab");
+            return {
+              id: "wayfarer-authored-r001" as const,
+              revision: 1 as const,
+            };
+          })(),
+        }),
     schema: SHIP_PREFAB_SCHEMA,
     id: str(o.id, "id", ID),
     name: str(o.name, "name", LABEL),
@@ -702,6 +730,7 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
       if (m.tile !== undefined && !tiles.has(m.tile))
         fail(`mounts.${m.id}`, `unknown mount tile ${m.tile}`);
   }
+  if (isWayfarerGameplay(doc)) assertWayfarerPrefabContract(doc);
   return doc;
 }
 
@@ -783,6 +812,7 @@ export function prefabBounds(
 
 /** Ship origin used by rendering and authority: centre of the structure bounding box. */
 export function prefabOrigin(doc: ShipPrefabDocumentV1): [number, number] {
+  if (isWayfarerGameplay(doc)) return [0, 0];
   const [x0, y0, x1, y1] = prefabBounds(doc.volumes.map(volumeGeometry));
   return [(x0 + x1) / 2, (y0 + y1) / 2];
 }
@@ -895,7 +925,8 @@ export function tileMounts(
 export type MountTileContext = Pick<
   ShipPrefabDocumentV1,
   "mounts" | "mountTiles"
->;
+> &
+  Partial<Pick<ShipPrefabDocumentV1, "id" | "authoredGameplay">>;
 
 export function placeMount(
   mount: PrefabMount,
@@ -903,6 +934,28 @@ export function placeMount(
   geoms: readonly VolumeGeometry[],
   ctx?: MountTileContext,
 ): MountPlacement {
+  if (ctx?.id && isWayfarerGameplay(ctx as ShipPrefabDocumentV1)) {
+    const pose = WAYFARER_MOUNT_POSES[mount.id];
+    if (!pose) throw Error(`Unknown authored Wayfarer mount ${mount.id}`);
+    const width = spec?.cells[0] ?? 1,
+      depth = spec?.cells[1] ?? 1;
+    return {
+      mount,
+      spec,
+      rect: [
+        pose.at[0] - depth / 2,
+        pose.at[1] - width / 2,
+        pose.at[0] + depth / 2,
+        pose.at[1] + width / 2,
+      ],
+      z: [pose.z * 16, pose.z * 16 + (spec?.heightTexels ?? 16)],
+      quarterTurns: pose.quarterTurns,
+      anchor: [...pose.at],
+      anchorZ: pose.z * 16,
+      host: "hull",
+      rear: mount.normal === "aft",
+    };
+  }
   const tile =
     mount.tile !== undefined
       ? ctx?.mountTiles?.find((t) => t.id === mount.tile)
@@ -1329,6 +1382,7 @@ export function deriveInterior(
   deck = 0,
   catalog?: PrefabComponentCatalog,
 ): DerivedInterior {
+  if (isWayfarerGameplay(doc)) return wayfarerInterior(deck);
   const empty: DerivedInterior = {
     deck,
     volume: null,
@@ -2235,6 +2289,38 @@ export function validateShipPrefab(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
 ): PrefabIssue[] {
+  if (isWayfarerGameplay(doc)) {
+    try {
+      assertWayfarerPrefabContract(doc);
+    } catch {
+      return [
+        {
+          severity: "error",
+          code: "authored.source",
+          message: "Authored profile requires the exact registered source",
+          ref: { kind: "document" },
+        },
+      ];
+    }
+    if (!/^ship-components-v1@4(?:\+[0-9a-f]{16})?$/.test(catalog.revision))
+      return [
+        {
+          severity: "error",
+          code: "authored.catalog",
+          message:
+            "Authored Wayfarer requires a component catalogue based on revision 4",
+          ref: { kind: "document" },
+        },
+      ];
+    return doc.mounts
+      .filter((m) => !catalog.get(m.component))
+      .map((m) => ({
+        severity: "error" as const,
+        code: "mount.unknown",
+        message: `Unknown ${m.component}`,
+        ref: { kind: "mount" as const, id: m.id },
+      }));
+  }
   const issues: PrefabIssue[] = [];
   const push = (
     severity: "error" | "warning",

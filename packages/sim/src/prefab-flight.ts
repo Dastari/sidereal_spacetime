@@ -1,3 +1,7 @@
+import {
+  isWayfarerGameplay,
+  WAYFARER_MAIN_NOZZLE,
+} from "@sidereal/content/wayfarer-authored-gameplay";
 /**
  * Flight definition for prefab ships, compiled from grammar data and component stats
  * (docs/shipyard_player_builder_design.md §8.3: "Flight compiles from part definitions,
@@ -312,6 +316,12 @@ export function prefabFlightModel(
     if (!spec) throw Error(`Unknown component ${m.component}`);
     const role = componentFlightRole(spec, m.attach);
     const def = componentDefinition(spec, role);
+    if (isWayfarerGameplay(doc) && role === "actuator") {
+      const actuator = def as ActuatorDefinition;
+      actuator.nozzleOffset = [0, -WAYFARER_MAIN_NOZZLE.offset];
+      actuator.nozzleHeight = WAYFARER_MAIN_NOZZLE.height;
+    }
+
     defs.set(def.id, def);
     const mp = placeMount(m, spec, geoms, doc);
     const [sx, sy] = toShip(mp.anchor);
@@ -349,9 +359,14 @@ export function prefabFlightModel(
         // From catalogue revision 4 the reverser acts at the drive's nozzle exit (its local +Y
         // is the drive's aft); earlier revisions keep their pinned offset.
         nozzleOffset: quadRcs
-          ? [0, Math.max(1, spec.heightTexels / 16) * 1.6]
+          ? [
+              0,
+              isWayfarerGameplay(doc)
+                ? WAYFARER_MAIN_NOZZLE.offset
+                : Math.max(1, spec.heightTexels / 16) * 1.6,
+            ]
           : [0, -0.3],
-        nozzleHeight: 0,
+        nozzleHeight: isWayfarerGameplay(doc) ? WAYFARER_MAIN_NOZZLE.height : 0,
       };
       defs.set(reverser.id, reverser);
       const id = `${sourceId}#reverser`;
