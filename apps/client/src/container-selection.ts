@@ -3,6 +3,29 @@ import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
 import { prefabShipObjects } from "@sidereal/sim/prefab-deck-objects";
 import { prefabOrigin } from "@sidereal/content/ship-prefab";
 import { prefabShipOf, PREFAB_OBJECT_PREFIX } from "./prefab-objects";
+import type { ObjectDetailsState } from "@sidereal/canvas-ui";
+
+/** Visible storage stays inspectable/editable even when inventory access is not disclosed. */
+export function storageObjectDetails(
+  details: ObjectDetailsState | undefined,
+  selection: { storage: boolean; containerId?: string },
+): ObjectDetailsState | undefined {
+  if (!details || !selection.storage) return details;
+  return {
+    ...details,
+    status: selection.containerId
+      ? details.status
+      : `Move within reach to open inventory. ${details.status ?? ""}`.trim(),
+    actions: [
+      {
+        id: "open-storage",
+        label: "Open inventory",
+        enabled: !!selection.containerId,
+      },
+      ...details.actions.filter((action) => action.id !== "open-storage"),
+    ],
+  };
+}
 
 /** Picking names geometry; cargo roots name authoritative placements. Resolve only against
  * the current admitted document and containers already disclosed by server-filtered views. */
