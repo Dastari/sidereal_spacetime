@@ -1,0 +1,33 @@
+{
+  "repository": "https://github.com/clockworklabs/SpacetimeDB",
+  "revision": "df82e00456079d4f2af8f55b7784c2c1c4fb5921",
+  "installed": "2026-10-04",
+  "license": "Apache-2.0",
+  "files": [
+    {
+      "path": "references/concepts.md",
+      "upstream_path": "skills/concepts/SKILL.md",
+      "sha256": "485e0f54ce3a8300a67a9eed00d6c066aea2a3665f14687225e98dfa0e218523"
+    },
+    {
+      "path": "references/typescript-server.md",
+      "upstream_path": "skills/typescript-server/SKILL.md",
+      "sha256": "fa45ec0816130d11d493ba2098b993da231539054084e389c2144731619e7bb7"
+    },
+    {
+      "path": "references/typescript-client.md",
+      "upstream_path": "skills/typescript-client/SKILL.md",
+      "sha256": "95b3977ab281104092c77f39bcc0144da96fea43b0e753645ca89926450c5614"
+    },
+    {
+      "path": "references/cli.md",
+      "upstream_path": "skills/cli/SKILL.md",
+      "sha256": "e325c9aa87077ad3c9914f25cc431a45e2b29b3c510e17223c615b7146fff426"
+    },
+    {
+      "path": "LICENSE",
+      "upstream_path": "codex-plugin/plugins/spacetimedb/LICENSE",
+      "sha256": "5ef3fe1990c05675763c2a426ae5628aa7bdf1f073e3d2aa5ad817913e6b04f9"
+    }
+  ]
+}
