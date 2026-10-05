@@ -14,6 +14,7 @@ import {
   validatePopulation,
 } from "./capacity-metrics";
 import { meteredWebSocket } from "./capacity-transport";
+import { createServerMetrics } from "./capacity-server-metrics";
 
 // SDK diagnostics can carry transport URLs or private rows. This harness emits
 // only explicitly constructed aggregates, even on failures.
@@ -49,6 +50,20 @@ const fixture = (await import(pathToFileURL(bindingsFile).href)) as {
   DbConnection: typeof import("../packages/net/src/generated").DbConnection;
   tables: typeof import("../packages/net/src/generated").tables;
 };
+const serverMetrics = createServerMetrics(
+  host,
+  new Set([
+    ...gameViewKeys().map((key) =>
+      key.replace(/[A-Z]/g, (c) => "_" + c.toLowerCase()),
+    ),
+    "own_world_admission",
+    "visible_ship_motion",
+    "visible_ship_descriptions",
+    "visible_body_motion",
+    "visible_body_descriptions",
+    "own_capacity_input",
+  ]),
+);
 type InputEvidence = {
   characterId: string;
   sequence: bigint;
@@ -975,11 +990,13 @@ try {
     outsiderEmpty: true,
     personalInventoryDisjoint: true,
   };
-  await coldActorApply(clients);
+  await serverMetrics.measure("populated-actor-view-reapply", () =>
+    coldActorApply(clients),
+  );
   verifyPrivacy(clients, hosts);
   await staleLeaseOracle(clients[0]);
-  await idle(clients);
-  await walking(clients);
+  await serverMetrics.measure("warm-idle", () => idle(clients));
+  await serverMetrics.measure("walking", () => walking(clients));
   phase = "revocation-fail-closed";
   const synthetic = clients[population.hosts + 1],
     host0 = clients[0],
@@ -1016,7 +1033,7 @@ try {
     syntheticReturnUnavailable: true,
     interiorCrewPresentationGeometryAndLogicRemoved: true,
   };
-  await reconnect(clients);
+  await serverMetrics.measure("reconnect", () => reconnect(clients));
   if (subscriptionErrors) throw Error("CAPACITY_SUBSCRIPTION_ERRORS");
   if (lifetimeBytes.some((c) => c.decodeErrors || c.deliveryInversions))
     throw Error("CAPACITY_TRANSPORT_CORRECTNESS");
@@ -1035,6 +1052,10 @@ try {
       : "CAPACITY_OPERATION_REJECTED";
   process.exitCode = 1;
 } finally {
+  report.serverMetrics = serverMetrics.reports;
+  report.serverDiagnosisQualified =
+    serverMetrics.reports.length === 4 &&
+    serverMetrics.reports.every((row) => row.qualified);
   const lifetime = byteCounters();
   for (const row of lifetimeBytes)
     for (const key of Object.keys(lifetime) as (keyof typeof lifetime)[])
