@@ -247,6 +247,10 @@ export interface WorldOptions {
     ships?: {
       store: import("./prefab-ship/remote-exteriors").RemoteShipStore;
       localShipId: () => string | undefined;
+      /** Current/target contact protection is presentation only. */
+      fullDetailShipIds?: () => ReadonlySet<string>;
+      /** Controlled fleet S2 experiment; default disabled pending hardware timing. */
+      intermediateExteriors?: boolean;
       /** `visible_actuator_exhaust`: firing thrusters per perceived ship (source id -> throttle). */
       exhaust?: () => ReadonlyMap<string, ReadonlyMap<string, number>>;
       exteriorLogic?: () => ReadonlyMap<
@@ -264,6 +268,8 @@ export interface WorldOptions {
   authoredFlightEffects?: boolean;
   onObjectSelected?: (placementId?: string) => void;
   onScene?: (scene: Scene) => void;
+  /** Developer review camera, applied before projection/LOD admission. */
+  onPresentationCamera?: (camera: Camera) => void;
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
   /** Skip hidden world frames only after first usable-frame readiness completes.
@@ -983,6 +989,26 @@ async function buildWorld(
         ({ createRemoteShipExteriors }) =>
           createRemoteShipExteriors(scene, sharedShips.store, {
             localShipId: sharedShips.localShipId,
+            intermediateExteriors:
+              sharedShips.intermediateExteriors ??
+              (() => {
+                try {
+                  return (
+                    globalThis.localStorage.getItem(
+                      "sidereal.fleet-intermediate.v1",
+                    ) === "1"
+                  );
+                } catch {
+                  return false;
+                }
+              })(),
+            fullDetailShipIds: () =>
+              new Set([
+                ...(sharedShips.fullDetailShipIds?.() ?? []),
+                ...(options.construction?.instanceId
+                  ? [options.construction.instanceId]
+                  : []),
+              ]),
             accessResolver: publishedAccessBytes,
             onError: (error) =>
               console.warn("remote ship exterior unavailable", error),
@@ -1266,6 +1292,7 @@ async function buildWorld(
       logic: state.shipLogic?.doors,
     });
     prefabView?.updatePanels(state.shipLogic?.panels, Date.now());
+    options.onPresentationCamera?.(camera);
     camera.getViewMatrix(true);
     remoteShips?.update(
       { x: displayed.x, y: displayed.y },

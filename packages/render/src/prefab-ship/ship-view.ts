@@ -194,6 +194,8 @@ export interface PrefabShipViewOptions {
    * build the flight exterior only (`exteriorOnlyDress`): no deck geometry, interior modules,
    * furniture, room lights or labels, and no static exhaust plumes. The view stays "flight". */
   exteriorOnly?: boolean;
+  /** Remote runtime derivative only; editor and occupied presentations retain native geometry. */
+  exteriorDetail?: "full" | "intermediate";
 }
 
 export interface PrefabShipMetrics {
@@ -530,6 +532,7 @@ async function createPrefabShipViewImpl(
           {
             catalog: options.catalog,
             exteriorOnly: options.exteriorOnly,
+            exteriorDetail: options.exteriorDetail,
             theme,
             standinComponents: options.standinComponents,
           },

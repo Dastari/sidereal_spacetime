@@ -9,6 +9,30 @@ import {
 } from "./presentation-lod";
 
 describe("ship LOD (presentation only; never drops a perceived ship)", () => {
+  it("keeps source-qualified intermediate hysteresis separate from native near detail", () => {
+    expect(nextShipTier(undefined, 100, true)).toBe(3);
+    expect(nextShipTier(3, 50, true)).toBe(3);
+    expect(nextShipTier(3, 43, true)).toBe(1);
+    expect(nextShipTier(3, 179, true)).toBe(3);
+    expect(nextShipTier(3, 180, true)).toBe(0);
+    expect(nextShipTier(0, 150, true)).toBe(0);
+    expect(nextShipTier(0, 149, true)).toBe(3);
+    expect(nextShipTier(undefined, 100)).toBe(0);
+    expect(
+      assignShipTiers(
+        [
+          { id: "target", px: 2, intermediate: true, forceFull: true },
+          { id: "other", px: 400, intermediate: true },
+        ],
+        1,
+      ),
+    ).toEqual(
+      new Map([
+        ["target", 0],
+        ["other", 1],
+      ]),
+    );
+  });
   it("projects a hull radius to screen pixels", () => {
     // 10 m at 100 m under a 90 degree fov on a 1000 px viewport: 10/100 * 500 = 50 px.
     expect(projectedRadiusPx(10, 100, Math.PI / 2, 1000)).toBeCloseTo(50);

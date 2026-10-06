@@ -4,13 +4,16 @@
  * drawn. They never drop one: the last tier is a marker. Budgets demote tiers, never membership.
  */
 
-/** Ship tiers: 0 = exterior full (S1), 1 = low-poly hull proxy (S3), 2 = tactical marker (S5). */
-export type ShipLodTier = 0 | 1 | 2;
+/** Ship tiers: 0 = full (S1), 3 = intermediate (S2), 1 = hull proxy (S3), 2 = marker (S5). */
+export type ShipLodTier = 0 | 1 | 2 | 3;
 
 export const SHIP_LOD = Object.freeze({
   /** Projected hull radius (px) to enter / leave the full exterior (hysteresis band). */
   fullEnterPx: 56,
   fullExitPx: 44,
+  /** Source-qualified intermediate exteriors retain native full geometry when near. */
+  nativeFullEnterPx: 180,
+  nativeFullExitPx: 150,
   /** Projected hull radius (px) to enter / leave the proxy; below it the ship is a marker. */
   proxyEnterPx: 7,
   proxyExitPx: 5,
@@ -42,11 +45,23 @@ export function projectedRadiusPx(
 export function nextShipTier(
   previous: ShipLodTier | undefined,
   px: number,
+  intermediate = false,
 ): ShipLodTier {
   const size = Number.isFinite(px) ? px : 0;
   const full =
-    previous === 0 ? size >= SHIP_LOD.fullExitPx : size >= SHIP_LOD.fullEnterPx;
+    previous === 0
+      ? size >= (intermediate ? SHIP_LOD.nativeFullExitPx : SHIP_LOD.fullExitPx)
+      : size >=
+        (intermediate ? SHIP_LOD.nativeFullEnterPx : SHIP_LOD.fullEnterPx);
   if (full) return 0;
+  if (
+    intermediate &&
+    size >=
+      (previous === 0 || previous === 3
+        ? SHIP_LOD.fullExitPx
+        : SHIP_LOD.fullEnterPx)
+  )
+    return 3;
   const proxy =
     previous === undefined || previous === 2
       ? size >= SHIP_LOD.proxyEnterPx
@@ -60,15 +75,29 @@ export function nextShipTier(
  * tier, so the result never has fewer entries than the input.
  */
 export function assignShipTiers(
-  ships: readonly { id: string; px: number; previous?: ShipLodTier }[],
+  ships: readonly {
+    id: string;
+    px: number;
+    previous?: ShipLodTier;
+    intermediate?: boolean;
+    forceFull?: boolean;
+  }[],
   budget: number = SHIP_LOD.fullDetailBudget,
 ): Map<string, ShipLodTier> {
   const tiers = new Map<string, ShipLodTier>();
-  for (const s of ships) tiers.set(s.id, nextShipTier(s.previous, s.px));
+  for (const s of ships)
+    tiers.set(
+      s.id,
+      s.forceFull ? 0 : nextShipTier(s.previous, s.px, s.intermediate),
+    );
   const full = ships
-    .filter((s) => tiers.get(s.id) === 0)
+    .filter(
+      (s) => (tiers.get(s.id) === 0 || tiers.get(s.id) === 3) && !s.forceFull,
+    )
     .sort((a, b) => b.px - a.px || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
-  for (const s of full.slice(Math.max(0, budget))) tiers.set(s.id, 1);
+  const protectedCount = ships.filter((s) => s.forceFull).length;
+  for (const s of full.slice(Math.max(0, budget - protectedCount)))
+    tiers.set(s.id, 1);
   return tiers;
 }
 

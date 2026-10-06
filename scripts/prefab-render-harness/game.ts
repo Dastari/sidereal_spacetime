@@ -43,6 +43,7 @@ canvas.style.width = `${width}px`;
 canvas.style.height = `${height}px`;
 
 async function main() {
+  const cam = q.get("cam")?.split(",").map(Number);
   const construction = prefabConstructionDocument(
     doc,
     defaultPrefabComponentCatalog(),
@@ -80,6 +81,29 @@ async function main() {
     canvas,
     (text) => (document.getElementById("hud")!.textContent = text),
     {
+      onPresentationCamera:
+        cam && cam.length >= 3 && cam.every(Number.isFinite)
+          ? (reviewCamera) => {
+              const c = reviewCamera as unknown as {
+                alpha: number;
+                beta: number;
+                radius: number;
+                target: Vector3;
+              } | null;
+              if (!c || !("alpha" in c)) return;
+              // Target first: the ArcRotateCamera target setter re-derives angles from the position.
+              if (cam.length >= 5) c.target = new Vector3(cam[3], 1.2, -cam[4]);
+              [c.alpha, c.beta, c.radius] = cam as [number, number, number];
+              if (q.get("ortho") === "1") {
+                const camera = reviewCamera;
+                camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
+                camera.orthoTop = 7;
+                camera.orthoBottom = -7;
+                camera.orthoLeft = (-7 * width) / height;
+                camera.orthoRight = (7 * width) / height;
+              }
+            }
+          : undefined,
       prefabVisualVariant:
         q.get("visual") === "reference-r001"
           ? SHIP_REFERENCE_VISUAL
@@ -90,6 +114,11 @@ async function main() {
               bodies: () => undefined,
               ships: {
                 localShipId: () => "review-local",
+                intermediateExteriors: q.get("intermediate") !== "0",
+                fullDetailShipIds: () =>
+                  q.get("allFull") === "1"
+                    ? new Set(poses.map((p) => p.shipId))
+                    : new Set(),
                 store: {
                   getSnapshot: () => snapshot,
                   subscribeTable: () => () => {},
@@ -146,31 +175,6 @@ async function main() {
   window.__prefabWorld = world;
   // Review hook: shots can re-issue the state with extra fields (e.g. airlockCycle).
   (window as unknown as { __prefabState?: SceneState }).__prefabState = state;
-  // Review-only camera override (&cam=alpha,beta,radius): the game eases its RPG camera toward the
-  // crew every frame; this re-applies fixed matching angles after it, never touching game state.
-  const cam = q.get("cam")?.split(",").map(Number);
-  // Optional 4th/5th values: camera target in ship metres (x starboard, y fore) at deck height.
-  if (cam && cam.length >= 3 && cam.every(Number.isFinite))
-    scene!.onBeforeRenderObservable.add(() => {
-      const c = scene!.activeCamera as unknown as {
-        alpha: number;
-        beta: number;
-        radius: number;
-        target: Vector3;
-      } | null;
-      if (!c || !("alpha" in c)) return;
-      // Target first: the ArcRotateCamera target setter re-derives angles from the position.
-      if (cam.length >= 5) c.target = new Vector3(cam[3], 1.2, -cam[4]);
-      [c.alpha, c.beta, c.radius] = cam as [number, number, number];
-      if (q.get("ortho") === "1") {
-        const camera = scene!.activeCamera!;
-        camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
-        camera.orthoTop = 7;
-        camera.orthoBottom = -7;
-        camera.orthoLeft = (-7 * width) / height;
-        camera.orthoRight = (7 * width) / height;
-      }
-    });
   const instrumentation = new SceneInstrumentation(scene!);
   const engine = scene!.getEngine();
   const warmup = Math.max(6, Math.min(120, Number(q.get("frames")) || 30));

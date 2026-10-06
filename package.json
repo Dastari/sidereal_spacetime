@@ -1,6 +1,6 @@
 {
   "name": "sidereal-spacetime",
-  "version": "0.16.4",
+  "version": "0.16.5",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -84,6 +84,7 @@
     "@types/react-dom": "19.2.7",
     "@vitejs/plugin-react": "6.1.1",
     "eslint": "10.10.0",
+    "meshoptimizer": "1.3.0",
     "prettier": "3.9.6",
     "tsx": "4.23.13",
     "typescript": "6.0.3",
