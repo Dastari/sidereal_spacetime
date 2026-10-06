@@ -4526,6 +4526,82 @@
     "coolant-out"
    ],
    "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "reactor.sm",
+   "kitKey": "x.reactor.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/reactor.sm.glb",
+   "sha256": "68f5eb1f9adeadd8110fb4ae21520c4b78b17402abdf2055fd84d8e18e46fe66",
+   "bytes": 60520,
+   "boxes": 117,
+   "triangles": 980,
+   "vertices": 936,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.75,
+     -0.75,
+     0.0
+    ],
+    [
+     0.75,
+     0.8125,
+     1.875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     1.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/reactor-sm-addition/manifest.json",
+   "sourceExport": {
+    "manifestSha256": "c8aafd294a444b1094c98f42da8f01958d930a3aedea04cf3459b83f5cd0377a",
+    "source": {
+     "blend": "assets/art-library/ship-components/r004/reactor-sm-addition/reactor-sm-r004-runtime.blend",
+     "sha256": "056f3fbec7d6fde05b16230b403945c82712e884d96013152e62b987c36f4246",
+     "note": "editable Blender source saved by this export; GLBs are exported from it"
+    },
+    "catalog": {
+     "schema": "sidereal.ship-components.v1",
+     "id": "ship-components-v1",
+     "revision": 4,
+     "sha256": "b85f18272abb9fbcefbb3c4a0214c65fdd4f71df7633161598dfe6f4e7745d8b"
+    },
+    "generator": {
+     "script": "scripts/art_library/ship_component_export.py",
+     "sha256": "eb69d9ab7c7de1b086054385415513cbbcbca5284bb6856c21e81f4d80dec180",
+     "kit": "scripts/art_library/ship_kit_prototype.py",
+     "kitSha256": "60fc91f153279a9b51ed06a5a5daf151bda4d15324868a0a9f95af0f23fd4ebb",
+     "blender": "4.3.2"
+    }
+   }
   }
  ],
  "source": {
@@ -4600,6 +4676,7 @@
   "rcs.sm",
   "reactor.lg",
   "reactor.md",
+  "reactor.sm",
   "relay-beacon.md",
   "relay-beacon.sm",
   "resonance-drive.aurelian.lg",
