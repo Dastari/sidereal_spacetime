@@ -1,19 +1,19 @@
 {
   "name": "@sidereal/client",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "private": true,
   "type": "module",
   "dependencies": {
     "@fontsource/barlow": "5.3.0",
     "@fontsource/barlow-condensed": "5.3.0",
-    "@sidereal/content": "0.14.0",
-    "@sidereal/net": "0.8.0",
-    "@sidereal/render": "0.16.0",
-    "@sidereal/sim": "0.10.0",
+    "@sidereal/content": "0.14.1",
+    "@sidereal/net": "0.8.2",
+    "@sidereal/render": "0.16.1",
+    "@sidereal/sim": "0.10.2",
     "oidc-client-ts": "^3.4.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "@sidereal/canvas-ui": "0.3.3",
+    "@sidereal/canvas-ui": "0.3.4",
     "@sidereal/ui": "0.6.3"
   },
   "scripts": {

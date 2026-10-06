@@ -137,7 +137,7 @@ def apply(args):
     request = plan['request']
     call(args.server, args.database, 'operator_upgrade_prefab_ship', args.operation_id, False,
          request['shipId'], request['expectedSourceBlueprintSha256'], int(request['expectedInstanceRevision']),
-         request['targetPrefabId'], request['expectedTargetBlueprintSha256'], args.from_dry_run)
+         request['targetPrefabId'], request['expectedTargetBlueprintSha256'], {'some': args.from_dry_run})
     result = ledger(args.server, args.database, args.operation_id)
     print(json.dumps(result, indent=1))
     return result

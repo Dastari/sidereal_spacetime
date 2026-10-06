@@ -1,8 +1,10 @@
+import json
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 
 import ship_upgrade
+import ship_wipe
 
 
 class ChosenUpgradePlanTests(unittest.TestCase):
@@ -47,9 +49,21 @@ class ChosenUpgradePlanTests(unittest.TestCase):
         self.assertEqual(ledger.call_args_list[0].args, (args.server, args.database, args.from_dry_run))
         self.assertEqual(call.call_args.args, (
             args.server, args.database, 'operator_upgrade_prefab_ship', args.operation_id,
-            False, 'fixture-ship', 'source-pin', 6, 'fed.m.wayfarer', 'target-pin', args.from_dry_run,
+            False, 'fixture-ship', 'source-pin', 6, 'fed.m.wayfarer', 'target-pin', {'some': args.from_dry_run},
         ))
         load.assert_not_called()
+
+    def test_chosen_plan_reaches_cli_as_tagged_some_json(self):
+        args = self.args()
+        with patch.object(ship_upgrade, 'ledger', side_effect=[self.plan(), {'kind': 'upgrade-prefab'}]), \
+                patch.object(ship_wipe, 'cli') as cli, patch('builtins.print'):
+            ship_upgrade.apply(args)
+        command = cli.call_args.args[0]
+        self.assertEqual(command[:7], [
+            'call', '--server', args.server, '--yes', '--no-config', args.database,
+            'operator_upgrade_prefab_ship',
+        ])
+        self.assertEqual(json.loads(command[-1]), {'some': args.from_dry_run})
 
     def test_refused_plan_never_calls_apply(self):
         with patch.object(ship_upgrade, 'ledger', return_value=self.plan(refusals=['blocked furniture'])), \
