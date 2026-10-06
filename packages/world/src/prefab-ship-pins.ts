@@ -3,6 +3,7 @@
  * (no server imports) so operator scripts and smokes can read the same values.
  * `prefab-ship-spawners.test.ts` asserts every pin equals the current derivation.
  */
+import { FEDERATION_FLEET_PINS } from "./faction-fleet-pins";
 export interface PinnedPrefabShip {
   readonly prefabId: string;
   /** `${SHIP_COMPONENT_CATALOG_ID}@${SHIP_COMPONENT_CATALOG_REVISION}`. */
@@ -190,7 +191,7 @@ export const FED_WREN_R2_PIN: PinnedPrefabShip = {
 };
 
 /** Owner-selected authored Wayfarer r1, explicitly issued or used for targeted replacement. */
-export const FED_WAYFARER_PIN: PinnedPrefabShip = {
+export const FED_WAYFARER_R1_PIN: PinnedPrefabShip = {
   prefabId: "fed.m.wayfarer",
   catalogRevision: "ship-components-v1@4",
   blueprintSha256:
@@ -201,9 +202,20 @@ export const FED_WAYFARER_PIN: PinnedPrefabShip = {
   issueEmptyStorage: true,
 };
 
+/** Native access profile2; existing profile1 ships require an explicit preserving upgrade. */
+export const FED_WAYFARER_PIN: PinnedPrefabShip = {
+  ...FED_WAYFARER_R1_PIN,
+  blueprintSha256:
+    "536e77c75b73ca04755dc77f890e19d4f5b7b1bf096a37bf2b21d3094fbf5977",
+  flightDefinitionSha256:
+    "783ede554ce526b12630e3b3bb6d44fc583ea17c86b2472b0f4bfb5040606856",
+  description: "Wayfarer (Federation explorer, authored access profile2)",
+};
+
 export const REGISTERED_PREFAB_PINS: readonly PinnedPrefabShip[] = [
   FED_WREN_PIN,
   FED_WAYFARER_PIN,
+  ...FEDERATION_FLEET_PINS,
 ];
 
 /**
@@ -211,6 +223,7 @@ export const REGISTERED_PREFAB_PINS: readonly PinnedPrefabShip[] = [
  * registered pin of the same prefab (containers, items and the ship id are kept).
  */
 export const PREFAB_UPGRADE_SOURCES: readonly PinnedPrefabShip[] = [
+  FED_WAYFARER_R1_PIN,
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,

@@ -719,6 +719,22 @@ export function evaCaptureShip(
   return best?.id;
 }
 
+/** Overlapping bubbles retain the current frame until another capturable hull is
+ * at least half a metre nearer. This changes the motion reference, never access. */
+export function evaRecaptureShip(
+  ships: readonly EvaReferenceCandidate[],
+  body: EvaFreeState,
+  currentShipId: string,
+): string | undefined {
+  const nearest = evaCaptureShip(ships, body);
+  if (!nearest || nearest === currentShipId) return;
+  const current = ships.find((ship) => ship.id === currentShipId);
+  const target = ships.find((ship) => ship.id === nearest)!;
+  const gap = (ship: EvaReferenceCandidate) =>
+    Math.hypot(body.x - ship.pose.x, body.y - ship.pose.y) - ship.radiusM;
+  return !current || gap(target) + 0.5 < gap(current) ? nearest : undefined;
+}
+
 /**
  * Why a ship-local body leaves the ship's frame this tick, if it does: beyond the release radius,
  * or the ship's linear acceleration (its velocity change since last tick, `shipVPrevious`) exceeds

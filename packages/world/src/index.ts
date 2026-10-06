@@ -17,6 +17,7 @@ import {
 } from "./ship-operator-tables";
 import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
+import { installFactionFleet } from "./faction-fleet";
 import { stockShipCargo } from "./ship-cargo-operator";
 import { upgradePrefabShip } from "./ship-upgrade";
 import { replacePrefabShip } from "./ship-replace";
@@ -1811,6 +1812,16 @@ export const operatorAssignPrefabShip = db.reducer(
     allowLegacy: t.bool(),
   },
   withComponentSnapshots(assignPrefabShip),
+);
+export const operatorInstallFactionFleet = db.reducer(
+  {
+    operationId: t.string(),
+    characterId: t.string(),
+    expectedShipId: t.string(),
+    expectedInstanceRevision: t.u64(),
+    expectedFleetPinSet: t.string(),
+  },
+  withComponentSnapshots(installFactionFleet),
 );
 /** Operator-only, additive: binds a prefab storage socket (e.g. Wren's hold crate) to a
  * ship-owned container if needed and inserts new item instances. See ship-cargo-operator.ts. */

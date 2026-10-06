@@ -45,7 +45,7 @@ test("authored gameplay admits one exact registered source and rejects physical 
   expect(prefabOrigin(readShipPrefab(doc))).toEqual([0, 0]);
   for (const change of [
     (p: typeof doc) => {
-      p.authoredGameplay!.revision = 2 as 1;
+      p.authoredGameplay!.revision = p.authoredGameplay!.revision === 1 ? 2 : 1;
     },
     (p: typeof doc) => {
       p.id = "fed.s.wren";
@@ -68,7 +68,8 @@ test("authored gameplay admits one exact registered source and rejects physical 
   const bad = structuredClone(bound);
   bad.layout.tiles[0].vertices[0][0]++;
   expect(() => readConstructionDraft(JSON.stringify(bad))).toThrow();
-  expect(deriveInterior(doc, 0, catalog).floors.length).toBe(222);
+  // Active access profile2 retains the 222 native deck cells plus six qualified thresholds.
+  expect(deriveInterior(doc, 0, catalog).floors.length).toBe(228);
 });
 
 test("every live small crate and locker has a standing approach reachable from the cockpit", () => {

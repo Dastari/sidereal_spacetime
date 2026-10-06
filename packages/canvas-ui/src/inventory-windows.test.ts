@@ -1,3 +1,4 @@
+import { uiTheme } from "@sidereal/ui/theme";
 import { afterEach, expect, test, vi } from "vitest";
 import { CanvasUI } from "./toolkit";
 import { dismissGroundLootMenu, drawGroundLoot } from "./ground-loot";
@@ -478,7 +479,7 @@ test("held item outlines its full landing footprint and rotation changes fit wit
     slot.w * 2 - 4,
     slot.h * 4 - 4,
   ]);
-  expect(strokes.at(-1)?.color).toBe("#47dfff");
+  expect(strokes.at(-1)?.color).toBe(uiTheme.colors.primary);
   board.rotate();
   draw();
   // The turned 4x2 footprint no longer fits at column 5; the outline stays inside the grid
@@ -563,7 +564,7 @@ test("a valid equipment target outlines the slot in cyan and equips through auth
   draw();
   expect(strokes.at(-1)).toEqual({
     rect: [hand.x, hand.y, hand.w, hand.h],
-    color: "#47dfff",
+    color: uiTheme.colors.primary,
   });
   expect(
     ui.pointerAction({

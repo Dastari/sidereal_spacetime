@@ -545,6 +545,14 @@ export function upgradePrefabShip(ctx: Context, args: UpgradePrefabShipArgs) {
   const sequence = { next: 0 };
   const mapBefore = archiveJson(mapRowCounts(ctx.db));
   const inventoryBefore = shipInventory(ctx, S);
+  const flightIdentityBySource = new Map(
+    [...ctx.db.constructionFlightFitting.by_ship.filter(S)].map((row) => [
+      row.sourceDeviceId,
+      row.id,
+    ]),
+  );
+  const oldStation = ctx.db.station.shipId.find(S);
+  if (oldStation) flightIdentityBySource.set("station", oldStation.id);
 
   // 1. Archive and delete the rebuilt ship rows (containers, items and bindings stay).
   for (const [table, column] of UPGRADE_REBUILT_SHIP_TABLES)
@@ -589,6 +597,7 @@ export function upgradePrefabShip(ctx: Context, args: UpgradePrefabShipArgs) {
       template: plan.template,
       reuseIds: [S, deck.id],
       instanceRevision: revision,
+      flightIdentityBySource,
     },
   );
   if (installed.shipId !== S || installed.deckId !== deck.id)

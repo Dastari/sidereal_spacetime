@@ -29,7 +29,7 @@ import {
   trustedPrefabTemplate,
   trustedPrefabTemplateFor,
 } from "./prefab-ship-authority";
-import { stockShipCargo } from "./ship-cargo-operator";
+import { stockShipCargo, issueEmptySocketStorage } from "./ship-cargo-operator";
 import {
   clearConstructionCollisionCache,
   constructionCollision,
@@ -38,6 +38,8 @@ import { compileShipFlight } from "./construction-flight-compilation";
 import { readConstructionFlightInput } from "./construction-flight-input";
 import {
   FED_WREN_PIN,
+  FED_WAYFARER_PIN,
+  FED_WAYFARER_R1_PIN,
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,
@@ -288,6 +290,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
   for (const t of listed) expect(WIPED_SHIP_TABLES, t).toContain(t);
 
   expect(PREFAB_UPGRADE_SOURCES).toEqual([
+    FED_WAYFARER_R1_PIN,
     FED_WREN_R2_PIN,
     FED_WREN_R3_PIN,
     FED_WREN_R4_PIN,
@@ -327,6 +330,12 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
       ]);
       const motion = { ...f.db.shipWorldMotion.shipId.find(shipId) };
       const shipBefore = { ...f.db.ship.id.find(shipId) };
+      const fittingIdsBefore = new Map(
+        f.db.constructionFlightFitting.rows.map((row: Row) => [
+          row.sourceDeviceId,
+          row.id,
+        ]),
+      );
 
       // Dry run: a ledger row with the plan and nothing else.
       const quiet = f.snapshot(["shipOperatorOperation"]);
@@ -351,6 +360,10 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
 
       // Apply.
       upgradePrefabShip(f.ctx, upgradeArgs(shipId, pin));
+      for (const row of f.db.constructionFlightFitting.rows) {
+        if (fittingIdsBefore.has(row.sourceDeviceId))
+          expect(row.id).toBe(fittingIdsBefore.get(row.sourceDeviceId));
+      }
       const instance = f.db.constructionInstance.id.find(shipId);
       expect(instance.blueprintSha256).toBe(FED_WREN_PIN.blueprintSha256);
       expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r9");
@@ -713,5 +726,94 @@ test(
       instanceRevision: 2n,
       lifecycle: "active",
     });
+  },
+);
+
+test(
+  "authored Wayfarer profile1 gets working access in place without losing inventory or matching flight fitting UUIDs",
+  HEAVY,
+  () => {
+    clearConstructionCollisionCache();
+    const f = fixture();
+    f.as(OWNER);
+    const characterId = onboardNewCharacter(f.ctx, "Access qualification");
+    f.as(SHIP_OPERATOR);
+    const source = readShipPrefab(
+      JSON.parse(
+        readFileSync(
+          new URL("../../content/src/wayfarer-prefab.v1.json", import.meta.url),
+          "utf8",
+        ),
+      ),
+    );
+    const catalog = prefabComponentCatalogFor(
+      FED_WAYFARER_R1_PIN.catalogRevision,
+    );
+    const template = trustedPrefabTemplateFor(source, catalog);
+    expect(template.snapshot.sha256).toBe(FED_WAYFARER_R1_PIN.blueprintSha256);
+    const { shipId, deckId } = installPrefabShip(
+      f.ctx,
+      f.db.character.id.find(characterId),
+      { prefabId: source.id, pose: { kind: "berth" } },
+      { template },
+    );
+    for (const container of f.db.inventoryContainer.rows)
+      if (container.characterId === characterId) container.shipId = shipId;
+    for (const socket of prefabCargoSockets(source, 0, catalog))
+      issueEmptySocketStorage(f.ctx, shipId, socket.key, socket.designId);
+    const inventory = heldInventory(f, shipId);
+    const fittings = new Map(
+      f.db.constructionFlightFitting.rows
+        .filter((r: Row) => r.shipId === shipId)
+        .map((r: Row) => [r.sourceDeviceId, r.id]),
+    );
+    const motion = { ...f.db.shipWorldMotion.shipId.find(shipId) };
+    const args = {
+      operationId: "upgrade-authored-access-0001",
+      dryRun: true,
+      shipId,
+      expectedSourceBlueprintSha256: template.snapshot.sha256,
+      expectedInstanceRevision: 1n,
+      targetPrefabId: source.id,
+      expectedTargetBlueprintSha256: FED_WAYFARER_PIN.blueprintSha256,
+    };
+    upgradePrefabShip(f.ctx, args);
+    const plan = JSON.parse(
+      f.db.shipOperatorOperation.operationId.find(args.operationId).summaryJson,
+    );
+    expect(plan.refusals).toEqual([]);
+    upgradePrefabShip(f.ctx, {
+      ...args,
+      dryRun: false,
+      operationId: "upgrade-authored-access-0002",
+    });
+    expect(heldInventory(f, shipId)).toEqual(inventory);
+    expect(f.db.constructionDeck.id.find(deckId)?.instanceId).toBe(shipId);
+    expect(f.db.constructionInstance.id.find(shipId)).toMatchObject({
+      revision: 2n,
+      blueprintSha256: FED_WAYFARER_PIN.blueprintSha256,
+    });
+    expect(
+      JSON.parse(f.db.constructionInstance.id.find(shipId).documentJson).prefab
+        .document.authoredGameplay.revision,
+    ).toBe(2);
+    for (const row of f.db.constructionFlightFitting.rows.filter(
+      (r: Row) => r.shipId === shipId,
+    ))
+      if (fittings.has(row.sourceDeviceId))
+        expect(row.id).toBe(fittings.get(row.sourceDeviceId));
+    const after = f.db.shipWorldMotion.shipId.find(shipId);
+    expect([after.x, after.y, after.heading]).toEqual([
+      motion.x,
+      motion.y,
+      motion.heading,
+    ]);
+    const ledger = f.db.shipOperatorOperation.rows.length;
+    upgradePrefabShip(f.ctx, {
+      ...args,
+      dryRun: false,
+      operationId: "upgrade-authored-access-0002",
+    });
+    expect(f.db.shipOperatorOperation.rows.length).toBe(ledger);
   },
 );

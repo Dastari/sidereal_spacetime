@@ -1,3 +1,4 @@
+import { fleetAccessPhysicalGeometry } from "@sidereal/content/prefabs";
 import {
   effectiveWayfarerObjects,
   type FurnishingOverrides,
@@ -544,11 +545,26 @@ export function prefabDeckObstacles(
       });
     return obstacles;
   }
-  return prefabDeckBlockers(doc, catalog).map((b) => ({
+  const obstacles = prefabDeckBlockers(doc, catalog).map((b) => ({
     id: `prefab-${b.objectId}`,
     definitionId: b.definitionId.slice(0, 128),
     vertices: planRectToShip(doc, b.rect),
   }));
+  const [ox, oy] = prefabOrigin(doc);
+  for (const access of fleetAccessPhysicalGeometry(doc))
+    for (const solid of [...access.frame, ...access.pockets]) {
+      // Headers above standing crew are presentation; jambs and leaf pockets are solid.
+      if (solid.minZ >= 1.8 + 0.1875 || solid.maxZ <= 0.1875) continue;
+      obstacles.push({
+        id: `prefab-access:${solid.id}`,
+        definitionId: "fleet.access.frame",
+        vertices: solid.polygon.map(([x, y]): [number, number] => [
+          -(y - oy) + 0,
+          x - ox + 0,
+        ]),
+      });
+    }
+  return obstacles;
 }
 
 /**

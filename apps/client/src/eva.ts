@@ -27,6 +27,9 @@ import { evaSuitCheck, evaSuitMessage } from "@sidereal/content/crew-wardrobe";
 import { evaExitThrough } from "@sidereal/sim/eva";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import type { CrewAppearance } from "@sidereal/render/crew/appearance";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { prefabIdOfExterior } from "@sidereal/sim/ship-exterior";
 
 export interface EvaBodyRow {
   characterId: string;
@@ -93,6 +96,117 @@ interface PrefabModels {
   logic: ShipLogicModel | null;
 }
 const models = new Map<string, PrefabModels | null>();
+const publishedModels = new Map<string, PrefabModels>();
+/** Immutable published geometry, never an unoccupied ship's private instance document. */
+export function publishedExteriorModels(
+  assetId: string,
+  revision: bigint,
+): PrefabModels | null {
+  const id = prefabIdOfExterior(assetId);
+  const doc = id ? prefabById(id) : undefined;
+  if (!doc || BigInt(doc.revision) !== revision) return null;
+  const key = `${id}@${revision}`;
+  let result = publishedModels.get(key);
+  if (!result) {
+    const catalog = defaultPrefabComponentCatalog();
+    result = {
+      eva: prefabEvaModel(doc, catalog),
+      logic: shipLogicModel(doc, catalog),
+    };
+    publishedModels.set(key, result);
+  }
+  return result;
+}
+
+/** Target-frame interaction from accepted exterior rows while physically in EVA. */
+export function exteriorButtonAction(input: {
+  body: EvaBodyRow | undefined;
+  motions: Iterable<ShipPose & { shipId: string }>;
+  descriptions: Iterable<{
+    shipId: string;
+    publishedExteriorAssetId: string;
+    appearanceRevision: bigint;
+  }>;
+  rows: Iterable<ShipLogicRow>;
+}): EvaAction {
+  const { body } = input;
+  if (!body || body.phase !== "local" || !body.anchorShipId) return;
+  const motion = [...input.motions].find((r) => r.shipId === body.anchorShipId);
+  const description = [...input.descriptions].find(
+    (r) => r.shipId === body.anchorShipId,
+  );
+  if (!motion || !description) return;
+  const model = publishedExteriorModels(
+    description.publishedExteriorAssetId,
+    description.appearanceRevision,
+  );
+  if (!model) return;
+  const at = worldToShip(motion, [body.x, body.y]);
+  if (!model.logic)
+    return legacyEntryAction({
+      shipId: body.anchorShipId,
+      model: model.eva,
+      logic: null,
+      outside: at,
+    });
+  if (!model.logic) return;
+  const action = logicButtonAction({
+    shipId: body.anchorShipId,
+    logic: model.logic,
+    outside: at,
+  });
+  return action?.kind === "button" &&
+    [...input.rows].some(
+      (r) =>
+        r.shipId === action.shipId &&
+        r.deviceId === action.deviceId &&
+        r.kind === "button",
+    )
+    ? action
+    : undefined;
+}
+
+export function exteriorLogicPresentation(
+  descriptions: Iterable<{
+    shipId: string;
+    publishedExteriorAssetId: string;
+    appearanceRevision: bigint;
+  }>,
+  rows: readonly ShipLogicRow[],
+) {
+  const out = new Map<
+    string,
+    {
+      doors: ReadonlyMap<string, boolean>;
+      panels: ReadonlyMap<string, { state: string; light: string }>;
+    }
+  >();
+  for (const description of descriptions) {
+    const logic = publishedExteriorModels(
+      description.publishedExteriorAssetId,
+      description.appearanceRevision,
+    )?.logic;
+    if (!logic) continue;
+    const accepted = rows.filter((r) => r.shipId === description.shipId);
+    const doors = new Map<string, boolean>();
+    for (const door of logic.doors.filter((d) => d.exterior)) {
+      const state = accepted.find(
+        (r) => r.kind === "door" && r.deviceId === door.deviceId,
+      );
+      if (state) doors.set(door.doorId, state.open);
+    }
+    const panels = new Map<string, { state: string; light: string }>();
+    for (const panel of logic.panels.filter((p) => p.side === "exterior")) {
+      const state = accepted.find(
+        (r) => r.kind === "button" && r.deviceId === panel.deviceId,
+      );
+      if (state)
+        panels.set(panel.deviceId, { state: state.state, light: state.light });
+    }
+    out.set(description.shipId, { doors, panels });
+  }
+  return out;
+}
 function modelsOfDocument(documentJson: string | undefined) {
   if (!documentJson) return null;
   if (models.has(documentJson)) return models.get(documentJson)!;

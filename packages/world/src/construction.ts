@@ -1,5 +1,6 @@
 import { recoverConstructionPilotsForGrant } from "./construction-pilot-authority";
 import { recoverConstructionSeatsForGrant } from "./construction-interactions";
+import { assertPrefabSizeClass } from "../../sim/src/prefab-size-class";
 import {
   SenderError,
   Range,
@@ -218,6 +219,15 @@ export function saveDraft(
   const prior = ctx.db.constructionDraft.id.find(args.draftId);
   if (prior && prior.workspaceId !== args.workspaceId)
     throw new SenderError("Draft workspace mismatch");
+  try {
+    assertPrefabSizeClass(
+      JSON.parse(snapshot.canonical),
+      prior ? JSON.parse(prior.documentJson) : undefined,
+      args.draftId,
+    );
+  } catch (e) {
+    throw new SenderError(String(e));
+  }
   const op = operation(
     ctx,
     args.operationId,
@@ -285,6 +295,11 @@ export function publishBlueprint(
   let snapshot;
   try {
     snapshot = compileConstruction(prior.documentJson);
+    assertPrefabSizeClass(
+      JSON.parse(snapshot.canonical),
+      undefined,
+      args.draftId,
+    );
   } catch (e) {
     throw new SenderError(String(e));
   }

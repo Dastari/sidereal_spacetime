@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -52,6 +52,7 @@
     "./construction-airlock-controller": "./src/construction-airlock-controller.ts",
     "./construction-airlock-document": "./src/construction-airlock-document.ts",
     "./game-ship-access": "./src/game-ship-access.ts",
+    "./owned-ship-entry": "./src/owned-ship-entry.ts",
     "./construction-flight": "./src/construction-flight.ts",
     "./construction-pilot": "./src/construction-pilot.ts",
     "./construction-airlock-published": "./src/construction-airlock-published.ts",
@@ -98,11 +99,12 @@
     "./ship-visual-compiler": "./src/ship-visual-compiler.ts",
     "./ship-furnishings": "./src/ship-furnishings.ts",
     "./furnishing-wall-placement": "./src/furnishing-wall-placement.ts",
-    "./authored-template-plan": "./src/authored-template-plan.ts"
+    "./authored-template-plan": "./src/authored-template-plan.ts",
+    "./fleet-formation-bounds": "./src/fleet-formation-bounds.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.13.1",
+    "@sidereal/content": "0.14.0",
     "@sidereal/scripting": "0.1.0"
   }
 }

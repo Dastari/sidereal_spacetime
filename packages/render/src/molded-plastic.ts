@@ -563,7 +563,9 @@ export function applyMoldedFinishToMeshes(
       if (!(m instanceof PBRMaterial) || seen.has(m)) continue;
       seen.add(m);
       const part = (m.metadata?.crewPart as CrewPart | undefined) ?? "body";
-      const family = surfaceFamilyForMaterialName(m.name, part);
+      const family =
+        (m.metadata?.studySurfaceFamily as SurfaceFamily | undefined) ??
+        surfaceFamilyForMaterialName(m.name, part);
       if (!family) continue;
       // Skip materials already in this finish; a later theme/colourway pass that rewrote the
       // response (e.g. item themes carry their own roughness) is finished again.

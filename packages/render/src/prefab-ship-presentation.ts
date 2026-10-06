@@ -1,5 +1,9 @@
 import { readFurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { isWayfarerAccessProfile } from "@sidereal/content/wayfarer-access-profile";
+import {
+  createFederationFleetAccessDoors,
+  isFederationFleet,
+} from "./prefab-ship/federation-fleet-access";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -69,6 +73,7 @@ export async function loadPrefabShipPresentation(
   accessResolver?: (
     piece: import("@sidereal/content/ship-access-doors").ShipAccessDoorPiece,
   ) => Promise<Uint8Array>,
+  initialInteriorVisibility = false,
 ): Promise<PrefabShipViewHandle | undefined> {
   let binding: { document?: unknown; catalog?: unknown } | undefined;
   try {
@@ -88,14 +93,14 @@ export async function loadPrefabShipPresentation(
     import("./prefab-ship/doors"),
     import("./prefab-ship/logic-panels"),
   ]);
-  let interior = true;
+  let interior = initialInteriorVisibility;
   // Published component (ship-components/r002) and interior object (ship-objects/r001) GLBs;
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.
   const view = await createPrefabShipView(scene, doc, {
     catalog,
     furnishings: readFurnishingOverrides(furnishingsJson),
     visualVariant,
-    view: "deck",
+    view: interior ? "deck" : "flight",
     parent: shipRoot,
     // Closed, animated door leaves (doors.ts) replace the airlock GLB's baked leaves.
     externalDoorLeaves: true,
@@ -112,16 +117,26 @@ export async function loadPrefabShipPresentation(
     ? await (
         await import("./prefab-ship/wayfarer-access-doors")
       ).createWayfarerAccessDoors(scene, view.root, accessResolver!)
-    : createPrefabDoors(
-        scene,
-        view.root,
-        doc,
-        catalog,
-        doc.theme,
-        view.metrics().visualRevision !== undefined,
-      );
+    : isFederationFleet(doc)
+      ? await createFederationFleetAccessDoors(
+          scene,
+          view.root,
+          doc,
+          catalog,
+          accessResolver!,
+        )
+      : createPrefabDoors(
+          scene,
+          view.root,
+          doc,
+          catalog,
+          doc.theme,
+          view.metrics().visualRevision !== undefined,
+        );
   // Ship logic wall buttons (wiki Systems/Ship Logic): lights follow `visible_ship_logic`.
   const panels = createLogicPanels(scene, view.root, doc, catalog);
+  doors.setView(interior ? "deck" : "flight");
+  panels.setView(interior ? "deck" : "flight");
   // The native construction loader also builds boundary guide meshes for the same layout; the
   // dressed view replaces them visually (walking and collision stay authoritative), so hide them.
   for (const mesh of shipRoot.getChildMeshes())

@@ -80,8 +80,12 @@ export async function enterNativePilot(c: DbConnection) {
   await acquireNativePilot(c);
 }
 export async function acquireNativePilot(c: DbConnection) {
-  // This same-box fixture must observe a fresh solve, not an old cached powered
-  // row. Server authority expires power after 100 ms; leave dispatch margin.
+  // Wait for a newly observed powered solve. The actor-filtered power view is
+  // already server-freshness checked. Its tick is floor(solvedMicros / 50_000),
+  // not the exact solve timestamp: local wall-clock age adds quantization, clock
+  // skew and delivery latency, so it cannot impose a tighter freshness gate.
+  // The single entry command below still receives exact server-time, station
+  // proximity, access and power validation; never retry an authority rejection.
   const currentFlight = () => {
     const shipId = [...c.db.ownCharacters.iter()][0]?.shipId;
     return [...c.db.ownAuthoredFlights.iter()].find((f) => f.shipId === shipId);
@@ -89,35 +93,25 @@ export async function acquireNativePilot(c: DbConnection) {
   const initial = currentFlight();
   const initialPowerTick =
     (initial && c.db.ownShipPower.shipId.find(initial.shipId)?.tick) ?? 0n;
-  let minimumPoweredAgeMs = Infinity;
   let lastReadiness: Record<string, unknown> = {};
   const ready = () => {
     const flight = currentFlight();
     const power = flight && c.db.ownShipPower.shipId.find(flight.shipId);
     const physics =
       flight && c.db.ownAuthoredFlightPhysics.shipId.find(flight.shipId);
-    const ageMs = power ? Date.now() - Number(power.tick * 50n) : Infinity;
-    if (power?.corePowered && physics?.status === "ready")
-      minimumPoweredAgeMs = Math.min(minimumPoweredAgeMs, ageMs);
     lastReadiness = {
-      shipId: flight?.shipId,
       active: flight?.active,
       flightAdmitted: flight?.flightAdmitted,
       physicsStatus: physics?.status,
       corePowered: power?.corePowered,
-      initialPowerTick: String(initialPowerTick),
-      powerTick: power && String(power.tick),
-      ageMs,
-      minimumPoweredAgeMs,
+      newPoweredTickObserved: !!power && power.tick > initialPowerTick,
     };
     return (
       !!flight?.active &&
       flight.flightAdmitted &&
       physics?.status === "ready" &&
       !!power?.corePowered &&
-      power.tick > initialPowerTick &&
-      ageMs >= -50 &&
-      ageMs <= 50
+      power.tick > initialPowerTick
     );
   };
   try {

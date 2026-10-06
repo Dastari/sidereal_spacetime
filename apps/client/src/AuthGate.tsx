@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { User } from "oidc-client-ts";
 import App from "./App";
 import { authManager, authOrigin, gameAuthentication } from "./auth";
 import { restoreGameSession, usableGameSession } from "./auth-session";
+import {
+  GameButton,
+  GameNotice,
+  GamePanel,
+  HangarShell,
+  SiderealWordmark,
+} from "@sidereal/ui/game";
 import "./auth.css";
 
 export default function AuthGate() {
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
+  const [signingIn, setSigningIn] = useState(false);
+  const signInPending = useRef(false);
+  const mounted = useRef(false);
   const [development, setDevelopment] = useState(
     () =>
       import.meta.env.DEV &&
@@ -16,6 +26,12 @@ export default function AuthGate() {
       Boolean(localStorage.getItem("sidereal.lab.token")) &&
       !new URLSearchParams(location.search).has("login"),
   );
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
   useEffect(() => {
     if (location.origin !== authOrigin) {
       setReady(true);
@@ -66,17 +82,26 @@ export default function AuthGate() {
     };
   }, []);
   const signIn = async () => {
-    if (location.origin !== authOrigin) {
-      location.assign(authOrigin + location.search);
-      return;
-    }
+    if (signInPending.current || !ready) return;
+    signInPending.current = true;
+    setSigningIn(true);
     try {
       setError("");
+      if (location.origin !== authOrigin) {
+        location.assign(authOrigin + location.search);
+        return;
+      }
       await authManager().signinRedirect({
         state: { returnQuery: location.search },
       });
     } catch {
-      setError("Unable to reach sign-in. Check your connection and try again.");
+      signInPending.current = false;
+      if (mounted.current) {
+        setSigningIn(false);
+        setError(
+          "Unable to reach sign-in. Check your connection and try again.",
+        );
+      }
     }
   };
   const signOut = async () => {
@@ -103,46 +128,44 @@ export default function AuthGate() {
       />
     );
   return (
-    <main className="auth-screen">
-      <div className="auth-world" aria-hidden="true" />
-      <section className="auth-intro">
-        <span className="auth-orbit" aria-hidden="true">
-          ◒
-        </span>
-        <h1>Sidereal</h1>
-        <p>Your ship. Your crew. A universe to explore.</p>
-      </section>
-      <section className="auth-panel" aria-label="Sign in">
-        <h2>Welcome aboard</h2>
-        <p>Sign in with your Dastari account to continue your journey.</p>
-        {error && (
-          <p className="auth-error" role="alert">
-            {error}
-          </p>
-        )}
-        <button
+    <HangarShell className="auth-screen" header={<SiderealWordmark />}>
+      <GamePanel className="auth-panel" title="Sign in">
+        <p className="auth-description">Sign in with your Dastari account.</p>
+        {error && <GameNotice kind="danger">{error}</GameNotice>}
+        <GameButton
           className="auth-primary"
+          variant="primary"
           disabled={!ready}
+          pending={signingIn}
           onClick={() => void signIn()}
         >
-          {ready ? "Sign in / Create account" : "Preparing sign-in…"}
-        </button>
-        <p className="auth-note">
-          Your character, equipment and appearance stay with your account.
+          {signingIn
+            ? "Opening sign-in…"
+            : ready
+              ? "Sign in"
+              : "Preparing sign-in…"}
+        </GameButton>
+        <p className="auth-note" role={signingIn ? "status" : undefined}>
+          {signingIn
+            ? "Continue on the Dastari sign-in page."
+            : "Account registration is available on the sign-in page."}
         </p>
         {import.meta.env.DEV && (
-          <details>
+          <details className="auth-development">
             <summary>Existing development character</summary>
             <p>
               Continue the saved character in this browser. Use Account in game
               to link it to your Dastari account.
             </p>
-            <button onClick={() => setDevelopment(true)}>
+            <GameButton
+              variant="secondary"
+              onClick={() => setDevelopment(true)}
+            >
               Continue development character
-            </button>
+            </GameButton>
           </details>
         )}
-      </section>
-    </main>
+      </GamePanel>
+    </HangarShell>
   );
 }

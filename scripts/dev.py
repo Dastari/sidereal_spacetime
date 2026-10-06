@@ -446,7 +446,11 @@ def status():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-equipment', 'export-materials', 'export-crew-items', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup', *(f'{name}-serve' for name in SERVE)])
+    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-theme-status', 'keycloak-theme-stage', 'keycloak-theme-activate', 'keycloak-theme-rollback', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-equipment', 'export-materials', 'export-crew-items', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup', *(f'{name}-serve' for name in SERVE)])
+    parser.add_argument('--theme-revision', help='Immutable installed theme name; keycloak-theme-activate/rollback only')
+    parser.add_argument('--theme-artifact-sha256', help='Reviewed complete theme archive digest')
+    parser.add_argument('--expected-client-theme', help='Current sidereal-game login theme, or __realm_default__')
+    parser.add_argument('--theme-operation-id', help='32-character hex operation ID; reuse for rollback')
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
     parser.add_argument('--client-artifact', help='Pinned prebuilt client directory; public-client-stage only')
     parser.add_argument('--client-artifact-sha256', help='Required complete tree digest with --client-artifact')
@@ -463,6 +467,11 @@ def main():
     parser.add_argument('--expected-sha256', help='Pinned cold archive digest; restore-review-prepare only')
     args = parser.parse_args()
     command = args.command
+    theme_args = (args.theme_revision, args.theme_artifact_sha256, args.expected_client_theme, args.theme_operation_id)
+    if any(theme_args) and command not in ('keycloak-theme-activate', 'keycloak-theme-rollback'):
+        parser.error('Theme mutation arguments require keycloak-theme-activate or keycloak-theme-rollback')
+    if command in ('keycloak-theme-activate', 'keycloak-theme-rollback') and not all(theme_args):
+        parser.error('Theme mutation requires all four pinned revision, digest, expected theme and operation arguments')
     if (args.archive is not None or args.expected_sha256 is not None) and command != 'restore-review-prepare':
         parser.error('Recovery archive arguments are valid only for restore-review-prepare')
     if args.prefab and (command != 'smoke' or not args.fresh_smoke or not args.smoke_name):
@@ -510,7 +519,9 @@ def main():
         auth_https_command(command.removeprefix('auth-https-'), CFG)
     elif command.startswith('keycloak-'):
         from keycloak_service import command as keycloak_command
-        keycloak_command(command.removeprefix('keycloak-'))
+        keycloak_command(command.removeprefix('keycloak-'), theme_revision=args.theme_revision,
+            expected_client_theme=args.expected_client_theme, theme_artifact_sha256=args.theme_artifact_sha256,
+            theme_operation_id=args.theme_operation_id)
     elif command == 'setup':
         if not (TOOLS / 'bin' / CFG['project']['spacetime_version'] / 'spacetimedb-cli').exists():
             installer = STATE / 'install-spacetime.sh'

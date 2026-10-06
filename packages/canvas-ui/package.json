@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/canvas-ui",
-  "version": "0.2.1",
+  "version": "0.3.3",
   "private": true,
   "type": "module",
   "exports": {
@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",
-    "@sidereal/content": "0.13.1",
-    "@sidereal/render": "0.15.0"
+    "@sidereal/content": "0.14.0",
+    "@sidereal/render": "0.16.0",
+    "@sidereal/ui": "0.6.3"
   }
 }

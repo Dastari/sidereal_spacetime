@@ -5,7 +5,14 @@ import {
   readAuthoredTemplateKit,
   AUTHORED_TEMPLATE_KIT_MANIFEST_SHA256,
 } from "@sidereal/content/authored-template-kit";
-import { EDITABLE_PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
+import {
+  EDITABLE_PREFAB_SHIPS,
+  FEDERATION_FLEET,
+  fleetAccessAuthorPoint,
+  fleetAccessPhysicalGeometry,
+  prefabById,
+} from "@sidereal/content/prefabs";
+import { WAYFARER_ACCESS_DOORS } from "@sidereal/content/wayfarer-access-profile";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   G,
@@ -30,9 +37,11 @@ import { compilePrefabFlight } from "./prefab-handling";
 import {
   authoredTemplateTileMatrix,
   compileAuthoredTemplatePlan,
+  retainedAuthoredTemplateKitPlacement,
   type AuthoredTemplateInstance,
   type AuthoredTemplateMatrix,
 } from "./authored-template-plan";
+import { dressShip } from "./ship-dresser";
 
 const catalog = defaultPrefabComponentCatalog();
 const transform = (m: AuthoredTemplateMatrix, p: Pt): Pt => [
@@ -87,7 +96,246 @@ const kept = (row: AuthoredTemplateInstance, p: readonly number[]) =>
     ([nx, ny, nz, d]) => nx * p[0] + ny * p[1] + nz * p[2] + d >= -1e-7,
   );
 
+type Triangle = number[][];
+const nativeTriangles = new Map<string, Triangle[]>();
+function trianglesFromGlb(piece: string): Triangle[] {
+  const cached = nativeTriangles.get(piece);
+  if (cached) return cached;
+  const bytes = readFileSync(
+    new URL(
+      `../../../assets/runtime/ship-study/template-authored-r001/${piece}.glb`,
+      import.meta.url,
+    ),
+  );
+  const jsonLength = bytes.readUInt32LE(12),
+    gltf = JSON.parse(bytes.subarray(20, 20 + jsonLength).toString());
+  const blob = bytes.subarray(28 + jsonLength);
+  const values = (id: number): number[][] => {
+    const a = gltf.accessors[id],
+      v = gltf.bufferViews[a.bufferView],
+      n = a.type === "VEC3" ? 3 : 1;
+    const width = a.componentType === 5123 ? 2 : 4;
+    return Array.from({ length: a.count }, (_, i) =>
+      Array.from({ length: n }, (_, j) => {
+        const at =
+          (v.byteOffset ?? 0) +
+          (a.byteOffset ?? 0) +
+          i * (v.byteStride ?? width * n) +
+          j * width;
+        return a.componentType === 5126
+          ? blob.readFloatLE(at)
+          : width === 2
+            ? blob.readUInt16LE(at)
+            : blob.readUInt32LE(at);
+      }),
+    );
+  };
+  // These pinned native structural sources bake their transforms into mesh vertices.
+  expect(
+    gltf.nodes.every(
+      (n: Record<string, unknown>) =>
+        !n.matrix && !n.translation && !n.rotation && !n.scale,
+    ),
+  ).toBe(true);
+  const out: Triangle[] = [];
+  for (const mesh of gltf.meshes)
+    for (const p of mesh.primitives) {
+      const vertices = values(p.attributes.POSITION).map(([x, y, z]) => [
+          x,
+          -z,
+          y,
+        ]),
+        indices = values(p.indices).flat();
+      for (let i = 0; i < indices.length; i += 3)
+        out.push(indices.slice(i, i + 3).map((k) => vertices[k]));
+    }
+  nativeTriangles.set(piece, out);
+  return out;
+}
+function clipNativePolygon(poly: number[][], plane: readonly number[]) {
+  const out: number[][] = [];
+  for (let i = 0; i < poly.length; i++) {
+    const a = poly[i],
+      b = poly[(i + 1) % poly.length],
+      d = (p: number[]) =>
+        plane[0] * p[0] + plane[1] * p[1] + plane[2] * p[2] + plane[3];
+    const da = d(a),
+      db = d(b);
+    if (da >= -1e-9) out.push(a);
+    if (da >= -1e-9 !== db >= -1e-9)
+      out.push(a.map((n, j) => n + ((b[j] - n) * da) / (da - db)));
+  }
+  return out;
+}
+function polygonArea3D(poly: number[][]) {
+  if (poly.length < 3) return 0;
+  let sum = 0;
+  for (let i = 1; i + 1 < poly.length; i++) {
+    const a = poly[i].map((n, j) => n - poly[0][j]),
+      b = poly[i + 1].map((n, j) => n - poly[0][j]);
+    sum +=
+      Math.hypot(
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+      ) / 2;
+  }
+  return sum;
+}
+function nativeSweepIntersection(
+  row: AuthoredTemplateInstance,
+  min: number[],
+  max: number[],
+) {
+  const box = [min[0], max[0]].flatMap((x) =>
+    [min[1], max[1]].flatMap((y) => [min[2], max[2]].map((z) => [x, y, z])),
+  );
+  // An existing native clip separating the entire sweep certifies zero intersection.
+  if (
+    (row.clipPlanes ?? []).some((p) =>
+      box.every((q) => p[0] * q[0] + p[1] * q[1] + p[2] * q[2] + p[3] < -1e-8),
+    )
+  )
+    return 0;
+  let area = 0;
+  const clips = [
+    ...(row.clipPlanes ?? []),
+    [1, 0, 0, -min[0]],
+    [-1, 0, 0, max[0]],
+    [0, 1, 0, -min[1]],
+    [0, -1, 0, max[1]],
+    [0, 0, 1, -min[2]],
+    [0, 0, -1, max[2]],
+  ];
+  for (const tri of trianglesFromGlb(row.piece)) {
+    let poly = tri.map(([x, y, z]) => {
+      const p = sourcePoint(row, x, y, z);
+      if (row.verticalProfile) {
+        const h = (a: number[]) => a[0] * p[0] + a[1] * p[1] + a[2],
+          low = h(row.verticalProfile.bottom),
+          high = h(row.verticalProfile.top);
+        p[2] = low + (high - low) * z;
+      }
+      return p;
+    });
+    if (
+      [0, 1, 2].some(
+        (i) =>
+          Math.max(...poly.map((p) => p[i])) < min[i] ||
+          Math.min(...poly.map((p) => p[i])) > max[i],
+      )
+    )
+      continue;
+    for (const p of clips) {
+      poly = clipNativePolygon(poly, p);
+      if (poly.length < 3) break;
+    }
+    area += polygonArea3D(poly);
+  }
+  return area;
+}
+
 describe("authored template presentation", () => {
+  it("removes actual native structural triangles from all ten outer leaf strokes, including pod/roof corners", () => {
+    let proved = 0;
+    let cargoRegressions = 0;
+    for (const doc of FEDERATION_FLEET) {
+      for (const access of fleetAccessPhysicalGeometry(doc)) {
+        const variant = WAYFARER_ACCESS_DOORS.variants.find(
+          (v) =>
+            v.id === (access.port.id === "cargo" ? "cargo.4m" : "personnel"),
+        )!;
+        const sweep = (
+          variant as typeof variant & {
+            sweepBounds: { min: number[]; max: number[] };
+          }
+        ).sweepBounds;
+        const xy = [sweep.min[0], sweep.max[0]].flatMap((x) =>
+          [sweep.min[1], sweep.max[1]].map((y) =>
+            fleetAccessAuthorPoint(access.port, x, y),
+          ),
+        );
+        const min = [
+            Math.min(...xy.map((p) => p[0])),
+            Math.min(...xy.map((p) => p[1])),
+            0.1875 + 1e-5,
+          ],
+          max = [
+            Math.max(...xy.map((p) => p[0])),
+            Math.max(...xy.map((p) => p[1])),
+            sweep.max[2] + 0.1875,
+          ];
+        const plan = compileAuthoredTemplatePlan(doc, { catalog });
+        for (const row of plan.instances)
+          expect(
+            nativeSweepIntersection(row, min, max),
+            `${doc.id}/${row.object}`,
+          ).toBeLessThan(1e-8);
+        if (access.port.id === "cargo") {
+          // Regression sensitivity: the old straight wall contains real intersecting surfaces.
+          const cassette: AuthoredTemplateInstance = {
+            object: "old-solid-cassette",
+            piece: "hull.straight.c",
+            role: "hull",
+            region: "hull",
+            view: "both",
+            matrix: [
+              [1, 0, 0, access.port.outer[0] + 2],
+              [0, -1, 0, access.port.outer[1]],
+              [0, 0, 2.6875, 0],
+              [0, 0, 0, 1],
+            ],
+          };
+          expect(nativeSweepIntersection(cassette, min, max)).toBeGreaterThan(
+            0.1,
+          );
+          cargoRegressions++;
+        }
+        proved++;
+      }
+    }
+    expect(proved).toBe(10);
+    expect(cargoRegressions).toBe(4);
+  }, 30000);
+  it("replaces only exact native outer surrounds, retaining each inner isolator and historical ship surround", () => {
+    for (const doc of FEDERATION_FLEET) {
+      const plan = compileAuthoredTemplatePlan(doc, { catalog });
+      const doors = plan.interiors.flatMap((i) => i.doors);
+      const kit = dressShip(doc, { catalog }).kit;
+      expect(plan.excludedLegacyInstances).toHaveLength(
+        doors.filter((d) => d.exterior).length,
+      );
+      for (const door of doors) {
+        const surround = kit.find(
+          (k) =>
+            k.piece.startsWith("int.door.") &&
+            Math.abs(k.x - door.a[0]) < 0.2 &&
+            Math.abs(k.y - door.a[1]) < 0.2 &&
+            Math.abs(
+              k.rotDeg -
+                (Math.atan2(door.b[1] - door.a[1], door.b[0] - door.a[0]) *
+                  180) /
+                  Math.PI,
+            ) < 1e-6,
+        );
+        expect(surround, `${doc.id} ${door.id} surround`).toBeDefined();
+        expect(
+          retainedAuthoredTemplateKitPlacement(plan, surround!),
+          `${doc.id} ${door.id}`,
+        ).toBe(!door.exterior);
+      }
+    }
+    for (const doc of EDITABLE_PREFAB_SHIPS.filter(
+      (d) => !FEDERATION_FLEET.some((f) => f.id === d.id),
+    )) {
+      const plan = compileAuthoredTemplatePlan(doc, { catalog });
+      expect(plan.excludedLegacyInstances).toEqual([]);
+      for (const k of dressShip(doc, { catalog }).kit.filter((k) =>
+        k.piece.startsWith("int.door."),
+      ))
+        expect(retainedAuthoredTemplateKitPlacement(plan, k)).toBe(true);
+    }
+  });
   for (const prefab of EDITABLE_PREFAB_SHIPS)
     it(`${prefab.id} preserves navigation, collision, stations, seats, inventory identities and hardware`, () => {
       const before = signature(prefab),
@@ -342,6 +590,10 @@ describe("authored template presentation", () => {
       for (const row of plan.instances.filter(
         (r) =>
           r.view === "deck" &&
+          // Access recess fragments intentionally terminate inside the closed native
+          // housing, rather than retaining an obstructing ordinary cassette top cap.
+          // Their actual surfaces have separate full-stroke GLB qualification above.
+          !r.object.includes(":leaf-recess:") &&
           !r.verticalProfile &&
           (r.piece.startsWith("hull.") || r.object.includes(":corner")),
       )) {

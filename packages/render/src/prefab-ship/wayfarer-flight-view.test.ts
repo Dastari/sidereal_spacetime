@@ -1,3 +1,5 @@
+import legacyWayfarer from "../../../content/src/wayfarer-prefab.v1.json";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { readFileSync } from "node:fs";
 import { afterEach, expect, it, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -5,7 +7,6 @@ import { Scene } from "@babylonjs/core/scene";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
-import { prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { loadAuthoredStudy } from "./wayfarer-authored-study";
 import { createWayfarerLiveView } from "./wayfarer-live-view";
@@ -89,7 +90,7 @@ function setup() {
 }
 it("switches whole cohorts, room fixtures and emissive admission together, then restores the deck", async () => {
   const scene = setup(),
-    view = await createWayfarerLiveView(scene, prefabById("fed.m.wayfarer")!, {
+    view = await createWayfarerLiveView(scene, readShipPrefab(legacyWayfarer), {
       catalog: defaultPrefabComponentCatalog(),
       view: "deck",
     });
@@ -124,7 +125,7 @@ it("switches whole cohorts, room fixtures and emissive admission together, then 
 });
 it("remote ships load only the closed exterior and cannot reveal private rooms", async () => {
   const scene = setup(),
-    view = await createWayfarerLiveView(scene, prefabById("fed.m.wayfarer")!, {
+    view = await createWayfarerLiveView(scene, readShipPrefab(legacyWayfarer), {
       catalog: defaultPrefabComponentCatalog(),
       view: "deck",
       exteriorOnly: true,
@@ -154,7 +155,7 @@ it("cleans the completed deck import if its dorsal bank fails to load", async ()
     )
     .mockRejectedValueOnce(Error("stopped import"));
   await expect(
-    createWayfarerLiveView(scene, prefabById("fed.m.wayfarer")!, {
+    createWayfarerLiveView(scene, readShipPrefab(legacyWayfarer), {
       catalog: defaultPrefabComponentCatalog(),
       view: "deck",
     }),

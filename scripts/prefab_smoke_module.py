@@ -71,9 +71,10 @@ def stage_access_dependencies(root, stage, packages):
     admission = packages / 'content/src/wayfarer-access-profile.ts'
     marker = 'export const WAYFARER_ACCESS_REVIEW_ENABLED = false;'
     text = admission.read_text()
-    if text.count(marker) != 1:
-        raise RuntimeError('Expected exactly one disabled Wayfarer access admission constant')
-    admission.write_text(text.replace(marker, marker.replace('false', 'true'), 1))
+    enabled = marker.replace('false', 'true')
+    if text.count(marker) + text.count(enabled) != 1:
+        raise RuntimeError('Expected exactly one exact Wayfarer access admission constant')
+    admission.write_text(text.replace(marker, enabled, 1))
     (stage / 'assets').symlink_to(root / 'assets', target_is_directory=True)
     modules = stage / 'node_modules'
     modules.mkdir()

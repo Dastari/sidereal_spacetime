@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/render",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -25,13 +25,14 @@
     "./crew/armor-attach": "./src/crew/armor-attach.ts",
     "./prefab-ship/blueprint-svg": "./src/prefab-ship/blueprint-svg.ts",
     "./character-preview": "./src/character-preview.ts",
-    "./prefab-ship/authored-access-doors": "./src/prefab-ship/authored-access-doors.ts"
+    "./prefab-ship/authored-access-doors": "./src/prefab-ship/authored-access-doors.ts",
+    "./crew/seat-presentation": "./src/crew/seat-presentation.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",
     "@babylonjs/loaders": "9.25.0",
-    "@sidereal/content": "0.13.1",
-    "@sidereal/sim": "0.9.0",
+    "@sidereal/content": "0.14.0",
+    "@sidereal/sim": "0.10.0",
     "@noble/hashes": "2.4.0"
   }
 }

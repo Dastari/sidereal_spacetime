@@ -35,6 +35,7 @@ import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   EVA,
+  evaBodyBlocked,
   prefabEvaModel,
   shipToWorld,
   worldToShip,
@@ -270,6 +271,7 @@ function fixture() {
     constructionTraversal: table("characterId"),
     constructionStairWalk: table("characterId"),
     constructionFlightBinding: table("shipId"),
+    constructionFlightReview: table("characterId"),
     constructionFlightDirty: table("shipId"),
     couchSeat: table("characterId"),
     station: table("id", {}, ["shipId"]),
@@ -541,7 +543,7 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     expect(doorOpen("door-outer")).toBe(true);
   });
 
-  it("shows device states only for the ship the viewer is at", () => {
+  it("shows private logic only aboard and redacted public hatches on nearby hulls", () => {
     expect(visibleShipLogic(ctx).length).toBe(6);
     addShip("kite", other, "mate");
     addCharacter("mate", other, "kite", lock.inside);
@@ -550,10 +552,21 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
       owner: other,
       game: true,
     });
-    expect(visibleShipLogic(as(other))).toHaveLength(6);
-    expect(visibleShipLogic(as(other)).every((r) => r.shipId === "kite")).toBe(
-      true,
+    const rows = visibleShipLogic(as(other));
+    expect(rows.filter((r) => r.shipId === "kite")).toHaveLength(6);
+    const outside = rows.filter((r) => r.shipId === "wren");
+    expect(outside.map((r) => r.deviceId).sort()).toEqual([
+      "btn-lock-out",
+      "door-outer",
+    ]);
+    expect(
+      outside.every((r) => r.endsMicros === 0n && r.pressedMicros === 0n),
+    ).toBe(true);
+    setShip("wren", { x: 251, y: 0 });
+    expect(visibleShipLogic(as(other)).some((r) => r.shipId === "wren")).toBe(
+      false,
     );
+    setShip("wren", { x: 0, y: 0 });
     const row = visibleShipLogic(ctx)[0] as Record<string, unknown>;
     for (const secret of ["owner", "characterId", "stateJson"])
       expect(row[secret]).toBeUndefined();
@@ -669,10 +682,13 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     // No interior door, interior button or airlock controller of a ship they are not aboard.
     for (const id of ["door-inner", "btn-lock-in", "btn-hall", "lock"])
       expect(wrenRows.some((r) => r.deviceId === id)).toBe(false);
-    // Their own home ship (left through its airlock) still shows every device.
-    expect(rows.filter((r) => r.shipId === "kite").length).toBe(
-      visibleShipLogic(ctx).length,
-    );
+    // The home ship also reveals exterior hardware only while the viewer is outside.
+    expect(
+      rows
+        .filter((r) => r.shipId === "kite")
+        .map((r) => r.deviceId)
+        .sort(),
+    ).toEqual([...exterior].sort());
     // Losing the home admission cannot retain its interior state through the EVA row.
     ctx.db.worldAdmission.characterId.delete("mate");
     const denied = visibleShipLogic(as(other));
@@ -1096,6 +1112,76 @@ describe("frames: ride along in the bubble, drop off when left behind", () => {
 });
 
 describe("ship impacts with leeway", () => {
+  it("keeps a non-reference foreign hull solid during ship-local EVA", () => {
+    goOutside();
+    addShip("kite", other, "other-cap");
+    setShip("kite", { x: 25, y: 0 });
+    const before = ctx.db.evaBody.characterId.find("cap");
+    ctx.db.evaBody.characterId.update({
+      ...before,
+      x: 25,
+      y: 0,
+      localX: 25,
+      localY: 0,
+      vx: 0,
+      vy: 0,
+      refVx: 0,
+      refVy: 0,
+      ...cell(25, 0),
+    });
+    tick();
+    const after = ctx.db.evaBody.characterId.find("cap");
+    const at = worldToShip(ctx.db.shipWorldMotion.shipId.find("kite"), [
+      after.x,
+      after.y,
+    ]);
+    expect(evaBodyBlocked(model, at, new Set())).toBe(false);
+    expect(ctx.db.character.id.find("cap").shipId).toBe("wren");
+    expect(ctx.db.constructionLocation.characterId.find("cap")).toBeUndefined();
+  });
+
+  it("changes overlapping references continuously without boarding or disclosing a foreign interior", () => {
+    goOutside();
+    addShip("kite", other, "other-cap");
+    setShip("kite", { x: 30, y: 0, heading: 0.7 });
+    const before = ctx.db.evaBody.characterId.find("cap");
+    ctx.db.evaBody.characterId.update({
+      ...before,
+      x: 20,
+      y: 0,
+      localX: 20,
+      localY: 0,
+      vx: 0,
+      vy: 0,
+      refVx: 0,
+      refVy: 0,
+      ...cell(20, 0),
+    });
+    tick();
+    const after = ctx.db.evaBody.characterId.find("cap");
+    expect(after.anchorShipId).toBe("kite");
+    expect(after.x).toBeCloseTo(20, 8);
+    expect(after.y).toBeCloseTo(0, 8);
+    expect(after.vx).toBeCloseTo(0, 8);
+    expect(after.vy).toBeCloseTo(0, 8);
+    expect(
+      shipToWorld(ctx.db.shipWorldMotion.shipId.find("kite"), [
+        after.localX,
+        after.localY,
+      ])[0],
+    ).toBeCloseTo(20, 8);
+    expect(ctx.db.character.id.find("cap").shipId).toBe("wren");
+    expect(ctx.db.worldAdmission.characterId.find("cap").shipId).toBe("wren");
+    expect(ctx.db.constructionLocation.characterId.find("cap")).toBeUndefined();
+    const rows = visibleShipLogic(ctx).filter((row) => row.shipId === "kite");
+    expect(rows.length).toBeGreaterThan(0);
+    expect(
+      rows.every((row) =>
+        ["door-outer", "btn-lock-out"].includes(row.deviceId),
+      ),
+    ).toBe(true);
+  });
+
   function freeBodyBeside(vx: number) {
     goOutside();
     const b = ctx.db.evaBody.characterId.find("cap");

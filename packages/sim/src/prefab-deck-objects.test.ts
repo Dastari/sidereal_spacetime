@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { readFileSync } from "node:fs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   deckApproachZones,
@@ -7,6 +8,7 @@ import {
   planRectsOverlap,
   SOCKET_APPROACH_TOLERANCE_M,
   validatePrefabFixtures,
+  readShipPrefab,
 } from "@sidereal/content/ship-prefab";
 import {
   planRectToShip,
@@ -35,6 +37,14 @@ import { reachablePanel, shipLogicModel } from "./ship-logic-model";
 
 const catalog = defaultPrefabComponentCatalog();
 const wren = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
+const legacyWayfarer = readShipPrefab(
+  JSON.parse(
+    readFileSync(
+      new URL("../../content/src/wayfarer-prefab.v1.json", import.meta.url),
+      "utf8",
+    ),
+  ),
+);
 
 describe("prefab deck objects", () => {
   it("derives Wren's modules, furniture, exterior parts and doors with stable ids", () => {
@@ -143,7 +153,12 @@ describe("prefab deck objects", () => {
     );
   });
 
-  for (const prefab of PREFAB_SHIPS)
+  // The rectangle keep-clear policy qualifies grammar furniture and the original
+  // native profile1. Profile2 uses source collision cuts and exact frame geometry;
+  // its swept-circle connectivity is qualified in wayfarer-access-connectivity.test.ts.
+  for (const prefab of PREFAB_SHIPS.map((doc) =>
+    doc.id === "fed.m.wayfarer" ? legacyWayfarer : doc,
+  ))
     it(`${prefab.id}: furniture never seals a door or the pilot approach, and every room is reachable`, () => {
       const interior = deriveInterior(prefab, 0, catalog);
       const cells = new Set(

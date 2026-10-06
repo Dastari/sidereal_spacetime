@@ -3,8 +3,9 @@ import { crewWardrobeItem } from "./crew-wardrobe";
 /**
  * Voxel crew bundle (CHAR-BODY r005): 1/32 m voxel body, `crew_rig`, sockets and the baked
  * animation library. Accepted as a first revision (wiki: Decisions/2026-09-27 First Revision Art
- * Acceptance) together with the head kit, weapons and armour r006; it is the game's only crew
- * (the r008 modular bundle and its `?crew=legacy` fallback were retired on 2026-09-29).
+ * Acceptance) together with the head kit, weapons and armour r006. Retained as the explicit legacy
+ * fixture/catalogue; the default renderer now uses the provisional pinned crew-study v2
+ * assembly (crew-study.ts). The r008 modular fallback was retired on 2026-09-29.
  */
 
 export const VOXEL_CREW_REVISION = "r005";

@@ -22,10 +22,12 @@
 import { SenderError, t } from "spacetimedb/server";
 import type { InferSchema, ReducerCtx, ViewCtx } from "spacetimedb/server";
 import type world from "./index";
-import { gameShipAccess } from "@sidereal/sim/game-ship-access";
+import { ownedShipEntryAccess } from "@sidereal/sim/owned-ship-entry";
+import { GAME_OWNED_TEMPLATE_NAMESPACE } from "./game-ship-access-authority";
 import {
   EVA,
   evaCaptureShip,
+  evaRecaptureShip,
   evaEntryThrough,
   evaExitThrough,
   evaImpactDamage,
@@ -160,9 +162,20 @@ export function ownedDeckAccess(
     admission = ctx.db.worldAdmission.characterId.find(actor.id),
     motion = ctx.db.shipWorldMotion.shipId.find(shipId),
     deck = binding && ctx.db.constructionDeck.id.find(binding.deckId);
-  if (!instance || !ship || !binding || !deck || !admission || !motion) return;
+  if (
+    !instance ||
+    !ship ||
+    !binding ||
+    !deck ||
+    !admission ||
+    !motion ||
+    instance.workspaceId !== GAME_OWNED_TEMPLATE_NAMESPACE ||
+    !admission.owner.isEqual(actor.owner) ||
+    ctx.db.retiredIdentity.source.find(actor.owner)
+  )
+    return;
   const principalId = actor.owner.toHexString();
-  const allowed = gameShipAccess({
+  const allowed = ownedShipEntryAccess({
     principalId,
     liveGame: true,
     actor: { ...actor, ownerId: principalId },
@@ -181,7 +194,7 @@ export function ownedDeckAccess(
     },
     admission,
     motion,
-  }).walkDeck;
+  });
   return allowed ? { instance, deck, binding, motion } : undefined;
 }
 
@@ -659,6 +672,26 @@ function commitAboard(
     ctx.db.evaAirlockCycle.characterId.delete(actor.id);
   if (existing) ctx.db.constructionLocation.characterId.update(location);
   else ctx.db.constructionLocation.insert(location);
+  const admission = ctx.db.worldAdmission.characterId.find(actor.id);
+  const motion = ctx.db.shipWorldMotion.shipId.find(shipId);
+  if (!admission || !motion || motion.systemId !== admission.systemId)
+    throw Error("Boarding admission changed");
+  ctx.db.worldAdmission.characterId.update({
+    ...admission,
+    shipId,
+    revision: admission.revision + 1n,
+  });
+  const input = ctx.db.input.characterId.find(actor.id);
+  if (input)
+    ctx.db.input.characterId.update({
+      ...input,
+      throttle: 0,
+      turn: 0,
+      dx: 0,
+      dy: 0,
+      sprint: false,
+      updatedMicros: ctx.timestamp.microsSinceUnixEpoch,
+    });
   commitFlightCharacter(
     ctx,
     {
@@ -865,7 +898,78 @@ function stepLocal(
     stepAboard(ctx, actor, body, shipId, [next.x, next.y])
   )
     return;
-  const w = localToWorld(pose, next);
+  let w = localToWorld(pose, next);
+  const ships = nearbyShips(ctx.db, body.systemId, w.x, w.y);
+  let worldState = { ...w, omega: next.omega };
+  let contacted = false;
+  // A local reference does not make other nearby hulls intangible.
+  for (const nearby of ships) {
+    if (
+      nearby.motion.shipId === shipId ||
+      Math.hypot(
+        worldState.x - nearby.motion.x,
+        worldState.y - nearby.motion.y,
+      ) >
+        nearby.model.radiusM + EVA.bodyRadiusM + 1
+    )
+      continue;
+    const contact = evaWorldContact(
+      nearby.model,
+      poseOf(nearby.motion),
+      worldState,
+      passableEntries(ctx, actor, nearby.motion.shipId),
+    );
+    if (!contact) continue;
+    worldState = { ...worldState, ...contact.body };
+    contacted = true;
+    applyImpact(ctx, actor.id, contact.impactSpeed);
+  }
+  if (!ctx.db.evaBody.characterId.find(actor.id)) return;
+  const captured = evaRecaptureShip(
+    ships.map(({ motion, model }) => ({
+      id: motion.shipId,
+      pose: poseOf(motion),
+      radiusM: model.radiusM,
+    })),
+    worldState,
+    shipId,
+  );
+  if (captured) {
+    const targetPose = poseOf(
+      ships.find((candidate) => candidate.motion.shipId === captured)!.motion,
+    );
+    const local = worldToLocal(targetPose, worldState);
+    const targetWorld = localToWorld(targetPose, local);
+    writeBody(ctx, {
+      ...body,
+      ...evaSuitPresentation(step.allocation),
+      x: targetWorld.x,
+      y: targetWorld.y,
+      vx: targetWorld.vx,
+      vy: targetWorld.vy,
+      heading: targetWorld.heading,
+      refVx: targetWorld.refVx,
+      refVy: targetWorld.refVy,
+      phase: "local",
+      anchorShipId: captured,
+      refShipId: captured,
+      localX: local.x,
+      localY: local.y,
+      localHeading: local.heading,
+      walking: false,
+      serverTick: tick,
+      revision: body.revision + 1n,
+    });
+    writeSuitSpin(
+      ctx,
+      suit,
+      next.omega,
+      wrapAngle(suit.facing + pose.heading - targetPose.heading),
+    );
+    return;
+  }
+  const resolved = contacted ? worldToLocal(pose, worldState) : next;
+  if (contacted) w = localToWorld(pose, resolved);
   const shown = evaSuitPresentation(step.allocation);
   const moved = {
     ...body,
@@ -878,9 +982,9 @@ function stepLocal(
     refVy: w.refVy,
     phase: "local",
     anchorShipId: shipId,
-    localX: next.x,
-    localY: next.y,
-    localHeading: next.heading,
+    localX: resolved.x,
+    localY: resolved.y,
+    localHeading: resolved.heading,
     refShipId: shipId,
     ...shown,
     walking: false,

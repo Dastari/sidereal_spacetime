@@ -12,14 +12,16 @@ import {
 import { createWayfarerLiveView } from "./wayfarer-live-view";
 
 describe("native profile2 access presentation", () => {
-  it("rejects production admission before any normal-view asset lookup", async () => {
+  it("rejects a forged access profile before any normal-view asset lookup", async () => {
     const engine = new NullEngine();
     const scene = new Scene(engine);
     scene.useRightHandedSystem = true;
     let reads = 0;
     try {
+      const forged = structuredClone(WAYFARER_ACCESS_SOURCE);
+      forged.mounts[0].at[0] += 1;
       await expect(
-        createWayfarerLiveView(scene, WAYFARER_ACCESS_SOURCE, {
+        createWayfarerLiveView(scene, forged, {
           catalog: defaultPrefabComponentCatalog(),
           view: "deck",
           accessResolver: async () => {
@@ -27,7 +29,7 @@ describe("native profile2 access presentation", () => {
             return new Uint8Array();
           },
         }),
-      ).rejects.toThrow(/admission is disabled/);
+      ).rejects.toThrow(/exact registered prefab/);
       expect(reads).toBe(0);
     } finally {
       engine.dispose();

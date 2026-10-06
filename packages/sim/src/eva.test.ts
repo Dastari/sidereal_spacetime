@@ -6,6 +6,7 @@ import {
   doorwayCoords,
   evaBodyBlocked,
   evaCaptureShip,
+  evaRecaptureShip,
   evaEntryThrough,
   evaExitThrough,
   evaImpactDamage,
@@ -46,6 +47,33 @@ const toShip = prefabToShipMetres(wren);
 const hatch = model.entries[0];
 const OPEN = new Set(["airlock"]);
 const SHUT = new Set<string>();
+
+describe("overlapping EVA references", () => {
+  const pose = { x: 0, y: 0, vx: 0, vy: 0, heading: 0, omega: 0 };
+  const ships = [
+    { id: "source", pose, radiusM: 10 },
+    { id: "target", pose: { ...pose, x: 30 }, radiusM: 10 },
+  ];
+  const body = { x: 16, y: 0, vx: 0, vy: 0, heading: 0, omega: 0 };
+  it("switches to a nearer hull while still inside the old release bubble", () => {
+    expect(
+      evaReleaseReason(pose, 10, [body.x, body.y], [0, 0]),
+    ).toBeUndefined();
+    expect(evaRecaptureShip(ships, body, "source")).toBe("target");
+  });
+  it("retains the frame around a tie and cannot capture a fast-moving target", () => {
+    expect(
+      evaRecaptureShip(ships, { ...body, x: 15.1 }, "source"),
+    ).toBeUndefined();
+    expect(
+      evaRecaptureShip(
+        [ships[0], { ...ships[1], pose: { ...ships[1].pose, vx: 20 } }],
+        body,
+        "source",
+      ),
+    ).toBeUndefined();
+  });
+});
 
 function drift(
   s: EvaLocalState,

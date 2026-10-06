@@ -418,8 +418,8 @@ function rebuild(t: Doc): Doc {
 }
 
 describe("every editable grammar preset is authorable with the Shipyard tools", () => {
-  it("covers all twelve templates", () => {
-    expect(EDITABLE_PREFAB_SHIPS.length).toBe(12);
+  it("covers all eighteen templates, including all six new fleet designs", () => {
+    expect(EDITABLE_PREFAB_SHIPS.length).toBe(18);
   });
   for (const t of EDITABLE_PREFAB_SHIPS)
     it(`rebuilds ${t.id} exactly`, () => {
@@ -566,7 +566,7 @@ describe("every grammar construct is reachable from the tools", () => {
     });
   });
 
-  it("places every storage fixture design facing every way, and refuses an overlapping one", () => {
+  it("places every supported fixture design facing every way, and refuses an overlapping one", () => {
     let doc = deckDoc();
     doc = removeSelection(doc, { kind: "room", id: "bridge" });
     doc = act(
@@ -579,7 +579,6 @@ describe("every grammar construct is reachable from the tools", () => {
         [19.5, 7.5],
       ),
     ).doc;
-    let x = 9.5;
     for (const design of PREFAB_FIXTURE_DESIGNS)
       for (const facing of FACE_NORMALS) {
         const placed = act(
@@ -589,26 +588,26 @@ describe("every grammar construct is reachable from the tools", () => {
             doc,
             catalog,
             tools(doc, { tool: "storage", fixtureDesign: design, facing }),
-            [x, 5.5],
+            [12, 4],
           ),
         );
         doc = placed.doc;
+        expect(doc.fixtures).toHaveLength(1);
         expect(doc.fixtures!.at(-1)).toMatchObject({ design, facing });
-        x += 1.25;
+        const clash = storagePlace(
+          doc,
+          catalog,
+          tools(doc, { tool: "storage", fixtureDesign: design, facing }),
+          [12, 4],
+        );
+        expect(clash.doc).toBe(doc);
+        expect(clash.error).toMatch(/overlaps fixture/);
+        doc = removeSelection(doc, {
+          kind: "fixture",
+          id: doc.fixtures![0].id,
+        });
+        expect("fixtures" in doc).toBe(false);
       }
-    expect(doc.fixtures).toHaveLength(8);
-    const clash = storagePlace(
-      doc,
-      catalog,
-      tools(doc, { tool: "storage" }),
-      [9.5, 5.5],
-    );
-    expect(clash.doc).toBe(doc);
-    expect(clash.error).toMatch(/overlaps fixture/);
-    // Delete removes the key once the last fixture is gone.
-    for (const f of doc.fixtures!)
-      doc = removeSelection(doc, { kind: "fixture", id: f.id });
-    expect("fixtures" in doc).toBe(false);
   });
 
   it("offers every skylight size, face normal, interior facing, theme, size class and emblem", () => {
@@ -621,12 +620,13 @@ describe("every grammar construct is reachable from the tools", () => {
     expect(FACE_NORMALS).toHaveLength(4);
     let doc = blankShipPrefab("test.s.meta", "Meta", "S");
     for (const theme of SHIP_THEME_IDS) doc = updateMeta(doc, { theme });
-    for (const sizeClass of BLUEPRINT_SIZE_CLASS_IDS)
-      doc = updateMeta(doc, { sizeClass });
+    expect(() => updateMeta(doc, { sizeClass: "L" })).toThrow(
+      /fixed at creation/,
+    );
     for (const emblem of EMBLEM_IDS) doc = updateMarkings(doc, { emblem });
     expect(doc).toMatchObject({
       theme: SHIP_THEME_IDS.at(-1),
-      sizeClass: BLUEPRINT_SIZE_CLASS_IDS.at(-1),
+      sizeClass: "S",
       markings: { emblem: EMBLEM_IDS.at(-1) },
     });
   });
@@ -646,4 +646,16 @@ it("keeps registered authored trial ships out of editable templates, drafts and 
     ]).some((entry) => entry.id === authored.id),
   ).toBe(false);
   expect(() => writeDraft(authored)).toThrow(/outside the grammar editor/);
+});
+
+it("refuses imported registered template drafts with a changed size class", () => {
+  for (const template of EDITABLE_PREFAB_SHIPS.filter((d) =>
+    d.id.endsWith("-fleet"),
+  ))
+    expect(() =>
+      writeDraft({
+        ...template,
+        sizeClass: template.sizeClass === "S" ? "L" : "S",
+      }),
+    ).toThrow(/fixed at creation/);
 });

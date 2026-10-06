@@ -3,6 +3,7 @@ import {
   readAuthoredAssetLighting,
 } from "../authored-asset-lighting";
 import { authoredInstanceMatrix } from "./wayfarer-authored-study";
+import { publishedShipAccessBytes } from "./wayfarer-access-assets";
 import {
   isWayfarerAccessProfile,
   WAYFARER_ACCESS_PHYSICAL,
@@ -147,8 +148,7 @@ export async function createWayfarerLiveView(
 ): Promise<PrefabShipView> {
   assertWayfarerPrefabContract(doc);
   const accessProfile = isWayfarerAccessProfile(doc);
-  if (accessProfile && !options.accessResolver)
-    throw Error("Proposed Wayfarer access requires an explicit byte resolver");
+  const accessResolver = options.accessResolver ?? publishedShipAccessBytes;
   const root = new TransformNode(`prefab-ship:${doc.id}`, scene);
   root.parent = options.parent ?? null;
   root.position.y = 0.1875;
@@ -261,8 +261,7 @@ export async function createWayfarerLiveView(
         throw Error("Invalid proposed native access piece");
       return Object.freeze({ ...piece, frame: "piece-local" as const });
     };
-    const resolveAccess = (id: string) =>
-      options.accessResolver!(accessPiece(id));
+    const resolveAccess = (id: string) => accessResolver(accessPiece(id));
     const used = new Set(instances.map((row) => row.piece));
     const regions = new Map(
       instances.map((row) => [

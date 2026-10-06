@@ -635,7 +635,7 @@ export function prefabFlightModelFor(
 export function planPrefabConstructionFlight(
   instance: PrefabFlightInstance,
   placement: { systemId: string; x: number; y: number; serverTick: bigint },
-  allocate: () => string,
+  allocate: (sourceDeviceId?: string) => string,
   reservedIds: readonly string[] = [],
 ) {
   // Game-owned prefab instances are never refitted: every revision holds a trusted prefab source
@@ -667,8 +667,8 @@ export function planPrefabConstructionFlight(
   const used = new Set(
     [instance.id, ...reservedIds].map((s) => s.toLowerCase()),
   );
-  const fresh = () => {
-    const id = allocate();
+  const fresh = (sourceDeviceId?: string) => {
+    const id = allocate(sourceDeviceId);
     if (!UUID.test(id) || used.has(id.toLowerCase()))
       throw Error("Fresh flight UUID required");
     used.add(id.toLowerCase());
@@ -682,7 +682,7 @@ export function planPrefabConstructionFlight(
     computerPart.definitionId,
   ) as ComputerDefinition;
   const station = {
-    id: fresh(),
+    id: fresh("station"),
     shipId,
     deckId: instance.spawnDeckId,
     placedObjectId: prefabPlacedObjectId(shipId, "station"),
@@ -693,7 +693,7 @@ export function planPrefabConstructionFlight(
     operational: false,
   };
   const computer = {
-    id: fresh(),
+    id: fresh(computers[0].sourceId),
     shipId,
     placedObjectId: station.consolePlacedObjectId,
     sourceDeviceId: computers[0].sourceId,
@@ -712,7 +712,7 @@ export function planPrefabConstructionFlight(
       s * d.forceAxis[0] + c * d.forceAxis[1],
     ];
     return {
-      id: fresh(),
+      id: fresh(f.sourceId),
       shipId,
       placedObjectId: prefabPlacedObjectId(shipId, f.sourceId),
       sourceDeviceId: f.sourceId,

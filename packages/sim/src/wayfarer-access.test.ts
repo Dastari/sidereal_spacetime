@@ -1,8 +1,8 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { prefabById } from "@sidereal/content/prefabs";
+import { readFileSync } from "node:fs";
 import { WAYFARER_ACCESS_SOURCE as proposed } from "@sidereal/content/wayfarer-access-profile";
-import { deriveInterior } from "@sidereal/content/ship-prefab";
+import { deriveInterior, readShipPrefab } from "@sidereal/content/ship-prefab";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   prefabConstructionDocument,
@@ -25,13 +25,19 @@ import {
 } from "./eva";
 import { shipLogicModel } from "./ship-logic-model";
 
-const FED_WAYFARER = prefabById("fed.m.wayfarer");
-if (!FED_WAYFARER) throw new Error("Canonical Wayfarer template is missing");
+const FED_WAYFARER = readShipPrefab(
+  JSON.parse(
+    readFileSync(
+      new URL("../../content/src/wayfarer-prefab.v1.json", import.meta.url),
+      "utf8",
+    ),
+  ),
+);
 const catalog = defaultPrefabComponentCatalog();
 const hash = (v: unknown) =>
   createHash("sha256").update(JSON.stringify(v)).digest("hex");
 
-describe("Wayfarer access geometry qualification (not production admission)", () => {
+describe("Wayfarer legacy and active access geometry qualification", () => {
   it("keeps original profile1 construction, geometry, pressure input and fitting identities exact", () => {
     const d = FED_WAYFARER;
     const actual = {
@@ -45,15 +51,14 @@ describe("Wayfarer access geometry qualification (not production admission)", ()
       Object.fromEntries(Object.entries(actual).map(([k, v]) => [k, hash(v)])),
     ).toEqual(PROFILE1_GOLDENS);
   });
-  it("rejects a crafted construction/blueprint/refit binding carrying profile2", () => {
+  it("admits the derived access blueprint but rejects a profile swapped onto the old layout", () => {
     const draft = prefabConstructionDocument(FED_WAYFARER, catalog);
     draft.prefab.document = structuredClone(proposed);
     expect(() => readConstructionDraft(JSON.stringify(draft))).toThrow(
-      /admission is disabled/,
+      /differs|mismatch|derived|binding/,
     );
-    expect(() => prefabConstructionDocument(proposed, catalog)).toThrow(
-      /admission is disabled/,
-    );
+    const access = prefabConstructionDocument(proposed, catalog);
+    expect(() => readConstructionDraft(JSON.stringify(access))).not.toThrow();
   });
   it("derives supported native floor interfaces, exact inner partitions and conservative clear lanes", () => {
     const layout = prefabLayout(proposed, catalog);
@@ -150,7 +155,8 @@ describe("Wayfarer access geometry qualification (not production admission)", ()
     for (const [key, dx, dy] of [
       ["Cargo_crate_small_white", 0.5, 1.2],
       ["Cargo_crate_yellow", 1.6, 0],
-      ["Hydroponics_hydro_locker", 1.2, -0.8],
+      ["Hydroponics_hydro_locker", 2.1, -0.8],
+      ["Cargo_crate_white_blue", 3.45, 0],
     ] as const) {
       const before = original.find((s) => s.key === key)!,
         after = candidate.find((s) => s.key === key)!;

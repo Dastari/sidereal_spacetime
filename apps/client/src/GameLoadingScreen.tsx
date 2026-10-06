@@ -1,13 +1,20 @@
 import { useEffect, useRef } from "react";
+import {
+  GameButton,
+  GameNotice,
+  GamePanel,
+  HangarShell,
+  SiderealWordmark,
+} from "@sidereal/ui/game";
 import "./game-loading.css";
 
 const stages: Record<string, string> = {
-  connecting: "Connecting to your world",
-  ship: "Loading your ship",
-  environment: "Preparing the surrounding space",
-  crew: "Loading your character",
+  connecting: "Connecting to server",
+  ship: "Loading ship",
+  environment: "Loading environment",
+  crew: "Loading character",
   equipment: "Loading equipped items",
-  finishing: "Preparing the first frame",
+  finishing: "Rendering first frame",
 };
 
 /** Covers, but never display:none's, the live canvas while its GPU assets load. */
@@ -37,64 +44,51 @@ export function GameLoadingScreen({
       tabIndex={-1}
       ref={panel}
     >
-      <div className="loading-nebula" aria-hidden="true" />
-      <header className="loading-brand">
-        <span aria-hidden="true">◒</span> Sidereal
-      </header>
-      <div className="loading-manifest">
-        <svg
-          className="loading-vessel"
-          viewBox="0 0 180 300"
-          aria-hidden="true"
+      <HangarShell
+        className="loading-hangar"
+        header={<SiderealWordmark subtitle="Loading game" />}
+        actions={
+          <GameButton variant="ghost" onClick={onSignOut}>
+            Sign out
+          </GameButton>
+        }
+      >
+        <div className="loading-space" aria-hidden="true" />
+        <GamePanel
+          className="loading-manifest"
+          title={failure ? "Loading failed" : "Loading game"}
+          eyebrow={
+            awaitingShip ? "No ship assigned" : shipName || "Loading game"
+          }
         >
-          <path d="M90 12 120 35 144 85 144 250 128 270 52 270 36 250 36 85 60 35Z" />
-          <path d="M60 35 68 76H112L120 35M36 85H144M55 95V243M125 95V243M80 85V252M100 85V252M36 133H80M100 133H144M36 182H80M100 182H144M36 229H144M60 270V290H78V270M102 270V290H120V270" />
-        </svg>
-        <div className="loading-copy">
-          <p className="loading-destination">
-            {awaitingShip ? "No ship assigned" : shipName || "Your next voyage"}
-          </p>
-          <h1>
+          <p className="loading-stage" role="status" aria-live="polite">
             {failure
-              ? awaitingShip
-                ? "Unable to load"
-                : "Unable to board"
-              : awaitingShip
-                ? "Entering Sidereal"
-                : "Preparing to board"}
-          </h1>
-          <p role="status" aria-live="polite">
-            {failure
-              ? "The game could not finish loading. Retry to download the required assets again."
+              ? "Loading could not complete."
               : awaitingShip && stage === "ship"
-                ? "Preparing your character"
+                ? "Loading character"
                 : (stages[stage] ?? stages.ship)}
           </p>
-          {!failure && (
+          {failure ? (
+            <GameNotice kind="danger">{failure}</GameNotice>
+          ) : (
             <div className="loading-track" aria-hidden="true">
               <span />
             </div>
           )}
           <p className="loading-hint">
             {failure
-              ? "Your saved character and cargo remain in your account."
+              ? "Retry to load the required assets again."
               : awaitingShip
-                ? "Your character and personal kit are ready. A ship will be assigned to your account."
-                : "Your ship and equipment will be ready before you enter."}
+                ? "No ship is assigned to this character."
+                : "Loading ship and equipment."}
           </p>
           {failure && (
-            <button className="loading-retry" onClick={() => location.reload()}>
+            <GameButton variant="primary" onClick={() => location.reload()}>
               Retry loading
-            </button>
+            </GameButton>
           )}
-        </div>
-      </div>
-      <footer>
-        <span>
-          {awaitingShip ? "WASD to move" : "WASD to move · TAB to change view"}
-        </span>
-        <button onClick={onSignOut}>Sign out</button>
-      </footer>
+        </GamePanel>
+      </HangarShell>
     </section>
   );
 }

@@ -40,6 +40,7 @@ import { prefabEvaModel, type EvaShipModel } from "@sidereal/sim/eva";
 import { isDead } from "./combat-damage";
 import { ownedGameShipAccess } from "./game-ship-access-authority";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
+import { spaceObserver, visibleShipMotion } from "./shared-world-views";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -501,8 +502,7 @@ export const visibleShipLogicProjection = t.row("ShipLogicDeviceStatus", {
 });
 
 /**
- * Device states of the ships the viewer is at: the ship they stand aboard, the ship whose frame
- * their EVA body is in, and the home ship they left. Door, light and phase values only; never who
+ * Device states of the occupied ship and nearby perceived hulls. Door and light values only; never who
  * pressed or any other character data. A ship the viewer is only floating beside (EVA frame of
  * another ship, no interior presence) shows its exterior devices only: hull-face buttons and
  * exterior doors, never interior doors, interior buttons or controllers (wiki `Architecture/
@@ -523,13 +523,36 @@ export function visibleShipLogic(ctx: ReadContext) {
   )
     inside.add(location.instanceId);
   const body = ctx.db.evaBody.characterId.find(actor.id);
+  for (const id of inside) ships.add(id);
+  const observer = spaceObserver(ctx);
+  // Detailed public hatch state has a separate bounded range from coarse discovery.
+  // This never turns ownership or an exterior contact into an interior read grant.
+  const nearby = (observer ? visibleShipMotion(ctx) : [])
+    .map((motion) => ({
+      motion,
+      distance: Math.hypot(
+        motion.x - observer!.point.x,
+        motion.y - observer!.point.y,
+      ),
+    }))
+    .filter(
+      (contact) => Number.isFinite(contact.distance) && contact.distance <= 250,
+    )
+    .sort(
+      (a, b) =>
+        a.distance - b.distance ||
+        a.motion.shipId.localeCompare(b.motion.shipId),
+    )
+    .slice(0, 128);
+  for (const contact of nearby) ships.add(contact.motion.shipId);
+  if (body?.anchorShipId) ships.add(body.anchorShipId);
+  const admission = ctx.db.worldAdmission.characterId.find(actor.id);
   if (
     body?.exitShipId &&
-    ownedGameShipAccess(ctx, body.exitShipId, body.deckId).readInterior
+    admission?.shipId === body.exitShipId &&
+    admission.owner.isEqual(ctx.sender)
   )
-    inside.add(body.exitShipId);
-  for (const id of inside) ships.add(id);
-  if (body?.anchorShipId) ships.add(body.anchorShipId);
+    ships.add(body.exitShipId);
   const out = [];
   for (const shipId of [...ships].sort()) {
     const binding = shipPrefabBinding(ctx.db, shipId);
@@ -575,7 +598,9 @@ export function visibleShipLogic(ctx: ReadContext) {
               : "off",
         open: s.kind === "door" ? s.open : false,
         endsMicros: BigInt(s.kind === "airlock-controller" ? s.endsMicros : 0),
-        pressedMicros: BigInt(s.kind === "button" ? s.pressedMicros : 0),
+        pressedMicros: BigInt(
+          !exterior && s.kind === "button" ? s.pressedMicros : 0,
+        ),
       });
     }
   }

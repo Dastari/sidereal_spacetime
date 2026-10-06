@@ -61,22 +61,20 @@ describe("proposed private Wayfarer access profile", () => {
       );
     }
   });
-  it("rejects exact and crafted profile2 through production admission", () => {
-    expect(WAYFARER_ACCESS_REVIEW_ENABLED).toBe(false);
-    expect(() => readShipPrefab(WAYFARER_ACCESS_SOURCE)).toThrow(
-      /admission is disabled/,
+  it("admits only the exact access profile and preserves legacy profile1 admission", () => {
+    expect(WAYFARER_ACCESS_REVIEW_ENABLED).toBe(true);
+    expect(readShipPrefab(WAYFARER_ACCESS_SOURCE)).toEqual(
+      WAYFARER_ACCESS_SOURCE,
     );
     const crafted = structuredClone(WAYFARER_ACCESS_SOURCE);
     crafted.mounts[0].at[0] += 1;
-    expect(() => readShipPrefab(crafted)).toThrow(/admission is disabled/);
+    expect(() => readShipPrefab(crafted)).toThrow(/exact registered prefab/);
     expect(
       validateShipPrefab(
         WAYFARER_ACCESS_SOURCE,
         defaultPrefabComponentCatalog(),
       ),
-    ).toEqual([
-      expect.objectContaining({ code: "authored.source", severity: "error" }),
-    ]);
+    ).toEqual([]);
     expect(readShipPrefab(FED_WAYFARER)).toEqual(FED_WAYFARER);
   });
   it("retains mount identities with one coherent proposed RCS relocation and valid controller wiring", () => {

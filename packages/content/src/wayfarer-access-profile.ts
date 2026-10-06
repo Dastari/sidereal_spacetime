@@ -1,4 +1,4 @@
-/** Proposed private native derivative. No catalogue/default/live activation. */
+/** Exact native access derivative; live ships migrate only through an explicit operator upgrade. */
 import contract from "./wayfarer-access-contract.v2.json";
 import physical from "./wayfarer-access-profile.v2.json";
 import doors from "../../../assets/runtime/wayfarer-access/r002/doors.json";
@@ -9,8 +9,8 @@ import {
 } from "./ship-access-doors";
 import type { WayfarerGameplayObject } from "./wayfarer-authored-gameplay";
 
-// The isolated smoke-module builder may flip only this exact admission constant.
-export const WAYFARER_ACCESS_REVIEW_ENABLED = false;
+// Exact profile admission does not migrate existing ships or grant boarding access.
+export const WAYFARER_ACCESS_REVIEW_ENABLED = true;
 export const WAYFARER_ACCESS_PROFILE_REVISION = 2 as const;
 function freeze<T>(value: T): T {
   if (value && typeof value === "object") {
@@ -31,10 +31,15 @@ export const WAYFARER_ACCESS_FURNISHING_SHIFTS: Readonly<
   Cargo_crate_small_white: [0.5, 1.2],
   Cargo_crate_yellow: [1.6, 0],
   Cargo_machine_small: [-2.5, -0.9],
+  // Keep usable storage out of the sealed native cargo pocket housing and clear
+  // of both chamber control fronts. The same delta drives meshes and sockets.
+  Cargo_crate_white_blue: [3.45, 0],
   Cargo_toolbox_tray: [-1.25, -0.5],
-  Hydroponics_hydro_locker: [1.2, -0.8],
+  // Clear the hall doorway and keep both units below the inner cargo leaf's
+  // swept pocket plane. The locker remains approachable inside hydro.
+  Hydroponics_hydro_locker: [2.1, -0.8],
   Hydroponics_planter_row: [0.625, 1],
-  Hydroponics_cabinet_dark: [0, -0.5],
+  Hydroponics_cabinet_dark: [0.6, -0.5],
   Utility_wall_strip_amber: [0, -0.5],
   Utility_utility_console: [0, -1.125],
 };

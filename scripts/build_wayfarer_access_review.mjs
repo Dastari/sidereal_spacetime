@@ -19,8 +19,9 @@ const bundle = await rolldown({
           id ===
           resolve(root, "packages/content/src/wayfarer-access-profile.ts")
         ) {
-          if (code.split(flag).length !== 2)
-            throw Error("Expected exactly one disabled profile admission flag");
+          const enabled = flag.replace("false", "true");
+          if (code.split(flag).length + code.split(enabled).length !== 3)
+            throw Error("Expected exactly one exact profile admission flag");
           flipped++;
           return code.replace(flag, flag.replace("false", "true"));
         }

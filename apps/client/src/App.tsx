@@ -4,6 +4,7 @@ import {
 } from "@sidereal/content/item-presentation";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
+import { CharacterSelect } from "./CharacterSelect";
 import { ShipSystemsPanel } from "./ShipSystemsPanel";
 import { FurnishingEditor } from "./FurnishingEditor";
 import type { ObjectPlacementState } from "@sidereal/canvas-ui";
@@ -102,7 +103,8 @@ import {
   evaSuitRefusalOf,
   evaThrustFromKeys,
   legacyEntryAction,
-  evaHomeVisit,
+  exteriorButtonAction,
+  exteriorLogicPresentation,
   evaScene,
   evaStatusLabel,
   localAimAngle,
@@ -187,6 +189,9 @@ export default function App({
   const [loadStage, setLoadStage] = useState("connecting");
   const [loadFailure, setLoadFailure] = useState<string>();
   const loadingRef = useRef(true);
+  const [enteredWorld, setEnteredWorld] = useState(false);
+  const entryBlocked = useRef(true);
+  entryBlocked.current = !enteredWorld;
   // HUD-only reload label timing (see combat-status.ts).
   const reloadingUntil = useRef(0);
   const reloadSeen = useRef<bigint | undefined>(undefined);
@@ -235,6 +240,8 @@ export default function App({
     reducedMotion,
     bodies: [] as SpaceBodyRow[],
   });
+  const installedSceneKey = useRef<string | undefined>(undefined);
+  const acceptedSceneKey = useRef<string | undefined>(undefined);
   useEffect(() => {
     const active = createConnectionSession(
       connect,
@@ -355,12 +362,12 @@ export default function App({
             }
           : undefined))
       : undefined;
-  localShipId.current = ship?.id;
   // EVA (wiki Systems/EVA): the own body outside the hull (same plane as the ship).
   const evaBody =
     c && actor
       ? [...c.db.ownEvaBody.iter()].find((r) => r.characterId === actor.id)
       : undefined;
+  localShipId.current = evaBody ? undefined : ship?.id;
   const evaShipPose = ship
     ? {
         id: ship.id,
@@ -396,19 +403,25 @@ export default function App({
         )
       : undefined;
   const ownLocations = c ? [...c.db.ownConstructionLocation.iter()] : [];
-  // Outside the hull the owner keeps the ship scene: the server's read-only home location.
-  const evaHome = ownLocations.some((l) => l.characterId === actor?.id)
-    ? undefined
-    : evaHomeVisit(evaBody, actor);
   const constructionScene = constructionPresentation(
     actor?.id,
-    evaHome ? [...ownLocations, evaHome] : ownLocations,
+    ownLocations,
     c ? [...c.db.ownConstructionInstances.iter()] : [],
     c ? [...c.db.ownConstructionStairWalks.iter()] : [],
     c ? [...c.db.ownConstructionStairEgressGeometry.iter()] : [],
   );
   const constructionVisit = constructionScene.visit;
   const constructionInstance = constructionScene.instance;
+  const acceptedInterior = !!(
+    status === "ready" &&
+    actor?.connected &&
+    !evaBody &&
+    constructionScene.active &&
+    constructionVisit &&
+    constructionInstance &&
+    constructionVisit.instanceId === actor.shipId &&
+    constructionInstance.id === actor.shipId
+  );
   const sceneDocument = useRef({
     json: undefined as string | undefined,
     version: 0,
@@ -430,7 +443,9 @@ export default function App({
     constructionScene.egress?.stairId,
     gameShipAccess?.shipId,
     awaitingShip,
+    acceptedInterior,
   ]);
+  acceptedSceneKey.current = sceneKey;
   loadingRef.current = loadedSceneKey !== sceneKey || status !== "ready";
   const authoredFlight = authoredFlightPresentation(
     actor,
@@ -497,6 +512,12 @@ export default function App({
   const logicRows = c ? [...c.db.visibleShipLogic.iter()] : [];
   const logicShipId = constructionInstance?.id;
   const evaAction =
+    exteriorButtonAction({
+      body: evaBody,
+      motions: c?.db.visibleShipMotion.iter() ?? [],
+      descriptions: c?.db.visibleShipDescriptions.iter() ?? [],
+      rows: logicRows,
+    }) ??
     logicButtonAction({
       shipId: logicShipId,
       logic: logicModel,
@@ -504,7 +525,7 @@ export default function App({
         actor && constructionVisit && !evaBody
           ? [actor.localX, actor.localY]
           : undefined,
-      outside: evaView?.local ? [evaView.localX, evaView.localY] : undefined,
+      outside: undefined,
     }) ??
     legacyEntryAction({
       shipId: logicShipId,
@@ -525,9 +546,31 @@ export default function App({
     : undefined;
   const evaLocal = !!evaView?.local;
   useEffect(() => {
-    // Same plane: next to the loaded ship the deck view continues; far out, the top-down view.
-    setInterior(!evaBody || evaLocal);
-  }, [!!evaBody, evaLocal]);
+    setInterior(acceptedInterior);
+  }, [acceptedInterior]);
+  useLayoutEffect(() => {
+    // Clear a retained scene before the next browser frame on exit or revoked occupancy.
+    if (acceptedInterior && installedSceneKey.current === sceneKey) return;
+    sceneState.current = {
+      ...sceneState.current,
+      interior: false,
+      furnishings: undefined,
+      selectedObject: undefined,
+      crewmates: [],
+      groundItems: [],
+      shipLogic: undefined,
+      constructionDoors: [],
+      objectLights: [],
+      combatActions: [],
+      seated: false,
+      seatContact: undefined,
+      constructionDeckId: undefined,
+      constructionTraversal: null,
+      constructionSupportElevation: undefined,
+    };
+    view.current?.update(sceneState.current);
+    setSelectedObject(undefined);
+  }, [acceptedInterior, sceneKey]);
   const station = (
     c && ship
       ? [...c.db.ownStations.iter()].find((row) => row.shipId === ship.id)
@@ -1106,6 +1149,7 @@ export default function App({
       document.hasFocus() &&
       !document.hidden &&
       !loadingRef.current &&
+      !entryBlocked.current &&
       !servicePanelOpen.current &&
       !isEditableTarget(document.activeElement) &&
       !gui.current?.blocked();
@@ -1121,8 +1165,16 @@ export default function App({
     );
     refresh((v) => v + 1);
   };
-  const perform = async (action: () => Promise<unknown>) => {
-    if (actionPending.current || !live.current.ready) return;
+  const perform = async (
+    action: () => Promise<unknown>,
+    allowDuringEntry = false,
+  ) => {
+    if (
+      actionPending.current ||
+      !live.current.ready ||
+      (entryBlocked.current && !allowDuringEntry)
+    )
+      return;
     actionPending.current = true;
     setPending(true);
     setError("");
@@ -1326,7 +1378,7 @@ export default function App({
     )
       return;
     issuedKit.current = actor.id;
-    void perform(() => connection.current!.reducers.claimStarterKit({}));
+    void perform(() => connection.current!.reducers.claimStarterKit({}), true);
   }, [
     ready,
     actor?.id,
@@ -1386,6 +1438,15 @@ export default function App({
                       remoteExhaustByShip(
                         connection.current?.db.visibleActuatorExhaust.iter() ??
                           [],
+                      ),
+                    exteriorLogic: () =>
+                      exteriorLogicPresentation(
+                        connection.current?.db.visibleShipDescriptions.iter() ??
+                          [],
+                        [
+                          ...(connection.current?.db.visibleShipLogic.iter() ??
+                            []),
+                        ],
                       ),
                   },
                 }
@@ -1634,8 +1695,13 @@ export default function App({
               if (!disposed) setError(text);
             },
             blocksCameraInput: () =>
-              loadingRef.current || (gui.current?.pointerBlocked() ?? false),
+              entryBlocked.current ||
+              loadingRef.current ||
+              (gui.current?.pointerBlocked() ?? false),
+            isPresentationSuspended: () =>
+              entryBlocked.current && !loadingRef.current,
             blocksObjectSelection: () =>
+              entryBlocked.current ||
               loadingRef.current ||
               live.current.combatEnabled ||
               !!servicePanelOpen.current,
@@ -1666,10 +1732,12 @@ export default function App({
       })
       .then((result) => {
         if (!result) return;
-        if (disposed) result.dispose();
+        if (disposed || acceptedSceneKey.current !== sceneKey) result.dispose();
         else {
           view.current = result;
+          installedSceneKey.current = sceneKey;
           result.update(sceneState.current);
+          refresh((v) => v + 1);
           // Development review only: EVA presentation diagnostics (never simulation state).
           if (import.meta.env.DEV) {
             (globalThis as { __siderealEva?: () => unknown }).__siderealEva =
@@ -1695,6 +1763,7 @@ export default function App({
       gui.current = null;
       view.current?.dispose();
       view.current = null;
+      installedSceneKey.current = undefined;
     };
   }, [
     sceneKey,
@@ -1749,7 +1818,11 @@ export default function App({
   // Child placement effects restore/recreate their transient ghost from this revision.
   // Commit the retained world's accepted baseline before those passive effects run.
   useLayoutEffect(() => {
-    if (constructionInstance)
+    if (
+      acceptedInterior &&
+      installedSceneKey.current === sceneKey &&
+      constructionInstance
+    )
       view.current?.updateFurnishings({
         instanceId: constructionInstance.id,
         revision: constructionInstance.furnishingRevision ?? 0n,
@@ -1760,18 +1833,21 @@ export default function App({
     constructionInstance?.furnishingsJson,
     constructionInstance?.furnishingRevision,
   ]);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const deliverInterior =
+      acceptedInterior && installedSceneKey.current === sceneKey;
     sceneState.current = {
-      furnishings: constructionInstance
-        ? {
-            instanceId: constructionInstance.id,
-            revision: constructionInstance.furnishingRevision ?? 0n,
-            json: constructionInstance.furnishingsJson ?? "{}",
-          }
-        : undefined,
-      selectedObject,
+      furnishings:
+        deliverInterior && constructionInstance
+          ? {
+              instanceId: constructionInstance.id,
+              revision: constructionInstance.furnishingRevision ?? 0n,
+              json: constructionInstance.furnishingsJson ?? "{}",
+            }
+          : undefined,
+      selectedObject: deliverInterior ? selectedObject : undefined,
       groundItems:
-        ready && c
+        deliverInterior && ready && c
           ? groundItemsForScene(
               [...c.db.ownGroundItems.iter()],
               constructionScene,
@@ -1795,21 +1871,25 @@ export default function App({
             }
           : undefined,
       },
-      constructionDeckId: constructionVisit?.deckId,
-      constructionSupportElevation: constructionInstance
-        ? constructionVisit?.standingElevationM
+      constructionDeckId: deliverInterior
+        ? constructionVisit?.deckId
         : undefined,
-      constructionTraversal:
-        constructionScene.acceptedStair ??
-        (c && constructionVisit
-          ? ([...c.db.ownConstructionTraversals.iter()].find(
-              (t) =>
-                t.characterId === actor?.id &&
-                t.instanceId === constructionVisit.instanceId,
-            ) ?? null)
-          : null),
+      constructionSupportElevation:
+        deliverInterior && constructionInstance
+          ? constructionVisit?.standingElevationM
+          : undefined,
+      constructionTraversal: deliverInterior
+        ? (constructionScene.acceptedStair ??
+          (c && constructionVisit
+            ? ([...c.db.ownConstructionTraversals.iter()].find(
+                (t) =>
+                  t.characterId === actor?.id &&
+                  t.instanceId === constructionVisit.instanceId,
+              ) ?? null)
+            : null))
+        : null,
       constructionDoors:
-        c && constructionVisit
+        deliverInterior && c && constructionVisit
           ? [...c.db.ownConstructionDoors.iter()]
               .filter(
                 (d) =>
@@ -1840,21 +1920,23 @@ export default function App({
                 };
               })
           : [],
-      objectLights: constructionScene.active
-        ? interactions
-            .filter((row) => row.kind === "light")
-            .map((row) => ({
-              placementId: row.placementId,
-              enabled: row.enabled,
-            }))
-        : LAB_INTERACTIONS.filter((row) => row.kind === "light").map(
-            ({ placementId }) => ({
-              placementId,
-              enabled:
-                interactions.find((row) => row.placementId === placementId)
-                  ?.enabled ?? false,
-            }),
-          ),
+      objectLights: !deliverInterior
+        ? []
+        : constructionScene.active
+          ? interactions
+              .filter((row) => row.kind === "light")
+              .map((row) => ({
+                placementId: row.placementId,
+                enabled: row.enabled,
+              }))
+          : LAB_INTERACTIONS.filter((row) => row.kind === "light").map(
+              ({ placementId }) => ({
+                placementId,
+                enabled:
+                  interactions.find((row) => row.placementId === placementId)
+                    ?.enabled ?? false,
+              }),
+            ),
       ...inventoryAppearance(inventory, cosmetics),
       vx: staticConstruction ? 0 : (ship?.vx ?? 0),
       vy: staticConstruction ? 0 : (ship?.vy ?? 0),
@@ -1869,13 +1951,15 @@ export default function App({
       y: staticConstruction ? 0 : (ship?.y ?? 0),
       localX: evaView?.localX ?? actor?.localX ?? 0,
       localY: evaView?.localY ?? actor?.localY ?? PILOT_LAYOUT.station.y,
-      interior: interior && (!evaView || evaView.local),
+      interior: interior && deliverInterior,
       eva: evaView ?? null,
       airlockCycle: null,
-      shipLogic: {
-        doors: logicDoors,
-        panels: logicPanelLights(logicRows, logicShipId),
-      },
+      shipLogic: deliverInterior
+        ? {
+            doors: logicDoors,
+            panels: logicPanelLights(logicRows, logicShipId),
+          }
+        : undefined,
       evaBodies:
         ready && c && actor?.connected && evaShipPose
           ? evaBodiesForScene(
@@ -1887,18 +1971,18 @@ export default function App({
           : [],
       inspect: false,
       grid: false,
-      seated: seated || !!couch || !!constructionSeat,
+      seated: deliverInterior && (seated || !!couch || !!constructionSeat),
       seatFacing:
-        couch || constructionSeat
+        deliverInterior && (seated || couch || constructionSeat)
           ? (prefabSeatPresentation(
               prefabShip,
               actor?.localX ?? 0,
               actor?.localY ?? 0,
             )?.facing ??
-            (Math.sign((couch ?? constructionSeat)!.localX) * Math.PI) / 2)
+            (Math.sign((couch ?? constructionSeat)?.localX ?? 0) * Math.PI) / 2)
           : 0,
       seatContact:
-        couch || constructionSeat
+        deliverInterior && (seated || couch || constructionSeat)
           ? prefabSeatPresentation(
               prefabShip,
               actor?.localX ?? 0,
@@ -1909,7 +1993,7 @@ export default function App({
       dead: ownVitals?.state === "dead",
       // Other characters on this deck: two server views, never their inventory or health.
       crewmates:
-        ready && c && actor?.connected
+        deliverInterior && ready && c && actor?.connected
           ? crewmatesFromViews(
               c.db.currentInteriorCrew.iter(),
               c.db.visibleCrewPresentation.iter(),
@@ -1928,7 +2012,7 @@ export default function App({
       // Accepted combat actions on this deck (own included) drive the r001 weapon effects.
       selfCharacterId: actor?.id,
       combatActions:
-        ready && c && actor?.connected
+        deliverInterior && ready && c && actor?.connected
           ? combatActionsFromView(c.db.visibleCombatActions.iter())
           : [],
       vistaId: systemScape ? DEFAULT_SPACE_VISTA : vistaId,
@@ -2009,6 +2093,7 @@ export default function App({
         return;
       }
       const blocked =
+        entryBlocked.current ||
         loadingRef.current ||
         !!servicePanelOpen.current ||
         isEditableTarget(document.activeElement) ||
@@ -2023,7 +2108,8 @@ export default function App({
         const mode = suitMode.current ?? live.current.evaSuitMode;
         const free = mode === "free";
         // Free (Newtonian) mode: no pointer facing; thrust along the body and A/D spin it.
-        const pointer = free ? undefined : view.current?.pointerDirection();
+        const pointer =
+          free || blocked ? undefined : view.current?.pointerDirection();
         const aim = pointer
           ? Math.atan2(-pointer[0], pointer[1]) +
             (live.current.evaLocal ? 0 : live.current.shipHeading)
@@ -2092,6 +2178,7 @@ export default function App({
       if (
         isEditableTarget(e.target) ||
         !!servicePanelOpen.current ||
+        entryBlocked.current ||
         loadingRef.current ||
         gui.current?.blocked() ||
         !actor?.connected ||
@@ -2107,7 +2194,7 @@ export default function App({
         if (
           !e.repeat &&
           live.current.actor?.shipId !== "" &&
-          (!live.current.evaPhase || live.current.evaLocal)
+          !live.current.evaPhase
         )
           setInterior((v) => !v);
         return;
@@ -2210,6 +2297,7 @@ export default function App({
             !liveState.couch &&
             (liveState.uiState.interior || !!liveState.evaPhase),
           blocked:
+            entryBlocked.current ||
             loadingRef.current ||
             !!servicePanelOpen.current ||
             isEditableTarget(document.activeElement) ||
@@ -2264,6 +2352,8 @@ export default function App({
       move(event);
       if (
         event.button === 0 &&
+        !entryBlocked.current &&
+        !loadingRef.current &&
         live.current.combatEnabled &&
         !servicePanelOpen.current &&
         !gui.current?.pointerBlocked()
@@ -2278,6 +2368,8 @@ export default function App({
     const key = (event: KeyboardEvent) => {
       if (
         event.code === "KeyR" &&
+        !entryBlocked.current &&
+        !loadingRef.current &&
         !event.repeat &&
         live.current.combatEnabled &&
         !servicePanelOpen.current &&
@@ -2322,13 +2414,16 @@ export default function App({
   }, []);
   return (
     <>
-      <div className="game-surface" inert={loadingRef.current}>
+      <div
+        className="game-surface"
+        inert={loadingRef.current || entryBlocked.current}
+      >
         <canvas
           key={rendererFailed ? "fallback" : "webgl"}
           className="game-canvas"
           ref={canvas}
-          tabIndex={loadingRef.current ? -1 : 0}
-          aria-hidden={loadingRef.current}
+          tabIndex={loadingRef.current || entryBlocked.current ? -1 : 0}
+          aria-hidden={loadingRef.current || entryBlocked.current}
           aria-label={
             rendererFailed
               ? "Graphics renderer failed. Enable WebGL, then press Enter to retry."
@@ -2466,7 +2561,48 @@ export default function App({
           onSignOut={onSignOut}
         />
       </div>
-      {loadingRef.current && (
+      {!enteredWorld && ready && (!actor || !loadingRef.current) && (
+        <CharacterSelect
+          actor={actor ?? null}
+          items={c ? [...c.db.ownInventoryItems.iter()] : []}
+          ship={
+            c
+              ? ([...c.db.ownShips.iter()].find(
+                  (row) => row.id === actor?.shipId,
+                ) ?? null)
+              : null
+          }
+          appearance={cosmetics}
+          vitals={ownVitals}
+          pending={pending}
+          error={error}
+          onEnter={() => {
+            if (!actor || loadingRef.current || pending) return;
+            setEnteredWorld(true);
+            requestAnimationFrame(() => canvas.current?.focus());
+          }}
+          onCreate={async (name) => {
+            const current = connection.current;
+            if (
+              !current?.isActive ||
+              !live.current.ready ||
+              actionPending.current
+            )
+              throw new Error("Reconnect before creating a character.");
+            actionPending.current = true;
+            setPending(true);
+            setError("");
+            try {
+              await current.reducers.enterLab({ name });
+            } finally {
+              actionPending.current = false;
+              setPending(false);
+            }
+          }}
+          onSignOut={onSignOut}
+        />
+      )}
+      {loadingRef.current && (enteredWorld || !ready || !!actor) && (
         <GameLoadingScreen
           stage={status === "ready" ? loadStage : "connecting"}
           shipName={ship?.name ?? ""}

@@ -127,7 +127,7 @@ function fixture() {
 test("server compile equals the shared estimator on every registered prefab, within the per-tick budget", () => {
   const { db, ctx, tick, addShip } = fixture();
   const count = PREFAB_SHIPS.length;
-  expect(count).toBe(13);
+  expect(count).toBe(19);
   const remaining = count - SHIP_SYSTEMS_COMPILES_PER_TICK;
   const deferred = Array.from(
     { length: Math.ceil(count / SHIP_SYSTEMS_COMPILES_PER_TICK) - 1 },

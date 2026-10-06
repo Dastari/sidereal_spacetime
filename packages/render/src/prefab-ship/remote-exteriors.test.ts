@@ -1,9 +1,11 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { readFileSync } from "node:fs";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { PointLight } from "@babylonjs/core/Lights/pointLight";
 import { prefabById } from "@sidereal/content/prefabs";
 import { createLegacyPrefabShipView as createPrefabShipView } from "./ship-view";
@@ -99,6 +101,83 @@ function fakeStore(
 }
 
 describe("remote prefab exteriors (other ships never render interiors)", () => {
+  it("shows a safe proxy after native access failure and retries after backoff", async () => {
+    const scene = headless();
+    const doc = prefabById("fed.s.wren-fleet")!;
+    const store = {
+      getSnapshot: () => ({
+        epoch: 1,
+        shipMotion: [{ shipId: "fleet" }],
+        shipDescription: [
+          {
+            shipId: "fleet",
+            publishedExteriorAssetId: `prefab:${doc.id}`,
+            appearanceRevision: 1n,
+          },
+        ],
+      }),
+      subscribeTable: () => () => {},
+      sampleShip: () => ({ x: 0, y: 0, heading: 0 }),
+    };
+    let now = 10_000,
+      available = false;
+    vi.spyOn(Date, "now").mockImplementation(() => now);
+    const resolver = vi.fn(async (piece: { file: string }) => {
+      if (!available) throw Error("temporary byte fetch failure");
+      return new Uint8Array(
+        readFileSync(
+          new URL(
+            `../../../../assets/runtime/wayfarer-access/r002/${piece.file}`,
+            import.meta.url,
+          ),
+        ),
+      );
+    });
+    const error = vi.fn();
+    const remote = createRemoteShipExteriors(scene, store, {
+      localShipId: () => undefined,
+      accessResolver: resolver,
+      onError: error,
+      load: (s, r) =>
+        loadRemoteExteriorPrototype(s, r, {
+          standinComponents: true,
+          accessResolver: resolver,
+        }),
+    });
+    await remote.settled();
+    await vi.waitFor(() => expect(error).toHaveBeenCalledOnce());
+    const camera = new FreeCamera("camera", new Vector3(0, 20, 0), scene);
+    remote.update({ x: 0, y: 0 }, 0, camera, 1000);
+    expect(remote.diagnostics().ships[0]).toMatchObject({
+      accessPending: false,
+      accessUnavailable: true,
+    });
+    expect(
+      scene.getTransformNodeByName("remote-ship-fleet:full")!.isEnabled(),
+    ).toBe(false);
+    expect(
+      scene.getTransformNodeByName("remote-ship-fleet:proxy")!.isEnabled(),
+    ).toBe(true);
+    const attempts = resolver.mock.calls.length;
+    now += 999;
+    remote.update({ x: 0, y: 0 }, 16, camera, 1000);
+    expect(resolver).toHaveBeenCalledTimes(attempts);
+    available = true;
+    now++;
+    remote.update({ x: 0, y: 0 }, 32, camera, 1000);
+    await vi.waitFor(() =>
+      expect(remote.diagnostics().ships[0]).toMatchObject({
+        accessPending: false,
+        accessUnavailable: false,
+      }),
+    );
+    expect(resolver.mock.calls.length).toBeGreaterThan(attempts);
+    remote.update({ x: 0, y: 0 }, 48, camera, 1000);
+    expect(
+      scene.getTransformNodeByName("remote-ship-fleet:full")!.isEnabled(),
+    ).toBe(true);
+    remote.dispose();
+  });
   it("resolves a published prefab exterior to the bundled developer prefab only", () => {
     const wren = prefabById("fed.s.wren")!;
     expect(
@@ -113,6 +192,12 @@ describe("remote prefab exteriors (other ships never render interiors)", () => {
     );
     expect(resolvePublishedExterior("unpublished", 0n)).toBeUndefined();
     expect(resolvePublishedExterior("prefab:no.such.ship", 1n)).toBeUndefined();
+    expect(
+      resolvePublishedExterior("prefab:fed.s.wren-fleet", 2n),
+    ).toBeUndefined();
+    expect(resolvePublishedExterior("prefab:fed.s.wren-fleet", 1n)?.exact).toBe(
+      true,
+    );
   });
 
   it("builds the exterior prototype with no deck geometry, furniture, lights or labels", async () => {
@@ -200,6 +285,33 @@ describe("remote prefab exteriors (other ships never render interiors)", () => {
     const near = scene.getTransformNodeByName("remote-ship-near")!;
     expect(near.position.x).toBeCloseTo(20);
     expect(near.rotation.y).toBeCloseTo(0.5);
+    // Legacy Wren gets its own outer leaves without any interior leaf geometry.
+    const outerDoors = near
+      .getChildMeshes()
+      .filter(
+        (m): m is Mesh =>
+          m instanceof Mesh && m.name.startsWith("prefab-doors:"),
+      );
+    expect(outerDoors.length).toBeGreaterThan(0);
+    const matrices = () =>
+      outerDoors.map((m) =>
+        m.thinInstanceGetWorldMatrices().flatMap((matrix) => [...matrix.m]),
+      );
+    const closed = matrices();
+    remote.update(
+      { x: 0, y: 0 },
+      1016,
+      camera,
+      1000,
+      undefined,
+      100,
+      new Map([
+        ["near", { doors: new Map([["airlock", true]]), panels: new Map() }],
+      ]),
+    );
+    expect(matrices()).not.toEqual(closed);
+    remote.update({ x: 0, y: 0 }, 2016, camera, 1000);
+    expect(matrices()).toEqual(closed);
     // Remote plumes: the server's coarse throttle per blueprint mount lights that jet only.
     const wren = prefabById("fed.s.wren")!;
     const jet = prefabNozzleLayout(wren, defaultPrefabComponentCatalog())[0];

@@ -1,5 +1,5 @@
 /**
- * Local review harness for the proposal equipped voxel crew (CHAR-BODY r005) inside the ACTUAL game renderer
+ * Local review harness for the proposal equipped voxel crew (pinned crew study v2, uniform scale 0.90) inside the ACTUAL game renderer
  * (createWorld, stock ship, deck view). Presentation only: static SceneState, no database, no
  * authority writes. Serve through the client Vite dev server:
  *   /@fs/<repo>/scripts/crew-voxel-review/index.html
@@ -17,12 +17,18 @@ import {
 } from "../../packages/content/src/character-components";
 import { prefabById } from "../../packages/content/src/prefabs/index";
 import { defaultPrefabComponentCatalog } from "../../packages/content/src/ship-prefab-catalog";
+import { prefabFlightModel } from "../../packages/sim/src/prefab-flight";
+import { prefabSeatPresentation } from "../../packages/render/src/crew/seat-presentation";
 import { equipVoxelCrewItem } from "../../packages/render/src/crew/voxel-crew-kit";
 import {
   VOXEL_CREW_ACTIONS,
   VOXEL_CREW_EXTRA_ACTIONS,
   type VoxelCrewAction,
 } from "../../packages/content/src/crew-voxel-bundle";
+import {
+  CREW_STUDY,
+  CREW_STUDY_SCALE,
+} from "../../packages/content/src/crew-study";
 import type { VoxelCrewMotion } from "../../packages/render/src/crew/voxel-crew-clips";
 
 type Mode =
@@ -41,7 +47,8 @@ type Mode =
   | "climb"
   | "hover"
   | "downed"
-  | "dead";
+  | "dead"
+  | "eva";
 const MODES: Record<
   Mode,
   {
@@ -69,6 +76,18 @@ const MODES: Record<
   hover: { override: { hovering: true } },
   downed: { override: { downed: true } },
   dead: { override: { dead: true } },
+  eva: {
+    override: {
+      eva: {
+        phase: "free",
+        forward: 1,
+        strafe: 0,
+        turn: 0,
+        walking: false,
+        cycling: false,
+      },
+    },
+  },
 };
 
 const canvas = document.querySelector("canvas")!;
@@ -84,8 +103,108 @@ const params = new URLSearchParams(location.search);
 let mode = (params.get("mode") as Mode) ?? "idle";
 let body = params.get("body") ?? "male";
 let role = params.get("role") ?? "engineer";
+const STUDY_CASES: Record<
+  string,
+  {
+    body: string;
+    role: string;
+    mode: Mode;
+    hair: "swept" | "scientist" | "ponytail" | "none";
+    uniform?: string;
+  }
+> = {
+  "male-uniform": {
+    body: "male",
+    role: "engineer",
+    mode: "idle",
+    hair: "swept",
+    uniform: "engineering",
+  },
+  "female-uniform": {
+    body: "female",
+    role: "medic",
+    mode: "idle",
+    hair: "ponytail",
+    uniform: "medical",
+  },
+  "male-t3": { body: "male", role: "marine", mode: "rifle_aim", hair: "none" },
+  "female-t3": {
+    body: "female",
+    role: "marine",
+    mode: "rifle_aim",
+    hair: "none",
+  },
+  "female-scalp": {
+    body: "female",
+    role: "scientist",
+    mode: "idle",
+    hair: "scientist",
+  },
+  "female-seated": {
+    body: "female",
+    role: "pilot",
+    mode: "seated",
+    hair: "ponytail",
+    uniform: "command",
+  },
+  "male-walk": {
+    body: "male",
+    role: "engineer",
+    mode: "walk",
+    hair: "swept",
+    uniform: "engineering",
+  },
+  "female-walk": {
+    body: "female",
+    role: "engineer",
+    mode: "walk",
+    hair: "ponytail",
+    uniform: "engineering",
+  },
+  "male-eva": { body: "male", role: "pilot", mode: "eva", hair: "none" },
+  "female-eva": { body: "female", role: "pilot", mode: "eva", hair: "none" },
+  "male-pistol": {
+    body: "male",
+    role: "security",
+    mode: "pistol_aim",
+    hair: "swept",
+  },
+  "female-rifle": {
+    body: "female",
+    role: "security",
+    mode: "rifle_aim",
+    hair: "ponytail",
+  },
+};
+let caseName = params.get("case") ?? "";
+const selectCase = (name: string) => {
+  const selected = STUDY_CASES[name];
+  if (!selected) return;
+  caseName = name;
+  body = selected.body;
+  role = selected.role;
+  mode = selected.mode;
+};
+selectCase(caseName);
+let outfitDisplay: "equipped" | "uniform" | "base" = "equipped";
 const roleEquipment = (): EquippedCharacterComponents => {
-  const uniform = params.get("uniform");
+  if (outfitDisplay === "base") return {};
+  if (outfitDisplay === "uniform") {
+    const department: Record<string, string> = {
+      captain: "command",
+      medic: "medical",
+      security: "security",
+    };
+    return { uniform: `wardrobe-uniform-${department[role] ?? "engineering"}` };
+  }
+  if (caseName.endsWith("-eva"))
+    return {
+      uniform: "wardrobe-suit-body",
+      helmet: "wardrobe-suit-helmet",
+      back: "wardrobe-suit-pack",
+      boots: "wardrobe-suit-boots",
+    };
+  const uniform = STUDY_CASES[caseName]?.uniform ?? params.get("uniform");
   if (uniform) return { uniform: `wardrobe-uniform-${uniform}` };
   return {
     ...(CHARACTER_COMPONENT_SETS[
@@ -126,6 +245,7 @@ const crew = () =>
     | (NonNullable<ReturnType<NonNullable<typeof world>["getCrewVisual"]>> & {
         setMotionOverride?: (m?: Partial<VoxelCrewMotion>) => void;
         play?: (a: VoxelCrewAction) => void;
+        prepareClip?: (name: string) => unknown;
         setOutfit?: (o: { suit?: boolean; gear?: boolean }) => void;
         face?: {
           setExpression(id: string | null): void;
@@ -259,12 +379,21 @@ const isolate = (keep: Set<AbstractMesh> | null) => {
     }
 };
 const reviewTarget = () => {
-  const c = crew() as { joints?: Map<string, TransformNode> } | undefined;
-  return c?.joints?.get("pelvis")?.getAbsolutePosition() ?? Vector3.Zero();
+  const c = crew() as { root?: TransformNode } | undefined;
+  const target = c?.root?.getAbsolutePosition().clone() ?? Vector3.Zero();
+  // Fixed full-body centre: pelvis sway must not move the review framing.
+  target.y += 0.85;
+  return target;
+};
+const restorePose = () => {
+  const c = crew() as { update: (m: unknown) => void } | undefined;
+  if (c && mutedUpdate) c.update = mutedUpdate as (m: unknown) => void;
+  mutedUpdate = null;
+  posing = false;
 };
 
 const applyMode = () => {
-  const m = MODES[mode];
+  const m = MODES[mode] ?? MODES.idle;
   state = {
     ...state,
     seated: !!m.seated,
@@ -275,6 +404,9 @@ const applyMode = () => {
         : m.weapon === "pistol"
           ? "compact-pistol"
           : null,
+    // Explicit accepted item presentation selects the matching source armed class.
+    heldItem:
+      m.weapon === "rifle" ? "rifle" : m.weapon === "pistol" ? "pistol" : null,
     combat: m.combat
       ? { active: true, angle: 0, range: 40, shotSequence: shots }
       : undefined,
@@ -282,6 +414,7 @@ const applyMode = () => {
       outfit: role as "engineer",
       equippedComponents: roleEquipment(),
       bodyType: body as "male",
+      hairStyle: STUDY_CASES[caseName]?.hair ?? "swept",
       weapon: m.weapon ?? "none",
     },
   };
@@ -291,7 +424,7 @@ const applyMode = () => {
 
 const tick = () => {
   if (!world || posing) return;
-  const m = MODES[mode];
+  const m = MODES[mode] ?? MODES.idle;
   if (m.moving) {
     const speed = m.sprint
       ? 4.5
@@ -322,6 +455,9 @@ const tick = () => {
   (canvas.dataset as DOMStringMap).review = JSON.stringify({
     mode,
     body,
+    case: caseName,
+    sourceRevision: CREW_STUDY.revision,
+    scale: CREW_STUDY_SCALE,
     layers: c?.layers,
     clips: c?.activeClips,
   });
@@ -376,7 +512,7 @@ async function loadShip(scene: Scene) {
 
 createWorld(canvas, (text) => (status.textContent = text), {
   signal: controller.signal,
-  ...(shipId || params.get("ship") === "none"
+  ...(shipId || params.get("ship") === "none" || caseName
     ? { vessel: "none" as const }
     : {}),
   onScene: (scene) => {
@@ -388,7 +524,8 @@ createWorld(canvas, (text) => (status.textContent = text), {
     scene.onBeforeAnimationsObservable.add(() => {
       if (!posing) return;
       for (const g of scene.animationGroups)
-        if (g !== posedGroup && g.isStarted) g.stop();
+        if (g !== posedGroup && g.isStarted && g.name !== "deploy_sight")
+          g.stop();
     });
   },
 })
@@ -397,8 +534,13 @@ createWorld(canvas, (text) => (status.textContent = text), {
     if (sceneRef)
       await loadShip(sceneRef).catch((e) => console.error("ship", e));
     applyMode();
-    status.textContent =
-      "voxel crew (proposal, preview only) — actual game renderer, no database";
+    status.textContent = `${CREW_STUDY.revision} at ${CREW_STUDY_SCALE} — provisional, actual game renderer`;
+    if (caseName)
+      (
+        window as unknown as {
+          crewReview: { cameraPreset(name: string): void };
+        }
+      ).crewReview.cameraPreset(params.get("view") ?? "front");
   })
   .catch((error) => {
     status.textContent = String(error);
@@ -428,7 +570,9 @@ document
   .querySelector<HTMLSelectElement>("#outfit")!
   .addEventListener("change", (e) => {
     const v = (e.target as HTMLSelectElement).value;
-    crew()?.setOutfit?.({ suit: v !== "base", gear: v === "gear" });
+    outfitDisplay =
+      v === "base" ? "base" : v === "suit" ? "uniform" : "equipped";
+    applyMode();
   });
 document
   .querySelector<HTMLSelectElement>("#expression")!
@@ -436,10 +580,26 @@ document
     const v = (e.target as HTMLSelectElement).value;
     crew()?.face?.setExpression(v === "auto" ? null : v);
   });
+let directHeld: Awaited<ReturnType<typeof equipVoxelCrewItem>> | undefined;
+let contactShip: { dispose(): void } | undefined;
+const caseSelect = document.querySelector<HTMLSelectElement>("#case")!;
+for (const name of Object.keys(STUDY_CASES))
+  caseSelect.append(new Option(name, name));
+caseSelect.value = caseName;
+caseSelect.addEventListener("change", () => {
+  restorePose();
+  state = { ...state, seatContact: undefined, seatFacing: undefined };
+  selectCase(caseSelect.value);
+  modeSelect.value = mode;
+  bodySelect.value = body;
+  applyMode();
+});
 Object.assign(window, {
   crewReview: {
     setOutfit(v: "base" | "suit" | "gear") {
-      crew()?.setOutfit?.({ suit: v !== "base", gear: v === "gear" });
+      outfitDisplay =
+        v === "base" ? "base" : v === "suit" ? "uniform" : "equipped";
+      applyMode();
     },
     setExpression(v: string | null) {
       crew()?.face?.setExpression(v);
@@ -463,7 +623,115 @@ Object.assign(window, {
     },
     async equip(item: string) {
       const c = crew();
-      if (c && sceneRef) return equipVoxelCrewItem(sceneRef, c as never, item);
+      directHeld?.dispose();
+      if (c && sceneRef) {
+        directHeld = await equipVoxelCrewItem(sceneRef, c as never, item);
+        return directHeld;
+      }
+    },
+    setCase(name: string) {
+      restorePose();
+      state = { ...state, seatContact: undefined, seatFacing: undefined };
+      selectCase(name);
+      caseSelect.value = caseName;
+      modeSelect.value = mode;
+      bodySelect.value = body;
+      applyMode();
+    },
+    /** Actual authored deck and accepted pilot anchor; no presentation-only chair offsets. */
+    async seatInShip(id: string) {
+      if (!sceneRef || !world) throw Error("Review scene unavailable");
+      const doc = prefabById(id);
+      if (!doc) throw Error("Unknown review prefab");
+      const catalog = defaultPrefabComponentCatalog();
+      const station = prefabFlightModel(doc, catalog).station;
+      if (!station) throw Error("Review prefab has no pilot station");
+      restorePose();
+      isolate(null);
+      contactShip?.dispose();
+      const { createPrefabShipView } =
+        await import("../../packages/render/src/prefab-ship/ship-view");
+      contactShip = await createPrefabShipView(sceneRef, doc, {
+        catalog,
+        view: "deck",
+        parent: sceneRef.getTransformNodeByName("ship-frame")!,
+        standinComponents: false,
+        roomLights: 2,
+      });
+      origin.x = station[0];
+      origin.y = station[1];
+      mode = "seated";
+      applyMode();
+      state = {
+        ...state,
+        localX: station[0],
+        localY: station[1],
+        seated: true,
+        seatFacing:
+          prefabSeatPresentation({ doc, catalog }, ...station)?.facing ?? 0,
+        seatContact: prefabSeatPresentation({ doc, catalog }, ...station),
+      };
+      world.update(state);
+      return {
+        prefab: doc.id,
+        revision: doc.revision,
+        station,
+        seatFacing: state.seatFacing,
+        seatContact: state.seatContact ?? null,
+        scale: CREW_STUDY_SCALE,
+      };
+    },
+    cameraPreset(name: string) {
+      const azimuths: Record<string, number> = {
+        front: -Math.PI / 2,
+        back: Math.PI / 2,
+        left: Math.PI,
+        right: 0,
+        oblique: -Math.PI / 4,
+      };
+      const api = (
+        window as unknown as {
+          crewReview: { reviewCamera(view: unknown): void };
+        }
+      ).crewReview;
+      api.reviewCamera({
+        azimuth: azimuths[name] ?? azimuths.front,
+        beta: name === "oblique" ? 1.3 : Math.PI / 2,
+        radius: 4.5,
+        lift: 0,
+        isolate: true,
+      });
+    },
+    record() {
+      const c = crew() as
+        | {
+            root?: TransformNode;
+            modelScale?: number;
+            skeleton?: { bones: unknown[] };
+            activeClips?: string[];
+          }
+        | undefined;
+      return {
+        revision: CREW_STUDY.revision,
+        sourceCommit: CREW_STUDY.sourceCommit,
+        case: caseName,
+        body,
+        mode,
+        scale: c?.modelScale,
+        bones: c?.skeleton?.bones.length,
+        waiting: sceneRef?.getWaitingItemsCount(),
+        ready: sceneRef?.isReady(),
+        clips: c?.activeClips,
+        meshes: c?.root
+          ?.getChildMeshes()
+          .filter((mesh) => mesh.getTotalVertices() && mesh.isEnabled())
+          .map((mesh) => ({
+            name: mesh.name,
+            indices: mesh.getTotalIndices(),
+            material: mesh.material?.name,
+            determinant: mesh.computeWorldMatrix(true).determinant(),
+          })),
+      };
     },
     shoot() {
       shots += 1n;
@@ -474,8 +742,8 @@ Object.assign(window, {
       skeletonOn = on;
     },
     /**
-     * Review view orbiting the pelvis (alpha/beta radians, radius metres); null restores the
-     * game camera. azimuth is relative to the crew facing: 0 = right side, PI/2 = front.
+     * Review view around the fixed full-body centre; null restores the game camera.
+     * Source glTF front is -Z: relative azimuth -PI/2 is front, 0 is right.
      */
     reviewCamera(
       view: {
@@ -529,7 +797,15 @@ Object.assign(window, {
         }
         if (!g.isStarted) continue;
         g.pause();
-        g.goToFrame(Math.min(g.to, g.from + frame));
+        g.goToFrame(
+          Math.min(
+            g.to,
+            g.from +
+              (frame *
+                (g.targetedAnimations[0]?.animation.framePerSecond ?? 60)) /
+                24,
+          ),
+        );
       }
     },
     /**
@@ -539,6 +815,7 @@ Object.assign(window, {
      */
     pose(clip: string, frame: number) {
       if (!sceneRef) return false;
+      crew()?.prepareClip?.(clip);
       const g = sceneRef.animationGroups.find((a) => a.name === clip);
       if (!g) return false;
       posing = true;
@@ -549,17 +826,18 @@ Object.assign(window, {
         mutedUpdate = c.update;
         c.update = () => {};
       }
-      for (const other of sceneRef.animationGroups) other.stop();
-      const at = Math.min(g.to, g.from + (frame * 60) / 24);
+      for (const other of sceneRef.animationGroups)
+        if (other.name !== "deploy_sight") other.stop();
+      const fps = g.targetedAnimations[0]?.animation.framePerSecond ?? 60;
+      const at = Math.min(g.to, g.from + (frame * fps) / 24);
       g.start(false, 1e-6, at, g.to);
       g.setWeightForAllAnimatables(1);
+      g.goToFrame(at);
+      g.pause();
       return true;
     },
     unpose() {
-      const c = crew() as { update: (m: unknown) => void } | undefined;
-      if (c && mutedUpdate) c.update = mutedUpdate as (m: unknown) => void;
-      mutedUpdate = null;
-      posing = false;
+      restorePose();
       applyMode();
     },
     /** Names and lengths (frames) of the crew clips currently started. */
@@ -584,5 +862,7 @@ Object.assign(window, {
 if (import.meta.hot)
   import.meta.hot.dispose(() => {
     controller.abort();
+    directHeld?.dispose();
+    contactShip?.dispose();
     world?.dispose();
   });

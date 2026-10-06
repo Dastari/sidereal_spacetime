@@ -9,7 +9,7 @@
       "name": "Main deck"
     }
   ],
-  "description": "Private proposed authored access profile; production admission disabled.",
+  "description": "Provisional authored Wayfarer access refit with personnel airlock and cargo hatch.",
   "edges": [
     {
       "id": "personnel-inner",
@@ -163,7 +163,7 @@
     }
   ],
   "name": "Wayfarer",
-  "revision": 1,
+  "revision": 2,
   "role": "Explorer",
   "rooms": [
     {

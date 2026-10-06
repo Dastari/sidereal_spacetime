@@ -1,5 +1,6 @@
 import { bowJoinErrors, bowWalkable } from "./bow-profiles";
 import { interiorArtQuarterTurns } from "./ship-furniture";
+import { fleetAccessDoorClearance } from "./fleet-access-physical";
 import {
   isWayfarerAccessProfile,
   wayfarerAccessInterior,
@@ -187,13 +188,21 @@ export interface PrefabSkylight {
 }
 
 /**
- * Storage deck objects a prefab places by hand (2026-09-29, Wren r8 EVA suit locker), next to the
- * ones the room types derive. A fixture is an ordinary derived storage socket (same designs, key
- * `<room>/<design>`, collision, dressing and operator-bound container); only its place is authored.
+ * Deck furniture and storage a prefab places by hand, next to the ones its room types derive.
+ * Fixtures use the same authored designs, collision and dressing as room sockets, with explicit
+ * furniture envelopes large enough to preserve their native source proportions.
+ * Storage designs also retain their operator-bound container; only placement is authored.
  */
 export const PREFAB_FIXTURE_DESIGNS = [
   "shipyard.equipment.wall-locker",
   "cargo.standard.medium",
+  "shipyard.equipment.medical-bed",
+  "shipyard.equipment.lounge-sofa",
+  "pale-studless.table.standard",
+  "pale-studless.console.standard",
+  "shipyard.equipment.bridge-bank",
+  "shipyard.equipment.command-console",
+  "pale-studless.kitchen.standard",
 ] as const;
 export type PrefabFixtureDesign = (typeof PREFAB_FIXTURE_DESIGNS)[number];
 
@@ -202,14 +211,18 @@ export interface PrefabFixture {
   design: PrefabFixtureDesign;
   /** Footprint min corner (m, 0.05 m snap), deck 0. */
   at: [number, number];
-  /** The side it opens to (faces into the room), as for derived storage sockets. */
+  /** Access side, or operator view direction for consoles, as for derived room sockets. */
   facing: FaceNormal;
 }
 
-/** Room-grammar dimensions of a fixture design: [width along its wall, depth, height] in texels. */
+/** Explicit fixture envelope: [width along its wall, depth, height] in texels. */
 export function fixtureDesignTexels(
   design: PrefabFixtureDesign,
 ): [number, number, number] {
+  // Explicit fleet fixtures reserve the native study furniture's full plan envelope.
+  // Auto-derived room sockets retain their original grammar dimensions/live pins.
+  if (design === "shipyard.equipment.lounge-sofa") return [40, 26, 14];
+  if (design === "shipyard.equipment.bridge-bank") return [32, 13, 22];
   for (const spec of Object.values(G.roomTypes))
     for (const [id, w, d, h] of spec.sockets)
       if (id === design) return [w, d, h];
@@ -1653,6 +1666,9 @@ export function deriveInterior(
       type: cargo ? "door.blast" : "door.airlock",
       rooms: [inside?.id ?? null, null],
       exterior: true,
+      ...(fleetAccessDoorClearance(doc, m.id)
+        ? { clearWidthM: fleetAccessDoorClearance(doc, m.id)!.clearWidthM }
+        : {}),
     });
   }
   // Doors on the exterior replace the wall segments they occupy.

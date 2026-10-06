@@ -53,6 +53,21 @@ import {
 } from "./exhaust";
 import { roleSlotMaterial } from "./materials";
 import { createPrefabShipView } from "./ship-view";
+import {
+  createFederationFleetAccessDoors,
+  isFederationFleet,
+} from "./federation-fleet-access";
+import { createLogicPanels } from "./logic-panels";
+import type { ShipAccessDoorPiece } from "@sidereal/content/ship-access-doors";
+import {
+  WAYFARER_ACCESS_DOORS,
+  isWayfarerAccessProfile,
+} from "@sidereal/content/wayfarer-access-profile";
+import {
+  accessDoorPlacements,
+  loadAuthoredAccessDoors,
+} from "./authored-access-doors";
+import { createPrefabDoors, prefabDoorSpecs, type DoorUpdate } from "./doors";
 
 /** Direct-light share of prefab hull plastic in the game (prefab-ship-presentation.ts). */
 const REMOTE_SHIP_DIRECT = 0.6;
@@ -99,6 +114,8 @@ export function resolvePublishedExterior(
   const prefabId = prefabIdOfExterior(assetId);
   const doc = prefabId ? prefabById(prefabId) : undefined;
   if (!doc) return undefined;
+  if (isFederationFleet(doc) && BigInt(doc.revision) !== revision)
+    return undefined;
   return {
     key: `${assetId}@r${doc.revision}`,
     doc,
@@ -114,6 +131,8 @@ interface SourcePart {
   scaling: Vector3;
 }
 export interface RemoteExteriorPrototype {
+  /** Immutable public template access slots; never a remote instance document. */
+  readonly nativeAccess?: ResolvedExterior;
   readonly key: string;
   readonly exact: boolean;
   /** Plan radius of the hull around the ship pivot (m). */
@@ -176,8 +195,13 @@ function buildProxy(
 export async function loadRemoteExteriorPrototype(
   scene: Scene,
   resolved: ResolvedExterior,
-  options: { standinComponents?: boolean } = {},
+  options: {
+    standinComponents?: boolean;
+    accessResolver?: (piece: ShipAccessDoorPiece) => Promise<Uint8Array>;
+  } = {},
 ): Promise<RemoteExteriorPrototype> {
+  if (isFederationFleet(resolved.doc) && !resolved.exact)
+    throw Error("Fleet exterior requires its exact published revision");
   const root = new TransformNode(`remote-exterior:${resolved.key}`, scene);
   const view = await createPrefabShipView(scene, resolved.doc, {
     catalog: resolved.catalog,
@@ -185,6 +209,8 @@ export async function loadRemoteExteriorPrototype(
     exteriorOnly: true,
     parent: root,
     standinComponents: options.standinComponents,
+    accessResolver: options.accessResolver,
+    externalDoorLeaves: true,
   });
   const frame = view.root
     .getChildren()
@@ -258,6 +284,7 @@ export async function loadRemoteExteriorPrototype(
     console.warn("remote ship exhaust layout unavailable", error);
   }
   return {
+    nativeAccess: resolved,
     key: resolved.key,
     exact: resolved.exact,
     radius,
@@ -309,7 +336,68 @@ function createMarkerSource(scene: Scene): Mesh {
   return mesh;
 }
 
+interface ExteriorAccessHandle {
+  setView(view: "deck" | "flight"): void;
+  update(input: DoorUpdate): void;
+  dispose(): void;
+}
+async function createExteriorAccess(
+  scene: Scene,
+  root: TransformNode,
+  resolved: ResolvedExterior,
+  resolver?: (piece: ShipAccessDoorPiece) => Promise<Uint8Array>,
+): Promise<ExteriorAccessHandle> {
+  if (isFederationFleet(resolved.doc)) {
+    if (!resolver) throw Error("Fleet exterior access requires pinned bytes");
+    return createFederationFleetAccessDoors(
+      scene,
+      root,
+      resolved.doc,
+      resolved.catalog,
+      resolver,
+      { exteriorOnly: true },
+    );
+  }
+  if (isWayfarerAccessProfile(resolved.doc)) {
+    if (!resolver)
+      throw Error("Native Wayfarer exterior access requires pinned bytes");
+    const native = await loadAuthoredAccessDoors(
+      scene,
+      root,
+      accessDoorPlacements(prefabDoorSpecs(resolved.doc, resolved.catalog)),
+      { pack: WAYFARER_ACCESS_DOORS, fetchBytes: resolver },
+    );
+    return {
+      setView: () => native.setEnabled(true),
+      update: (input) =>
+        native.update(
+          input.logic === undefined
+            ? undefined
+            : new Map([...input.logic].map(([id, open]) => [id, { open }])),
+          input.dt,
+        ),
+      dispose: native.dispose,
+    };
+  }
+  return createPrefabDoors(
+    scene,
+    root,
+    resolved.doc,
+    resolved.catalog,
+    resolved.doc.theme,
+    true,
+    new Set(),
+    true,
+  );
+}
 interface Entry {
+  access?: ExteriorAccessHandle;
+  panels?: ReturnType<typeof createLogicPanels>;
+  accessToken?: object;
+  accessPending?: boolean;
+  accessUnavailable?: boolean;
+  accessFailures?: number;
+  accessRetryAt?: number;
   shipId: string;
   root: TransformNode;
   /** Prototype key this entry wants, or undefined for an unpublished hull (marker only). */
@@ -324,6 +412,7 @@ interface Entry {
 }
 
 export interface RemoteShipExteriorsOptions {
+  accessResolver?: (piece: ShipAccessDoorPiece) => Promise<Uint8Array>;
   localShipId: () => string | undefined;
   resolve?: typeof resolvePublishedExterior;
   load?: (
@@ -345,7 +434,12 @@ export function createRemoteShipExteriors(
   options: RemoteShipExteriorsOptions,
 ) {
   const resolve = options.resolve ?? resolvePublishedExterior;
-  const load = options.load ?? loadRemoteExteriorPrototype;
+  const load =
+    options.load ??
+    ((s, r) =>
+      loadRemoteExteriorPrototype(s, r, {
+        accessResolver: options.accessResolver,
+      }));
   const budget = options.fullDetailBudget ?? SHIP_LOD.fullDetailBudget;
   const group = new TransformNode("remote-ships", scene);
   const markerSource = createMarkerSource(scene);
@@ -355,12 +449,24 @@ export function createRemoteShipExteriors(
     Promise<RemoteExteriorPrototype | undefined>
   >();
   const loaded = new Map<string, RemoteExteriorPrototype>();
+  const prototypeFailures = new Map<
+    string,
+    { resolved: ResolvedExterior; count: number; retryAt: number }
+  >();
   const entries = new Map<string, Entry>();
   let disposed = false,
     epoch = store.getSnapshot().epoch,
     inexact = 0;
 
   const release = (entry: Entry) => {
+    entry.accessToken = undefined;
+    entry.accessPending = false;
+    entry.accessUnavailable = false;
+    entry.accessFailures = 0;
+    entry.accessRetryAt = 0;
+    entry.access?.dispose();
+    entry.panels?.dispose();
+    entry.access = entry.panels = undefined;
     entry.exhaust?.dispose();
     entry.full?.dispose();
     entry.proxy?.dispose();
@@ -371,8 +477,62 @@ export function createRemoteShipExteriors(
     const entry = entries.get(id);
     if (!entry) return;
     entries.delete(id);
-    entry.exhaust?.dispose();
+    release(entry);
     entry.root.dispose();
+  };
+  const requestAccess = (entry: Entry) => {
+    const prototype = entry.prototype,
+      full = entry.full;
+    if (
+      !prototype?.nativeAccess ||
+      !full ||
+      entry.access ||
+      entry.accessPending ||
+      Date.now() < (entry.accessRetryAt ?? 0)
+    )
+      return;
+    const token = {};
+    entry.accessToken = token;
+    entry.accessPending = true;
+    const resolved = prototype.nativeAccess;
+    void createExteriorAccess(scene, full, resolved, options.accessResolver)
+      .then((access) => {
+        if (
+          disposed ||
+          entry.accessToken !== token ||
+          entries.get(entry.shipId) !== entry
+        ) {
+          access.dispose();
+          return;
+        }
+        entry.access = access;
+        entry.accessPending = false;
+        entry.accessUnavailable = false;
+        entry.accessFailures = 0;
+        access.setView("flight");
+        entry.panels = createLogicPanels(
+          scene,
+          full,
+          resolved.doc,
+          resolved.catalog,
+        );
+        entry.panels.setView("flight");
+      })
+      .catch((error) => {
+        if (
+          !disposed &&
+          entry.accessToken === token &&
+          entries.get(entry.shipId) === entry
+        ) {
+          entry.accessPending = false;
+          entry.accessUnavailable = true;
+          entry.accessFailures = (entry.accessFailures ?? 0) + 1;
+          entry.accessRetryAt =
+            Date.now() +
+            Math.min(30_000, 1000 * 2 ** Math.min(5, entry.accessFailures - 1));
+          options.onError?.(error);
+        }
+      });
   };
   const attach = (entry: Entry) => {
     const prototype = entry.key ? loaded.get(entry.key) : undefined;
@@ -382,9 +542,12 @@ export function createRemoteShipExteriors(
     full.setEnabled(false);
     proxy.setEnabled(false);
     Object.assign(entry, { prototype, full, proxy });
+    requestAccess(entry);
   };
   const request = (resolved: ResolvedExterior) => {
     if (prototypes.has(resolved.key)) return;
+    if (Date.now() < (prototypeFailures.get(resolved.key)?.retryAt ?? 0))
+      return;
     if (!resolved.exact) inexact++;
     prototypes.set(
       resolved.key,
@@ -395,13 +558,25 @@ export function createRemoteShipExteriors(
             return undefined;
           }
           loaded.set(resolved.key, prototype);
+          prototypeFailures.delete(resolved.key);
           for (const entry of entries.values())
             if (entry.key === resolved.key) attach(entry);
           return prototype;
         })
         .catch((error) => {
           // The ship stays a marker; never hidden because its hull failed to load.
-          if (!disposed) options.onError?.(error);
+          if (!disposed) {
+            prototypes.delete(resolved.key);
+            const count = (prototypeFailures.get(resolved.key)?.count ?? 0) + 1;
+            prototypeFailures.set(resolved.key, {
+              resolved,
+              count,
+              retryAt:
+                Date.now() +
+                Math.min(30_000, 1000 * 2 ** Math.min(5, count - 1)),
+            });
+            options.onError?.(error);
+          }
           return undefined;
         }),
     );
@@ -459,6 +634,7 @@ export function createRemoteShipExteriors(
   );
   reconcile();
   let lastLocal = options.localShipId();
+  let lastUpdateMs: number | undefined;
   const dispose = () => {
     if (disposed) return;
     disposed = true;
@@ -466,6 +642,7 @@ export function createRemoteShipExteriors(
     clear();
     for (const p of loaded.values()) p.dispose();
     loaded.clear();
+    prototypeFailures.clear();
     markerSource.material?.dispose();
     markerSource.dispose();
     group.dispose();
@@ -484,6 +661,13 @@ export function createRemoteShipExteriors(
       /** Firing thrusters per perceived ship: flight source id -> coarse achieved throttle. */
       exhaust?: ReadonlyMap<string, ReadonlyMap<string, number>>,
       delayMs = 100,
+      exteriorLogic?: ReadonlyMap<
+        string,
+        {
+          doors: ReadonlyMap<string, boolean>;
+          panels: ReadonlyMap<string, { state: string; light: string }>;
+        }
+      >,
     ) {
       if (disposed) return;
       if (options.localShipId() !== lastLocal) {
@@ -491,10 +675,18 @@ export function createRemoteShipExteriors(
         reconcile();
       }
       if (![origin.x, origin.y, nowMs].every(Number.isFinite)) return;
+      const accessDt =
+        lastUpdateMs === undefined
+          ? 0
+          : Math.max(0, Math.min(1, (nowMs - lastUpdateMs) / 1000));
+      lastUpdateMs = nowMs;
       const eye = camera?.globalPosition;
       const fov = camera?.fov ?? 0.8;
       const sized: { id: string; px: number; previous?: ShipLodTier }[] = [];
       for (const [id, entry] of entries) {
+        const failed = entry.key ? prototypeFailures.get(entry.key) : undefined;
+        if (failed) request(failed.resolved);
+        requestAccess(entry);
         const sample = store.sampleShip(id, nowMs, delayMs);
         if (
           !sample ||
@@ -522,9 +714,28 @@ export function createRemoteShipExteriors(
         // Without a loaded hull the ship is a marker, whatever its size.
         const tier: ShipLodTier = entry.prototype ? tiers.get(id)! : 2;
         entry.tier = entry.prototype ? tier : undefined;
-        entry.full?.setEnabled(tier === 0);
-        entry.proxy?.setEnabled(tier === 1);
+        const safeProxy = entry.accessPending || entry.accessUnavailable;
+        entry.full?.setEnabled(tier === 0 && !safeProxy);
+        entry.proxy?.setEnabled(tier === 1 || (tier === 0 && !!safeProxy));
         entry.marker.setEnabled(tier === 2);
+        const logic = exteriorLogic?.get(id);
+        entry.access?.update({
+          actors: [],
+          nowMs,
+          dt: accessDt,
+          logic: logic?.doors,
+        });
+        entry.panels?.update(
+          logic
+            ? new Map(
+                [...logic.panels].map(([slot, value]) => [
+                  slot,
+                  { light: value.light, pressedMicros: 0 },
+                ]),
+              )
+            : undefined,
+          nowMs,
+        );
         // Plumes and RCS puffs on hull tiers only, from the server's achieved outputs.
         const jets = exhaust?.get(id);
         if (entry.prototype && tier !== 2 && (jets?.size || entry.exhaust)) {
@@ -557,6 +768,8 @@ export function createRemoteShipExteriors(
             shipId: e.shipId,
             exterior: e.key ?? null,
             loaded: !!e.prototype,
+            accessPending: !!e.accessPending,
+            accessUnavailable: !!e.accessUnavailable,
             litJets: e.exhaust?.lit().length ?? 0,
             enabled: e.root.isEnabled(),
             tier:
