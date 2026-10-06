@@ -16,6 +16,7 @@ import {
 } from "@sidereal/content/ship-visual-fixture";
 import { SHIP_REFERENCE_VISUAL } from "../art_library/ship_reference_revision";
 import { isWayfarerAccessProfile } from "@sidereal/content/wayfarer-access-profile";
+import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { createWayfarerAccessDoors } from "../../packages/render/src/prefab-ship/wayfarer-access-doors";
 import { publishedShipAccessBytes } from "../../packages/render/src/prefab-ship/wayfarer-access-assets";
 import { createPrefabDoors } from "../../packages/render/src/prefab-ship/doors";
@@ -73,6 +74,8 @@ declare global {
     __prefabDoors?: unknown;
     __prefabScene?: Scene;
     __prefabViews?: PrefabShipView[];
+    /** Read-only review fixture; never writes world state or ships in published content. */
+    __prefabFurnishings?: FurnishingOverrides;
   }
 }
 
@@ -279,6 +282,7 @@ async function main() {
       objectsBaseUrl: q.get("objects") ?? undefined,
       batch: q.get("batch") !== "0",
       roomLights: Number(q.get("lights") ?? 0),
+      furnishings: window.__prefabFurnishings,
     });
     if (
       q.get("visual") === "reference-r001" ||

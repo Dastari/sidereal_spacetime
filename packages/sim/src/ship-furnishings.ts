@@ -11,6 +11,10 @@ import {
   WAYFARER_GAMEPLAY_OBJECTS,
 } from "@sidereal/content/wayfarer-authored-gameplay";
 import { type ShipPrefabDocumentV1 } from "@sidereal/content/ship-prefab";
+import {
+  isWayfarerAccessProfile,
+  wayfarerAccessObjects,
+} from "@sidereal/content/wayfarer-access-profile";
 import { positiveOverlap, inside } from "./layout-geometry";
 import { qualifyWallFurnishingPlacement } from "./furnishing-wall-placement";
 import {
@@ -97,8 +101,9 @@ const sweep = (
 export function deckRouteGroups(
   frame: DeckCollisionFrame,
   points: readonly (readonly number[])[],
+  resolution: 0.25 | 0.1 = 0.25,
 ): number[] {
-  const step = 0.25,
+  const step = resolution,
     nodes = new Map<string, boolean>(),
     labels = new Map<string, number>();
   const point = (x: number, y: number) =>
@@ -106,11 +111,14 @@ export function deckRouteGroups(
   const legal = (x: number, y: number) => {
     const key = x + "," + y;
     if (!nodes.has(key)) {
-      if (nodes.size >= 8192)
+      if (nodes.size >= (resolution === 0.1 ? 65536 : 8192))
         throw Error("Furnishing route validation budget exceeded");
       nodes.set(
         key,
-        Math.abs(x) <= 27 && y >= -46 && y <= 54 && clear(frame, point(x, y)),
+        Math.abs(x * step) <= 6.75 &&
+          y * step >= -11.5 &&
+          y * step <= 13.5 &&
+          clear(frame, point(x, y)),
       );
     }
     return nodes.get(key)!;
@@ -243,10 +251,14 @@ export function validateFurnishingPlacement(
   overrides: FurnishingOverrides,
   after: DeckCollisionFrame,
   crew: readonly (readonly number[])[],
+  doc?: ShipPrefabDocumentV1,
 ) {
-  const moved = effectiveWayfarerObjects(overrides).find(
-    (row) => row.object === sourceObjectId,
-  );
+  const objects = effectiveWayfarerObjects(overrides);
+  const moved = (
+    doc && isWayfarerAccessProfile(doc)
+      ? wayfarerAccessObjects(objects)
+      : objects
+  ).find((row) => row.object === sourceObjectId);
   if (moved) {
     const pose = overrides[sourceObjectId] ?? FURNISHING_DEFAULT,
       originalWallPose =

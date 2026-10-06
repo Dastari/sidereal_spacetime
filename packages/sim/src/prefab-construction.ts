@@ -40,6 +40,7 @@ import {
   type Point,
 } from "@sidereal/content/ship-layout";
 import { bindConstructionLayout } from "./construction-layout";
+import { wayfarerNativeSupportBindings } from "./construction-native-support-clips";
 import { isWayfarerAccessProfile } from "@sidereal/content/wayfarer-access-profile";
 import {
   canOccupyDeck,
@@ -117,6 +118,9 @@ export function prefabLayout(
   const roomOf = new Map(
     full.map((f) => [`${f.cell[0]},${f.cell[1]}`, f.room]),
   );
+  const fragments = new Set(
+    full.filter((f) => f.extentM).map((f) => `${f.cell[0]},${f.cell[1]}`),
+  );
   const used = new Set<string>();
   const tiles: FloorTile[] = [];
   const tileRoom = new Map<string, string>();
@@ -137,7 +141,11 @@ export function prefabLayout(
     const k = `${x},${y}`;
     if (used.has(k)) continue;
     const block = [`${x + 1},${y}`, `${x},${y + 1}`, `${x + 1},${y + 1}`];
-    const big = block.every((c) => roomOf.get(c) === f.room && !used.has(c));
+    const big =
+      !f.extentM &&
+      block.every(
+        (c) => roomOf.get(c) === f.room && !used.has(c) && !fragments.has(c),
+      );
     const id = `floor-${x}-${y}`;
     const size = big ? 2 : 1;
     for (let a = 0; a < size; a++)
@@ -147,7 +155,7 @@ export function prefabLayout(
       deckId,
       shape: "rectangle",
       revision: SHAPE_REVISION,
-      vertices: cellPoly(x, y, size, size),
+      vertices: cellPoly(x, y, f.extentM?.[0] ?? size, f.extentM?.[1] ?? size),
       material: `prefab.${f.kind}`,
     });
     tileRoom.set(id, f.room);
@@ -173,9 +181,9 @@ export function prefabLayout(
         return full.some(
           (f) =>
             x >= f.cell[0] &&
-            x <= f.cell[0] + 1 &&
+            x <= f.cell[0] + (f.extentM?.[0] ?? 1) &&
             y >= f.cell[1] &&
-            y <= f.cell[1] + 1,
+            y <= f.cell[1] + (f.extentM?.[1] ?? 1),
         );
       });
     }
@@ -404,6 +412,10 @@ export function prefabConstructionDocument(
     );
   const layout = prefabLayout(prefab, catalog);
   const bound = bindConstructionLayout(layout);
+  const clips = wayfarerNativeSupportBindings(prefab, layout);
+  bound.document.floors.push(...clips);
+  const clippedIds = new Set(clips.map((floor) => floor.id));
+  bound.unmatched = bound.unmatched.filter((id) => !clippedIds.has(id));
   if (bound.unmatched.length)
     throw Error(
       `Prefab floors without a native interface: ${bound.unmatched.join(", ")}`,

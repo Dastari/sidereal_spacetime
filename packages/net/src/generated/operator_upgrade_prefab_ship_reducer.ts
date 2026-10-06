@@ -18,4 +18,5 @@ export default {
   expectedInstanceRevision: __t.u64(),
   targetPrefabId: __t.string(),
   expectedTargetBlueprintSha256: __t.string(),
+  fromDryRunOperationId: __t.option(__t.string()),
 };

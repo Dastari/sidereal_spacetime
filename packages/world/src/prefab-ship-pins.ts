@@ -206,9 +206,9 @@ export const FED_WAYFARER_R1_PIN: PinnedPrefabShip = {
 export const FED_WAYFARER_PIN: PinnedPrefabShip = {
   ...FED_WAYFARER_R1_PIN,
   blueprintSha256:
-    "536e77c75b73ca04755dc77f890e19d4f5b7b1bf096a37bf2b21d3094fbf5977",
+    "d3842793440a6738fee6c416c2e3f61a2c7591d397ece428cf1f66e06b504d54",
   flightDefinitionSha256:
-    "783ede554ce526b12630e3b3bb6d44fc583ea17c86b2472b0f4bfb5040606856",
+    "0e0ac47fcf9447fbe9ad6415903dfb6b0344783556daa075f32c1338fa2ed1b7",
   description: "Wayfarer (Federation explorer, authored access profile2)",
 };
 

@@ -18,6 +18,7 @@ import {
   applyWayfarerAuthoredPlacementEdits,
   WAYFARER_GAMEPLAY_OBJECTS,
   WAYFARER_MAIN_NOZZLE,
+  wayfarerNativeFloorUnitPlacement,
 } from "@sidereal/content/wayfarer-authored-gameplay";
 import {
   prefabConstructionDocument,
@@ -40,6 +41,31 @@ import { allocateThrust } from "./ifcs";
 const doc = PREFAB_SHIPS.find((p) => p.id === "fed.m.wayfarer")!;
 const catalog = defaultPrefabComponentCatalog();
 const spawn: [number, number] = [0, 6.875];
+
+test("native floor backings reject shear, changed Z and non-affine placements", () => {
+  const original = [
+    [1, 0, 0, 2],
+    [0, 1, 0, -5.5],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1],
+  ];
+  expect(wayfarerNativeFloorUnitPlacement(original)).toBe(true);
+  for (const [r, c, value] of [
+    [0, 1, 0.25],
+    [1, 0, 0.25],
+    [0, 2, 0.1],
+    [2, 1, 0.1],
+    [2, 2, 1.25],
+    [3, 0, 0.1],
+    [3, 3, 0],
+    [0, 3, Infinity],
+  ]) {
+    const matrix = original.map((row) => [...row]);
+    matrix[r][c] = value;
+    expect(wayfarerNativeFloorUnitPlacement(matrix), `${r},${c}`).toBe(false);
+  }
+  expect(wayfarerNativeFloorUnitPlacement(original.slice(0, 3))).toBe(false);
+});
 
 test("authored gameplay admits one exact registered source and rejects physical edits", () => {
   expect(prefabOrigin(readShipPrefab(doc))).toEqual([0, 0]);
@@ -68,8 +94,16 @@ test("authored gameplay admits one exact registered source and rejects physical 
   const bad = structuredClone(bound);
   bad.layout.tiles[0].vertices[0][0]++;
   expect(() => readConstructionDraft(JSON.stringify(bad))).toThrow();
-  // Active access profile2 retains the 222 native deck cells plus six qualified thresholds.
-  expect(deriveInterior(doc, 0, catalog).floors.length).toBe(228);
+  // Six half-metre fragments retain native support after retessellation,
+  // without counting those fragments as whole1m floor cells.
+  const floors = deriveInterior(doc, 0, catalog).floors;
+  expect(floors.length).toBe(234);
+  expect(
+    floors.reduce(
+      (sum, f) => sum + (f.extentM ? f.extentM[0] * f.extentM[1] : 1),
+      0,
+    ),
+  ).toBe(231);
 });
 
 test("every live small crate and locker has a standing approach reachable from the cockpit", () => {

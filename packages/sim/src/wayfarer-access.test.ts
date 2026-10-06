@@ -16,7 +16,10 @@ import { prefabCargoSockets } from "./prefab-cargo-sockets";
 import { prefabDeckObstacles, prefabShipObjects } from "./prefab-deck-objects";
 import { compileLayout } from "./layout-compiler";
 import { bindConstructionLayout } from "./construction-layout";
-import { readConstructionDraft } from "./construction-transactions";
+import {
+  compileConstruction,
+  readConstructionDraft,
+} from "./construction-transactions";
 import {
   prefabEvaModel,
   evaExitThrough,
@@ -65,7 +68,17 @@ describe("Wayfarer legacy and active access geometry qualification", () => {
     expect(
       compileLayout(layout).diagnostics.filter((d) => d.severity === "error"),
     ).toEqual([]);
-    expect(bindConstructionLayout(layout).unmatched).toEqual([]);
+    // A layout alone cannot authorize source-backed support clips. Only the
+    // complete canonical profile reconstructs the six native boundary subsets.
+    expect(bindConstructionLayout(layout).unmatched.sort()).toEqual(
+      [-9, -8, -7, -6, 2, 3].map((x) => `floor-${x}--5.5`).sort(),
+    );
+    const bound = prefabConstructionDocument(proposed, catalog);
+    expect(bound.floors).toHaveLength(bound.layout.tiles.length);
+    expect(bound.floors.filter((f) => f.nativeSupportClip)).toHaveLength(6);
+    expect(
+      compileConstruction(JSON.stringify(bound)).readiness.nativeFloors,
+    ).toBe(true);
     expect(layout.partitions).toHaveLength(6);
     const widths = Object.fromEntries(
       layout.openings.map((o) => [

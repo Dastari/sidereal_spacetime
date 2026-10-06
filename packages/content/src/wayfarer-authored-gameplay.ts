@@ -20,6 +20,35 @@ export const WAYFARER_OMITTED_OBJECTS = new Set([
   "Hall_crew_chibi",
   "Hall_selection_ring",
 ]);
+/** A finite affine translation with an unchanged full unit linear transform. */
+export function wayfarerNativeFloorUnitPlacement(
+  matrix: readonly (readonly number[])[],
+): boolean {
+  return (
+    matrix.length === 4 &&
+    matrix.every(
+      (row, r) =>
+        row.length === 4 &&
+        row.every(
+          (value, c) =>
+            Number.isFinite(value) &&
+            ((r < 3 && c === 3) || value === (r === c ? 1 : 0)),
+        ),
+    )
+  );
+}
+/** Immutable source identities/nominal cells for qualified native support subsets. */
+export const WAYFARER_NATIVE_FLOOR_BACKINGS = Object.freeze(
+  source.rows
+    .filter((row) => row.role === "floor")
+    .map((row) =>
+      Object.freeze({
+        object: row.object,
+        cell: Object.freeze([row.matrix[0][3], row.matrix[1][3]] as const),
+        unitPlacement: wayfarerNativeFloorUnitPlacement(row.matrix),
+      }),
+    ),
+);
 
 /** Approved-source derivative: a .74m bedroom doorway and clear furnished access lanes. */
 export function applyWayfarerAuthoredPlacementEdits(

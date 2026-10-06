@@ -9,7 +9,10 @@ import {
   PREFAB_FLIGHT_PROFILE,
   prefabFlightInput,
   prefabFlightModel,
+  prefabInteriorDefinitionId,
 } from "./prefab-flight";
+import { WAYFARER_ACCESS_SOURCE } from "@sidereal/content/wayfarer-access-profile";
+import { prefabWalkFrame } from "./prefab-construction";
 
 const catalog = defaultPrefabComponentCatalog();
 
@@ -78,6 +81,39 @@ describe("prefab flight compile", () => {
     const a = JSON.stringify(prefabFlightModel(PREFAB_SHIPS[1], catalog));
     const b = JSON.stringify(prefabFlightModel(PREFAB_SHIPS[1], catalog));
     expect(a).toBe(b);
+  });
+
+  it("uses actual native floor area and its surface centroid for the access refit", () => {
+    const doc = WAYFARER_ACCESS_SOURCE;
+    const frame = prefabWalkFrame(doc, catalog);
+    let area = 0,
+      xMoment = 0,
+      yMoment = 0;
+    for (const polygon of frame.floors) {
+      const patchArea =
+        Math.abs(
+          polygon.reduce((sum, p, i) => {
+            const q = polygon[(i + 1) % polygon.length];
+            return sum + p[0] * q[1] - q[0] * p[1];
+          }, 0),
+        ) / 2;
+      area += patchArea;
+      xMoment +=
+        (patchArea * polygon.reduce((s, p) => s + p[0], 0)) / polygon.length;
+      yMoment +=
+        (patchArea * polygon.reduce((s, p) => s + p[1], 0)) / polygon.length;
+    }
+    expect(area).toBe(231);
+    const model = prefabFlightModel(doc, catalog);
+    const interior = model.catalog.definitions.find(
+      (d) => d.id === prefabInteriorDefinitionId(doc.id),
+    )!;
+    // Floor231m²×40kg plus the sixteen retained side-wall segments×60kg.
+    expect(interior.massKg).toBe(10200);
+    const part = model.parts.find((p) => p.sourceId === "interior")!;
+    expect(part.position[0]).toBeCloseTo(xMoment / area, 9);
+    expect(part.position[1]).toBeCloseTo(yMoment / area, 9);
+    expect(compiled(doc).mass.massKg).toBe(59820);
   });
 });
 

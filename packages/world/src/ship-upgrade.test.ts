@@ -17,6 +17,7 @@ vi.mock("./auth", () => ({
 }));
 import { readFileSync } from "node:fs";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { CREW_WARDROBE_KITS } from "@sidereal/content/crew-wardrobe";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
@@ -53,6 +54,7 @@ import {
 } from "./prefab-ship-pins";
 import {
   UPGRADE_KEPT_SHIP_TABLES,
+  UPGRADE_QUALIFIED_SHIP_TABLES,
   UPGRADE_PRESENCE_TABLES,
   UPGRADE_REBUILT_SHIP_TABLES,
   UPGRADE_REFUSED_SHIP_TABLES,
@@ -64,6 +66,7 @@ const HEAVY = { timeout: 120_000 };
 type Row = Record<string, any>;
 const PRIMARY: Record<string, string> = {
   shipPowerInstallation: "shipId",
+  shipFurnishingState: "shipId",
   shipPowerState: "shipId",
   personalStarterReceipt: "owner",
   gameShipAccess: "shipId",
@@ -282,6 +285,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
     ...UPGRADE_REBUILT_SHIP_TABLES.map(([t]) => t),
     ...UPGRADE_REFUSED_SHIP_TABLES.map(([t]) => t),
     ...UPGRADE_KEPT_SHIP_TABLES,
+    ...UPGRADE_QUALIFIED_SHIP_TABLES,
     ...UPGRADE_PRESENCE_TABLES,
   ];
   expect(new Set(listed).size).toBe(listed.length);
@@ -815,5 +819,421 @@ test(
       operationId: "upgrade-authored-access-0002",
     });
     expect(f.db.shipOperatorOperation.rows.length).toBe(ledger);
+  },
+);
+
+function furnishedWayfarer(dx = 0, customOverrides?: FurnishingOverrides) {
+  clearConstructionCollisionCache();
+  const f = fixture();
+  f.as(OWNER);
+  const characterId = onboardNewCharacter(
+    f.ctx,
+    "Furnishing migration qualification",
+  );
+  f.as(SHIP_OPERATOR);
+  const source = readShipPrefab(
+    JSON.parse(
+      readFileSync(
+        new URL("../../content/src/wayfarer-prefab.v1.json", import.meta.url),
+        "utf8",
+      ),
+    ),
+  );
+  const catalog = prefabComponentCatalogFor(
+    FED_WAYFARER_R1_PIN.catalogRevision,
+  );
+  const template = trustedPrefabTemplateFor(source, catalog);
+  const { shipId, deckId } = installPrefabShip(
+    f.ctx,
+    f.db.character.id.find(characterId),
+    { prefabId: source.id, pose: { kind: "berth" } },
+    { template },
+  );
+  const overrides = customOverrides ?? {
+    Quarters_A_poster_planet: {
+      dx,
+      dy: 0,
+      yaw: 0,
+      snap: false,
+      deleted: false,
+    },
+  };
+  const furnishing = {
+    shipId,
+    revision: 31n,
+    overridesJson: JSON.stringify(overrides),
+  };
+  f.db.shipFurnishingState.insert(furnishing);
+  for (const c of f.db.inventoryContainer.rows)
+    if (c.characterId === characterId) c.shipId = shipId;
+  for (const socket of prefabCargoSockets(source, 0, catalog, overrides))
+    issueEmptySocketStorage(f.ctx, shipId, socket.key, socket.designId);
+  const args = {
+    operationId: "furnished-wayfarer-dryrun-0001",
+    dryRun: true,
+    shipId,
+    expectedSourceBlueprintSha256: template.snapshot.sha256,
+    expectedInstanceRevision: 1n,
+    targetPrefabId: source.id,
+    expectedTargetBlueprintSha256: FED_WAYFARER_PIN.blueprintSha256,
+  };
+  return { f, characterId, shipId, deckId, furnishing, overrides, args };
+}
+
+test(
+  "native refit carries nonempty furnishing state through effective sockets/collision, preserving UUIDs and chosen plan",
+  HEAVY,
+  () => {
+    const { f, shipId, furnishing, overrides, args } = furnishedWayfarer();
+    const inventory = heldInventory(f, shipId);
+    const fittings = f.db.constructionFlightFitting.rows.map((r: Row) => [
+      r.sourceDeviceId,
+      r.id,
+    ]);
+    const station = f.db.station.shipId.find(shipId).id;
+    upgradePrefabShip(f.ctx, args);
+    const plan = JSON.parse(
+      f.db.shipOperatorOperation.operationId.find(args.operationId).summaryJson,
+    );
+    expect(plan.refusals).toEqual([]);
+    expect(plan.furnishingState).toMatchObject({
+      present: true,
+      sourceRevision: { $bigint: "31" },
+      targetRevision: { $bigint: "31" },
+      overrideCount: 1,
+      sourceOverridesJson: furnishing.overridesJson,
+      targetOverridesJson: furnishing.overridesJson,
+      rebasedKeys: [],
+      relocatedKeys: [],
+      qualified: true,
+      preservedUnchanged: true,
+    });
+    upgradePrefabShip(f.ctx, {
+      ...args,
+      dryRun: false,
+      operationId: "furnished-wayfarer-apply-0001",
+      fromDryRunOperationId: args.operationId,
+    });
+    expect(f.db.shipFurnishingState.shipId.find(shipId)).toEqual(furnishing);
+    expect(heldInventory(f, shipId)).toEqual(inventory);
+    expect(f.db.station.shipId.find(shipId).id).toBe(station);
+    for (const [sourceDeviceId, id] of fittings)
+      expect(
+        f.db.constructionFlightFitting.rows.find(
+          (r: Row) => r.sourceDeviceId === sourceDeviceId,
+        )?.id,
+      ).toBe(id);
+    const target = trustedPrefabTemplate("fed.m.wayfarer").prefab;
+    const targetSockets = prefabCargoSockets(
+      target,
+      0,
+      prefabComponentCatalogFor(FED_WAYFARER_PIN.catalogRevision),
+      overrides,
+    );
+    for (const socket of targetSockets) {
+      const planned = plan.sockets.find((s: Row) => s.socketKey === socket.key);
+      const c = f.db.inventoryContainer.id.find(planned.containerId);
+      expect([c.localX, c.localY]).toEqual(socket.centreM);
+      const scope = f.db.inventoryContainerScope.containerId.find(c.id);
+      expect([scope.accessX, scope.accessY, scope.accessZ]).toEqual(
+        planned.toAccessM,
+      );
+      const frame = constructionCollision(
+        f.ctx,
+        f.db.constructionInstance.id.find(shipId),
+        scope.deckId,
+      );
+      expect(
+        canOccupyDeck(
+          frame,
+          {
+            shipId,
+            deckId: scope.deckId,
+            position: [scope.accessX, scope.accessY],
+          },
+          0.3,
+        ),
+      ).toBe(true);
+    }
+  },
+);
+
+test(
+  "unsafe nonempty furnishing target refuses before any authoritative apply writes",
+  HEAVY,
+  () => {
+    const { f, shipId, args } = furnishedWayfarer();
+    const row = f.db.shipFurnishingState.shipId.find(shipId);
+    f.db.shipFurnishingState.shipId.update({
+      ...row,
+      overridesJson: JSON.stringify({
+        Cargo_crate_white_blue: {
+          dx: 32,
+          dy: 0,
+          yaw: 0,
+          snap: false,
+          deleted: false,
+        },
+      }),
+    });
+    upgradePrefabShip(f.ctx, args);
+    const plan = JSON.parse(
+      f.db.shipOperatorOperation.operationId.find(args.operationId).summaryJson,
+    );
+    expect(
+      plan.refusals.some(
+        (r: string) =>
+          r.startsWith("furnishing carry-over unsafe:") ||
+          r === "target prefab spawn is not standable",
+      ),
+    ).toBe(true);
+    const before = f.snapshot();
+    expect(() =>
+      upgradePrefabShip(f.ctx, {
+        ...args,
+        dryRun: false,
+        operationId: "furnished-wayfarer-refused-0001",
+        fromDryRunOperationId: args.operationId,
+      }),
+    ).toThrow();
+    expect(f.snapshot()).toBe(before);
+  },
+);
+
+test(
+  "chosen furnishing dry-run rejects changed state at unchanged construction revision",
+  HEAVY,
+  () => {
+    const { f, shipId, args } = furnishedWayfarer();
+    upgradePrefabShip(f.ctx, args);
+    expect(
+      JSON.parse(
+        f.db.shipOperatorOperation.operationId.find(args.operationId)
+          .summaryJson,
+      ).refusals,
+    ).toEqual([]);
+    const row = f.db.shipFurnishingState.shipId.find(shipId);
+    f.db.shipFurnishingState.shipId.update({
+      ...row,
+      revision: row.revision + 1n,
+    });
+    const before = f.snapshot();
+    expect(() =>
+      upgradePrefabShip(f.ctx, {
+        ...args,
+        dryRun: false,
+        operationId: "furnished-wayfarer-stale-0001",
+        fromDryRunOperationId: args.operationId,
+      }),
+    ).toThrow("Furnishing state changed since the chosen dry-run");
+    expect(f.snapshot()).toBe(before);
+    expect(f.db.constructionInstance.id.find(shipId).revision).toBe(1n);
+  },
+);
+
+test(
+  "mapped furnishing migration archives one row revision and preserves absolute placement without losing any override",
+  HEAVY,
+  () => {
+    const source: FurnishingOverrides = {
+      Quarters_A_poster_planet: {
+        dx: 0,
+        dy: 0,
+        yaw: 0,
+        snap: false,
+        deleted: false,
+      },
+      Hydroponics_cabinet_dark: {
+        dx: 0.6,
+        dy: -0.5,
+        yaw: 0,
+        snap: true,
+        deleted: false,
+      },
+    };
+    const { f, shipId, args } = furnishedWayfarer(0.05, source);
+    const original = f.db.shipFurnishingState.shipId.find(shipId);
+    upgradePrefabShip(f.ctx, args);
+    const plan = JSON.parse(
+      f.db.shipOperatorOperation.operationId.find(args.operationId).summaryJson,
+    );
+    expect(plan.refusals).toEqual([]);
+    const migration = plan.furnishingState;
+    expect(migration.sourceRevision).toEqual({ $bigint: "31" });
+    expect(migration.targetRevision).toEqual({ $bigint: "32" });
+    expect(migration.rebasedKeys).toEqual(["Hydroponics_cabinet_dark"]);
+    expect(migration.relocatedKeys).toEqual([]);
+    const target = JSON.parse(migration.targetOverridesJson);
+    expect(target).toEqual({
+      ...source,
+      Hydroponics_cabinet_dark: {
+        ...source.Hydroponics_cabinet_dark,
+        dx: 0,
+        dy: 0,
+      },
+    });
+    const inventory = heldInventory(f, shipId);
+    upgradePrefabShip(f.ctx, {
+      ...args,
+      dryRun: false,
+      operationId: "furnished-mapped-apply-0001",
+      fromDryRunOperationId: args.operationId,
+    });
+    expect(f.db.shipFurnishingState.shipId.find(shipId)).toEqual({
+      ...original,
+      revision: 32n,
+      overridesJson: migration.targetOverridesJson,
+    });
+    expect(heldInventory(f, shipId)).toEqual(inventory);
+    const archived = f.db.shipWipeArchive.rows.filter(
+      (r: Row) => r.tableName === "shipFurnishingState",
+    );
+    expect(archived).toHaveLength(1);
+    expect(JSON.parse(archived[0].rowJson)).toMatchObject({
+      overridesJson: original.overridesJson,
+      revision: { $bigint: "31" },
+    });
+  },
+);
+
+test.each(["raw-json", "row-removed"])(
+  "chosen dry-run rejects furnishing %s changes even at the same construction revision",
+  HEAVY,
+  (mode) => {
+    const { f, shipId, args } = furnishedWayfarer();
+    upgradePrefabShip(f.ctx, args);
+    const plan = JSON.parse(
+      f.db.shipOperatorOperation.operationId.find(args.operationId).summaryJson,
+    );
+    expect(plan.refusals).toEqual([]);
+    const row = f.db.shipFurnishingState.shipId.find(shipId);
+    if (mode === "row-removed") f.db.shipFurnishingState.shipId.delete(shipId);
+    else
+      f.db.shipFurnishingState.shipId.update({
+        ...row,
+        overridesJson: row.overridesJson + " ",
+      });
+    const before = f.snapshot();
+    expect(() =>
+      upgradePrefabShip(f.ctx, {
+        ...args,
+        dryRun: false,
+        operationId: "furnished-stale-state-apply-0001",
+        fromDryRunOperationId: args.operationId,
+      }),
+    ).toThrow(/changed since the chosen dry-run/);
+    expect(f.snapshot()).toBe(before);
+  },
+);
+
+test(
+  "a furnishing upgrade refuses missing or another principal's chosen dry-run before any authoritative writes",
+  HEAVY,
+  () => {
+    const { f, args } = furnishedWayfarer();
+    upgradePrefabShip(f.ctx, args);
+    const apply = {
+      ...args,
+      dryRun: false,
+      operationId: "furnished-wrong-plan-apply-0001",
+    };
+    const before = f.snapshot();
+    expect(() => upgradePrefabShip(f.ctx, apply)).toThrow(
+      /chosen matching operator dry-run/,
+    );
+    expect(f.snapshot()).toBe(before);
+    const prior = f.db.shipOperatorOperation.operationId.find(args.operationId);
+    f.db.shipOperatorOperation.operationId.update({
+      ...prior,
+      principal: Identity.fromString(OWNER),
+    });
+    const unauthorized = f.snapshot();
+    expect(() =>
+      upgradePrefabShip(f.ctx, {
+        ...apply,
+        fromDryRunOperationId: args.operationId,
+      }),
+    ).toThrow(/chosen matching operator dry-run/);
+    expect(f.snapshot()).toBe(unauthorized);
+  },
+);
+
+test.each(["socket-approach", "ground-drop", "inventory-grid"])(
+  "chosen furnishing dry-run rejects changed %s effects before writes",
+  HEAVY,
+  (mode) => {
+    const { f, shipId, args } = furnishedWayfarer();
+    let ground: Row | undefined;
+    if (mode === "ground-drop") {
+      const base = f.db.inventoryContainer.rows[0];
+      ground = {
+        ...base,
+        id: "ground-plan-container",
+        shipId,
+        characterId: undefined,
+        parentItemId: undefined,
+        carried: false,
+        localX: 0,
+        localY: 0,
+      };
+      f.db.inventoryContainer.insert(ground);
+      f.db.storageBinding.insert({
+        id: "ground-plan-storage",
+        containerId: ground!.id,
+        placementId: "ground:qualification",
+      });
+    }
+    if (mode === "inventory-grid") {
+      const root = f.db.instanceInventoryBinding.rows.find(
+        (b: Row) => b.instanceId === shipId,
+      ).containerId;
+      const item = {
+        ...f.db.inventoryItem.rows[0],
+        id: "chosen-plan-grid-item",
+        containerId: root,
+        equipmentSlot: "",
+        x: 0,
+        y: 0,
+        rotated: false,
+      };
+      f.db.inventoryItem.insert(item);
+      f.db.inventoryItemMembership.insert({
+        itemId: item.id,
+        revision: 1n,
+        containerId: root,
+        rootContainerId: root,
+        rootCharacterId: "",
+      });
+    }
+    upgradePrefabShip(f.ctx, args);
+    const plan = JSON.parse(
+      f.db.shipOperatorOperation.operationId.find(args.operationId).summaryJson,
+    );
+    expect(plan.refusals).toEqual([]);
+    if (mode === "socket-approach") {
+      const scope = f.db.inventoryContainerScope.rows.find(
+        (r: Row) => r.rootKind === "instance",
+      );
+      f.db.inventoryContainerScope.containerId.update({
+        ...scope,
+        accessX: scope.accessX + 0.01,
+      });
+    } else if (mode === "ground-drop")
+      f.db.inventoryContainer.id.update({ ...ground, localX: 0.01 });
+    else {
+      const item = f.db.inventoryItem.id.find("chosen-plan-grid-item");
+      expect(item).toBeTruthy();
+      f.db.inventoryItem.id.update({ ...item, x: item.x + 1 });
+    }
+    const before = f.snapshot();
+    expect(() =>
+      upgradePrefabShip(f.ctx, {
+        ...args,
+        dryRun: false,
+        operationId: "furnished-effects-stale-apply-0001",
+        fromDryRunOperationId: args.operationId,
+      }),
+    ).toThrow(/target effects changed since the chosen dry-run/);
+    expect(f.snapshot()).toBe(before);
   },
 );

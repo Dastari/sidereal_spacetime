@@ -33,6 +33,11 @@ export interface ConstructionGrant {
 }
 export interface ConstructionFloor extends InterfacePlacement {
   deckId: string;
+  /** Only exact registered profile2 native edge subsets; never a player clip. */
+  nativeSupportClip?: {
+    profile: "wayfarer-authored-r001@2";
+    sourceObject: string;
+  };
 }
 export interface NativeAirlockBinding {
   pin: { id: string; revision: string; sha256: string };

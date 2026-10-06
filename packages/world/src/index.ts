@@ -1837,8 +1837,8 @@ export const operatorStockShipCargo = db.reducer(
   },
   withComponentSnapshots(stockShipCargo),
 );
-/** Operator-only: replaces one game-owned prefab ship's revision in place (e.g. Wren r2/r3 -> r4),
- * keeping the ship/deck ids, pose, owner, containers and items. See ship-upgrade.ts. */
+/** Operator-only preserving prefab refit: retain ship/deck ids, pose, owner and inventory.
+ * Furnishing carry-over binds apply to the exact clean dry-run. See ship-upgrade.ts. */
 export const operatorUpgradePrefabShip = db.reducer(
   {
     operationId: t.string(),
@@ -1848,6 +1848,7 @@ export const operatorUpgradePrefabShip = db.reducer(
     expectedInstanceRevision: t.u64(),
     targetPrefabId: t.string(),
     expectedTargetBlueprintSha256: t.string(),
+    fromDryRunOperationId: t.option(t.string()),
   },
   withComponentSnapshots(upgradePrefabShip),
 );

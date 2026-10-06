@@ -31,6 +31,25 @@ import {
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import { prefabById } from "@sidereal/content/prefabs";
+import { isWayfarerGameplay } from "@sidereal/content/wayfarer-authored-gameplay";
+import {
+  isWayfarerAccessProfile,
+  WAYFARER_ACCESS_FURNISHING_SHIFTS,
+  WAYFARER_ACCESS_DOORS,
+  wayfarerAccessObjects,
+} from "@sidereal/content/wayfarer-access-profile";
+import {
+  effectiveWayfarerObjects,
+  type FurnishingOverrides,
+  type FurnishingOverride,
+} from "@sidereal/content/wayfarer-furnishings";
+import {
+  deckRouteGroups,
+  validateFurnishingPlacement,
+} from "@sidereal/sim/ship-furnishings";
+import { prefabBedSeats, qualifyPrefabBed } from "@sidereal/sim/prefab-seats";
+import { shipLogicModel } from "@sidereal/sim/ship-logic-model";
+import { furnishingState } from "./ship-furnishings-tables";
 import {
   PREFAB_DECK_ID,
   isPrefabConstruction,
@@ -43,7 +62,14 @@ import {
   canOccupyDeck,
   type DeckCollisionFrame,
 } from "@sidereal/sim/construction-collision";
-import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
+import {
+  PREFAB_FLIGHT_DEFINITION,
+  prefabFlightModel,
+} from "@sidereal/sim/prefab-flight";
+import {
+  prefabPilotPose,
+  canApproachPilot,
+} from "@sidereal/sim/construction-pilot";
 import { TRUSTED_PREFAB_BLUEPRINT_PREFIX } from "@sidereal/sim/game-ship-access";
 import {
   archiveJson,
@@ -151,6 +177,11 @@ export const UPGRADE_KEPT_SHIP_TABLES = [
   "instanceInventoryBinding",
 ] as const satisfies readonly (keyof Db)[];
 
+/** Cold instance customization is retained only after target geometry qualification. */
+export const UPGRADE_QUALIFIED_SHIP_TABLES = [
+  "shipFurnishingState",
+] as const satisfies readonly (keyof Db)[];
+
 /**
  * Presence rows of the character aboard: updated in place (new visit, spawn position, zero input)
  * by the trusted reinstall, not deleted. Couch seats are refused through their interaction objects.
@@ -166,6 +197,7 @@ const UPGRADE_CLASSIFIED_TABLES = new Set<string>([
   ...UPGRADE_REBUILT_SHIP_TABLES.map(([t]) => t),
   ...UPGRADE_REFUSED_SHIP_TABLES.map(([t]) => t),
   ...UPGRADE_KEPT_SHIP_TABLES,
+  ...UPGRADE_QUALIFIED_SHIP_TABLES,
   ...UPGRADE_PRESENCE_TABLES,
 ]);
 
@@ -177,6 +209,7 @@ export interface UpgradePrefabShipArgs {
   expectedInstanceRevision: bigint;
   targetPrefabId: string;
   expectedTargetBlueprintSha256: string;
+  fromDryRunOperationId?: string;
 }
 
 function fail(message: string): never {
@@ -200,6 +233,230 @@ function rowsWhere(db: Db, table: keyof Db, test: (row: Row) => boolean) {
 
 type Point = [number, number];
 const round = (v: number) => Math.round(v * 1e6) / 1e6 + 0;
+
+/** Revision1 overrides are relative to the original authored prop positions.
+ * Revision2 adds code-owned displacements after user transforms. Rebase existing
+ * keys so those user placements remain absolute; never synthesize reset overrides. */
+function migrateFurnishingOverrides(
+  source: ShipPrefabDocumentV1,
+  target: ShipPrefabDocumentV1,
+  catalog: PrefabComponentCatalog,
+  state: ReturnType<typeof furnishingState>,
+) {
+  const overrides: Record<string, FurnishingOverride> = { ...state.overrides };
+  const rebasedKeys: string[] = [];
+  const relocatedKeys: string[] = [];
+  const audit: { sourceObjectId: string; reason: string }[] = [];
+  if (
+    source.authoredGameplay?.revision === 1 &&
+    isWayfarerAccessProfile(target)
+  ) {
+    for (const [id, pose] of Object.entries(state.overrides)) {
+      const shift = WAYFARER_ACCESS_FURNISHING_SHIFTS[id];
+      if (!shift || (!shift[0] && !shift[1])) continue;
+      overrides[id] = {
+        ...pose,
+        dx: round(pose.dx - shift[0]),
+        dy: round(pose.dy - shift[1]),
+      };
+      rebasedKeys.push(id);
+      audit.push({
+        sourceObjectId: id,
+        reason: "preserve-authored-absolute-placement",
+      });
+    }
+  }
+  // The r2 cargo sidewall can occupy this one legacy planter destination.
+  // Preserve it first. If unsupported/intersecting, choose the nearest qualified
+  // 1/16m-lattice displacement within .5m, with deterministic axis tie-breaking.
+  const planterId = "Hydroponics_planter_row";
+  const planter = overrides[planterId];
+  if (
+    source.authoredGameplay?.revision === 1 &&
+    isWayfarerAccessProfile(target) &&
+    planter &&
+    !planter.deleted
+  ) {
+    const fits = (candidate: FurnishingOverrides) => {
+      try {
+        const frame = prefabWalkFrame(target, catalog, candidate);
+        qualifyFurnishingGeometry(target, candidate, frame);
+        return true;
+      } catch (error) {
+        if (error instanceof Error && error.constructor === Error) return false;
+        throw error;
+      }
+    };
+    if (!fits(overrides)) {
+      const candidates: { x: number; y: number; distance2: number }[] = [];
+      for (let x = -8; x <= 8; x++)
+        for (let y = -8; y <= 8; y++)
+          if (x * x + y * y <= 64 && (x || y))
+            candidates.push({ x, y, distance2: x * x + y * y });
+      candidates.sort(
+        (a, b) => a.distance2 - b.distance2 || a.x - b.x || a.y - b.y,
+      );
+      for (const delta of candidates) {
+        const pose = {
+          ...planter,
+          dx: round(planter.dx + delta.x / 16),
+          dy: round(planter.dy + delta.y / 16),
+        };
+        if (!fits({ ...overrides, [planterId]: pose })) continue;
+        overrides[planterId] = pose;
+        relocatedKeys.push(planterId);
+        audit.push({
+          sourceObjectId: planterId,
+          reason: "nearest-qualified-r2-sidewall-clearance",
+        });
+        break;
+      }
+    }
+  }
+  const changed = rebasedKeys.length > 0 || relocatedKeys.length > 0;
+  return {
+    revision: state.revision + (changed ? 1n : 0n),
+    overrides,
+    overridesJson: changed ? JSON.stringify(overrides) : state.overridesJson,
+    rebasedKeys,
+    relocatedKeys,
+    audit,
+    changed,
+  };
+}
+
+/** Candidate search checks physical placement and native leaf travel only.
+ * Route connectivity is qualified once after selecting the nearest geometry-valid pose. */
+function qualifyFurnishingGeometry(
+  doc: ShipPrefabDocumentV1,
+  overrides: FurnishingOverrides,
+  frame: DeckCollisionFrame,
+) {
+  if (!isWayfarerGameplay(doc))
+    throw Error("Furnishing carry-over requires an authored Wayfarer");
+  const access = isWayfarerAccessProfile(doc);
+  for (const id of Object.keys(overrides))
+    validateFurnishingPlacement(id, overrides, frame, [], doc);
+  if (access) {
+    const objects = wayfarerAccessObjects(
+      effectiveWayfarerObjects(overrides),
+    ).filter((o) => Object.hasOwn(overrides, o.object));
+    const variants = WAYFARER_ACCESS_DOORS.variants as unknown as readonly {
+      id: string;
+      sweepBounds: { min: number[]; max: number[]; clearanceM: number };
+    }[];
+    for (const module of [
+      { id: "cargo", center: -7 },
+      { id: "personnel", center: 3 },
+    ])
+      for (const [side, y, sign] of [
+        ["inner", 3, -1],
+        ["outer", 7, 1],
+      ] as const) {
+        const variant = variants.find(
+          (v) =>
+            v.id ===
+            (module.id === "cargo"
+              ? "cargo.4m"
+              : side === "inner"
+                ? "personnel.reverse"
+                : "personnel"),
+        )!;
+        const sweep = variant.sweepBounds;
+        const xs = [sweep.min[0], sweep.max[0]].map(
+          (x) => module.center + sign * x,
+        );
+        const ys = [sweep.min[1], sweep.max[1]].map((dy) => y + sign * dy);
+        for (const object of objects)
+          if (
+            object.min[0] < Math.max(...xs) + sweep.clearanceM &&
+            object.max[0] > Math.min(...xs) - sweep.clearanceM &&
+            object.min[1] < Math.max(...ys) + sweep.clearanceM &&
+            object.max[1] > Math.min(...ys) - sweep.clearanceM &&
+            object.min[2] < 0.1875 + sweep.max[2] &&
+            object.max[2] > 0.1875 + sweep.min[2]
+          )
+            throw Error(
+              `Furnishing ${object.object} obstructs ${module.id}-${side} leaf travel`,
+            );
+      }
+  }
+}
+
+/** Qualify a source instance's overrides in the target's effective placement frame.
+ * Ordinary furnishing edits do not reserve routes; crossing a prefab revision does. */
+function qualifyFurnishingCarryOver(
+  doc: ShipPrefabDocumentV1,
+  catalog: PrefabComponentCatalog,
+  overrides: FurnishingOverrides,
+  frame: DeckCollisionFrame,
+  spawn: Point,
+) {
+  qualifyFurnishingGeometry(doc, overrides, frame);
+  const sockets = prefabCargoSockets(doc, 0, catalog, overrides);
+  const beds = prefabBedSeats(doc, catalog, overrides);
+  for (const bed of beds)
+    if (!qualifyPrefabBed(frame, bed))
+      throw Error(`Furnishing blocks berth ${bed.placementId}`);
+  const panels =
+    shipLogicModel(doc, catalog)?.panels.filter((p) => p.side === "interior") ??
+    [];
+  const pilot = prefabFlightModel(doc, catalog).station;
+  if (!pilot) throw Error("Furnishing target pilot station is missing");
+  const pilotPose = prefabPilotPose(pilot);
+  const pilotApproach = pilotPose.approach;
+  if (
+    !canApproachPilot(
+      frame,
+      pilotPose.position[0],
+      pilotPose.position[1],
+      pilotPose,
+    )
+  )
+    throw Error("Furnishing blocks the pilot seat/approach sweep");
+  const rooms = doc.rooms
+    .filter(
+      (r) =>
+        r.deck === 0 && !["cargo_service", "utility_service"].includes(r.id),
+    )
+    .map((room) => {
+      const points: Point[] = [];
+      for (let x = room.rect[0] + 0.125; x < room.rect[2]; x += 0.25)
+        for (let y = room.rect[1] + 0.125; y < room.rect[3]; y += 0.25)
+          points.push([-y, x]);
+      return { id: room.id, points };
+    });
+  const points = [
+    spawn,
+    pilotApproach,
+    ...panels.map((p) => p.front),
+    ...beds.map((b) => [b.approachX, b.approachY] as Point),
+    ...sockets.flatMap((s) => s.approachesM),
+    ...rooms.flatMap((r) => r.points),
+  ];
+  const groups = deckRouteGroups(frame, points, 0.1);
+  const group = groups[0];
+  if (group < 0) throw Error("Furnishing target spawn has no supported route");
+  const fixed = 1 + panels.length + beds.length;
+  if (groups.slice(1, 1 + fixed).some((g) => g !== group))
+    throw Error("Furnishing disconnects a berth or interior control");
+  let offset = 1 + fixed;
+  const approaches = new Map<string, Point>();
+  for (const socket of sockets) {
+    const found = socket.approachesM.find(
+      (_, i) => groups[offset + i] === group,
+    );
+    offset += socket.approachesM.length;
+    if (!found) throw Error(`Furnishing disconnects storage ${socket.key}`);
+    approaches.set(socket.key, found);
+  }
+  for (const room of rooms) {
+    if (!groups.slice(offset, offset + room.points.length).includes(group))
+      throw Error(`Furnishing disconnects standing space in ${room.id}`);
+    offset += room.points.length;
+  }
+  return approaches;
+}
 
 /** Plans the upgrade from current rows. Pure reads; throws only on malformed identity. */
 export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
@@ -279,6 +536,10 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
     target.catalogRevision,
   );
 
+  const furnishingRow = ctx.db.shipFurnishingState.shipId.find(S);
+  const sourceFurnishings = furnishingState(ctx.db, S);
+  const furnishingBefore = archiveJson(furnishingRow ?? null);
+
   // Deck, pose, crew.
   const decks = [...ctx.db.constructionDeck.by_instance.filter(S)];
   const deck = decks.find((d) => d.sourceDeckId === PREFAB_DECK_ID);
@@ -334,8 +595,27 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
     if (n) refuse(`unclassified per-ship table ${table} has ${n} row(s)`);
   }
 
+  const furnishings = refusals.length
+    ? {
+        ...sourceFurnishings,
+        rebasedKeys: [] as string[],
+        relocatedKeys: [] as string[],
+        audit: [] as { sourceObjectId: string; reason: string }[],
+        changed: false,
+      }
+    : migrateFurnishingOverrides(
+        sourcePrefab,
+        targetPrefab,
+        targetCatalog,
+        sourceFurnishings,
+      );
+
   // Target geometry (pure prefab walk frame; the apply step re-qualifies on the installed one).
-  const pureFrame = prefabWalkFrame(targetPrefab, targetCatalog);
+  const pureFrame = prefabWalkFrame(
+    targetPrefab,
+    targetCatalog,
+    furnishings.overrides,
+  );
   const frame: DeckCollisionFrame = {
     ...pureFrame,
     shipId: S,
@@ -347,13 +627,41 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
   const spawn = prefabConstructionSpawnPreference({
     prefab: { document: targetPrefab, catalog: target.catalogRevision },
   })[0];
-  if (!spawn || !standable(spawn)) fail("Target prefab spawn is not standable");
+  if (!spawn) fail("Target prefab spawn is not defined");
+  if (!standable(spawn)) refuse("target prefab spawn is not standable");
   const targetSockets = new Map(
-    prefabCargoSockets(targetPrefab, 0, targetCatalog).map((s) => [s.key, s]),
+    prefabCargoSockets(
+      targetPrefab,
+      0,
+      targetCatalog,
+      furnishings.overrides,
+    ).map((s) => [s.key, s]),
   );
   const sourceSockets = new Map(
-    prefabCargoSockets(sourcePrefab, 0, sourceCatalog).map((s) => [s.key, s]),
+    prefabCargoSockets(
+      sourcePrefab,
+      0,
+      sourceCatalog,
+      sourceFurnishings.overrides,
+    ).map((s) => [s.key, s]),
   );
+
+  let furnishingApproaches: Map<string, Point> | undefined;
+  if (furnishingRow && !refusals.length) {
+    try {
+      furnishingApproaches = qualifyFurnishingCarryOver(
+        targetPrefab,
+        targetCatalog,
+        furnishings.overrides,
+        frame,
+        spawn,
+      );
+    } catch (error) {
+      if (error instanceof Error && error.constructor === Error)
+        refuse(`furnishing carry-over unsafe: ${error.message}`);
+      else throw error;
+    }
+  }
 
   // Ship-held inventory.
   const prefix = `${S}:${deck.id}:`;
@@ -393,7 +701,9 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
       "inventoryContainerScope",
       (r) => r.rootContainerId === b.containerId,
     );
-    const found = to.approachesM.find((p) => standable(p));
+    const found = furnishingRow
+      ? furnishingApproaches?.get(key)
+      : to.approachesM.find((p) => standable(p));
     if (!found) refuse(`storage socket ${key} has no standing approach`);
     const nestedIds = nested
       .map((r) => r.containerId as string)
@@ -473,6 +783,17 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
     targetPrefab,
     target,
     template,
+    furnishings,
+    furnishingBefore,
+    furnishingAfter: archiveJson(
+      furnishingRow
+        ? {
+            ...furnishingRow,
+            revision: furnishings.revision,
+            overridesJson: furnishings.overridesJson,
+          }
+        : null,
+    ),
     summary: {
       shipId: S,
       shipName: ship.name,
@@ -503,8 +824,22 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
         instanceRevision: instance.revision + 1n,
       },
       spawnM: spawn,
+      furnishingState: {
+        present: !!furnishingRow,
+        sourceRevision: sourceFurnishings.revision,
+        targetRevision: furnishings.revision,
+        overrideCount: Object.keys(furnishings.overrides).length,
+        sourceOverridesJson: sourceFurnishings.overridesJson,
+        targetOverridesJson: furnishings.overridesJson,
+        rebasedKeys: furnishings.rebasedKeys,
+        relocatedKeys: furnishings.relocatedKeys,
+        audit: furnishings.audit,
+        qualified: !furnishingRow || !!furnishingApproaches,
+        preservedUnchanged: !furnishings.changed,
+      },
       sockets,
       groundDrops,
+      inventoryBefore: shipInventory(ctx, S),
       rebuiltRows: rebuilt,
       refusals,
     },
@@ -515,13 +850,19 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
 export function upgradePrefabShip(ctx: Context, args: UpgradePrefabShipArgs) {
   requireShipOperator(ctx);
   const kind = args.dryRun ? "upgrade-prefab-dry-run" : "upgrade-prefab";
-  const request = JSON.stringify({
+  const baseRequest = JSON.stringify({
     shipId: args.shipId,
     expectedSourceBlueprintSha256: args.expectedSourceBlueprintSha256,
     expectedInstanceRevision: args.expectedInstanceRevision.toString(),
     targetPrefabId: args.targetPrefabId,
     expectedTargetBlueprintSha256: args.expectedTargetBlueprintSha256,
   });
+  const request = args.fromDryRunOperationId
+    ? JSON.stringify({
+        ...JSON.parse(baseRequest),
+        fromDryRunOperationId: args.fromDryRunOperationId,
+      })
+    : baseRequest;
   if (priorOperation(ctx.db, ctx.sender, args.operationId, kind, request))
     return;
   const plan = planPrefabUpgrade(ctx, args);
@@ -539,6 +880,40 @@ export function upgradePrefabShip(ctx: Context, args: UpgradePrefabShipArgs) {
     return;
   }
   if (plan.refusals.length) fail(plan.refusals.join("; "));
+  if (plan.summary.furnishingState.present || args.fromDryRunOperationId) {
+    const prior =
+      args.fromDryRunOperationId &&
+      ctx.db.shipOperatorOperation.operationId.find(args.fromDryRunOperationId);
+    if (
+      !prior ||
+      prior.kind !== "upgrade-prefab-dry-run" ||
+      !prior.principal.isEqual(ctx.sender) ||
+      prior.request !== baseRequest
+    )
+      fail(
+        "Furnishing carry-over requires the chosen matching operator dry-run",
+      );
+    const summary = JSON.parse(prior.summaryJson);
+    if (
+      summary.refusals?.length ||
+      archiveJson(summary.furnishingState) !==
+        archiveJson(JSON.parse(archiveJson(plan.summary.furnishingState)))
+    )
+      fail("Furnishing state changed since the chosen dry-run");
+    for (const field of [
+      "source",
+      "target",
+      "spawnM",
+      "sockets",
+      "groundDrops",
+      "inventoryBefore",
+    ] as const)
+      if (
+        archiveJson(summary[field]) !==
+        archiveJson(JSON.parse(archiveJson(plan.summary[field])))
+      )
+        fail("Upgrade target effects changed since the chosen dry-run");
+  }
   const S = args.shipId;
   const { actor, deck, ship, motion, instance } = plan;
   const op = args.operationId;
@@ -575,6 +950,27 @@ export function upgradePrefabShip(ctx: Context, args: UpgradePrefabShipArgs) {
             }
           ).characterId.find(actor.id);
     if (row) archiveRow(ctx.db, op, sequence, table, "updated", row);
+  }
+
+  // Audit the explicit, qualified cold-state migration under this same atomic
+  // operation. Install and all subsequent socket/frame reads see the target state.
+  const furnishingRow = ctx.db.shipFurnishingState.shipId.find(S);
+  if (archiveJson(furnishingRow ?? null) !== plan.furnishingBefore)
+    fail("Furnishing state changed during upgrade");
+  if (furnishingRow && plan.furnishings.changed) {
+    archiveRow(
+      ctx.db,
+      op,
+      sequence,
+      "shipFurnishingState",
+      "updated",
+      furnishingRow,
+    );
+    ctx.db.shipFurnishingState.shipId.update({
+      ...furnishingRow,
+      revision: plan.furnishings.revision,
+      overridesJson: plan.furnishings.overridesJson,
+    });
   }
 
   // 2. Trusted reinstall with the same ship and deck ids at the next instance revision.
@@ -634,6 +1030,7 @@ export function upgradePrefabShip(ctx: Context, args: UpgradePrefabShipArgs) {
       plan.targetPrefab,
       0,
       prefabComponentCatalogFor(plan.target.catalogRevision),
+      plan.furnishings.overrides,
     ).find((x) => x.key === s.socketKey)!;
     const z = deck.elevation + PREFAB_STANDING_OFFSET_M;
     const scopeAt = (p: Point) => ({
@@ -649,8 +1046,11 @@ export function upgradePrefabShip(ctx: Context, args: UpgradePrefabShipArgs) {
       frame: installedFrame,
       supportHeightAt: () => z,
     };
-    const found = socket.approachesM.find((p) =>
-      qualifyCargoAccessPoint(scopeAt(p), geometry),
+    const found = socket.approachesM.find(
+      (p) =>
+        (!plan.summary.furnishingState.present ||
+          (p[0] === s.toAccessM?.[0] && p[1] === s.toAccessM?.[1])) &&
+        qualifyCargoAccessPoint(scopeAt(p), geometry),
     );
     if (!found) fail(`storage socket ${s.socketKey} has no qualified approach`);
     const container = ctx.db.inventoryContainer.id.find(s.containerId)!;
@@ -711,6 +1111,12 @@ export function upgradePrefabShip(ctx: Context, args: UpgradePrefabShipArgs) {
     });
   }
   markShipFlightDirty(ctx, S);
+
+  if (
+    archiveJson(ctx.db.shipFurnishingState.shipId.find(S) ?? null) !==
+    plan.furnishingAfter
+  )
+    fail("Furnishing state changed during upgrade");
 
   // 4. Verify: same containers and items (ids, containers, grid positions), crew standing,
   // access active at the new revision, map state untouched.

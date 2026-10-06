@@ -78,6 +78,15 @@ export const WAYFARER_ACCESS_MODULES = [
   { id: "personnel", x0: 2, x1: 4, center: 3, clearWidthM: 1.2 },
   { id: "cargo", x0: -9, x1: -5, center: -7, clearWidthM: 3.75 },
 ] as const;
+/** Frozen native full-floor backings of the six preserved half-metre edge strips. */
+export const WAYFARER_ACCESS_NATIVE_FLOOR_STRIPS = [
+  { x: -9, sourceObject: "FLOOR_quarters_b_-9_-5" },
+  { x: -8, sourceObject: "FLOOR_quarters_b_-8_-5" },
+  { x: -7, sourceObject: "FLOOR_quarters_a_-7_-5" },
+  { x: -6, sourceObject: "FLOOR_quarters_a_-6_-5" },
+  { x: 2, sourceObject: "FLOOR_hall_2_-5" },
+  { x: 3, sourceObject: "FLOOR_hall_3_-5" },
+] as const;
 
 export function isWayfarerAccessProfile(
   doc: Pick<ShipPrefabDocumentV1, "id" | "authoredGameplay">,
@@ -94,7 +103,7 @@ export function assertWayfarerAccessAdmission(): void {
     throw Error("Proposed Wayfarer access profile2 admission is disabled");
 }
 
-/** Pure geometry qualification only; normal admission still rejects profile2. */
+/** Exact admitted profile2 geometry; applying it to live ships requires an explicit upgrade. */
 export function wayfarerAccessInterior(base: DerivedInterior): DerivedInterior {
   if (base.deck !== 0) return base;
   const columns = new Set(
@@ -103,6 +112,11 @@ export function wayfarerAccessInterior(base: DerivedInterior): DerivedInterior {
     ),
   );
   const floors = base.floors.filter((f) => !columns.has(f.cell[0]));
+  // The frozen native floor starts at -5.5m. Integer chamber retessellation
+  // must retain its real half-metre edge rather than silently remove support.
+  for (const original of base.floors)
+    if (columns.has(original.cell[0]) && original.cell[1] === -5.5)
+      floors.push({ ...original, extentM: [1, 0.5] });
   for (const x of columns)
     for (let y = -5; y < 7; y++) {
       const module = WAYFARER_ACCESS_MODULES.find(

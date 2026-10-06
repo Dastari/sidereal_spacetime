@@ -1256,6 +1256,8 @@ export function deckApproachZones(
 // ---------------------------------------------------------------- interior derivation
 export interface DerivedFloor {
   cell: [number, number];
+  /** Exact supported rectangle for native boundary fragments; otherwise a 1m cell. */
+  extentM?: readonly [number, number];
   kind: FloorKindId;
   room: string;
   /** Partial cells (sloped or curved hull) get a generated slab clipped to the outline. */
@@ -3109,7 +3111,12 @@ export function prefabStats(
       g.area * G.heightClasses[g.volume.height].massPerM2 * 1000;
   }
   const interior = deriveInterior(doc, 0, catalog);
-  structureMassKg += interior.floors.length * FLOOR_KG_PER_M2;
+  const deckAreaM2 = interior.floors.reduce(
+    (sum, floor) =>
+      sum + (floor.extentM ? floor.extentM[0] * floor.extentM[1] : 1),
+    0,
+  );
+  structureMassKg += deckAreaM2 * FLOOR_KG_PER_M2;
   structureMassKg +=
     (interior.partitions.length + interior.exteriorWalls.length) *
     WALL_KG_PER_M;
@@ -3161,7 +3168,7 @@ export function prefabStats(
     lengthM: x1 - x0,
     beamM: y1 - y0,
     hullAreaM2,
-    deckAreaM2: interior.floors.length,
+    deckAreaM2,
     rooms: doc.rooms.length,
     structureMassKg,
     componentMassKg,

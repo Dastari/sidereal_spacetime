@@ -32,7 +32,10 @@ import {
   stableStringify,
   compareText,
 } from "./layout-geometry";
-import { fitTileset } from "./tileset-fit";
+import {
+  fitConstructionNativeFloors,
+  validateConstructionNativeSupportClips,
+} from "./construction-native-support-clips";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "./prefab-catalog";
 import {
@@ -188,6 +191,7 @@ export function readConstructionDraft(
             "origin",
             "quarterTurns",
             "reflected",
+            "nativeSupportClip",
           ].includes(k),
       )
     )
@@ -237,6 +241,7 @@ export function readConstructionDraft(
   );
   normalized.floors.sort((a, b) => compareText(a.id, b.id));
   normalized.layout.serviceConnections?.sort((a, b) => compareText(a.id, b.id));
+  validateConstructionNativeSupportClips(normalized, PINNED_FLOOR_KIT);
   const canonical = stableStringify(normalized);
   if (input.prefab !== undefined && !options.prefabDerivation) {
     // Prefab ships: the walkable layout and floor bindings must equal their grammar
@@ -314,10 +319,7 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
     )
       throw Error("Floor binding deck/datum mismatch");
   }
-  const fit = fitTileset(
-    PINNED_FLOOR_KIT,
-    input.floors as ConstructionDocument["floors"],
-  );
+  const fit = fitConstructionNativeFloors(input, PINNED_FLOOR_KIT);
   if (!fit.valid) throw Error(fit.issues.map((i) => i.code).join(", "));
   for (const p of fit.placements)
     if (

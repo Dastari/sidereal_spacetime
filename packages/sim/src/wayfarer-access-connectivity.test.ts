@@ -15,6 +15,10 @@ import { prefabPilotPose, canApproachPilot } from "./construction-pilot";
 import { prefabBedSeats, qualifyPrefabBed } from "./prefab-seats";
 import { prefabCargoSockets } from "./prefab-cargo-sockets";
 import { reachablePanel, shipLogicModel } from "./ship-logic-model";
+import originalSource from "@sidereal/content/wayfarer-prefab.v1.json";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import { footprintFloorCoverage } from "./ship-furnishings";
+import { positiveOverlap } from "./layout-geometry";
 
 const doc = WAYFARER_ACCESS_SOURCE;
 const catalog = defaultPrefabComponentCatalog();
@@ -117,6 +121,31 @@ describe("active native Wayfarer profile2 capsule connectivity", () => {
     expect(
       frame.obstacles.some((o) => o.id === "prefab-socket:PART_x-6.25_near_0"),
     ).toBe(false);
+  });
+
+  it("retains every native source floor surface without overlapping support patches", () => {
+    const original = prefabWalkFrame(readShipPrefab(originalSource), catalog);
+    for (const floor of original.floors) {
+      const coverage = footprintFloorCoverage(floor, frame.floors);
+      expect(coverage.supported).toBeCloseTo(coverage.area, 8);
+    }
+    // Retiling the chambers formerly discarded the real native -5.5..-5m
+    // strip in six columns. Whole overlapping 1m cells would hide that error
+    // by double-counting support during furniture placement qualification.
+    for (let i = 0; i < frame.floors.length; i++)
+      for (let j = i + 1; j < frame.floors.length; j++)
+        expect(positiveOverlap(frame.floors[i], frame.floors[j])).toBe(false);
+    for (const x of [-9, -8, -7, -6, 2, 3]) {
+      const strip: Point[] = [
+        [5.5, x],
+        [5.5, x + 1],
+        [5, x + 1],
+        [5, x],
+      ];
+      const coverage = footprintFloorCoverage(strip, frame.floors);
+      expect(coverage.area).toBe(0.5);
+      expect(coverage.supported).toBeCloseTo(0.5, 8);
+    }
   });
 
   it("connects every room label that has supported standing space to the pilot approach", () => {
