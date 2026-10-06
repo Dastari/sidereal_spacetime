@@ -6,8 +6,8 @@
   "dependencies": {
     "@fontsource/barlow": "5.3.0",
     "@fontsource/barlow-condensed": "5.3.0",
-    "@sidereal/content": "0.14.1",
-    "@sidereal/render": "0.16.3",
+    "@sidereal/content": "0.14.2",
+    "@sidereal/render": "0.16.4",
     "@sidereal/sim": "0.10.2",
     "@sidereal/ui": "0.6.3",
     "lucide-react": "1.42.0",

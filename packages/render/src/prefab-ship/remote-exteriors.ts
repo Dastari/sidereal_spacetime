@@ -58,6 +58,7 @@ import {
   isFederationFleet,
 } from "./federation-fleet-access";
 import { createLogicPanels } from "./logic-panels";
+import { loadDeferredExterior } from "./deferred-exteriors";
 import type { ShipAccessDoorPiece } from "@sidereal/content/ship-access-doors";
 import {
   WAYFARER_ACCESS_DOORS,
@@ -131,6 +132,9 @@ interface SourcePart {
   scaling: Vector3;
 }
 export interface RemoteExteriorPrototype {
+  readonly hasIntermediate?: boolean;
+  ensureDetail?(tier: 0 | 3): Promise<boolean>;
+  detailReady?(tier: 0 | 3): boolean;
   /** Immutable public template access slots; never a remote instance document. */
   readonly nativeAccess?: ResolvedExterior;
   readonly key: string;
@@ -146,6 +150,7 @@ export interface RemoteExteriorPrototype {
     exteriorMeshes: number;
     exteriorTriangles: number;
     proxyTriangles: number;
+    intermediateTriangles?: number;
   };
   instantiate(
     parent: TransformNode,
@@ -153,6 +158,9 @@ export interface RemoteExteriorPrototype {
   ): {
     full: TransformNode;
     proxy: TransformNode;
+    intermediate?: TransformNode;
+    prepareIntermediate?: () => void;
+    releaseIntermediate?: () => void;
     /** Allocate the expensive native instances only when selected for full detail. */
     prepareFull?: () => void;
     releaseFull?: () => void;
@@ -165,7 +173,7 @@ function triangles(mesh: Mesh) {
 }
 
 /** Low-poly hull proxy (LOD S3): every volume outline extruded to its height, 4 m panels. */
-function buildProxy(
+export function buildProxy(
   scene: Scene,
   doc: ShipPrefabDocumentV1,
   frame: TransformNode,
@@ -421,6 +429,9 @@ async function createExteriorAccess(
   );
 }
 interface Entry {
+  intermediate?: TransformNode;
+  prepareIntermediate?: () => void;
+  releaseIntermediate?: () => void;
   accessRoot?: TransformNode;
   accessNeedsSync?: boolean;
   prepareFull?: () => void;
@@ -443,6 +454,7 @@ interface Entry {
   proxy?: TransformNode;
   marker: InstancedMesh;
   tier?: ShipLodTier;
+  renderedTier?: ShipLodTier;
   /** Plumes and RCS puffs from `visible_actuator_exhaust` (created when a jet first fires). */
   exhaust?: ShipExhaust;
 }
@@ -456,6 +468,10 @@ export interface RemoteShipExteriorsOptions {
     resolved: ResolvedExterior,
   ) => Promise<RemoteExteriorPrototype>;
   fullDetailBudget?: number;
+  /** Opt-in until same-camera hardware qualification proves a net benefit. */
+  intermediateExteriors?: boolean;
+  /** Current/target ships retain full detail; this never grants disclosure. */
+  fullDetailShipIds?: () => ReadonlySet<string>;
   onError?: (error: unknown) => void;
 }
 
@@ -473,9 +489,11 @@ export function createRemoteShipExteriors(
   const load =
     options.load ??
     ((s, r) =>
-      loadRemoteExteriorPrototype(s, r, {
-        accessResolver: options.accessResolver,
-      }));
+      isFederationFleet(r.doc) && r.exact
+        ? loadDeferredExterior(s, r, options.accessResolver)
+        : loadRemoteExteriorPrototype(s, r, {
+            accessResolver: options.accessResolver,
+          }));
   const budget = options.fullDetailBudget ?? SHIP_LOD.fullDetailBudget;
   const group = new TransformNode("remote-ships", scene);
   const markerSource = createMarkerSource(scene);
@@ -508,9 +526,13 @@ export function createRemoteShipExteriors(
     entry.access = entry.panels = undefined;
     entry.exhaust?.dispose();
     entry.full?.dispose();
+    entry.intermediate?.dispose();
     entry.proxy?.dispose();
     entry.full = entry.proxy = entry.prototype = entry.tier = undefined;
+    entry.renderedTier = undefined;
     entry.prepareFull = entry.releaseFull = undefined;
+    entry.intermediate = undefined;
+    entry.prepareIntermediate = entry.releaseIntermediate = undefined;
     entry.lastFullAt = undefined;
     entry.detailed = false;
     entry.exhaust = undefined;
@@ -541,7 +563,9 @@ export function createRemoteShipExteriors(
       `remote-ship-${entry.shipId}:access`,
       scene,
     );
-    accessRoot.parent = full;
+    // Access is shared by both native detail tiers. Keep it outside their geometry roots.
+    accessRoot.parent = entry.root;
+    accessRoot.setEnabled(false);
     entry.accessRoot = accessRoot;
     void createExteriorAccess(
       scene,
@@ -567,7 +591,7 @@ export function createRemoteShipExteriors(
         access.setView("flight");
         entry.panels = createLogicPanels(
           scene,
-          full,
+          accessRoot,
           resolved.doc,
           resolved.catalog,
         );
@@ -595,13 +619,28 @@ export function createRemoteShipExteriors(
     const prototype = entry.key ? loaded.get(entry.key) : undefined;
     if (!prototype || entry.prototype === prototype) return;
     release(entry);
-    const { full, proxy, prepareFull, releaseFull } = prototype.instantiate(
-      entry.root,
-      entry.shipId,
-    );
+    const {
+      full,
+      proxy,
+      intermediate,
+      prepareFull,
+      releaseFull,
+      prepareIntermediate,
+      releaseIntermediate,
+    } = prototype.instantiate(entry.root, entry.shipId);
     full.setEnabled(false);
     proxy.setEnabled(false);
-    Object.assign(entry, { prototype, full, proxy, prepareFull, releaseFull });
+    intermediate?.setEnabled(false);
+    Object.assign(entry, {
+      prototype,
+      full,
+      proxy,
+      intermediate,
+      prepareFull,
+      releaseFull,
+      prepareIntermediate,
+      releaseIntermediate,
+    });
   };
   const request = (resolved: ResolvedExterior) => {
     if (prototypes.has(resolved.key)) return;
@@ -766,7 +805,14 @@ export function createRemoteShipExteriors(
       lastUpdateMs = nowMs;
       const eye = camera?.globalPosition;
       const fov = camera?.fov ?? 0.8;
-      const sized: { id: string; px: number; previous?: ShipLodTier }[] = [];
+      const sized: {
+        id: string;
+        px: number;
+        previous?: ShipLodTier;
+        intermediate?: boolean;
+        forceFull?: boolean;
+      }[] = [];
+      const protectedShips = options.fullDetailShipIds?.();
       for (const [id, entry] of entries) {
         const failed = entry.key ? prototypeFailures.get(entry.key) : undefined;
         if (failed) request(failed.resolved);
@@ -789,6 +835,9 @@ export function createRemoteShipExteriors(
           id,
           px: projectedRadiusPx(radius, distance, fov, viewportHeightPx),
           previous: entry.tier,
+          intermediate:
+            !!options.intermediateExteriors && entry.prototype?.hasIntermediate,
+          forceFull: protectedShips?.has(id),
         });
       }
       const tiers = assignShipTiers(sized, budget);
@@ -802,7 +851,9 @@ export function createRemoteShipExteriors(
         entry.accessRoot = undefined;
         entry.access = entry.panels = undefined;
         entry.releaseFull?.();
+        entry.releaseIntermediate?.();
         entry.full?.setEnabled(false);
+        entry.intermediate?.setEnabled(false);
         entry.lastFullAt = undefined;
         entry.detailed = false;
       };
@@ -810,12 +861,16 @@ export function createRemoteShipExteriors(
       // fleet. Reserve space for this frame's selected ships, then keep only
       // the most recently used inactive detail within that same budget.
       const selected = sized.filter(
-        ({ id }) => entries.get(id)!.prototype && tiers.get(id) === 0,
+        ({ id }) =>
+          entries.get(id)!.prototype &&
+          (tiers.get(id) === 0 || tiers.get(id) === 3),
       ).length;
       const retained = [...entries.values()]
         .filter(
           (entry) =>
-            entry.lastFullAt !== undefined && tiers.get(entry.shipId) !== 0,
+            entry.lastFullAt !== undefined &&
+            tiers.get(entry.shipId) !== 0 &&
+            tiers.get(entry.shipId) !== 3,
         )
         .sort((a, b) => b.lastFullAt! - a.lastFullAt!);
       let available = Math.max(0, budget - selected);
@@ -827,18 +882,37 @@ export function createRemoteShipExteriors(
       for (const { id, px } of sized) {
         const entry = entries.get(id)!;
         // Without a loaded hull the ship is a marker, whatever its size.
-        const tier: ShipLodTier = entry.prototype ? tiers.get(id)! : 2;
-        const promoted = tier === 0 && !entry.detailed;
-        entry.tier = entry.prototype ? tier : undefined;
-        if (tier === 0) {
-          entry.prepareFull?.();
+        const requested: ShipLodTier = entry.prototype ? tiers.get(id)! : 2;
+        entry.tier = entry.prototype ? requested : undefined;
+        let tier = requested;
+        if (requested === 0 || requested === 3) {
+          void entry.prototype?.ensureDetail?.(requested);
+          if (
+            entry.prototype?.detailReady &&
+            !entry.prototype.detailReady(requested)
+          ) {
+            // Preserve ready S2 while S1 loads. Requested hysteresis stays separate.
+            tier =
+              requested === 0 && entry.prototype.detailReady(3)
+                ? 3
+                : requested === 3 && entry.prototype.detailReady(0)
+                  ? 0
+                  : 1;
+          }
+        }
+        const detailed = tier === 0 || tier === 3;
+        const promoted = detailed && !entry.detailed;
+        if (detailed) {
+          if (tier === 0) entry.prepareFull?.();
+          else entry.prepareIntermediate?.();
           requestAccess(entry);
           entry.lastFullAt = nowMs;
         }
-        entry.detailed = tier === 0;
+        entry.detailed = detailed;
         const safeProxy = entry.accessPending || entry.accessUnavailable;
+        entry.renderedTier = detailed && safeProxy ? 1 : tier;
         const logic = exteriorLogic?.get(id);
-        if (tier === 0)
+        if (detailed)
           entry.access?.update({
             actors: [],
             nowMs,
@@ -847,8 +921,8 @@ export function createRemoteShipExteriors(
             dt: promoted || entry.accessNeedsSync ? 1 : accessDt,
             logic: logic?.doors,
           });
-        if (tier === 0 && entry.access) entry.accessNeedsSync = false;
-        if (tier === 0)
+        if (detailed && entry.access) entry.accessNeedsSync = false;
+        if (detailed)
           entry.panels?.update(
             logic
               ? new Map(
@@ -861,7 +935,9 @@ export function createRemoteShipExteriors(
             nowMs,
           );
         entry.full?.setEnabled(tier === 0 && !safeProxy);
-        entry.proxy?.setEnabled(tier === 1 || (tier === 0 && !!safeProxy));
+        entry.intermediate?.setEnabled(tier === 3 && !safeProxy);
+        entry.accessRoot?.setEnabled(detailed && !safeProxy);
+        entry.proxy?.setEnabled(tier === 1 || (detailed && !!safeProxy));
         entry.marker.setEnabled(tier === 2);
         // Plumes and RCS puffs on hull tiers only, from the server's achieved outputs.
         const jets = exhaust?.get(id);
@@ -897,14 +973,21 @@ export function createRemoteShipExteriors(
             loaded: !!e.prototype,
             accessPending: !!e.accessPending,
             accessUnavailable: !!e.accessUnavailable,
+            requestedTier: e.tier,
+            detailReady:
+              (e.tier !== 0 && e.tier !== 3) ||
+              !e.prototype?.detailReady ||
+              e.prototype.detailReady(e.tier),
             litJets: e.exhaust?.lit().length ?? 0,
             enabled: e.root.isEnabled(),
             tier:
-              e.tier === 0
+              e.renderedTier === 0
                 ? "exterior"
-                : e.tier === 1
+                : e.renderedTier === 1
                   ? "proxy"
-                  : ("marker" as const),
+                  : e.renderedTier === 3
+                    ? "intermediate"
+                    : ("marker" as const),
           }))
           .sort((a, b) => (a.shipId < b.shipId ? -1 : 1)),
         prototypes: [...loaded.values()].map((p) => ({

@@ -12,6 +12,11 @@ import {
   readAuthoredTemplateKit,
 } from "@sidereal/content/authored-template-kit";
 import {
+  AUTHORED_TEMPLATE_LOD_BASE,
+  AUTHORED_TEMPLATE_LOD_MANIFEST_SHA256,
+  readAuthoredTemplateLod,
+} from "@sidereal/content/authored-template-lod";
+import {
   WAYFARER_AUTHORED_STUDY_PINS,
   readWayfarerAuthoredStudy,
   type AuthoredStudyPiece,
@@ -75,10 +80,16 @@ export async function buildAuthoredTemplateView(
   options: {
     catalog: PrefabComponentCatalog;
     exteriorOnly?: boolean;
+    exteriorDetail?: "full" | "intermediate";
     theme: ShipThemeId;
     standinComponents?: boolean;
   },
 ) {
+  const assertLive = () => {
+    if (scene.isDisposed || root.isDisposed())
+      throw Error("Cancelled authored template assembly");
+  };
+  assertLive();
   const plan = compileAuthoredTemplatePlan(doc, { catalog: options.catalog });
   const [kit, props, propLighting] = await Promise.all([
     json(
@@ -98,7 +109,19 @@ export async function buildAuthoredTemplateView(
     ]).then((args) => readWayfarerAuthoredStudy(args[0], args[1], args[2])),
     json(LIGHT_URL, LIGHT_PIN).then(readAuthoredAssetLighting),
   ]);
+  assertLive();
   const propMap = new Map(props.pieces.map((p) => [p.id, p]));
+  const derivatives =
+    options.exteriorOnly && options.exteriorDetail === "intermediate"
+      ? readAuthoredTemplateLod(
+          await json(
+            AUTHORED_TEMPLATE_LOD_BASE + "manifest.json",
+            AUTHORED_TEMPLATE_LOD_MANIFEST_SHA256,
+          ),
+          kit,
+        )
+      : undefined;
+  assertLive();
   const propulsion = options.standinComponents
     ? { pieces: [], instances: [], replacedMounts: new Set<string>() }
     : authoredTemplatePropulsion(dressed, propMap, options.catalog);
@@ -110,8 +133,17 @@ export async function buildAuthoredTemplateView(
           ...authoredTemplateComponents(dressed, propMap),
         ];
   const source = new Map<string, AuthoredStudyPiece & { base: string }>([
-    ...kit.pieces.map(
-      (p) => [p.id, { ...p, base: AUTHORED_TEMPLATE_KIT_BASE }] as const,
+    ...(derivatives ?? kit.pieces).map(
+      (p) =>
+        [
+          p.id,
+          {
+            ...p,
+            base: derivatives
+              ? AUTHORED_TEMPLATE_LOD_BASE
+              : AUTHORED_TEMPLATE_KIT_BASE,
+          },
+        ] as const,
     ),
     ...props.pieces.map((p) => [p.id, { ...p, base: PROP_BASE }] as const),
     ...propulsion.pieces.map((p) => [p.id, p] as const),
@@ -122,6 +154,11 @@ export async function buildAuthoredTemplateView(
   if (kit.lighting)
     for (const [pin, asset] of readAuthoredAssetLighting(kit.lighting))
       lighting.set(pin, asset);
+  // Derivative transport hashes do not change source-owned emission policy.
+  for (const piece of derivatives ?? []) {
+    const asset = lighting.get(piece.sourceSha256);
+    if (asset) lighting.set(piece.sha256, asset);
+  }
   const banks: {
     tag: "deck" | "flight";
     parent: TransformNode;
@@ -142,6 +179,7 @@ export async function buildAuthoredTemplateView(
     for (const tag of options.exteriorOnly
       ? (["flight"] as const)
       : (["deck", "flight"] as const)) {
+      assertLive();
       const parent = new TransformNode(
         `authored-template:${doc.id}:${tag}`,
         scene,
@@ -200,6 +238,7 @@ export async function buildAuthoredTemplateView(
             },
           },
         );
+        assertLive();
         for (const mesh of loaded.meshes) {
           mesh.parent = parent;
           mesh.isPickable = false;

@@ -26,7 +26,10 @@ const ids = [
   "fed.l.albatross-fleet",
 ];
 const screenLayout = q.get("layout") === "screen";
-const columns = screenLayout ? 14 : 7;
+const columns = Math.min(count, screenLayout ? 14 : 7);
+const reviewPrefab = q.get("prefab");
+if (reviewPrefab && !ids.includes(reviewPrefab))
+  throw Error("Unsupported fixture prefab");
 const poses = Array.from({ length: count }, (_, i) => ({
   shipId: `fixture-${i}`,
   x: ((i % columns) - (columns - 1) / 2) * (screenLayout ? 80 : 50),
@@ -38,7 +41,7 @@ const snapshot: RemoteShipSnapshot = {
   epoch: 1,
   shipMotion: poses,
   shipDescription: poses.map((p, i) => {
-    const doc = prefabById(ids[i % ids.length])!;
+    const doc = prefabById(reviewPrefab ?? ids[i % ids.length])!;
     return {
       shipId: p.shipId,
       publishedExteriorAssetId: `prefab:${doc.id}`,
@@ -75,10 +78,19 @@ async function main() {
     screenLayout ? new Vector3(0, 1050, 0) : new Vector3(0, 100, 100),
     scene,
   );
+  const reviewCamera = q.get("cam")?.split(",").map(Number);
+  if (reviewCamera?.length === 5 && reviewCamera.every(Number.isFinite))
+    camera.position.set(reviewCamera[0], reviewCamera[1], reviewCamera[2]);
   camera.fov = 0.8;
   camera.minZ = 0.1;
   camera.maxZ = 5000;
-  camera.setTarget(screenLayout ? Vector3.Zero() : new Vector3(0, 0, -90));
+  camera.setTarget(
+    reviewCamera?.length === 5 && reviewCamera.every(Number.isFinite)
+      ? new Vector3(reviewCamera[3], 0, reviewCamera[4])
+      : screenLayout
+        ? Vector3.Zero()
+        : new Vector3(0, 0, -90),
+  );
   const fill = new HemisphericLight("fill", Vector3.Up(), scene);
   fill.intensity = 0.75;
   fill.groundColor = new Color3(0.22, 0.12, 0.35);
@@ -87,8 +99,11 @@ async function main() {
   const errors: string[] = [];
   const remote = createRemoteShipExteriors(scene, store, {
     localShipId: () => undefined,
+    intermediateExteriors: q.get("intermediate") !== "0",
     accessResolver: publishedShipAccessBytes,
     fullDetailBudget: q.get("allFull") === "1" ? count : undefined,
+    fullDetailShipIds: () =>
+      new Set(q.get("allFull") === "1" ? poses.map((p) => p.shipId) : []),
     onError: (e) => errors.push(String(e)),
   });
   Object.assign(review, { scene, remote, camera, engine });
@@ -101,6 +116,7 @@ async function main() {
     previous: number | undefined;
   engine.runRenderLoop(() => {
     const start = performance.now();
+    camera.getViewMatrix(true);
     remote.update({ x: 0, y: 0 }, start, camera, 800);
     const updated = performance.now();
     scene.render();
@@ -117,7 +133,10 @@ async function main() {
   for (
     let i = 0;
     i < 60 &&
-    (i < 3 || remote.diagnostics().ships.some((s) => s.accessPending));
+    (i < 3 ||
+      remote
+        .diagnostics()
+        .ships.some((s) => s.accessPending || !s.detailReady));
     i++
   )
     await new Promise<void>((resolve) =>
