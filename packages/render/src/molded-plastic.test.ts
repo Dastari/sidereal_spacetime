@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -260,6 +260,63 @@ describe("applying the finish", () => {
     expect(
       scene.lights.filter((l) => l.name.startsWith("molded-")),
     ).toHaveLength(0);
+    scene.dispose();
+    engine.dispose();
+  });
+  it("resynchronizes each rig light once per cohort without accumulating array hooks", () => {
+    const engine = new NullEngine();
+    const scene = new Scene(engine);
+    const rig = moldedLightRig(scene);
+    const lights = scene.lights.filter((light) =>
+      light.name.startsWith("molded-"),
+    );
+    const scans = lights.map((light) =>
+      vi.spyOn(light as unknown as { _resyncMeshes(): void }, "_resyncMeshes"),
+    );
+    const boxes = Array.from({ length: 20 }, (_, i) =>
+      CreateBox(`cohort-${i}`, {}, scene),
+    );
+    for (const box of boxes) {
+      scans.forEach((scan) => scan.mockClear());
+      rig.include([box]);
+      scans.forEach((scan) => expect(scan).toHaveBeenCalledTimes(1));
+    }
+    expect(lights[0].includedOnlyMeshes).not.toBe(lights[1].includedOnlyMeshes);
+    scans.forEach((scan) => scan.mockClear());
+    rig.include(boxes);
+    scans.forEach((scan) => expect(scan).not.toHaveBeenCalled());
+    boxes[0].dispose();
+    scans.forEach((scan) => scan.mockClear());
+    rig.include([]);
+    scans.forEach((scan) => expect(scan).toHaveBeenCalledTimes(1));
+    for (const light of lights)
+      expect(light.includedOnlyMeshes.map((mesh) => mesh.uniqueId)).toEqual(
+        boxes.slice(1).map((mesh) => mesh.uniqueId),
+      );
+    rig.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+  it("admits the shader owner of hardware instances, including detached prototypes", () => {
+    const engine = new NullEngine();
+    const scene = new Scene(engine);
+    const rig = moldedLightRig(scene);
+    const other = CreateBox("unrelated", {}, scene);
+    rig.include([other]);
+    const source = CreateBox("source", {}, scene);
+    expect(source.lightSources).toHaveLength(0);
+    scene.removeMesh(source);
+    source.isVisible = false;
+    const placed = source.createInstance("placed");
+    const excluded = CreateBox("excluded", {}, scene);
+    rig.include([placed]);
+    for (const light of scene.lights) {
+      expect(light.canAffectMesh(source)).toBe(true);
+      expect(light.canAffectMesh(excluded)).toBe(false);
+      expect(placed.lightSources.includes(light)).toBe(true);
+    }
+    rig.dispose();
+    source.dispose();
     scene.dispose();
     engine.dispose();
   });
