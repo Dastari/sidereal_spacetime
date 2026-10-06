@@ -431,7 +431,9 @@ describe("every editable grammar preset is authorable with the Shipyard tools", 
       expect(
         validateShipPrefab(doc, catalog).filter((i) => i.severity === "error"),
       ).toEqual([]);
-    });
+    }, // Each incremental editor operation revalidates the growing document. Large
+    // fleet templates need more than Vitest's 5 s default on shared CI runners.
+    20_000);
 });
 
 describe("every grammar construct is reachable from the tools", () => {
