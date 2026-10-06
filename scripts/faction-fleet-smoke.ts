@@ -588,8 +588,13 @@ async function main() {
         actor(c)?.shipId === ship.id,
     );
     await interior(c, ship.id);
-    await walkToPanel(c, ship, `${role}-inside`);
-    await press(c, ship, `${role}-inside`);
+    // Authored access r2 has distinct inward/outward chamber commands; the
+    // generic fleet and legacy Wren use one chamber cycle button for both.
+    const inwardButton = isWayfarerAccessProfile(ship.document)
+      ? `${role}-chamber-inner-button`
+      : `${role}-inside`;
+    await walkToPanel(c, ship, inwardButton);
+    await press(c, ship, inwardButton);
     await wait(
       () => logic(c, ship.id, `${role}-controller`)?.state === "pressurised",
     );
