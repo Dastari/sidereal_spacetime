@@ -70,6 +70,7 @@
     "./ship-kit-pieces.v1.json": "./src/ship-kit-pieces.v1.json",
     "./ship-themes": "./src/ship-themes.ts",
     "./prefabs": "./src/prefabs/index.ts",
+    "./wayfarer-prefab.v1.json": "./src/wayfarer-prefab.v1.json",
     "./ship-components": "./src/ship-components.ts",
     "./weapons": "./src/weapons.ts",
     "./ship-components-source": "./src/ship-components-source.ts",

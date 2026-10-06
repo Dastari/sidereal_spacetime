@@ -1,4 +1,4 @@
-import legacyWayfarer from "../../../content/src/wayfarer-prefab.v1.json";
+import legacyWayfarer from "@sidereal/content/wayfarer-prefab.v1.json";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { describe, expect, it } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";

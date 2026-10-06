@@ -9,6 +9,7 @@
     "./prefab-handling": "./src/prefab-handling.ts",
     "./prefab-flight-supply": "./src/prefab-flight-supply.ts",
     "./prefab-construction": "./src/prefab-construction.ts",
+    "./prefab-size-class": "./src/prefab-size-class.ts",
     "./prefab-catalog": "./src/prefab-catalog.ts",
     "./prefab-seats": "./src/prefab-seats.ts",
     "./prefab-cargo-sockets": "./src/prefab-cargo-sockets.ts",

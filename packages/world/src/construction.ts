@@ -1,6 +1,6 @@
 import { recoverConstructionPilotsForGrant } from "./construction-pilot-authority";
 import { recoverConstructionSeatsForGrant } from "./construction-interactions";
-import { assertPrefabSizeClass } from "../../sim/src/prefab-size-class";
+import { assertPrefabSizeClass } from "@sidereal/sim/prefab-size-class";
 import {
   SenderError,
   Range,

@@ -421,6 +421,8 @@ describe("every editable grammar preset is authorable with the Shipyard tools", 
   it("covers all eighteen templates, including all six new fleet designs", () => {
     expect(EDITABLE_PREFAB_SHIPS.length).toBe(18);
   });
+  // Each incremental editor operation revalidates the growing document. Large
+  // fleet templates need more than Vitest's 5 s default on shared CI runners.
   for (const t of EDITABLE_PREFAB_SHIPS)
     it(`rebuilds ${t.id} exactly`, () => {
       const doc = rebuild(t);
@@ -431,9 +433,7 @@ describe("every editable grammar preset is authorable with the Shipyard tools", 
       expect(
         validateShipPrefab(doc, catalog).filter((i) => i.severity === "error"),
       ).toEqual([]);
-    }, // Each incremental editor operation revalidates the growing document. Large
-    // fleet templates need more than Vitest's 5 s default on shared CI runners.
-    20_000);
+    }, 20_000);
 });
 
 describe("every grammar construct is reachable from the tools", () => {
