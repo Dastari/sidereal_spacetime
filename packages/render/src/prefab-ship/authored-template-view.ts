@@ -171,9 +171,15 @@ export async function buildAuthoredTemplateView(
             return bytes(s.base + p.file, p.sha256);
           },
           {
-            batchRegions: new Map(
-              instances.map((r) => [r.object, `${r.role}:${r.region}`]),
-            ),
+            // Remote exteriors have no local-light receivers. Keeping cabin
+            // regions here fragments one opaque material into hundreds of
+            // draw submissions per hull. Native channels and placement ranges
+            // stay intact; blended surfaces keep the loader's depth sorting.
+            batchRegions: options.exteriorOnly
+              ? undefined
+              : new Map(
+                  instances.map((r) => [r.object, `${r.role}:${r.region}`]),
+                ),
             assetLighting: lighting,
             transformGeometry: (row, geometry, transform) => {
               const modifier = byObject.get(row.object);

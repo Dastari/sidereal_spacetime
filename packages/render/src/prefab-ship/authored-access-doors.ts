@@ -146,6 +146,8 @@ export async function loadAuthoredAccessDoors(
   options: {
     fetchBytes: (piece: ShipAccessDoorPiece) => Promise<Uint8Array>;
     pack?: ShipAccessDoorPack;
+    /** Share rigid source geometry for remote exteriors; deck cutaways use clones. */
+    instanceMeshes?: boolean;
   },
 ) {
   if (!options || typeof options.fetchBytes !== "function")
@@ -244,6 +246,7 @@ export async function loadAuthoredAccessDoors(
         const entry = sources[i].instantiateModelsToScene(
           (name) => `access-door:${placement.id}:${part}:${name}`,
           false,
+          { doNotInstantiate: !options.instanceMeshes },
         );
         entries.push(entry);
         for (const node of entry.rootNodes) node.parent = group;

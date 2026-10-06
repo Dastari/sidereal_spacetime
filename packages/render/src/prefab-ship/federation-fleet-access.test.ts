@@ -100,8 +100,33 @@ describe("fleet native exterior doors", () => {
               m.material?.name.startsWith("access.navy"),
           );
       expect(navy(a).length).toBeGreaterThan(0);
-      expect(navy(a).every((m) => m.material!.clipPlane !== null)).toBe(true);
+      // An exterior-only handle cannot acquire a cabin cutaway, even if a
+      // coordinator supplies a deck toggle. No per-instance material clone.
+      expect(navy(a).every((m) => !m.material!.clipPlane)).toBe(true);
+      expect(navy(a).every((m) => !m.material!.name.includes("cutaway"))).toBe(
+        true,
+      );
       expect(navy(b).every((m) => !m.material!.clipPlane)).toBe(true);
+      const deckRoot = new TransformNode("occupied", scene);
+      const deck = await createFederationFleetAccessDoors(
+        scene,
+        deckRoot,
+        doc,
+        catalog,
+        read,
+      );
+      handles.push(deck);
+      deck.setView("deck");
+      expect(navy(deck).every((m) => m.material!.clipPlane != null)).toBe(true);
+      expect(
+        navy(deck).every((m) => m.material!.name.includes("cutaway")),
+      ).toBe(true);
+      expect(navy(a).every((m) => !m.material!.clipPlane)).toBe(true);
+      expect(navy(b).every((m) => !m.material!.clipPlane)).toBe(true);
+      deck.setView("flight");
+      expect(navy(deck).every((m) => !m.material!.clipPlane)).toBe(true);
+      deck.dispose();
+      handles.pop();
       a.setView("flight");
       expect(navy(a).every((m) => !m.material!.clipPlane)).toBe(true);
       for (const h of handles) {

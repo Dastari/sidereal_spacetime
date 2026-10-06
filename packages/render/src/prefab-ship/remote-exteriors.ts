@@ -150,7 +150,13 @@ export interface RemoteExteriorPrototype {
   instantiate(
     parent: TransformNode,
     shipId: string,
-  ): { full: TransformNode; proxy: TransformNode };
+  ): {
+    full: TransformNode;
+    proxy: TransformNode;
+    /** Allocate the expensive native instances only when selected for full detail. */
+    prepareFull?: () => void;
+    releaseFull?: () => void;
+  };
   dispose(): void;
 }
 
@@ -203,6 +209,9 @@ export async function loadRemoteExteriorPrototype(
   if (isFederationFleet(resolved.doc) && !resolved.exact)
     throw Error("Fleet exterior requires its exact published revision");
   const root = new TransformNode(`remote-exterior:${resolved.key}`, scene);
+  // Source assembly spans asynchronous asset loads. Never render partial
+  // prototypes at the camera origin while the actual ships show markers.
+  root.setEnabled(false);
   const view = await createPrefabShipView(scene, resolved.doc, {
     catalog: resolved.catalog,
     view: "flight",
@@ -211,7 +220,12 @@ export async function loadRemoteExteriorPrototype(
     standinComponents: options.standinComponents,
     accessResolver: options.accessResolver,
     externalDoorLeaves: true,
+  }).catch((error) => {
+    root.dispose();
+    throw error;
   });
+  // No await below: hide every source before another frame can observe it.
+  root.setEnabled(true);
   const frame = view.root
     .getChildren()
     .find((n) => n.name.endsWith(":prefab-frame")) as TransformNode | undefined;
@@ -302,9 +316,21 @@ export async function loadRemoteExteriorPrototype(
       const coarse = new TransformNode(`remote-ship-${shipId}:proxy`, scene);
       full.parent = parent;
       coarse.parent = parent;
-      instanceParts(fullParts, full, shipId);
       instanceParts(proxyParts, coarse, shipId);
-      return { full, proxy: coarse };
+      let ready = false;
+      return {
+        full,
+        proxy: coarse,
+        prepareFull() {
+          if (ready) return;
+          instanceParts(fullParts, full, shipId);
+          ready = true;
+        },
+        releaseFull() {
+          for (const mesh of full.getChildMeshes()) mesh.dispose();
+          ready = false;
+        },
+      };
     },
     dispose() {
       if (disposed) return;
@@ -365,7 +391,11 @@ async function createExteriorAccess(
       scene,
       root,
       accessDoorPlacements(prefabDoorSpecs(resolved.doc, resolved.catalog)),
-      { pack: WAYFARER_ACCESS_DOORS, fetchBytes: resolver },
+      {
+        pack: WAYFARER_ACCESS_DOORS,
+        fetchBytes: resolver,
+        instanceMeshes: true,
+      },
     );
     return {
       setView: () => native.setEnabled(true),
@@ -391,6 +421,12 @@ async function createExteriorAccess(
   );
 }
 interface Entry {
+  accessRoot?: TransformNode;
+  accessNeedsSync?: boolean;
+  prepareFull?: () => void;
+  releaseFull?: () => void;
+  lastFullAt?: number;
+  detailed?: boolean;
   access?: ExteriorAccessHandle;
   panels?: ReturnType<typeof createLogicPanels>;
   accessToken?: object;
@@ -461,16 +497,22 @@ export function createRemoteShipExteriors(
   const release = (entry: Entry) => {
     entry.accessToken = undefined;
     entry.accessPending = false;
+    entry.accessNeedsSync = false;
     entry.accessUnavailable = false;
     entry.accessFailures = 0;
     entry.accessRetryAt = 0;
     entry.access?.dispose();
     entry.panels?.dispose();
+    entry.accessRoot?.dispose();
+    entry.accessRoot = undefined;
     entry.access = entry.panels = undefined;
     entry.exhaust?.dispose();
     entry.full?.dispose();
     entry.proxy?.dispose();
     entry.full = entry.proxy = entry.prototype = entry.tier = undefined;
+    entry.prepareFull = entry.releaseFull = undefined;
+    entry.lastFullAt = undefined;
+    entry.detailed = false;
     entry.exhaust = undefined;
   };
   const destroy = (id: string) => {
@@ -495,7 +537,18 @@ export function createRemoteShipExteriors(
     entry.accessToken = token;
     entry.accessPending = true;
     const resolved = prototype.nativeAccess;
-    void createExteriorAccess(scene, full, resolved, options.accessResolver)
+    const accessRoot = new TransformNode(
+      `remote-ship-${entry.shipId}:access`,
+      scene,
+    );
+    accessRoot.parent = full;
+    entry.accessRoot = accessRoot;
+    void createExteriorAccess(
+      scene,
+      accessRoot,
+      resolved,
+      options.accessResolver,
+    )
       .then((access) => {
         if (
           disposed ||
@@ -503,9 +556,11 @@ export function createRemoteShipExteriors(
           entries.get(entry.shipId) !== entry
         ) {
           access.dispose();
+          accessRoot.dispose();
           return;
         }
         entry.access = access;
+        entry.accessNeedsSync = true;
         entry.accessPending = false;
         entry.accessUnavailable = false;
         entry.accessFailures = 0;
@@ -519,11 +574,13 @@ export function createRemoteShipExteriors(
         entry.panels.setView("flight");
       })
       .catch((error) => {
+        accessRoot.dispose();
         if (
           !disposed &&
           entry.accessToken === token &&
           entries.get(entry.shipId) === entry
         ) {
+          entry.accessRoot = undefined;
           entry.accessPending = false;
           entry.accessUnavailable = true;
           entry.accessFailures = (entry.accessFailures ?? 0) + 1;
@@ -538,11 +595,13 @@ export function createRemoteShipExteriors(
     const prototype = entry.key ? loaded.get(entry.key) : undefined;
     if (!prototype || entry.prototype === prototype) return;
     release(entry);
-    const { full, proxy } = prototype.instantiate(entry.root, entry.shipId);
+    const { full, proxy, prepareFull, releaseFull } = prototype.instantiate(
+      entry.root,
+      entry.shipId,
+    );
     full.setEnabled(false);
     proxy.setEnabled(false);
-    Object.assign(entry, { prototype, full, proxy });
-    requestAccess(entry);
+    Object.assign(entry, { prototype, full, proxy, prepareFull, releaseFull });
   };
   const request = (resolved: ResolvedExterior) => {
     if (prototypes.has(resolved.key)) return;
@@ -584,14 +643,37 @@ export function createRemoteShipExteriors(
   const clear = () => {
     for (const id of [...entries.keys()]) destroy(id);
   };
+  let reconciledDescriptions: RemoteShipSnapshot["shipDescription"] | undefined;
+  let reconciledLocal: string | undefined;
   const reconcile = () => {
     if (disposed) return;
     const snapshot = store.getSnapshot();
     if (snapshot.epoch !== epoch) {
       clear();
       epoch = snapshot.epoch;
+      reconciledDescriptions = undefined;
     }
     const local = options.localShipId();
+    if (
+      reconciledDescriptions === snapshot.shipDescription &&
+      reconciledLocal === local
+    ) {
+      let members = 0;
+      for (const motion of snapshot.shipMotion) {
+        if (motion.shipId === local) continue;
+        if (!entries.has(motion.shipId)) break;
+        members++;
+      }
+      // Hot pose updates do not change appearance or membership. Keep pose
+      // interpolation live; removals and new IDs still reconcile immediately.
+      if (
+        members === entries.size &&
+        members ===
+          snapshot.shipMotion.length -
+            (snapshot.shipMotion.some((m) => m.shipId === local) ? 1 : 0)
+      )
+        return;
+    }
     const descriptions = new Map(
       snapshot.shipDescription.map((d) => [d.shipId, d]),
     );
@@ -628,6 +710,8 @@ export function createRemoteShipExteriors(
         attach(entry);
       }
     }
+    reconciledDescriptions = snapshot.shipDescription;
+    reconciledLocal = local;
   };
   const unbind = (["shipMotion", "shipDescription", "admission"] as const).map(
     (table) => store.subscribeTable(table, reconcile),
@@ -686,7 +770,6 @@ export function createRemoteShipExteriors(
       for (const [id, entry] of entries) {
         const failed = entry.key ? prototypeFailures.get(entry.key) : undefined;
         if (failed) request(failed.resolved);
-        requestAccess(entry);
         const sample = store.sampleShip(id, nowMs, delayMs);
         if (
           !sample ||
@@ -709,33 +792,77 @@ export function createRemoteShipExteriors(
         });
       }
       const tiers = assignShipTiers(sized, budget);
+      const retireDetail = (entry: Entry) => {
+        entry.accessToken = undefined;
+        entry.accessPending = false;
+        entry.accessNeedsSync = false;
+        entry.access?.dispose();
+        entry.panels?.dispose();
+        entry.accessRoot?.dispose();
+        entry.accessRoot = undefined;
+        entry.access = entry.panels = undefined;
+        entry.releaseFull?.();
+        entry.full?.setEnabled(false);
+        entry.lastFullAt = undefined;
+        entry.detailed = false;
+      };
+      // A cooldown alone does not bound allocations while moving through a
+      // fleet. Reserve space for this frame's selected ships, then keep only
+      // the most recently used inactive detail within that same budget.
+      const selected = sized.filter(
+        ({ id }) => entries.get(id)!.prototype && tiers.get(id) === 0,
+      ).length;
+      const retained = [...entries.values()]
+        .filter(
+          (entry) =>
+            entry.lastFullAt !== undefined && tiers.get(entry.shipId) !== 0,
+        )
+        .sort((a, b) => b.lastFullAt! - a.lastFullAt!);
+      let available = Math.max(0, budget - selected);
+      for (const entry of retained) {
+        if (nowMs - entry.lastFullAt! >= 5000 || available <= 0)
+          retireDetail(entry);
+        else available--;
+      }
       for (const { id, px } of sized) {
         const entry = entries.get(id)!;
         // Without a loaded hull the ship is a marker, whatever its size.
         const tier: ShipLodTier = entry.prototype ? tiers.get(id)! : 2;
+        const promoted = tier === 0 && !entry.detailed;
         entry.tier = entry.prototype ? tier : undefined;
+        if (tier === 0) {
+          entry.prepareFull?.();
+          requestAccess(entry);
+          entry.lastFullAt = nowMs;
+        }
+        entry.detailed = tier === 0;
         const safeProxy = entry.accessPending || entry.accessUnavailable;
+        const logic = exteriorLogic?.get(id);
+        if (tier === 0)
+          entry.access?.update({
+            actors: [],
+            nowMs,
+            // Promotion reflects current accepted state before enabling full
+            // meshes; hidden animations are never replayed from stale states.
+            dt: promoted || entry.accessNeedsSync ? 1 : accessDt,
+            logic: logic?.doors,
+          });
+        if (tier === 0 && entry.access) entry.accessNeedsSync = false;
+        if (tier === 0)
+          entry.panels?.update(
+            logic
+              ? new Map(
+                  [...logic.panels].map(([slot, value]) => [
+                    slot,
+                    { light: value.light, pressedMicros: 0 },
+                  ]),
+                )
+              : undefined,
+            nowMs,
+          );
         entry.full?.setEnabled(tier === 0 && !safeProxy);
         entry.proxy?.setEnabled(tier === 1 || (tier === 0 && !!safeProxy));
         entry.marker.setEnabled(tier === 2);
-        const logic = exteriorLogic?.get(id);
-        entry.access?.update({
-          actors: [],
-          nowMs,
-          dt: accessDt,
-          logic: logic?.doors,
-        });
-        entry.panels?.update(
-          logic
-            ? new Map(
-                [...logic.panels].map(([slot, value]) => [
-                  slot,
-                  { light: value.light, pressedMicros: 0 },
-                ]),
-              )
-            : undefined,
-          nowMs,
-        );
         // Plumes and RCS puffs on hull tiers only, from the server's achieved outputs.
         const jets = exhaust?.get(id);
         if (entry.prototype && tier !== 2 && (jets?.size || entry.exhaust)) {
