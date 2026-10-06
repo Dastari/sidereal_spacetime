@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Fleet renderer performance fixture</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #050817;
+        color: #cdf;
+        font: 12px monospace;
+      }
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+      pre {
+        position: fixed;
+        top: 0;
+        left: 12px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+    <pre id="hud">Loading exact authored fleet…</pre>
+    <script type="module" src="/fleet-performance.ts"></script>
+  </body>
+</html>
