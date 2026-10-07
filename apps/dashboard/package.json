@@ -7,7 +7,7 @@
     "@fontsource/barlow": "5.3.0",
     "@fontsource/barlow-condensed": "5.3.0",
     "@sidereal/content": "0.14.1",
-    "@sidereal/render": "0.16.5",
+    "@sidereal/render": "0.16.6",
     "@sidereal/sim": "0.10.2",
     "@sidereal/ui": "0.6.3",
     "lucide-react": "1.42.0",
