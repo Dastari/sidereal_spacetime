@@ -1,4 +1,8 @@
 import {
+  isWayfarerHullAccessProfile,
+  HULL_ACCESS_PHYSICAL,
+} from "@sidereal/content/hull-access-profile";
+import {
   createAuthoredAssetLighting,
   readAuthoredAssetLighting,
 } from "../authored-asset-lighting";
@@ -147,7 +151,11 @@ export async function createWayfarerLiveView(
   options: PrefabShipViewOptions & { furnishings?: FurnishingOverrides },
 ): Promise<PrefabShipView> {
   assertWayfarerPrefabContract(doc);
-  const accessProfile = isWayfarerAccessProfile(doc);
+  const hullAccess = isWayfarerHullAccessProfile(doc);
+  const accessProfile = isWayfarerAccessProfile(doc) || hullAccess;
+  const accessPhysical = hullAccess
+    ? HULL_ACCESS_PHYSICAL
+    : WAYFARER_ACCESS_PHYSICAL;
   const accessResolver = options.accessResolver ?? publishedShipAccessBytes;
   const root = new TransformNode(`prefab-ship:${doc.id}`, scene);
   root.parent = options.parent ?? null;
@@ -251,12 +259,12 @@ export async function createWayfarerLiveView(
       mirrored: false,
     });
     if (accessProfile) {
-      const omitted = new Set(WAYFARER_ACCESS_PHYSICAL.omitted.deck);
+      const omitted = new Set(accessPhysical.omitted.deck);
       instances = instances.filter((row) => !omitted.has(row.object));
       if (!options.exteriorOnly) instances.push(accessInstance("native.deck"));
     }
     const accessPiece = (id: string) => {
-      const piece = WAYFARER_ACCESS_PHYSICAL.pieces.find((p) => p.id === id);
+      const piece = accessPhysical.pieces.find((p) => p.id === id);
       if (!piece || piece.frame !== "piece-local")
         throw Error("Invalid proposed native access piece");
       return Object.freeze({ ...piece, frame: "piece-local" as const });
@@ -280,7 +288,7 @@ export async function createWayfarerLiveView(
           ...(accessProfile ? [accessPiece("native.deck")] : []),
         ],
         instances,
-        accessProfile ? WAYFARER_ACCESS_PHYSICAL.palette : study.palette,
+        accessProfile ? accessPhysical.palette : study.palette,
         [0, 0],
         (piece) =>
           piece.id === "native.deck"
@@ -293,8 +301,7 @@ export async function createWayfarerLiveView(
     const flightInstances = [
       ...flight.instances.filter(
         (row) =>
-          !accessProfile ||
-          !WAYFARER_ACCESS_PHYSICAL.omitted.flight.includes(row.object),
+          !accessProfile || !accessPhysical.omitted.flight.includes(row.object),
       ),
       ...instances.filter((row) => row.object.startsWith("RCS_")),
       ...(accessProfile ? [accessInstance("native.flight")] : []),
@@ -310,7 +317,7 @@ export async function createWayfarerLiveView(
         ...(accessProfile ? [accessPiece("native.flight")] : []),
       ],
       flightInstances,
-      accessProfile ? WAYFARER_ACCESS_PHYSICAL.palette : flight.palette,
+      accessProfile ? accessPhysical.palette : flight.palette,
       [0, 0],
       (piece) =>
         piece.id === "native.flight"
@@ -512,7 +519,7 @@ export async function createWayfarerLiveView(
         );
         return {
           visualRevision: accessProfile
-            ? `${WAYFARER_ACCESS_PHYSICAL.revision}-${view}-proposal`
+            ? `${accessPhysical.revision}-${view}-proposal`
             : view === "deck"
               ? "wayfarer-authored-r001-live"
               : "wayfarer-dorsal-r001-live",

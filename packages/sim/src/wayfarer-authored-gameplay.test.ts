@@ -94,16 +94,15 @@ test("authored gameplay admits one exact registered source and rejects physical 
   const bad = structuredClone(bound);
   bad.layout.tiles[0].vertices[0][0]++;
   expect(() => readConstructionDraft(JSON.stringify(bad))).toThrow();
-  // Six half-metre fragments retain native support after retessellation,
-  // without counting those fragments as whole1m floor cells.
+  // The hull-tile revision restores native floors and adds one narrow sill row.
   const floors = deriveInterior(doc, 0, catalog).floors;
-  expect(floors.length).toBe(234);
+  expect(floors.length).toBe(228);
   expect(
     floors.reduce(
       (sum, f) => sum + (f.extentM ? f.extentM[0] * f.extentM[1] : 1),
       0,
     ),
-  ).toBe(231);
+  ).toBe(228);
 });
 
 test("every live small crate and locker has a standing approach reachable from the cockpit", () => {

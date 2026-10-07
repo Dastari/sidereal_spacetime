@@ -1,3 +1,4 @@
+import { isWayfarerHullAccessProfile } from "@sidereal/content/hull-access-profile";
 import {
   effectiveWayfarerObjects,
   type FurnishingOverrides,
@@ -76,7 +77,7 @@ export function prefabCargoSockets(
           (id) => {
             const effective = effectiveWayfarerObjects(furnishings);
             const o = (
-              isWayfarerAccessProfile(doc)
+              isWayfarerAccessProfile(doc) || isWayfarerHullAccessProfile(doc)
                 ? wayfarerAccessObjects(effective)
                 : effective
             ).find((row) => row.object === id)!;

@@ -111,7 +111,10 @@ describe("active native Wayfarer profile2 capsule connectivity", () => {
   }, 60_000);
 
   it("qualifies the exact registered source with actual collision cuts, not original visual envelopes", () => {
-    expect(PREFAB_SHIPS.find((p) => p.id === doc.id)).toBe(doc);
+    expect(
+      PREFAB_SHIPS.find((p) => p.id === doc.id)?.authoredGameplay?.revision,
+    ).toBe(3);
+    // Historical profile2 is still decoded and qualified from its exact saved document.
     expect(doc.authoredGameplay?.revision).toBe(2);
     expect(
       frame.obstacles.some(

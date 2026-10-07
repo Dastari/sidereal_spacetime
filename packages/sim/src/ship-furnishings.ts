@@ -1,3 +1,4 @@
+import { isWayfarerHullAccessProfile } from "@sidereal/content/hull-access-profile";
 import {
   FURNISHING_DEFAULT,
   furnishingRestriction,
@@ -255,7 +256,7 @@ export function validateFurnishingPlacement(
 ) {
   const objects = effectiveWayfarerObjects(overrides);
   const moved = (
-    doc && isWayfarerAccessProfile(doc)
+    doc && (isWayfarerAccessProfile(doc) || isWayfarerHullAccessProfile(doc))
       ? wayfarerAccessObjects(objects)
       : objects
   ).find((row) => row.object === sourceObjectId);

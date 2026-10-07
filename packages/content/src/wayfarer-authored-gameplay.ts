@@ -1,3 +1,7 @@
+import {
+  isWayfarerHullAccessProfile,
+  HULL_ACCESS_SOURCE,
+} from "./hull-access-profile";
 /** Pinned authored Wayfarer geometry. Source originals remain immutable. */
 import source from "./wayfarer-authored-gameplay.v1.json";
 import prefabContract from "./wayfarer-prefab.v1.json";
@@ -230,7 +234,9 @@ export function isWayfarerGameplay(
   return (
     doc.id === WAYFARER_PREFAB_ID &&
     doc.authoredGameplay?.id === WAYFARER_GAMEPLAY_PROFILE.id &&
-    (doc.authoredGameplay.revision === 1 || isWayfarerAccessProfile(doc))
+    (doc.authoredGameplay.revision === 1 ||
+      isWayfarerAccessProfile(doc) ||
+      isWayfarerHullAccessProfile(doc))
   );
 }
 
@@ -248,9 +254,11 @@ export function assertWayfarerPrefabContract(doc: ShipPrefabDocumentV1): void {
               .map(([key, v]) => [key, sort(v)]),
           )
         : value;
-  const expected = isWayfarerAccessProfile(doc)
-    ? WAYFARER_ACCESS_SOURCE
-    : prefabContract;
+  const expected = isWayfarerHullAccessProfile(doc)
+    ? HULL_ACCESS_SOURCE
+    : isWayfarerAccessProfile(doc)
+      ? WAYFARER_ACCESS_SOURCE
+      : prefabContract;
   if (JSON.stringify(sort(doc)) !== JSON.stringify(sort(expected)))
     throw Error(
       "Authored Wayfarer profile requires its exact registered prefab document",

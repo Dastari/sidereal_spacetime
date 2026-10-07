@@ -1,3 +1,4 @@
+import { isWayfarerHullAccessProfile } from "@sidereal/content/hull-access-profile";
 import { readFurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { isWayfarerAccessProfile } from "@sidereal/content/wayfarer-access-profile";
 import {
@@ -113,26 +114,36 @@ export async function loadPrefabShipPresentation(
     doc.id === "fed.m.wayfarer" ? shipRoot : view.root,
     doc.theme,
   );
-  const doors = isWayfarerAccessProfile(doc)
+  const doors = isWayfarerHullAccessProfile(doc)
     ? await (
         await import("./prefab-ship/wayfarer-access-doors")
-      ).createWayfarerAccessDoors(scene, view.root, accessResolver!)
-    : isFederationFleet(doc)
-      ? await createFederationFleetAccessDoors(
-          scene,
-          view.root,
-          doc,
-          catalog,
-          accessResolver!,
-        )
-      : createPrefabDoors(
-          scene,
-          view.root,
-          doc,
-          catalog,
-          doc.theme,
-          view.metrics().visualRevision !== undefined,
-        );
+      ).createWayfarerHullAccessDoors(
+        scene,
+        view.root,
+        doc,
+        catalog,
+        accessResolver!,
+      )
+    : isWayfarerAccessProfile(doc)
+      ? await (
+          await import("./prefab-ship/wayfarer-access-doors")
+        ).createWayfarerAccessDoors(scene, view.root, accessResolver!)
+      : isFederationFleet(doc)
+        ? await createFederationFleetAccessDoors(
+            scene,
+            view.root,
+            doc,
+            catalog,
+            accessResolver!,
+          )
+        : createPrefabDoors(
+            scene,
+            view.root,
+            doc,
+            catalog,
+            doc.theme,
+            view.metrics().visualRevision !== undefined,
+          );
   // Ship logic wall buttons (wiki Systems/Ship Logic): lights follow `visible_ship_logic`.
   const panels = createLogicPanels(scene, view.root, doc, catalog);
   doors.setView(interior ? "deck" : "flight");
