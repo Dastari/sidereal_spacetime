@@ -215,7 +215,8 @@ export const FED_WAYFARER_R2_PIN: PinnedPrefabShip = {
 /** Native hull tiles with traversable force fields; prior instances use the explicit upgrade. */
 export const FED_WAYFARER_PIN: PinnedPrefabShip = {
   ...FED_WAYFARER_R2_PIN,
-  blueprintSha256: "f84138e71550216a08c949ad95359e0874b268db35317351986194bdb2d319cf",
+  blueprintSha256:
+    "f84138e71550216a08c949ad95359e0874b268db35317351986194bdb2d319cf",
   flightDefinitionSha256:
     "f33c6ceaadb5f0bccdb9acf015f6d9663d6505f61709af35de7d748e6667f6a0",
   description: "Wayfarer (Federation explorer, hull-access profile3)",

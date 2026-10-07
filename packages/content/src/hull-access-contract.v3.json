@@ -14,27 +14,15 @@
     {
       "id": "personnel-inner",
       "type": "door.airlock",
-      "a": [
-        2,
-        3
-      ],
-      "b": [
-        4,
-        3
-      ],
+      "a": [2, 3],
+      "b": [4, 3],
       "deck": 0
     },
     {
       "id": "cargo-inner",
       "type": "door.blast",
-      "a": [
-        -9,
-        3
-      ],
-      "b": [
-        -5,
-        3
-      ],
+      "a": [-9, 3],
+      "b": [-5, 3],
       "deck": 0
     }
   ],
@@ -48,160 +36,112 @@
   "mountTiles": [],
   "mounts": [
     {
-      "at": [
-        -11,
-        -4.5
-      ],
+      "at": [-11, -4.5],
       "attach": "face",
       "component": "ion-drive.lg",
       "id": "main-s",
       "normal": "aft"
     },
     {
-      "at": [
-        -11,
-        0
-      ],
+      "at": [-11, 0],
       "attach": "face",
       "component": "ion-drive.lg",
       "id": "main-c",
       "normal": "aft"
     },
     {
-      "at": [
-        -11,
-        4.5
-      ],
+      "at": [-11, 4.5],
       "attach": "face",
       "component": "ion-drive.lg",
       "id": "main-p",
       "normal": "aft"
     },
     {
-      "at": [
-        6.5,
-        -6.5
-      ],
+      "at": [6.5, -6.5],
       "attach": "face",
       "component": "rcs.md",
       "id": "rcs-bow-s",
       "normal": "starboard"
     },
     {
-      "at": [
-        6.5,
-        6.5
-      ],
+      "at": [6.5, 6.5],
       "attach": "face",
       "component": "rcs.md",
       "id": "rcs-bow-p",
       "normal": "port"
     },
     {
-      "at": [
-        -9.5,
-        -6.5
-      ],
+      "at": [-9.5, -6.5],
       "attach": "face",
       "component": "rcs.md",
       "id": "rcs-stern-s",
       "normal": "starboard"
     },
     {
-      "at": [
-        -2,
-        6.5
-      ],
+      "at": [-2, 6.5],
       "attach": "face",
       "component": "rcs.md",
       "id": "rcs-stern-p",
       "normal": "port"
     },
     {
-      "at": [
-        7.5,
-        0
-      ],
+      "at": [7.5, 0],
       "attach": "interior",
       "component": "console.navigation.sm",
       "id": "helm",
       "normal": "fore"
     },
     {
-      "at": [
-        3,
-        2.5
-      ],
+      "at": [3, 2.5],
       "attach": "interior",
       "component": "computer-core.md",
       "id": "core",
       "normal": "fore"
     },
     {
-      "at": [
-        -8,
-        0
-      ],
+      "at": [-8, 0],
       "attach": "interior",
       "component": "reactor.lg",
       "id": "reactor",
       "normal": "fore"
     },
     {
-      "at": [
-        -5,
-        0
-      ],
+      "at": [-5, 0],
       "attach": "interior",
       "component": "fuel-tank.lg",
       "id": "fuel",
       "normal": "fore"
     },
     {
-      "at": [
-        -3,
-        0
-      ],
+      "at": [-3, 0],
       "attach": "interior",
       "component": "coolant-pump.lg",
       "id": "coolant",
       "normal": "fore"
     },
     {
-      "at": [
-        0,
-        0
-      ],
+      "at": [0, 0],
       "attach": "interior",
       "component": "battery.md",
       "id": "battery",
       "normal": "fore"
     },
     {
-      "at": [
-        2.5,
-        2
-      ],
+      "at": [2.5, 2],
       "attach": "interior",
       "component": "life-support.md",
       "id": "life",
       "normal": "fore"
     },
     {
-      "at": [
-        -7,
-        -6
-      ],
+      "at": [-7, -6],
       "attach": "face",
       "component": "radiator.lg",
       "id": "rad-a",
       "normal": "starboard"
     },
     {
-      "at": [
-        -7,
-        6
-      ],
+      "at": [-7, 6],
       "attach": "face",
       "component": "radiator.lg",
       "id": "rad-b",
@@ -211,20 +151,14 @@
       "id": "personnel-outer",
       "component": "airlock.exterior.md",
       "attach": "edge",
-      "at": [
-        3,
-        6.5
-      ],
+      "at": [3, 6.5],
       "normal": "port"
     },
     {
       "id": "cargo-outer",
       "component": "cargo-door.4m",
       "attach": "edge",
-      "at": [
-        -7,
-        6.5
-      ],
+      "at": [-7, 6.5],
       "normal": "port"
     }
   ],
@@ -236,120 +170,70 @@
       "deck": 0,
       "id": "cockpit",
       "label": "COCKPIT",
-      "rect": [
-        5,
-        -5,
-        12,
-        5
-      ],
+      "rect": [5, -5, 12, 5],
       "type": "bridge"
     },
     {
       "deck": 0,
       "id": "hall",
       "label": "HALL",
-      "rect": [
-        -10,
-        -1,
-        5,
-        2
-      ],
+      "rect": [-10, -1, 5, 2],
       "type": "corridor"
     },
     {
       "deck": 0,
       "id": "lounge",
       "label": "LOUNGE",
-      "rect": [
-        -2,
-        -5,
-        2,
-        -1
-      ],
+      "rect": [-2, -5, 2, -1],
       "type": "lounge"
     },
     {
       "deck": 0,
       "id": "quarters_a",
       "label": "QUARTERS A",
-      "rect": [
-        -6,
-        -5,
-        -2,
-        -1
-      ],
+      "rect": [-6, -5, -2, -1],
       "type": "quarters"
     },
     {
       "deck": 0,
       "id": "quarters_b",
       "label": "QUARTERS B",
-      "rect": [
-        -10,
-        -5,
-        -6,
-        -1
-      ],
+      "rect": [-10, -5, -6, -1],
       "type": "quarters"
     },
     {
       "deck": 0,
       "id": "utility",
       "label": "UTILITY",
-      "rect": [
-        2,
-        2,
-        5,
-        5
-      ],
+      "rect": [2, 2, 5, 5],
       "type": "engineering"
     },
     {
       "deck": 0,
       "id": "galley",
       "label": "GALLEY",
-      "rect": [
-        0,
-        2,
-        2,
-        5
-      ],
+      "rect": [0, 2, 2, 5],
       "type": "lounge"
     },
     {
       "deck": 0,
       "id": "workshop",
       "label": "WORKSHOP",
-      "rect": [
-        -2,
-        2,
-        0,
-        5
-      ],
+      "rect": [-2, 2, 0, 5],
       "type": "engineering"
     },
     {
       "deck": 0,
       "id": "hydro",
       "label": "HYDROPONICS",
-      "rect": [
-        -6,
-        2,
-        -2,
-        5
-      ],
+      "rect": [-6, 2, -2, 5],
       "type": "lounge"
     },
     {
       "deck": 0,
       "id": "cargo",
       "label": "CARGO",
-      "rect": [
-        -10,
-        2,
-        -6,
-        5
-      ],
+      "rect": [-10, 2, -6, 5],
       "type": "cargo"
     }
   ],
@@ -2421,19 +2305,13 @@
       {
         "id": "personnel-inside-button",
         "kind": "button",
-        "at": [
-          3.75,
-          5.5
-        ],
+        "at": [3.75, 5.5],
         "normal": "aft"
       },
       {
         "id": "personnel-outside-button",
         "kind": "button",
-        "at": [
-          3.75,
-          6.75
-        ],
+        "at": [3.75, 6.75],
         "normal": "port"
       },
       {
@@ -2444,19 +2322,13 @@
       {
         "id": "cargo-inside-button",
         "kind": "button",
-        "at": [
-          -5,
-          5.5
-        ],
+        "at": [-5, 5.5],
         "normal": "aft"
       },
       {
         "id": "cargo-outside-button",
         "kind": "button",
-        "at": [
-          -9,
-          6.75
-        ],
+        "at": [-9, 6.75],
         "normal": "port"
       }
     ],
