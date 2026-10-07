@@ -1,4 +1,5 @@
 import { protectPbrLight } from "./pbr-light-budget";
+import { refreshShadowCasterTransforms } from "./shadow-transform-refresh";
 import { INSET_VISUAL_PARTS } from "./inset-visual-registry";
 import { createLayoutFloorSlabs } from "./layout-floor-slabs";
 import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
@@ -443,8 +444,7 @@ export function createConstructionLighting(
     // Disabled deck/roof banks aren't evaluated by Scene, but the directional
     // fit still visits the complete registered list. Keep their world bounds
     // current too, so a view switch or ship rotation cannot change precision.
-    for (const mesh of shadow.getShadowMap()?.renderList ?? [])
-      if (!mesh.isDisposed()) mesh.computeWorldMatrix(true);
+    refreshShadowCasterTransforms(shadow.getShadowMap()?.renderList ?? []);
   });
   scene.onDisposeObservable.addOnce(() =>
     scene.onBeforeRenderObservable.remove(refreshCasterBounds),
