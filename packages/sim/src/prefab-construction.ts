@@ -1,3 +1,4 @@
+import { isWayfarerHullAccessProfile } from "@sidereal/content/hull-access-profile";
 /**
  * Prefab ships through the existing construction authority.
  *
@@ -170,7 +171,7 @@ export function prefabLayout(
   const segs: Seg[] = [];
   const walkable = new Set(full.map((f) => `${f.cell[0]},${f.cell[1]}`));
   const bothSidesFloor = (a: Pt, b: Pt) => {
-    if (isWayfarerAccessProfile(doc)) {
+    if (isWayfarerAccessProfile(doc) || isWayfarerHullAccessProfile(doc)) {
       const dx = b[0] - a[0],
         dy = b[1] - a[1],
         length = Math.hypot(dx, dy);
@@ -195,7 +196,7 @@ export function prefabLayout(
       : walkable.has(`${x},${y}`) && walkable.has(`${x - 1},${y}`);
   };
   for (const w of interior.partitions) {
-    if (isWayfarerAccessProfile(doc)) {
+    if (isWayfarerAccessProfile(doc) || isWayfarerHullAccessProfile(doc)) {
       const length = Math.hypot(w.b[0] - w.a[0], w.b[1] - w.a[1]);
       const count = Math.round(length * 2);
       for (let i = 0; i < count; i++) {

@@ -1,3 +1,8 @@
+import {
+  isWayfarerHullAccessProfile,
+  HULL_ACCESS_PHYSICAL,
+  HULL_ACCESS_MODULES,
+} from "@sidereal/content/hull-access-profile";
 import { fleetAccessPhysicalGeometry } from "@sidereal/content/prefabs";
 import {
   effectiveWayfarerObjects,
@@ -197,7 +202,7 @@ const nativeObjects = (
   furnishings: FurnishingOverrides,
 ) => {
   const objects = effectiveWayfarerObjects(furnishings);
-  return isWayfarerAccessProfile(doc)
+  return isWayfarerAccessProfile(doc) || isWayfarerHullAccessProfile(doc)
     ? wayfarerAccessObjects(objects)
     : objects;
 };
@@ -438,6 +443,11 @@ export function prefabDeckObstacles(
   furnishings: FurnishingOverrides = {},
 ): DeckObstacle[] {
   if (isWayfarerGameplay(doc)) {
+    const hullAccess = isWayfarerHullAccessProfile(doc);
+    const accessProfile = isWayfarerAccessProfile(doc) || hullAccess;
+    const physical = hullAccess
+      ? HULL_ACCESS_PHYSICAL
+      : WAYFARER_ACCESS_PHYSICAL;
     const toShip = ([x, y]: readonly number[]): [number, number] => [
       -y + 0,
       x + 0,
@@ -451,13 +461,10 @@ export function prefabDeckObstacles(
           o.object !== "Cockpit_pilot_chair",
       )
       .flatMap((o) => {
-        const replacements = isWayfarerAccessProfile(doc)
-          ? (
-              WAYFARER_ACCESS_PHYSICAL.collisionReplacements as Record<
-                string,
-                number[][]
-              >
-            )[o.object]
+        const replacements = accessProfile
+          ? (physical.collisionReplacements as Record<string, number[][]>)[
+              o.object
+            ]
           : undefined;
         if (replacements)
           return replacements.map((r, i) => ({
@@ -473,15 +480,15 @@ export function prefabDeckObstacles(
           },
         ];
       });
-    if (isWayfarerAccessProfile(doc)) {
-      for (const source of WAYFARER_ACCESS_PHYSICAL.newBlockers)
+    if (accessProfile) {
+      for (const source of physical.newBlockers)
         obstacles.push({
           id: `prefab-access:${source.id}`,
           definitionId: "wayfarer.access.bulkhead",
           vertices: planRectToShip(doc, source.rect as Rect),
         });
       for (const [object, rects] of Object.entries(
-        WAYFARER_ACCESS_PHYSICAL.collisionReplacements,
+        physical.collisionReplacements,
       ))
         if (object.startsWith("WALL_near_") || object.startsWith("LINER_near_"))
           rects.forEach((r, i) =>
@@ -491,10 +498,12 @@ export function prefabDeckObstacles(
               vertices: planRectToShip(doc, r as Rect),
             }),
           );
-      for (const module of WAYFARER_ACCESS_MODULES)
+      for (const module of hullAccess
+        ? HULL_ACCESS_MODULES
+        : WAYFARER_ACCESS_MODULES)
         for (const [side, y] of [
-          ["outer", 7],
-          ["inner", 3],
+          ["outer", hullAccess ? 6.5 : 7],
+          ...(!hullAccess ? [["inner", 3] as const] : []),
         ] as const) {
           const variant =
             module.id === "cargo"
@@ -503,9 +512,12 @@ export function prefabDeckObstacles(
                 ? "personnel.reverse"
                 : "personnel";
           const sign = side === "outer" ? 1 : -1;
-          for (const [i, source] of WAYFARER_ACCESS_PHYSICAL.frameBlockers[
-            variant
-          ].entries()) {
+          for (const [i, source] of (
+            physical.frameBlockers as Record<
+              string,
+              { id: string; min: number[]; max: number[] }[]
+            >
+          )[variant].entries()) {
             const corners = [source.min[0], source.max[0]].flatMap((x) =>
               [source.min[1], source.max[1]].map((dy) => [
                 module.center + sign * x,

@@ -1,3 +1,8 @@
+import { createDoorFields } from "./door-fields";
+import {
+  isWayfarerHullAccessProfile,
+  HULL_ACCESS_DOORS,
+} from "@sidereal/content/hull-access-profile";
 /**
  * Other players' ships in flight view: exterior only, dynamic LOD, shared GPU geometry.
  *
@@ -62,6 +67,7 @@ import type { ShipAccessDoorPiece } from "@sidereal/content/ship-access-doors";
 import {
   WAYFARER_ACCESS_DOORS,
   isWayfarerAccessProfile,
+  WAYFARER_ACCESS_SOURCE,
 } from "@sidereal/content/wayfarer-access-profile";
 import {
   accessDoorPlacements,
@@ -112,7 +118,12 @@ export function resolvePublishedExterior(
   revision: bigint,
 ): ResolvedExterior | undefined {
   const prefabId = prefabIdOfExterior(assetId);
-  const doc = prefabId ? prefabById(prefabId) : undefined;
+  const bundled = prefabId ? prefabById(prefabId) : undefined;
+  const doc =
+    prefabId === WAYFARER_ACCESS_SOURCE.id &&
+    BigInt(WAYFARER_ACCESS_SOURCE.revision) === revision
+      ? WAYFARER_ACCESS_SOURCE
+      : bundled;
   if (!doc) return undefined;
   if (isFederationFleet(doc) && BigInt(doc.revision) !== revision)
     return undefined;
@@ -384,7 +395,10 @@ async function createExteriorAccess(
       { exteriorOnly: true },
     );
   }
-  if (isWayfarerAccessProfile(resolved.doc)) {
+  if (
+    isWayfarerAccessProfile(resolved.doc) ||
+    isWayfarerHullAccessProfile(resolved.doc)
+  ) {
     if (!resolver)
       throw Error("Native Wayfarer exterior access requires pinned bytes");
     const native = await loadAuthoredAccessDoors(
@@ -392,21 +406,36 @@ async function createExteriorAccess(
       root,
       accessDoorPlacements(prefabDoorSpecs(resolved.doc, resolved.catalog)),
       {
-        pack: WAYFARER_ACCESS_DOORS,
+        pack: isWayfarerHullAccessProfile(resolved.doc)
+          ? HULL_ACCESS_DOORS
+          : WAYFARER_ACCESS_DOORS,
         fetchBytes: resolver,
         instanceMeshes: true,
       },
     );
+    const fields = isWayfarerHullAccessProfile(resolved.doc)
+      ? createDoorFields(
+          scene,
+          root,
+          accessDoorPlacements(prefabDoorSpecs(resolved.doc, resolved.catalog)),
+          HULL_ACCESS_DOORS,
+        )
+      : undefined;
     return {
       setView: () => native.setEnabled(true),
-      update: (input) =>
+      update: (input) => {
         native.update(
           input.logic === undefined
             ? undefined
             : new Map([...input.logic].map(([id, open]) => [id, { open }])),
           input.dt,
-        ),
-      dispose: native.dispose,
+        );
+        fields?.update(native.states());
+      },
+      dispose() {
+        native.dispose();
+        fields?.dispose();
+      },
     };
   }
   return createPrefabDoors(

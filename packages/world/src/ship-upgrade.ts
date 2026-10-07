@@ -1,3 +1,7 @@
+import {
+  isWayfarerHullAccessProfile,
+  HULL_ACCESS_DOORS,
+} from "@sidereal/content/hull-access-profile";
 /**
  * Operator-only in-place prefab upgrade (deployment identity, like the ship-wipe reducers).
  *
@@ -249,7 +253,7 @@ function migrateFurnishingOverrides(
   const audit: { sourceObjectId: string; reason: string }[] = [];
   if (
     source.authoredGameplay?.revision === 1 &&
-    isWayfarerAccessProfile(target)
+    (isWayfarerAccessProfile(target) || isWayfarerHullAccessProfile(target))
   ) {
     for (const [id, pose] of Object.entries(state.overrides)) {
       const shift = WAYFARER_ACCESS_FURNISHING_SHIFTS[id];
@@ -334,14 +338,16 @@ function qualifyFurnishingGeometry(
 ) {
   if (!isWayfarerGameplay(doc))
     throw Error("Furnishing carry-over requires an authored Wayfarer");
-  const access = isWayfarerAccessProfile(doc);
+  const hullAccess = isWayfarerHullAccessProfile(doc);
+  const access = isWayfarerAccessProfile(doc) || hullAccess;
   for (const id of Object.keys(overrides))
     validateFurnishingPlacement(id, overrides, frame, [], doc);
   if (access) {
     const objects = wayfarerAccessObjects(
       effectiveWayfarerObjects(overrides),
     ).filter((o) => Object.hasOwn(overrides, o.object));
-    const variants = WAYFARER_ACCESS_DOORS.variants as unknown as readonly {
+    const variants = (hullAccess ? HULL_ACCESS_DOORS : WAYFARER_ACCESS_DOORS)
+      .variants as unknown as readonly {
       id: string;
       sweepBounds: { min: number[]; max: number[]; clearanceM: number };
     }[];
@@ -350,8 +356,8 @@ function qualifyFurnishingGeometry(
       { id: "personnel", center: 3 },
     ])
       for (const [side, y, sign] of [
-        ["inner", 3, -1],
-        ["outer", 7, 1],
+        ...(!hullAccess ? [["inner", 3, -1] as const] : []),
+        ["outer", hullAccess ? 6.5 : 7, 1],
       ] as const) {
         const variant = variants.find(
           (v) =>

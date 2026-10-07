@@ -275,7 +275,7 @@ const request = (
 test("wall dragging commits supported auto-facing poses and rejects detached or reversed requests atomically", async () => {
   const w = await wayfarerOwner(),
     id = "Cockpit_wall_light_cyan_v";
-  const pose = wallFurnishingPlacement(w.doc, id, [0.5, 5.5], false)!;
+  const pose = wallFurnishingPlacement(w.doc, id, [5.08, 2], false)!;
   expect(pose).toBeDefined();
   standNear(w, id, { [id]: pose });
   const initial = w.f.snapshot();

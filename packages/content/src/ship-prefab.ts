@@ -1,3 +1,8 @@
+import {
+  isWayfarerHullAccessProfile,
+  hullAccessInterior,
+  HULL_ACCESS_SOURCE,
+} from "./hull-access-profile";
 import { bowJoinErrors, bowWalkable } from "./bow-profiles";
 import { interiorArtQuarterTurns } from "./ship-furniture";
 import { fleetAccessDoorClearance } from "./fleet-access-physical";
@@ -246,7 +251,7 @@ export interface PrefabMarkings {
 
 export interface ShipPrefabDocumentV1 {
   /** Exact code-owned geometry profile; never caller-supplied collider data. */
-  authoredGameplay?: { id: "wayfarer-authored-r001"; revision: 1 | 2 };
+  authoredGameplay?: { id: "wayfarer-authored-r001"; revision: 1 | 2 | 3 };
   schema: typeof SHIP_PREFAB_SCHEMA;
   id: string;
   name: string;
@@ -463,13 +468,13 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
             ]);
             if (
               p.id !== "wayfarer-authored-r001" ||
-              (p.revision !== 1 && p.revision !== 2) ||
+              (p.revision !== 1 && p.revision !== 2 && p.revision !== 3) ||
               o.id !== "fed.m.wayfarer"
             )
               fail("authoredGameplay", "unknown profile or prefab");
             return {
               id: "wayfarer-authored-r001" as const,
-              revision: p.revision as 1 | 2,
+              revision: p.revision as 1 | 2 | 3,
             };
           })(),
         }),
@@ -953,11 +958,13 @@ export function placeMount(
 ): MountPlacement {
   if (ctx?.id && isWayfarerGameplay(ctx as ShipPrefabDocumentV1)) {
     const accessOuter =
-      isWayfarerAccessProfile(ctx as ShipPrefabDocumentV1) &&
+      (isWayfarerAccessProfile(ctx as ShipPrefabDocumentV1) ||
+        isWayfarerHullAccessProfile(ctx as ShipPrefabDocumentV1)) &&
       (mount.id === "personnel-outer" || mount.id === "cargo-outer");
     const nativePose = WAYFARER_MOUNT_POSES[mount.id];
     const accessRcs =
-      isWayfarerAccessProfile(ctx as ShipPrefabDocumentV1) &&
+      (isWayfarerAccessProfile(ctx as ShipPrefabDocumentV1) ||
+        isWayfarerHullAccessProfile(ctx as ShipPrefabDocumentV1)) &&
       mount.id === "rcs-stern-p" &&
       mount.attach === "face" &&
       mount.normal === "port";
@@ -1420,9 +1427,11 @@ export function deriveInterior(
 ): DerivedInterior {
   if (isWayfarerGameplay(doc)) {
     const native = wayfarerInterior(deck);
-    return isWayfarerAccessProfile(doc)
-      ? wayfarerAccessInterior(native)
-      : native;
+    return isWayfarerHullAccessProfile(doc)
+      ? hullAccessInterior(native)
+      : isWayfarerAccessProfile(doc)
+        ? wayfarerAccessInterior(native)
+        : native;
   }
   const empty: DerivedInterior = {
     deck,
@@ -2893,6 +2902,43 @@ export function logicWallPlacement(
 ): LogicWallPlacement | { error: string } {
   if (!device.at || !device.normal)
     return { error: "needs a wall point and a facing" };
+  if (isWayfarerHullAccessProfile(doc)) {
+    assertWayfarerPrefabContract(doc);
+    const installed = HULL_ACCESS_SOURCE.logic?.devices.find(
+      (d) =>
+        d.kind === "button" &&
+        d.normal === device.normal &&
+        d.at?.[0] === device.at![0] &&
+        d.at?.[1] === device.at![1],
+    );
+    if (!installed) return { error: "unregistered native hull control" };
+    const exterior = installed.id.endsWith("outside-button");
+    const hall = installed.id.endsWith("hall-button");
+    const module = installed.id.startsWith("cargo-") ? "cargo" : "personnel";
+    const normal = NORMAL_VECTOR[device.normal];
+    // These exact devices attach to the native hull jambs and existing entrance
+    // pilasters. Generic grammar ships retain the integer wall-line admission.
+    return {
+      at: [...device.at],
+      // Quarter-metre device anchors select the exact native aperture cheek.
+      surface: installed.id.endsWith("inside-button")
+        ? [module === "personnel" ? 3.6 : -5.125, device.at[1]]
+        : [...device.at],
+      normal: [...normal],
+      side: exterior ? "exterior" : "interior",
+      wall:
+        installed.id.endsWith("inside-button") || exterior
+          ? "hull"
+          : "partition",
+      room: exterior
+        ? null
+        : hall
+          ? "hall"
+          : module === "cargo"
+            ? "cargo"
+            : "utility",
+    };
+  }
   const deck = deckVolume(doc, 0);
   if (!deck?.outline) return { error: "the ship has no walkable deck" };
   const n = NORMAL_VECTOR[device.normal];

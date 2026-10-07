@@ -41,6 +41,7 @@ import {
   FED_WREN_PIN,
   FED_WAYFARER_PIN,
   FED_WAYFARER_R1_PIN,
+  FED_WAYFARER_R2_PIN,
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,
@@ -295,6 +296,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
 
   expect(PREFAB_UPGRADE_SOURCES).toEqual([
     FED_WAYFARER_R1_PIN,
+    FED_WAYFARER_R2_PIN,
     FED_WREN_R2_PIN,
     FED_WREN_R3_PIN,
     FED_WREN_R4_PIN,
@@ -800,7 +802,7 @@ test(
     expect(
       JSON.parse(f.db.constructionInstance.id.find(shipId).documentJson).prefab
         .document.authoredGameplay.revision,
-    ).toBe(2);
+    ).toBe(3);
     for (const row of f.db.constructionFlightFitting.rows.filter(
       (r: Row) => r.shipId === shipId,
     ))
@@ -1235,5 +1237,97 @@ test.each(["socket-approach", "ground-drop", "inventory-grid"])(
       }),
     ).toThrow(/target effects changed since the chosen dry-run/);
     expect(f.snapshot()).toBe(before);
+  },
+);
+
+test(
+  "current chamber profile upgrades to hull fields preserving inventory, fittings and furnishing state",
+  HEAVY,
+  async () => {
+    clearConstructionCollisionCache();
+    const { WAYFARER_ACCESS_SOURCE: source } =
+      await import("@sidereal/content/wayfarer-access-profile");
+    const f = fixture();
+    f.as(OWNER);
+    const characterId = onboardNewCharacter(f.ctx, "Field refit qualification");
+    f.as(SHIP_OPERATOR);
+    const catalog = prefabComponentCatalogFor(
+      FED_WAYFARER_R2_PIN.catalogRevision,
+    );
+    const template = trustedPrefabTemplateFor(source, catalog);
+    expect(template.snapshot.sha256).toBe(FED_WAYFARER_R2_PIN.blueprintSha256);
+    const { shipId, deckId } = installPrefabShip(
+      f.ctx,
+      f.db.character.id.find(characterId),
+      { prefabId: source.id, pose: { kind: "berth" } },
+      { template },
+    );
+    for (const container of f.db.inventoryContainer.rows)
+      if (container.characterId === characterId) container.shipId = shipId;
+    for (const socket of prefabCargoSockets(source, 0, catalog))
+      issueEmptySocketStorage(f.ctx, shipId, socket.key, socket.designId);
+    const furnishing = {
+      shipId,
+      revision: 12n,
+      overridesJson: JSON.stringify({
+        Quarters_A_poster_planet: {
+          dx: 0,
+          dy: 0,
+          yaw: 0,
+          snap: false,
+          deleted: false,
+        },
+      }),
+    };
+    f.db.shipFurnishingState.insert(furnishing);
+    const inventory = heldInventory(f, shipId);
+    const fittings = new Map(
+      f.db.constructionFlightFitting.rows
+        .filter((r: Row) => r.shipId === shipId)
+        .map((r: Row) => [r.sourceDeviceId, r.id]),
+    );
+    const motion = { ...f.db.shipWorldMotion.shipId.find(shipId) };
+    const args = {
+      operationId: "field-door-r2-dryrun",
+      dryRun: true,
+      shipId,
+      expectedSourceBlueprintSha256: FED_WAYFARER_R2_PIN.blueprintSha256,
+      expectedInstanceRevision: 1n,
+      targetPrefabId: source.id,
+      expectedTargetBlueprintSha256: FED_WAYFARER_PIN.blueprintSha256,
+    };
+    upgradePrefabShip(f.ctx, args);
+    const plan = JSON.parse(
+      f.db.shipOperatorOperation.operationId.find(args.operationId).summaryJson,
+    );
+    expect(plan.refusals).toEqual([]);
+    expect(plan.furnishingState.preservedUnchanged).toBe(true);
+    upgradePrefabShip(f.ctx, {
+      ...args,
+      operationId: "field-door-r2-apply",
+      dryRun: false,
+      fromDryRunOperationId: args.operationId,
+    });
+    expect(f.db.shipFurnishingState.shipId.find(shipId)).toEqual(furnishing);
+    expect(heldInventory(f, shipId)).toEqual(inventory);
+    expect(f.db.constructionDeck.id.find(deckId).instanceId).toBe(shipId);
+    const after = JSON.parse(
+      f.db.constructionInstance.id.find(shipId).documentJson,
+    ).prefab.document;
+    expect(after.authoredGameplay.revision).toBe(3);
+    expect(
+      after.logic.devices.some((d: Row) => d.kind === "airlock-controller"),
+    ).toBe(false);
+    for (const row of f.db.constructionFlightFitting.rows.filter(
+      (r: Row) => r.shipId === shipId,
+    ))
+      if (fittings.has(row.sourceDeviceId))
+        expect(row.id).toBe(fittings.get(row.sourceDeviceId));
+    const finalMotion = f.db.shipWorldMotion.shipId.find(shipId);
+    expect([finalMotion.x, finalMotion.y, finalMotion.heading]).toEqual([
+      motion.x,
+      motion.y,
+      motion.heading,
+    ]);
   },
 );

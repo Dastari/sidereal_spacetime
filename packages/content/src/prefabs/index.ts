@@ -7,7 +7,7 @@ import { AU_CATHEDRAL, AU_CRESCENT, AU_LUMEN } from "./aurelian";
 import { FED_BASTION, FED_CREST, FED_MERIDIAN, FED_WREN } from "./federation";
 import { CRY_SHARD, IND_MULE } from "./frontier";
 import { RJ_JACKAL, RJ_MARAUDER, RJ_MAW } from "./riftjack";
-import { WAYFARER_ACCESS_SOURCE } from "../wayfarer-access-profile";
+import { HULL_ACCESS_SOURCE } from "../hull-access-profile";
 import { FEDERATION_FLEET } from "./federation-fleet";
 export {
   FEDERATION_FLEET,
@@ -29,7 +29,7 @@ export const PREFAB_SHIPS: readonly ShipPrefabDocumentV1[] = [
   AU_CATHEDRAL,
   IND_MULE,
   CRY_SHARD,
-  WAYFARER_ACCESS_SOURCE,
+  HULL_ACCESS_SOURCE,
   ...FEDERATION_FLEET,
 ];
 

@@ -262,3 +262,28 @@ describe("ship logic (Wren r6 airlock)", () => {
     });
   });
 });
+
+describe("native hull door toggles with air-retention fields", () => {
+  it("opens immediately from either wall button and keeps obstruction-safe closure", () => {
+    const doc = prefabById("fed.m.wayfarer")!;
+    const h = harness(doc.logic!);
+    expect(
+      [...h.graph.devices.values()].some(
+        (d) => d.kind === "airlock-controller",
+      ),
+    ).toBe(false);
+    h.fire({ kind: "press", device: "personnel-inside-button" }, 100);
+    expect(h.door("personnel-outer-actuator").open).toBe(true);
+    expect(h.light("personnel-inside-button")).toBe("green");
+    expect(h.light("personnel-outside-button")).toBe("green");
+    h.obstructed.add("personnel-outer-actuator");
+    h.fire({ kind: "press", device: "personnel-outside-button" }, 200);
+    expect(h.door("personnel-outer-actuator").open).toBe(true);
+    expect(h.door("personnel-outer-actuator").pendingClose).toBe(true);
+    h.obstructed.clear();
+    h.runTimers(1_000_000);
+    expect(h.door("personnel-outer-actuator").open).toBe(false);
+    expect(h.light("personnel-inside-button")).toBe("off");
+    expect(h.light("personnel-outside-button")).toBe("off");
+  });
+});

@@ -103,7 +103,7 @@ def doors(kit, output):
     return variants
 
 
-def import_native(root, cohort, placements, pieces, cuts):
+def import_native(root, cohort, placements, pieces, cuts, *, legacy_entrance_cut=True, standing_height=2.25):
     imported=[]
     prefix='assets/runtime/ship-study/'+('wayfarer-authored-r001' if cohort=='deck' else 'wayfarer-dorsal-r001')
     for row in placements:
@@ -118,7 +118,7 @@ def import_native(root, cohort, placements, pieces, cuts):
         source_bounds=([min(c[i] for c in source_corners) for i in range(3)],[max(c[i] for c in source_corners) for i in range(3)])
         # Flatten dressing above datum; retain the actual native floor cores.
         applicable=[([c[0][0],c[0][1],max(0,c[0][2])],c[1]) if row['role']=='floor' else c for c in cuts if intersects(source_bounds,(c[0],c[1]))]
-        if cohort=='deck' and row['object'] in {'PART_near_3','POST_near_hdr_3.25'}:
+        if legacy_entrance_cut and cohort=='deck' and row['object'] in {'PART_near_3','POST_near_hdr_3.25'}:
             applicable.append(([2.875,1.2,-.015625],[4.375,1.8,2.625]))
         if not applicable: continue
         before=set(bpy.data.objects);bpy.ops.import_scene.gltf(filepath=str(path));objects=[o for o in set(bpy.data.objects)-before if o.type=='MESH']
@@ -139,7 +139,7 @@ def import_native(root, cohort, placements, pieces, cuts):
         if cohort=='deck' and row['role'] in {'partition','door-post','wall-dressing','header-light','door-light','threshold'}:
             rects=[[source_bounds[0][0],source_bounds[0][1],source_bounds[1][0],source_bounds[1][1]]]
             for a,b in applicable:
-                if a[2]<=0 and b[2]>=2.25:
+                if a[2]<=0 and b[2]>=standing_height:
                     rects=[p for r in rects for p in subtract(r,[a[0],a[1],b[0],b[1]])]
             COLLISION_REPLACEMENTS[row['object']]=rects
     return imported
