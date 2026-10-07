@@ -248,6 +248,60 @@ describe("authored access door pack", () => {
       env.dispose();
     }
   });
+  it("shares remote geometry while preserving independent moving leaves and sibling lifetime", async () => {
+    const env = scene();
+    try {
+      const a = await loadAuthoredAccessDoors(env.scene, env.root, [place], {
+        fetchBytes: read,
+        instanceMeshes: true,
+      });
+      const other = new TransformNode("other-ship", env.scene);
+      other.position.x = 40;
+      const b = await loadAuthoredAccessDoors(env.scene, other, [place], {
+        fetchBytes: read,
+        instanceMeshes: true,
+      });
+      const cloned = await loadAuthoredAccessDoors(
+        env.scene,
+        env.root,
+        [{ ...place, id: "deck" }],
+        { fetchBytes: read },
+      );
+      const visible = (h: typeof a) =>
+        h.meshes().filter((m) => m.getTotalVertices() > 0);
+      expect(visible(a).length).toBeGreaterThan(0);
+      expect(visible(a).every((m) => m.isAnInstance)).toBe(true);
+      expect(visible(cloned).every((m) => !m.isAnInstance)).toBe(true);
+      for (let i = 0; i < visible(a).length; i++) {
+        const first = visible(a)[
+          i
+        ] as import("@babylonjs/core/Meshes/instancedMesh").InstancedMesh;
+        const second = visible(b)[
+          i
+        ] as import("@babylonjs/core/Meshes/instancedMesh").InstancedMesh;
+        expect(first.sourceMesh).toBe(second.sourceMesh);
+        expect(first.material).toBe(second.material);
+      }
+      a.update(new Map([["cargo", { open: true }]]), 0.7);
+      b.update(new Map([["cargo", { open: false }]]), 0.7);
+      const leaf = (root: TransformNode) =>
+        root
+          .getDescendants()
+          .find((n) => n.name === "access-door:cargo:left") as TransformNode;
+      expect(leaf(env.root).position.x).toBeLessThan(0);
+      expect(leaf(other).position.x).toBeCloseTo(0);
+      a.dispose();
+      expect(visible(b).every((m) => !m.isDisposed())).toBe(true);
+      b.update(new Map([["cargo", { open: true }]]), 0.7);
+      expect(leaf(other).position.x).toBeLessThan(0);
+      b.update(undefined, 0);
+      expect(leaf(other).position.x).toBeCloseTo(0);
+      b.dispose();
+      cloned.dispose();
+    } finally {
+      env.dispose();
+    }
+  });
   it("rejects scaled and reflected ancestors before fetching source bytes", async () => {
     const env = scene();
     let reads = 0;

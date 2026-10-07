@@ -34,6 +34,7 @@ export async function createFederationFleetAccessDoors(
   const authored = await loadAuthoredAccessDoors(scene, root, placements, {
     pack: WAYFARER_ACCESS_DOORS,
     fetchBytes,
+    instanceMeshes: options.exteriorOnly,
   });
   const ordinary = options.exteriorOnly
     ? undefined
@@ -51,6 +52,7 @@ export async function createFederationFleetAccessDoors(
   const backers: Material[] = [];
   for (const mesh of authored.meshes()) {
     if (
+      options.exteriorOnly ||
       mesh.metadata?.authoredAccessDoor?.part !== "frame" ||
       mesh.material?.name !== "access.navy"
     )
@@ -73,10 +75,12 @@ export async function createFederationFleetAccessDoors(
       : null;
     for (const material of backers) material.clipPlane = plane;
   };
-  const cutawayObserver = scene.onBeforeRenderObservable.add(updateCutaway);
+  const cutawayObserver = options.exteriorOnly
+    ? null
+    : scene.onBeforeRenderObservable.add(updateCutaway);
   return {
     setView(view: "deck" | "flight") {
-      deck = view === "deck";
+      deck = !options.exteriorOnly && view === "deck";
       updateCutaway();
       ordinary?.setView(view);
       authored.setEnabled(true);

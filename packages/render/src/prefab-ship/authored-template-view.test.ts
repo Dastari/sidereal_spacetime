@@ -168,3 +168,52 @@ it("remote exterior admission loads no cabin cohort or attached light owners", a
   view.dispose();
   expect(scene.transformNodes).toHaveLength(0);
 });
+
+it("coalesces remote opaque receivers without changing native placement coverage or bounds", async () => {
+  serveAssets();
+  const scene = makeScene();
+  const doc = prefabById("fed.s.wren")!;
+  const options = {
+    catalog: defaultPrefabComponentCatalog(),
+    view: "flight" as const,
+  };
+  const own = await createPrefabShipView(scene, doc, options);
+  const remote = await createPrefabShipView(scene, doc, {
+    ...options,
+    exteriorOnly: true,
+  });
+  const native = (view: typeof own) =>
+    view.root
+      .getChildMeshes()
+      .filter((m) => m.isEnabled() && m.metadata?.authoredStudy);
+  const coverage = (view: typeof own) => {
+    const totals = new Map<string, number>();
+    for (const mesh of native(view)) {
+      for (const r of mesh.metadata.authoredStudy.placementRanges) {
+        const key = JSON.stringify([r.object, r.piece, r.role, r.material]);
+        totals.set(key, (totals.get(key) ?? 0) + r.indexCount);
+      }
+    }
+    return [...totals].sort(([a], [b]) => a.localeCompare(b));
+  };
+  expect(coverage(remote)).toEqual(coverage(own));
+  expect(native(remote).length).toBeLessThan(native(own).length / 2);
+  const bounds = (view: typeof own) => {
+    const min = new Vector3(Infinity, Infinity, Infinity);
+    const max = new Vector3(-Infinity, -Infinity, -Infinity);
+    for (const m of native(view)) {
+      m.computeWorldMatrix(true);
+      const b = m.getBoundingInfo().boundingBox;
+      min.minimizeInPlace(b.minimumWorld);
+      max.maximizeInPlace(b.maximumWorld);
+    }
+    return [...min.asArray(), ...max.asArray()];
+  };
+  bounds(remote).forEach((v, i) => expect(v).toBeCloseTo(bounds(own)[i], 5));
+  expect(
+    native(remote).every((m) => !m.metadata.authoredStudy.receiverRegion),
+  ).toBe(true);
+  own.dispose();
+  remote.dispose();
+  expect(scene.transformNodes).toHaveLength(0);
+}, 30000);
