@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/net",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -13,6 +13,6 @@
   },
   "dependencies": {
     "@sidereal/sim": "0.8.1",
-    "spacetimedb": "2.10.0"
+    "spacetimedb": "2.10.2"
   }
 }

@@ -219,16 +219,27 @@ export function createWorldSubscriptions(options: {
       pumping = false;
     }
   }
-  const reset = () => {
+  const reset = (preserveBaseline = false) => {
     if (disposed) return store.getEpoch();
     running = false;
     admission = undefined;
     ownMotion = undefined;
     desiredCell = undefined;
-    for (const scope of [...scopes]) retire(scope);
+    // Admission/descriptions/charted bodies are context-independent queries:
+    // their server-filtered rows change atomically with accepted admission. Keep
+    // this handle so unsubscribe cannot masquerade as authoritative revocation.
+    for (const scope of [...scopes])
+      if (!preserveBaseline || scope.kind !== "baseline") retire(scope);
     const epoch = clearStore();
     running = true;
     pump();
+    if (
+      preserveBaseline &&
+      [...scopes].some(
+        (scope) => scope.kind === "baseline" && scope.phase === "active",
+      )
+    )
+      options.onBaselineApplied?.();
     return epoch;
   };
   const dispose = () => {
@@ -266,7 +277,7 @@ export function createWorldSubscriptions(options: {
           next.revision <= admission.revision
         )
           return false;
-        reset();
+        reset(true);
       }
       if (motion) {
         if (
