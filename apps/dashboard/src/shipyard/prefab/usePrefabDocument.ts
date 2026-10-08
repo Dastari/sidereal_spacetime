@@ -98,6 +98,15 @@ export function listDrafts(): DraftRecord[] {
 export function writeDraft(doc: Doc): string {
   if (doc.authoredGameplay)
     throw Error("Authored ships are managed outside the grammar editor");
+  const template = prefabById(doc.id);
+  const prior = readDraftRecord(
+    storage()?.getItem(DRAFT_PREFIX + doc.id) ?? null,
+  );
+  if (
+    (template && template.sizeClass !== doc.sizeClass) ||
+    (prior && prior.doc.sizeClass !== doc.sizeClass)
+  )
+    throw Error("Blueprint size class is fixed at creation");
   const savedAt = new Date().toISOString();
   const record: DraftRecord = {
     schema: "sidereal.prefab-draft.v1",

@@ -1,6 +1,15 @@
+import {
+  isWayfarerHullAccessProfile,
+  HULL_ACCESS_SOURCE,
+} from "./hull-access-profile";
 /** Pinned authored Wayfarer geometry. Source originals remain immutable. */
 import source from "./wayfarer-authored-gameplay.v1.json";
 import prefabContract from "./wayfarer-prefab.v1.json";
+import {
+  assertWayfarerAccessAdmission,
+  isWayfarerAccessProfile,
+  WAYFARER_ACCESS_SOURCE,
+} from "./wayfarer-access-profile";
 import type { AuthoredStudyInstance } from "./wayfarer-authored-study";
 import type { DerivedInterior, ShipPrefabDocumentV1 } from "./ship-prefab";
 
@@ -15,6 +24,35 @@ export const WAYFARER_OMITTED_OBJECTS = new Set([
   "Hall_crew_chibi",
   "Hall_selection_ring",
 ]);
+/** A finite affine translation with an unchanged full unit linear transform. */
+export function wayfarerNativeFloorUnitPlacement(
+  matrix: readonly (readonly number[])[],
+): boolean {
+  return (
+    matrix.length === 4 &&
+    matrix.every(
+      (row, r) =>
+        row.length === 4 &&
+        row.every(
+          (value, c) =>
+            Number.isFinite(value) &&
+            ((r < 3 && c === 3) || value === (r === c ? 1 : 0)),
+        ),
+    )
+  );
+}
+/** Immutable source identities/nominal cells for qualified native support subsets. */
+export const WAYFARER_NATIVE_FLOOR_BACKINGS = Object.freeze(
+  source.rows
+    .filter((row) => row.role === "floor")
+    .map((row) =>
+      Object.freeze({
+        object: row.object,
+        cell: Object.freeze([row.matrix[0][3], row.matrix[1][3]] as const),
+        unitPlacement: wayfarerNativeFloorUnitPlacement(row.matrix),
+      }),
+    ),
+);
 
 /** Approved-source derivative: a .74m bedroom doorway and clear furnished access lanes. */
 export function applyWayfarerAuthoredPlacementEdits(
@@ -196,11 +234,14 @@ export function isWayfarerGameplay(
   return (
     doc.id === WAYFARER_PREFAB_ID &&
     doc.authoredGameplay?.id === WAYFARER_GAMEPLAY_PROFILE.id &&
-    doc.authoredGameplay.revision === 1
+    (doc.authoredGameplay.revision === 1 ||
+      isWayfarerAccessProfile(doc) ||
+      isWayfarerHullAccessProfile(doc))
   );
 }
 
 export function assertWayfarerPrefabContract(doc: ShipPrefabDocumentV1): void {
+  if (isWayfarerAccessProfile(doc)) assertWayfarerAccessAdmission();
   // Recursive key ordering compares the entire admitted source; clients cannot change physical
   // components or keep this profile attached to a different hull revision.
   const sort = (value: unknown): unknown =>
@@ -213,7 +254,12 @@ export function assertWayfarerPrefabContract(doc: ShipPrefabDocumentV1): void {
               .map(([key, v]) => [key, sort(v)]),
           )
         : value;
-  if (JSON.stringify(sort(doc)) !== JSON.stringify(sort(prefabContract)))
+  const expected = isWayfarerHullAccessProfile(doc)
+    ? HULL_ACCESS_SOURCE
+    : isWayfarerAccessProfile(doc)
+      ? WAYFARER_ACCESS_SOURCE
+      : prefabContract;
+  if (JSON.stringify(sort(doc)) !== JSON.stringify(sort(expected)))
     throw Error(
       "Authored Wayfarer profile requires its exact registered prefab document",
     );

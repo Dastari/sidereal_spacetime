@@ -1,0 +1,374 @@
+{
+  "approval": "proposal",
+  "axes": "author X along / Y outward / Z up; native GLB Y up",
+  "palette": {
+    "access.amber": {
+      "colour": [
+        1,
+        0.38,
+        0.015
+      ],
+      "family": "emissive",
+      "kind": "authored-access",
+      "strength": 2.4
+    },
+    "access.cyan": {
+      "colour": [
+        0.015,
+        0.48,
+        1
+      ],
+      "family": "emissive",
+      "kind": "authored-access",
+      "strength": 2.4
+    },
+    "access.grey": {
+      "colour": [
+        0.18,
+        0.2,
+        0.24
+      ],
+      "family": "plastic-deck",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.hazard": {
+      "colour": [
+        0.72,
+        0.39,
+        0.025
+      ],
+      "family": "plastic-colour",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.metal": {
+      "colour": [
+        0.28,
+        0.32,
+        0.37
+      ],
+      "family": "metal",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.navy": {
+      "colour": [
+        0.013,
+        0.025,
+        0.065
+      ],
+      "family": "plastic-dark",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.red": {
+      "colour": [
+        0.42,
+        0.018,
+        0.034
+      ],
+      "family": "plastic-colour",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.rubber": {
+      "colour": [
+        0.006,
+        0.009,
+        0.014
+      ],
+      "family": "rubber",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.trim": {
+      "colour": [
+        0.065,
+        0.085,
+        0.12
+      ],
+      "family": "plastic-dark",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.white": {
+      "colour": [
+        0.66,
+        0.68,
+        0.69
+      ],
+      "family": "plastic-light",
+      "kind": "authored-access",
+      "strength": 0
+    }
+  },
+  "pieces": [
+    {
+      "boundsMax": [
+        1.0,
+        0.3319999873638153,
+        2.3125
+      ],
+      "boundsMin": [
+        -1.0,
+        -0.550000011920929,
+        -0.041999999433755875
+      ],
+      "bytes": 406088,
+      "file": "personnel.frame.glb",
+      "frame": "piece-local",
+      "id": "personnel.frame",
+      "sha256": "8dd70cdd1ea3b5cffee1e25c6a1f041b640b0f10751763d913fedc7e0c2c1717",
+      "triangles": 5724
+    },
+    {
+      "boundsMax": [
+        0.6000000238418579,
+        0.17099998891353607,
+        2.200000047683716
+      ],
+      "boundsMin": [
+        -0.6000000238418579,
+        -0.2800000011920929,
+        0.0
+      ],
+      "bytes": 187888,
+      "file": "personnel.leaf.glb",
+      "frame": "piece-local",
+      "id": "personnel.leaf",
+      "sha256": "971b4465638eb0641b971b67ad4e2f54cd3baaea3e61ef93cf72d8aabd6de9a1",
+      "triangles": 2624
+    },
+    {
+      "boundsMax": [
+        1.0,
+        0.25,
+        2.3335001468658447
+      ],
+      "boundsMin": [
+        -1.0,
+        -0.32499998807907104,
+        0.0
+      ],
+      "bytes": 301800,
+      "file": "cargo.2m.frame.glb",
+      "frame": "piece-local",
+      "id": "cargo.2m.frame",
+      "sha256": "fb0dee53de4335067d4ece847a095cb66e63373a0017dfd399bda47493ad4a5f",
+      "triangles": 4212
+    },
+    {
+      "boundsMax": [
+        0.0,
+        0.18449999392032623,
+        2.25
+      ],
+      "boundsMin": [
+        -0.875,
+        -0.11999999731779099,
+        0.0
+      ],
+      "bytes": 128432,
+      "file": "cargo.2m.left.glb",
+      "frame": "piece-local",
+      "id": "cargo.2m.left",
+      "sha256": "0e5d0bbb6590609491292fb06652f2f8165b6682c12baf8a6e732f7da3c27bf2",
+      "triangles": 1744
+    },
+    {
+      "boundsMax": [
+        0.875,
+        0.18449999392032623,
+        2.25
+      ],
+      "boundsMin": [
+        0.0,
+        -0.11999999731779099,
+        0.0
+      ],
+      "bytes": 127640,
+      "file": "cargo.2m.right.glb",
+      "frame": "piece-local",
+      "id": "cargo.2m.right",
+      "sha256": "2f2c3ce4ae6dc77a6467732d88fe4213694b7b9e1901902489e5b532eef81278",
+      "triangles": 1744
+    },
+    {
+      "boundsMax": [
+        2.0,
+        0.25,
+        2.3335001468658447
+      ],
+      "boundsMin": [
+        -2.0,
+        -0.32499998807907104,
+        0.0
+      ],
+      "bytes": 422764,
+      "file": "cargo.4m.frame.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.frame",
+      "sha256": "b57aa246355fda477761a5321c15f8d57dde632919313e43bfcec2dfc77e5672",
+      "triangles": 5940
+    },
+    {
+      "boundsMax": [
+        0.0,
+        0.18449999392032623,
+        2.25
+      ],
+      "boundsMin": [
+        -1.875,
+        -0.11999999731779099,
+        0.0
+      ],
+      "bytes": 127644,
+      "file": "cargo.4m.left.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.left",
+      "sha256": "67eb2c7ec66e2ebd6f0299e0ae8074e1322840a5bfd26eebb3b0e2131f01061a",
+      "triangles": 1744
+    },
+    {
+      "boundsMax": [
+        1.875,
+        0.18449999392032623,
+        2.25
+      ],
+      "boundsMin": [
+        0.0,
+        -0.11999999731779099,
+        0.0
+      ],
+      "bytes": 127632,
+      "file": "cargo.4m.right.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.right",
+      "sha256": "886559e2f79109db7e8cdc73f2be201c21acde5aded1dbd58f0a1b9b957d8a11",
+      "triangles": 1744
+    },
+    {
+      "boundsMax": [
+        3.0,
+        0.25,
+        2.3335001468658447
+      ],
+      "boundsMin": [
+        -3.0,
+        -0.32499998807907104,
+        0.0
+      ],
+      "bytes": 551280,
+      "file": "cargo.6m.frame.glb",
+      "frame": "piece-local",
+      "id": "cargo.6m.frame",
+      "sha256": "18f095a364681ee6568694939d0cd82551d1e359814fdb452d888773dca6f5d0",
+      "triangles": 7776
+    },
+    {
+      "boundsMax": [
+        0.0,
+        0.18449999392032623,
+        2.25
+      ],
+      "boundsMin": [
+        -2.875,
+        -0.11999999731779099,
+        0.0
+      ],
+      "bytes": 127648,
+      "file": "cargo.6m.left.glb",
+      "frame": "piece-local",
+      "id": "cargo.6m.left",
+      "sha256": "e06f2eaa35aca073872b652379d63d7ae77d1d7120eeca8d6d6cdfb51e5bebea",
+      "triangles": 1744
+    },
+    {
+      "boundsMax": [
+        2.875,
+        0.18449999392032623,
+        2.25
+      ],
+      "boundsMin": [
+        0.0,
+        -0.11999999731779099,
+        0.0
+      ],
+      "bytes": 127636,
+      "file": "cargo.6m.right.glb",
+      "frame": "piece-local",
+      "id": "cargo.6m.right",
+      "sha256": "505b1557f236610bcdc45900a2c3468704164983401b8dd12c5790b37ecc6dae",
+      "triangles": 1744
+    }
+  ],
+  "revision": "ship-access-r002",
+  "schema": "sidereal.ship-access-doors/v1",
+  "sourceSha256": "c92283d38248dc6aac68b52f51a9fed41aa7ebd20b568f7a28d47655d3d2aea6",
+  "variants": [
+    {
+      "clearHeightM": 2.2,
+      "clearWidthM": 1.2,
+      "depthM": 0.8819999992847443,
+      "id": "personnel",
+      "motion": "single-sliding",
+      "outerHeightM": 2.3125,
+      "parts": {
+        "frame": "personnel.frame",
+        "leaf": "personnel.leaf"
+      },
+      "requiresPocketReservationM": 1.2249999999999999,
+      "spanM": 2,
+      "strokeM": 1.2249999999999999
+    },
+    {
+      "clearHeightM": 2.25,
+      "clearWidthM": 1.75,
+      "depthM": 0.574999988079071,
+      "id": "cargo.2m",
+      "motion": "split-sliding",
+      "outerHeightM": 2.3335001468658447,
+      "parts": {
+        "frame": "cargo.2m.frame",
+        "left": "cargo.2m.left",
+        "right": "cargo.2m.right"
+      },
+      "requiresPocketReservationM": 0.9,
+      "spanM": 2,
+      "strokeM": 0.9
+    },
+    {
+      "clearHeightM": 2.25,
+      "clearWidthM": 3.75,
+      "depthM": 0.574999988079071,
+      "id": "cargo.4m",
+      "motion": "split-sliding",
+      "outerHeightM": 2.3335001468658447,
+      "parts": {
+        "frame": "cargo.4m.frame",
+        "left": "cargo.4m.left",
+        "right": "cargo.4m.right"
+      },
+      "requiresPocketReservationM": 1.9,
+      "spanM": 4,
+      "strokeM": 1.9
+    },
+    {
+      "clearHeightM": 2.25,
+      "clearWidthM": 5.75,
+      "depthM": 0.574999988079071,
+      "id": "cargo.6m",
+      "motion": "split-sliding",
+      "outerHeightM": 2.3335001468658447,
+      "parts": {
+        "frame": "cargo.6m.frame",
+        "left": "cargo.6m.left",
+        "right": "cargo.6m.right"
+      },
+      "requiresPocketReservationM": 2.9,
+      "spanM": 6,
+      "strokeM": 2.9
+    }
+  ]
+}

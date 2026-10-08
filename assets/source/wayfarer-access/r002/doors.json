@@ -1,0 +1,1094 @@
+{
+  "palette": {
+    "accent": {
+      "colour": [
+        0.3,
+        0.017,
+        0.045
+      ],
+      "family": "plastic-colour",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "access.amber": {
+      "colour": [
+        1,
+        0.38,
+        0.015
+      ],
+      "family": "emissive",
+      "kind": "authored-access",
+      "strength": 2.4
+    },
+    "access.cyan": {
+      "colour": [
+        0.015,
+        0.48,
+        1
+      ],
+      "family": "emissive",
+      "kind": "authored-access",
+      "strength": 2.4
+    },
+    "access.grey": {
+      "colour": [
+        0.18,
+        0.2,
+        0.24
+      ],
+      "family": "plastic-deck",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.hazard": {
+      "colour": [
+        0.72,
+        0.39,
+        0.025
+      ],
+      "family": "plastic-colour",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.metal": {
+      "colour": [
+        0.28,
+        0.32,
+        0.37
+      ],
+      "family": "metal",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.navy": {
+      "colour": [
+        0.013,
+        0.025,
+        0.065
+      ],
+      "family": "plastic-dark",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.red": {
+      "colour": [
+        0.42,
+        0.018,
+        0.034
+      ],
+      "family": "plastic-colour",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.rubber": {
+      "colour": [
+        0.006,
+        0.009,
+        0.014
+      ],
+      "family": "rubber",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.trim": {
+      "colour": [
+        0.065,
+        0.085,
+        0.12
+      ],
+      "family": "plastic-dark",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.white": {
+      "colour": [
+        0.66,
+        0.68,
+        0.69
+      ],
+      "family": "plastic-light",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "blue": {
+      "colour": [
+        0.02,
+        0.12,
+        0.55
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "dark": {
+      "colour": [
+        0.008,
+        0.009,
+        0.024
+      ],
+      "family": "plastic-dark",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "deck": {
+      "colour": [
+        0.055,
+        0.058,
+        0.105
+      ],
+      "family": "plastic-deck",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "deck_dark": {
+      "colour": [
+        0.02,
+        0.022,
+        0.045
+      ],
+      "family": "plastic-deck",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "deck_seam": {
+      "colour": [
+        0.03,
+        0.032,
+        0.06
+      ],
+      "family": "plastic-dark",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "emit_a": {
+      "colour": [
+        0.05,
+        0.48,
+        1.0
+      ],
+      "family": "emissive",
+      "kind": "slot",
+      "strength": 5.0
+    },
+    "emit_a@high": {
+      "colour": [
+        0.05,
+        0.48,
+        1.0
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 6.0
+    },
+    "emit_a@low": {
+      "colour": [
+        0.05,
+        0.48,
+        1.0
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 1.2
+    },
+    "emit_b": {
+      "colour": [
+        1.0,
+        0.3,
+        0.025
+      ],
+      "family": "emissive",
+      "kind": "slot",
+      "strength": 4.2
+    },
+    "emit_b@high": {
+      "colour": [
+        1.0,
+        0.3,
+        0.025
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 6.0
+    },
+    "emit_b@low": {
+      "colour": [
+        1.0,
+        0.3,
+        0.025
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 1.2
+    },
+    "emit_c@mid": {
+      "colour": [
+        1.0,
+        0.1,
+        0.55
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 3.0
+    },
+    "emit_g@mid": {
+      "colour": [
+        0.75,
+        1.0,
+        0.45
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 3.0
+    },
+    "emit_r@high": {
+      "colour": [
+        1.0,
+        0.06,
+        0.03
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 6.0
+    },
+    "emit_r@low": {
+      "colour": [
+        1.0,
+        0.06,
+        0.03
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 1.2
+    },
+    "emit_w@high": {
+      "colour": [
+        1.0,
+        0.86,
+        0.66
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 6.0
+    },
+    "emit_w@mid": {
+      "colour": [
+        1.0,
+        0.86,
+        0.66
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 3.0
+    },
+    "fabric_blue": {
+      "colour": [
+        0.025,
+        0.14,
+        0.62
+      ],
+      "family": "fabric",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "fabric_white": {
+      "colour": [
+        0.78,
+        0.8,
+        0.84
+      ],
+      "family": "fabric",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "glass_canopy": {
+      "colour": [
+        0.3,
+        0.55,
+        1.0
+      ],
+      "family": "glass",
+      "kind": "shared",
+      "strength": 0.5
+    },
+    "glass_dark": {
+      "colour": [
+        0.02,
+        0.05,
+        0.12
+      ],
+      "family": "glass",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "hazard": {
+      "colour": [
+        0.9,
+        0.42,
+        0.04
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "leaf": {
+      "colour": [
+        0.06,
+        0.36,
+        0.03
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "leaf_light": {
+      "colour": [
+        0.2,
+        0.6,
+        0.05
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "metal": {
+      "colour": [
+        0.4,
+        0.41,
+        0.45
+      ],
+      "family": "metal",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "orange": {
+      "colour": [
+        0.9,
+        0.25,
+        0.02
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "pink": {
+      "colour": [
+        0.85,
+        0.16,
+        0.3
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "primary": {
+      "colour": [
+        0.6,
+        0.6,
+        0.63
+      ],
+      "family": "plastic-light",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "rubber": {
+      "colour": [
+        0.012,
+        0.012,
+        0.016
+      ],
+      "family": "rubber",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "scr_blue@low": {
+      "colour": [
+        0.06,
+        0.35,
+        1.0
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 1.2
+    },
+    "scr_blue@mid": {
+      "colour": [
+        0.06,
+        0.35,
+        1.0
+      ],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 3.0
+    },
+    "secondary": {
+      "colour": [
+        0.03,
+        0.034,
+        0.1
+      ],
+      "family": "plastic-dark",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "skin": {
+      "colour": [
+        0.75,
+        0.5,
+        0.36
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "soil": {
+      "colour": [
+        0.05,
+        0.03,
+        0.02
+      ],
+      "family": "rubber",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "terracotta": {
+      "colour": [
+        0.55,
+        0.16,
+        0.06
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "trim": {
+      "colour": [
+        0.075,
+        0.085,
+        0.15
+      ],
+      "family": "plastic-dark",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "wall": {
+      "colour": [
+        0.26,
+        0.255,
+        0.29
+      ],
+      "family": "plastic-light",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "wall_dark": {
+      "colour": [
+        0.13,
+        0.13,
+        0.17
+      ],
+      "family": "plastic-dark",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "white": {
+      "colour": [
+        0.8,
+        0.8,
+        0.82
+      ],
+      "family": "plastic-light",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "x_bridge_navyblue": {
+      "colour": [
+        0.022,
+        0.04,
+        0.17
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_can_red": {
+      "colour": [
+        0.5,
+        0.09,
+        0.11
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_leaf_lime": {
+      "colour": [
+        0.36,
+        0.75,
+        0.06
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_leaf_purple": {
+      "colour": [
+        0.4,
+        0.03,
+        0.13
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_mag_pink": {
+      "colour": [
+        0.78,
+        0.1,
+        0.42
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_mag_yellow": {
+      "colour": [
+        0.95,
+        0.6,
+        0.08
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_mug_grey": {
+      "colour": [
+        0.22,
+        0.2,
+        0.34
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_mug_orange": {
+      "colour": [
+        0.62,
+        0.17,
+        0.03
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_pale_blue": {
+      "colour": [
+        0.42,
+        0.52,
+        0.72
+      ],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_sofa_base": {
+      "colour": [
+        0.14,
+        0.014,
+        0.022
+      ],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_sofa_red": {
+      "colour": [
+        0.6,
+        0.13,
+        0.18
+      ],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_sofa_red_back": {
+      "colour": [
+        0.29,
+        0.027,
+        0.083
+      ],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_suit_red": {
+      "colour": [
+        0.62,
+        0.03,
+        0.05
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_table_pink": {
+      "colour": [
+        0.21,
+        0.026,
+        0.1
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_blue_fold": {
+      "colour": [
+        0.16,
+        0.24,
+        0.72
+      ],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_bronze": {
+      "colour": [
+        0.32,
+        0.13,
+        0.035
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_gold": {
+      "colour": [
+        0.55,
+        0.22,
+        0.03
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_mattress": {
+      "colour": [
+        0.56,
+        0.59,
+        0.68
+      ],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_pot": {
+      "colour": [
+        0.42,
+        0.055,
+        0.05
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_seam": {
+      "colour": [
+        0.42,
+        0.44,
+        0.5
+      ],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_tan": {
+      "colour": [
+        0.21,
+        0.075,
+        0.03
+      ],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_walls_cream": {
+      "colour": [
+        0.52,
+        0.37,
+        0.3
+      ],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_walls_rail": {
+      "colour": [
+        0.4,
+        0.4,
+        0.45
+      ],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_case_greyblue": {
+      "colour": [
+        0.2,
+        0.22,
+        0.36
+      ],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_chili": {
+      "colour": [
+        0.9,
+        0.1,
+        0.02
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_guard": {
+      "colour": [
+        0.15,
+        0.17,
+        0.3
+      ],
+      "family": "plastic-dark",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_kale": {
+      "colour": [
+        0.1,
+        0.42,
+        0.2
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_kale_dark": {
+      "colour": [
+        0.05,
+        0.25,
+        0.13
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_label_green": {
+      "colour": [
+        0.1,
+        0.5,
+        0.1
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_lavender": {
+      "colour": [
+        0.19,
+        0.2,
+        0.46
+      ],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_lid": {
+      "colour": [
+        0.3,
+        0.33,
+        0.46
+      ],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_orange_dark": {
+      "colour": [
+        0.45,
+        0.1,
+        0.01
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_pebble": {
+      "colour": [
+        0.45,
+        0.5,
+        0.07
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_pebble_tan": {
+      "colour": [
+        0.55,
+        0.36,
+        0.12
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_sage": {
+      "colour": [
+        0.2,
+        0.23,
+        0.18
+      ],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_stem": {
+      "colour": [
+        0.14,
+        0.32,
+        0.05
+      ],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "yellow": {
+      "colour": [
+        0.92,
+        0.48,
+        0.02
+      ],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    }
+  },
+  "pieces": [
+    {
+      "boundsMax": [
+        1.0,
+        0.3319999873638153,
+        2.4375
+      ],
+      "boundsMin": [
+        -1.9031250476837158,
+        -0.550000011920929,
+        -0.1875
+      ],
+      "bytes": 395064,
+      "file": "personnel.frame.glb",
+      "frame": "piece-local",
+      "id": "personnel.frame",
+      "sha256": "f2854ecec0497c8d58cfa356af6d5244b1ebea2332a1f7adfd870a570440fbab",
+      "triangles": 5614
+    },
+    {
+      "boundsMax": [
+        0.6000000238418579,
+        0.07099999487400055,
+        2.200000047683716
+      ],
+      "boundsMin": [
+        -0.6000000238418579,
+        -0.3799999952316284,
+        0.0
+      ],
+      "bytes": 187928,
+      "file": "personnel.leaf.glb",
+      "frame": "piece-local",
+      "id": "personnel.leaf",
+      "sha256": "0150ff4dbdd550114e6b2b29b19abeeb5b909feb94ffd41372372677d5b97418",
+      "triangles": 2624
+    },
+    {
+      "boundsMax": [
+        1.9031250476837158,
+        0.3319999873638153,
+        2.4375
+      ],
+      "boundsMin": [
+        -1.0,
+        -0.550000011920929,
+        -0.1875
+      ],
+      "bytes": 398228,
+      "file": "personnel.reverse.frame.glb",
+      "frame": "piece-local",
+      "id": "personnel.reverse.frame",
+      "sha256": "1978e5a0b862491ae94d3017cb1889f9cd0b9c7512d2210d76243d24d24975ba",
+      "triangles": 5662
+    },
+    {
+      "boundsMax": [
+        0.6000000238418579,
+        0.07099999487400055,
+        2.200000047683716
+      ],
+      "boundsMin": [
+        -0.6000000238418579,
+        -0.3799999952316284,
+        0.0
+      ],
+      "bytes": 187936,
+      "file": "personnel.reverse.leaf.glb",
+      "frame": "piece-local",
+      "id": "personnel.reverse.leaf",
+      "sha256": "52bb0542235fe9270d5b428748038191325522c1bdd912bd862198932ab4289c",
+      "triangles": 2624
+    },
+    {
+      "boundsMax": [
+        3.8531250953674316,
+        0.25,
+        2.4375
+      ],
+      "boundsMin": [
+        -3.8531250953674316,
+        -0.34812501072883606,
+        -0.1875
+      ],
+      "bytes": 431592,
+      "file": "cargo.4m.frame.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.frame",
+      "sha256": "17e1bc5566e9cc3dc31d35b8dc294d0018d7339ef45e818501e40a95881c78a4",
+      "triangles": 6184
+    },
+    {
+      "boundsMax": [
+        0.0,
+        0.03449999913573265,
+        2.25
+      ],
+      "boundsMin": [
+        -1.875,
+        -0.27000001072883606,
+        0.0
+      ],
+      "bytes": 127684,
+      "file": "cargo.4m.left.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.left",
+      "sha256": "8c7393b2af9c97e9f46e49f3b3c81f69e36082726700bc2363e9926c7ce26219",
+      "triangles": 1744
+    },
+    {
+      "boundsMax": [
+        1.875,
+        0.03449999913573265,
+        2.25
+      ],
+      "boundsMin": [
+        0.0,
+        -0.27000001072883606,
+        0.0
+      ],
+      "bytes": 127672,
+      "file": "cargo.4m.right.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.right",
+      "sha256": "98465c77987847fbd6afcd0c8985e8909cd03d0bb50e9addbde93871e7d52713",
+      "triangles": 1744
+    }
+  ],
+  "revision": "wayfarer-access-doors-r002",
+  "schema": "sidereal.ship-access-doors/v1",
+  "variants": [
+    {
+      "clearHeightM": 2.2,
+      "clearWidthM": 1.2,
+      "depthM": 0.8819999992847443,
+      "id": "personnel",
+      "leafDirection": -1,
+      "motion": "single-sliding",
+      "outerHeightM": 2.4375,
+      "parts": {
+        "frame": "personnel.frame",
+        "leaf": "personnel.leaf"
+      },
+      "requiresPocketReservationM": 1.2249999999999999,
+      "spanM": 2,
+      "strokeM": 1.2249999999999999,
+      "sweepBounds": {
+        "clearanceM": 0.015625,
+        "max": [
+          0.6000000238418579,
+          0.07099999487400055,
+          2.200000047683716
+        ],
+        "min": [
+          -1.8250000238418578,
+          -0.3799999952316284,
+          0.0
+        ]
+      }
+    },
+    {
+      "clearHeightM": 2.2,
+      "clearWidthM": 1.2,
+      "depthM": 0.8819999992847443,
+      "id": "personnel.reverse",
+      "leafDirection": 1,
+      "motion": "single-sliding",
+      "outerHeightM": 2.4375,
+      "parts": {
+        "frame": "personnel.reverse.frame",
+        "leaf": "personnel.reverse.leaf"
+      },
+      "requiresPocketReservationM": 1.2249999999999999,
+      "spanM": 2,
+      "strokeM": 1.2249999999999999,
+      "sweepBounds": {
+        "clearanceM": 0.015625,
+        "max": [
+          1.8250000238418578,
+          0.07099999487400055,
+          2.200000047683716
+        ],
+        "min": [
+          -0.6000000238418579,
+          -0.3799999952316284,
+          0.0
+        ]
+      }
+    },
+    {
+      "clearHeightM": 2.25,
+      "clearWidthM": 3.75,
+      "depthM": 0.5981250107288361,
+      "id": "cargo.4m",
+      "leafDirection": -1,
+      "motion": "split-sliding",
+      "outerHeightM": 2.4375,
+      "parts": {
+        "frame": "cargo.4m.frame",
+        "left": "cargo.4m.left",
+        "right": "cargo.4m.right"
+      },
+      "requiresPocketReservationM": 1.9,
+      "spanM": 4,
+      "strokeM": 1.9,
+      "sweepBounds": {
+        "clearanceM": 0.015625,
+        "max": [
+          3.775,
+          0.03449999913573265,
+          2.25
+        ],
+        "min": [
+          -3.775,
+          -0.27000001072883606,
+          0.0
+        ]
+      }
+    }
+  ]
+}

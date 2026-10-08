@@ -85,6 +85,7 @@ async function client(token?: string) {
           tables.ownShips,
           tables.ownStations,
           tables.ownAuthoredFlights,
+          tables.ownShipPower,
           tables.ownAuthoredFlightFittings,
           tables.ownAuthoredFlightPhysics,
           tables.ownGameShipAccess,

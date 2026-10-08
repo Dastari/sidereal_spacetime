@@ -29,7 +29,7 @@ const FIT_ERRORS = new Set([
 ]);
 
 test("every prefab compiles: mounts restate as valid hardpoints and mass/thrust match the grammar stats", () => {
-  expect(PREFAB_SHIPS).toHaveLength(13);
+  expect(PREFAB_SHIPS).toHaveLength(19);
   for (const p of PREFAB_SHIPS) {
     const { report: r } = compilePrefabShipSystems(p, catalog.revision);
     const fit = r.issues.filter((i) => FIT_ERRORS.has(i.code));

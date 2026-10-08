@@ -1,105 +1,42 @@
-.auth-screen {
-  position: relative;
-  min-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(2rem, 8vw, 9rem);
-  padding: 3rem;
-  color: #dbeeff;
-  background: #040916;
-  isolation: isolate;
+.auth-screen .ui-hangar__content {
+  display: grid;
+  place-items: center;
   overflow: auto;
 }
-.auth-world {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(90deg, #03132844, #040916bb),
-    url("/assets/environment/veil-nebula-v1.png") center/cover;
-}
-.auth-intro {
-  max-width: 34rem;
-}
-.auth-intro h1 {
-  font:
-    600 clamp(4rem, 8vw, 8rem)/0.95 "Barlow Condensed",
-    sans-serif;
-  margin: 1rem 0;
-  color: #e7f7ff;
-  text-shadow: 0 0 30px #147cff88;
-}
-.auth-intro p {
-  font-size: 1.3rem;
-  color: #98d1ec;
-}
-.auth-orbit {
-  color: #74dcff;
-  font-size: 5rem;
-}
 .auth-panel {
-  width: min(100%, 25rem);
-  padding: 2rem;
-  background: #03162bec;
-  border: 1px solid #24c9f2;
-  box-shadow:
-    0 0 18px #009cfa44,
-    inset 0 0 24px #073d6733;
-  border-radius: 14px 2px 14px 2px;
+  width: min(100%, 460px);
 }
-.auth-panel h2,
-.account-panel h2 {
-  font:
-    600 2rem "Barlow Condensed",
-    sans-serif;
-  margin: 0 0 1rem;
-}
-.auth-panel p {
+.auth-description {
   line-height: 1.5;
-  color: #aecbdf;
+  color: var(--ui-text-secondary);
+  margin: 0 0 24px;
 }
-.auth-panel button,
-.account-panel button {
-  font:
-    600 1rem Barlow,
-    sans-serif;
-  cursor: pointer;
-  color: #d9efff;
-  background: #0c2844;
-  border: 1px solid #42bde8;
-  padding: 0.7rem 1rem;
-  border-radius: 3px;
-}
-.auth-panel .auth-primary {
-  display: block;
+.auth-primary {
   width: 100%;
-  margin: 1.5rem 0;
-  background: #104986;
-  border: 2px solid #c4f1ff;
-  box-shadow:
-    0 0 12px #007eff,
-    inset 0 0 15px #2d8aff88;
+  min-height: 54px;
+  margin: 20px 0 8px;
 }
-.auth-panel button:focus-visible,
-.account-panel button:focus-visible {
-  outline: 3px solid white;
-  outline-offset: 3px;
+.auth-note {
+  color: var(--ui-text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 12px 0 0;
 }
-.auth-panel .auth-note {
-  font-size: 0.9rem;
+.auth-development {
+  border-top: 1px solid var(--ui-border);
+  padding-top: 20px;
+  margin-top: 24px;
+  color: var(--ui-text-secondary);
 }
-.auth-error {
-  color: #ffacb5 !important;
-}
-.auth-panel summary {
+.auth-development summary {
   cursor: pointer;
-  color: #74dafa;
+  color: var(--ui-primary);
 }
-.auth-panel details {
-  margin-top: 1.5rem;
-  font-size: 0.9rem;
+.auth-development p {
+  font-size: 14px;
+  line-height: 1.5;
 }
+/* Account service retains the common frame vocabulary until moved into a shared window. */
 .account-panel {
   position: absolute;
   z-index: 9;
@@ -108,20 +45,24 @@
   width: min(28rem, calc(100vw - 2rem));
   max-height: calc(100vh - 7rem);
   overflow: auto;
-  color: #dcefff;
-  padding: 1.5rem;
-  background: #03162bf5;
-  border: 1px solid #34d4ff;
-  box-shadow: 0 0 16px #0078c944;
+  color: var(--ui-text);
+  padding: 24px;
+  background: var(--ui-panel);
+  border: 1px solid var(--ui-border);
+}
+.account-panel h2 {
+  font: 600 32px var(--ui-font-title);
+  margin: 0 0 16px;
 }
 .account-panel input {
   display: block;
   width: 100%;
-  padding: 0.65rem;
-  background: #071321;
-  color: white;
-  border: 1px solid #5586a2;
-  margin: 0.5rem 0 1rem;
+  padding: 12px;
+  background: var(--ui-input);
+  color: var(--ui-text);
+  border: 1px solid var(--ui-border);
+  margin: 8px 0 16px;
+  font: inherit;
 }
 .account-panel p {
   line-height: 1.4;
@@ -131,28 +72,25 @@
   font-size: 0.8rem;
 }
 .account-panel button {
-  margin: 0.2rem 0.4rem 0.2rem 0;
+  margin: 4px 8px 4px 0;
+  min-height: 44px;
+  padding: 10px 16px;
+  color: var(--ui-text);
+  background: var(--ui-input);
+  border: 1px solid var(--ui-border);
+  font: 600 16px var(--ui-font-body);
+  cursor: pointer;
+}
+.account-panel :is(input, button):focus-visible {
+  outline: 2px solid var(--ui-primary);
+  outline-offset: 3px;
 }
 .account-panel label {
   display: block;
-  margin-top: 1rem;
+  margin-top: 16px;
 }
-@media (max-width: 750px) {
-  .auth-screen {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem;
-  }
-  .auth-intro {
-    text-align: center;
-  }
-  .auth-intro h1 {
-    font-size: 4rem;
-  }
-  .auth-orbit {
-    display: none;
-  }
-  .auth-panel {
-    padding: 1.5rem;
+@media (max-height: 719px) {
+  .auth-screen .ui-hangar__content {
+    align-items: start;
   }
 }

@@ -1,0 +1,1357 @@
+{
+  "approval": "proposal",
+  "collisionReplacements": {
+    "LINER_near_01": [[-9.5, 5.448999881744385, -9.0, 6.289999961853027]],
+    "LINER_near_02": [],
+    "LINER_near_03": [],
+    "LINER_near_04": [],
+    "LINER_near_05": [[-5.0, 5.448999881744385, -4.5, 6.289999961853027]],
+    "LINER_near_12": [[1.5, 5.448999881744385, 2.0, 6.289999961853027]],
+    "LINER_near_13": [],
+    "LINER_near_14": [[4.0, 5.448999881744385, 4.5, 6.289999961853027]],
+    "PART_near_3": [
+      [0.44599997997283936, 1.3610000610351562, 2.875, 1.6389999389648438],
+      [4.375, 1.3610000610351562, 4.503999710083008, 1.6389999389648438]
+    ],
+    "PART_x-6.25_near_0": [
+      [-6.388999938964844, 1.496000051498413, -6.111000061035156, 2.375]
+    ],
+    "PART_x2_near_0": [
+      [1.8610000610351562, 1.496000051498413, 2.0, 2.375],
+      [2.0, 1.496000051498413, 2.1389999389648438, 2.375]
+    ],
+    "PART_x2_near_1": [
+      [1.8610000610351562, 4.296000003814697, 2.0, 5.504000186920166]
+    ],
+    "POST_near_hdr_3.25": [],
+    "POST_x2_3.3": [],
+    "POST_x2_4.3": [
+      [1.7300000190734863, 4.170000076293945, 2.0, 4.430000305175781]
+    ],
+    "WALL_near_01": [[-9.5, 5.279999732971191, -9.0, 5.5]],
+    "WALL_near_02": [],
+    "WALL_near_03": [],
+    "WALL_near_04": [],
+    "WALL_near_05": [[-5.0, 5.238500118255615, -4.5, 5.5]],
+    "WALL_near_12": [[1.5, 5.300000190734863, 2.0, 5.5]],
+    "WALL_near_13": [],
+    "WALL_near_14": [[4.0, 5.238500118255615, 4.5, 5.5]],
+    "WALL_stern_07": [[-10.75, 1.5, -10.488499641418457, 2.375]],
+    "WALL_stern_08": [],
+    "WALL_stern_09": [[-10.75, 3.625, -10.488499641418457, 4.5]]
+  },
+  "finishBase": {
+    "descriptorSha256": "de7ae4ff208e732dff9866393e22744225004d310eaef0e617d988eadcf4ae25",
+    "revision": "wayfarer-access-r001",
+    "sourceSha256": "52ead742bd51323daffd0f504cb7702f38628061e260e73b30a21cdb99e334a1"
+  },
+  "finishSha256": "ab36962829c1339a2339c39ec8fdd4def69c29556dcf2b506212fd8bf20ca4ee",
+  "floorSupport": [
+    {
+      "id": "personnel-continuous-support",
+      "rect": [2.0, -5, 4.0, 7],
+      "topM": 0.1875
+    },
+    {
+      "id": "cargo-continuous-support",
+      "rect": [-9.0, -5, -5.0, 7],
+      "topM": 0.1875
+    }
+  ],
+  "frameBlockers": {
+    "cargo.4m": [
+      {
+        "id": "GEO-cargo.4m.frame-jamb--1",
+        "max": [-1.875, 0.14999999105930328, 2.3125],
+        "min": [-2.0, -0.20000000298023224, 0.0]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-face--1",
+        "max": [-1.8862500190734863, 0.20750001072883606, 2.2699999809265137],
+        "min": [-1.9887499809265137, 0.12250000238418579, 0.04250001907348633]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-bolt--1-1.32",
+        "max": [-1.9149999618530273, 0.22499999403953552, 1.34250009059906],
+        "min": [-1.9600000381469727, 0.20899999141693115, 1.2975000143051147]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-service-catch--1",
+        "max": [-1.9024999141693115, 0.25, 0.7599999904632568],
+        "min": [-1.9674999713897705, 0.1899999976158142, 0.3999999761581421]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-status-socket--1",
+        "max": [-1.9049999713897705, 0.23650000989437103, 1.7650001049041748],
+        "min": [-1.9700000286102295, 0.21150000393390656, 1.6349999904632568]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-status--1",
+        "max": [-1.9187500476837158, 0.24799999594688416, 1.7190001010894775],
+        "min": [-1.9562499523162842, 0.23600000143051147, 1.680999994277954]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-jamb-1",
+        "max": [2.0, 0.14999999105930328, 2.3125],
+        "min": [1.875, -0.20000000298023224, 0.0]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-face-1",
+        "max": [1.9887499809265137, 0.20750001072883606, 2.2699999809265137],
+        "min": [1.8862500190734863, 0.12250000238418579, 0.04250001907348633]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-bolt-1-1.32",
+        "max": [1.9600000381469727, 0.22499999403953552, 1.34250009059906],
+        "min": [1.9149999618530273, 0.20899999141693115, 1.2975000143051147]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-service-catch-1",
+        "max": [1.9674999713897705, 0.25, 0.7599999904632568],
+        "min": [1.9024999141693115, 0.1899999976158142, 0.3999999761581421]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-status-socket-1",
+        "max": [1.9700000286102295, 0.23650000989437103, 1.7650001049041748],
+        "min": [1.9049999713897705, 0.21150000393390656, 1.6349999904632568]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-status-1",
+        "max": [1.9562499523162842, 0.24799999594688416, 1.7190001010894775],
+        "min": [1.9187500476837158, 0.23600000143051147, 1.680999994277954]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-pocket-0-rear",
+        "max": [-2.0, -0.28562501072883606, 2.4375],
+        "min": [-3.8531250953674316, -0.34812501072883606, 0.0]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-pocket-0-front",
+        "max": [-2.0, 0.11262500286102295, 2.4375],
+        "min": [-3.8531250953674316, 0.05012500286102295, 0.0]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-pocket-0-end",
+        "max": [-3.7906250953674316, 0.11262500286102295, 2.4375],
+        "min": [-3.8531250953674316, -0.34812501072883606, 0.0]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-pocket-1-rear",
+        "max": [3.8531250953674316, -0.28562501072883606, 2.4375],
+        "min": [2.0, -0.34812501072883606, 0.0]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-pocket-1-front",
+        "max": [3.8531250953674316, 0.11262500286102295, 2.4375],
+        "min": [2.0, 0.05012500286102295, 0.0]
+      },
+      {
+        "id": "GEO-cargo.4m.frame-pocket-1-end",
+        "max": [3.8531250953674316, 0.11262500286102295, 2.4375],
+        "min": [3.7906250953674316, -0.34812501072883606, 0.0]
+      }
+    ],
+    "personnel": [
+      {
+        "id": "GEO-personnel.frame-jamb--1",
+        "max": [-0.6000000238418579, 0.17000001668930054, 2.3125],
+        "min": [-1.0, -0.550000011920929, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-face--1",
+        "max": [-0.6360000371932983, 0.20750001072883606, 2.2699999809265137],
+        "min": [-0.9639999866485596, 0.12250000238418579, 0.04250001907348633]
+      },
+      {
+        "id": "GEO-personnel.frame-bolt--1-1.32",
+        "max": [-0.7775000333786011, 0.22499999403953552, 1.34250009059906],
+        "min": [-0.8224999904632568, 0.20899999141693115, 1.2975000143051147]
+      },
+      {
+        "id": "GEO-personnel.frame-service-catch--1",
+        "max": [-0.9025000333786011, 0.25, 0.7599999904632568],
+        "min": [-0.9674999713897705, 0.1899999976158142, 0.3999999761581421]
+      },
+      {
+        "id": "GEO-personnel.frame-status-socket--1",
+        "max": [-0.699999988079071, 0.23650000989437103, 1.7650001049041748],
+        "min": [-0.9000000357627869, 0.21150000393390656, 1.6349999904632568]
+      },
+      {
+        "id": "GEO-personnel.frame-status--1",
+        "max": [-0.7400000095367432, 0.24799999594688416, 1.7190001010894775],
+        "min": [-0.8600000143051147, 0.23600000143051147, 1.680999994277954]
+      },
+      {
+        "id": "GEO-personnel.frame-jamb-1",
+        "max": [1.0, 0.17000001668930054, 2.3125],
+        "min": [0.6000000238418579, -0.550000011920929, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-face-1",
+        "max": [0.9639999866485596, 0.20750001072883606, 2.2699999809265137],
+        "min": [0.6360000371932983, 0.12250000238418579, 0.04250001907348633]
+      },
+      {
+        "id": "GEO-personnel.frame-seal-seat-1",
+        "max": [0.6240000128746033, 0.03999999910593033, 2.200000047683716],
+        "min": [0.6156250238418579, -0.07999999821186066, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-recess-cheek-1",
+        "max": [0.7039999961853027, -0.07999999821186066, 2.200000047683716],
+        "min": [0.6156249642372131, -0.23999999463558197, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-bolt-1-1.32",
+        "max": [0.8224999904632568, 0.22499999403953552, 1.34250009059906],
+        "min": [0.7775000333786011, 0.20899999141693115, 1.2975000143051147]
+      },
+      {
+        "id": "GEO-personnel.frame-service-catch-1",
+        "max": [0.9674999713897705, 0.25, 0.7599999904632568],
+        "min": [0.9025000333786011, 0.1899999976158142, 0.3999999761581421]
+      },
+      {
+        "id": "GEO-personnel.frame-status-socket-1",
+        "max": [0.9000000357627869, 0.23650000989437103, 1.7650001049041748],
+        "min": [0.699999988079071, 0.21150000393390656, 1.6349999904632568]
+      },
+      {
+        "id": "GEO-personnel.frame-status-1",
+        "max": [0.8600000143051147, 0.24799999594688416, 1.7190001010894775],
+        "min": [0.7400000095367432, 0.23600000143051147, 1.680999994277954]
+      },
+      {
+        "id": "GEO-personnel.frame-control-housing--1",
+        "max": [-0.7520000338554382, 0.3100000023841858, 1.1949999332427979],
+        "min": [-0.9120000004768372, 0.20999999344348907, 0.8849999904632568]
+      },
+      {
+        "id": "GEO-personnel.frame-control-screen--1",
+        "max": [-0.784500002861023, 0.3279999792575836, 1.1425000429153442],
+        "min": [-0.8795000314712524, 0.31200000643730164, 1.0575000047683716]
+      },
+      {
+        "id": "GEO-personnel.frame-control-key--1",
+        "max": [-0.7960000038146973, 0.3319999873638153, 1.003499984741211],
+        "min": [-0.8680000305175781, 0.30799999833106995, 0.9564999938011169]
+      },
+      {
+        "id": "GEO-personnel.frame-control-housing-1",
+        "max": [0.9120000004768372, 0.3100000023841858, 1.1949999332427979],
+        "min": [0.7520000338554382, 0.20999999344348907, 0.8849999904632568]
+      },
+      {
+        "id": "GEO-personnel.frame-control-screen-1",
+        "max": [0.8795000314712524, 0.3279999792575836, 1.1425000429153442],
+        "min": [0.784500002861023, 0.31200000643730164, 1.0575000047683716]
+      },
+      {
+        "id": "GEO-personnel.frame-control-key-1",
+        "max": [0.8680000305175781, 0.3319999873638153, 1.003499984741211],
+        "min": [0.7960000038146973, 0.30799999833106995, 0.9564999938011169]
+      },
+      {
+        "id": "GEO-personnel.frame-white-recess-step--1",
+        "max": [-0.6499999761581421, 0.20500001311302185, 2.200000047683716],
+        "min": [-0.8700000047683716, 0.08662497252225876, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-grey-seal-step--1",
+        "max": [-0.6200000047683716, 0.1550000011920929, 2.200000047683716],
+        "min": [-0.7300000190734863, 0.08662497997283936, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-white-recess-step-1",
+        "max": [0.8700000047683716, 0.20500001311302185, 2.200000047683716],
+        "min": [0.6499999761581421, 0.02499999850988388, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-grey-seal-step-1",
+        "max": [0.7300000190734863, 0.1550000011920929, 2.200000047683716],
+        "min": [0.6200000047683716, -0.06499999761581421, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-inner-seal-rail-1",
+        "max": [0.625499963760376, 0.04500000178813934, 2.200000047683716],
+        "min": [0.6156249642372131, -0.125, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-pocket-0-rear",
+        "max": [-1.0, -0.3956249952316284, 2.4375],
+        "min": [-1.9031250476837158, -0.4581249952316284, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-pocket-0-front",
+        "max": [-1.0, 0.14912499487400055, 2.4375],
+        "min": [-1.9031250476837158, 0.08662499487400055, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-pocket-0-end",
+        "max": [-1.8406250476837158, 0.14912497997283936, 2.4375],
+        "min": [-1.9031250476837158, -0.4581249952316284, 0.0]
+      }
+    ],
+    "personnel.reverse": [
+      {
+        "id": "GEO-personnel.frame-jamb--1.001",
+        "max": [-0.6000000238418579, 0.17000001668930054, 2.3125],
+        "min": [-1.0, -0.550000011920929, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-face--1.001",
+        "max": [-0.6360000371932983, 0.20750001072883606, 2.2699999809265137],
+        "min": [-0.9639999866485596, 0.12250000238418579, 0.04250001907348633]
+      },
+      {
+        "id": "GEO-personnel.frame-seal-seat--1.001",
+        "max": [-0.6156250238418579, 0.03999999910593033, 2.200000047683716],
+        "min": [-0.6240000128746033, -0.07999999821186066, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-recess-cheek--1.001",
+        "max": [-0.6156249642372131, -0.07999999821186066, 2.200000047683716],
+        "min": [-0.7039999961853027, -0.23999999463558197, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-bolt--1-1.001",
+        "max": [-0.7775000333786011, 0.22499999403953552, 1.34250009059906],
+        "min": [-0.8224999904632568, 0.20899999141693115, 1.2975000143051147]
+      },
+      {
+        "id": "GEO-personnel.frame-service-catch--1.001",
+        "max": [-0.9025000333786011, 0.25, 0.7599999904632568],
+        "min": [-0.9674999713897705, 0.1899999976158142, 0.3999999761581421]
+      },
+      {
+        "id": "GEO-personnel.frame-status-socket--1.001",
+        "max": [-0.699999988079071, 0.23650000989437103, 1.7650001049041748],
+        "min": [-0.9000000357627869, 0.21150000393390656, 1.6349999904632568]
+      },
+      {
+        "id": "GEO-personnel.frame-status--1.001",
+        "max": [-0.7400000095367432, 0.24799999594688416, 1.7190001010894775],
+        "min": [-0.8600000143051147, 0.23600000143051147, 1.680999994277954]
+      },
+      {
+        "id": "GEO-personnel.frame-jamb-1.001",
+        "max": [1.0, 0.17000001668930054, 2.3125],
+        "min": [0.6000000238418579, -0.550000011920929, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-face-1.001",
+        "max": [0.9639999866485596, 0.20750001072883606, 2.2699999809265137],
+        "min": [0.6360000371932983, 0.12250000238418579, 0.04250001907348633]
+      },
+      {
+        "id": "GEO-personnel.frame-bolt-1-1.001",
+        "max": [0.8224999904632568, 0.22499999403953552, 1.34250009059906],
+        "min": [0.7775000333786011, 0.20899999141693115, 1.2975000143051147]
+      },
+      {
+        "id": "GEO-personnel.frame-service-catch-1.001",
+        "max": [0.9674999713897705, 0.25, 0.7599999904632568],
+        "min": [0.9025000333786011, 0.1899999976158142, 0.3999999761581421]
+      },
+      {
+        "id": "GEO-personnel.frame-status-socket-1.001",
+        "max": [0.9000000357627869, 0.23650000989437103, 1.7650001049041748],
+        "min": [0.699999988079071, 0.21150000393390656, 1.6349999904632568]
+      },
+      {
+        "id": "GEO-personnel.frame-status-1.001",
+        "max": [0.8600000143051147, 0.24799999594688416, 1.7190001010894775],
+        "min": [0.7400000095367432, 0.23600000143051147, 1.680999994277954]
+      },
+      {
+        "id": "GEO-personnel.frame-control-housing--1.001",
+        "max": [-0.7520000338554382, 0.3100000023841858, 1.1949999332427979],
+        "min": [-0.9120000004768372, 0.20999999344348907, 0.8849999904632568]
+      },
+      {
+        "id": "GEO-personnel.frame-control-screen--1.001",
+        "max": [-0.784500002861023, 0.3279999792575836, 1.1425000429153442],
+        "min": [-0.8795000314712524, 0.31200000643730164, 1.0575000047683716]
+      },
+      {
+        "id": "GEO-personnel.frame-control-key--1.001",
+        "max": [-0.7960000038146973, 0.3319999873638153, 1.003499984741211],
+        "min": [-0.8680000305175781, 0.30799999833106995, 0.9564999938011169]
+      },
+      {
+        "id": "GEO-personnel.frame-control-housing-1.001",
+        "max": [0.9120000004768372, 0.3100000023841858, 1.1949999332427979],
+        "min": [0.7520000338554382, 0.20999999344348907, 0.8849999904632568]
+      },
+      {
+        "id": "GEO-personnel.frame-control-screen-1.001",
+        "max": [0.8795000314712524, 0.3279999792575836, 1.1425000429153442],
+        "min": [0.784500002861023, 0.31200000643730164, 1.0575000047683716]
+      },
+      {
+        "id": "GEO-personnel.frame-control-key-1.001",
+        "max": [0.8680000305175781, 0.3319999873638153, 1.003499984741211],
+        "min": [0.7960000038146973, 0.30799999833106995, 0.9564999938011169]
+      },
+      {
+        "id": "GEO-personnel.frame-white-recess-step--1.001",
+        "max": [-0.6499999761581421, 0.20500001311302185, 2.200000047683716],
+        "min": [-0.8700000047683716, 0.02499999850988388, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-grey-seal-step--1.001",
+        "max": [-0.6200000047683716, 0.1550000011920929, 2.200000047683716],
+        "min": [-0.7300000190734863, -0.06499999761581421, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-inner-seal-rail--1.001",
+        "max": [-0.6156249642372131, 0.04500000178813934, 2.200000047683716],
+        "min": [-0.625499963760376, -0.125, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-white-recess-step-1.001",
+        "max": [0.8700000047683716, 0.20500001311302185, 2.200000047683716],
+        "min": [0.6499999761581421, 0.08662497252225876, 0.0]
+      },
+      {
+        "id": "GEO-personnel.frame-grey-seal-step-1.001",
+        "max": [0.7300000190734863, 0.1550000011920929, 2.200000047683716],
+        "min": [0.6200000047683716, 0.08662497997283936, 0.0]
+      },
+      {
+        "id": "GEO-personnel.reverse.frame-pocket-0-rear",
+        "max": [1.9031250476837158, -0.3956249952316284, 2.4375],
+        "min": [1.0, -0.4581249952316284, 0.0]
+      },
+      {
+        "id": "GEO-personnel.reverse.frame-pocket-0-front",
+        "max": [1.9031250476837158, 0.14912499487400055, 2.4375],
+        "min": [1.0, 0.08662499487400055, 0.0]
+      },
+      {
+        "id": "GEO-personnel.reverse.frame-pocket-0-end",
+        "max": [1.9031250476837158, 0.14912497997283936, 2.4375],
+        "min": [1.8406250476837158, -0.4581249952316284, 0.0]
+      }
+    ]
+  },
+  "newBlockers": [
+    {
+      "id": "personnel-side-0",
+      "maxZ": 2.625,
+      "minZ": 0.1875,
+      "rect": [1.9375, 3.4, 2.0625, 6.6]
+    },
+    {
+      "id": "personnel-side-1",
+      "maxZ": 2.625,
+      "minZ": 0.1875,
+      "rect": [3.9375, 3.4, 4.0625, 6.6]
+    },
+    {
+      "id": "personnel-hall-control-pilaster",
+      "maxZ": 2.625,
+      "minZ": 0.1875,
+      "rect": [3.9375, 2, 4.0625, 2.625]
+    },
+    {
+      "id": "cargo-side-0",
+      "maxZ": 2.625,
+      "minZ": 0.1875,
+      "rect": [-9.0625, 3.3125, -8.9375, 6.6875]
+    },
+    {
+      "id": "cargo-hall-control-pilaster",
+      "maxZ": 2.625,
+      "minZ": 0.1875,
+      "rect": [-9.0625, 2, -8.9375, 2.625]
+    },
+    {
+      "id": "cargo-side-1",
+      "maxZ": 2.625,
+      "minZ": 0.1875,
+      "rect": [-5.0625, 3.3125, -4.9375, 6.6875]
+    }
+  ],
+  "omitted": {
+    "deck": [
+      "FLOOR_cargo_-10_2",
+      "FLOOR_cargo_-10_3",
+      "FLOOR_cargo_-10_4",
+      "FLOOR_cargo_-7_2",
+      "FLOOR_cargo_-7_3",
+      "FLOOR_cargo_-7_4",
+      "FLOOR_cargo_-7_5",
+      "FLOOR_cargo_-8_2",
+      "FLOOR_cargo_-8_3",
+      "FLOOR_cargo_-8_4",
+      "FLOOR_cargo_-8_5",
+      "FLOOR_cargo_-9_2",
+      "FLOOR_cargo_-9_3",
+      "FLOOR_cargo_-9_4",
+      "FLOOR_cargo_-9_5",
+      "FLOOR_cargo_stern_2",
+      "FLOOR_cargo_stern_3",
+      "FLOOR_cargo_stern_4",
+      "FLOOR_galley_1_2",
+      "FLOOR_galley_1_3",
+      "FLOOR_galley_1_4",
+      "FLOOR_hydro_-4_2",
+      "FLOOR_hydro_-4_3",
+      "FLOOR_hydro_-4_4",
+      "FLOOR_hydro_-5_2",
+      "FLOOR_hydro_-5_3",
+      "FLOOR_hydro_-5_4",
+      "FLOOR_hydro_-6_2",
+      "FLOOR_hydro_-6_3",
+      "FLOOR_hydro_-6_4",
+      "FLOOR_hydro_-6_5",
+      "FLOOR_utility_2_2",
+      "FLOOR_utility_2_3",
+      "FLOOR_utility_2_4",
+      "FLOOR_utility_2_5",
+      "FLOOR_utility_3_2",
+      "FLOOR_utility_3_3",
+      "FLOOR_utility_3_4",
+      "FLOOR_utility_3_5",
+      "HULL_corner_5",
+      "HULL_near_bay00_pilaster",
+      "HULL_near_bay01_livery",
+      "HULL_near_bay02_livery_plate",
+      "HULL_near_bay03_vent_amber",
+      "HULL_near_bay05_vent",
+      "HULL_near_bay06_red_hatch",
+      "HULL_stern_bay00_navy",
+      "LIVERY_explore",
+      "LIVERY_wf011",
+      "PART_near_3",
+      "PART_x-6.25_near_0",
+      "PART_x2_near_0",
+      "PART_x2_near_1",
+      "POST_near_hdr_3.25",
+      "POST_x2_3.3",
+      "POST_x2_4.3",
+      "WALL_stern_07",
+      "WALL_stern_08",
+      "WALL_stern_09",
+      "WALL_near_01",
+      "LINER_near_01",
+      "WALL_near_02",
+      "LINER_near_02",
+      "WALL_near_03",
+      "LINER_near_03",
+      "WALL_near_04",
+      "LINER_near_04",
+      "WALL_near_05",
+      "LINER_near_05",
+      "WALL_near_12",
+      "LINER_near_12",
+      "WALL_near_13",
+      "LINER_near_13",
+      "WALL_near_14",
+      "LINER_near_14"
+    ],
+    "flight": [
+      "HULL_corner_5",
+      "HULL_near_bay00_pilaster",
+      "HULL_near_bay01_livery",
+      "HULL_near_bay02_livery_plate",
+      "HULL_near_bay03_vent_amber",
+      "HULL_near_bay05_vent",
+      "HULL_near_bay06_red_hatch",
+      "HULL_stern_bay00_navy",
+      "HULL_upper_009",
+      "HULL_upper_010",
+      "HULL_upper_011",
+      "HULL_upper_013",
+      "HULL_upper_014",
+      "HULL_upper_016",
+      "HULL_upper_018",
+      "HULL_upper_020",
+      "HULL_upper_022",
+      "HULL_upper_024",
+      "HULL_upper_026",
+      "HULL_upper_028",
+      "HULL_upper_038",
+      "HULL_upper_040",
+      "HULL_upper_042",
+      "LIVERY_explore",
+      "LIVERY_wf011",
+      "ROOF_joint_0_5",
+      "ROOF_mod_09_small.fan",
+      "ROOF_mod_12_small.vent",
+      "ROOF_mod_13_tanks",
+      "ROOF_plinth_0_-10_p",
+      "ROOF_plinth_0_-4_p",
+      "ROOF_plinth_0_-5_p",
+      "ROOF_plinth_0_-6_p",
+      "ROOF_plinth_0_-7_p",
+      "ROOF_plinth_0_-8_p",
+      "ROOF_plinth_0_-9_p",
+      "ROOF_plinth_0_1_p",
+      "ROOF_plinth_0_2_p",
+      "ROOF_plinth_0_3_p",
+      "ROOF_sh_0_036",
+      "ROOF_sh_0_037",
+      "ROOF_sh_0_038",
+      "ROOF_sh_0_043",
+      "ROOF_sh_0_044",
+      "ROOF_sh_0_045",
+      "ROOF_sh_0_046",
+      "ROOF_sh_0_047",
+      "ROOF_sh_0_048",
+      "ROOF_sh_0_049",
+      "ROOF_sh_0_050",
+      "ROOF_sh_0_051",
+      "ROOF_sh_0_053",
+      "ROOF_sh_0_054",
+      "ROOF_sh_0_055",
+      "ROOF_skin_-10_2",
+      "ROOF_skin_-10_3",
+      "ROOF_skin_-10_4",
+      "ROOF_skin_-10_6",
+      "ROOF_skin_-11_2",
+      "ROOF_skin_-11_3",
+      "ROOF_skin_-11_4",
+      "ROOF_skin_-11_6",
+      "ROOF_skin_-4_2",
+      "ROOF_skin_-4_3",
+      "ROOF_skin_-4_4",
+      "ROOF_skin_-4_6",
+      "ROOF_skin_-5_2",
+      "ROOF_skin_-5_3",
+      "ROOF_skin_-5_4",
+      "ROOF_skin_-5_6",
+      "ROOF_skin_-6_2",
+      "ROOF_skin_-6_3",
+      "ROOF_skin_-6_4",
+      "ROOF_skin_-6_5",
+      "ROOF_skin_-6_6",
+      "ROOF_skin_-7_2",
+      "ROOF_skin_-7_3",
+      "ROOF_skin_-7_4",
+      "ROOF_skin_-7_5",
+      "ROOF_skin_-7_6",
+      "ROOF_skin_-8_2",
+      "ROOF_skin_-8_3",
+      "ROOF_skin_-8_4",
+      "ROOF_skin_-8_5",
+      "ROOF_skin_-8_6",
+      "ROOF_skin_-9_2",
+      "ROOF_skin_-9_3",
+      "ROOF_skin_-9_4",
+      "ROOF_skin_-9_5",
+      "ROOF_skin_-9_6",
+      "ROOF_skin_1_2",
+      "ROOF_skin_1_3",
+      "ROOF_skin_1_4",
+      "ROOF_skin_1_6",
+      "ROOF_skin_2_2",
+      "ROOF_skin_2_3",
+      "ROOF_skin_2_4",
+      "ROOF_skin_2_5",
+      "ROOF_skin_2_6",
+      "ROOF_skin_3_2",
+      "ROOF_skin_3_3",
+      "ROOF_skin_3_4",
+      "ROOF_skin_3_5",
+      "ROOF_skin_3_6"
+    ]
+  },
+  "palette": {
+    "accent": {
+      "colour": [0.3, 0.017, 0.045],
+      "family": "plastic-colour",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "access.amber": {
+      "colour": [1, 0.38, 0.015],
+      "family": "emissive",
+      "kind": "authored-access",
+      "strength": 2.4
+    },
+    "access.cyan": {
+      "colour": [0.015, 0.48, 1],
+      "family": "emissive",
+      "kind": "authored-access",
+      "strength": 2.4
+    },
+    "access.grey": {
+      "colour": [0.18, 0.2, 0.24],
+      "family": "plastic-deck",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.hazard": {
+      "colour": [0.72, 0.39, 0.025],
+      "family": "plastic-colour",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.metal": {
+      "colour": [0.28, 0.32, 0.37],
+      "family": "metal",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.navy": {
+      "colour": [0.013, 0.025, 0.065],
+      "family": "plastic-dark",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.red": {
+      "colour": [0.42, 0.018, 0.034],
+      "family": "plastic-colour",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.rubber": {
+      "colour": [0.006, 0.009, 0.014],
+      "family": "rubber",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.trim": {
+      "colour": [0.065, 0.085, 0.12],
+      "family": "plastic-dark",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "access.white": {
+      "colour": [0.66, 0.68, 0.69],
+      "family": "plastic-light",
+      "kind": "authored-access",
+      "strength": 0
+    },
+    "blue": {
+      "colour": [0.02, 0.12, 0.55],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "dark": {
+      "colour": [0.008, 0.009, 0.024],
+      "family": "plastic-dark",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "deck": {
+      "colour": [0.055, 0.058, 0.105],
+      "family": "plastic-deck",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "deck_dark": {
+      "colour": [0.02, 0.022, 0.045],
+      "family": "plastic-deck",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "deck_seam": {
+      "colour": [0.03, 0.032, 0.06],
+      "family": "plastic-dark",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "emit_a": {
+      "colour": [0.05, 0.48, 1.0],
+      "family": "emissive",
+      "kind": "slot",
+      "strength": 5.0
+    },
+    "emit_a@high": {
+      "colour": [0.05, 0.48, 1.0],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 6.0
+    },
+    "emit_a@low": {
+      "colour": [0.05, 0.48, 1.0],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 1.2
+    },
+    "emit_b": {
+      "colour": [1.0, 0.3, 0.025],
+      "family": "emissive",
+      "kind": "slot",
+      "strength": 4.2
+    },
+    "emit_b@high": {
+      "colour": [1.0, 0.3, 0.025],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 6.0
+    },
+    "emit_b@low": {
+      "colour": [1.0, 0.3, 0.025],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 1.2
+    },
+    "emit_c@mid": {
+      "colour": [1.0, 0.1, 0.55],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 3.0
+    },
+    "emit_g@mid": {
+      "colour": [0.75, 1.0, 0.45],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 3.0
+    },
+    "emit_r@high": {
+      "colour": [1.0, 0.06, 0.03],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 6.0
+    },
+    "emit_r@low": {
+      "colour": [1.0, 0.06, 0.03],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 1.2
+    },
+    "emit_w@high": {
+      "colour": [1.0, 0.86, 0.66],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 6.0
+    },
+    "emit_w@mid": {
+      "colour": [1.0, 0.86, 0.66],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 3.0
+    },
+    "fabric_blue": {
+      "colour": [0.025, 0.14, 0.62],
+      "family": "fabric",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "fabric_white": {
+      "colour": [0.78, 0.8, 0.84],
+      "family": "fabric",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "glass_canopy": {
+      "colour": [0.3, 0.55, 1.0],
+      "family": "glass",
+      "kind": "shared",
+      "strength": 0.5
+    },
+    "glass_dark": {
+      "colour": [0.02, 0.05, 0.12],
+      "family": "glass",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "hazard": {
+      "colour": [0.9, 0.42, 0.04],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "leaf": {
+      "colour": [0.06, 0.36, 0.03],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "leaf_light": {
+      "colour": [0.2, 0.6, 0.05],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "metal": {
+      "colour": [0.4, 0.41, 0.45],
+      "family": "metal",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "orange": {
+      "colour": [0.9, 0.25, 0.02],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "pink": {
+      "colour": [0.85, 0.16, 0.3],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "primary": {
+      "colour": [0.6, 0.6, 0.63],
+      "family": "plastic-light",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "rubber": {
+      "colour": [0.012, 0.012, 0.016],
+      "family": "rubber",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "scr_blue@low": {
+      "colour": [0.06, 0.35, 1.0],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 1.2
+    },
+    "scr_blue@mid": {
+      "colour": [0.06, 0.35, 1.0],
+      "family": "emissive",
+      "kind": "emissive",
+      "strength": 3.0
+    },
+    "secondary": {
+      "colour": [0.03, 0.034, 0.1],
+      "family": "plastic-dark",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "skin": {
+      "colour": [0.75, 0.5, 0.36],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "soil": {
+      "colour": [0.05, 0.03, 0.02],
+      "family": "rubber",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "terracotta": {
+      "colour": [0.55, 0.16, 0.06],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "trim": {
+      "colour": [0.075, 0.085, 0.15],
+      "family": "plastic-dark",
+      "kind": "slot",
+      "strength": 0.0
+    },
+    "wall": {
+      "colour": [0.26, 0.255, 0.29],
+      "family": "plastic-light",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "wall_dark": {
+      "colour": [0.13, 0.13, 0.17],
+      "family": "plastic-dark",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "white": {
+      "colour": [0.8, 0.8, 0.82],
+      "family": "plastic-light",
+      "kind": "shared",
+      "strength": 0.0
+    },
+    "x_bridge_navyblue": {
+      "colour": [0.022, 0.04, 0.17],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_can_red": {
+      "colour": [0.5, 0.09, 0.11],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_leaf_lime": {
+      "colour": [0.36, 0.75, 0.06],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_leaf_purple": {
+      "colour": [0.4, 0.03, 0.13],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_mag_pink": {
+      "colour": [0.78, 0.1, 0.42],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_mag_yellow": {
+      "colour": [0.95, 0.6, 0.08],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_mug_grey": {
+      "colour": [0.22, 0.2, 0.34],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_mug_orange": {
+      "colour": [0.62, 0.17, 0.03],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_pale_blue": {
+      "colour": [0.42, 0.52, 0.72],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_sofa_base": {
+      "colour": [0.14, 0.014, 0.022],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_sofa_red": {
+      "colour": [0.6, 0.13, 0.18],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_sofa_red_back": {
+      "colour": [0.29, 0.027, 0.083],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_suit_red": {
+      "colour": [0.62, 0.03, 0.05],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_lounge_table_pink": {
+      "colour": [0.21, 0.026, 0.1],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_blue_fold": {
+      "colour": [0.16, 0.24, 0.72],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_bronze": {
+      "colour": [0.32, 0.13, 0.035],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_gold": {
+      "colour": [0.55, 0.22, 0.03],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_mattress": {
+      "colour": [0.56, 0.59, 0.68],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_pot": {
+      "colour": [0.42, 0.055, 0.05],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_seam": {
+      "colour": [0.42, 0.44, 0.5],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_quarters_tan": {
+      "colour": [0.21, 0.075, 0.03],
+      "family": "fabric",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_walls_cream": {
+      "colour": [0.52, 0.37, 0.3],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_walls_rail": {
+      "colour": [0.4, 0.4, 0.45],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_case_greyblue": {
+      "colour": [0.2, 0.22, 0.36],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_chili": {
+      "colour": [0.9, 0.1, 0.02],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_guard": {
+      "colour": [0.15, 0.17, 0.3],
+      "family": "plastic-dark",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_kale": {
+      "colour": [0.1, 0.42, 0.2],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_kale_dark": {
+      "colour": [0.05, 0.25, 0.13],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_label_green": {
+      "colour": [0.1, 0.5, 0.1],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_lavender": {
+      "colour": [0.19, 0.2, 0.46],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_lid": {
+      "colour": [0.3, 0.33, 0.46],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_orange_dark": {
+      "colour": [0.45, 0.1, 0.01],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_pebble": {
+      "colour": [0.45, 0.5, 0.07],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_pebble_tan": {
+      "colour": [0.55, 0.36, 0.12],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_sage": {
+      "colour": [0.2, 0.23, 0.18],
+      "family": "plastic-light",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "x_wr_stem": {
+      "colour": [0.14, 0.32, 0.05],
+      "family": "plastic-colour",
+      "kind": "new",
+      "strength": 0.0
+    },
+    "yellow": {
+      "colour": [0.92, 0.48, 0.02],
+      "family": "plastic-colour",
+      "kind": "shared",
+      "strength": 0.0
+    }
+  },
+  "pieces": [
+    {
+      "boundsMax": [1.0, 0.3319999873638153, 2.4375],
+      "boundsMin": [-1.9031250476837158, -0.550000011920929, -0.1875],
+      "bytes": 395064,
+      "file": "personnel.frame.glb",
+      "frame": "piece-local",
+      "id": "personnel.frame",
+      "sha256": "f2854ecec0497c8d58cfa356af6d5244b1ebea2332a1f7adfd870a570440fbab",
+      "triangles": 5614
+    },
+    {
+      "boundsMax": [0.6000000238418579, 0.07099999487400055, 2.200000047683716],
+      "boundsMin": [-0.6000000238418579, -0.3799999952316284, 0.0],
+      "bytes": 187928,
+      "file": "personnel.leaf.glb",
+      "frame": "piece-local",
+      "id": "personnel.leaf",
+      "sha256": "0150ff4dbdd550114e6b2b29b19abeeb5b909feb94ffd41372372677d5b97418",
+      "triangles": 2624
+    },
+    {
+      "boundsMax": [1.9031250476837158, 0.3319999873638153, 2.4375],
+      "boundsMin": [-1.0, -0.550000011920929, -0.1875],
+      "bytes": 398228,
+      "file": "personnel.reverse.frame.glb",
+      "frame": "piece-local",
+      "id": "personnel.reverse.frame",
+      "sha256": "1978e5a0b862491ae94d3017cb1889f9cd0b9c7512d2210d76243d24d24975ba",
+      "triangles": 5662
+    },
+    {
+      "boundsMax": [0.6000000238418579, 0.07099999487400055, 2.200000047683716],
+      "boundsMin": [-0.6000000238418579, -0.3799999952316284, 0.0],
+      "bytes": 187936,
+      "file": "personnel.reverse.leaf.glb",
+      "frame": "piece-local",
+      "id": "personnel.reverse.leaf",
+      "sha256": "52bb0542235fe9270d5b428748038191325522c1bdd912bd862198932ab4289c",
+      "triangles": 2624
+    },
+    {
+      "boundsMax": [3.8531250953674316, 0.25, 2.4375],
+      "boundsMin": [-3.8531250953674316, -0.34812501072883606, -0.1875],
+      "bytes": 431592,
+      "file": "cargo.4m.frame.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.frame",
+      "sha256": "17e1bc5566e9cc3dc31d35b8dc294d0018d7339ef45e818501e40a95881c78a4",
+      "triangles": 6184
+    },
+    {
+      "boundsMax": [0.0, 0.03449999913573265, 2.25],
+      "boundsMin": [-1.875, -0.27000001072883606, 0.0],
+      "bytes": 127684,
+      "file": "cargo.4m.left.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.left",
+      "sha256": "8c7393b2af9c97e9f46e49f3b3c81f69e36082726700bc2363e9926c7ce26219",
+      "triangles": 1744
+    },
+    {
+      "boundsMax": [1.875, 0.03449999913573265, 2.25],
+      "boundsMin": [0.0, -0.27000001072883606, 0.0],
+      "bytes": 127672,
+      "file": "cargo.4m.right.glb",
+      "frame": "piece-local",
+      "id": "cargo.4m.right",
+      "sha256": "98465c77987847fbd6afcd0c8985e8909cd03d0bb50e9addbde93871e7d52713",
+      "triangles": 1744
+    },
+    {
+      "boundsMax": [4.503999710083008, 7.375, 2.4375],
+      "boundsMin": [-11.550000190734863, -6.5, -2.569999933242798],
+      "bytes": 5026320,
+      "file": "native.deck.glb",
+      "frame": "piece-local",
+      "id": "native.deck",
+      "sha256": "c54a5568361d267361cea191349613fec51bc331ab34d0d3da2a8ac57b3d7069",
+      "triangles": 133188
+    },
+    {
+      "boundsMax": [4.284999847412109, 7.375, 3.117164134979248],
+      "boundsMin": [-11.550000190734863, -6.5, -2.569999933242798],
+      "bytes": 4476636,
+      "file": "native.flight.glb",
+      "frame": "piece-local",
+      "id": "native.flight",
+      "sha256": "94e6f583176766b5f7af58f3d26f5bb02e71d61d1ef7ba4b53eb8e847d520f68",
+      "triangles": 111991
+    }
+  ],
+  "revision": "wayfarer-access-r002",
+  "schema": "sidereal.wayfarer-access-profile/v1",
+  "sourcePins": {
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.access.glb": "d84898c825cbfc0c7133cdf6f062df7914a7268116b08ea7ac95a3935edccb72",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.grate.glb": "55d663ea86cef90fb3f155e3e8c436aa4ac7c4e467842066f6852c7834ee9317",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.EN+sub.glb": "f22a1d6151515835605f107ce86bf0bf54a602e01050b6ef14cf3cdaf2873e52",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.EN.glb": "f342512cfa1d79989c536c319301e96917dc024789e0f83d8744fa599f444809",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.ES.glb": "900228cf989fe5f854fd49efb4eeb8f941e8e8fcce379c95ed70869588a8be1c",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.ESN+sub.glb": "fc9906bf35e524b074d72b557c2a2a1c7318d586650f93058e9c6ab3e9f66633",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.ESN.glb": "50e121b2794a7c754d510b71cbfb0d9382b12ab5de5a6b726e8cc4d1d0366cb5",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.WEN+sub.glb": "22943282b8fdbd5f41d371bf78510a638a63c96aba243f7ea4cf0684e08944b4",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.WEN.glb": "ba00e6f537425586c7400184625bc8be131cc4bd2d9b0601ace16d0fef2657d7",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.WES.glb": "37d89de1c97d7743679e4250b8362c1b69419bdc15199289f424b63bf7a2609b",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.WESN.glb": "d8d0722741642481ba1f2839cc70386a0504a1dfae56e532138c8b6620d7adcd",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.WN.glb": "53ba5dd4d00b7ca9bdcab91b016e76039a018fd5176e8defd0efed9b440c63d9",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.WS+sub.glb": "8692cb1cd05551bd369ea914961f7cb78d9ce0ed7ef50b4c259a12e8805b1c64",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.WS.glb": "9adc6b5280e9bfb45e40a6a8910ec417b1ff84e1dff5d7b12b8410c74bf45220",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.plate.WSN.glb": "71636eb86d643f033b27f22f8a9bb0973f077c7cbcbde1612390981c66b1d625",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.strips.glb": "39d93e74c50879303121838551859fe1b023d844e56d1a1b7693c37efcc0d784",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/hull/bay/hull.bay.livery.navy.navy.louvre.w2.000.s2.k-2.2.glb": "6c00486be3e19ac51739c2dae7808cab5fcb672d6e2e862110c97c1fdcc1d5e4",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/hull/bay/hull.bay.livery_plate.light.mixed.plate.w2.000.s1.k-2.15.glb": "12bf3034667892369c8a739064238937bbb4c7c0a8b6919a0f2a194ded4b57ba",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/hull/bay/hull.bay.navy.navy.navy.louvre.w13.000.s0.k-2.5.t0.25.glb": "542ff3d88b6bcc55f605ae01ad06c8876414b3d62c00c482146048fedca20ecf",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/hull/bay/hull.bay.pilaster.bumper.navy.plate.w1.000.s0.k-2.1.glb": "57381a584a30e8d5518741cb2d699d3e73e6f1e087ca45ad5862ae9bead79df0",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/hull/bay/hull.bay.red_hatch.bumper.navy.plate.w2.000.s6.k-2.4.glb": "48e8e0b45888fe358fcd9fdd14bdbad8927816e79be6ffb648c2ab6223c2d44f",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/hull/bay/hull.bay.vent.light.navy.plate.w2.000.s4.k-2.glb": "96569baa5d989a57f7c7378950972be8e83646d614cf49d8e83f70771dc2b2dc",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/hull/bay/hull.bay.vent_amber.bumper.red.plate.w3.000.s2.k-2.05.glb": "0aa992bd610d9b5f51d80b17f2692814f0e3928e4a775567a6868fdbe54c45d8",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/hull/corner/hull.corner.k-2.5.t1.85.glb": "d1a8ab67d0997fe2ebc1bea777eb1fb653122dff94a4cf5db10b764c3ca15ac8",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/halfwall/int.halfwall.l1.2.glb": "a596c6302a6ad70a5998058d33c3597e38be06ec6ba579d46c279164605d4d04",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/halfwall/int.halfwall.l1.8.glb": "f9b42ba603502d73154a35b2fe38450d93773e23a2d827df909747b17a967671",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/halfwall/int.halfwall.l4.05.glb": "284bedd51fa764d2d7e0df6c7359bb207afc4b4f86bfc98627129bf47901057b",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/halfwall/int.halfwall.l4.glb": "52c9c18b886822734f6e907dae9e1facc7d4c2aed6ad72947efd5910d2e739ff",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/post/int.post.white.glb": "ad5be49bcc75908fcd6888ab54cb1dc21062594117e0f149b9111d9cbf25933d",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/rimliner/int.rimliner.v0.w1.glb": "c5a143dcb839fcf06a5e6ad5a5071f716e0ea9962eb49caebfb59d77c47b9e72",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/rimliner/int.rimliner.v1.w1.glb": "859a7551ba6181282066f8abc59c140299e18676c73918a75ecf25b6b9fe13cd",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/rimliner/int.rimliner.v2.w1.glb": "7f22d780355f52c5fc0d6724ac5dbf5a3f8e4cbe5297a1ca759766ceb460a13d",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/wallpanel/int.wallpanel.cockpit+amber.w1.s0.i1.glb": "ca19c4d955371ed5b43d8d53b51796c7fbb5d3d4394a6e8f11869150602440e4",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/wallpanel/int.wallpanel.cockpit+cyanbox.w1.s0.i1.glb": "d623680143fa0b9624b357f4b3f296f1c2993eb257119048db41558dfb9bc7be",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/int/wallpanel/int.wallpanel.machinery.w1.s0.i0.25.glb": "83efcd30c833e161feb59c1dc2adf9ad361c57e9bdcff923b7ffbff2307d457f",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/unique/LIVERY_explore.glb": "a9df234ba4d28199812214c680cb670ab6d2b7343fec7b8494ded1cd6c7b0484",
+    "assets/runtime/ship-study/wayfarer-authored-r001/glb/unique/LIVERY_wf011.glb": "fb70ca408a27e9c551bf8573ed044854c7df02ac417830532299cbc757f15380",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/bay/hull.bay.livery.navy.none.louvre.w2.000.s2.k-2.2.glb": "ebf85011e1e4e459f95fa17fedde2d17f1b6e5509bc6494f496301b5d9137339",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/bay/hull.bay.livery_plate.light.none.plate.w2.000.s1.k-2.15.glb": "271757d3f548a354b3cfebec71cabbd3dcad477da654f7394afd9a406a008f51",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/bay/hull.bay.navy.navy.none.louvre.w13.000.s0.k-2.5.t0.25.glb": "19ee39e57e2cf768fd21007ba6bec9af472156fc5a4c5e9cf119118e0ab0c6b5",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/bay/hull.bay.pilaster.bumper.none.plate.w1.000.s0.k-2.1.glb": "dae3b8e020850e83ffd9c0f48aaa6657bddd950a9206e83294d3d78ec2d8e669",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/bay/hull.bay.red_hatch.bumper.none.plate.w2.000.s6.k-2.4.glb": "08ca4f5ac65acc956a01b65a545eb041884f35012af670062eb40703c365cd19",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/bay/hull.bay.vent.light.none.plate.w2.000.s4.k-2.glb": "9df75debc5ca5df1f5696bd8de3adf17cace6ffb6feb7a65e1c47e8951a100a1",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/bay/hull.bay.vent_amber.bumper.none.plate.w3.000.s2.k-2.05.glb": "d1b6fd941cb163e2b2e1a7105c401cfa812382f470dac5994cd81f7ec15b7cc8",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/corner/hull.corner.k-2.5.t1.85.glb": "d1a8ab67d0997fe2ebc1bea777eb1fb653122dff94a4cf5db10b764c3ca15ac8",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/upper/hull.upper.straight.l1.000.s0.glb": "eea0ec55d02f3d13db80631de460dba2f464a1e0562b70e28ab1025225af2765",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/upper/hull.upper.straight.l1.000.s1.glb": "ebdbcc8a34a628b736834241bfac6fc1f0013be2008e55ed7880a95ba5fb8515",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/upper/hull.upper.straight.l1.000.s2.glb": "cfab156d1ce02f62fcf76faef5319ae2fb3ebbb37a28f294feb7494796b89021",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/upper/hull.upper.straight.l1.000.s3.glb": "b3ff289d52fdfd8047db669df3690963e0fc1a3646d392b0385059ec0a32bae7",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/hull/upper/hull.upper.straight.l1.000.s4.glb": "6b4597c46b7fd9396dad469d3252fe1e88eefef91d4dd7bfb552971dda9eacbb",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/joint/roof.joint.convex90.s1.glb": "4d5566455b52f8928af2a19183c38e79356a290d5d5b132fbc22fe2a9fc76cc1",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/plinth/roof.plinth.w1.d3.glb": "29a2b5ef212eeb6e7d02512ffea9ad0d6d7c65ea99d6ef8b741fed749c772cb5",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.bump.s1.glb": "496f81e8b1e8594d15a73767877d737983a25fa16a6371b349dda3657b8dc8d5",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.bump.s2.glb": "3048452e8896994745373557d805364e32aadd797fc6bf2a5617377984683c15",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.grille.s3.glb": "5898734a913b81c18b437c1ebe80fa76e7225393671dc5cd182c7c96a436517b",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.hatch.s3.glb": "d1f14d76bf15bdbfcef420b75af803fe60184aed801c5e899d05a272a13fbd1a",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.lit.s0.glb": "5564477045bcf5aa786941a19d8e7da6d6dd2d67760d91d6a82afe58ceca90c2",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.lit.s3.c45_0.glb": "f28e57dcd63f7153f2880ff3bc900d25c34cdfc6eb7db71eab3b185dd639e493",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.plain.s0.c0_45.glb": "2f23eed538d8e04f2678c3b49adf62579c9ac962d740af8b4868f057796f97c4",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.plain.s0.glb": "251207fd7d19ba236e63b15dc11587d1825749e8e45e2ecb990c574cfba5f3e8",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.plain.s1.glb": "faebe8a154d71a7ece1d831adbfa016934454044794622487ad2b1c424ab5534",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.plain.s3.glb": "c71af0ef7f8750bc8b26f82fd31a7bd0c110258c8249535e7d5858f644f40f06",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/shoulder/roof.shoulder.straight.vent.s0.glb": "757fd7cd65b2f0d10cd3e65978548d3f2a65e3df56028f3baaf0310444da6c22",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/skin/roof.skin.square.EN.glb": "6208b15b8322c8a300eaf4cc1ef81b7b15327f703917eb9b16149a1576068d27",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/skin/roof.skin.square.ES.glb": "1006e0c0318c3e2e433c77f92d578b8e54fcfef3a062154211137b5931fb5797",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/skin/roof.skin.square.ESN.glb": "5998143f886deed86cb07a125a843a201251707cd864cac67c60c30cbbec454c",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/skin/roof.skin.square.WN.glb": "b7dd240cfdba482a17ddcf7582fa66ec8b8bfa4461466db4e1bfad2d906cb6b4",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/skin/roof.skin.square.WS.glb": "4e2b1fdaf031f3651cfaf3783e19a64aefe9acf4a567868859710cab7c95f468",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/skin/roof.skin.square.WSN.glb": "59971ddd380c4f8fd74cba7fdddfacf3fd0b1ceeb203d8e3ec52d910268633d2",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/small/roof.small.fan.glb": "b0b9a865b1557e5c6c422a570676fc299544d5fe9e2bbd2e3703e4e982c0acb9",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/small/roof.small.vent.glb": "1af263c8604b94356969c46fbd04c699ff9ad5071a9b6395bc7bd20a36d5d4c3",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/roof/tanks/roof.tanks.w2.d1.glb": "b5f5401477afb7b1bd75276786bf4fc30ab1b98ba7f2d9f402402957289ac7ef",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/unique/LIVERY_explore.glb": "a9df234ba4d28199812214c680cb670ab6d2b7343fec7b8494ded1cd6c7b0484",
+    "assets/runtime/ship-study/wayfarer-dorsal-r001/glb/unique/LIVERY_wf011.glb": "fb70ca408a27e9c551bf8573ed044854c7df02ac417830532299cbc757f15380"
+  },
+  "sourceSha256": "4d6c648aaec8d867bd861d9dfedc76b9448572b0aec948d9156cdae2401d7d5d"
+}

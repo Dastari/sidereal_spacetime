@@ -1,5 +1,7 @@
 import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
 import { buildAuthoredTemplateView } from "./authored-template-view";
+import { isFederationFleet } from "./federation-fleet-access";
+import { retainedAuthoredTemplateKitPlacement } from "@sidereal/sim/authored-template-plan";
 import {
   TEMPLATE_OBJECT_PIECES,
   authoredInteriorComponentPiece,
@@ -154,6 +156,10 @@ export const coplanarPriority = (role: MeshRole, slot: ShipKitSlot) =>
 export type PrefabShipPresentation = "flight" | "deck";
 
 export interface PrefabShipViewOptions {
+  /** Unpublished native access proposal bytes; never resolved implicitly or by a public URL. */
+  accessResolver?: (
+    piece: import("@sidereal/content/ship-access-doors").ShipAccessDoorPiece,
+  ) => Promise<Uint8Array>;
   furnishings?: FurnishingOverrides;
   catalog: PrefabComponentCatalog;
   /** Explicit exact proposal pin; absent preserves all legacy art/defaults. */
@@ -789,8 +795,14 @@ async function createPrefabShipViewImpl(
     const byPiece = new Map<string, Buckets>();
     for (const k of out.dressed.kit) {
       if (
+        isFederationFleet(doc) &&
+        options.accessResolver &&
+        k.piece === "exterior.airlock"
+      )
+        continue;
+      if (
         out.authored &&
-        !out.authored.plan.retainedLegacyPieces.includes(k.piece)
+        !retainedAuthoredTemplateKitPlacement(out.authored.plan, k)
       )
         continue;
       let b = byPiece.get(k.piece);
@@ -977,6 +989,13 @@ async function createPrefabShipViewImpl(
     const glbs = new Map<string, { list: ComponentPlacement[] }>();
     const standins: ComponentPlacement[] = [];
     for (const c of out.dressed.components) {
+      // The exact native frame and moving leaves are owned by the access adapter.
+      if (
+        isFederationFleet(doc) &&
+        c.placement.mount.attach === "edge" &&
+        options.accessResolver
+      )
+        continue;
       if (
         out.authored &&
         !options.standinComponents &&

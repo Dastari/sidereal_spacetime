@@ -1,3 +1,4 @@
+import { publishedShipAccessBytes as publishedAccessBytes } from "./prefab-ship/wayfarer-access-assets";
 import { createFurnishingPreview } from "./furnishing-preview";
 import type { FurnishingOverride } from "@sidereal/content/wayfarer-furnishings";
 import { getAuthoredAssetLightSources } from "./authored-asset-lighting";
@@ -150,6 +151,7 @@ import {
 } from "./camera";
 import { createSpaceEnvironment, type SpaceBodyState } from "./environment";
 import { DEFAULT_SPACE_VISTA } from "../../content/src/environment";
+import { createPresentationFrameGate } from "./presentation-suspension";
 import "@babylonjs/loaders/glTF";
 export type SceneState = {
   /** Server-accepted instance overlay; independent of the immutable ship document. */
@@ -247,6 +249,13 @@ export interface WorldOptions {
       localShipId: () => string | undefined;
       /** `visible_actuator_exhaust`: firing thrusters per perceived ship (source id -> throttle). */
       exhaust?: () => ReadonlyMap<string, ReadonlyMap<string, number>>;
+      exteriorLogic?: () => ReadonlyMap<
+        string,
+        {
+          doors: ReadonlyMap<string, boolean>;
+          panels: ReadonlyMap<string, { state: string; light: string }>;
+        }
+      >;
     };
   };
   construction?: ConstructionRenderInput & { visitId?: string };
@@ -257,6 +266,9 @@ export interface WorldOptions {
   onScene?: (scene: Scene) => void;
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
+  /** Skip hidden world frames only after first usable-frame readiness completes.
+   * Does not pause subscriptions, authoritative simulation, or another preview engine. */
+  isPresentationSuspended?: () => boolean;
   onLoadError?: (message: string) => void;
   onLoadStage?: (
     stage: "ship" | "environment" | "crew" | "equipment" | "finishing",
@@ -494,6 +506,7 @@ async function buildWorld(
           options.construction.documentJson,
           options.prefabVisualVariant,
           options.construction.furnishingsJson,
+          publishedAccessBytes,
         );
         if (prefabView)
           for (const mesh of imported.meshes) mesh.setEnabled(false);
@@ -970,6 +983,7 @@ async function buildWorld(
         ({ createRemoteShipExteriors }) =>
           createRemoteShipExteriors(scene, sharedShips.store, {
             localShipId: sharedShips.localShipId,
+            accessResolver: publishedAccessBytes,
             onError: (error) =>
               console.warn("remote ship exterior unavailable", error),
           }),
@@ -982,7 +996,10 @@ async function buildWorld(
   const flightActiveSet = createFlightActiveSet(scene);
   const fastSnapshot = engine.isWebGPU ? createFastSnapshot(scene) : undefined;
   let firstFrame = true;
-  engine.runRenderLoop(() => {
+  const presentationFrames = createPresentationFrameGate(
+    options.isPresentationSuspended,
+  );
+  const renderWorldFrame = () => {
     // A failed initial load stays covered by Retry/Sign out. Do not keep
     // submitting the hidden scene while the user recovers from that failure.
     if (assetFailure) return;
@@ -1256,6 +1273,8 @@ async function buildWorld(
       camera,
       engine.getRenderHeight(),
       sharedShips?.exhaust?.(),
+      undefined,
+      sharedShips?.exteriorLogic?.(),
     );
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,
@@ -1323,8 +1342,10 @@ async function buildWorld(
     ) {
       firstFrame = false;
       onReady("Vessel ready");
+      presentationFrames.ready();
     }
-  });
+  };
+  engine.runRenderLoop(presentationFrames.wrap(renderWorldFrame));
   resize();
   let disposed = false;
   function customizeCrew(next: CrewAppearance) {

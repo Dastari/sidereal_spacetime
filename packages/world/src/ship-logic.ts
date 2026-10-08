@@ -38,6 +38,9 @@ import {
 } from "@sidereal/sim/ship-logic-model";
 import { prefabEvaModel, type EvaShipModel } from "@sidereal/sim/eva";
 import { isDead } from "./combat-damage";
+import { ownedGameShipAccess } from "./game-ship-access-authority";
+import { acceptedPassengerAccess } from "./construction-passenger-access";
+import { spaceObserver, visibleShipMotion } from "./shared-world-views";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -170,9 +173,9 @@ function doorObstructed(
 ): boolean {
   const door = binding.logic?.doors.find((d) => d.deviceId === deviceId);
   if (!door) return false;
-  let count = 0;
+  // Crowd size is not an obstruction. Inspect the complete indexed membership;
+  // stop only when a body actually occupies this doorway.
   for (const l of db.constructionLocation.by_instance.filter(binding.shipId)) {
-    if (++count > 256) return true;
     const c = db.character.id.find(l.characterId);
     if (
       c &&
@@ -182,7 +185,6 @@ function doorObstructed(
       return true;
   }
   for (const b of db.evaBody.by_anchor.filter(binding.shipId)) {
-    if (++count > 512) return true;
     if (b.phase === "local" && inDoorway(door, [b.localX, b.localY]))
       return true;
   }
@@ -242,7 +244,12 @@ function writeStates(
 }
 
 /** Evaluate one event on a ship's logic and persist the result. Returns the evaluation. */
-export function fireShipLogic(ctx: Context, shipId: string, event: LogicEvent) {
+export function fireShipLogic(
+  ctx: Context,
+  shipId: string,
+  event: LogicEvent,
+  suitRefusal: (characterId: string) => string,
+) {
   const binding = shipPrefabBinding(ctx.db, shipId);
   if (!binding?.logic) return;
   const result = evaluateLogic(
@@ -254,8 +261,21 @@ export function fireShipLogic(ctx: Context, shipId: string, event: LogicEvent) {
       obstructed: (id) => doorObstructed(ctx.db, binding, id),
     },
   );
+  // A queued close or stage timer can consume after occupants/equipment change.
+  // Check only controllers touched by this event, before committing any output.
+  for (const [id, next] of result.states) {
+    if (next.kind !== "airlock-controller") continue;
+    const before = logicDeviceState(ctx.db, binding, id);
+    if (
+      (next.phase === "depressurising" ||
+        (before?.kind === "airlock-controller" &&
+          before.phase === "depressurising")) &&
+      unsuitedChamberOccupant(ctx.db, binding, id, suitRefusal)
+    )
+      return { applied: false } as const;
+  }
   writeStates(ctx, binding, result.states);
-  return result;
+  return { applied: true, evaluation: result } as const;
 }
 
 function actorOf(ctx: Pick<Context, "db" | "sender">) {
@@ -275,7 +295,7 @@ export function pressShipButton(
    * The suit rule (EVA suit, helmet and jetpack equipped): an empty string when suited, else the
    * refusal message. Only consulted when the press would depressurise an airlock chamber.
    */
-  suitRefusal: (characterId: string) => string = () => "",
+  suitRefusal: (characterId: string) => string,
 ) {
   const actor = actorOf(ctx);
   const binding = shipPrefabBinding(ctx.db, args.shipId);
@@ -323,7 +343,40 @@ export function pressShipButton(
     panel.deviceId,
     suitRefusal,
   );
-  fireShipLogic(ctx, args.shipId, { kind: "press", device: panel.deviceId });
+  const outcome = fireShipLogic(
+    ctx,
+    args.shipId,
+    { kind: "press", device: panel.deviceId },
+    suitRefusal,
+  );
+  if (outcome?.applied === false)
+    throw new SenderError(
+      "Someone in the airlock has no EVA suit: the airlock will not depressurise",
+    );
+}
+
+/** Complete physical chamber membership; disconnected bodies remain occupants. */
+function unsuitedChamberOccupant(
+  db: Db,
+  binding: ShipPrefabBinding,
+  controllerId: string,
+  suitRefusal: (characterId: string) => string,
+): boolean {
+  const chamber = binding.logic?.chambers.find(
+    (c) => c.controllerId === controllerId,
+  );
+  if (!chamber) return false;
+  for (const l of db.constructionLocation.by_instance.filter(binding.shipId)) {
+    const c = db.character.id.find(l.characterId);
+    if (
+      c &&
+      c.shipId === binding.shipId &&
+      inChamber(chamber, [c.localX, c.localY]) &&
+      suitRefusal(c.id)
+    )
+      return true;
+  }
+  return false;
 }
 
 /**
@@ -362,29 +415,18 @@ function refuseUnsuitedDepressurisation(
       const refusal = suitRefusal(actor.id);
       if (refusal) throw new SenderError(refusal);
     }
-    const chamber = logic.chambers.find((c) => c.controllerId === id);
-    if (!chamber) continue;
-    let count = 0;
-    for (const l of ctx.db.constructionLocation.by_instance.filter(
-      binding.shipId,
-    )) {
-      if (++count > 256) break;
-      const c = ctx.db.character.id.find(l.characterId);
-      if (
-        c &&
-        c.shipId === binding.shipId &&
-        inChamber(chamber, [c.localX, c.localY]) &&
-        suitRefusal(c.id)
-      )
-        throw new SenderError(
-          "Someone in the airlock has no EVA suit: the airlock will not depressurise",
-        );
-    }
+    if (unsuitedChamberOccupant(ctx.db, binding, id, suitRefusal))
+      throw new SenderError(
+        "Someone in the airlock has no EVA suit: the airlock will not depressurise",
+      );
   }
 }
 
 /** Fire due timers (bounded); drop timers of retired revisions or missing ships. */
-export function stepShipLogic(ctx: Context) {
+export function stepShipLogic(
+  ctx: Context,
+  suitRefusal: (characterId: string) => string,
+) {
   const now = ctx.timestamp.microsSinceUnixEpoch;
   const due: { key: string; shipId: string; deviceId: string; rev: bigint }[] =
     [];
@@ -410,7 +452,21 @@ export function stepShipLogic(ctx: Context) {
       ctx.db.shipLogicTimer.key.delete(t.key);
       continue;
     }
-    fireShipLogic(ctx, t.shipId, { kind: "timer", device: t.deviceId });
+    const outcome = fireShipLogic(
+      ctx,
+      t.shipId,
+      { kind: "timer", device: t.deviceId },
+      suitRefusal,
+    );
+    if (outcome?.applied === false) {
+      const pending = ctx.db.shipLogicTimer.key.find(t.key);
+      if (pending)
+        ctx.db.shipLogicTimer.key.update({
+          ...pending,
+          dueMicros: now + BigInt(LOGIC_BUDGET.doorRetryMicros),
+        });
+      continue;
+    }
     // Defensive: a timer the device did not move forward never spins.
     const after = ctx.db.shipLogicTimer.key.find(t.key);
     if (after && after.dueMicros <= now)
@@ -446,8 +502,7 @@ export const visibleShipLogicProjection = t.row("ShipLogicDeviceStatus", {
 });
 
 /**
- * Device states of the ships the viewer is at: the ship they stand aboard, the ship whose frame
- * their EVA body is in, and the home ship they left. Door, light and phase values only; never who
+ * Device states of the occupied ship and nearby perceived hulls. Door and light values only; never who
  * pressed or any other character data. A ship the viewer is only floating beside (EVA frame of
  * another ship, no interior presence) shows its exterior devices only: hull-face buttons and
  * exterior doors, never interior doors, interior buttons or controllers (wiki `Architecture/
@@ -456,15 +511,48 @@ export const visibleShipLogicProjection = t.row("ShipLogicDeviceStatus", {
 export function visibleShipLogic(ctx: ReadContext) {
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
   if (!actor?.connected) return [];
-  // Interior presence: aboard now, or the ship this spacewalker left through its airlock.
+  // Retained physical location after blocked recovery is not interior read access.
   const inside = new Set<string>();
   const ships = new Set<string>();
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
-  if (location) inside.add(location.instanceId);
+  if (
+    location &&
+    (ownedGameShipAccess(ctx, location.instanceId, location.deckId)
+      .readInterior ||
+      acceptedPassengerAccess(ctx, actor.id).readInterior)
+  )
+    inside.add(location.instanceId);
   const body = ctx.db.evaBody.characterId.find(actor.id);
-  if (body?.exitShipId) inside.add(body.exitShipId);
   for (const id of inside) ships.add(id);
+  const observer = spaceObserver(ctx);
+  // Detailed public hatch state has a separate bounded range from coarse discovery.
+  // This never turns ownership or an exterior contact into an interior read grant.
+  const nearby = (observer ? visibleShipMotion(ctx) : [])
+    .map((motion) => ({
+      motion,
+      distance: Math.hypot(
+        motion.x - observer!.point.x,
+        motion.y - observer!.point.y,
+      ),
+    }))
+    .filter(
+      (contact) => Number.isFinite(contact.distance) && contact.distance <= 250,
+    )
+    .sort(
+      (a, b) =>
+        a.distance - b.distance ||
+        a.motion.shipId.localeCompare(b.motion.shipId),
+    )
+    .slice(0, 128);
+  for (const contact of nearby) ships.add(contact.motion.shipId);
   if (body?.anchorShipId) ships.add(body.anchorShipId);
+  const admission = ctx.db.worldAdmission.characterId.find(actor.id);
+  if (
+    body?.exitShipId &&
+    admission?.shipId === body.exitShipId &&
+    admission.owner.isEqual(ctx.sender)
+  )
+    ships.add(body.exitShipId);
   const out = [];
   for (const shipId of [...ships].sort()) {
     const binding = shipPrefabBinding(ctx.db, shipId);
@@ -510,7 +598,9 @@ export function visibleShipLogic(ctx: ReadContext) {
               : "off",
         open: s.kind === "door" ? s.open : false,
         endsMicros: BigInt(s.kind === "airlock-controller" ? s.endsMicros : 0),
-        pressedMicros: BigInt(s.kind === "button" ? s.pressedMicros : 0),
+        pressedMicros: BigInt(
+          !exterior && s.kind === "button" ? s.pressedMicros : 0,
+        ),
       });
     }
   }

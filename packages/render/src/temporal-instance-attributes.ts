@@ -9,7 +9,7 @@ import { ShaderLanguage } from "@babylonjs/core/Materials/shaderLanguage";
 /** Babylon 9.25 declares previousWorld for PREPASS_VELOCITY_LINEAR in WGSL,
  * but PrepareAttributesForInstances only lists it for PREPASS_VELOCITY.
  * Supply the missing bindings without replacing the authored material/shader. */
-class TemporalInstanceAttributes extends MaterialPluginBase {
+export class TemporalInstanceAttributes extends MaterialPluginBase {
   constructor(material: StandardMaterial | PBRBaseMaterial) {
     super(material, "TemporalInstanceAttributes", 210, {}, true, true);
   }

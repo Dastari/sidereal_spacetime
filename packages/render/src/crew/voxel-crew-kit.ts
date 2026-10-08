@@ -19,6 +19,7 @@ import {
   type HeadLoadout,
 } from "@sidereal/content/crew-heads";
 import { crewArmedClass, crewItem } from "@sidereal/content/crew-items";
+import { CREW_STUDY } from "@sidereal/content/crew-study";
 import { crewUsesSupportGrip, loadArmedClips } from "./voxel-held-item";
 import {
   createVoxelItemVisual,
@@ -320,18 +321,35 @@ export async function equipVoxelCrewItem(
   const item = crewItem(itemId);
   const cls = crewArmedClass(item);
   const [visual] = await Promise.all([
-    createVoxelItemVisual(scene, crew.socketNodes["socket.hand.R"], itemId, {
-      localRotation: crewItemHandSocketRotation(),
-    }),
+    createVoxelItemVisual(
+      scene,
+      crew.study
+        ? crew.joints.get("prop.R")!
+        : crew.socketNodes["socket.hand.R"],
+      itemId,
+      {
+        localRotation: crew.study
+          ? Quaternion.Identity()
+          : crewItemHandSocketRotation(),
+        study: crew.study,
+      },
+    ),
     cls ? loadArmedClips(scene, crew) : undefined,
   ]);
   crew.setArmedClass(cls);
-  const updateSupport = () =>
+  const updateSupport = () => {
+    if (crew.study)
+      visual.setSightDeployed(
+        crew.activeClips.some(
+          (clip) => CREW_STUDY.clips[clip]?.sight === "deployed",
+        ),
+      );
     crew.setSupportTarget(
-      item.twoHanded && crewUsesSupportGrip(crew.activeClips)
+      !crew.study && item.twoHanded && crewUsesSupportGrip(crew.activeClips)
         ? visual.supportTarget
         : null,
     );
+  };
   updateSupport();
   const observer = scene.onBeforeAnimationsObservable.add(updateSupport);
   const dispose = visual.dispose;

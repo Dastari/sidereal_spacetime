@@ -35,6 +35,7 @@ import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   EVA,
+  evaBodyBlocked,
   prefabEvaModel,
   shipToWorld,
   worldToShip,
@@ -64,6 +65,8 @@ import {
   visibleShipLogic,
 } from "./ship-logic";
 import { shipLogicModel } from "@sidereal/sim/ship-logic-model";
+import { acceptedPassengerAccess } from "./construction-passenger-access";
+import { GAME_OWNED_TEMPLATE_NAMESPACE } from "./game-ship-access-authority";
 import { characterTargets, damageCharacter, isDead } from "./combat-damage";
 import { stepRespawns } from "./character-death";
 import {
@@ -175,6 +178,7 @@ function addShip(id: string, who: Identity, characterId: string) {
   db.constructionInstance.insert({
     id,
     owner: who,
+    workspaceId: GAME_OWNED_TEMPLATE_NAMESPACE,
     revision: 1n,
     blueprintId: "trusted-prefab:fed.s.wren@4",
     blueprintSha256: "wren-sha",
@@ -199,6 +203,10 @@ function addShip(id: string, who: Identity, characterId: string) {
     shipId: id,
     instanceId: id,
     owner: who,
+    deckId: id + "-deck",
+    instanceRevision: 1n,
+    blueprintSha256: "wren-sha",
+    lifecycle: "active",
   });
   setShip(id, { x: 0, y: 0 });
 }
@@ -259,9 +267,11 @@ function fixture() {
     constructionLocation: table("characterId", { by_instance: "instanceId" }),
     constructionPilotSeat: table("characterId"),
     constructionPassengerVisit: table("characterId"),
+    constructionPassengerGrant: table("id"),
     constructionTraversal: table("characterId"),
     constructionStairWalk: table("characterId"),
     constructionFlightBinding: table("shipId"),
+    constructionFlightReview: table("characterId"),
     constructionFlightDirty: table("shipId"),
     couchSeat: table("characterId"),
     station: table("id", {}, ["shipId"]),
@@ -308,7 +318,7 @@ const as = (who: Identity) => ({
 });
 function tick(ms = 50) {
   now += BigInt(ms) * 1000n;
-  stepShipLogic(ctx);
+  stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
   stepEva(ctx);
 }
 function ticks(n: number, before?: () => void) {
@@ -451,22 +461,201 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     expect(doorOpen("door-outer")).toBe(true);
   });
 
-  it("shows device states only for the ship the viewer is at", () => {
+  it("closes a clear doorway with more than 256 aboard bodies", () => {
+    for (let n = 0; n < 300; n++)
+      addCharacter("crowd-" + n, third, "wren", [0, 0]);
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    expect(doorOpen("door-inner")).toBe(false);
+    expect(device("lock")).toBe("depressurising");
+  });
+
+  it("waits for a late disconnected doorway body in a large aboard crowd", () => {
+    for (let n = 0; n < 300; n++)
+      addCharacter("crowd-" + n, third, "wren", [0, 0]);
+    addCharacter("late", third, "wren", innerDoor.center);
+    const late = ctx.db.character.id.find("late");
+    ctx.db.character.id.update({ ...late, connected: false });
+    suitUp("cap");
+    suitUp("late");
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(doorOpen("door-inner")).toBe(true);
+    expect(doorOpen("door-outer")).toBe(false);
+    place("late", [0, 0]);
+    for (let n = 0; n < 70; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(doorOpen("door-inner")).toBe(false);
+    expect(doorOpen("door-outer")).toBe(true);
+  });
+
+  it("checks a late local-EVA obstruction beyond 512 bodies and clears it normally", () => {
+    for (let n = 0; n < 600; n++)
+      ctx.db.evaBody.insert({
+        characterId: "eva-crowd-" + n,
+        phase: "local",
+        anchorShipId: "wren",
+        localX: 0,
+        localY: 0,
+      });
+    const late = ctx.db.evaBody.characterId.find("eva-crowd-599");
+    ctx.db.evaBody.characterId.update({
+      ...late,
+      localX: innerDoor.center[0],
+      localY: innerDoor.center[1],
+    });
+    ctx.db.evaBody.insert({
+      characterId: "free-body",
+      phase: "free",
+      anchorShipId: "wren",
+      localX: innerDoor.center[0],
+      localY: innerDoor.center[1],
+    });
+    ctx.db.evaBody.insert({
+      characterId: "other-anchor",
+      phase: "local",
+      anchorShipId: "kite",
+      localX: innerDoor.center[0],
+      localY: innerDoor.center[1],
+    });
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(doorOpen("door-inner")).toBe(true);
+    expect(doorOpen("door-outer")).toBe(false);
+    ctx.db.evaBody.characterId.update(late);
+    for (let n = 0; n < 70; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(doorOpen("door-inner")).toBe(false);
+    expect(doorOpen("door-outer")).toBe(true);
+  });
+
+  it("shows private logic only aboard and redacted public hatches on nearby hulls", () => {
     expect(visibleShipLogic(ctx).length).toBe(6);
     addShip("kite", other, "mate");
     addCharacter("mate", other, "kite", lock.inside);
-    expect(visibleShipLogic(as(other)).every((r) => r.shipId === "kite")).toBe(
-      true,
+    ctx.db.authSession.insert({
+      connectionId: "kite-session",
+      owner: other,
+      game: true,
+    });
+    const rows = visibleShipLogic(as(other));
+    expect(rows.filter((r) => r.shipId === "kite")).toHaveLength(6);
+    const outside = rows.filter((r) => r.shipId === "wren");
+    expect(outside.map((r) => r.deviceId).sort()).toEqual([
+      "btn-lock-out",
+      "door-outer",
+    ]);
+    expect(
+      outside.every((r) => r.endsMicros === 0n && r.pressedMicros === 0n),
+    ).toBe(true);
+    setShip("wren", { x: 251, y: 0 });
+    expect(visibleShipLogic(as(other)).some((r) => r.shipId === "wren")).toBe(
+      false,
     );
+    setShip("wren", { x: 0, y: 0 });
     const row = visibleShipLogic(ctx)[0] as Record<string, unknown>;
     for (const secret of ["owner", "characterId", "stateJson"])
       expect(row[secret]).toBeUndefined();
   });
 
+  it.each([
+    "revoked",
+    "blocked-recovery",
+    "admission-lost",
+    "revision-changed",
+  ])("removes interior logic for a retained passenger when %s", (reason) => {
+    addCharacter("guest", other, "wren", lock.inside);
+    ctx.db.authSession.insert({
+      connectionId: "guest-session",
+      owner: other,
+      game: true,
+    });
+    ctx.db.constructionPassengerGrant.insert({
+      id: "guest-grant",
+      owner,
+      granteeOwner: other,
+      granteeId: "guest",
+      shipId: "wren",
+      deckId: "wren-deck",
+      instanceRevision: 1n,
+      revision: 1n,
+      expiresMicros: now + 1_000_000n,
+    });
+    ctx.db.constructionPassengerVisit.insert({
+      characterId: "guest",
+      owner: other,
+      shipId: "wren",
+      deckId: "wren-deck",
+      grantId: "guest-grant",
+      grantRevision: 1n,
+      visitId: "v-guest",
+      admissionRevision: 1n,
+      recoveryReason: "",
+    });
+    expect(acceptedPassengerAccess(as(other), "guest").readInterior).toBe(true);
+    expect(visibleShipLogic(as(other)).length).toBe(6);
+    if (reason === "revoked")
+      ctx.db.constructionPassengerGrant.id.delete("guest-grant");
+    if (reason === "blocked-recovery") {
+      const visit = ctx.db.constructionPassengerVisit.characterId.find("guest");
+      ctx.db.constructionPassengerVisit.characterId.update({
+        ...visit,
+        recoveryReason: "Original return unavailable",
+      });
+    }
+    if (reason === "admission-lost")
+      ctx.db.worldAdmission.characterId.delete("guest");
+    if (reason === "revision-changed") {
+      const instance = ctx.db.constructionInstance.id.find("wren");
+      ctx.db.constructionInstance.id.update({ ...instance, revision: 2n });
+    }
+    expect(acceptedPassengerAccess(as(other), "guest").readInterior).toBe(
+      false,
+    );
+    expect(
+      ctx.db.constructionLocation.characterId.find("guest").instanceId,
+    ).toBe("wren");
+    expect(ctx.db.character.id.find("guest").connected).toBe(true);
+    expect(visibleShipLogic(as(other))).toEqual([]);
+  });
+
+  it.each(["admission-lost", "disconnected"])(
+    "removes owned interior logic when %s",
+    (reason) => {
+      expect(visibleShipLogic(ctx).length).toBe(6);
+      if (reason === "admission-lost")
+        ctx.db.worldAdmission.characterId.delete("cap");
+      else {
+        const actor = ctx.db.character.id.find("cap");
+        ctx.db.character.id.update({ ...actor, connected: false });
+      }
+      expect(visibleShipLogic(ctx)).toEqual([]);
+    },
+  );
+
   it("a spacewalker in another player's ship frame sees that ship's exterior devices only", () => {
     // Mate left their own Kite and floats in the frame of Cap's Wren (no interior presence there).
     addShip("kite", other, "mate");
     addCharacter("mate", other, "kite", lock.inside);
+    ctx.db.authSession.insert({
+      connectionId: "kite-session",
+      owner: other,
+      game: true,
+    });
     ctx.db.constructionLocation.characterId.delete("mate");
     ctx.db.evaBody.insert({
       characterId: "mate",
@@ -475,6 +664,8 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
       phase: "local",
       anchorShipId: "wren",
       exitShipId: "kite",
+      visitId: "v-mate",
+      deckId: "kite-deck",
     });
     const rows = visibleShipLogic(as(other));
     const wrenRows = rows.filter((r) => r.shipId === "wren");
@@ -491,10 +682,23 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     // No interior door, interior button or airlock controller of a ship they are not aboard.
     for (const id of ["door-inner", "btn-lock-in", "btn-hall", "lock"])
       expect(wrenRows.some((r) => r.deviceId === id)).toBe(false);
-    // Their own home ship (left through its airlock) still shows every device.
-    expect(rows.filter((r) => r.shipId === "kite").length).toBe(
-      visibleShipLogic(ctx).length,
-    );
+    // The home ship also reveals exterior hardware only while the viewer is outside.
+    expect(
+      rows
+        .filter((r) => r.shipId === "kite")
+        .map((r) => r.deviceId)
+        .sort(),
+    ).toEqual([...exterior].sort());
+    // Losing the home admission cannot retain its interior state through the EVA row.
+    ctx.db.worldAdmission.characterId.delete("mate");
+    const denied = visibleShipLogic(as(other));
+    expect(denied.filter((r) => r.shipId === "kite")).toEqual([]);
+    expect(
+      denied
+        .filter((r) => r.shipId === "wren")
+        .map((r) => r.deviceId)
+        .sort(),
+    ).toEqual([...exterior].sort());
   });
 });
 
@@ -541,6 +745,113 @@ describe("the EVA suit (vacuum needs suit, helmet and jetpack)", () => {
     place("mate", panel("btn-hall").front);
     press("btn-lock-in");
     expect(device("lock")).toBe("depressurising");
+  });
+
+  it("rejects a late unsuited chamber body without writing states or timers", () => {
+    for (let n = 0; n < 300; n++)
+      addCharacter("crowd-" + n, third, "wren", [0, 0]);
+    addCharacter(
+      "late",
+      third,
+      "wren",
+      plusN(panel("btn-lock-in").front, [0, -1], 1),
+    );
+    const late = ctx.db.character.id.find("late");
+    ctx.db.character.id.update({ ...late, connected: false });
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    const states = [...ctx.db.shipLogicState.iter()];
+    const timers = [...ctx.db.shipLogicTimer.iter()];
+    expect(() => press("btn-lock-in")).toThrow("no EVA suit");
+    expect(ctx.db.shipLogicState.iter()).toEqual(states);
+    expect(ctx.db.shipLogicTimer.iter()).toEqual(timers);
+    expect(device("lock")).toBe("pressurised");
+    place("late", [0, 0]);
+    press("btn-lock-in");
+    expect(device("lock")).toBe("depressurising");
+  });
+
+  it("retains a door retry when a late unsuited occupant enters before sealing", () => {
+    addCharacter("blocker", third, "wren", innerDoor.center);
+    suitUp("cap");
+    suitUp("blocker");
+    for (let n = 0; n < 300; n++)
+      addCharacter("crowd-" + n, third, "wren", [0, 0]);
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    const states = [...ctx.db.shipLogicState.iter()];
+    const pending = ctx.db.shipLogicTimer
+      .iter()
+      .find((row: any) => row.deviceId === "door-inner");
+    expect(pending).toBeDefined();
+    addCharacter(
+      "late-unsuited",
+      other,
+      "wren",
+      plusN(panel("btn-lock-in").front, [0, -1], 1),
+    );
+    const late = ctx.db.character.id.find("late-unsuited");
+    ctx.db.character.id.update({ ...late, connected: false });
+    place("blocker", [0, 0]);
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(ctx.db.shipLogicState.iter()).toEqual(states);
+    expect(doorOpen("door-inner")).toBe(true);
+    expect(doorOpen("door-outer")).toBe(false);
+    const after = ctx.db.shipLogicTimer.key.find(pending.key);
+    expect(after).toMatchObject({
+      key: pending.key,
+      instanceRevision: pending.instanceRevision,
+    });
+    expect(after.dueMicros).toBeGreaterThan(now);
+    place("late-unsuited", [0, 0]);
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(device("lock")).toBe("vacuum");
+    expect(doorOpen("door-inner")).toBe(false);
+    expect(doorOpen("door-outer")).toBe(true);
+  });
+
+  it("rechecks a removed suit during countdown without stalling another ship", () => {
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    press("btn-lock-in");
+    const states = [...ctx.db.shipLogicState.iter()];
+    const pending = ctx.db.shipLogicTimer
+      .iter()
+      .find((row: any) => row.shipId === "wren" && row.deviceId === "lock");
+    const suit = ctx.db.inventoryItem.id.find("cap-suit-body");
+    ctx.db.inventoryItem.id.update({ ...suit, equipmentSlot: "" });
+    addShip("kite", other, "mate");
+    addCharacter("mate", other, "kite", panel("btn-lock-in").front);
+    suitUp("mate");
+    press("btn-lock-in", other, "kite");
+    for (let n = 0; n < 80; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(
+      ctx.db.shipLogicState.iter().filter((row: any) => row.shipId === "wren"),
+    ).toEqual(states);
+    expect(device("lock")).toBe("depressurising");
+    expect(doorOpen("door-outer")).toBe(false);
+    expect(
+      ctx.db.shipLogicTimer.key.find(pending.key).dueMicros,
+    ).toBeGreaterThan(now);
+    expect(
+      logicDeviceState(ctx.db, shipPrefabBinding(ctx.db, "kite")!, "lock"),
+    ).toMatchObject({ phase: "vacuum" });
+    ctx.db.inventoryItem.id.update(suit);
+    for (let n = 0; n < 6; n++) {
+      now += 50_000n;
+      stepShipLogic(ctx, (id) => evaSuitRefusal(ctx, id));
+    }
+    expect(device("lock")).toBe("vacuum");
+    expect(doorOpen("door-outer")).toBe(true);
   });
 });
 
@@ -801,6 +1112,76 @@ describe("frames: ride along in the bubble, drop off when left behind", () => {
 });
 
 describe("ship impacts with leeway", () => {
+  it("keeps a non-reference foreign hull solid during ship-local EVA", () => {
+    goOutside();
+    addShip("kite", other, "other-cap");
+    setShip("kite", { x: 25, y: 0 });
+    const before = ctx.db.evaBody.characterId.find("cap");
+    ctx.db.evaBody.characterId.update({
+      ...before,
+      x: 25,
+      y: 0,
+      localX: 25,
+      localY: 0,
+      vx: 0,
+      vy: 0,
+      refVx: 0,
+      refVy: 0,
+      ...cell(25, 0),
+    });
+    tick();
+    const after = ctx.db.evaBody.characterId.find("cap");
+    const at = worldToShip(ctx.db.shipWorldMotion.shipId.find("kite"), [
+      after.x,
+      after.y,
+    ]);
+    expect(evaBodyBlocked(model, at, new Set())).toBe(false);
+    expect(ctx.db.character.id.find("cap").shipId).toBe("wren");
+    expect(ctx.db.constructionLocation.characterId.find("cap")).toBeUndefined();
+  });
+
+  it("changes overlapping references continuously without boarding or disclosing a foreign interior", () => {
+    goOutside();
+    addShip("kite", other, "other-cap");
+    setShip("kite", { x: 30, y: 0, heading: 0.7 });
+    const before = ctx.db.evaBody.characterId.find("cap");
+    ctx.db.evaBody.characterId.update({
+      ...before,
+      x: 20,
+      y: 0,
+      localX: 20,
+      localY: 0,
+      vx: 0,
+      vy: 0,
+      refVx: 0,
+      refVy: 0,
+      ...cell(20, 0),
+    });
+    tick();
+    const after = ctx.db.evaBody.characterId.find("cap");
+    expect(after.anchorShipId).toBe("kite");
+    expect(after.x).toBeCloseTo(20, 8);
+    expect(after.y).toBeCloseTo(0, 8);
+    expect(after.vx).toBeCloseTo(0, 8);
+    expect(after.vy).toBeCloseTo(0, 8);
+    expect(
+      shipToWorld(ctx.db.shipWorldMotion.shipId.find("kite"), [
+        after.localX,
+        after.localY,
+      ])[0],
+    ).toBeCloseTo(20, 8);
+    expect(ctx.db.character.id.find("cap").shipId).toBe("wren");
+    expect(ctx.db.worldAdmission.characterId.find("cap").shipId).toBe("wren");
+    expect(ctx.db.constructionLocation.characterId.find("cap")).toBeUndefined();
+    const rows = visibleShipLogic(ctx).filter((row) => row.shipId === "kite");
+    expect(rows.length).toBeGreaterThan(0);
+    expect(
+      rows.every((row) =>
+        ["door-outer", "btn-lock-out"].includes(row.deviceId),
+      ),
+    ).toBe(true);
+  });
+
   function freeBodyBeside(vx: number) {
     goOutside();
     const b = ctx.db.evaBody.characterId.find("cap");

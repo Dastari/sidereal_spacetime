@@ -1,3 +1,4 @@
+import { isWayfarerHullAccessProfile } from "@sidereal/content/hull-access-profile";
 import {
   effectiveWayfarerObjects,
   type FurnishingOverrides,
@@ -26,6 +27,10 @@ import {
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import type { FaceNormal } from "@sidereal/content/construction-grammar";
+import {
+  isWayfarerAccessProfile,
+  wayfarerAccessObjects,
+} from "@sidereal/content/wayfarer-access-profile";
 
 /** Deck-object designs that can hold an operator-bound cargo container. */
 export const PREFAB_STORAGE_DESIGNS: readonly string[] = [
@@ -70,9 +75,12 @@ export function prefabCargoSockets(
     return deck === 0
       ? WAYFARER_STORAGE_OBJECTS.filter((id) => !furnishings[id]?.deleted).map(
           (id) => {
-            const o = effectiveWayfarerObjects(furnishings).find(
-              (row) => row.object === id,
-            )!;
+            const effective = effectiveWayfarerObjects(furnishings);
+            const o = (
+              isWayfarerAccessProfile(doc) || isWayfarerHullAccessProfile(doc)
+                ? wayfarerAccessObjects(effective)
+                : effective
+            ).find((row) => row.object === id)!;
             const cx = (o.min[0] + o.max[0]) / 2,
               cy = (o.min[1] + o.max[1]) / 2;
             const approachesM: [number, number][] = [];

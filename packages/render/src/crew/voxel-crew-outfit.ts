@@ -22,6 +22,7 @@ import {
   type createVoxelCrewVisual,
 } from "./voxel-crew";
 import { applyMoldedFinishToMeshes } from "../molded-plastic";
+import { createStudyCrewOutfit } from "./crew-study-outfit";
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 
@@ -84,6 +85,7 @@ export function createVoxelCrewOutfit(
   crew: VoxelCrew,
   options: { onChange?: () => void } = {},
 ) {
+  if (crew.study) return createStudyCrewOutfit(scene, crew, options);
   let disposed = false;
   let headKey = "";
   let headRevision = 0;

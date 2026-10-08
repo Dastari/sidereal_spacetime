@@ -1,4 +1,18 @@
 import { expect, test } from "vitest";
+import {
+  WAYFARER_ACCESS_SOURCE,
+  wayfarerAccessObjects,
+} from "@sidereal/content/wayfarer-access-profile";
+import { readFileSync } from "node:fs";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
+const legacyDoc = readShipPrefab(
+  JSON.parse(
+    readFileSync(
+      new URL("../../content/src/wayfarer-prefab.v1.json", import.meta.url),
+      "utf8",
+    ),
+  ),
+);
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { WAYFARER_GAMEPLAY_OBJECTS } from "@sidereal/content/wayfarer-authored-gameplay";
@@ -317,4 +331,44 @@ test("storage access points prefer clear geometry without reserving a route and 
   ).toEqual([-1, 0]);
   expect(furnishingAccessPoint(frame, [[0, 0]])).toEqual([0, 0]);
   expect(furnishingAccessPoint(frame, [])).toBeUndefined();
+});
+
+test("revision2 furnishing validation uses the same shifted footprint as collision, while revision1 retains its source pose", () => {
+  const id = "Hydroponics_cabinet_dark";
+  const original = effectiveWayfarerObjects().find((o) => o.object === id)!;
+  const shifted = wayfarerAccessObjects([original])[0];
+  const polygon = (row: typeof original) =>
+    row.footprint.map(([x, y]) => [-y, x] as [number, number]);
+  const frame: DeckCollisionFrame = { ...open, floors: [polygon(shifted)] };
+  expect(() =>
+    validateFurnishingPlacement(id, {}, frame, [], WAYFARER_ACCESS_SOURCE),
+  ).not.toThrow();
+  expect(() =>
+    validateFurnishingPlacement(id, {}, frame, [], legacyDoc),
+  ).toThrow(/complete supported/);
+  const sourceFrame: DeckCollisionFrame = {
+    ...open,
+    floors: [polygon(original)],
+  };
+  expect(() =>
+    validateFurnishingPlacement(id, {}, sourceFrame, [], legacyDoc),
+  ).not.toThrow();
+  expect(() =>
+    validateFurnishingPlacement(
+      id,
+      {},
+      sourceFrame,
+      [],
+      WAYFARER_ACCESS_SOURCE,
+    ),
+  ).toThrow(/complete supported/);
+  const blocked: DeckCollisionFrame = {
+    ...frame,
+    obstacles: [
+      { id: "target-wall", definitionId: "wall", vertices: polygon(shifted) },
+    ],
+  };
+  expect(() =>
+    validateFurnishingPlacement(id, {}, blocked, [], WAYFARER_ACCESS_SOURCE),
+  ).toThrow(/overlaps target wall/);
 });

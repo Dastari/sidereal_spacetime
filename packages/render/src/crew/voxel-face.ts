@@ -33,6 +33,7 @@ export function createVoxelFace(
   scene: Scene,
   initialMaterial: PBRMaterial | undefined,
   random: () => number = Math.random,
+  options: { flipRows?: boolean } = {},
 ) {
   let material = initialMaterial;
   let composer: VoxelFaceComposer | undefined;
@@ -75,7 +76,7 @@ export function createVoxelFace(
     for (let r = 0; r < n; r++)
       flipped.set(
         pixels.subarray(r * n * 4, (r + 1) * n * 4),
-        (n - 1 - r) * n * 4,
+        (options.flipRows === false ? r : n - 1 - r) * n * 4,
       );
     if (!texture) {
       texture = RawTexture.CreateRGBATexture(

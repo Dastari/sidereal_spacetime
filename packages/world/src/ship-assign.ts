@@ -20,7 +20,11 @@ export type PrefabSpawnPose =
   | { kind: "at"; systemId: string; x: number; y: number; heading: number };
 
 /** `name` is the gameplay ship name; "" means the prefab's own name. */
-export type PrefabSpawnRequest = { pose: PrefabSpawnPose; name: string };
+export type PrefabSpawnRequest = {
+  pose: PrefabSpawnPose;
+  name: string;
+  boardActor?: boolean;
+};
 
 /** Server-side spawn path for one published prefab ship (SHIPS-PREFABS
  * registers these; see the wiki: Operations/Ship Wipe Runbook). In the same

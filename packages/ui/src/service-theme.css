@@ -1,0 +1,102 @@
+/* Adapter for the existing service panel layouts; every surface uses UI tokens. */
+:is(
+  .account-panel,
+  .ship-service-panel,
+  .furnishing-editor,
+  .construction-review-controls
+) {
+  color: var(--ui-text);
+  font-family: var(--ui-font-body);
+  background: linear-gradient(135deg, #0b2240f5, #041027f5);
+  border: 1px solid var(--ui-border);
+  box-shadow:
+    inset 3px 0 0 var(--ui-primary),
+    0 12px 28px #030b1977;
+  border-radius: 2px;
+}
+:is(
+    .account-panel,
+    .ship-service-panel,
+    .furnishing-editor,
+    .construction-review-controls
+  )
+  :is(h2, h3) {
+  color: var(--ui-primary);
+  font-family: var(--ui-font-title);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+:is(
+    .account-panel,
+    .ship-service-panel,
+    .furnishing-editor,
+    .construction-review-controls
+  )
+  :is(small, dt) {
+  color: var(--ui-text-secondary);
+}
+:is(
+    .account-panel,
+    .ship-service-panel,
+    .furnishing-editor,
+    .construction-review-controls
+  )
+  button {
+  min-height: 42px;
+  padding: 10px 16px;
+  color: var(--ui-text);
+  border: 1px solid var(--ui-border);
+  background: var(--ui-input);
+  font: 600 1em var(--ui-font-title);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+:is(
+    .account-panel,
+    .ship-service-panel,
+    .furnishing-editor,
+    .construction-review-controls
+  )
+  button:not(:disabled):hover {
+  background: var(--ui-raised);
+  border-color: var(--ui-primary);
+}
+:is(
+    .account-panel,
+    .ship-service-panel,
+    .furnishing-editor,
+    .construction-review-controls
+  )
+  button:disabled {
+  color: var(--ui-text-muted);
+  opacity: 0.65;
+  cursor: default;
+}
+:is(
+    .account-panel,
+    .ship-service-panel,
+    .furnishing-editor,
+    .construction-review-controls
+  )
+  :is(input, select) {
+  background: var(--ui-input);
+  border: 1px solid var(--ui-border);
+  color: var(--ui-text);
+  font: inherit;
+  padding: 10px;
+}
+:is(
+    .account-panel,
+    .ship-service-panel,
+    .furnishing-editor,
+    .construction-review-controls
+  )
+  :is(button, input, select):focus-visible {
+  outline: 2px solid var(--ui-primary);
+  outline-offset: 3px;
+}
+.furnishing-editor .furnishing-editor__delete {
+  color: var(--ui-danger) !important;
+  border-color: var(--ui-danger) !important;
+}

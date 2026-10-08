@@ -1,8 +1,18 @@
 import {
+  isWayfarerHullAccessProfile,
+  HULL_ACCESS_PHYSICAL,
+} from "@sidereal/content/hull-access-profile";
+import {
   createAuthoredAssetLighting,
   readAuthoredAssetLighting,
 } from "../authored-asset-lighting";
 import { authoredInstanceMatrix } from "./wayfarer-authored-study";
+import { publishedShipAccessBytes } from "./wayfarer-access-assets";
+import {
+  isWayfarerAccessProfile,
+  WAYFARER_ACCESS_PHYSICAL,
+  wayfarerAccessFurnitureMatrix,
+} from "@sidereal/content/wayfarer-access-profile";
 import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -99,6 +109,7 @@ export function wayfarerVisiblePlacements(
   instances: readonly AuthoredStudyInstance[],
   exteriorOnly: boolean,
   furnishings: FurnishingOverrides = {},
+  accessProfile = false,
 ): AuthoredStudyInstance[] {
   return instances
     .filter(
@@ -111,7 +122,16 @@ export function wayfarerVisiblePlacements(
         applyWayfarerAuthoredPlacementEdits(row.object, row.matrix),
         furnishings,
       );
-      return matrix ? [{ ...row, matrix }] : [];
+      return matrix
+        ? [
+            {
+              ...row,
+              matrix: accessProfile
+                ? wayfarerAccessFurnitureMatrix(row.object, matrix)
+                : matrix,
+            },
+          ]
+        : [];
     });
 }
 
@@ -131,6 +151,12 @@ export async function createWayfarerLiveView(
   options: PrefabShipViewOptions & { furnishings?: FurnishingOverrides },
 ): Promise<PrefabShipView> {
   assertWayfarerPrefabContract(doc);
+  const hullAccess = isWayfarerHullAccessProfile(doc);
+  const accessProfile = isWayfarerAccessProfile(doc) || hullAccess;
+  const accessPhysical = hullAccess
+    ? HULL_ACCESS_PHYSICAL
+    : WAYFARER_ACCESS_PHYSICAL;
+  const accessResolver = options.accessResolver ?? publishedShipAccessBytes;
   const root = new TransformNode(`prefab-ship:${doc.id}`, scene);
   root.parent = options.parent ?? null;
   root.position.y = 0.1875;
@@ -182,10 +208,11 @@ export async function createWayfarerLiveView(
       parse(descriptorBytes),
     );
     const flight = readWayfarerAuthoredFlight(parse(flightBytes));
-    const instances = wayfarerVisiblePlacements(
+    let instances = wayfarerVisiblePlacements(
       study.instances,
       options.exteriorOnly === true,
       options.furnishings,
+      accessProfile,
     );
     if (!options.exteriorOnly)
       instances.push(...wayfarerNearWallPlacements(study.pieces));
@@ -214,6 +241,35 @@ export async function createWayfarerLiveView(
         mirrored: false,
       });
     }
+    const identity = [
+      [1, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 1],
+    ];
+    const accessInstance = (id: string): AuthoredStudyInstance => ({
+      object: id,
+      piece: id,
+      role: "structure",
+      room: null,
+      matrix: identity,
+      originalMatrix: identity,
+      frame: "piece-local",
+      trueScale: true,
+      mirrored: false,
+    });
+    if (accessProfile) {
+      const omitted = new Set(accessPhysical.omitted.deck);
+      instances = instances.filter((row) => !omitted.has(row.object));
+      if (!options.exteriorOnly) instances.push(accessInstance("native.deck"));
+    }
+    const accessPiece = (id: string) => {
+      const piece = accessPhysical.pieces.find((p) => p.id === id);
+      if (!piece || piece.frame !== "piece-local")
+        throw Error("Invalid proposed native access piece");
+      return Object.freeze({ ...piece, frame: "piece-local" as const });
+    };
+    const resolveAccess = (id: string) => accessResolver(accessPiece(id));
     const used = new Set(instances.map((row) => row.piece));
     const regions = new Map(
       instances.map((row) => [
@@ -229,28 +285,44 @@ export async function createWayfarerLiveView(
             .filter((piece) => used.has(piece.id))
             .map((piece) => WAYFARER_POST_APERTURES[piece.id] ?? piece),
           ...(used.has(RCS.id) ? [RCS] : []),
+          ...(accessProfile ? [accessPiece("native.deck")] : []),
         ],
         instances,
-        study.palette,
+        accessProfile ? accessPhysical.palette : study.palette,
         [0, 0],
         (piece) =>
-          bytes(
-            `${WAYFARER_POST_APERTURES[piece.id] ? DETAILS_BASE : BASE}${piece.file}`,
-          ),
+          piece.id === "native.deck"
+            ? resolveAccess(piece.id)
+            : bytes(
+                `${WAYFARER_POST_APERTURES[piece.id] ? DETAILS_BASE : BASE}${piece.file}`,
+              ),
         { batchRegions: regions, assetLighting },
       );
     const flightInstances = [
-      ...flight.instances,
+      ...flight.instances.filter(
+        (row) =>
+          !accessProfile || !accessPhysical.omitted.flight.includes(row.object),
+      ),
       ...instances.filter((row) => row.object.startsWith("RCS_")),
+      ...(accessProfile ? [accessInstance("native.flight")] : []),
     ];
+    const flightUsed = new Set(flightInstances.map((row) => row.piece));
     flightCandidate = await loadAuthoredStudy(
       scene,
-      [...flight.pieces, ...(used.has(RCS.id) ? [RCS] : [])],
+      [
+        ...flight.pieces.filter(
+          (piece) => !accessProfile || flightUsed.has(piece.id),
+        ),
+        ...(used.has(RCS.id) ? [RCS] : []),
+        ...(accessProfile ? [accessPiece("native.flight")] : []),
+      ],
       flightInstances,
-      flight.palette,
+      accessProfile ? accessPhysical.palette : flight.palette,
       [0, 0],
       (piece) =>
-        bytes(`${piece.id === RCS.id ? BASE : FLIGHT_BASE}${piece.file}`),
+        piece.id === "native.flight"
+          ? resolveAccess(piece.id)
+          : bytes(`${piece.id === RCS.id ? BASE : FLIGHT_BASE}${piece.file}`),
       {
         assetLighting,
         batchRegions: new Map(
@@ -446,8 +518,9 @@ export async function createWayfarerLiveView(
           0,
         );
         return {
-          visualRevision:
-            view === "deck"
+          visualRevision: accessProfile
+            ? `${accessPhysical.revision}-${view}-proposal`
+            : view === "deck"
               ? "wayfarer-authored-r001-live"
               : "wayfarer-dorsal-r001-live",
           drawCalls: scene.getEngine()._drawCalls?.current ?? 0,

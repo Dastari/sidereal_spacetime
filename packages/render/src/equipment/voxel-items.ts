@@ -22,6 +22,8 @@ import {
 } from "@sidereal/content/crew-items";
 import { setMeshRole } from "../mesh-roles";
 import { bindPoseEquipment } from "./pose-anchors";
+import { CREW_STUDY, crewStudyUrl } from "@sidereal/content/crew-study";
+import { studyMaterials } from "../crew/crew-study-materials";
 
 /** Materials exported by scripts/art_library/crew_items are named `slot:<slot>@<theme>`. */
 export function crewItemSlotFromMaterialName(
@@ -68,6 +70,9 @@ export function crewItemHandSocketRotation(): Quaternion {
 }
 
 export interface VoxelItemVisualOptions {
+  study?: boolean;
+  /** Exact in-memory asset for tests/review. */
+  source?: ArrayBufferView;
   theme?: string;
   lod?: "lod0" | "lod1";
   baseUrl?: string;
@@ -87,10 +92,17 @@ export async function createVoxelItemVisual(
   options: VoxelItemVisualOptions = {},
 ) {
   const item = crewItem(itemId);
+  const studyKey = `item.${item.id === "medkit" ? "med_kit" : item.id.replace(/-/g, "_")}`;
+  const studyItem = options.study ? CREW_STUDY.items[studyKey] : undefined;
+  if (options.study && !studyItem)
+    throw new Error(`No pinned study mesh for ${item.id}`);
   const base = options.baseUrl ?? CREW_ITEM_CATALOG.assetBase;
   const container = await SceneLoader.LoadAssetContainerAsync(
-    base,
-    item.files[options.lod ?? "lod0"],
+    options.source || studyItem ? "" : base,
+    options.source ??
+      (studyItem
+        ? crewStudyUrl(studyItem.files[options.lod ?? "lod0"].file)
+        : item.files[options.lod ?? "lod0"]),
     scene,
     undefined,
     ".glb",
@@ -98,19 +110,28 @@ export async function createVoxelItemVisual(
   for (const material of container.materials)
     if (material instanceof PBRMaterial)
       setPbrLightBudget(material, GAME_PBR_LIGHT_LIMIT);
-  applyCrewItemTheme(container.materials, item, options.theme);
+  if (studyItem) studyMaterials(container.materials, {}, studyItem.families);
+  else applyCrewItemTheme(container.materials, item, options.theme);
   const root = new TransformNode(`crew-item-placement:${item.id}`, scene);
   root.parent = parent;
   if (options.localRotation)
     root.rotationQuaternion = options.localRotation.clone();
   container.addAllToScene();
   for (const mesh of container.meshes) setMeshRole(mesh, "equipment");
+  // An item under a crew glTF socket already inherits the crew handedness conversion.
+  if (studyItem)
+    for (const node of container.rootNodes)
+      if (node instanceof TransformNode && node.name === "__root__") {
+        node.position.setAll(0);
+        node.scaling.setAll(1);
+        node.rotationQuaternion = Quaternion.Identity();
+      }
   for (const node of container.rootNodes) node.parent = root;
   const imported = container.rootNodes[0];
   // Position comes from this item's own exported socket metadata. The support target's axes
   // match socket.hand.L/R, rather than the item's native -Z barrel frame.
   const supportTarget =
-    item.sockets.support && imported instanceof TransformNode
+    !studyItem && item.sockets.support && imported instanceof TransformNode
       ? new TransformNode(`crew-item-support:${item.id}`, scene)
       : null;
   if (supportTarget) {
@@ -121,9 +142,43 @@ export async function createVoxelItemVisual(
     supportTarget.rotationQuaternion = crewItemHandSocketRotation().conjugate();
   }
   for (const group of container.animationGroups) group.stop();
+  const sight = studyItem
+    ? container.animationGroups.find((group) => group.name === "deploy_sight")
+    : undefined;
+  let sightAmount = 0;
+  let sightTarget = 0;
+  if (sight) {
+    sight.start(false, 0);
+    sight.pause();
+    sight.goToFrame(sight.from);
+  }
+  const sightObserver = sight
+    ? scene.onBeforeRenderObservable.add(() => {
+        const step =
+          Math.min(0.1, scene.getEngine().getDeltaTime() / 1000) / 0.25;
+        sightAmount +=
+          Math.sign(sightTarget - sightAmount) *
+          Math.min(Math.abs(sightTarget - sightAmount), step);
+        sight.goToFrame(sight.from + (sight.to - sight.from) * sightAmount);
+      })
+    : undefined;
   const poseItem = item.poseProfile ? toEquipmentPoseItem(item) : undefined;
   let disposed = false;
   const socketWorld = (name: CrewItemSocketName) => {
+    if (studyItem) {
+      const node = container.transformNodes.find(
+        (node) => node.name === `socket.${name}`,
+      );
+      if (disposed || !node) return undefined;
+      const world = node.computeWorldMatrix(true);
+      return {
+        position: world.getTranslation(),
+        direction: Vector3.TransformNormal(
+          new Vector3(0, 0, -1),
+          world,
+        ).normalize(),
+      };
+    }
     const socket = item.sockets[name];
     if (disposed || !socket || !(imported instanceof TransformNode))
       return undefined;
@@ -152,6 +207,9 @@ export async function createVoxelItemVisual(
     item,
     root,
     supportTarget,
+    setSightDeployed(deployed: boolean) {
+      sightTarget = deployed ? 1 : 0;
+    },
     poseItem,
     createPoseBinding(poseParent: TransformNode) {
       if (disposed || !(imported instanceof TransformNode) || !poseItem)
@@ -161,14 +219,15 @@ export async function createVoxelItemVisual(
     /** Plays the item-part clip matching an action and reports the character clip / FX to pair with it. */
     play(action: CrewItemAction) {
       const plan = crewItemActionPlan(item, action);
-      if (!disposed && plan.itemClip)
+      if (!disposed && (plan.itemClip || studyItem))
         container.animationGroups
-          .find((g) => g.name === plan.itemClip)
+          .find((g) => g.name === (studyItem ? action : plan.itemClip))
           ?.start(action === "idle");
       return plan;
     },
     setTheme(theme: string) {
-      if (!disposed) applyCrewItemTheme(container.materials, item, theme);
+      if (!disposed && !studyItem)
+        applyCrewItemTheme(container.materials, item, theme);
     },
     socketWorld,
     getMuzzleWorld: () =>
@@ -176,6 +235,7 @@ export async function createVoxelItemVisual(
     dispose() {
       if (disposed) return;
       disposed = true;
+      if (sightObserver) scene.onBeforeRenderObservable.remove(sightObserver);
       container.dispose();
       root.dispose();
     },
