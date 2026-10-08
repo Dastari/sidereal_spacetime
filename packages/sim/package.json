@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -101,11 +101,12 @@
     "./ship-furnishings": "./src/ship-furnishings.ts",
     "./furnishing-wall-placement": "./src/furnishing-wall-placement.ts",
     "./authored-template-plan": "./src/authored-template-plan.ts",
-    "./fleet-formation-bounds": "./src/fleet-formation-bounds.ts"
+    "./fleet-formation-bounds": "./src/fleet-formation-bounds.ts",
+    "./ship-systems-design": "./src/ship-systems-design.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.15.0",
+    "@sidereal/content": "0.16.0",
     "@sidereal/scripting": "0.1.0"
   }
 }

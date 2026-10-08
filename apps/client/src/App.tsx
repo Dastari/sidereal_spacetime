@@ -171,6 +171,12 @@ export default function App({
     ? "furnishing-editor"
     : servicePanel;
   const closeServicePanel = useCallback(() => setServicePanel(""), []);
+  const openServicePanel = useCallback((name: string) => {
+    furnishingCancel.current?.();
+    setFurnishingEdit(undefined);
+    setPlacementState(undefined);
+    setServicePanel(name);
+  }, []);
   const onSignOutRef = useRef(onSignOut);
   onSignOutRef.current = onSignOut;
   // Legacy stock-ship inspection catalog is retired with its assets (see below).
@@ -1468,7 +1474,7 @@ export default function App({
                   interact,
                   combat: () => setCombatEnabled((v) => !v),
                   cruise: () => toggleCruise(),
-                  openService: setServicePanel,
+                  openService: openServicePanel,
                   closeService: () => {
                     if (!servicePanelOpen.current) return false;
                     if (servicePanelOpen.current === "furnishing-editor") {
