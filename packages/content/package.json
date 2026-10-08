@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -95,7 +95,8 @@
     "./ship-access-doors": "./src/ship-access-doors.ts",
     "./fleet-access-physical": "./src/fleet-access-physical.ts",
     "./wayfarer-access-profile": "./src/wayfarer-access-profile.ts",
-    "./hull-access-profile": "./src/hull-access-profile.ts"
+    "./hull-access-profile": "./src/hull-access-profile.ts",
+    "./wayfarer-service-routes": "./src/wayfarer-service-routes.v1.json"
   },
   "dependencies": {}
 }

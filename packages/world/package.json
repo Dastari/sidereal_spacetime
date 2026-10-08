@@ -1,13 +1,13 @@
 {
   "name": "@sidereal/world",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "private": true,
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
     "spacetimedb": "2.10.2",
-    "@sidereal/content": "0.15.0",
-    "@sidereal/sim": "0.11.0",
+    "@sidereal/content": "0.16.0",
+    "@sidereal/sim": "0.12.0",
     "@sidereal/scripting": "0.1.0"
   },
   "scripts": {
