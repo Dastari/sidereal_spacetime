@@ -1,7 +1,7 @@
 /**
  * Registered prefab ship spawners for the live authority (SHIPS-PREFABS).
  *
- * Wren remains the starter; authored Wayfarer is separately pinned for explicit owner replacement.
+ * Wren remains the starter; authored Wayfarer and the six provisional fleet designs are pinned separately.
  * The other prefabs in `@sidereal/content/prefabs` stay unregistered until each is
  * separately chosen, pinned and smoke-tested.
  *
@@ -36,7 +36,7 @@ import {
 
 export { FED_WREN_PIN, REGISTERED_PREFAB_PINS } from "./prefab-ship-pins";
 
-function registerPinned(pin: PinnedPrefabShip) {
+export function registerPinnedPrefab(pin: PinnedPrefabShip) {
   registerPrefabShipSpawner({
     prefabId: pin.prefabId,
     catalogRevision: pin.catalogRevision,
@@ -62,8 +62,11 @@ function registerPinned(pin: PinnedPrefabShip) {
         actor,
         { prefabId: pin.prefabId, pose: request.pose },
         current.revision === pin.catalogRevision
-          ? {}
-          : { template: trustedPrefabTemplateFor(prefab, current) },
+          ? { boardActor: request.boardActor }
+          : {
+              template: trustedPrefabTemplateFor(prefab, current),
+              boardActor: request.boardActor,
+            },
       );
       const instance = ctx.db.constructionInstance.id.find(result.shipId);
       const binding = ctx.db.constructionFlightBinding.shipId.find(
@@ -106,4 +109,4 @@ function registerPinned(pin: PinnedPrefabShip) {
   });
 }
 
-for (const pin of REGISTERED_PREFAB_PINS) registerPinned(pin);
+for (const pin of REGISTERED_PREFAB_PINS) registerPinnedPrefab(pin);

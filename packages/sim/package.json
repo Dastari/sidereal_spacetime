@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.8.1",
+  "version": "0.12.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -9,6 +9,7 @@
     "./prefab-handling": "./src/prefab-handling.ts",
     "./prefab-flight-supply": "./src/prefab-flight-supply.ts",
     "./prefab-construction": "./src/prefab-construction.ts",
+    "./prefab-size-class": "./src/prefab-size-class.ts",
     "./prefab-catalog": "./src/prefab-catalog.ts",
     "./prefab-seats": "./src/prefab-seats.ts",
     "./prefab-cargo-sockets": "./src/prefab-cargo-sockets.ts",
@@ -52,6 +53,7 @@
     "./construction-airlock-controller": "./src/construction-airlock-controller.ts",
     "./construction-airlock-document": "./src/construction-airlock-document.ts",
     "./game-ship-access": "./src/game-ship-access.ts",
+    "./owned-ship-entry": "./src/owned-ship-entry.ts",
     "./construction-flight": "./src/construction-flight.ts",
     "./construction-pilot": "./src/construction-pilot.ts",
     "./construction-airlock-published": "./src/construction-airlock-published.ts",
@@ -98,11 +100,13 @@
     "./ship-visual-compiler": "./src/ship-visual-compiler.ts",
     "./ship-furnishings": "./src/ship-furnishings.ts",
     "./furnishing-wall-placement": "./src/furnishing-wall-placement.ts",
-    "./authored-template-plan": "./src/authored-template-plan.ts"
+    "./authored-template-plan": "./src/authored-template-plan.ts",
+    "./fleet-formation-bounds": "./src/fleet-formation-bounds.ts",
+    "./ship-systems-design": "./src/ship-systems-design.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.11.0",
+    "@sidereal/content": "0.16.0",
     "@sidereal/scripting": "0.1.0"
   }
 }

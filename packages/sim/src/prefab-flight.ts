@@ -282,16 +282,26 @@ export function prefabFlightModel(
   }
   const interior = deriveInterior(doc, 0, components);
   if (interior.floors.length) {
+    const floorArea = (f: (typeof interior.floors)[number]) =>
+      f.extentM ? f.extentM[0] * f.extentM[1] : 1;
+    const deckAreaM2 = interior.floors.reduce(
+      (sum, f) => sum + floorArea(f),
+      0,
+    );
     const massKg =
-      interior.floors.length * FLOOR_KG_PER_M2 +
+      deckAreaM2 * FLOOR_KG_PER_M2 +
       (interior.partitions.length + interior.exteriorWalls.length) *
         WALL_KG_PER_M;
     const cx =
-      interior.floors.reduce((s, f) => s + f.cell[0] + 0.5, 0) /
-      interior.floors.length;
+      interior.floors.reduce(
+        (s, f) => s + (f.cell[0] + (f.extentM?.[0] ?? 1) / 2) * floorArea(f),
+        0,
+      ) / deckAreaM2;
     const cy =
-      interior.floors.reduce((s, f) => s + f.cell[1] + 0.5, 0) /
-      interior.floors.length;
+      interior.floors.reduce(
+        (s, f) => s + (f.cell[1] + (f.extentM?.[1] ?? 1) / 2) * floorArea(f),
+        0,
+      ) / deckAreaM2;
     const id = prefabInteriorDefinitionId(doc.id);
     const [x0, y0, x1, y1] = prefabBounds(geoms);
     defs.set(id, {
@@ -635,7 +645,7 @@ export function prefabFlightModelFor(
 export function planPrefabConstructionFlight(
   instance: PrefabFlightInstance,
   placement: { systemId: string; x: number; y: number; serverTick: bigint },
-  allocate: () => string,
+  allocate: (sourceDeviceId?: string) => string,
   reservedIds: readonly string[] = [],
 ) {
   // Game-owned prefab instances are never refitted: every revision holds a trusted prefab source
@@ -667,8 +677,8 @@ export function planPrefabConstructionFlight(
   const used = new Set(
     [instance.id, ...reservedIds].map((s) => s.toLowerCase()),
   );
-  const fresh = () => {
-    const id = allocate();
+  const fresh = (sourceDeviceId?: string) => {
+    const id = allocate(sourceDeviceId);
     if (!UUID.test(id) || used.has(id.toLowerCase()))
       throw Error("Fresh flight UUID required");
     used.add(id.toLowerCase());
@@ -682,7 +692,7 @@ export function planPrefabConstructionFlight(
     computerPart.definitionId,
   ) as ComputerDefinition;
   const station = {
-    id: fresh(),
+    id: fresh("station"),
     shipId,
     deckId: instance.spawnDeckId,
     placedObjectId: prefabPlacedObjectId(shipId, "station"),
@@ -693,7 +703,7 @@ export function planPrefabConstructionFlight(
     operational: false,
   };
   const computer = {
-    id: fresh(),
+    id: fresh(computers[0].sourceId),
     shipId,
     placedObjectId: station.consolePlacedObjectId,
     sourceDeviceId: computers[0].sourceId,
@@ -712,7 +722,7 @@ export function planPrefabConstructionFlight(
       s * d.forceAxis[0] + c * d.forceAxis[1],
     ];
     return {
-      id: fresh(),
+      id: fresh(f.sourceId),
       shipId,
       placedObjectId: prefabPlacedObjectId(shipId, f.sourceId),
       sourceDeviceId: f.sourceId,

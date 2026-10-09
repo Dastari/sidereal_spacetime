@@ -1,4 +1,7 @@
 import { expect, test, vi } from "vitest";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
@@ -161,6 +164,64 @@ function doc() {
     ],
   };
 }
+test("server draft admission fixes class across renamed updates and forged template publications", () => {
+  const f = fixture();
+  f.grant(f.alice, "draft.write");
+  f.grant(f.alice, "draft.read");
+  f.grant(f.alice, "blueprint.publish");
+  const source = prefabById("fed.s.wren-fleet")!;
+  const bytes = (patch: Partial<typeof source>) =>
+    JSON.stringify(
+      prefabConstructionDocument(
+        { ...source, ...patch },
+        defaultPrefabComponentCatalog(),
+      ),
+    );
+  const args = {
+    workspaceId: "w",
+    draftId: "custom-draft",
+    documentJson: bytes({ id: "custom-small" }),
+    expectedRevision: 0n,
+    operationId: "size-first",
+  };
+  saveDraft(f.a, args);
+  expect(() =>
+    saveDraft(f.a, {
+      ...args,
+      documentJson: bytes({ id: "renamed-large", sizeClass: "L" }),
+      expectedRevision: 1n,
+      operationId: "size-change",
+    }),
+  ).toThrow(/fixed at creation/);
+  expect(f.db.constructionDraft.rows[0].revision).toBe(1n);
+  expect(() =>
+    saveDraft(f.a, {
+      ...args,
+      draftId: "forged",
+      documentJson: bytes({ sizeClass: "L" }),
+      operationId: "size-forged",
+    }),
+  ).toThrow(/Registered template/);
+  expect(() =>
+    saveDraft(f.a, {
+      ...args,
+      draftId: "prefab.fed.s.wren-fleet",
+      documentJson: bytes({ id: "renamed", sizeClass: "L" }),
+      operationId: "size-forged-name",
+    }),
+  ).toThrow(/Registered template/);
+  // A legacy draft that predates the gate must also fail at publication.
+  f.db.constructionDraft.rows[0].documentJson = bytes({ sizeClass: "L" });
+  expect(() =>
+    publishBlueprint(f.a, {
+      workspaceId: "w",
+      draftId: "custom-draft",
+      expectedRevision: 1n,
+      operationId: "size-forged-publish",
+    }),
+  ).toThrow(/Registered template/);
+  expect(f.db.constructionBlueprint.rows).toHaveLength(0);
+});
 test("explicit provider admin grants authoring; ordinary players cannot self-grant", () => {
   const f = fixture();
   expect(() =>

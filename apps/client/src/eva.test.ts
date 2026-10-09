@@ -10,6 +10,9 @@ import {
   evaSuitRefusalOf,
   evaThrustFromKeys,
   evaBodiesForScene,
+  exteriorButtonAction,
+  exteriorLogicPresentation,
+  publishedExteriorModels,
   evaHomeVisit,
   evaIntent,
   evaScene,
@@ -64,6 +67,151 @@ const body = (over: Partial<EvaBodyRow> = {}): EvaBodyRow => ({
 });
 const keys = (...codes: string[]) => new Set(codes);
 const identity = (h: number, v: number) => ({ dx: h, dy: v });
+
+describe("accepted public exterior interaction", () => {
+  it("offers legacy entry at a published target even when the EVA trip began elsewhere", () => {
+    const doc = PREFAB_SHIPS.find(
+      (p) => !p.logic && prefabEvaModel(p, catalog).entries.length > 0,
+    )!;
+    expect(doc).toBeDefined();
+    const model = prefabEvaModel(doc, catalog);
+    const target = { ...ship, shipId: "legacy-target" };
+    const [x, y] = shipToWorld(target, model.entries[0].outside);
+    const action = exteriorButtonAction({
+      body: body({
+        x,
+        y,
+        anchorShipId: target.shipId,
+        exitShipId: "another-ship",
+      }),
+      motions: [target],
+      descriptions: [
+        {
+          shipId: target.shipId,
+          publishedExteriorAssetId: `prefab:${doc.id}`,
+          appearanceRevision: BigInt(doc.revision),
+        },
+      ],
+      rows: [],
+    });
+    expect(action).toMatchObject({
+      kind: "legacy-entry",
+      shipId: target.shipId,
+      airlockId: model.entries[0].id,
+    });
+  });
+
+  it("uses the target's rotated world frame and requires its accepted public button row", () => {
+    const doc = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren-fleet")!;
+    const description = {
+      shipId: "target",
+      publishedExteriorAssetId: `prefab:${doc.id}`,
+      appearanceRevision: BigInt(doc.revision),
+    };
+    const target = {
+      ...ship,
+      shipId: "target",
+      heading: -1.2,
+      x: 280000000.25,
+      y: -91000000.125,
+    };
+    const panel = publishedExteriorModels(
+      description.publishedExteriorAssetId,
+      description.appearanceRevision,
+    )!.logic!.panels.find((p) => p.side === "exterior")!;
+    const [x, y] = shipToWorld(target, panel.front);
+    const eva = body({
+      anchorShipId: "target",
+      x,
+      y,
+      exitShipId: "original",
+      localX: 999,
+      localY: 999,
+    });
+    const row: ShipLogicRow = {
+      shipId: "target",
+      deviceId: panel.deviceId,
+      kind: "button",
+      state: "green",
+      light: "green",
+      open: false,
+      endsMicros: 0n,
+      pressedMicros: 0n,
+    };
+    const input = {
+      body: eva,
+      descriptions: [description],
+      motions: [target],
+      rows: [row],
+    };
+    expect(exteriorButtonAction(input)).toMatchObject({
+      kind: "button",
+      shipId: "target",
+      deviceId: panel.deviceId,
+    });
+    expect(exteriorButtonAction({ ...input, rows: [] })).toBeUndefined();
+    expect(
+      exteriorButtonAction({ ...input, body: { ...eva, phase: "free" } }),
+    ).toBeUndefined();
+    expect(
+      exteriorButtonAction({
+        ...input,
+        descriptions: [
+          {
+            ...description,
+            appearanceRevision: description.appearanceRevision + 1n,
+          },
+        ],
+      }),
+    ).toBeUndefined();
+  });
+
+  it("rejects unknown revisions and strips interior device state from remote presentation", () => {
+    const doc = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren-fleet")!;
+    const description = {
+      shipId: "target",
+      publishedExteriorAssetId: `prefab:${doc.id}`,
+      appearanceRevision: BigInt(doc.revision),
+    };
+    const logic = publishedExteriorModels(
+      description.publishedExteriorAssetId,
+      description.appearanceRevision,
+    )!.logic!;
+    const rows = [...logic.graph.devices.values()].map(
+      (node): ShipLogicRow => ({
+        shipId: "target",
+        deviceId: node.id,
+        kind: node.kind,
+        state: "open",
+        light: "green",
+        open: true,
+        endsMicros: 123n,
+        pressedMicros: 456n,
+      }),
+    );
+    const presentation = exteriorLogicPresentation([description], rows).get(
+      "target",
+    )!;
+    expect([...presentation.doors.keys()].sort()).toEqual(
+      logic.doors
+        .filter((d) => d.exterior)
+        .map((d) => d.doorId)
+        .sort(),
+    );
+    expect([...presentation.panels.keys()].sort()).toEqual(
+      logic.panels
+        .filter((p) => p.side === "exterior")
+        .map((p) => p.deviceId)
+        .sort(),
+    );
+    expect(
+      exteriorLogicPresentation(
+        [{ ...description, appearanceRevision: 999n }],
+        rows,
+      ).size,
+    ).toBe(0);
+  });
+});
 
 describe("EVA client input (jetpack, screen relative)", () => {
   it("WASD is the thrust direction through the frame mapping; blocked or inactive sends nothing", () => {

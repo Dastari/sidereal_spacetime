@@ -38,8 +38,53 @@ import { readFileSync } from "node:fs";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { trustedPrefabTemplate } from "./prefab-ship-authority";
+import { FEDERATION_FLEET_PINS } from "./faction-fleet-pins";
 
 const HEAVY = { timeout: 60_000 };
+
+test.each(FEDERATION_FLEET_PINS)(
+  "$prefabId exact blueprint/flight pins and occupied instance payload stay qualified",
+  HEAVY,
+  (pin) => {
+    const doc = prefabById(pin.prefabId)!;
+    const catalog = defaultPrefabComponentCatalog();
+    const template = trustedPrefabTemplate(pin.prefabId);
+    expect(template.snapshot.sha256).toBe(pin.blueprintSha256);
+    expect(
+      flightDefinitionCatalogHash(prefabFlightModel(doc, catalog).catalog),
+    ).toBe(pin.flightDefinitionSha256);
+    expect(pin.catalogRevision).toBe(catalog.revision);
+    let serial = 0;
+    const plan = planConstructionInstance(
+      template.snapshot,
+      {
+        blueprintRevisionId: template.blueprintRevisionId,
+        expectedBlueprintSha256: template.snapshot.sha256,
+        sourceDeckId: PREFAB_DECK_ID,
+        bodyRadiusM: 0.3,
+        bodyHeightM: 1.8,
+        perimeterHalfWidthM: 0,
+        partitionHalfWidthM: 0,
+        objectCollisionBindings: [],
+      },
+      () =>
+        `00000000-0000-4000-8000-${(++serial).toString(16).padStart(12, "0")}`,
+    );
+    expect(
+      new TextEncoder().encode(JSON.stringify(plan.document)).byteLength,
+    ).toBeLessThan(1_048_576);
+    expect(
+      new TextEncoder().encode(JSON.stringify(plan.mappings)).byteLength,
+    ).toBeLessThan(1_048_576);
+    expect(pin.issueStock).toEqual([
+      {
+        socketKey: "lock/shipyard.equipment.wall-locker",
+        containerName: "EVA suit locker",
+        kit: "eva-suit",
+      },
+    ]);
+  },
+);
 
 test(
   "Wren starter and explicit authored Wayfarer are registered as non-legacy spawners",
@@ -48,11 +93,13 @@ test(
     expect(REGISTERED_PREFAB_PINS.map((p) => p.prefabId)).toEqual([
       "fed.s.wren",
       "fed.m.wayfarer",
+      ...FEDERATION_FLEET_PINS.map((p) => p.prefabId),
     ]);
     const nonLegacy = prefabShipSpawners().filter((s) => !s.legacy);
     expect(nonLegacy.map((s) => s.prefabId)).toEqual([
       "fed.s.wren",
       "fed.m.wayfarer",
+      ...FEDERATION_FLEET_PINS.map((p) => p.prefabId),
     ]);
     expect(prefabShipSpawner("fed.s.wren")).toMatchObject({
       catalogRevision: FED_WREN_PIN.catalogRevision,

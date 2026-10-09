@@ -3,15 +3,30 @@ import { Layer } from "@babylonjs/core/Layers/layer";
 import type { Scene } from "@babylonjs/core/scene";
 import { contains, type Rect } from "./layout";
 import { gameCursors } from "./cursors";
-export const palette = {
-  text: "#eff6ff",
-  muted: "#a7c5e8",
-  line: "#277fbd",
-  blue: "#47dfff",
-  gold: "#ffd26d",
-  red: "#ff8eaa",
-  green: "#74dcbb",
-  well: "#091a30",
+import { panelFrameGeometry, uiTheme } from "@sidereal/ui/theme";
+import {
+  canvasControlState,
+  controlAction,
+  controlCornerCut,
+  type CanvasControlState,
+} from "./component-state";
+/** Compatibility names used by existing HUD compositions; all resolve to shared tokens. */
+export const palette: Record<
+  "text" | "muted" | "line" | "blue" | "gold" | "red" | "green" | "well",
+  string
+> = {
+  text: uiTheme.colors.text,
+  muted: uiTheme.colors.textSecondary,
+  line: uiTheme.colors.border,
+  blue: uiTheme.colors.primary,
+  gold: uiTheme.colors.warning,
+  red: uiTheme.colors.danger,
+  green: uiTheme.colors.success,
+  well: uiTheme.colors.input,
+};
+const rgba = (hex: string, alpha: number) => {
+  const value = Number.parseInt(hex.slice(1), 16);
+  return `rgba(${(value >> 16) & 255},${(value >> 8) & 255},${value & 255},${Math.max(0, Math.min(1, alpha))})`;
 };
 export type PointerAction = {
   x: number;
@@ -50,7 +65,7 @@ export class CanvasUI {
   readonly ctx: CanvasRenderingContext2D;
   width = 1;
   height = 1;
-  scale = window.innerWidth >= 1100 ? 1.35 : 1;
+  scale = 1;
   opacity = 0.94;
   hits: Hit[] = [];
   panels: Rect[] = [];
@@ -279,8 +294,10 @@ export class CanvasUI {
     if (moved && hit.drop) hit.drop(p.x, p.y);
     else {
       hit.cancel?.();
-      if (contains(hit.rect, p.x, p.y))
-        hit.action?.({ ...p, button: e.button, shiftKey: e.shiftKey });
+      // A repaint may have disabled/removed this control while the pointer was held.
+      const current = this.hits.find((candidate) => candidate.id === hit.id);
+      if (current && !current.disabled && contains(current.rect, p.x, p.y))
+        current.action?.({ ...p, button: e.button, shiftKey: e.shiftKey });
     }
     this.updateCursor();
     this.invalidate();
@@ -507,43 +524,61 @@ export class CanvasUI {
       );
     this.texture.update(true);
   }
+  private framePath(r: Rect, inset = 0) {
+    const c = this.ctx,
+      x = r.x + inset,
+      y = r.y + inset,
+      w = Math.max(0, r.w - inset * 2),
+      h = Math.max(0, r.h - inset * 2),
+      cut = controlCornerCut(w, h, uiTheme.frame.cornerCut);
+    c.beginPath();
+    c.moveTo(x + cut, y);
+    c.lineTo(x + w - cut, y);
+    c.lineTo(x + w, y + cut);
+    c.lineTo(x + w, y + h - cut);
+    c.lineTo(x + w - cut, y + h);
+    c.lineTo(x + cut, y + h);
+    c.lineTo(x, y + h - cut);
+    c.lineTo(x, y + cut);
+    c.closePath();
+  }
   panel(r: Rect, strong = false) {
     this.panels.push(r);
     const c = this.ctx;
     c.save();
+    const frame = panelFrameGeometry(r.w, r.h);
     c.beginPath();
-    c.moveTo(r.x + 8, r.y);
-    c.lineTo(r.x + r.w - 10, r.y);
-    c.lineTo(r.x + r.w, r.y + 10);
-    c.lineTo(r.x + r.w, r.y + r.h - 8);
-    c.lineTo(r.x + r.w - 8, r.y + r.h);
-    c.lineTo(r.x, r.y + r.h);
-    c.lineTo(r.x, r.y + 8);
+    frame.outline.forEach(([x, y], i) => {
+      if (i === 0) c.moveTo(r.x + x, r.y + y);
+      else c.lineTo(r.x + x, r.y + y);
+    });
     c.closePath();
     const gradient = c.createLinearGradient(0, r.y, 0, r.y + r.h);
-    gradient.addColorStop(0, `rgba(5,23,54,${strong ? 0.995 : this.opacity})`);
+    gradient.addColorStop(
+      0,
+      rgba(uiTheme.colors.panel, strong ? 0.995 : this.opacity),
+    );
     gradient.addColorStop(
       1,
-      `rgba(2,9,27,${strong ? 0.985 : this.opacity * 0.9})`,
+      rgba(uiTheme.colors.background, strong ? 0.985 : this.opacity * 0.9),
     );
     c.fillStyle = gradient;
     c.fill();
     c.strokeStyle = palette.line;
-    c.lineWidth = 1;
+    c.lineWidth = uiTheme.frame.borderWidth;
     c.stroke();
+    // Glow is confined to two small edge segments, never the whole window.
     c.strokeStyle = palette.blue;
-    c.lineWidth = 2;
-    c.shadowColor = "#169bff";
-    c.shadowBlur = 12;
+    c.lineWidth = uiTheme.frame.focusWidth;
+    c.shadowColor = uiTheme.colors.glow;
+    c.shadowBlur = strong ? 6 : 3;
     c.beginPath();
-    c.moveTo(r.x, r.y + 22);
-    c.lineTo(r.x, r.y + 8);
-    c.lineTo(r.x + 8, r.y);
-    c.lineTo(r.x + 46, r.y);
-    c.moveTo(r.x + r.w - 46, r.y + r.h);
-    c.lineTo(r.x + r.w - 8, r.y + r.h);
-    c.lineTo(r.x + r.w, r.y + r.h - 8);
-    c.lineTo(r.x + r.w, r.y + r.h - 28);
+    frame.accents.forEach((vertices) =>
+      vertices.forEach(([x, y], i) => {
+        if (i === 0) c.moveTo(r.x + x, r.y + y);
+        else c.lineTo(r.x + x, r.y + y);
+      }),
+    );
     c.stroke();
     c.shadowBlur = 0;
     c.strokeStyle = "#759ad044";
@@ -563,7 +598,7 @@ export class CanvasUI {
     maxWidth?: number,
   ) {
     const c = this.ctx;
-    c.font = `${size >= 24 ? "600" : "500"} ${size}px ${size >= 24 ? '"Barlow Condensed"' : "Barlow"}, sans-serif`;
+    c.font = `${size >= 24 ? "600" : "500"} ${size}px ${size >= 24 ? uiTheme.fonts.title : uiTheme.fonts.body}`;
     c.fillStyle = color;
     c.textBaseline = "top";
     if (maxWidth) {
@@ -575,7 +610,7 @@ export class CanvasUI {
   paragraph(text: string, r: Rect, size = 15, color = palette.muted) {
     let line = "",
       y = r.y;
-    this.ctx.font = `500 ${size}px Barlow, sans-serif`;
+    this.ctx.font = `500 ${size}px ${uiTheme.fonts.body}`;
     for (const word of text.split(" ")) {
       if (this.ctx.measureText(line + word).width > r.w && line) {
         this.text(line, r.x, y, size, color);
@@ -591,103 +626,93 @@ export class CanvasUI {
     label: string,
     r: Rect,
     action: () => void,
-    options: { selected?: boolean; disabled?: boolean; accent?: boolean } = {},
+    options: CanvasControlState = {},
   ) {
     const c = this.ctx,
-      focus = id === this.focus,
-      hover = id === this.hover;
-    const fill = c.createLinearGradient(0, r.y, 0, r.y + r.h);
-    fill.addColorStop(
-      0,
-      options.selected ? "#124c9c" : hover ? "#174e77" : "#112c50",
-    );
-    fill.addColorStop(0.5, options.selected ? "#063771" : "#071a35");
-    fill.addColorStop(1, options.selected ? "#165dc3" : "#0a2344");
-    c.fillStyle = fill;
-    c.fillRect(r.x, r.y, r.w, r.h);
-    c.strokeStyle = focus
-      ? "#ffffff"
-      : options.accent
-        ? palette.gold
-        : options.selected || hover
-          ? palette.blue
-          : palette.line;
-    c.lineWidth = focus || options.selected ? 2 : 1;
-    if (options.selected || focus) {
-      c.save();
-      c.shadowColor = "#168aff";
-      c.shadowBlur = 17;
-      c.strokeStyle = "#f0fcff";
-      c.strokeRect(r.x + 1, r.y + 1, r.w - 2, r.h - 2);
-      c.restore();
-    } else c.strokeRect(r.x + 0.5, r.y + 0.5, r.w - 1, r.h - 1);
-    if (!options.disabled) {
-      c.save();
-      c.shadowColor = options.accent ? "#ffaf29" : "#159fff";
-      c.shadowBlur = options.selected || hover || focus ? 10 : 0;
-      c.strokeStyle =
-        options.selected || focus
-          ? "#f3fdff"
-          : options.accent
-            ? palette.gold
-            : palette.blue;
-      c.lineWidth = 2;
-      c.beginPath();
-      c.moveTo(r.x + 1, r.y + 12);
-      c.lineTo(r.x + 1, r.y + 1);
-      c.lineTo(r.x + 20, r.y + 1);
-      c.moveTo(r.x + r.w - 20, r.y + r.h - 1);
-      c.lineTo(r.x + r.w - 1, r.y + r.h - 1);
-      c.lineTo(r.x + r.w - 1, r.y + r.h - 12);
+      style = canvasControlState({
+        ...options,
+        focused: options.focused || id === this.focus,
+        hovered: options.hovered || id === this.hover,
+        pressed: options.pressed || id === this.active?.hit.id,
+      });
+    c.save();
+    this.framePath(r, 0.5);
+    c.fillStyle = style.fill;
+    c.fill();
+    c.strokeStyle = style.border;
+    c.lineWidth = options.selected
+      ? uiTheme.frame.focusWidth
+      : uiTheme.frame.borderWidth;
+    c.stroke();
+    if (style.focus) {
+      this.framePath(r, 3);
+      c.strokeStyle = style.focus;
+      c.lineWidth = uiTheme.frame.focusWidth;
       c.stroke();
-      c.restore();
+    }
+    if (style.glow) {
+      c.strokeStyle = style.accent;
+      c.shadowColor = style.accent;
+      c.shadowBlur = style.glow;
+      c.beginPath();
+      c.moveTo(r.x + 12, r.y + 1);
+      c.lineTo(r.x + Math.min(36, r.w - 12), r.y + 1);
+      c.stroke();
+      c.shadowBlur = 0;
     }
     const keycap = /^(Esc|Tab|[A-Z])   (.+)$/.exec(label);
     let inset = 12;
     if (keycap) {
       const kw = keycap[1].length > 1 ? 35 : 24;
-      c.fillStyle = "#163d60";
+      c.fillStyle = uiTheme.colors.input;
       c.fillRect(r.x + 8, r.y + (r.h - 25) / 2, kw, 25);
-      c.strokeStyle = options.disabled ? "#526477" : "#91c6e5";
+      c.strokeStyle = style.border;
       c.strokeRect(r.x + 8.5, r.y + (r.h - 25) / 2 + 0.5, kw, 25);
-      this.text(keycap[1], r.x + 13, r.y + (r.h - 17) / 2, 15);
+      this.text(keycap[1], r.x + 13, r.y + (r.h - 17) / 2, 15, style.text);
       inset = kw + 17;
     }
+    const text = (options.pending ? "… " : "") + (keycap?.[2] ?? label);
+    c.font = `500 16px ${uiTheme.fonts.body}`;
     this.text(
-      keycap?.[2] ?? label,
+      text,
       r.x +
-        (r.w < 45
-          ? Math.max(3, (r.w - c.measureText(keycap?.[2] ?? label).width) / 2)
-          : inset),
-      r.y + (r.h - 17) / 2,
+        (r.w < 45 ? Math.max(3, (r.w - c.measureText(text).width) / 2) : inset),
+      r.y +
+        (r.h - 17) / 2 +
+        (style.interactive && (options.pressed || id === this.active?.hit.id)
+          ? 1
+          : 0),
       16,
-      options.disabled
-        ? "#62778d"
-        : options.accent
-          ? palette.gold
-          : palette.text,
+      style.text,
       r.w < 45 ? r.w - 6 : r.w - inset - 8,
     );
-    this.hits.push({ id, label, rect: r, action, disabled: options.disabled });
+    c.restore();
+    this.hits.push({
+      id,
+      label: options.pending ? `${label}, pending` : label,
+      rect: r,
+      action: controlAction(action, () => options),
+      disabled: !style.interactive,
+    });
   }
   /** Shared measured-value bar; callers provide real replicated quantities. */
   bar(r: Rect, fraction: number, color = palette.blue) {
     const c = this.ctx;
     c.save();
-    c.fillStyle = "#051327";
+    c.fillStyle = uiTheme.colors.input;
     c.fillRect(r.x, r.y, r.w, r.h);
-    c.strokeStyle = "#386aa0";
+    c.strokeStyle = palette.line;
     c.strokeRect(r.x + 0.5, r.y + 0.5, r.w - 1, r.h - 1);
     const w =
       Math.max(0, Math.min(1, Number.isFinite(fraction) ? fraction : 0)) *
       (r.w - 4);
     const fill = c.createLinearGradient(0, r.y, 0, r.y + r.h);
-    fill.addColorStop(0, "#e9fdff");
+    fill.addColorStop(0, palette.text);
     fill.addColorStop(0.3, color);
-    fill.addColorStop(1, "#116bcb");
+    fill.addColorStop(1, color);
     c.fillStyle = fill;
     c.shadowColor = color;
-    c.shadowBlur = 8;
+    c.shadowBlur = 3;
     c.fillRect(r.x + 2, r.y + 2, w, Math.max(1, r.h - 4));
     c.restore();
   }
@@ -708,9 +733,9 @@ export class CanvasUI {
     });
     const c = this.ctx;
     c.save();
-    c.strokeStyle = focused ? "#e7faff" : palette.blue;
-    c.shadowColor = "#138dff";
-    c.shadowBlur = focused ? 12 : 4;
+    c.strokeStyle = focused ? palette.text : palette.blue;
+    c.shadowColor = palette.blue;
+    c.shadowBlur = focused ? 5 : 0;
     c.beginPath();
     c.moveTo(r.x + 12, r.y + 43);
     c.lineTo(r.x + r.w - 12, r.y + 43);
@@ -770,11 +795,11 @@ export class CanvasUI {
     );
     const track = { ...r, y: r.y + 23, h: 30 },
       c = this.ctx;
-    c.fillStyle = "#0a192c";
+    c.fillStyle = uiTheme.colors.input;
     c.fillRect(track.x + 12, track.y + 12, track.w - 24, 5);
     c.fillStyle = palette.blue;
     c.fillRect(track.x + 12, track.y + 12, (track.w - 24) * value, 5);
-    c.fillStyle = this.focus === id ? "#ffffff" : palette.blue;
+    c.fillStyle = this.focus === id ? palette.text : palette.blue;
     c.fillRect(track.x + 8 + (track.w - 24) * value, track.y + 4, 8, 21);
     this.hits.push({ id, label, rect: track, change, value });
   }
@@ -788,7 +813,7 @@ export class CanvasUI {
   ) {
     this.button(id, value + (this.focus === id ? "│" : ""), r, () => {});
     if (this.selectedText === id && this.focus === id) {
-      this.ctx.fillStyle = "rgba(45,165,255,.25)";
+      this.ctx.fillStyle = rgba(palette.blue, 0.2);
       this.ctx.fillRect(
         r.x + 8,
         r.y + 5,

@@ -69,6 +69,7 @@ import MoveCargoCarrierReducer from "./move_cargo_carrier_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import OperatorAssignPrefabShipReducer from "./operator_assign_prefab_ship_reducer";
 import OperatorImportContentSeedReducer from "./operator_import_content_seed_reducer";
+import OperatorInstallFactionFleetReducer from "./operator_install_faction_fleet_reducer";
 import OperatorReplacePrefabShipReducer from "./operator_replace_prefab_ship_reducer";
 import OperatorResyncItemDefinitionsReducer from "./operator_resync_item_definitions_reducer";
 import OperatorSetDefinitionGrantReducer from "./operator_set_definition_grant_reducer";
@@ -760,6 +761,7 @@ const reducersSchema = __reducers(
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("operator_assign_prefab_ship", OperatorAssignPrefabShipReducer),
   __reducerSchema("operator_import_content_seed", OperatorImportContentSeedReducer),
+  __reducerSchema("operator_install_faction_fleet", OperatorInstallFactionFleetReducer),
   __reducerSchema("operator_replace_prefab_ship", OperatorReplacePrefabShipReducer),
   __reducerSchema("operator_resync_item_definitions", OperatorResyncItemDefinitionsReducer),
   __reducerSchema("operator_set_definition_grant", OperatorSetDefinitionGrantReducer),

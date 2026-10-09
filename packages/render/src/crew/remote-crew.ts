@@ -11,7 +11,6 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
-import { VOXEL_CREW_ASSET_URL } from "@sidereal/content/crew-voxel-bundle";
 import { castCharacterBeam } from "@sidereal/sim/combat-damage";
 import { setMeshRole } from "../mesh-roles";
 import type { CrewAppearance } from "./appearance";
@@ -262,14 +261,9 @@ export function createRemoteCrew(
     entry.label ??= makeLabel(entry.state.id);
     entry.labelKey = "";
     entry.label?.setEnabled(false);
-    createVoxelCrewVisual(
-      scene,
-      group,
-      options.assetUrl ?? VOXEL_CREW_ASSET_URL,
-      {
-        shared: true,
-      },
-    )
+    createVoxelCrewVisual(scene, group, options.assetUrl, {
+      shared: true,
+    })
       .then((crew) => {
         if (entry.disposed || disposed || token !== entry.generation)
           return crew.dispose();

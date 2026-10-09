@@ -1,3 +1,5 @@
+import { logicalUiScale } from "@sidereal/ui/theme";
+import { createComponentGallery } from "./component-gallery";
 import { onboardingCopy } from "./onboarding-copy";
 import { COMBAT_CURSOR } from "./combat-cursor";
 import {
@@ -241,6 +243,9 @@ export function createGameUI(
   const objectDetails = actions.objectDetails
     ? createObjectDetailsUI(ui, actions.objectDetails)
     : undefined;
+  const componentGallery = createComponentGallery(ui, () => {
+    menu = true;
+  });
   let navVisible = false;
   const inventory = actions.inventory
     ? createInventoryUI(ui, actions.inventory, {
@@ -274,6 +279,7 @@ export function createGameUI(
     maxScroll = 0;
   let showGroundLabels = true;
   ui.shortcut = (code) => {
+    if (componentGallery.isOpen()) return false;
     if (code === "KeyZ" && state.hasActor && !menu) {
       showGroundLabels = !showGroundLabels;
       ui.invalidate();
@@ -322,6 +328,7 @@ export function createGameUI(
     return false;
   };
   ui.scroll = (delta, x, y, horizontalDelta) => {
+    if (componentGallery.scroll(delta)) return;
     if (diagnostics.scroll(delta, x, y)) return;
     if (!menu && objectDetails?.scroll(delta, x, y)) return;
     if (inventory?.isOpen()) {
@@ -347,6 +354,11 @@ export function createGameUI(
   const change = () => ui.invalidate();
   const drawFeedback = createCombatFeedback();
   ui.escape = () => {
+    if (componentGallery.isOpen()) {
+      componentGallery.close();
+      menu = true;
+      return change();
+    }
     if (!menu && actions.closeService?.()) return change();
     if (menu) menu = false;
     else if (inventory?.isOpen()) inventory.close();
@@ -379,6 +391,7 @@ export function createGameUI(
       "aria-description",
       `${state.modelStatus}. Connection ${state.status}. ${state.hasActor ? `${state.shipName}. ${state.interior ? "Deck" : "Flight"} view. ${state.seated ? "Control seat occupied" : state.resting ? "Seated" : "On foot"}.` : "Character entry"} ${state.error}`,
     );
+    if (componentGallery.draw()) return;
     const w = ui.width,
       h = ui.height,
       narrow = w < 700;
@@ -879,7 +892,7 @@ export function createGameUI(
                 ? 330 + (state.vesselServices?.length ?? 0) * 46
                 : tab === "Account"
                   ? 260
-                  : 300;
+                  : 364;
       maxScroll = Math.max(0, contentHeight - viewport.h);
       scrollY = Math.min(scrollY, maxScroll);
       const inner = { ...viewport, y: viewport.y - scrollY };
@@ -950,19 +963,29 @@ export function createGameUI(
           { ...inner, y: inner.y + 201, h: 40 },
           () => actions.vista(vistas[(current + 1) % vistas.length].id),
         );
-        const sizes = flex({ ...inner, y: inner.y + 258, h: 36 }, [1, 1, 1]);
-        [1, 1.35, 1.6].forEach((value, i) =>
+        const sizes = flex({ ...inner, y: inner.y + 258, h: 36 }, [1, 1, 1, 1]);
+        [0.75, 1, 1.25, 1.5].forEach((value, i) =>
           ui.button(
             "scale-" + value,
             `${Math.round(value * 100)}% UI`,
             sizes[i],
             () => {
-              ui.scale = value;
+              ui.scale = logicalUiScale(value);
               windowRect = undefined;
               change();
             },
             { selected: ui.scale === value },
           ),
+        );
+        ui.button(
+          "interface-kit",
+          "Interface kit   ›",
+          { ...inner, y: inner.y + 308, h: 44 },
+          () => {
+            menu = false;
+            componentGallery.open();
+            change();
+          },
         );
       } else if (tab === "Vessel") {
         ui.text("Vessel name", inner.x, inner.y, 14, palette.muted);
@@ -1322,8 +1345,13 @@ export function createGameUI(
       }
       return opened;
     },
-    blocked: () => !!inventory?.isOpen() || menu || ui.blocked(),
-    pointerBlocked: () => menu || ui.pointerBlocked(),
+    blocked: () =>
+      componentGallery.isOpen() ||
+      !!inventory?.isOpen() ||
+      menu ||
+      ui.blocked(),
+    pointerBlocked: () =>
+      componentGallery.isOpen() || menu || ui.pointerBlocked(),
     dispose: () => {
       inventory?.dispose();
       objectDetails?.dispose();

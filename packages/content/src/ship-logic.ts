@@ -108,7 +108,9 @@ export const SHIP_LOGIC_DEVICES: Readonly<
     placement: "door",
     ports: [
       port("command", "in", "door-command", "Command"),
+      port("toggle", "in", "pulse", "Toggle"),
       port("state", "out", "door-state", "State"),
+      port("light", "out", "light", "Status light"),
     ],
     channel: "data",
     connectorFamily: "dat-std",

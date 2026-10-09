@@ -208,7 +208,13 @@ export function editShipFurnishing(
   const newSockets = prefabCargoSockets(doc, 0, catalog, overrides);
   if (args.action !== "snap")
     qualify(() =>
-      validateFurnishingPlacement(args.sourceObjectId, overrides, after, crew),
+      validateFurnishingPlacement(
+        args.sourceObjectId,
+        overrides,
+        after,
+        crew,
+        doc,
+      ),
     );
   const socket = newSockets.find((s) => s.key === args.sourceObjectId);
   let approach: [number, number] | undefined;

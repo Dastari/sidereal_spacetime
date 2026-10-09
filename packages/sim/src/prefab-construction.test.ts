@@ -4,7 +4,11 @@ import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-cat
 import {
   compileConstruction,
   readConstructionDraft,
+  PINNED_FLOOR_KIT,
 } from "./construction-transactions";
+import { WAYFARER_ACCESS_SOURCE } from "@sidereal/content/wayfarer-access-profile";
+import { inside, stableStringify } from "./layout-geometry";
+import { transformInterfacePoint } from "./tileset-fit";
 import { compileLayout } from "./layout-compiler";
 import {
   PREFAB_DECK_ID,
@@ -52,6 +56,68 @@ describe("prefab construction documents", () => {
     expect(() => readConstructionDraft(JSON.stringify(doc))).toThrow(
       /derivation/,
     );
+  });
+
+  it("qualifies six exact source-backed half strips without changing the generic kit", () => {
+    const kitBefore = stableStringify(PINNED_FLOOR_KIT);
+    const doc = prefabConstructionDocument(WAYFARER_ACCESS_SOURCE, catalog);
+    const clips = doc.floors.filter((floor) => floor.nativeSupportClip);
+    expect(clips).toHaveLength(6);
+    for (const floor of clips) {
+      const backing = PINNED_FLOOR_KIT.parts.find(
+        (part) => part.id === floor.partId,
+      )!;
+      const polygon = backing.footprint.map((p) =>
+        transformInterfacePoint(p, floor),
+      );
+      const tile = doc.layout.tiles.find((tile) => tile.id === floor.id)!;
+      expect(tile.vertices.every((p) => inside(p, polygon))).toBe(true);
+      const xs = tile.vertices.map((p) => p[0]),
+        ys = tile.vertices.map((p) => p[1]);
+      expect(
+        (Math.max(...xs) - Math.min(...xs)) *
+          (Math.max(...ys) - Math.min(...ys)),
+      ).toBe(32 * 16);
+    }
+    expect(
+      compileConstruction(JSON.stringify(doc)).readiness.nativeFloors,
+    ).toBe(true);
+    expect(stableStringify(PINNED_FLOOR_KIT)).toBe(kitBefore);
+    expect(
+      PINNED_FLOOR_KIT.parts.some((part) => part.id.includes("support")),
+    ).toBe(false);
+  });
+
+  it.each([
+    "no-prefab",
+    "profile1",
+    "spoofed-source",
+    "arbitrary-floor",
+    "missing-fragment",
+    "outside-backing",
+    "moved-backing",
+    "arbitrary-clip",
+  ])("rejects native support clip forgery: %s", (kind) => {
+    const doc = prefabConstructionDocument(WAYFARER_ACCESS_SOURCE, catalog);
+    const clip = doc.floors.find((floor) => floor.nativeSupportClip)!;
+    const tile = doc.layout.tiles.find((tile) => tile.id === clip.id)!;
+    if (kind === "no-prefab") delete (doc as Partial<typeof doc>).prefab;
+    else if (kind === "profile1")
+      doc.prefab.document.authoredGameplay!.revision = 1;
+    else if (kind === "spoofed-source")
+      doc.prefab.document.description += " altered";
+    else if (kind === "arbitrary-floor")
+      doc.floors.find((floor) => !floor.nativeSupportClip)!.nativeSupportClip =
+        { ...clip.nativeSupportClip! };
+    else if (kind === "missing-fragment") delete clip.nativeSupportClip;
+    else if (kind === "outside-backing")
+      tile.vertices.forEach((p) => (p[0] += 64));
+    else if (kind === "moved-backing") clip.origin[0] += 16;
+    else Object.assign(clip.nativeSupportClip!, { width: 2 });
+    // Internal derivation mode is not a bypass for untrusted support metadata.
+    expect(() =>
+      readConstructionDraft(JSON.stringify(doc), { prefabDerivation: true }),
+    ).toThrow(/support clip|support fragment/i);
   });
 
   it("rejects an invalid prefab and an unknown catalog revision", () => {

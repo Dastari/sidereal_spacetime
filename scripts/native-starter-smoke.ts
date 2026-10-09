@@ -80,18 +80,61 @@ export async function enterNativePilot(c: DbConnection) {
   await acquireNativePilot(c);
 }
 export async function acquireNativePilot(c: DbConnection) {
-  const f = [...c.db.ownAuthoredFlights.iter()][0]!;
+  // Wait for a newly observed powered solve. The actor-filtered power view is
+  // already server-freshness checked. Its tick is floor(solvedMicros / 50_000),
+  // not the exact solve timestamp: local wall-clock age adds quantization, clock
+  // skew and delivery latency, so it cannot impose a tighter freshness gate.
+  // The single entry command below still receives exact server-time, station
+  // proximity, access and power validation; never retry an authority rejection.
+  const currentFlight = () => {
+    const shipId = [...c.db.ownCharacters.iter()][0]?.shipId;
+    return [...c.db.ownAuthoredFlights.iter()].find((f) => f.shipId === shipId);
+  };
+  const initial = currentFlight();
+  const initialPowerTick =
+    (initial && c.db.ownShipPower.shipId.find(initial.shipId)?.tick) ?? 0n;
+  let lastReadiness: Record<string, unknown> = {};
+  const ready = () => {
+    const flight = currentFlight();
+    const power = flight && c.db.ownShipPower.shipId.find(flight.shipId);
+    const physics =
+      flight && c.db.ownAuthoredFlightPhysics.shipId.find(flight.shipId);
+    lastReadiness = {
+      active: flight?.active,
+      flightAdmitted: flight?.flightAdmitted,
+      physicsStatus: physics?.status,
+      corePowered: power?.corePowered,
+      newPoweredTickObserved: !!power && power.tick > initialPowerTick,
+    };
+    return (
+      !!flight?.active &&
+      flight.flightAdmitted &&
+      physics?.status === "ready" &&
+      !!power?.corePowered &&
+      power.tick > initialPowerTick
+    );
+  };
+  try {
+    await wait(ready, "starter fresh powered tick and compiled flight ready");
+  } catch (error) {
+    console.error(
+      "Starter readiness timeout: " + JSON.stringify(lastReadiness),
+    );
+    throw error;
+  }
+  const f = currentFlight()!;
   assert(
     f?.active && f.flightAdmitted,
     "starter ship has accepted active flight admission",
   );
+  // Send one command; a real authority failure still fails the smoke.
   await c.reducers.enterAuthoredPilot({
     stationId: f.stationId,
     expectedStationRevision: f.stationRevision,
     operationId: crypto.randomUUID(),
   });
   await wait(
-    () => [...c.db.ownAuthoredFlights.iter()][0]?.seatState === "seated",
+    () => currentFlight()?.seatState === "seated",
     "native pilot entry",
   );
 }

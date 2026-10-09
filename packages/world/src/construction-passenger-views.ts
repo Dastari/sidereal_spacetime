@@ -140,7 +140,8 @@ const support = createConstructionStandingSupport();
  * The bodies the current actor may see: characters standing on the actor's own current deck of the
  * ship the actor is aboard, when the actor holds owned or accepted-passenger interior access there.
  * Stair/traversal bodies are excluded (their projections own moving vertical poses). Returns
- * undefined when nothing is visible, including when the bounded scan (256 bodies) is exceeded.
+ * undefined when the viewer has no valid interior scope. Membership comes from accepted
+ * locations, so other decks' moving character rows do not invalidate this deck's crew.
  * Shared by every crew projection so they can never disagree about who is visible.
  */
 export function visibleInteriorBodies(ctx: Context) {
@@ -155,18 +156,15 @@ export function visibleInteriorBodies(ctx: Context) {
     return undefined;
   const instance = ctx.db.constructionInstance.id.find(a.shipId),
     deck = ctx.db.constructionDeck.id.find(l.deckId);
-  if (!instance || !deck) return undefined;
+  if (!instance || !deck || deck.instanceId !== instance.id) return undefined;
   const bodies = [];
-  let count = 0;
-  for (const body of ctx.db.character.by_ship.filter(a.shipId)) {
-    if (++count > 256) return undefined;
-    const location = ctx.db.constructionLocation.characterId.find(body.id);
-    if (
-      !location ||
-      location.instanceId !== instance.id ||
-      location.deckId !== deck.id
-    )
+  for (const location of ctx.db.constructionLocation.by_instance.filter(
+    instance.id,
+  )) {
+    if (location.instanceId !== instance.id || location.deckId !== deck.id)
       continue;
+    const body = ctx.db.character.id.find(location.characterId);
+    if (!body || body.shipId !== instance.id) continue;
     // Stair/traversal projections own moving vertical poses; do not expose stale
     // standing coordinates as an alternate accepted transform.
     if (
@@ -174,7 +172,19 @@ export function visibleInteriorBodies(ctx: Context) {
       ctx.db.constructionTraversal.characterId.find(body.id)
     )
       continue;
-    bodies.push({ body, location });
+    try {
+      const standingElevationM = support({
+        actor: body,
+        location,
+        instance,
+        deck,
+      });
+      bodies.push({ body, location, standingElevationM });
+    } catch {
+      // Invalid support belongs to this body only. Both projections omit it without
+      // clearing the valid crowd or exposing a stale alternate-frame transform.
+      continue;
+    }
   }
   return { actor: a, instance, deck, bodies };
 }
@@ -183,29 +193,20 @@ export function visibleInteriorBodies(ctx: Context) {
 export function currentInteriorCrew(ctx: Context) {
   const visible = visibleInteriorBodies(ctx);
   if (!visible) return [];
-  const { instance: i, deck: d } = visible;
+  const { deck: d } = visible;
   const out = [];
-  for (const { body, location } of visible.bodies) {
-    try {
-      out.push({
-        characterId: body.id,
-        name: body.name,
-        shipId: body.shipId,
-        deckId: d.id,
-        localX: body.localX,
-        localY: body.localY,
-        standingElevationM: support({
-          actor: body,
-          location,
-          instance: i,
-          deck: d,
-        }),
-        connected: body.connected,
-        sprinting: body.sprinting,
-      });
-    } catch {
-      return [];
-    }
+  for (const { body, standingElevationM } of visible.bodies) {
+    out.push({
+      characterId: body.id,
+      name: body.name,
+      shipId: body.shipId,
+      deckId: d.id,
+      localX: body.localX,
+      localY: body.localY,
+      standingElevationM,
+      connected: body.connected,
+      sprinting: body.sprinting,
+    });
   }
   return out;
 }

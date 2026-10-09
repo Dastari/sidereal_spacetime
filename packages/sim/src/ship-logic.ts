@@ -247,8 +247,12 @@ function handleDoor(
     s.pendingLock = false;
     s.retryMicros = 0;
   };
-  if (input.kind === "signal" && input.port === "command") {
-    const c = input.value as DoorCommand;
+  if (
+    input.kind === "signal" &&
+    (input.port === "command" || input.port === "toggle")
+  ) {
+    const c: DoorCommand =
+      input.port === "toggle" ? "toggle" : (input.value as DoorCommand);
     if (c === "open" || (c === "toggle" && !s.open)) {
       if (!s.locked) {
         s.open = true;
@@ -260,12 +264,22 @@ function handleDoor(
     else if (c === "lock") tryClose(true);
     else if (c === "unlock") s.locked = false;
     // Always report after a command: controllers use the report to advance.
-    return [{ port: "state", value: doorOutput(s) }];
+    return [
+      { port: "state", value: doorOutput(s) },
+      { port: "light", value: s.locked ? "red" : s.open ? "green" : "off" },
+    ];
   }
   if (input.kind === "timer" && s.pendingClose) tryClose(s.pendingLock);
-  if (input.kind === "init") return [{ port: "state", value: doorOutput(s) }];
+  if (input.kind === "init")
+    return [
+      { port: "state", value: doorOutput(s) },
+      { port: "light", value: s.locked ? "red" : s.open ? "green" : "off" },
+    ];
   return doorOutput(s) !== before
-    ? [{ port: "state", value: doorOutput(s) }]
+    ? [
+        { port: "state", value: doorOutput(s) },
+        { port: "light", value: s.locked ? "red" : s.open ? "green" : "off" },
+      ]
     : [];
 }
 

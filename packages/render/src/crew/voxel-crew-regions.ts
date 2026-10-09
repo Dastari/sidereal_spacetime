@@ -172,6 +172,53 @@ function resetSubset(mesh: Mesh, source: Mesh) {
     previous.dispose();
 }
 
+/** Study bodies have no built-in suit donor: loaded authored parts own exact base coverage. */
+export function createStudyBaseCoverage(meshes: readonly AbstractMesh[]) {
+  const layers = meshes
+    .filter(
+      (m): m is Mesh =>
+        m instanceof Mesh &&
+        !!m.geometry &&
+        /^GEO-crew-base-(male|female)/.test(m.name),
+    )
+    .map((source) => {
+      const mesh = source.clone(
+        `${source.name}-study-coverage`,
+        source.parent,
+        true,
+      );
+      setMeshRole(mesh, "crew");
+      mesh.setEnabled(false);
+      return {
+        source,
+        mesh,
+        variant: /GEO-crew-base-(male|female)/.exec(source.name)![1],
+      };
+    });
+  return {
+    refresh(variant: string, covered: ReadonlySet<string>) {
+      for (const layer of layers) {
+        const active = layer.variant === variant;
+        layer.source.setEnabled(active && !covered.size);
+        const selected = new Set(
+          ALL_REGIONS.filter((region) => !covered.has(region)),
+        );
+        layer.mesh.setEnabled(
+          active &&
+            covered.size > 0 &&
+            selectSubset(layer.mesh, layer.source, selected),
+        );
+      }
+    },
+    dispose() {
+      for (const { mesh, source } of layers) {
+        resetSubset(mesh, source);
+        mesh.dispose(false, false);
+      }
+    },
+  };
+}
+
 type Layer = {
   source: Mesh;
   union: Mesh;

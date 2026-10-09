@@ -1,4 +1,7 @@
-/** Pure presentation compiler; never changes the prefab or its authority-derived data. */
+/** Pure native role-layer compiler; never changes the prefab or grants authority.
+ * Access recesses are finite cuts in the structural source, shared with its sealed
+ * physical housing descriptor, and apply identically in flight and deck views.
+ */
 import {
   G,
   TEXEL,
@@ -11,6 +14,12 @@ import {
   type Pt,
   type ShapeTilePlacement,
 } from "@sidereal/content/construction-grammar";
+import {
+  FEDERATION_FLEET_ACCESS,
+  fleetAccessPhysicalGeometry,
+} from "@sidereal/content/prefabs";
+import { readAuthoredTemplateKit } from "@sidereal/content/authored-template-kit";
+import templateSource from "../../../assets/runtime/ship-study/template-authored-r001/manifest.json";
 import {
   bowGlass,
   bowHeights,
@@ -28,7 +37,7 @@ import {
   type ShipPrefabDocumentV1,
   type VolumeGeometry,
 } from "@sidereal/content/ship-prefab";
-import { dressShip, tileFrame } from "./ship-dresser";
+import { dressShip, tileFrame, type KitPlacement } from "./ship-dresser";
 
 export type AuthoredTemplateMatrix = [number[], number[], number[], number[]];
 /** World-author plane; keep n.x*x+n.y*y+n.z*z+d >= 0. */
@@ -52,6 +61,26 @@ export interface AuthoredTemplatePlan {
   interiors: DerivedInterior[];
   /** Specialized moving door/inset glazing families with no native replacement yet. */
   retainedLegacyPieces: string[];
+  /** Ordinary surrounds replaced at exact native outer ports; inner isolators remain. */
+  excludedLegacyInstances: KitPlacement[];
+}
+export function retainedAuthoredTemplateKitPlacement(
+  plan: AuthoredTemplatePlan,
+  placement: KitPlacement,
+): boolean {
+  return (
+    plan.retainedLegacyPieces.includes(placement.piece) &&
+    !plan.excludedLegacyInstances.some(
+      (p) =>
+        p.piece === placement.piece &&
+        p.x === placement.x &&
+        p.y === placement.y &&
+        p.z === placement.z &&
+        p.rotDeg === placement.rotDeg &&
+        p.view === placement.view &&
+        p.mirror === placement.mirror,
+    )
+  );
 }
 const EPS = 1e-6;
 // The native facade's outermost authored detail, measured from the structural edge.
@@ -186,6 +215,97 @@ function subtractConvex(poly: readonly Pt[], cut: readonly Pt[]): Pt[][] {
     if (Math.abs(area(inside)) < EPS) break;
   }
   return out;
+}
+const nativePieces = new Map(
+  readAuthoredTemplateKit(templateSource).pieces.map((p) => [p.id, p]),
+);
+/** Closed half-space fragments of the real structural surface outside an enclosed leaf recess. */
+function subtractAccessRecesses(
+  doc: ShipPrefabDocumentV1,
+  rows: AuthoredTemplateInstance[],
+) {
+  const voids = fleetAccessPhysicalGeometry(doc).map(
+    ({ structuralVoid: v }) => ({
+      id: v.id,
+      min: [
+        Math.min(...v.polygon.map((p) => p[0])),
+        Math.min(...v.polygon.map((p) => p[1])),
+        v.minZ,
+      ],
+      max: [
+        Math.max(...v.polygon.map((p) => p[0])),
+        Math.max(...v.polygon.map((p) => p[1])),
+        v.maxZ,
+      ],
+    }),
+  );
+  if (!voids.length) return rows;
+  return rows.flatMap((row) => {
+    const piece = nativePieces.get(row.piece)!;
+    const corners = [piece.boundsMin[0], piece.boundsMax[0]].flatMap((x) =>
+      [piece.boundsMin[1], piece.boundsMax[1]].flatMap((y) =>
+        [piece.boundsMin[2], piece.boundsMax[2]].map((z) => {
+          const p = [0, 1, 2].map(
+            (i) =>
+              row.matrix[i][0] * x +
+              row.matrix[i][1] * y +
+              row.matrix[i][2] * z +
+              row.matrix[i][3],
+          );
+          if (row.verticalProfile) {
+            const h = (a: number[]) => a[0] * p[0] + a[1] * p[1] + a[2];
+            const low = h(row.verticalProfile.bottom),
+              high = h(row.verticalProfile.top);
+            p[2] = low + (high - low) * z;
+          }
+          return p;
+        }),
+      ),
+    );
+    const min = [0, 1, 2].map((i) => Math.min(...corners.map((p) => p[i]))),
+      max = [0, 1, 2].map((i) => Math.max(...corners.map((p) => p[i])));
+    let fragments = [row];
+    for (const v of voids) {
+      if (
+        ![0, 1, 2].every(
+          (i) => max[i] > v.min[i] + EPS && min[i] < v.max[i] - EPS,
+        )
+      )
+        continue;
+      const inside: AuthoredTemplateClipPlane[] = [
+        [1, 0, 0, -v.min[0]],
+        [-1, 0, 0, v.max[0]],
+        [0, 1, 0, -v.min[1]],
+        [0, -1, 0, v.max[1]],
+        [0, 0, 1, -v.min[2]],
+        [0, 0, -1, v.max[2]],
+      ];
+      fragments = fragments.flatMap((fragment) => {
+        const kept: AuthoredTemplateInstance[] = [];
+        const prior = [...(fragment.clipPlanes ?? [])];
+        for (const [i, p] of inside.entries()) {
+          // A wholly outside source box needs no split; a wholly inside
+          // half-space has no outside fragment. Existing miter clips persist.
+          const values = corners.map(
+            (q) => p[0] * q[0] + p[1] * q[1] + p[2] * q[2] + p[3],
+          );
+          if (Math.min(...values) < EPS)
+            kept.push({
+              ...fragment,
+              object: `${fragment.object}:${v.id}:${i}`,
+              clipPlanes: [
+                ...prior,
+                p.map((n) => -n) as AuthoredTemplateClipPlane,
+              ],
+            });
+          if (Math.max(...values) < -EPS) break;
+          prior.push(p);
+        }
+        return kept;
+      });
+    }
+    return fragments;
+  });
 }
 const variant = (doc: ShipPrefabDocumentV1, ...keys: (number | string)[]) =>
   ["a", "b", "c"][Math.floor(hash01(doc.id, ...keys) * 3)];
@@ -512,6 +632,74 @@ export function compileAuthoredTemplatePlan(
         add({ ...row, object: row.object + ":deck", view: "deck", matrix });
       }
     };
+    // Fleet roofs retain the same native surfaces and per-cell sampling, but assemble
+    // square cells into manufactured room-sized panels rather than repeating 1 m seams.
+    // Mounts, skylights, shaped boundaries and pitched bow tiles keep their exact tiles.
+    const roofPanels = new Map<
+      string,
+      {
+        x: number;
+        y: number;
+        width: number;
+        depth: number;
+        finish: string;
+      }
+    >();
+    if (FEDERATION_FLEET_ACCESS[doc.id]) {
+      const free = new Set(
+        v.tiles
+          .filter((t) => t.shape === "square" && !t.bow)
+          .map((t) => `${t.x},${t.y}`)
+          .filter((key) => !reserved.has(key) && !skylightCells.has(key)),
+      );
+      const owner = (x: number, y: number) =>
+        doc.rooms.find(
+          (r) =>
+            r.deck === v.deck &&
+            x >= r.rect[0] &&
+            y >= r.rect[1] &&
+            x + 1 <= r.rect[2] &&
+            y + 1 <= r.rect[3],
+        );
+      for (const t of v.tiles) {
+        const key = `${t.x},${t.y}`;
+        if (!free.has(key)) continue;
+        const room = owner(t.x, t.y);
+        const limitX = room?.type === "cargo" ? 5 : 4;
+        const limitY = room?.type === "engineering" ? 2 : 3;
+        const available = (x: number, y: number) =>
+          free.has(`${x},${y}`) && owner(x, y)?.id === room?.id;
+        let width = 1,
+          depth = 1;
+        while (width < limitX && available(t.x + width, t.y)) width++;
+        while (
+          depth < limitY &&
+          Array.from({ length: width }, (_, dx) =>
+            available(t.x + dx, t.y + depth),
+          ).every(Boolean)
+        )
+          depth++;
+        const service = room?.type === "engineering";
+        const finish =
+          service && width >= 2 && depth >= 2
+            ? Math.floor(t.y / 2) % 2
+              ? "box"
+              : "vent"
+            : room?.type === "corridor"
+              ? "plate"
+              : room?.type === "cargo" &&
+                  Math.floor((t.x - room.rect[0]) / 5) % 3 === 1
+                ? "plate"
+                : "light";
+        const panel = { x: t.x, y: t.y, width, depth, finish };
+        for (let dx = 0; dx < width; dx++)
+          for (let dy = 0; dy < depth; dy++) {
+            const cell = `${t.x + dx},${t.y + dy}`;
+            free.delete(cell);
+            roofPanels.set(cell, panel);
+          }
+      }
+    }
     // Native tile surfaces are clipped per lattice cell to retain room floor finishes and roof reservations.
     for (let ti = 0; ti < v.tiles.length; ti++) {
       const t = v.tiles[ti],
@@ -535,15 +723,26 @@ export function compileAuthoredTemplatePlan(
           const cellClip = rectPlanes(x, y);
           const region = `${v.id}:${Math.floor(x / 4)},${Math.floor(y / 4)}`;
           const prefix = `${v.id}:tile${ti}:${cell}`;
+          const panel = roofPanels.get(cell);
+          const roofMatrix: AuthoredTemplateMatrix = panel
+            ? [
+                [panel.width, 0, 0, panel.x],
+                [0, panel.depth, 0, panel.y],
+                [0, 0, 1, profile.top[2]],
+                [0, 0, 0, 1],
+              ]
+            : horizontalMatrix(t, profile.top);
           {
             if (!skylightCells.has(cell) && !bowGlass(t))
               add({
                 object: `${prefix}:roof`,
                 piece: reserved.has(cell)
                   ? `floor.${t.shape}.plate`
-                  : `roof.${t.shape}.${roofFinish(doc, t.shape, x, y, centreY)}`,
+                  : panel
+                    ? `roof.square.${panel.finish}`
+                    : `roof.${t.shape}.${roofFinish(doc, t.shape, x, y, centreY)}`,
                 role: "roof",
-                matrix: horizontalMatrix(t, profile.top),
+                matrix: roofMatrix,
                 view: roofView,
                 region,
                 clipPlanes: cellClip,
@@ -684,7 +883,14 @@ export function compileAuthoredTemplatePlan(
           const pa: Pt = [a[0] + u[0] * s, a[1] + u[1] * s],
             pb: Pt = [a[0] + u[0] * e, a[1] + u[1] * e],
             p = mid(pa, pb);
-          if (doors.some((d) => onSegment(p, d.a, d.b))) continue;
+          const accessOpening = doors.find((d) => onSegment(p, d.a, d.b));
+          const nativeFleetOpening =
+            accessOpening &&
+            Object.prototype.hasOwnProperty.call(
+              FEDERATION_FLEET_ACCESS,
+              doc.id,
+            );
+          if (accessOpening && !nativeFleetOpening) continue;
           const glass = glassRuns.some(([ga, gb]) => onSegment(p, ga, gb));
           if (glass) continue; // qualified historical canopy families retained below
           const tile = v.tiles.find((t) =>
@@ -737,10 +943,16 @@ export function compileAuthoredTemplatePlan(
             high = profile
               ? Math.max(atHeight(profile.top, pa), atHeight(profile.top, pb))
               : ztop;
-          for (const [lo, hi] of exposedBands(g, geoms, sample, low, high, {
+          for (const [bandLo, hi] of exposedBands(g, geoms, sample, low, high, {
             boundary: p,
             outward: [u[1], -u[0]],
           })) {
+            // Native frames reserve the opening below their header. Refit a closed source
+            // cap above it; the deck cutaway omits this roof-height strip completely.
+            const lo = nativeFleetOpening
+              ? Math.max(bandLo, G.deck.floorTopTexels * TEXEL + 2.4375)
+              : bandLo;
+            if (hi <= lo + EPS) continue;
             const base: AuthoredTemplateInstance = {
               object: `${v.id}:edge${ei}:${si}:${lo}${loops.indexOf(loop) ? `:loop${loops.indexOf(loop)}` : ""}`,
               piece: `hull.straight.${variant(doc, v.id, ei, si)}`,
@@ -798,8 +1010,18 @@ export function compileAuthoredTemplatePlan(
             (u[1] + w[1]) / (2 * cosine),
           ],
           tangent: Pt = [n[1], -n[0]],
-          inner = -FACADE_INSIDE / cosine,
-          outer = FACADE_OUTSIDE / cosine,
+          // Acute reversal joins (e.g. adjoining concave arc waist tiles) get a
+          // bevel column. An unbounded miter would project a many-metre slab
+          // from a centimetre-wide cusp. Ordinary corners keep their exact miter.
+          bevel =
+            cosine < 0.25 &&
+            arcFacets.some(
+              (f) =>
+                onSegment(mid(a, p), f.a, f.b) ||
+                onSegment(mid(p, b), f.a, f.b),
+            ),
+          inner = -FACADE_INSIDE / (bevel ? 1 : cosine),
+          outer = FACADE_OUTSIDE / (bevel ? 1 : cosine),
           centre = (inner + outer) / 2;
         const bandsA = exposedBands(
             g,
@@ -930,6 +1152,25 @@ export function compileAuthoredTemplatePlan(
     }
   }
   const legacy = dressShip(doc, options).kit;
+  const nativeOuterDoors = Object.prototype.hasOwnProperty.call(
+    FEDERATION_FLEET_ACCESS,
+    doc.id,
+  )
+    ? interiors.flatMap((i) => i.doors.filter((d) => d.exterior))
+    : [];
+  const excludedLegacyInstances = legacy.filter(
+    (k) =>
+      k.piece.startsWith("int.door.") &&
+      nativeOuterDoors.some(
+        (d) =>
+          Math.abs(k.x - d.a[0]) < EPS &&
+          Math.abs(k.y - d.a[1]) < EPS &&
+          Math.abs(
+            k.rotDeg -
+              (Math.atan2(d.b[1] - d.a[1], d.b[0] - d.a[0]) * 180) / Math.PI,
+          ) < EPS,
+      ),
+  );
   const retainedLegacyPieces = [
     ...new Set(
       legacy
@@ -955,5 +1196,10 @@ export function compileAuthoredTemplatePlan(
         .map((k) => k.piece),
     ),
   ];
-  return { instances, interiors, retainedLegacyPieces };
+  return {
+    instances: subtractAccessRecesses(doc, instances),
+    interiors,
+    retainedLegacyPieces,
+    excludedLegacyInstances,
+  };
 }

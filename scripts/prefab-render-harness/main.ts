@@ -15,11 +15,20 @@ import {
   familyReviewCut,
 } from "@sidereal/content/ship-visual-fixture";
 import { SHIP_REFERENCE_VISUAL } from "../art_library/ship_reference_revision";
+import { isWayfarerAccessProfile } from "@sidereal/content/wayfarer-access-profile";
+import type { FurnishingOverrides } from "@sidereal/content/wayfarer-furnishings";
+import { createWayfarerAccessDoors } from "../../packages/render/src/prefab-ship/wayfarer-access-doors";
+import { publishedShipAccessBytes } from "../../packages/render/src/prefab-ship/wayfarer-access-assets";
 import { createPrefabDoors } from "../../packages/render/src/prefab-ship/doors";
+import {
+  createFederationFleetAccessDoors,
+  isFederationFleet,
+} from "../../packages/render/src/prefab-ship/federation-fleet-access";
 import { BOW_REVIEW_POD, BOW_HOSTS } from "./bow-fixtures";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+import { Camera } from "@babylonjs/core/Cameras/camera";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
@@ -65,6 +74,8 @@ declare global {
     __prefabDoors?: unknown;
     __prefabScene?: Scene;
     __prefabViews?: PrefabShipView[];
+    /** Read-only review fixture; never writes world state or ships in published content. */
+    __prefabFurnishings?: FurnishingOverrides;
   }
 }
 
@@ -162,6 +173,14 @@ function placeCamera(
       ? new Vector3(-1, 0, 0)
       : new Vector3(0, 1, 0);
   camera.position = target.add(d.scale(fit / (Number(q.get("zoom")) || 1)));
+  const scaleM = Number(q.get("scaleM"));
+  if (Number.isFinite(scaleM) && scaleM > 0) {
+    camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
+    camera.orthoLeft = -scaleM / 2;
+    camera.orthoRight = scaleM / 2;
+    camera.orthoTop = scaleM / (2 * aspect);
+    camera.orthoBottom = -scaleM / (2 * aspect);
+  }
   camera.setTarget(target);
 }
 
@@ -234,6 +253,16 @@ async function main() {
   for (const doc of docs) {
     const anchor = new TransformNode(`anchor:${doc.id}`, scene);
     const v = await createPrefabShipView(scene, doc, {
+      accessResolver: isFederationFleet(doc)
+        ? async (piece) => {
+            const response = await fetch(
+              `/assets/wayfarer-access/r002/${piece.file}`,
+            );
+            if (!response.ok)
+              throw Error(`Missing native fleet access part ${piece.id}`);
+            return new Uint8Array(await response.arrayBuffer());
+          }
+        : undefined,
       catalog,
       visualVariant:
         q.get("visual") === "reference-r001"
@@ -253,16 +282,42 @@ async function main() {
       objectsBaseUrl: q.get("objects") ?? undefined,
       batch: q.get("batch") !== "0",
       roomLights: Number(q.get("lights") ?? 0),
+      furnishings: window.__prefabFurnishings,
     });
-    if (q.get("visual") === "reference-r001") {
-      const doors = createPrefabDoors(
-        scene,
-        v.root,
-        doc,
-        catalog,
-        theme ?? doc.theme,
-        !!v.metrics().visualRevision,
-      );
+    if (
+      q.get("visual") === "reference-r001" ||
+      isFederationFleet(doc) ||
+      isWayfarerAccessProfile(doc)
+    ) {
+      const doors = isFederationFleet(doc)
+        ? await createFederationFleetAccessDoors(
+            scene,
+            v.root,
+            doc,
+            catalog,
+            async (piece) => {
+              const response = await fetch(
+                `/assets/wayfarer-access/r002/${piece.file}`,
+              );
+              if (!response.ok)
+                throw Error(`Missing native fleet access part ${piece.id}`);
+              return new Uint8Array(await response.arrayBuffer());
+            },
+          )
+        : isWayfarerAccessProfile(doc)
+          ? await createWayfarerAccessDoors(
+              scene,
+              v.root,
+              publishedShipAccessBytes,
+            )
+          : createPrefabDoors(
+              scene,
+              v.root,
+              doc,
+              catalog,
+              theme ?? doc.theme,
+              !!v.metrics().visualRevision,
+            );
       doors.setView(view);
       const targets = new Map(
         doors.doors().map((d) => [d.id, q.get("doors") === "open"]),
@@ -358,6 +413,10 @@ async function main() {
     id: docs[i].id,
     view,
     ...v.metrics(),
+    renderedBounds: (() => {
+      const b = v.root.getHierarchyBoundingVectors(true);
+      return { min: b.min.asArray(), max: b.max.asArray() };
+    })(),
     drawCalls: frameDraws,
     glowDraws,
     mainDraws: frameDraws - glowDraws,

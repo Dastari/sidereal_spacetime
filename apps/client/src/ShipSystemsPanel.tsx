@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { tables, type DbConnection } from "@sidereal/net";
 import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
 import { createOperationId } from "./operation-id";
@@ -9,8 +9,11 @@ import {
   estimateShipSystems,
   type ShipBudget,
 } from "./ship-systems-budget";
+import { systemsDesignSource } from "./systems-design-source";
+const SystemsDesignView = lazy(() => import("./SystemsDesignView"));
 import "./ship-refit.css";
 import "./ship-systems.css";
+import "./systems-design.css";
 
 function engineName(sourceId: string): string {
   const definition = LAB_FLIGHT_ACTUATORS.find(
@@ -42,6 +45,29 @@ export function ShipSystemsPanel({
   const [pending, setPending] = useState("");
   const [, redraw] = useState(0);
   const sending = useRef(false);
+  const [designOpen, setDesignOpen] = useState(false);
+  const currentActor = connection
+    ? [...connection.db.ownCharacters.iter()][0]
+    : undefined;
+  const isOwner =
+    !!currentActor &&
+    !!connection &&
+    [...connection.db.ownShips.iter()].some(
+      (s) => s.id === currentActor.shipId,
+    );
+  const designJson =
+    isOwner && connection
+      ? [...connection.db.ownConstructionInstances.iter()].find(
+          (i) => i.id === currentActor?.shipId,
+        )?.documentJson
+      : undefined;
+  const designSource = useMemo(
+    () => systemsDesignSource(designJson),
+    [designJson],
+  );
+  useEffect(() => {
+    if (!open || !designSource) setDesignOpen(false);
+  }, [open, designSource]);
   useEffect(() => {
     if (!connection || !open) return;
     let disposed = false;
@@ -51,6 +77,9 @@ export function ShipSystemsPanel({
       if (!disposed) redraw((revision) => revision + 1);
     };
     const watched = [
+      connection.db.ownConstructionInstances,
+      connection.db.ownCharacters,
+      connection.db.ownShips,
       connection.db.ownAuthoredFlights,
       connection.db.ownAuthoredFlightPowerFittings,
       connection.db.ownShipNetworks,
@@ -182,6 +211,15 @@ export function ShipSystemsPanel({
   }
   return (
     <>
+      {open && designOpen && designSource && (
+        <Suspense fallback={<p role="status">Opening systems design…</p>}>
+          <SystemsDesignView
+            key={designJson}
+            source={designSource}
+            onClose={() => setDesignOpen(false)}
+          />
+        </Suspense>
+      )}
       {open && (
         <section
           className="ship-service-panel ship-systems-panel"
@@ -195,6 +233,14 @@ export function ShipSystemsPanel({
             ×
           </button>
           <h2>Ship systems</h2>
+          {ready && designSource && (
+            <button
+              className="systems-design-open"
+              onClick={() => setDesignOpen(true)}
+            >
+              Open systems design view
+            </button>
+          )}
           {error && <p role="alert">{error}</p>}
           {ready && budget && (
             <div className="ship-systems-budget" aria-label="Systems budget">

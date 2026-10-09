@@ -33,6 +33,7 @@ import {
 } from "../authored-asset-lighting";
 import {
   loadAuthoredStudy,
+  authoredThemeSlot,
   authoredInstanceMatrix,
   type AuthoredPieceInput,
 } from "./wayfarer-authored-study";
@@ -171,10 +172,17 @@ export async function buildAuthoredTemplateView(
             return bytes(s.base + p.file, p.sha256);
           },
           {
-            batchRegions: new Map(
-              instances.map((r) => [r.object, `${r.role}:${r.region}`]),
-            ),
+            // Remote exteriors have no local-light receivers. Keeping cabin
+            // regions here fragments one opaque material into hundreds of
+            // draw submissions per hull. Native channels and placement ranges
+            // stay intact; blended surfaces keep the loader's depth sorting.
+            batchRegions: options.exteriorOnly
+              ? undefined
+              : new Map(
+                  instances.map((r) => [r.object, `${r.role}:${r.region}`]),
+                ),
             assetLighting: lighting,
+            themed: true,
             transformGeometry: (row, geometry, transform) => {
               const modifier = byObject.get(row.object);
               if (!modifier?.clipPlanes?.length && !modifier?.verticalProfile)
@@ -325,19 +333,8 @@ export async function buildAuthoredTemplateView(
         for (const mesh of b.loaded.meshes) {
           const material = mesh.material;
           if (!(material instanceof PBRMaterial)) continue;
-          const slot =
-            kit.palette[material.name]?.sourceSlotName ??
-            material.name.split("@")[0];
-          if (
-            [
-              "primary",
-              "secondary",
-              "accent",
-              "trim",
-              "dark",
-              "metal",
-            ].includes(slot)
-          )
+          const slot = authoredThemeSlot(material.name, kit.palette);
+          if (slot && slot !== "emit_a" && slot !== "emit_b")
             material.albedoColor = Color3.FromArray(
               SHIP_THEMES[theme].slots[slot as ShipKitSlot].colour,
             );

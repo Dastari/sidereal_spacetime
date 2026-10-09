@@ -5,7 +5,10 @@ import {
   type SharedWorldSnapshot,
   type SharedWorldTable,
 } from "./shared-world-store";
-import { createWorldSubscriptions } from "./world-subscriptions";
+import {
+  createWorldSubscriptions,
+  type AcceptedEvaObserver,
+} from "./world-subscriptions";
 
 type Row<K extends SharedWorldTable> = SharedWorldSnapshot[K][number];
 export interface SharedWorldReadiness {
@@ -58,6 +61,8 @@ export function bindSharedWorld(options: {
     bodyMotion: connection.db.visibleBodyMotion,
     bodyDescription: connection.db.visibleBodyDescriptions,
   } satisfies { [K in SharedWorldTable]: AggregateTable<Row<K>> };
+  const evaTable: AggregateTable<AcceptedEvaObserver> =
+    connection.db.ownEvaBody;
   const subscriptions = createWorldSubscriptions({
     store,
     resources,
@@ -95,6 +100,8 @@ export function bindSharedWorld(options: {
       ),
       epoch,
     );
+    for (const row of evaTable.iter())
+      subscriptions.acceptEvaObserver(row, epoch);
   }
   function upsert<K extends SharedWorldTable>(
     table: K,
@@ -152,6 +159,26 @@ export function bindSharedWorld(options: {
     attach("shipDescription", tables.shipDescription, epoch);
     attach("bodyMotion", tables.bodyMotion, epoch);
     attach("bodyDescription", tables.bodyDescription, epoch);
+    const change = () => observe(epoch);
+    const remove = (_: unknown, row: AcceptedEvaObserver) => {
+      if (!current(epoch)) return;
+      const admission = store.getSnapshot().admission[0];
+      if (
+        row.characterId !== admission?.characterId ||
+        row.systemId !== admission.systemId
+      )
+        return;
+      subscriptions.acceptEvaObserver(undefined, epoch);
+      observe(epoch);
+    };
+    evaTable.onInsert(change);
+    evaTable.onUpdate(change);
+    evaTable.onDelete(remove);
+    removers.push(() => {
+      evaTable.removeOnInsert(change);
+      evaTable.removeOnUpdate(change);
+      evaTable.removeOnDelete(remove);
+    });
   }
   function hydrate(epoch: number) {
     if (!current(epoch)) return;

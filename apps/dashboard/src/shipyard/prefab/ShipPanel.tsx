@@ -1,8 +1,5 @@
 /** Document header: identity, size class limits, theme and hull markings. */
-import {
-  BLUEPRINT_SIZE_CLASS_IDS,
-  G,
-} from "@sidereal/content/construction-grammar";
+import { G } from "@sidereal/content/construction-grammar";
 import {
   EMBLEM_IDS,
   SHIP_THEME_IDS,
@@ -132,24 +129,10 @@ export function ShipPanel({
       </section>
       <section className="layout-section">
         <h2>Size class</h2>
-        <div
-          className="pf-segmented"
-          role="radiogroup"
-          aria-label="Blueprint size class"
-        >
-          {BLUEPRINT_SIZE_CLASS_IDS.map((s) => (
-            <button
-              key={s}
-              role="radio"
-              aria-checked={doc.sizeClass === s}
-              onClick={() =>
-                commit("Change size class", updateMeta(doc, { sizeClass: s }))
-              }
-            >
-              {s}
-            </button>
-          ))}
-        </div>
+        <p className="layout-note">
+          Size {doc.sizeClass} is fixed at creation. Create a new blueprint to
+          choose another class.
+        </p>
         <dl>
           <dt>Class</dt>
           <dd>{size.label}</dd>

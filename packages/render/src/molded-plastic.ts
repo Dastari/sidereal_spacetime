@@ -14,6 +14,7 @@ import { protectPbrLight } from "./pbr-light-budget";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Material } from "@babylonjs/core/Materials/material";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
 import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTexture";
@@ -563,7 +564,9 @@ export function applyMoldedFinishToMeshes(
       if (!(m instanceof PBRMaterial) || seen.has(m)) continue;
       seen.add(m);
       const part = (m.metadata?.crewPart as CrewPart | undefined) ?? "body";
-      const family = surfaceFamilyForMaterialName(m.name, part);
+      const family =
+        (m.metadata?.studySurfaceFamily as SurfaceFamily | undefined) ??
+        surfaceFamilyForMaterialName(m.name, part);
       if (!family) continue;
       // Skip materials already in this finish; a later theme/colourway pass that rewrote the
       // response (e.g. item themes carry their own roughness) is finished again.
@@ -645,9 +648,9 @@ export function moldedLightRig(scene: Scene): MoldedLightRig {
   protectPbrLight(fill, 2);
   protectPbrLight(rim, 3);
   rim.setEnabled(finishEnabled);
-  const lit: AbstractMesh[] = [];
-  fill.includedOnlyMeshes = lit;
-  rim.includedOnlyMeshes = lit;
+  const lit = new Set<AbstractMesh>();
+  fill.includedOnlyMeshes = [];
+  rim.includedOnlyMeshes = [];
   const forward = new Vector3();
   // Camera-relative rim: travels from behind the subject toward the camera (azimuth follows the
   // orbit), so silhouettes get a thin cool edge from every view without a second key.
@@ -665,18 +668,38 @@ export function moldedLightRig(scene: Scene): MoldedLightRig {
   });
   const rig: MoldedLightRig = {
     include(meshes) {
-      for (let i = lit.length - 1; i >= 0; i--)
-        if (lit[i].isDisposed()) lit.splice(i, 1);
       let changed = false;
-      for (const m of meshes)
-        if (!m.isDisposed() && !lit.includes(m)) {
-          lit.push(m);
+      const added: AbstractMesh[] = [];
+      for (const mesh of lit)
+        if (mesh.isDisposed()) {
+          lit.delete(mesh);
           changed = true;
         }
+      for (const placed of meshes) {
+        if (placed.isDisposed()) continue;
+        // Hardware instances use their source's shader and light array. These
+        // global lights admit that owner; placement-local lamps stay separate.
+        const mesh =
+          placed instanceof InstancedMesh ? placed.sourceMesh : placed;
+        if (!mesh.isDisposed() && !lit.has(mesh)) {
+          lit.add(mesh);
+          added.push(mesh);
+          changed = true;
+        }
+      }
       if (changed) {
         // Reassign so Babylon re-evaluates light/mesh bindings.
-        fill.includedOnlyMeshes = lit;
-        rim.includedOnlyMeshes = lit;
+        // Babylon hooks push/splice on these arrays. Never hand it our owner
+        // list or reassign an already hooked list: wrappers accumulate and each
+        // addition then resynchronizes the entire scene repeatedly.
+        fill.includedOnlyMeshes = [...lit];
+        rim.includedOnlyMeshes = [...lit];
+        // AssetContainer shader owners may be outside scene.meshes, which is
+        // the only list Babylon's receiver setter resynchronizes.
+        for (const mesh of added) {
+          mesh._resyncLightSource(fill);
+          mesh._resyncLightSource(rim);
+        }
       }
     },
     setRimEnabled(enabled) {

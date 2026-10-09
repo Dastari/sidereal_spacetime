@@ -369,21 +369,21 @@ def publish(database=None, reset=False):
     cli(*arguments)
 
 
-def database_up(publish_module=True):
+def database_up(publish_module=True, data_dir=None):
     require_development()
     state = load()
     if 'database' in state and alive(state['database']):
         ready(DB_URL + '/v1/ping', 'database')
         return
     port_free(CFG['server']['host'], CFG['server']['port'])
-    launch('database', database_command())
+    launch('database', database_command(data_dir))
     ready(DB_URL + '/v1/ping', 'database')
     if publish_module:
         publish()
 
 
-def database_command():
-    return CLI + ['start', '--listen-addr', f"{CFG['server']['host']}:{CFG['server']['port']}", '--data-dir', str(ROOT / '.spacetime-data'), '--non-interactive']
+def database_command(data_dir=None):
+    return CLI + ['start', '--listen-addr', f"{CFG['server']['host']}:{CFG['server']['port']}", '--data-dir', str(ROOT / '.spacetime-data' if data_dir is None else data_dir), '--non-interactive']
 
 
 def app_command(name):
@@ -446,7 +446,11 @@ def status():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-equipment', 'export-materials', 'export-crew-items', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup', *(f'{name}-serve' for name in SERVE)])
+    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-theme-status', 'keycloak-theme-stage', 'keycloak-theme-activate', 'keycloak-theme-rollback', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-equipment', 'export-materials', 'export-crew-items', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup', *(f'{name}-serve' for name in SERVE)])
+    parser.add_argument('--theme-revision', help='Immutable installed theme name; keycloak-theme-activate/rollback only')
+    parser.add_argument('--theme-artifact-sha256', help='Reviewed complete theme archive digest')
+    parser.add_argument('--expected-client-theme', help='Current sidereal-game login theme, or __realm_default__')
+    parser.add_argument('--theme-operation-id', help='32-character hex operation ID; reuse for rollback')
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
     parser.add_argument('--client-artifact', help='Pinned prebuilt client directory; public-client-stage only')
     parser.add_argument('--client-artifact-sha256', help='Required complete tree digest with --client-artifact')
@@ -454,6 +458,8 @@ def main():
     parser.add_argument('--expected-staged-client-sha256', help='Exact reviewed staged digest; public-client-activate only')
     parser.add_argument('--module-artifact', help='Pinned compiled JS/WASM; publish-review only')
     parser.add_argument('--artifact-sha256', help='Required digest with --module-artifact')
+    parser.add_argument('--capacity', action='store_true', help='Run isolated 50/100-client SDK replication baseline')
+    parser.add_argument('--clients', type=int, choices=(50, 100), help='Distinct SDK actors for --capacity only')
     parser.add_argument('--prefab', action='store_true', help='Assign, walk and fly a developer prefab ship in an isolated module copy')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
     parser.add_argument('--fresh-smoke', action='store_true', help='Reserve an unused numbered fixture for a named smoke run; never reset')
@@ -461,10 +467,22 @@ def main():
     parser.add_argument('--expected-sha256', help='Pinned cold archive digest; restore-review-prepare only')
     args = parser.parse_args()
     command = args.command
+    theme_args = (args.theme_revision, args.theme_artifact_sha256, args.expected_client_theme, args.theme_operation_id)
+    if any(theme_args) and command not in ('keycloak-theme-activate', 'keycloak-theme-rollback'):
+        parser.error('Theme mutation arguments require keycloak-theme-activate or keycloak-theme-rollback')
+    if command in ('keycloak-theme-activate', 'keycloak-theme-rollback') and not all(theme_args):
+        parser.error('Theme mutation requires all four pinned revision, digest, expected theme and operation arguments')
     if (args.archive is not None or args.expected_sha256 is not None) and command != 'restore-review-prepare':
         parser.error('Recovery archive arguments are valid only for restore-review-prepare')
     if args.prefab and (command != 'smoke' or not args.fresh_smoke or not args.smoke_name):
         parser.error('--prefab requires smoke --smoke-name LABEL --fresh-smoke')
+    if args.capacity and (command != 'smoke' or not args.fresh_smoke or not args.smoke_name or args.clients is None or args.prefab):
+        parser.error('--capacity requires smoke --clients 50|100 --smoke-name LABEL --fresh-smoke')
+    if args.clients is not None and not args.capacity:
+        parser.error('--clients requires --capacity')
+    if args.capacity:
+        from capacity_smoke_module import validate_target
+        validate_target(sys.modules[__name__])
     smoke_database = CFG['project']['database'] + '-smoke'
     if args.smoke_name is not None:
         import re
@@ -501,7 +519,9 @@ def main():
         auth_https_command(command.removeprefix('auth-https-'), CFG)
     elif command.startswith('keycloak-'):
         from keycloak_service import command as keycloak_command
-        keycloak_command(command.removeprefix('keycloak-'))
+        keycloak_command(command.removeprefix('keycloak-'), theme_revision=args.theme_revision,
+            expected_client_theme=args.expected_client_theme, theme_artifact_sha256=args.theme_artifact_sha256,
+            theme_operation_id=args.theme_operation_id)
     elif command == 'setup':
         if not (TOOLS / 'bin' / CFG['project']['spacetime_version'] / 'spacetimedb-cli').exists():
             installer = STATE / 'install-spacetime.sh'
@@ -531,6 +551,42 @@ def main():
     elif command == 'smoke-prepare':
         publish(CFG['project']['database'] + '-smoke', reset=True)
     elif command in ('smoke', 'smoke-restart', 'smoke-auth-admission'):
+        if args.capacity:
+            from capacity_smoke_module import publish as publish_capacity, finalize_driver_run
+            from fresh_smoke import reserve
+            try:
+                import tempfile
+                capacity_servers = STATE / 'capacity-servers'
+                capacity_servers.mkdir(exist_ok=True, mode=0o700)
+                server_directory = Path(tempfile.mkdtemp(prefix='run-', dir=capacity_servers))
+                database_up(publish_module=False, data_dir=server_directory)
+                fixture = reserve(sys.modules[__name__], args.smoke_name)
+                print(json.dumps({'freshCapacitySmoke': fixture}), flush=True)
+                bindings = publish_capacity(sys.modules[__name__], fixture['database'], fixture['evidenceDirectory'])
+                import hashlib
+                driver_paths = sorted([*list((ROOT/'packages/net/src').rglob('*.ts')), *list((ROOT/'scripts').glob('capacity-*.ts')), ROOT/'scripts/capacity_smoke_module.py', ROOT/'scripts/dev.py', ROOT/'package-lock.json'])
+                driver_hashes = {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in driver_paths}
+                driver_manifest = Path(fixture['evidenceDirectory']) / 'capacity-driver-manifest.json'
+                driver_manifest.write_text(json.dumps(driver_hashes, sort_keys=True, indent=2) + '\n')
+                driver_manifest.chmod(0o600)
+                driver_digest = hashlib.sha256(driver_manifest.read_bytes()).hexdigest()
+                env = os.environ.copy()
+                env.update(SIDEREAL_CAPACITY_DRIVER_SHA256=driver_digest, SIDEREAL_SMOKE_URL=DB_URL, SIDEREAL_SMOKE_DATABASE=fixture['database'],
+                           SIDEREAL_SMOKE_EVIDENCE_DIR=fixture['evidenceDirectory'],
+                           SIDEREAL_IFCS_TEST_BINDINGS=bindings, SIDEREAL_CAPACITY_CLIENTS=str(args.clients))
+                driver_failed = False
+                try:
+                    run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/capacity-smoke.ts'], env=env, stderr=subprocess.DEVNULL)
+                except subprocess.CalledProcessError:
+                    driver_failed = True
+                unchanged, driver_status = finalize_driver_run(ROOT, fixture['evidenceDirectory'], driver_hashes, driver_failed=driver_failed)
+                if not unchanged:
+                    raise RuntimeError('Capacity driver sources changed during run')
+                if driver_failed or driver_status != 'passed':
+                    raise RuntimeError('Capacity driver failed; inspect the sanitized capacity-result.json') from None
+            finally:
+                down('database')
+            return
         evidence = None
         if args.fresh_smoke:
             from fresh_smoke import reserve

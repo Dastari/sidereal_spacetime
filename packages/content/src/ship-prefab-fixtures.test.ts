@@ -18,10 +18,18 @@ const withFixtures = (fixtures: unknown) =>
   JSON.parse(JSON.stringify({ ...FED_WREN, fixtures })) as unknown;
 
 describe("prefab storage fixtures (hand-placed storage sockets)", () => {
-  it("only current Wren carries fixtures; documents without them keep no key", () => {
+  it("current Wren and the six fleet designs carry fixtures; documents without them keep no key", () => {
     expect(
       PREFAB_SHIPS.filter((p) => p.fixtures).map((p) => [p.id, p.revision]),
-    ).toEqual([["fed.s.wren", 9]]);
+    ).toEqual([
+      ["fed.s.wren", 9],
+      ["fed.s.wren-fleet", 1],
+      ["fed.s.petrel-fleet", 1],
+      ["fed.m.wayfarer-fleet", 1],
+      ["fed.m.heron-fleet", 1],
+      ["fed.l.kestrel-fleet", 1],
+      ["fed.l.albatross-fleet", 1],
+    ]);
     const { fixtures: _, ...bare } = FED_WREN;
     expect(canonicalShipPrefabJson(bare)).not.toContain("fixtures");
     expect(

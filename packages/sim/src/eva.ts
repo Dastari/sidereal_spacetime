@@ -166,6 +166,8 @@ export interface EvaEntry {
   inside: P2;
   outside: P2;
   room: string | null;
+  /** Exact code-owned native clear lane; absent preserves legacy prefab clearance. */
+  clearHalfM?: number;
 }
 /** Legacy name (milestone 1): every exterior entry. */
 export type EvaAirlock = EvaEntry;
@@ -237,6 +239,9 @@ export function prefabEvaModel(
       ],
       outside: [zero(hatch[0] + normal[0] * 1), zero(hatch[1] + normal[1] * 1)],
       room: door.rooms[0] ?? door.rooms[1],
+      ...(door.clearWidthM === undefined
+        ? {}
+        : { clearHalfM: door.clearWidthM / 2 }),
     });
   }
   entries.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
@@ -327,7 +332,7 @@ export function evaSolidAt(
     if (!open.has(e.id)) continue;
     const c = doorwayCoords(e, p);
     if (
-      Math.abs(c.along) <= EVA.doorwayHalfM &&
+      Math.abs(c.along) <= (e.clearHalfM ?? EVA.doorwayHalfM) &&
       c.depth >= -0.5 &&
       c.depth <= EVA.doorwayDepthM
     )
@@ -444,7 +449,8 @@ export function evaExitThrough(
     const c = doorwayCoords(e, p);
     const push = (walk[0] * e.normal[0] + walk[1] * e.normal[1]) / len;
     if (
-      Math.abs(c.along) <= EVA.doorwayHalfM - EVA.bodyRadiusM + 1e-6 &&
+      Math.abs(c.along) <=
+        (e.clearHalfM ?? EVA.doorwayHalfM) - EVA.bodyRadiusM + 1e-6 &&
       c.depth >= -0.05 &&
       c.depth <= EVA.exitDepthM &&
       push >= EVA.exitPush
@@ -464,7 +470,10 @@ export function evaEntryThrough(
     if (!open.has(e.id)) continue;
     const c = doorwayCoords(e, p);
     if (
-      Math.abs(c.along) <= EVA.doorwayHalfM &&
+      Math.abs(c.along) <=
+        (e.clearHalfM === undefined
+          ? EVA.doorwayHalfM
+          : e.clearHalfM - EVA.bodyRadiusM) &&
       c.depth >= EVA.entryDepthM &&
       c.depth <= EVA.doorwayDepthM + EVA.bodyRadiusM
     )
@@ -708,6 +717,22 @@ export function evaCaptureShip(
       best = { gap, id: ship.id };
   }
   return best?.id;
+}
+
+/** Overlapping bubbles retain the current frame until another capturable hull is
+ * at least half a metre nearer. This changes the motion reference, never access. */
+export function evaRecaptureShip(
+  ships: readonly EvaReferenceCandidate[],
+  body: EvaFreeState,
+  currentShipId: string,
+): string | undefined {
+  const nearest = evaCaptureShip(ships, body);
+  if (!nearest || nearest === currentShipId) return;
+  const current = ships.find((ship) => ship.id === currentShipId);
+  const target = ships.find((ship) => ship.id === nearest)!;
+  const gap = (ship: EvaReferenceCandidate) =>
+    Math.hypot(body.x - ship.pose.x, body.y - ship.pose.y) - ship.radiusM;
+  return !current || gap(target) + 0.5 < gap(current) ? nearest : undefined;
 }
 
 /**
