@@ -10,7 +10,7 @@ import "@babylonjs/loaders/glTF";
 import { createNativeWallBatches } from "../packages/render/src/native-wall-batches";
 
 const inputPath =
-  "docs/releases/usable-wall-readiness-20260910/geometry-comparison.json";
+  "output/releases/usable-wall-readiness-20260910/geometry-comparison.json";
 const sha = (value: Uint8Array | string) =>
   createHash("sha256").update(value).digest("hex");
 const inputBytes = readFileSync(inputPath),
@@ -194,7 +194,7 @@ try {
     rows,
   };
   writeFileSync(
-    "docs/releases/usable-wall-readiness-20260910/batching-comparison.json",
+    "output/releases/usable-wall-readiness-20260910/batching-comparison.json",
     JSON.stringify(result, null, 2) + "\n",
   );
   console.log(JSON.stringify(result.summary));

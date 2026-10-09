@@ -17,7 +17,7 @@ def qualify():
     spec=json.loads((RECEIVER/'interface.json').read_text())
     receiver_faces,_=triangles(RECEIVER/'receiver-set.glb')
     receivers=[p for _,face in receiver_faces for p in face]
-    audit=json.loads((ROOT/'docs/handoffs/cargo_grid_model_audit.json').read_text())
+    audit=json.loads((ROOT/'assets/ci/cargo-grid-model-audit.json').read_text())
     rows=[r for r in audit['rows'] if r['appearance'] in spec['payloadAppearances']]
     proofs=[]
     for width in (1,2):

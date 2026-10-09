@@ -19,6 +19,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = ROOT / 'assets/runtime'
 sys.path.insert(0, str(ROOT / 'scripts'))
+from art_catalog import source_present
 from prepare_app import PUBLISHED_RUNTIME  # noqa: E402
 
 
@@ -78,7 +79,7 @@ for entry in icons['entries']:
     assert struct.unpack('>II', raw[16:24]) == (256, 256) and raw[24:26] == bytes([8, 6]), entry['file']
     assert len(raw) == entry['bytes'] and all(6 <= c <= 250 for c in entry['boundsPixels'])
 assert sum(entry['bytes'] for entry in icons['entries']) == icons['iconBytes']
-assert sha(icons_root / icons['contactSheet']) == icons['contactSheetSha256']
+assert source_present(str((icons_root / icons['contactSheet']).relative_to(ROOT)), icons['contactSheetSha256'])
 print(json.dumps({'inventory_icons': len(icons['entries']), 'icon_bytes': icons['iconBytes'],
                   'preserved_source_and_rgba_provenance': 'passed'}))
 

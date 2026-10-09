@@ -41,7 +41,7 @@ replace(p,'  const grants = [...ctx.db.constructionGrant.by_principal.filter(ctx
 replace(p,'    !["draft.read", "instance.spawn"].every((cap) =>','    !gameAccess.readInterior && !["draft.read", "instance.spawn"].every((cap) =>')
 output=ROOT/'.runtime/airlock-shared-preview.json';output.parent.mkdir(exist_ok=True);output.write_text(json.dumps({str(ROOT/p):s for p,s in changes.items()}))
 manifest={p:{'beforeSha256':hashlib.sha256((ROOT/p).read_bytes()).hexdigest(),'afterSha256':hashlib.sha256(s.encode()).hexdigest()}for p,s in changes.items()}
-(ROOT/'docs/handoffs/native_external_airlock_patch_inputs.json').write_text(json.dumps(manifest,indent=2)+'\n')
+(ROOT/'.runtime/native_external_airlock_patch_inputs.json').write_text(json.dumps(manifest,indent=2)+'\n')
 patch=''.join(''.join(difflib.unified_diff((ROOT/p).read_text().splitlines(True),s.splitlines(True),fromfile='a/'+p,tofile='b/'+p))for p,s in changes.items())
-(ROOT/'docs/handoffs/native_external_airlock_integration.patch').write_text(patch)
+(ROOT/'.runtime/native_external_airlock_integration.patch').write_text(patch)
 print(f'Staged {len(changes)} files; shared source untouched.')

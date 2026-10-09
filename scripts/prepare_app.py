@@ -1386,6 +1386,8 @@ UNPUBLISHED_PATTERNS = (
     "crew/looks/views",
     "equipment/browser-review.png",
     "equipment/contact-sheet.png",
+    "equipment/icons/contact-sheet.png",
+    "equipment/equipment-review.glb",
 )
 ASSET_REFERENCE = re.compile(r'"/assets/([^"?#]+)')
 

@@ -29,7 +29,7 @@ def validate():
             assert all(0<=i<len(kit['materials'])for i in form['triangleMaterials'])
             triangles+=count//3
         results.append({'revision':m['revision'],'files':len(m['files']),'native_form_triangles':triangles,'manifest_sha256':sha(path)})
-    out=ROOT/'docs/releases/native-ship-2026-09-08/planet-asset-validation.json'
+    out=ROOT/'output/releases/native-ship-2026-09-08/planet-asset-validation.json'
     out.write_text(json.dumps({'status':'passed','scope':'Pinned source/artifact hashes and GLB/compiled-stream topology counts; actual visual review recorded separately','planets':results},indent=2)+'\n')
     print(json.dumps(results))
 if __name__=='__main__':validate()

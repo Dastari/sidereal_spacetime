@@ -43,7 +43,7 @@ class CargoAuditTests(unittest.TestCase):
             proposed_reservation({'min': [0, 0, 0], 'max': [math.nan, 1, 1]})
 
     def test_committed_exact73_audit_makes_no_false_stacking_qualification(self):
-        report = json.loads((ROOT/'docs/handoffs/cargo_grid_model_audit.json').read_text())
+        report = json.loads((ROOT/'assets/ci/cargo-grid-model-audit.json').read_text())
         rows = report['rows']
         self.assertEqual(len(rows), 73)
         self.assertEqual(len({r['assetId'] for r in rows}), 73)

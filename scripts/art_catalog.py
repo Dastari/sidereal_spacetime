@@ -45,6 +45,19 @@ def archived():
     return _ARCHIVED
 
 
+def archived_original_matches(copy, sha256):
+    """Verify a mounted original; off-host/inaccessible archives use the pinned receipt.
+
+    GitHub runners cannot traverse this host's /root archive. A missing mount or
+    PermissionError means the optional original is unavailable, not that its receipt
+    is invalid. Accessible copies are still hashed and tampering still fails.
+    """
+    try:
+        return digest(copy) == sha256 if copy.is_file() else True
+    except PermissionError:
+        return True
+
+
 def present(path, sha256):
     """True when `path` exists with `sha256`, or it was archived out of git with that exact hash.
     If the archive is mounted locally (ARCHIVED.json archive_root), the archived copy is verified too."""
@@ -58,7 +71,7 @@ def present(path, sha256):
     if not record or record["sha256"] != sha256:
         return False
     copy = Path(os.environ.get("SIDEREAL_ART_ARCHIVE", archived().get("archive_root", ""))) / "sidereal_spacetime/assets/art-library" / rel
-    return digest(copy) == sha256 if copy.is_file() else True
+    return archived_original_matches(copy, sha256)
 
 
 _ARCHIVED_MEDIA = {}
@@ -103,7 +116,7 @@ def source_present(rel, sha256):
     if not record or record["sha256"] != sha256:
         return False
     copy = archived_copy(rel)
-    return digest(copy) == sha256 if copy.is_file() else True
+    return archived_original_matches(copy, sha256)
 
 
 def valid_revision_history(design):

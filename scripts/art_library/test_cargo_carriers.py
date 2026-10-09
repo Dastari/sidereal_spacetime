@@ -12,7 +12,7 @@ class CarrierQualificationTests(unittest.TestCase):
     def setUp(self):
         self.directory = ROOT/'assets/art-library/designs/cargo.carrier.grid-support/revisions/r000/a003'
         self.interface = json.loads((self.directory/'carrier-1m-interface.json').read_text())
-        self.rows = json.loads((ROOT/'docs/handoffs/cargo_grid_model_audit.json').read_text())['rows']
+        self.rows = json.loads((ROOT/'assets/ci/cargo-grid-model-audit.json').read_text())['rows']
 
     def test_native_export_has_actual_flat_bearing_surfaces(self):
         report = validate(self.directory)
