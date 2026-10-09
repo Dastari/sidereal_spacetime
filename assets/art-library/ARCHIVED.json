@@ -1,6 +1,6 @@
 {
  "schema": "sidereal.art-library.archived.v1",
- "note": "Reference and review media (exact reference crops, boards, renders, comparison sheets, revision screenshots, review HTML/video) moved out of git on 2026-09-26. Exact originals: <archive_root>/sidereal_spacetime/assets/art-library/<path>; verify with `sha256sum -c MANIFEST.sha256` in the archive root. Web-sized copies with the ledger text: the Sidereal wiki, Art/Library/<design>. Git history keeps every file. scripts/art_catalog.py check accepts a listed file that is absent from the tree when its recorded hash matches.",
+ "note": "Reference and review media (exact reference crops, boards, renders, comparison sheets, revision screenshots, review HTML/video) moved out of git on 2026-09-26. Exact originals: <archive_root>/sidereal_spacetime/assets/art-library/<path>; verify with `sha256sum -c MANIFEST.sha256` in the archive root. Web-sized copies with the ledger text: the Sidereal wiki, Art/Library/<design>. Git history keeps every file. scripts/art_catalog.py check accepts a listed file that is absent from the tree when its recorded hash matches. October 10: superseded historical binary authoring attempts are also archived with their exact original hashes. Latest family sources, active runtime inputs and test/installer fixtures remain tracked. See Operations/Historical Asset and LFS Audit 2026-10-10 in the wiki; restore a historical recipe input from its exact archive path before rerunning that recipe.",
  "archive_root": "/root/sidereal-art-archive",
  "manifest": "/root/sidereal-art-archive/MANIFEST.sha256",
  "wiki": "https://wiki.sidereal.dastari.net/Art/Library",
@@ -17136,6 +17136,804 @@
    "bytes": 1035424,
    "wiki": "https://wiki.sidereal.dastari.net/Agents/Reviews/Repository%20and%20Wiki%20Relevance%202026-10-05",
    "archived_at": "2026-10-05"
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a001/blender-source.blend": {
+   "sha256": "ced24c245b6a2f3dafed17d89e0b5898a8106111d3b9b72e8612343040ede9f7",
+   "bytes": 1363532,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a001/carrier-1m.glb": {
+   "sha256": "b9c1fad859225b20520aed6933faf6afeda5677564373395399189da7ff6da1f",
+   "bytes": 219908,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a001/carrier-2m.glb": {
+   "sha256": "20840add31ccb63c6ea457f3c5c411221fddaafeaa7f4bd0ff30ba730c812a0c",
+   "bytes": 305836,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a002/blender-source.blend": {
+   "sha256": "3bf787b64df90aaebea2a1672b2b2bed396056b09f70b16e455e1e609c525059",
+   "bytes": 1363532,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a002/stack-fixture.blend": {
+   "sha256": "2bb156e5fbe5264b66c746ac9f297a562cecf6f0179577ab02a9134d2615784c",
+   "bytes": 14586440,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/cargo.handling.fixture/revisions/r001/a001/stacked-fixture.blend": {
+   "sha256": "eb79a711f34bba7089026fb6269776930caefd3114be11fc71e80ac8c8709d4a",
+   "bytes": 16167718,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/cargo.handling.fixture/revisions/r001/a001/unstacked-fixture.blend": {
+   "sha256": "380d623c858026c55b26a1ce49589748160e5cfbc703485845868eed7b5a4193",
+   "bytes": 16167718,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a001/blender-source.blend": {
+   "sha256": "6c7a4b1f4dc0ad1f5836ee3a1c7cbd20434e5a9c6dcd7869691cb6f7e14a2bd0",
+   "bytes": 1933252,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a001/glb.glb": {
+   "sha256": "001433b841360cbb8b0339f984f503a70a681bd44e3b743e5cb5235581e59951",
+   "bytes": 1276240,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/baseline-collar.glb": {
+   "sha256": "beb7fde687637ff8c033ab231b2f67eed67feff6a6da6179325e3bf6f29832b5",
+   "bytes": 331740,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/baseline-shoulder.glb": {
+   "sha256": "fd3e6688069957b69f8bfbe430111410469cdebab88952124f20e477081cad81",
+   "bytes": 56044,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/blender-source.blend": {
+   "sha256": "42a2de95a3e301bce2a0f7f77826aed397c3bbf1df541447404964297d174073",
+   "bytes": 1088528,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/collar.glb": {
+   "sha256": "1c9f27314d976c6ec836280795501544b03870bdfd83cc1316955115f129efdc",
+   "bytes": 329076,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/shoulder.glb": {
+   "sha256": "2fdc309ecee5a7c4c8f32558dc29b583a54c30f5c8fed3193ac1215874e14b57",
+   "bytes": 63828,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/baseline-collar.glb": {
+   "sha256": "beb7fde687637ff8c033ab231b2f67eed67feff6a6da6179325e3bf6f29832b5",
+   "bytes": 331740,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/baseline-shoulder.glb": {
+   "sha256": "e3ffccfeac1b5bc1ae72e2e61aff538d5c46d6616075b0d7e924d0f993dd7696",
+   "bytes": 58024,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/blender-source.blend": {
+   "sha256": "31a365882d73f74c77a47a845c7f33116d1f376788e09855b028a63fd7d84461",
+   "bytes": 1091568,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/collar.glb": {
+   "sha256": "1c9f27314d976c6ec836280795501544b03870bdfd83cc1316955115f129efdc",
+   "bytes": 329076,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/shoulder.glb": {
+   "sha256": "d0d458055ea98157fa3c33f57e622243d0d0ca3e27c49a51f64bd60881618f4c",
+   "bytes": 67076,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.boundary-kit/revisions/r005/final-a004/boundary-kit.blend": {
+   "sha256": "ec0417de1046ac4b79d40c48d9b627b97c32e1b3d0dd5b54c420513d175ffbbe",
+   "bytes": 13173414,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a001/blender-source.blend": {
+   "sha256": "08297653312f9d2876abf92302c12503d052e1da1162805840d8f9cd47b092bb",
+   "bytes": 1228168,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a001/junction-square.glb": {
+   "sha256": "688895af2916b81fdeb49a1ea0b62e619f4e3669fcc8f1e0628fbebcb3420515",
+   "bytes": 661036,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a001/rail-2m.glb": {
+   "sha256": "c9b9827f4870407c0f8c7879668c5c7ae09a3a471bbecb0eb53d9fbb5f171494",
+   "bytes": 642992,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a001/step-rail-2m.glb": {
+   "sha256": "85b341ed5737b2b6a864130237637e382c99a438fa3dce3b7f089862a3c37326",
+   "bytes": 643020,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a002/blender-source.blend": {
+   "sha256": "2ac9c322b2ec4717d1abd1b6681903850c3c5b13402377293dee859bb7aa496f",
+   "bytes": 1269124,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a002/junction-square.glb": {
+   "sha256": "688895af2916b81fdeb49a1ea0b62e619f4e3669fcc8f1e0628fbebcb3420515",
+   "bytes": 661036,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a002/rail-2m.glb": {
+   "sha256": "c9b9827f4870407c0f8c7879668c5c7ae09a3a471bbecb0eb53d9fbb5f171494",
+   "bytes": 642992,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a002/step-rail-2m.glb": {
+   "sha256": "85b341ed5737b2b6a864130237637e382c99a438fa3dce3b7f089862a3c37326",
+   "bytes": 643020,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.roof-closure/revisions/r000/a002/wall-seam-2p5m.glb": {
+   "sha256": "da12929941b5704ca01b4ba51971af5f9b77e4fc17aede95eb779176734f759c",
+   "bytes": 662336,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.stair-dogleg/revisions/r000/a001/blender-source.blend": {
+   "sha256": "509d55a3e2e46e64c18eecb6886864eb6b676a4d073e8bb065c7dcfac0f0cc25",
+   "bytes": 5217755,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.stair-dogleg/revisions/r000/a001/kit.glb": {
+   "sha256": "7073cc9b366e56a3f67f4ea8f296063bdfe0df38fb5c02794b92a8e2272a4034",
+   "bytes": 2730888,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.stair-dogleg/revisions/r000/a002/blender-source.blend": {
+   "sha256": "57a3174e95938f94cebf01a0da3ca19d1d86478e377ffee2d632caaf661621bc",
+   "bytes": 5217755,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.stair-dogleg/revisions/r000/a002/kit.glb": {
+   "sha256": "845ab13f1a1e7a6a4332e00f9ea9fd443b1c29d1b8d941102168fe9a7415db15",
+   "bytes": 2730896,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.traversal-ladder/revisions/r000/a001/blender-source.blend": {
+   "sha256": "63a535e1583bd95560867b0943b41289f84045001ef37bcd8024f1fdd1705fd4",
+   "bytes": 3354155,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.traversal-ladder/revisions/r000/a001/kit.glb": {
+   "sha256": "ea82d300630c04567391947eddf1fd84a42d45c7db354ef2efcf5150cc6cf336",
+   "bytes": 1234424,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.traversal-ladder/revisions/r000/a002/blender-source.blend": {
+   "sha256": "f8f30e5070a326c13583a500374e297ffc9c39bece162f9c407beafd025fa927",
+   "bytes": 3354155,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.traversal-ladder/revisions/r000/a002/kit.glb": {
+   "sha256": "ea82d300630c04567391947eddf1fd84a42d45c7db354ef2efcf5150cc6cf336",
+   "bytes": 1234424,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/blender-source.blend": {
+   "sha256": "df233bb3a404c21128f21c5d84870d3e277028cade925b047e754ac4d5135afb",
+   "bytes": 1765300,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/outer-corner.glb": {
+   "sha256": "8e6806cf73b6e912a705aa13d2aeef49dd4959b66c5f3299abfc41804773d33c",
+   "bytes": 649484,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/straight-2m.glb": {
+   "sha256": "7c92e8faf140aad5f3807c706f89a542ec9c2b13828e29648fb5cdb1aaf547a0",
+   "bytes": 1018380,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/straight-port-legacy.glb": {
+   "sha256": "0493de6db8e5762f83c0662f7097983c3ec88e83f0006b5cee71e4a5df4df063",
+   "bytes": 1020096,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/straight-starboard-legacy.glb": {
+   "sha256": "538bda02bc476ee506c0f6dafcde1fad89fc521ae8ed6f9c2d5207c00c1dcaa4",
+   "bytes": 1020096,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/blender-source.blend": {
+   "sha256": "c165aa14b4594b8b393626b7af85fba6663198172fe68d262a10458221e50c1a",
+   "bytes": 1728508,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/outer-corner.glb": {
+   "sha256": "9604f4ddaab1a717333b301571c8904b4b75417ff549c6edd6222217731489e4",
+   "bytes": 646516,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/straight-2m.glb": {
+   "sha256": "abdd69bd588e2496e9eb11052c6d5f0b31d5c06cb984436120e6acc34ccd54b4",
+   "bytes": 977828,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/straight-port-legacy.glb": {
+   "sha256": "e3cf967f5e0af05c0d8dc95356618609c8180974594ba5f7f124248b9a8b2ccd",
+   "bytes": 979244,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/straight-starboard-legacy.glb": {
+   "sha256": "3d46a6ebdd276ca9d933af16d9c55d95ffd1f74d0f63dc86e8b940a1fe0eaa00",
+   "bytes": 979208,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/blender-source.blend": {
+   "sha256": "a00911ce08dbfcdbdd3cc1ef77056dc7de7bd01392660318afe82f87db1dc427",
+   "bytes": 1728356,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/outer-corner.glb": {
+   "sha256": "51c5280a87cb3a5b4b18fc1dd3fe349f8c7dfdfec13d8d7de16247de0c0052c2",
+   "bytes": 646504,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/straight-2m.glb": {
+   "sha256": "abdd69bd588e2496e9eb11052c6d5f0b31d5c06cb984436120e6acc34ccd54b4",
+   "bytes": 977828,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/straight-port-legacy.glb": {
+   "sha256": "e3cf967f5e0af05c0d8dc95356618609c8180974594ba5f7f124248b9a8b2ccd",
+   "bytes": 979244,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/straight-starboard-legacy.glb": {
+   "sha256": "3d46a6ebdd276ca9d933af16d9c55d95ffd1f74d0f63dc86e8b940a1fe0eaa00",
+   "bytes": 979208,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/blender-source.blend": {
+   "sha256": "0fadf2687669694a2b1fc04acc70bbb3d441628826b560ea20f9a3b9a0341f99",
+   "bytes": 1728524,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/outer-corner.glb": {
+   "sha256": "062ddea776bd9fb5bca7677668a60c319112d313be9aa709b20d8b132f92c238",
+   "bytes": 646512,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/straight-2m.glb": {
+   "sha256": "479f546b875389e2c726a42c9af4db027d4780066634009c600193ae2b6b08e8",
+   "bytes": 977904,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/straight-port-legacy.glb": {
+   "sha256": "204874ad4825b97b68016798cb69a37d7e39750a30dd12733a7c6c3176fa7664",
+   "bytes": 979320,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/straight-starboard-legacy.glb": {
+   "sha256": "bf70723a8a68d34c5c60288559e6f37b1fefba611c4f04c582cce261343ed241",
+   "bytes": 979284,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/blender-source.blend": {
+   "sha256": "c085df609ca7af71efc50d92fbdfadd41ce7c5c345e87a9d6a8940a2aaf82815",
+   "bytes": 2014988,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/outer-corner.glb": {
+   "sha256": "062ddea776bd9fb5bca7677668a60c319112d313be9aa709b20d8b132f92c238",
+   "bytes": 646512,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/port-inner-facing.glb": {
+   "sha256": "7b5266aae6c742504a317ca57e62a797f6088296fc3a448fc95f30f081574d7f",
+   "bytes": 974904,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/port-pressure-body.glb": {
+   "sha256": "a753a692306c8093527b523d7fc9f821716417a5ee54b8da35c7bb7ff342fded",
+   "bytes": 331132,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/starboard-inner-facing.glb": {
+   "sha256": "7c505906e461a77f110327c707c86c1ac2200e499ae202b2c3a812085176fd07",
+   "bytes": 974896,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/starboard-pressure-body.glb": {
+   "sha256": "b8059b3203a2cc186bb0bb46fc16f0ba4f438e00b238c247afc54662ab04bafc",
+   "bytes": 331132,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/straight-2m.glb": {
+   "sha256": "479f546b875389e2c726a42c9af4db027d4780066634009c600193ae2b6b08e8",
+   "bytes": 977904,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/straight-port-legacy.glb": {
+   "sha256": "204874ad4825b97b68016798cb69a37d7e39750a30dd12733a7c6c3176fa7664",
+   "bytes": 979320,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/straight-starboard-legacy.glb": {
+   "sha256": "bf70723a8a68d34c5c60288559e6f37b1fefba611c4f04c582cce261343ed241",
+   "bytes": 979284,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay00-exterior.glb": {
+   "sha256": "8f13403efba4183d8ba74997c4719867c0590fef9330ee8efc975b6834f646a2",
+   "bytes": 331108,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay00-interior.glb": {
+   "sha256": "a123c2a59e6e64e269d8915eb87fb65572b85c980d9b42cae023f88d32ff6a64",
+   "bytes": 974344,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay01-exterior.glb": {
+   "sha256": "5cc011b84a33755d78355ea3c9cd2cbe741862febebe0d9c2e7cd13b504dcc21",
+   "bytes": 331108,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay01-interior.glb": {
+   "sha256": "5d0cf4644602ee3a854167c7025f060a9b3a38c63daf7d43182c0ce6a030edcc",
+   "bytes": 1064508,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay02-exterior.glb": {
+   "sha256": "e522b1147d96ca6d1a2672f8ed9a0378c2fbe52b463f9861e59c6bb27cf10d20",
+   "bytes": 331108,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay02-interior.glb": {
+   "sha256": "f3c3fab9c443b96057205085a8d8fab75f18b8da5e269c0e2f0e92a401c80572",
+   "bytes": 974344,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay03-exterior.glb": {
+   "sha256": "dc7ee10cdd1aa3c6b12bb63284ad932df4f6484816209259e93ae9703a27e2bc",
+   "bytes": 331108,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay03-interior.glb": {
+   "sha256": "1e5a654308c021473ca01e9b237ea430699c35c403c63681c0feed88a25a2aa6",
+   "bytes": 1070392,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay04-exterior.glb": {
+   "sha256": "f043cc123911058368d0124728b4e2ed43662fae9c688c0f198319d4a38b502a",
+   "bytes": 331108,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay04-interior.glb": {
+   "sha256": "fdc4f8e2a5ca880bb81a710e6a667a291c335405703df7bcd348f7c994aef805",
+   "bytes": 981752,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay05-exterior.glb": {
+   "sha256": "273ac115520c633fba915f969edcc6aca6b4106fb050e051e716501eb332396d",
+   "bytes": 331108,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay05-interior.glb": {
+   "sha256": "29d063e4c11edc2ba9d8d8da3fe733396edba274673e1e863202e477f8f5ffe4",
+   "bytes": 974344,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay06-exterior.glb": {
+   "sha256": "f73b9132630f4b1c3ef80e228a5b5846c45b138a0db45c1e196dcc6a861203bf",
+   "bytes": 331108,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay06-interior.glb": {
+   "sha256": "165c2453e93dc7fef74419e0971230ec2513acd0ab8b680e8ce2e4299eb43c17",
+   "bytes": 1076412,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay07-exterior.glb": {
+   "sha256": "69c21bb53f1b00d8bb21cf32229fb2ddec22934cc2590872a75429fea99a9627",
+   "bytes": 331104,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay07-interior.glb": {
+   "sha256": "3d7391610a427f44bc2b1a459dba9b018a5d1dfdabc758d9ba4bea9e86a20e9c",
+   "bytes": 974260,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay08-exterior.glb": {
+   "sha256": "c370ebd56eeecf2c0a56152aee79c20bec81197d287887301593365cb7910d9b",
+   "bytes": 331104,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay08-interior.glb": {
+   "sha256": "b1b840da96a87b9f87e07a4ca8d4f0c3ddc837de1e02fbc820f839b3630ac5be",
+   "bytes": 1069152,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay09-exterior.glb": {
+   "sha256": "f9fc8311745c51b31eb881fc838b346a8909d45862210cf5fc0aca46752fcff6",
+   "bytes": 331104,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay09-interior.glb": {
+   "sha256": "1147cabae655cbf1c3a3f93b618da22223abff9336599b7e5472904703676bf0",
+   "bytes": 974260,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay10-exterior.glb": {
+   "sha256": "6bff81d41884bf9e2423ac684d8cc6616962ac17226c38a0b49652537327adf4",
+   "bytes": 331104,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay10-interior.glb": {
+   "sha256": "75add13729ef7b7b6c84ebe00eab015821456b61628db8cff0721b0bf084e00b",
+   "bytes": 1071252,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay11-exterior.glb": {
+   "sha256": "cae642d9589fca635db3de17160d7e8ecdfd91120bf06471227d53edef55f635",
+   "bytes": 331104,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay11-interior.glb": {
+   "sha256": "db1928fd27baae484df8fa16f8f2ef3deaee1c16f4abc1fb84c932a337fec040",
+   "bytes": 984748,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay12-exterior.glb": {
+   "sha256": "220e8d4b737d734f5032413f9805cf10117480ec37a00406ccc4d601ec9353ce",
+   "bytes": 331104,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay12-interior.glb": {
+   "sha256": "cd2e7d557d1351c5dd3f2ae20fe9d92c859797739c5ab4a63e4f14241187a1e5",
+   "bytes": 974260,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay13-exterior.glb": {
+   "sha256": "8b7f3663ceb3f0aeb33d41b7800888d78693863646b97041b889d01df2be1132",
+   "bytes": 331104,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay13-interior.glb": {
+   "sha256": "958fc95302f1cf9ccc03fec322eb7432da063cde7f95cbb102a31c9b0c6a2706",
+   "bytes": 1080912,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/blender-source.blend": {
+   "sha256": "c83d4681b3f6e7527d8ba2a59aabb0dcf99e43cf1d0e112c50dc2738fa6b5c34",
+   "bytes": 5505705,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/blender-source.blend": {
+   "sha256": "9957bb1618dfe4ac70196d5ac32b647ad6e21621260950c742d0ec4e132a2266",
+   "bytes": 4478801,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end00.glb": {
+   "sha256": "9e739b8295d77709e5bb98db0f2616c041d2dfa2fd2abd77f78255abd771a850",
+   "bytes": 331100,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end01.glb": {
+   "sha256": "28586b0f9381601e87af03846fe038651d94b0de88ca1ebb7d09458694b04f63",
+   "bytes": 1380840,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end02.glb": {
+   "sha256": "10f13543e976edea5630029d19748870c1f12e9b16bf10d74bfe454f9158fc5f",
+   "bytes": 331100,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end03.glb": {
+   "sha256": "16d446c385803b1137a9f5ce434a1f67d510d8144af6240d126fccb901a99f34",
+   "bytes": 1470900,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end04.glb": {
+   "sha256": "e3464b3aefaafbbe41a36f02a09344b207b71e7d8dd5d97743c2f9f043d0f145",
+   "bytes": 646396,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end05.glb": {
+   "sha256": "97ec82cb8be22bcadfd662252a9eb7339e8f61a5183e6951043b1df953a6d55f",
+   "bytes": 331100,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end06.glb": {
+   "sha256": "168e33d054a86859b0addfacfb26f7ea55a2fd38c6aa512acc72586cc7177ac0",
+   "bytes": 1380752,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end07.glb": {
+   "sha256": "63a1a1a27165a54f5d87a34bb7d052be5244ddc0a6e070dd6189a937d454a2f7",
+   "bytes": 331100,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end08.glb": {
+   "sha256": "2491a564ed3a8daa258724e95bb495c70bf5cc9a6da7e6ab86f13d80f6e52d88",
+   "bytes": 1470736,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end09.glb": {
+   "sha256": "83e809e640528edcec1498897540b08f2f00eb43cfa02cffe3e37c2d53d17b28",
+   "bytes": 646680,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end10.glb": {
+   "sha256": "6710381dfdac3f4aaa350fbc68725685dbe4d09ab29a6269cba459722b81c708",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end11.glb": {
+   "sha256": "20c62f7ec3543b516e9159b84219c4afec8cf392800de90158ce0ee6cbc665c1",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end12.glb": {
+   "sha256": "19f6bd5c364262ae0e717df7f3460d40a260111fe0ea169de1c50eba34c39408",
+   "bytes": 1011688,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end13.glb": {
+   "sha256": "885d3c8048b31de22112cd90813f71af25a78ec57d91d4e642949705b7e33e4b",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end14.glb": {
+   "sha256": "3d94a9f7ce8d7b4dfb1eea5563ed6f0b4c0f27e0580fdad8061da827519ed750",
+   "bytes": 973048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end15.glb": {
+   "sha256": "96c3d95c1a43da05a31e5fada48b9bae4649e126873df0e02627509e7a212425",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end16.glb": {
+   "sha256": "801d5ff6ab53cc07e59b91f81ae37082e6dc732e936977eec8ffd6fb0db51f65",
+   "bytes": 1011292,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end17.glb": {
+   "sha256": "c4364f3d79a46efb6f51271b0a7d87f2724cb300c684ae06ef9c7360ec9221aa",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/blender-source.blend": {
+   "sha256": "aabea1824c50f602c3c733971df2938e2e2244ac7e99b8bac5d09fad99d4ac90",
+   "bytes": 4191801,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end00.glb": {
+   "sha256": "a067d76f03f6a045092932e391d9564f16f275da97ca68305f5e364fd187699a",
+   "bytes": 331100,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end01.glb": {
+   "sha256": "340ac594b11b60989bc94e37a08d21f59c7db9b66d7900d5f87413aa3433d58a",
+   "bytes": 1380840,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end02.glb": {
+   "sha256": "469a7da6d8ec5b69518d3b5dc019b9cfc4984de3be69b3e1b6224a9aba54d140",
+   "bytes": 331100,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end03.glb": {
+   "sha256": "c0f9eeda8312e129f27ef5244ec298e3238b09f50cdf2307838ad53783909768",
+   "bytes": 974232,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end04.glb": {
+   "sha256": "8087b73f1a6661245884a9f65e7a7a838fc0ccbc6bfda4bfd0790533248d28ef",
+   "bytes": 607396,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end05.glb": {
+   "sha256": "d61db5c8769693da7df5fcf4d8a0265b33665a9707c4f5300a9da5c56be15317",
+   "bytes": 331100,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end06.glb": {
+   "sha256": "d29f53e239229e8140d628d469c3144a4643062ec597d18fdfd077011d358246",
+   "bytes": 1380752,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end07.glb": {
+   "sha256": "31ef9a430c78273ad4ef510f1854c841b3fbd7d91e674d96bce9fd6fef437149",
+   "bytes": 331100,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end08.glb": {
+   "sha256": "b2717f64917875be8f16461f4222a31c00a3e75d603364d17e4d8f28b69660fc",
+   "bytes": 974144,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end09.glb": {
+   "sha256": "5cbb2df0070cc42339e31effda699ae333d43188dbca0109006d55348f60bfc3",
+   "bytes": 608840,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end10.glb": {
+   "sha256": "2429573c81021dd02f4b6204f723338b9c8065ec86111687a9eb3cf800b87db7",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end11.glb": {
+   "sha256": "db035d3402b48c03e9af190cdf52bdd4f9bc32bfa7103ea83bd6fe1ae466c3c7",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end12.glb": {
+   "sha256": "480352f94b94cc63f3305bcabd126330d159f40545a0dcc9c22d29188e5f5d42",
+   "bytes": 1011688,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end13.glb": {
+   "sha256": "5524e33eda339bebbcf1cdf13e88498b49446a95cddef14b2ebc686a207f64dd",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end14.glb": {
+   "sha256": "6d5c50ade65223ab596277aa01026031c78d930d277cd62c65fe0d991f4aa2d9",
+   "bytes": 973048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end15.glb": {
+   "sha256": "1253b5e7255920642cced9c448e0edc97bf358a05484d16fae1f4b34b496fb6c",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end16.glb": {
+   "sha256": "949d7590d78b19b2335d58694bb68532389f31f614cc1408cec110a73e7f9cbf",
+   "bytes": 1011292,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
+  },
+  "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end17.glb": {
+   "sha256": "60d1112e532c42fecbb9bc730643f37a94dc9b5d68b7e22ab25556004d9b90c5",
+   "bytes": 331048,
+   "archived_at": "2026-10-10",
+   "reason": "Superseded authoring attempt; latest family/source and all runtime/test inputs retained; exact original archived."
   }
  },
  "batches": {

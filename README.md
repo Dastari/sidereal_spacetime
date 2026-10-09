@@ -5,7 +5,9 @@ Browser space RPG with one authoritative SpacetimeDB server, Babylon.js renderin
 The [Sidereal wiki](https://wiki.sidereal.dastari.net/Home) is the source of truth for design, implementation status, decisions and operations. Start with [Agents](https://wiki.sidereal.dastari.net/Agents), the [current roadmap](https://wiki.sidereal.dastari.net/Roadmap) and [releases](https://wiki.sidereal.dastari.net/History/Releases). A merged PR and a public deployment are separate events; check release receipts for deployed source pins.
 
 ```sh
-git lfs pull
+GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/Dastari/sidereal_spacetime.git
+cd sidereal_spacetime
+python3 scripts/prepare_ci_lfs_assets.py
 python3 scripts/prepare_ci_assets.py
 npm ci
 npm run setup
@@ -16,7 +18,7 @@ Setup uses `dev.toml`; secrets and local database state remain outside git. The 
 
 The code includes account authentication, stable character identities, inventory and equipment, walking/EVA, control stations and component-based flight, ship construction, live furnishing edits, resource and logic foundations, and Studio authoring. The [systems roadmap](https://wiki.sidereal.dastari.net/Architecture/Game%20Systems%20Roadmap) separates implemented foundations from remaining gameplay. Current ship visuals follow the [authored surface trial](https://wiki.sidereal.dastari.net/Decisions/2026-10-02%20Authored%20Ship%20Surface%20Trial); occupancy and damage authority remain separate.
 
-Before a PR, run `npm run check` and `npm run build`. Authority changes also require `npm run smoke` against an isolated database; UI changes require a browser review. Runtime art checks use `npm run art:check`. [CI bootstrap](https://wiki.sidereal.dastari.net/Architecture/Documents/CI%20reproducibility%20repair%20%E2%80%94%202026-09-15) verifies exact native asset hashes and refuses to overwrite local edits.
+Before a PR, run `npm run check` and `npm run build`. Authority changes also require `npm run smoke` against an isolated database; UI changes require a browser review. Runtime art checks use `npm run art:check`. [LFS-free asset bootstrap](https://wiki.sidereal.dastari.net/Operations/CI%20Asset%20Bootstrap%20Without%20LFS) downloads a pinned ordinary release attachment, verifies exact native asset hashes and refuses to overwrite local edits. Unknown new asset revisions require a reviewed cache refresh; it never falls back to an LFS download.
 
 Keep source, runtime assets, tests and tooling in git. Project documents and release reports belong in the wiki; exact review originals are preserved in `/root/sidereal-art-archive` with hash receipts. Required machine fixtures live in `assets/ci/`, and generated reports in ignored `output/`. `scripts/check_docs.py` enforces these boundaries. See [what lives where](https://wiki.sidereal.dastari.net/Agents/What%20Lives%20Where).
 
