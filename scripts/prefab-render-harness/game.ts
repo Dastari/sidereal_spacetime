@@ -64,6 +64,15 @@ canvas.style.height = `${height}px`;
 // The opt-in benchmark needs visible progress: opening DevTools to check an
 // unfinished run takes page focus and correctly discards that partial run.
 if (perf) {
+  // Focusing the benchmark must not select/hover an object and introduce an
+  // outline proxy/pass. Register before the production input listeners.
+  const focusOnly = (event: PointerEvent) => {
+    canvas.focus({ preventScroll: true });
+    event.stopImmediatePropagation();
+  };
+  const noHover = (event: PointerEvent) => event.stopImmediatePropagation();
+  canvas.addEventListener("pointerdown", focusOnly, true);
+  canvas.addEventListener("pointermove", noHover, true);
   const progress = document.createElement("div");
   progress.id = "performance-probe-status";
   progress.setAttribute("role", "status");
@@ -105,6 +114,8 @@ if (perf) {
   import.meta.hot?.dispose(() => {
     window.clearInterval(timer);
     progress.remove();
+    canvas.removeEventListener("pointerdown", focusOnly, true);
+    canvas.removeEventListener("pointermove", noHover, true);
   });
 }
 
@@ -383,6 +394,7 @@ async function main() {
         focusValidation: hostFocusConfirmed
           ? "owner-confirmed embedded preview"
           : "document.hasFocus()",
+        interaction: "focus only; object selection/hover input suppressed",
         definitions: {
           renderCpuMs:
             "Raw scene.render() wall duration, including scene observers and targets",
