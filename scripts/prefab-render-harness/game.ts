@@ -19,6 +19,9 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { prefabById, PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
+import { createPerformanceProbe } from "./performance-probe";
+
+declare const __PREFAB_SOURCE__: { head: string; rendererTree: string };
 
 declare global {
   interface Window {
@@ -26,10 +29,12 @@ declare global {
     __prefabMetrics?: unknown;
     __prefabError?: string;
     __prefabWorld?: unknown;
+    __prefabPerf?: ReturnType<typeof createPerformanceProbe>["report"];
   }
 }
 
 const q = new URLSearchParams(location.search);
+const perf = q.get("perf") === "1";
 const doc =
   BOW_HOSTS.find((p) => p.id === q.get("prefab")) ??
   prefabById(q.get("prefab") ?? "fed.s.wren") ??
@@ -76,6 +81,7 @@ async function main() {
     }),
   };
   let scene: Scene | undefined;
+  let probe: ReturnType<typeof createPerformanceProbe> | undefined;
   const world = await createWorld(
     canvas,
     (text) => (document.getElementById("hud")!.textContent = text),
@@ -111,9 +117,16 @@ async function main() {
         (window as unknown as { __prefabScene?: Scene }).__prefabScene = s;
       },
       onLoadError: (m) => (window.__prefabError = m),
+      onFrameDiagnostics: perf
+        ? (sample) => probe?.recordFrame(sample)
+        : undefined,
+      blocksCameraInput: perf ? () => true : undefined,
     },
   );
-  import.meta.hot?.dispose(() => world.dispose());
+  import.meta.hot?.dispose(() => {
+    probe?.dispose();
+    world.dispose();
+  });
   const interior = q.get("interior") !== "0";
   const state: SceneState = {
     heading: 0,
@@ -148,7 +161,12 @@ async function main() {
   (window as unknown as { __prefabState?: SceneState }).__prefabState = state;
   // Review-only camera override (&cam=alpha,beta,radius): the game eases its RPG camera toward the
   // crew every frame; this re-applies fixed matching angles after it, never touching game state.
-  const cam = q.get("cam")?.split(",").map(Number);
+  const cam = (
+    q.get("cam") ??
+    (perf ? "2.0207963267948967,0.9553166181245092,30,0,0" : undefined)
+  )
+    ?.split(",")
+    .map(Number);
   // Optional 4th/5th values: camera target in ship metres (x starboard, y fore) at deck height.
   if (cam && cam.length >= 3 && cam.every(Number.isFinite))
     scene!.onBeforeRenderObservable.add(() => {
@@ -252,6 +270,59 @@ async function main() {
   if (q.get("overlay") === "1") addBowOverlay(scene!, doc);
   if (q.get("freeze") === "1") engine.stopRenderLoop();
   window.__prefabReady = true;
+  if (perf) {
+    const bounded = (
+      name: string,
+      fallback: number,
+      min: number,
+      max: number,
+    ) => {
+      const value = Number(q.get(name) ?? fallback);
+      return Number.isFinite(value)
+        ? Math.max(min, Math.min(max, Math.floor(value)))
+        : fallback;
+    };
+    const gl = canvas.getContext("webgl2");
+    const gpuInfo = gl?.getExtension("WEBGL_debug_renderer_info");
+    probe = createPerformanceProbe(scene!, {
+      frames: bounded("perfFrames", 300, 60, 3600),
+      warmup: bounded("perfWarmup", 180, 60, 1800),
+      metadata: {
+        source: __PREFAB_SOURCE__,
+        prefab: doc.id,
+        fleetSize,
+        interior,
+        crewPosition: [state.localX, state.localY],
+        userAgent: navigator.userAgent,
+        gpu: gpuInfo ? gl!.getParameter(gpuInfo.UNMASKED_RENDERER_WEBGL) : null,
+        query: location.search,
+        definitions: {
+          renderCpuMs:
+            "Raw scene.render() wall duration, including scene observers and targets",
+          updateCpuMs:
+            "Raw controller duration, identical to F3 diagnostics before static material preparation",
+          frameCpuMs:
+            "Raw world frame callback duration, identical to F3 diagnostics",
+          frameMs:
+            "Interval between engine frame starts; fps includes presentation pacing",
+          gpuFrameMs:
+            "New asynchronously completed engine GPU timer samples; unsupported is null",
+          litMaterialBinds:
+            "Material onBind events with lighting enabled, positive light cap and an enabled nonzero eligible light; not a GPU draw count",
+          draws:
+            "Babylon draw counter increments, including fullscreen draws, by currentRenderPassId",
+        },
+      },
+      ready: () => window.__prefabReady === true && !window.__prefabError,
+      diagnostics: () => world.getDiagnostics(true),
+      settings: () => ({
+        backend: world.getRenderBackend(),
+        aa: world.getAntialiasing(),
+        graphics: world.getGraphicsSettings(),
+      }),
+    });
+    window.__prefabPerf = probe.report;
+  }
 }
 
 main().catch((e) => {

@@ -264,6 +264,13 @@ export interface WorldOptions {
   authoredFlightEffects?: boolean;
   onObjectSelected?: (placementId?: string) => void;
   onScene?: (scene: Scene) => void;
+  /** Opt-in completed-frame samples for the no-database performance harness.
+   * Raw timings use the same boundaries as diagnostics, without HUD smoothing. */
+  onFrameDiagnostics?: (sample: {
+    renderCpuMs: number;
+    frameCpuMs: number;
+    updateCpuMs: number;
+  }) => void;
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
   /** Skip hidden world frames only after first usable-frame readiness completes.
@@ -1331,8 +1338,15 @@ async function buildWorld(
         !focusedBodyId &&
         blend < 0.001,
     );
+    const renderStarted = options.onFrameDiagnostics ? performance.now() : 0;
     scene.render();
-    diagnostics.recordFrameCpu(performance.now() - frameStarted, updateCpuMs);
+    const frameCpuMs = performance.now() - frameStarted;
+    diagnostics.recordFrameCpu(frameCpuMs, updateCpuMs);
+    options.onFrameDiagnostics?.({
+      renderCpuMs: frameStarted + frameCpuMs - renderStarted,
+      frameCpuMs,
+      updateCpuMs,
+    });
     if (
       firstFrame &&
       initialStateApplied &&

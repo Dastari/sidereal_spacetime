@@ -12,6 +12,9 @@ import { defineConfig, type Plugin } from "vite";
 import { fileURLToPath } from "node:url";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { join, normalize, sep } from "node:path";
+import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 
 const repo = fileURLToPath(new URL("../..", import.meta.url));
 
@@ -79,6 +82,29 @@ function repositoryAssets(): Plugin {
 }
 
 export default defineConfig({
+  define: {
+    __PREFAB_SOURCE__: JSON.stringify({
+      head: execFileSync("git", ["rev-parse", "HEAD"], {
+        cwd: repo,
+        encoding: "utf8",
+      }).trim(),
+      rendererTree: execFileSync(
+        "git",
+        ["rev-parse", "HEAD:packages/render/src"],
+        { cwd: repo, encoding: "utf8" },
+      ).trim(),
+      frameCallbackSourceSha256: createHash("sha256")
+        .update(readFileSync(join(repo, "packages/render/src/index.ts")))
+        .digest("hex"),
+      probeSourceSha256: createHash("sha256")
+        .update(
+          readFileSync(
+            join(repo, "scripts/prefab-render-harness/performance-probe.ts"),
+          ),
+        )
+        .digest("hex"),
+    }),
+  },
   root: fileURLToPath(new URL(".", import.meta.url)),
   plugins: [repositoryAssets()],
   publicDir: false,
