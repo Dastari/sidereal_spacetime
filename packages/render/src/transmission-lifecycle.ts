@@ -47,7 +47,10 @@ export function maintainSceneTransmission(scene: Scene) {
     restoreCapture = null;
     if (!next) return;
     const previous = next.getCustomRenderList;
-    const filter = createTransmissionCaptureFilter(scene, previous);
+    const filter = createTransmissionCaptureFilter(scene, previous, {
+      target: next,
+      candidates: () => transmissionCandidates(scene),
+    });
     next.getCustomRenderList = filter;
     const previousShouldRender = next._shouldRender;
     const visible = createTransmissionVisibilityTest(scene, next, () =>

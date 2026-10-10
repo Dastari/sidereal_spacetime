@@ -1,10 +1,12 @@
 import type { Material } from "@babylonjs/core/Materials/material";
 import type { MaterialPluginManager } from "@babylonjs/core/Materials/materialPluginManager";
-import type { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
+import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Plane } from "@babylonjs/core/Maths/math.plane";
 import { Frustum } from "@babylonjs/core/Maths/math.frustum";
+import { Matrix } from "@babylonjs/core/Maths/math.vector";
+import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { TemporalInstanceAttributes } from "./temporal-instance-attributes";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { PBRMetallicRoughnessMaterial } from "@babylonjs/core/Materials/PBR/pbrMetallicRoughnessMaterial";
@@ -137,11 +139,142 @@ export function createTransmissionVisibilityTest(
   };
 }
 
+type ScreenBox = { minX: number; maxX: number; minY: number; maxY: number };
+
+function projectedBox(
+  mesh: AbstractMesh,
+  transform: Matrix,
+  expansion = 0,
+): ScreenBox | null {
+  if (!hasConservativeRigidBounds(mesh)) return null;
+  mesh.computeWorldMatrix();
+  const box = mesh.getBoundingInfo().boundingBox;
+  const min = box.minimumWorld,
+    max = box.maximumWorld;
+  const m = transform.asArray();
+  const result = {
+    minX: Infinity,
+    maxX: -Infinity,
+    minY: Infinity,
+    maxY: -Infinity,
+  };
+  for (let i = 0; i < 8; i++) {
+    const x = i & 1 ? max.x + expansion : min.x - expansion;
+    const y = i & 2 ? max.y + expansion : min.y - expansion;
+    const z = i & 4 ? max.z + expansion : min.z - expansion;
+    const w = x * m[3] + y * m[7] + z * m[11] + m[15];
+    const clipZ = x * m[2] + y * m[6] + z * m[10] + m[14];
+    // A box crossing the eye/near plane has no finite conservative projected box.
+    if (!(w > 1e-4) || clipZ < -w) return null;
+    const sx = (x * m[0] + y * m[4] + z * m[8] + m[12]) / w;
+    const sy = (x * m[1] + y * m[5] + z * m[9] + m[13]) / w;
+    if (![sx, sy, clipZ].every(Number.isFinite)) return null;
+    result.minX = Math.min(result.minX, sx);
+    result.maxX = Math.max(result.maxX, sx);
+    result.minY = Math.min(result.minY, sy);
+    result.maxY = Math.max(result.maxY, sy);
+  }
+  return result;
+}
+
+function thinGlassDepth(
+  material: Material | null,
+  target: RenderTargetTexture,
+): number | null {
+  // glTF thin surfaces use volume IOR 1: the pinned shader mixes refraction
+  // roughness to zero, so every sample uses mip 0 even with specular AA. Unknown
+  // volume/blur modes fail open rather than clipping their sampling footprint.
+  if (material?.constructor !== PBRMaterial) return null;
+  const pbr = material as PBRMaterial,
+    sub = pbr.subSurface;
+  if (
+    !sub.isRefractionEnabled ||
+    sub.refractionTexture !== target ||
+    sub.useThicknessAsDepth ||
+    !(sub.volumeIndexOfRefraction > 0 && sub.volumeIndexOfRefraction <= 1) ||
+    target.isCube ||
+    target.constructor !== RenderTargetTexture ||
+    target.coordinatesMode !== Texture.PROJECTION_MODE ||
+    target.lodLevelInAlpha ||
+    !(target.lodGenerationScale > 0) ||
+    !Number.isFinite(target.lodGenerationScale) ||
+    !(target.lodGenerationOffset <= 0) ||
+    !Number.isFinite(target.lodGenerationOffset)
+  )
+    return null;
+  // pbrSubSurfaceConfiguration.bindForSubMesh uses depth || 1. Refract's
+  // normalized direction has length <=1, including total internal reflection.
+  const depth = (target as RenderTargetTexture & { depth?: number }).depth || 1;
+  return Number.isFinite(depth) ? Math.abs(depth) : null;
+}
+
+function glassSampleBoxes(
+  scene: Scene,
+  target: RenderTargetTexture,
+  candidates: Iterable<AbstractMesh> | null,
+): ScreenBox[] | null {
+  const camera = target.activeCamera ?? scene.activeCamera;
+  // Scene transform here is ObjectRenderer's installed target transform.
+  // A custom capture camera or viewport could use different glass coordinates.
+  if (
+    !camera ||
+    scene.getEngine().snapshotRendering ||
+    camera !== scene.activeCamera ||
+    !candidates ||
+    !target.ignoreCameraViewport ||
+    camera.viewport.x !== 0 ||
+    camera.viewport.y !== 0 ||
+    camera.viewport.width !== 1 ||
+    camera.viewport.height !== 1
+  )
+    return null;
+  const transform = scene.getTransformMatrix();
+  const boxes: ScreenBox[] = [],
+    size = target.getSize();
+  if (!(size.width > 0 && size.height > 0)) return null;
+  const paddingX = 4 / size.width,
+    paddingY = 4 / size.height;
+  for (const mesh of candidates) {
+    if (
+      !mesh.isEnabled() ||
+      !mesh.isVisible ||
+      mesh.visibility <= 0 ||
+      !(mesh.layerMask & camera.layerMask) ||
+      !touchesFrustum(mesh, scene.frustumPlanes)
+    )
+      continue;
+    const depth = thinGlassDepth(mesh.material, target);
+    if (depth === null) return null;
+    const box = projectedBox(mesh, transform, depth);
+    if (!box) return null;
+    // Two base-level texels include bilinear/MSAA coverage and rounding. Mips
+    // are still generated unchanged. Repeat/mirror wrap across an edge can sample
+    // the opposite edge, so retain the full list in that case.
+    box.minX -= paddingX;
+    box.maxX += paddingX;
+    box.minY -= paddingY;
+    box.maxY += paddingY;
+    if (
+      (target.wrapU !== Texture.CLAMP_ADDRESSMODE &&
+        (box.minX < -1 || box.maxX > 1)) ||
+      (target.wrapV !== Texture.CLAMP_ADDRESSMODE &&
+        (box.minY < -1 || box.maxY > 1))
+    )
+      return null;
+    boxes.push(box);
+  }
+  return boxes;
+}
+
 /** Only the helper-owned opaque target uses this callback. ObjectRenderer installs
  * that target's camera/frustum before calling it. No admission survives a frame. */
 export function createTransmissionCaptureFilter(
   scene: Scene,
   previous: RenderListCallback | null,
+  capture?: {
+    target: RenderTargetTexture;
+    candidates: () => Iterable<AbstractMesh> | null;
+  },
 ): RenderListCallback {
   const filtered: AbstractMesh[] = [];
   return function (this: unknown, face, renderList, renderListLength) {
@@ -165,6 +298,9 @@ export function createTransmissionCaptureFilter(
     const length = selected
       ? selected.length
       : Math.min(list.length, Math.max(0, renderListLength));
+    const glass = capture
+      ? glassSampleBoxes(scene, capture.target, capture.candidates())
+      : null;
     filtered.length = 0;
     for (let i = 0; i < length; i++) {
       const mesh = list[i];
@@ -190,7 +326,23 @@ export function createTransmissionCaptureFilter(
         planes.every((plane) =>
           box.vectorsWorld.some((v) => plane.dotCoordinate(v) >= -1e-4),
         );
-      if (!finite || touchesPlane) filtered.push(mesh);
+      if (!finite || touchesPlane) {
+        const screen = glass
+          ? projectedBox(mesh, scene.getTransformMatrix())
+          : null;
+        if (
+          !screen ||
+          !glass ||
+          glass.some(
+            (g) =>
+              screen.minX <= g.maxX &&
+              screen.maxX >= g.minX &&
+              screen.minY <= g.maxY &&
+              screen.maxY >= g.minY,
+          )
+        )
+          filtered.push(mesh);
+      }
     }
     return filtered;
   };
