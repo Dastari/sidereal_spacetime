@@ -1,7 +1,34 @@
 import type { Scene } from "@babylonjs/core/scene";
 import type { ITransmissionHelperHolder } from "@babylonjs/loaders/glTF/2.0/Extensions/transmissionHelper";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
-import { createTransmissionCaptureFilter } from "./transmission-capture";
+import {
+  createTransmissionCaptureFilter,
+  createTransmissionVisibilityTest,
+} from "./transmission-capture";
+
+// Babylon 9.25 boundary. Mixed meshes are in the opaque cache, but their glass
+// submeshes still consume this target. Missing SDK fields disable the optimization.
+function transmissionCandidates(scene: Scene): Iterable<AbstractMesh> | null {
+  const helper = (scene as Scene & Partial<ITransmissionHelperHolder>)
+    ._transmissionHelper as unknown as
+    | {
+        _transparentMeshesCache?: AbstractMesh[];
+        _translucentMaterialIndices?: Map<AbstractMesh, Set<number>>;
+      }
+    | undefined;
+  if (
+    !Array.isArray(helper?._transparentMeshesCache) ||
+    !(helper?._translucentMaterialIndices instanceof Map)
+  )
+    return null;
+  const transparent = helper._transparentMeshesCache;
+  const mixed = helper._translucentMaterialIndices;
+  return (function* () {
+    yield* transparent;
+    yield* mixed.keys();
+  })();
+}
 
 /** Babylon 9.25's glTF helper owns one scene-wide refraction target. A disposed
  * target can outlive its GPU resource in transmission materials between asset
@@ -22,6 +49,26 @@ export function maintainSceneTransmission(scene: Scene) {
     const previous = next.getCustomRenderList;
     const filter = createTransmissionCaptureFilter(scene, previous);
     next.getCustomRenderList = filter;
+    const previousShouldRender = next._shouldRender;
+    const visible = createTransmissionVisibilityTest(scene, next, () =>
+      transmissionCandidates(scene),
+    );
+    let skipped = false;
+    const shouldRender: typeof next._shouldRender = function (
+      this: RenderTargetTexture,
+    ) {
+      // Snapshot playback needs a stable pass topology (Babylon's own rule).
+      if (!scene.getEngine().snapshotRendering && !visible()) {
+        skipped = true;
+        return false;
+      }
+      if (skipped) {
+        next.resetRefreshCounter();
+        skipped = false;
+      }
+      return previousShouldRender.call(this);
+    };
+    next._shouldRender = shouldRender;
     // The helper renders its capture at environment intensity 1 and restores
     // the scene afterwards. Both passes share each material's uniform buffer,
     // and a frozen material is rewritten only by the first pass that sees a
@@ -39,6 +86,8 @@ export function maintainSceneTransmission(scene: Scene) {
     restoreCapture = () => {
       if (next.getCustomRenderList === filter)
         next.getCustomRenderList = previous;
+      if (next._shouldRender === shouldRender)
+        next._shouldRender = previousShouldRender;
       next.onBeforeBindObservable.remove(remember);
       next.onBeforeBindObservable.remove(retain);
     };

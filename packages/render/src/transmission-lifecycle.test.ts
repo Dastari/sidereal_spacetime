@@ -1,6 +1,8 @@
 import { expect, test } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
-import { Matrix } from "@babylonjs/core/Maths/math.vector";
+import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
 import { Scene } from "@babylonjs/core/scene";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
@@ -131,6 +133,87 @@ test("captures at the scene's own environment intensity until the guard is relea
   guard.dispose();
   scene.environmentIntensity = 0.28;
   expect(capture()).toEqual([1, 0.28]);
+  scene.dispose();
+  engine.dispose();
+});
+
+test("skips invisible glass and refreshes the first returning frame, including mixed materials", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const camera = new FreeCamera("main", new Vector3(0, 0, -10), scene);
+  camera.setTarget(Vector3.Zero());
+  const glass = new PBRMaterial("glass", scene);
+  glass.subSurface.isRefractionEnabled = true;
+  const multi = new MultiMaterial("mixed", scene);
+  multi.subMaterials = [new PBRMaterial("opaque", scene), glass];
+  const mesh = CreateBox("mixed glass", {}, scene);
+  mesh.material = multi;
+  const helper = new TransmissionHelper({}, scene);
+  helper.addMaterialImpl({
+    materialClass: PBRMaterial,
+    adapterClass: PBRMaterialLoadingAdapter,
+  });
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  const target = helper.getOpaqueTarget()! as RenderTargetTexture;
+  const original = target._shouldRender;
+  target.refreshRate = 2;
+  const guard = maintainSceneTransmission(scene);
+  guard.repair();
+  expect(target._shouldRender()).toBe(true);
+  expect(target._shouldRender()).toBe(false);
+  mesh.position.x = 1000;
+  scene.incrementRenderId();
+  expect(target._shouldRender()).toBe(false);
+  mesh.position.x = 0;
+  scene.incrementRenderId();
+  expect(target._shouldRender()).toBe(true);
+  mesh.isVisible = false;
+  expect(target._shouldRender()).toBe(false);
+  mesh.isVisible = true;
+  mesh.setEnabled(false);
+  expect(target._shouldRender()).toBe(false);
+  mesh.setEnabled(true);
+  mesh.layerMask = 0;
+  expect(target._shouldRender()).toBe(false);
+  mesh.layerMask = camera.layerMask;
+  mesh.visibility = 0;
+  expect(target._shouldRender()).toBe(false);
+  mesh.visibility = 1;
+  expect(target._shouldRender()).toBe(true);
+  expect(mesh.material).toBe(multi);
+  expect(multi.subMaterials[1]).toBe(glass);
+  expect(target.samples).toBe(4);
+  expect(target.refreshRate).toBe(2);
+  guard.dispose();
+  expect(target._shouldRender).toBe(original);
+  scene.dispose();
+  engine.dispose();
+});
+
+test("retains snapshot pass topology and foreign scheduling callbacks across repair/disposal", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  new FreeCamera("main", Vector3.Zero(), scene);
+  const helper = new TransmissionHelper({}, scene);
+  const first = helper.getOpaqueTarget()! as RenderTargetTexture;
+  const earlier = () => true,
+    later = () => false;
+  first._shouldRender = earlier;
+  const guard = maintainSceneTransmission(scene);
+  guard.repair();
+  expect(first._shouldRender()).toBe(false);
+  Object.defineProperty(engine, "snapshotRendering", {
+    configurable: true,
+    value: true,
+  });
+  expect(first._shouldRender()).toBe(true);
+  first.dispose();
+  guard.repair();
+  expect(first._shouldRender).toBe(earlier);
+  const next = helper.getOpaqueTarget()! as RenderTargetTexture;
+  next._shouldRender = later;
+  guard.dispose();
+  expect(next._shouldRender).toBe(later);
   scene.dispose();
   engine.dispose();
 });

@@ -3,6 +3,8 @@ import type { MaterialPluginManager } from "@babylonjs/core/Materials/materialPl
 import type { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Scene } from "@babylonjs/core/scene";
+import type { Plane } from "@babylonjs/core/Maths/math.plane";
+import { Frustum } from "@babylonjs/core/Maths/math.frustum";
 import { TemporalInstanceAttributes } from "./temporal-instance-attributes";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { PBRMetallicRoughnessMaterial } from "@babylonjs/core/Materials/PBR/pbrMetallicRoughnessMaterial";
@@ -75,6 +77,64 @@ function hasConservativeRigidBounds(mesh: AbstractMesh): boolean {
     !source.bakedVertexAnimationManager &&
     hasRigidMaterial(mesh.material)
   );
+}
+
+function finitePlanes(planes: Plane[]): boolean {
+  return (
+    planes.length === 6 &&
+    planes.every((p) =>
+      [p.normal.x, p.normal.y, p.normal.z, p.d].every(Number.isFinite),
+    )
+  );
+}
+
+function touchesFrustum(mesh: AbstractMesh, planes: Plane[]): boolean {
+  if (!hasConservativeRigidBounds(mesh)) return true;
+  if (
+    mesh
+      .computeWorldMatrix()
+      .asArray()
+      .some((v) => !Number.isFinite(v))
+  )
+    return true;
+  const vertices = mesh.getBoundingInfo().boundingBox.vectorsWorld;
+  if (vertices.some((v) => ![v.x, v.y, v.z].every(Number.isFinite)))
+    return true;
+  return planes.every((p) => vertices.some((v) => p.dotCoordinate(v) >= -1e-4));
+}
+
+/** The pinned helper's translucent and mixed caches are live, including instances.
+ * Unknown adapters/bounds fail open. Read the current camera rather than the scene
+ * frustum: an earlier shadow target can have installed different planes. */
+export function createTransmissionVisibilityTest(
+  scene: Scene,
+  target: RenderTargetTexture,
+  candidates: () => Iterable<AbstractMesh> | null,
+): () => boolean {
+  const planes = Frustum.GetPlanes(scene.getTransformMatrix());
+  return () => {
+    const camera = target.activeCamera ?? scene.activeCamera;
+    const meshes = candidates();
+    if (!camera || !meshes || scene.skipFrustumClipping) return true;
+    camera.getViewMatrix();
+    camera.getProjectionMatrix();
+    Frustum.GetPlanesToRef(camera.getTransformationMatrix(), planes);
+    if (!finitePlanes(planes)) return true;
+    for (const mesh of meshes) {
+      if (
+        mesh.isDisposed() ||
+        !mesh.isEnabled() ||
+        !mesh.isVisible ||
+        mesh.visibility <= 0 ||
+        !(mesh.layerMask & camera.layerMask)
+      )
+        continue;
+      // Cache membership comes from the helper's own adapter classification.
+      // Do not reclassify or mutate mixed submeshes here.
+      if (touchesFrustum(mesh, planes)) return true;
+    }
+    return false;
+  };
 }
 
 /** Only the helper-owned opaque target uses this callback. ObjectRenderer installs
