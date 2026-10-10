@@ -4,6 +4,7 @@ import {
   CHARACTER_FACE_DETAILS,
   CHARACTER_FACIAL_HAIR,
   CHARACTER_FACE_AGES,
+  CHARACTER_FACE_VARIANTS,
 } from "./character-face-options";
 import looks from "./crew-looks.json";
 export * from "./character-face-options";
@@ -30,6 +31,7 @@ export const CHARACTER_APPEARANCE_ENUMS = {
   faceDetail: CHARACTER_FACE_DETAILS,
   facialHair: CHARACTER_FACIAL_HAIR,
   faceAge: CHARACTER_FACE_AGES,
+  faceVariant: CHARACTER_FACE_VARIANTS,
   helmet: [
     "none",
     "open",

@@ -19,6 +19,7 @@ test("legacy defaults are adult and neutral, while uniform changes preserve expl
     faceDetail: "scar",
     facialHair: "goatee",
     faceAge: "mature",
+    faceVariant: "m_bold",
   } as const;
   const next = mergeCrewAppearance(
     { ...personal, outfit: "engineer", armor: "heavy", weapon: "rifle" },
@@ -38,4 +39,20 @@ test("legacy defaults are adult and neutral, while uniform changes preserve expl
   expect(
     mergeCrewAppearance({ outfit: "engineer" }, { outfit: "scientist" }).hair,
   ).toBeUndefined();
+});
+
+test("omitted face shapes keep classic body defaults, explicit shapes survive body and uniform changes", () => {
+  expect(resolveCrewAppearance({ bodyType: "male" }).faceVariant).toBe(
+    "m_classic",
+  );
+  expect(resolveCrewAppearance({ bodyType: "female" }).faceVariant).toBe(
+    "f_classic",
+  );
+  expect(
+    resolveCrewAppearance({ bodyType: "female", faceVariant: "m_bold" })
+      .faceVariant,
+  ).toBe("m_bold");
+  expect(() =>
+    resolveCrewAppearance({ faceVariant: "missing" as never }),
+  ).toThrow("Unknown crew face");
 });

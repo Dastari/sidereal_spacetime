@@ -4,6 +4,7 @@ import {
   CHARACTER_FACE_DETAILS,
   CHARACTER_FACIAL_HAIR,
   CHARACTER_FACE_AGES,
+  CHARACTER_FACE_VARIANTS,
 } from "@sidereal/content/appearance";
 import {
   resolveCrewAppearance,
@@ -105,6 +106,7 @@ test("each face selector reaches every persisted option and wraps without alteri
     ["faceDetail", CHARACTER_FACE_DETAILS],
     ["facialHair", CHARACTER_FACIAL_HAIR],
     ["faceAge", CHARACTER_FACE_AGES],
+    ["faceVariant", CHARACTER_FACE_VARIANTS],
   ] as const) {
     const initial = resolveCrewAppearance(appearance())[key];
     const observed = new Set<string>();
@@ -165,5 +167,55 @@ test.each([180, 250, 280, 444, 640])(
     expect(visible.some((hit) => hit.id === lastId)).toBe(true);
     click(lastId);
     expect(change).toHaveBeenLastCalledWith({ hair: HAIR_COLORS.at(-1)![1] });
+  },
+);
+
+test("direct hairstyle pages expose the whole catalogue on either body without resetting a saved selection", () => {
+  const f = fixture();
+  for (const body of ["male", "female"]) {
+    if (resolveCrewAppearance(f.appearance()).bodyType !== body) {
+      f.draw();
+      f.click("crew-bodyType");
+    }
+    const seen = new Set<string>();
+    for (let page = 0; page < 5; page++) {
+      f.draw();
+      for (const hit of f.ui.hits.filter((hit) =>
+        hit.id.startsWith("crew-hair-choice-"),
+      )) {
+        f.click(hit.id);
+        seen.add(f.appearance().hairStyle!);
+        expect(resolveCrewAppearance(f.appearance()).bodyType).toBe(body);
+      }
+      f.click("crew-hair-next");
+    }
+    expect(seen.size).toBe(38);
+    const selected = f.appearance().hairStyle;
+    f.draw();
+    f.click("crew-bodyType");
+    expect(f.appearance().hairStyle).toBe(selected);
+  }
+});
+
+test.each(["skin", "hair", "eyes"] as const)(
+  "custom %s colour accepts complete RGB, retains partial drafts and follows later swatch changes",
+  (role) => {
+    const f = fixture();
+    f.draw();
+    const edit = () =>
+      f.ui.hits.find((hit) => hit.id === `crew-${role}-custom`)!.edit!;
+    edit().change("#12");
+    f.draw();
+    expect(edit().value).toBe("#12");
+    expect(f.change).not.toHaveBeenCalled();
+    edit().change("#12xz56");
+    expect(f.change).not.toHaveBeenCalled();
+    edit().change("#12AbEF");
+    f.draw();
+    expect(f.appearance()[role]).toBe("#12abef");
+    expect(edit().value).toBe("#12AbEF");
+    f.click(`crew-${role}-color-0`);
+    f.draw();
+    expect(edit().value).toBe(f.appearance()[role]);
   },
 );

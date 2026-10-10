@@ -257,9 +257,16 @@ export function crewStudyHair(
     braids: ["braids", "braids"],
   };
   if (style === "none") return undefined;
+  if (style?.startsWith("hair.") || style?.startsWith("groom.")) {
+    if (!CREW_STUDY.parts[style])
+      throw new Error(`Unknown crew hairstyle: ${style}`);
+    return style;
+  }
+  if (style !== undefined && !Object.hasOwn(styles, style))
+    throw new Error(`Unknown crew hairstyle: ${style}`);
   // Role defaults never replace an explicitly saved personal hairstyle.
   if (defaultRole === "scientist" || style === "scientist")
     return female ? "groom.twin_puffs" : "groom.fluffy_curls";
   if (female && defaultRole === "marine") return "groom.twin_tails";
-  return `hair.${(styles[style ?? "swept"] ?? styles.swept)[female ? 1 : 0]}`;
+  return `hair.${styles[style ?? "swept"][female ? 1 : 0]}`;
 }
