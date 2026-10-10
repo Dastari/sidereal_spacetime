@@ -64,6 +64,39 @@ test("global-only capture uses separate buffers and restores lights, shadows and
   engine.dispose();
 });
 
+test("capture exceptions restore receiver state before another pass can run", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const helper = new TransmissionHelper({}, scene),
+    target = helper.getOpaqueTarget()! as RenderTargetTexture;
+  const mesh = CreateBox("receiver", {}, scene);
+  mesh.material = new PBRMaterial("main", scene);
+  mesh.receiveShadows = true;
+  const global = new HemisphericLight("global", Vector3.Up(), scene);
+  new PointLight("local", Vector3.Zero(), scene);
+  target.renderList = [mesh];
+  const originalLights = mesh.lightSources.slice();
+  target.render = () => {
+    target.onBeforeBindObservable.notifyObservers(target);
+    expect(mesh.receiveShadows).toBe(false);
+    throw new Error("capture failed");
+  };
+  const guard = maintainSceneTransmission(
+    scene,
+    () => ({ captureGlobalsOnly: true, captureOnMotion: false }),
+    () => [global],
+  );
+  guard.repair();
+  expect(() => target.render()).toThrow("capture failed");
+  expect(mesh.receiveShadows).toBe(true);
+  expect(mesh.lightSources.map((light) => light.uniqueId)).toEqual(
+    originalLights.map((light) => light.uniqueId),
+  );
+  guard.dispose();
+  scene.dispose();
+  engine.dispose();
+});
+
 test("motion experiment wakes on camera, crew/door transforms and content; default/off retains stock cadence", () => {
   const engine = new NullEngine(),
     scene = new Scene(engine);
