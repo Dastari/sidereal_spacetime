@@ -281,6 +281,7 @@ function glassFixture() {
   target.lodGenerationOffset = -4;
   const glass = box("glass");
   const material = glass.material as PBRMaterial;
+  material.roughness = 0.05;
   material.subSurface.isRefractionEnabled = true;
   material.subSurface.volumeIndexOfRefraction = 1;
   material.subSurface.refractionTexture = target;
@@ -315,13 +316,13 @@ test("captures only opaque boxes overlapping conservative thin-glass samples, pr
   expect(filter(0, [behind, unrelated], 2)).toEqual([unrelated]);
 });
 
-test("retains the full frustum list for unknown/blurred/near-plane/wrapped glass and exceptional opaque bounds", () => {
+test("retains the full frustum list for unknown/near-plane/wrapped glass and exceptional opaque bounds", () => {
   const { box, filter, glass, material, target, camera, scene } =
     glassFixture();
   const far = box("outside footprint", 4);
-  material.subSurface.volumeIndexOfRefraction = 1.5;
+  material.roughness = null;
   expect(filter(0, [far], 1)).toEqual([far]);
-  material.subSurface.volumeIndexOfRefraction = 1;
+  material.roughness = 0.05;
   material.subSurface.useThicknessAsDepth = true;
   expect(filter(0, [far], 1)).toEqual([far]);
   material.subSurface.useThicknessAsDepth = false;
@@ -345,4 +346,20 @@ test("retains the full frustum list for unknown/blurred/near-plane/wrapped glass
   target.activeCamera = camera;
   material.subSurface.refractionTexture = null;
   expect(filter(0, [far], 1)).toEqual([far]);
+});
+
+test("mip support grows with roughness and curved normals keep the original list", () => {
+  const { box, material, glass, filter } = glassFixture();
+  const outside = box("outside base-level samples", 3);
+  expect(filter(0, [outside], 1)).toEqual([]);
+  material.subSurface.volumeIndexOfRefraction = 1.5;
+  material.roughness = 1;
+  expect(filter(0, [outside], 1)).toEqual([outside]);
+  material.roughness = 0.05;
+  const normals = glass.getVerticesData("normal")!;
+  const indices = glass.getIndices()!;
+  const changed = Array.from(normals);
+  changed[indices[0] * 3] += 0.01;
+  glass.setVerticesData("normal", changed);
+  expect(filter(0, [outside], 1)).toEqual([outside]);
 });

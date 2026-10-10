@@ -1,4 +1,4 @@
-import type { Material } from "@babylonjs/core/Materials/material";
+import { Material } from "@babylonjs/core/Materials/material";
 import type { MaterialPluginManager } from "@babylonjs/core/Materials/materialPluginManager";
 import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -7,6 +7,7 @@ import type { Plane } from "@babylonjs/core/Maths/math.plane";
 import { Frustum } from "@babylonjs/core/Maths/math.frustum";
 import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
+import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
 import { TemporalInstanceAttributes } from "./temporal-instance-attributes";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { PBRMetallicRoughnessMaterial } from "@babylonjs/core/Materials/PBR/pbrMetallicRoughnessMaterial";
@@ -177,13 +178,42 @@ function projectedBox(
   return result;
 }
 
-function thinGlassDepth(
-  material: Material | null,
+function flatNormals(mesh: AbstractMesh): boolean {
+  const normals = mesh.getVerticesData(VertexBuffer.NormalKind);
+  const indices = mesh.getIndices();
+  if (!normals || !indices || indices.length % 3) return false;
+  for (let i = 0; i < indices.length; i += 3) {
+    const start = indices[i] * 3;
+    if (
+      !(
+        normals[start] ** 2 +
+          normals[start + 1] ** 2 +
+          normals[start + 2] ** 2 >
+        0
+      )
+    )
+      return false;
+    for (let axis = 0; axis < 3; axis++) {
+      const n = normals[indices[i] * 3 + axis];
+      if (
+        !Number.isFinite(n) ||
+        n !== normals[indices[i + 1] * 3 + axis] ||
+        n !== normals[indices[i + 2] * 3 + axis]
+      )
+        return false;
+    }
+  }
+  return true;
+}
+
+function thinGlassSampling(
+  mesh: AbstractMesh,
   target: RenderTargetTexture,
-): number | null {
-  // glTF thin surfaces use volume IOR 1: the pinned shader mixes refraction
-  // roughness to zero, so every sample uses mip 0 even with specular AA. Unknown
-  // volume/blur modes fail open rather than clipping their sampling footprint.
+): { depth: number; texels: number } | null {
+  const material = mesh.material;
+  // Flat per-triangle normals have zero normal derivatives, including the
+  // extrapolated helper lanes at an edge. This bounds specular-AA roughness
+  // without disabling it. Curved/normal-mapped or unknown surfaces fail open.
   if (material?.constructor !== PBRMaterial) return null;
   const pbr = material as PBRMaterial,
     sub = pbr.subSurface;
@@ -191,9 +221,21 @@ function thinGlassDepth(
     !sub.isRefractionEnabled ||
     sub.refractionTexture !== target ||
     sub.useThicknessAsDepth ||
-    !(sub.volumeIndexOfRefraction > 0 && sub.volumeIndexOfRefraction <= 1) ||
+    !flatNormals(mesh) ||
+    pbr.fillMode !== Material.TriangleFillMode ||
+    pbr.bumpTexture ||
+    pbr.anisotropy.isEnabled ||
+    pbr.detailMap.isEnabled ||
+    pbr.metallicTexture ||
+    pbr.microSurfaceTexture ||
+    pbr.reflectivityTexture ||
+    !(pbr.roughness !== null && pbr.roughness >= 0 && pbr.roughness <= 1) ||
     target.isCube ||
     target.constructor !== RenderTargetTexture ||
+    target.getRefractionTextureMatrix !==
+      RenderTargetTexture.prototype.getRefractionTextureMatrix ||
+    target.getReflectionTextureMatrix !==
+      RenderTargetTexture.prototype.getReflectionTextureMatrix ||
     target.coordinatesMode !== Texture.PROJECTION_MODE ||
     target.lodLevelInAlpha ||
     !(target.lodGenerationScale > 0) ||
@@ -205,7 +247,27 @@ function thinGlassDepth(
   // pbrSubSurfaceConfiguration.bindForSubMesh uses depth || 1. Refract's
   // normalized direction has length <=1, including total internal reflection.
   const depth = (target as RenderTargetTexture & { depth?: number }).depth || 1;
-  return Number.isFinite(depth) ? Math.abs(depth) : null;
+  const ior =
+    sub.maximumThickness !== sub.minimumThickness
+      ? sub.volumeIndexOfRefraction
+      : sub.indexOfRefraction;
+  if (!Number.isFinite(depth) || !Number.isFinite(ior) || ior <= 0) return null;
+  // Pinned pbrBlockSubSurface/pbrIBLFunctions: alphaG=r²+0.0005, then
+  // blend toward zero using the effective IOR. Keep the full support of both
+  // trilinear mip levels, including each mip's box reduction and bilinear taps.
+  const alpha =
+    (pbr.roughness! ** 2 + 0.0005) *
+    (1 - Math.min(1, Math.max(0, 3 / ior - 2)));
+  const width = target.getSize().width;
+  const rawLod = target.linearSpecularLOD
+    ? Math.log2(width) * alpha
+    : Math.log2(width * alpha);
+  const lod = Math.max(
+    0,
+    rawLod * target.lodGenerationScale + target.lodGenerationOffset,
+  );
+  const texels = 1.5 * 2 ** Math.ceil(lod) + 0.5;
+  return Number.isFinite(texels) ? { depth: Math.abs(depth), texels } : null;
 }
 
 function glassSampleBoxes(
@@ -232,8 +294,6 @@ function glassSampleBoxes(
   const boxes: ScreenBox[] = [],
     size = target.getSize();
   if (!(size.width > 0 && size.height > 0)) return null;
-  const paddingX = 4 / size.width,
-    paddingY = 4 / size.height;
   for (const mesh of candidates) {
     if (
       !mesh.isEnabled() ||
@@ -243,17 +303,17 @@ function glassSampleBoxes(
       !touchesFrustum(mesh, scene.frustumPlanes)
     )
       continue;
-    const depth = thinGlassDepth(mesh.material, target);
-    if (depth === null) return null;
-    const box = projectedBox(mesh, transform, depth);
+    const sampling = thinGlassSampling(mesh, target);
+    if (!sampling) return null;
+    const box = projectedBox(mesh, transform, sampling.depth);
     if (!box) return null;
-    // Two base-level texels include bilinear/MSAA coverage and rounding. Mips
+    // The bound includes mip filtering, MSAA coverage and rounding. Mips
     // are still generated unchanged. Repeat/mirror wrap across an edge can sample
     // the opposite edge, so retain the full list in that case.
-    box.minX -= paddingX;
-    box.maxX += paddingX;
-    box.minY -= paddingY;
-    box.maxY += paddingY;
+    box.minX -= (2 * sampling.texels) / size.width;
+    box.maxX += (2 * sampling.texels) / size.width;
+    box.minY -= (2 * sampling.texels) / size.height;
+    box.maxY += (2 * sampling.texels) / size.height;
     if (
       (target.wrapU !== Texture.CLAMP_ADDRESSMODE &&
         (box.minX < -1 || box.maxX > 1)) ||
