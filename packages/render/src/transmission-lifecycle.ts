@@ -246,8 +246,16 @@ export function maintainSceneTransmission(
       this: RenderTargetTexture,
       ...args
     ) {
+      // Babylon's readiness probe itself emits AfterUnbind. Validate before
+      // entering render, never from that notification (which would recurse).
+      const validated =
+        motionEnabled && !capturedReady
+          ? next.isReadyForRendering()
+          : capturedReady;
       try {
-        return previousRender.apply(this, args);
+        const result = previousRender.apply(this, args);
+        if (motionEnabled) capturedReady = validated;
+        return result;
       } finally {
         restorePass?.();
       }
@@ -277,7 +285,8 @@ export function maintainSceneTransmission(
         capturedReady = false;
         next.resetRefreshCounter();
       }
-      if (!enabled) return previousShouldRender.call(this);
+      if (!enabled || scene.getEngine().snapshotRendering)
+        return previousShouldRender.call(this);
       const motion = captureMotionState(scene, next);
       motion.push(experiments?.().captureGlobalsOnly);
       const changed =
@@ -293,10 +302,6 @@ export function maintainSceneTransmission(
       return previousShouldRender.call(this);
     };
     next._shouldRender = shouldRender;
-    const rendered = next.onAfterUnbindObservable.add(() => {
-      if (motionEnabled && !capturedReady)
-        capturedReady = next.isReadyForRendering();
-    });
     // The helper renders its capture at environment intensity 1 and restores
     // the scene afterwards. Both passes share each material's uniform buffer,
     // and a frozen material is rewritten only by the first pass that sees a
@@ -322,7 +327,6 @@ export function maintainSceneTransmission(
         next.getCustomRenderList = previous;
       next.onBeforeBindObservable.remove(remember);
       next.onBeforeBindObservable.remove(retain);
-      next.onAfterUnbindObservable.remove(rendered);
       if (next._shouldRender === shouldRender)
         next._shouldRender = previousShouldRender;
     };

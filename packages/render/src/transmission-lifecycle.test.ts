@@ -14,6 +14,27 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { PointLight } from "@babylonjs/core/Lights/pointLight";
 
+test("real RTT readiness notifications cannot recurse into readiness in motion mode", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  new ArcRotateCamera("camera", 1, 1, 20, Vector3.Zero(), scene);
+  const helper = new TransmissionHelper({}, scene),
+    target = helper.getOpaqueTarget()! as RenderTargetTexture;
+  target.renderList = [];
+  const guard = maintainSceneTransmission(scene, () => ({
+    captureOnMotion: true,
+    captureGlobalsOnly: false,
+  }));
+  guard.repair();
+  expect(target._shouldRender()).toBe(true);
+  expect(target.isReadyForRendering()).toBe(true);
+  expect(() => target.render()).not.toThrow();
+  expect(target._shouldRender()).toBe(false);
+  guard.dispose();
+  scene.dispose();
+  engine.dispose();
+});
+
 test("global-only capture uses separate buffers and restores lights, shadows and prior pass material", () => {
   const engine = new NullEngine(),
     scene = new Scene(engine);
@@ -110,12 +131,13 @@ test("motion experiment wakes on camera, crew/door transforms and content; defau
   const flags = { captureOnMotion: false, captureGlobalsOnly: false };
   const original = target._shouldRender;
   vi.spyOn(target, "isReadyForRendering").mockReturnValue(true);
-  const guard = maintainSceneTransmission(scene, () => flags);
-  guard.repair();
-  const captured = () => {
+  target.render = () => {
     target.onBeforeBindObservable.notifyObservers(target);
     target.onAfterUnbindObservable.notifyObservers(target);
   };
+  const guard = maintainSceneTransmission(scene, () => flags);
+  guard.repair();
+  const captured = () => target.render();
   expect(target._shouldRender()).toBe(true);
   expect(target._shouldRender()).toBe(true);
   flags.captureOnMotion = true;
