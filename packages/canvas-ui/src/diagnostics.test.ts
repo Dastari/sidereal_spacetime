@@ -201,7 +201,15 @@ it("scrolls every new visual option into reach on compact screens without offscr
   const seen = new Set<string>();
   for (let step = 0; step < 12; step++) {
     hits.clear();
+    text.mockClear();
     panel.draw();
+    const resetHit = hits.get("diagnostics-reset");
+    if (resetHit) {
+      const note = text.mock.calls.find(([value]) =>
+        String(value).startsWith("GI:"),
+      );
+      expect(note?.[2]).toBeGreaterThan(resetHit.rect.y + resetHit.rect.h);
+    }
     for (const [id, hit] of hits) {
       if (
         id.startsWith("diagnostics-tab-") ||

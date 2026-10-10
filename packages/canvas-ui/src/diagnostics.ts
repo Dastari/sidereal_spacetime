@@ -466,7 +466,7 @@ export function createDiagnosticsUI(
                   )),
             },
           );
-        let y = featuresTop + 373;
+        let y = reset.y + reset.h + 13;
         for (const line of visualLines) {
           const count = Math.max(20, Math.floor(viewport.w / 5.8));
           const words = line.split(" ");
