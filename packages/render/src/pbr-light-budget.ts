@@ -4,6 +4,7 @@ import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Light } from "@babylonjs/core/Lights/light";
 import { ShadowLight } from "@babylonjs/core/Lights/shadowLight";
 import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
+import { SubMesh } from "@babylonjs/core/Meshes/subMesh";
 import { PBRBaseMaterial } from "@babylonjs/core/Materials/PBR/pbrBaseMaterial";
 import { Material } from "@babylonjs/core/Materials/material";
 import { MaterialPluginEvent } from "@babylonjs/core/Materials/materialPluginEvent";
@@ -12,6 +13,18 @@ import { selectLocalLights, type LightBudgetPoint } from "./local-light-budget";
 
 /** A shader contribution budget, separate from Graphics' enabled local lamps. */
 export const GAME_PBR_LIGHT_LIMIT = 8;
+/** Updates a reordered prefix may wait for its shader. A program that never
+ * resolves then falls back to Babylon's own hot swap instead of starving. */
+export const PBR_LIGHT_LAYOUT_WAIT = 600;
+/** Updates a compiled probe is retained for the receiver's own draw to adopt. */
+const LAYOUT_PROBE_HOLD = 120;
+type LayoutProbe = { material: Material; source: SubMesh; probe: SubMesh };
+type PendingLayout = {
+  key: string;
+  probes: LayoutProbe[];
+  waited: number;
+  committed: boolean;
+};
 type BudgetPbrMaterial = PBRBaseMaterial & { maxSimultaneousLights: number };
 function isBudgetMaterial(
   material: Material | null,
@@ -146,6 +159,83 @@ export function createPbrLightBudget(scene: Scene) {
   >();
   let disposed = false;
   const limit = pbrLightLimit(pbrLightCapabilities(scene.getEngine()));
+  // Babylon keeps drawing a receiver with its previous effect while a changed
+  // light layout compiles (WebGL2 links asynchronously), yet binds the new
+  // lights to that effect by slot. A point lamp in a spot slot is then read
+  // through the wrong block layout, or its smaller buffer drops the draw. A
+  // reordered prefix therefore compiles through detached submeshes first.
+  const layouts = new Map<AbstractMesh, PendingLayout>();
+  const releaseLayout = (mesh: AbstractMesh) => {
+    for (const { probe } of layouts.get(mesh)?.probes ?? [])
+      probe.resetDrawCache(undefined, true);
+    layouts.delete(mesh);
+  };
+  const layoutReady = (
+    mesh: AbstractMesh,
+    next: readonly Light[],
+    visible: number,
+  ) => {
+    const key = next
+      .slice(0, visible)
+      .map((light) => light.uniqueId)
+      .join();
+    let layout = layouts.get(mesh);
+    if (layout?.key !== key || layout.committed) {
+      releaseLayout(mesh);
+      layout = { key, probes: [], waited: 0, committed: false };
+      layouts.set(mesh, layout);
+      const seen = new Set<Material>();
+      for (const source of mesh.subMeshes ?? []) {
+        const material = source.getMaterial() as
+          (Material & { disableLighting?: boolean }) | null;
+        if (!material || seen.has(material) || material.disableLighting)
+          continue;
+        seen.add(material);
+        layout.probes.push({
+          material,
+          source,
+          // Detached: never listed by the mesh, never drawn.
+          probe: new SubMesh(
+            source.materialIndex,
+            0,
+            0,
+            0,
+            0,
+            mesh,
+            undefined,
+            false,
+            false,
+          ),
+        });
+      }
+    }
+    if (++layout.waited > PBR_LIGHT_LAYOUT_WAIT) return true;
+    const lights = mesh.lightSources,
+      current = [...lights];
+    lights.splice(0, lights.length, ...next);
+    let ready = true;
+    try {
+      for (const { material, source, probe } of layout.probes) {
+        const effect = probe.effect;
+        if (effect) {
+          ready &&=
+            effect.isReady() ||
+            (!!effect.getCompilationError() && effect.allFallbacksProcessed());
+          continue;
+        }
+        const instances = source._drawWrappers.some(
+          (wrapper) => wrapper?._wasPreviouslyUsingInstances,
+        );
+        if (!material.isReadyForSubMesh(mesh, probe, instances)) ready = false;
+      }
+    } catch {
+      // An unprobeable material keeps Babylon's stock behaviour.
+      ready = true;
+    } finally {
+      lights.splice(0, lights.length, ...current);
+    }
+    return ready;
+  };
   const guards = new Map<Material, () => void>();
   const pendingCaps = new Set<BudgetPbrMaterial>();
   const guard = (material: Material) => {
@@ -301,6 +391,8 @@ export function createPbrLightBudget(scene: Scene) {
             mesh instanceof InstancedMesh ? mesh.sourceMesh : mesh,
           ),
       );
+      for (const mesh of layouts.keys())
+        if (!owners.has(mesh)) releaseLayout(mesh);
       for (const mesh of owners) {
         const boundMaterials =
           mesh.material instanceof MultiMaterial
@@ -328,8 +420,8 @@ export function createPbrLightBudget(scene: Scene) {
             light.canAffectMesh(mesh),
           ),
           meshLocals = locals.filter((light) => light.canAffectMesh(mesh));
-        const incumbents =
-          previous.get(mesh) ?? new Map<number, ReadonlySet<string>>();
+        // A copy: a deferred reorder must keep its accepted incumbents.
+        const incumbents = new Map(previous.get(mesh));
         const admitted = new Set<string>(),
           admittedLights: Light[] = [];
         // A multi-material's smaller cap needs its own relevant prefix. Build
@@ -364,7 +456,6 @@ export function createPbrLightBudget(scene: Scene) {
         }
         for (const cap of incumbents.keys())
           if (!contributionCaps.includes(cap)) incumbents.delete(cap);
-        previous.set(mesh, incumbents);
         const next = [
           ...meshGlobals,
           ...admittedLights,
@@ -382,13 +473,44 @@ export function createPbrLightBudget(scene: Scene) {
           !capChanged &&
           old.length === next.length &&
           old.every((light, i) => light === next[i])
-        )
+        ) {
+          previous.set(mesh, incumbents);
+          const layout = layouts.get(mesh);
+          if (
+            layout &&
+            (++layout.waited > LAYOUT_PROBE_HOLD ||
+              layout.probes.every(({ source, probe }) =>
+                source._drawWrappers.some(
+                  (wrapper) => wrapper?.effect === probe.effect,
+                ),
+              ))
+          )
+            releaseLayout(mesh);
           continue;
+        }
         const effectiveChanged =
           capChanged ||
           old.slice(0, visibleLimit).length !==
             next.slice(0, visibleLimit).length ||
           old.slice(0, visibleLimit).some((light, i) => light !== next[i]);
+        // Only a reorder of the receiver's own lights can wait, and only while
+        // a linked shader is drawing them. A changed cap needs its new shader
+        // whatever order those lights are bound in.
+        if (
+          effectiveChanged &&
+          !capChanged &&
+          old.length === next.length &&
+          next.every((light) => old.includes(light)) &&
+          mesh.subMeshes?.some((sub) =>
+            sub._drawWrappers.some((wrapper) => wrapper?.effect?.isReady()),
+          )
+        ) {
+          if (!layoutReady(mesh, next, visibleLimit)) continue;
+          const layout = layouts.get(mesh)!;
+          layout.committed = true;
+          layout.waited = 0;
+        }
+        previous.set(mesh, incumbents);
         old.splice(0, old.length, ...next);
         if (effectiveChanged) {
           mesh._markSubMeshesAsLightDirty();
@@ -401,6 +523,7 @@ export function createPbrLightBudget(scene: Scene) {
       if (disposed) return;
       disposed = true;
       activeControllers.delete(scene);
+      for (const mesh of [...layouts.keys()]) releaseLayout(mesh);
       scene.onNewMaterialAddedObservable.remove(newMaterial);
       Material.OnEventObservable.remove(createdMaterial);
       for (const restore of [...guards.values()]) restore();
