@@ -201,11 +201,6 @@ export async function shipAccessSmoke(c: any) {
       await assert.rejects(press(`${name}-outside-button`));
       await walk(panel(`${name}-chamber-outer-button`).front);
       if (name === "personnel") {
-        await assert.rejects(
-          press(`${name}-chamber-outer-button`),
-          /pressure suit, helmet and EVA jetpack/,
-        );
-        assert.equal(device(controller).state, "pressurised");
         await c.reducers.wearPrefabSmokeEvaSuit({});
         await wait(
           () =>
@@ -218,7 +213,7 @@ export async function shipAccessSmoke(c: any) {
       }
       const center = name === "personnel" ? 3 : -7;
       // A suited crew body holds the inner leaf. Becoming unsuited and moving
-      // into the chamber cannot turn pending-close into an unsafe vacuum commit.
+      // into the chamber must not cancel the physical pending-close retry.
       if (name === "personnel") await crew("spawn", -3, center);
       await press(`${name}-chamber-outer-button`);
       await wait(
@@ -234,12 +229,11 @@ export async function shipAccessSmoke(c: any) {
         await pause(3500);
         assert.equal(
           device(outer).open,
-          false,
-          "late unsuited entrant prevents vacuum while closure is pending",
+          true,
+          "late unsuited occupant does not block vacuum",
         );
-        capture("personnel-late-unsuited-denied");
+        capture("personnel-late-unsuited-allowed");
         await crew("clear");
-        await timedOpening(name);
       } else {
         // Remove the caller's helmet through the real inventory transaction during
         // the countdown, including revision/replay checks and actual pocket fit.
@@ -274,10 +268,10 @@ export async function shipAccessSmoke(c: any) {
         await pause(3500);
         assert.equal(
           device(outer).open,
-          false,
-          "equipment loss prevents delayed vacuum commit",
+          true,
+          "equipment loss does not cancel physical door opening",
         );
-        capture("cargo-countdown-suit-loss-denied");
+        capture("cargo-countdown-suit-loss-allowed");
         const revision = state().revision;
         await c.reducers.moveInventoryItem(command);
         assert.equal(

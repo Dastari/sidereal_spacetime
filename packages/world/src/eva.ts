@@ -58,7 +58,6 @@ import {
   type EvaSuitIntent,
   type EvaSuitMode,
 } from "@sidereal/sim/eva-suit";
-import { evaSuitCheck, evaSuitMessage } from "@sidereal/content/crew-wardrobe";
 import { characterCarriedMassKg } from "./construction-flight-input";
 import * as auth from "./auth";
 import { consumeInputControl } from "./input-control";
@@ -92,8 +91,6 @@ const EVA_BODIES_PER_TICK = 4096;
 const STALE_CYCLES_PER_TICK = 64;
 /** Walking speed used for the step-out velocity (m/s), as on deck. */
 const STEP_OUT_SPEED = 1.4;
-/** Legacy re-entry (hatches without logic): reach from the hatch's outside point (m). */
-const LEGACY_HATCH_REACH_M = 2.5;
 /** Spacing to other crew when stepping aboard at the doorway (m). */
 const BOARD_SPACING_M = 0.6;
 
@@ -280,25 +277,6 @@ export const isCyclingAirlock = (
 
 // ------------------------------------------------------------------ suit
 
-/**
- * The suit rule for a character: the refusal message when the EVA pressure suit, helmet or
- * jetpack is not equipped, else "". Uses only equipped items (one per slot).
- */
-export function evaSuitRefusal(
-  ctx: Pick<Context, "db">,
-  characterId: string,
-): string {
-  const equipped: { slot: string; id: string }[] = [];
-  let count = 0;
-  for (const item of ctx.db.inventoryItem.by_character.filter(characterId)) {
-    if (++count > 512) break;
-    if (item.equipmentSlot)
-      equipped.push({ slot: item.equipmentSlot, id: item.definitionId });
-  }
-  const check = evaSuitCheck(equipped);
-  return check.ready ? "" : evaSuitMessage(check.missing);
-}
-
 /** Mass of the suited body (body, suit and everything carried), kg. */
 function suitedMassKg(ctx: Pick<Context, "db">, characterId: string) {
   try {
@@ -383,77 +361,14 @@ export function cycleAirlock(
   ctx: Context,
   args: { shipId: string; airlockId: string },
 ) {
-  const actor = actorOf(ctx);
-  const binding = shipPrefabBinding(ctx.db, args.shipId);
-  const entry = binding?.eva.entries.find((e) => e.id === args.airlockId);
-  if (!binding || !entry) throw new SenderError("No exterior airlock there");
-  if (!legacyEntry(binding, entry.id))
-    throw new SenderError("Use the airlock's wall buttons (E)");
-  legacyEnter(ctx, actor, binding, entry);
-}
-
-/**
- * An exterior door with no ship-logic actuator (ships without logic: Wren r2-r6 and the other
- * developer prefabs). Such a door never opens, so nobody can walk out through it; a spacewalker
- * who is outside anyway (a milestone-1 EVA body carried over the same-plane upgrade) must never be
- * stranded, so it keeps the legacy way back in: E at the hatch.
- */
-export function legacyEntry(
-  binding: NonNullable<ReturnType<typeof shipPrefabBinding>>,
-  entryId: string,
-) {
-  return !binding.logic?.doors.some((d) => d.doorId === entryId);
-}
-
-/** Legacy re-entry at a hatch without logic: in reach, alive, entry allowed, a free deck spot. */
-function legacyEnter(
-  ctx: Context,
-  actor: CharacterRow,
-  binding: NonNullable<ReturnType<typeof shipPrefabBinding>>,
-  entry: EvaShipModel["entries"][number],
-) {
-  const body = ctx.db.evaBody.characterId.find(actor.id);
-  if (!body) throw new SenderError("Only outside the ship");
-  const motion = ctx.db.shipWorldMotion.shipId.find(binding.shipId);
-  if (!motion || motion.systemId !== body.systemId)
-    throw new SenderError("Move closer to the airlock");
-  const local: [number, number] =
-    inShipFrame(body) && body.anchorShipId === binding.shipId
-      ? [body.localX, body.localY]
-      : worldToShip(poseOf(motion), [body.x, body.y]);
+  actorOf(ctx);
   if (
-    Math.hypot(local[0] - entry.outside[0], local[1] - entry.outside[1]) >
-    LEGACY_HATCH_REACH_M
+    !shipPrefabBinding(ctx.db, args.shipId)?.eva.entries.some(
+      (e) => e.id === args.airlockId,
+    )
   )
-    throw new SenderError("Move closer to the airlock");
-  if (
-    !evaEntryAllowed(ctx, actor, binding.shipId, { kind: "door", id: entry.id })
-  )
-    throw new SenderError("The airlock does not open for you");
-  const access = ownedDeckAccess(ctx, actor, binding.shipId)!;
-  const spot = freeDeckSpot(
-    ctx,
-    { ...actor, shipId: binding.shipId },
-    access.instance,
-    access.deck,
-    {
-      characterId: actor.id,
-      visitId: body.visitId,
-      instanceId: binding.shipId,
-      deckId: access.deck.id,
-      returnShipId: "",
-      returnX: 0,
-      returnY: 0,
-      revision: 0n,
-    },
-    entry.inside,
-  );
-  if (!spot) throw new SenderError("No room inside the airlock");
-  commitAboard(ctx, actor, body, binding.shipId, access.deck.id, [
-    spot.x,
-    spot.y,
-  ]);
-  zeroInput(ctx, actor.id);
+    throw new SenderError("No exterior airlock there");
+  throw new SenderError("Open the door and move through it");
 }
 
 /** M: mag boots work only inside a ship (space-suit boots, zero gravity); never on the hull. */
@@ -541,8 +456,7 @@ export function tryStepOut(
   );
   const motion = ctx.db.shipWorldMotion.shipId.find(actor.shipId);
   if (!entry || !motion) return false;
-  // Vacuum: no suit, no step outside (the hatch line stays a wall for the walker).
-  if (evaSuitRefusal(ctx, actor.id)) return false;
+  // Physical crossing is independent of protective equipment. Exposure damage is deferred.
   const pose = poseOf(motion);
   const local = {
     x: actor.localX,

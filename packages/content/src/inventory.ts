@@ -5,6 +5,7 @@ import {
 } from "./character-components";
 import {
   CREW_WARDROBE,
+  LEGACY_CREW_WARDROBE,
   CREW_WARDROBE_KITS,
   WARDROBE_DEFINITION_PREFIX,
   crewWardrobeIconUrl,
@@ -210,6 +211,10 @@ export const CREW_WARDROBE_DEFINITIONS: readonly InventoryDefinition[] =
       : {}),
   }));
 /** The 2026-09-08 laboratory items (live instances exist; ids and footprints stay valid). */
+export const LEGACY_CREW_WARDROBE_DEFINITIONS =
+  CREW_WARDROBE_DEFINITIONS.filter((d) =>
+    LEGACY_CREW_WARDROBE.some((w) => w.id === d.wardrobeId),
+  );
 const LAB_BASE_DEFINITIONS: readonly InventoryDefinition[] = [
   {
     id: "compact-pistol",

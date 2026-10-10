@@ -503,15 +503,16 @@ try {
       button.front,
     ))
       await walkNative(x, px, py);
-    // Unsuited, the inside button refuses to depressurise (vacuum needs the EVA suit).
-    const refusal = await x.reducers
-      .pressShipButton({ shipId: owner.shipId, deviceId: button.deviceId })
-      .then(
-        () => "",
-        (e: unknown) => String(e),
-      );
-    assert.match(refusal, /EVA needs a pressure suit/);
-    assert.equal(device("lock")?.state, "pressurised");
+    // Equipment does not intercept the real button. Crossing itself remains ordinary movement.
+    await x.reducers.pressShipButton({
+      shipId: owner.shipId,
+      deviceId: button.deviceId,
+    });
+    await wait(
+      () => !!device("door-outer")?.open,
+      "unsuited opening after upgrade",
+    );
+    assert.equal(device("lock")?.state, "vacuum");
     // r8: the suit locker and the stocked suit are within reach where the inside button is pressed.
     const expected = stocked[WREN_SUIT_LOCKER_SOCKET];
     const suitLocker = () =>
@@ -536,10 +537,19 @@ try {
       };
     }
     evidence.airlockAfterUpgrade = {
-      pressurised: true,
-      unsuitedRefused: true,
+      vacuum: true,
+      unsuitedOpeningAllowed: true,
       suitLockerReachableAtButton: !!expected && !!suitLocker(),
     };
+    await x.reducers.pressShipButton({
+      shipId: owner.shipId,
+      deviceId: button.deviceId,
+    });
+    await wait(
+      () =>
+        device("lock")?.state === "pressurised" && !!device("door-inner")?.open,
+      "return the physical inner door to its open state before walking to the helm",
+    );
   }
 
   // Take the helm and fly.

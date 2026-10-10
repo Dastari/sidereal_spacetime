@@ -3,12 +3,17 @@ import {
   CHARACTER_COMPONENT_SETS,
   type CharacterEquipmentSlot,
 } from "./character-components";
+import {
+  STUDY_WEARABLES,
+  STUDY_EQUIPMENT_KITS,
+  type StudyWearable,
+} from "./crew-study-equipment";
 
 /**
  * Wearable voxel-crew wardrobe items (r006 wardrobe, first revision). Each entry is the content side
  * of an inventory definition (`wardrobe-<id>`): ownership, slots and movement stay with the normal
  * inventory authority. The visual maps to an armour-v1 part + colourway, or (uniforms) to the body's
- * suit layer tint. Appearance grants no protection, oxygen or skill.
+ * suit layer tint. Ordinary appearance grants no protection, oxygen or skill; explicit equipment ratings describe protection only.
  */
 export type WardrobeSlot = CharacterEquipmentSlot;
 export const CREW_WARDROBE_REVISION = "r001";
@@ -33,12 +38,15 @@ export interface CrewWardrobeItem {
   maglock?: boolean;
   /**
    * Part of the EVA space suit (owner 2026-09-29: "you're going to need a backpack/spacesuit and
-   * helmet before you can exist in the vacuum of space"). Going outside needs `suit`, `helmet` and
-   * `pack` equipped; `boots` add the maglock. `evaSuitCheck` is the rule.
+   * helmet before you can exist in the vacuum of space"). Legacy protection needs `suit`, `helmet` and
+   * `pack`; modular rated coverage is additive. Neither rating blocks physical crossing.
    */
   eva?: "suit" | "helmet" | "pack" | "boots";
   /** Head-kit helmet id drawn for a helmet item (crew-heads.v1.json `helmets`). */
   helmet?: string;
+  study?: StudyWearable["study"];
+  pressureCoverage?: StudyWearable["pressureCoverage"];
+  iconUrl?: string;
 }
 
 /** The four department uniforms of the r006 wardrobe: role undersuit + department accent. */
@@ -170,7 +178,7 @@ function evaSuit(): CrewWardrobeItem[] {
   ];
 }
 
-export const CREW_WARDROBE: readonly CrewWardrobeItem[] = [
+export const LEGACY_CREW_WARDROBE: readonly CrewWardrobeItem[] = [
   ...UNIFORMS.map(uniform),
   ...TIERS.flatMap(([tier, colourway, parts]) =>
     Object.entries(parts).map(([slot, partId]) => {
@@ -190,6 +198,10 @@ export const CREW_WARDROBE: readonly CrewWardrobeItem[] = [
   ),
   ...evaSuit(),
 ];
+export const CREW_WARDROBE: readonly CrewWardrobeItem[] = [
+  ...LEGACY_CREW_WARDROBE,
+  ...STUDY_WEARABLES,
+];
 
 export const WARDROBE_DEFINITION_PREFIX = "wardrobe-";
 export function crewWardrobeItem(id: string): CrewWardrobeItem | undefined {
@@ -201,14 +213,14 @@ export function crewWardrobeItem(id: string): CrewWardrobeItem | undefined {
 
 /**
  * Maglock rule input: whether an equipped item (wardrobe id or inventory definition id) is a pair
- * of space-suit boots. Clothing boots, shoes and armour boots are not.
+ * of space-suit boots. Clothing boots and shoes are not. Explicit EVA-rated armour boots are.
  */
 export function isMaglockBoots(id: string | null | undefined): boolean {
   const item = id ? crewWardrobeItem(id) : undefined;
   return !!item?.maglock && item.slot === "boots";
 }
 
-/** The parts of the EVA suit needed to go outside (boots are optional: they add the maglock). */
+/** Protection requirements, independent of movement. Legacy integrated suits retain optional mag boots. */
 export const EVA_SUIT_REQUIRED = ["suit", "helmet", "pack"] as const;
 export type EvaSuitPart = (typeof EVA_SUIT_REQUIRED)[number];
 /**
@@ -219,10 +231,19 @@ export function evaSuitCheck(
   equipped: Iterable<{ slot: string; id: string }>,
 ): { ready: boolean; missing: EvaSuitPart[] } {
   const have = new Set<string>();
+  const coverage = new Set<string>();
   for (const e of equipped) {
     const item = crewWardrobeItem(e.id);
     if (item?.eva && item.slot === e.slot) have.add(item.eva);
+    if (item?.slot === e.slot)
+      for (const region of item.pressureCoverage ?? []) coverage.add(region);
   }
+  if (
+    ["torso", "arms", "legs", "hands", "feet"].every((region) =>
+      coverage.has(region),
+    )
+  )
+    have.add("suit");
   const missing = EVA_SUIT_REQUIRED.filter((p) => !have.has(p));
   return { ready: missing.length === 0, missing };
 }
@@ -231,14 +252,14 @@ export const EVA_SUIT_NAMES: Readonly<Record<EvaSuitPart, string>> = {
   helmet: "helmet",
   pack: "EVA jetpack",
 };
-/** "Put on an EVA pressure suit, helmet and EVA jetpack first" style message for the missing parts. */
+/** Informational protection status, never a movement or door-operation refusal. */
 export function evaSuitMessage(missing: readonly EvaSuitPart[]): string {
   const names = missing.map((m) => EVA_SUIT_NAMES[m]);
   const list =
     names.length <= 1
       ? names.join("")
       : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
-  return `EVA needs a ${list}: equip the EVA suit first`;
+  return `Protection incomplete: missing ${list}`;
 }
 
 /**
@@ -249,11 +270,11 @@ export function evaSuitMessage(missing: readonly EvaSuitPart[]): string {
  *   which already render through the r006 role mapping; helmets and visors use the head kit.
  */
 export const CREW_WARDROBE_KITS: Readonly<Record<string, readonly string[]>> = {
-  "uniforms-and-tiers": CREW_WARDROBE.filter((item) => !item.eva).map(
+  "uniforms-and-tiers": LEGACY_CREW_WARDROBE.filter((item) => !item.eva).map(
     (item) => `${WARDROBE_DEFINITION_PREFIX}${item.id}`,
   ),
-  /** The EVA space suit (pressure suit, helmet, jetpack, mag boots): needed to go outside. */
-  "eva-suit": CREW_WARDROBE.filter((item) => item.eva).map(
+  /** Legacy protection kit; never a condition for crossing into space. */
+  "eva-suit": LEGACY_CREW_WARDROBE.filter((item) => item.eva).map(
     (item) => `${WARDROBE_DEFINITION_PREFIX}${item.id}`,
   ),
   "role-sets": ["medic", "engineer", "pilot"].flatMap((set) =>
@@ -261,6 +282,7 @@ export const CREW_WARDROBE_KITS: Readonly<Record<string, readonly string[]>> = {
       (id) => `crew-${id}`,
     ),
   ),
+  ...STUDY_EQUIPMENT_KITS,
 };
 /** Everything the starter delivery grants (both kits). */
 export const CREW_WARDROBE_STARTER_DELIVERY: readonly string[] = [
@@ -270,5 +292,7 @@ export const CREW_WARDROBE_STARTER_DELIVERY: readonly string[] = [
 
 /** Inventory icon (rendered headless from the armour-v1 GLBs / the body suit layer). */
 export function crewWardrobeIconUrl(id: string): string {
+  const override = crewWardrobeItem(id)?.iconUrl;
+  if (override) return override;
   return `${CREW_WARDROBE_ASSET_BASE}/icons/${id}.png?revision=${CREW_WARDROBE_REVISION}`;
 }

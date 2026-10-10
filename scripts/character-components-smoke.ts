@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import type { DbConnection } from "../packages/net/src/generated";
-import { CREW_WARDROBE_DEFINITIONS } from "../packages/content/src/inventory";
+import { LEGACY_CREW_WARDROBE_DEFINITIONS } from "../packages/content/src/inventory";
 type Client = (
   token?: string,
 ) => Promise<{ connection: DbConnection; token: string }>;
@@ -147,7 +147,7 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
     await wait(
       () =>
         items().filter((i) => i.definitionId.startsWith("wardrobe-")).length ===
-        CREW_WARDROBE_DEFINITIONS.length,
+        LEGACY_CREW_WARDROBE_DEFINITIONS.length,
       "all equipment issued",
     );
     const ids = items()
@@ -187,7 +187,7 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
         operationId: crypto.randomUUID(),
       });
       // Every worn wardrobe piece (tier 1, then tier 2 replacing it, then uniforms).
-      for (const d of CREW_WARDROBE_DEFINITIONS.filter(
+      for (const d of LEGACY_CREW_WARDROBE_DEFINITIONS.filter(
         (d) => d.equipSlot && d.equipSlot !== "back",
       )) {
         const item = items().find((i) => i.definitionId === d.id)!;
@@ -278,7 +278,7 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
     );
     return {
       passed: true,
-      wardrobeItems: CREW_WARDROBE_DEFINITIONS.length,
+      wardrobeItems: LEGACY_CREW_WARDROBE_DEFINITIONS.length,
       bodyTypes: 2,
       mixedSlots: 7,
       privateOwnership: true,

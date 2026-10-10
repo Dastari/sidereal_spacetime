@@ -23,6 +23,7 @@ import {
   loadCrewFaceAtlas,
 } from "./crew-study-face";
 import { toneCrewEmissive } from "./voxel-crew-outfit";
+import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
 
 type Crew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 type Attachment = {
@@ -30,6 +31,7 @@ type Attachment = {
   covers: string[];
   recolor(colors: Record<string, string>): void;
   stow(on: boolean): void;
+  occlude(regions: ReadonlySet<string>): void;
   dispose(): void;
 };
 type Wanted = StudyPartRequest & { mode?: string; state?: string };
@@ -66,6 +68,19 @@ export function createStudyCrewOutfit(
   });
   const changed = () => {
     if (disposed) return;
+    // Owned clothing stays intact until covering equipment has actually loaded.
+    active
+      .get("uniform")
+      ?.occlude(
+        new Set(
+          [...active]
+            .filter(
+              ([slot]) =>
+                slot !== "uniform" && slot !== "hair" && slot !== "facial",
+            )
+            .flatMap(([, part]) => part.covers),
+        ),
+      );
     const covers = new Set([...active.values()].flatMap((part) => part.covers));
     crew.setStudyCoverage(covers);
     crew.setHiddenRegions(
@@ -166,6 +181,15 @@ export function createStudyCrewOutfit(
         covers.push(...(part.covers_by_mode?.[request.mode ?? "full"] ?? []));
         active.get(slot)?.dispose();
         const enabled = meshes.map((mesh) => mesh.isEnabled());
+        const garmentRegions =
+          slot === "uniform"
+            ? meshes.map((mesh) =>
+                mesh instanceof Mesh
+                  ? partitionCrewTriangles(mesh, true)
+                  : undefined,
+              )
+            : [];
+        let occlusionKey = "";
         const attachment = {
           id: request.id,
           covers,
@@ -174,6 +198,21 @@ export function createStudyCrewOutfit(
           },
           stow(on: boolean) {
             meshes.forEach((mesh, i) => mesh.setEnabled(!on && enabled[i]));
+          },
+          occlude(regions: ReadonlySet<string>) {
+            const key = [...regions].sort().join(",");
+            if (key === occlusionKey) return;
+            occlusionKey = key;
+            meshes.forEach((mesh, i) => {
+              const buckets = garmentRegions[i];
+              if (!(mesh instanceof Mesh) || !buckets) return;
+              mesh.makeGeometryUnique();
+              const indices = [...buckets]
+                .filter(([region]) => !regions.has(region))
+                .flatMap(([, bucket]) => bucket);
+              mesh.setIndices(indices);
+              mesh.setEnabled(enabled[i] && indices.length > 0);
+            });
           },
           dispose: unattach,
         };
@@ -222,7 +261,12 @@ export function createStudyCrewOutfit(
     // A full uniform owns garment regions already represented by a role chest or legs.
     if (requests.has("uniform"))
       for (const slot of ["chest", "legs"]) {
-        if (requests.get(slot)?.id.startsWith("uniform."))
+        if (
+          requests.get(slot)?.id.startsWith("uniform.") &&
+          !crewWardrobeItem(
+            next.equippedComponents?.[slot as "chest" | "legs"] ?? "",
+          )?.pressureCoverage
+        )
           requests.delete(slot);
       }
     // Existing armor items own their authored underlayers without granting a uniform item.

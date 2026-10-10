@@ -22,7 +22,7 @@ import {
 } from "spacetimedb/server";
 import type world from "./index";
 import {
-  CREW_WARDROBE_DEFINITIONS,
+  LEGACY_CREW_WARDROBE_DEFINITIONS,
   CHARACTER_CARRY_LIMIT_KG,
   LIQUID_DENSITY_KG_PER_LITRE,
 } from "../../content/src/inventory";
@@ -747,7 +747,7 @@ function seedCharacterUniformsInternal(
     return true;
   }
   if (
-    data.items.length + CREW_WARDROBE_DEFINITIONS.length > 128 ||
+    data.items.length + LEGACY_CREW_WARDROBE_DEFINITIONS.length > 128 ||
     data.containers.length + 10 > 24
   )
     return false;
@@ -771,7 +771,7 @@ function seedCharacterUniformsInternal(
     });
   // The r006 wardrobe (4 uniforms, tier 1 and tier 2 armour). The retired r008 armour
   // is no longer issued; items characters already own stay valid (definitions and art kept).
-  const definitions = CREW_WARDROBE_DEFINITIONS.map((code) =>
+  const definitions = LEGACY_CREW_WARDROBE_DEFINITIONS.map((code) =>
     defs.preview(code.id),
   ).map((d) => ({
     ...d,
