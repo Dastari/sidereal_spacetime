@@ -1,7 +1,7 @@
 {
-  "revision": "study-v2-r001",
-  "sourceCommit": "dc619472261184aab54cf314d2f37ed81c73e2a3",
-  "manifestSha256": "e3fae52cc829b3f53b738e1c1b6fae3f9db7d7a9032d4e0fe02d7ae09c7e37aa",
+  "revision": "study-v2-r002",
+  "sourceCommit": "8f26c307fed1bc781789030457b41f4065d11670",
+  "manifestSha256": "78c7bf2740d8720406b6e1281b2d4467a6f5be8ab40f4c408126b680534e9759",
   "body": {
     "file": "crew-body.glb",
     "sha256": "fca4f28c2bffba1eaa3299867278a9011f09c54c6ec1dabfaecc8bd171e4174c",
@@ -2132,6 +2132,116 @@
         }
       }
     },
+    "groom.fluffy_curls": {
+      "slot": "hair",
+      "palette": { "hair": "#7a2fd0" },
+      "families": { "hair": "hair" },
+      "covers": [],
+      "covers_by_mode": { "full": ["scalp"] },
+      "hair_mode": null,
+      "files": {
+        "all#full": {
+          "file": "parts/groom/groom.fluffy_curls@all#full.glb",
+          "sha256": "6378be75ec0d50890898cc292827451a966f167a382333e7843aab61963467dc",
+          "bytes": 398816,
+          "tris": 3322
+        },
+        "all#cap": {
+          "file": "parts/groom/groom.fluffy_curls@all#cap.glb",
+          "sha256": "ebf68b7e276d99a73c31517088b6b0bb699b56f9a220a4fa2df8a26aa0a09729",
+          "bytes": 169408,
+          "tris": 1588
+        },
+        "all#fringe": {
+          "file": "parts/groom/groom.fluffy_curls@all#fringe.glb",
+          "sha256": "659bd4608ab0de9e7d53aa594ef74976f740809de8252b01c2b8aab820440a81",
+          "bytes": 37832,
+          "tris": 296
+        }
+      }
+    },
+    "groom.twin_puffs": {
+      "slot": "hair",
+      "palette": { "hair": "#2343c8" },
+      "families": { "hair": "hair" },
+      "covers": [],
+      "covers_by_mode": { "full": ["scalp"] },
+      "hair_mode": null,
+      "files": {
+        "all#full": {
+          "file": "parts/groom/groom.twin_puffs@all#full.glb",
+          "sha256": "40bffd34bbed99a7e48f88e32aa8a309544aad88fe918ff86e6dfbf6e9b8b460",
+          "bytes": 463900,
+          "tris": 3826
+        },
+        "all#cap": {
+          "file": "parts/groom/groom.twin_puffs@all#cap.glb",
+          "sha256": "c81f90b79bf46b49b60210d21b3912af5005df4023b227597c2423fedc37aa1e",
+          "bytes": 357616,
+          "tris": 3334
+        },
+        "all#fringe": {
+          "file": "parts/groom/groom.twin_puffs@all#fringe.glb",
+          "sha256": "a3fd3458a36b5f502b79a266dedf4a906aea42c734d55dfde55732cee37e79be",
+          "bytes": 42904,
+          "tris": 340
+        }
+      }
+    },
+    "groom.high_ponytail": {
+      "slot": "hair",
+      "palette": { "hair": "#6a2fc0" },
+      "families": { "hair": "hair" },
+      "covers": [],
+      "hair_mode": null,
+      "files": {
+        "all#full": {
+          "file": "parts/groom/groom.high_ponytail@all#full.glb",
+          "sha256": "364ee0a30ec62b5dfb9e0f815deb56a763496c3ecf8f95210b0fc4abf39e25f0",
+          "bytes": 381428,
+          "tris": 3298
+        },
+        "all#cap": {
+          "file": "parts/groom/groom.high_ponytail@all#cap.glb",
+          "sha256": "eb07c511365df33cbe78a67a21f26c237cf381ee547502baaf2ecc8885dd3429",
+          "bytes": 186184,
+          "tris": 1714
+        },
+        "all#fringe": {
+          "file": "parts/groom/groom.high_ponytail@all#fringe.glb",
+          "sha256": "95ae4046ce40932bcd0ddd817e7dee16f6b588267c90d4d51ac95e409e972b3d",
+          "bytes": 32816,
+          "tris": 244
+        }
+      }
+    },
+    "groom.twin_tails": {
+      "slot": "hair",
+      "palette": { "hair": "#b8283a" },
+      "families": { "hair": "hair" },
+      "covers": [],
+      "hair_mode": null,
+      "files": {
+        "all#full": {
+          "file": "parts/groom/groom.twin_tails@all#full.glb",
+          "sha256": "6f7415be6cb6c34ab955f6a513221860a22ca1392134a10ad0be8ef6e25c4dd3",
+          "bytes": 436736,
+          "tris": 3798
+        },
+        "all#cap": {
+          "file": "parts/groom/groom.twin_tails@all#cap.glb",
+          "sha256": "7767bbc44492a0c3cde0349f1c1abb0db119e53c1830b0acc49f226ac70d47ac",
+          "bytes": 210384,
+          "tris": 1978
+        },
+        "all#fringe": {
+          "file": "parts/groom/groom.twin_tails@all#fringe.glb",
+          "sha256": "91514a6eb3c6bd99d8ea0120cd8b37bf3cfd62f69920bab4e952374e009115fd",
+          "bytes": 26940,
+          "tris": 190
+        }
+      }
+    },
     "uniform.civilian": {
       "slot": "uniform",
       "palette": {
@@ -2401,7 +2511,7 @@
     "uniform.scientist": {
       "slot": "uniform",
       "palette": {
-        "suit_primary": "#eceaf4",
+        "suit_primary": "#f3f1f9",
         "suit_secondary": "#4c63b8",
         "dark": "#3a3466",
         "accent": "#3f8fe6",
@@ -2416,15 +2526,15 @@
       "files": {
         "wide": {
           "file": "parts/outfits/uniform.scientist@wide.glb",
-          "sha256": "bf0f53a37987b9e381d45b4a30737dd47a7a1410251a796497c51a9062885a18",
-          "bytes": 151796,
-          "tris": 3580
+          "sha256": "15b40ec99c9ed9010e4f30eb68ccb2298510a18bf92f7cde10c9f1216ceb1171",
+          "bytes": 173312,
+          "tris": 3588
         },
         "narrow": {
           "file": "parts/outfits/uniform.scientist@narrow.glb",
-          "sha256": "c0b17db314988a657f1ac0b018e18023f704e7a702246f29a017c6fa39e86f1f",
-          "bytes": 143172,
-          "tris": 3532
+          "sha256": "bff280e6973f0ab6b4b073a9ad9c45a297ac375860113fe47d125b83d031da4e",
+          "bytes": 181632,
+          "tris": 3784
         }
       }
     },
@@ -3224,16 +3334,16 @@
     },
     "visor.glasses_blue": {
       "slot": "visor",
-      "palette": { "accent": "#3d6fe0" },
+      "palette": { "accent": "#3d6fe0", "glass": "#5cb4ff" },
       "families": { "accent": "plastic_colour" },
       "covers": [],
       "hair_mode": null,
       "files": {
         "all": {
           "file": "parts/headwear/visor.glasses_blue@all.glb",
-          "sha256": "004313ea0961a13b6ec6cf85ab3506417fd65a1179e348c9bc7932e70fa2576d",
-          "bytes": 23932,
-          "tris": 396
+          "sha256": "6f3501a48eb7d03797ce452433ffea523f6b368d67c0928b47edf68afa810c53",
+          "bytes": 46280,
+          "tris": 308
         }
       }
     },
@@ -3246,9 +3356,9 @@
       "files": {
         "all": {
           "file": "parts/headwear/visor.glasses@all.glb",
-          "sha256": "02237590a5a9f75d76a00454c6212bab84122e9a235a0083946d0d0e8ab7f59d",
-          "bytes": 30360,
-          "tris": 572
+          "sha256": "c7ba32874fc7d3fa85d8cd893ac717d12ae2ce149233af53f3efb44279127511",
+          "bytes": 39204,
+          "tris": 252
         }
       }
     },

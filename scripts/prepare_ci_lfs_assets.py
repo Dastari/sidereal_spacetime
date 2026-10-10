@@ -105,6 +105,19 @@ def load_manifest(root):
         objects[oid] = row['bytes']
     if not objects:
         raise ValueError('Empty LFS object manifest')
+    for supplement in data.get('supplements', []):
+        name = supplement.get('path', '')
+        if (not re.fullmatch(r'assets/ci/[a-z0-9-]+\.tar\.xz', name)
+                or not HEX.fullmatch(supplement.get('sha256', ''))
+                or type(supplement.get('bytes')) is not int or not 0 < supplement['bytes'] < 2**31
+                or not supplement.get('objects')):
+            raise ValueError('Invalid local LFS supplement pin')
+        destination(root, name)
+        for row in supplement['objects']:
+            oid = row.get('sha256', '')
+            if not HEX.fullmatch(oid) or oid in objects or type(row.get('bytes')) is not int or row['bytes'] < 0:
+                raise ValueError('Invalid or duplicate supplemental LFS object pin')
+            objects[oid] = row['bytes']
     return data, objects
 
 
@@ -149,31 +162,42 @@ def prepare(root=ROOT, archive_path=None):
         missing[name] = entry
     if not missing:
         return {'verified': len(tracked), 'restored': 0, 'gitLfsDownloads': 0}
-    archive = Path(archive_path) if archive_path is not None else root / '.runtime/ci-lfs' / manifest['archive']['name']
-    if not archive.is_file():
-        if archive_path is not None:
-            raise ValueError('Explicit LFS object archive missing')
-        download(archive, manifest['archive'])
-    if archive.stat().st_size != manifest['archive']['bytes'] or digest(archive) != manifest['archive']['sha256']:
-        raise ValueError('Cached ordinary release archive size/hash differs')
+    required = {entry['sha256'] for entry in missing.values()}
+    archives = []
+    base_objects = {row['sha256']: row['bytes'] for row in manifest['objects']}
+    if required.intersection(base_objects):
+        archive = Path(archive_path) if archive_path is not None else root / '.runtime/ci-lfs' / manifest['archive']['name']
+        if not archive.is_file():
+            if archive_path is not None:
+                raise ValueError('Explicit LFS object archive missing')
+            download(archive, manifest['archive'])
+        archives.append((archive, manifest['archive'], base_objects))
+    for supplement in manifest.get('supplements', []):
+        subset = {row['sha256']: row['bytes'] for row in supplement['objects']}
+        if required.intersection(subset):
+            archives.append((destination(root, supplement['path']), supplement, subset))
+    for archive, pin, _ in archives:
+        if not archive.is_file() or archive.stat().st_size != pin['bytes'] or digest(archive) != pin['sha256']:
+            raise ValueError('Cached ordinary release archive size/hash differs')
     # Validate the full object inventory before changing any tracked destination.
     with tempfile.TemporaryDirectory(prefix='sidereal-ci-lfs-') as temporary:
         stage = Path(temporary)
-        seen = set()
-        with tarfile.open(archive, 'r:xz') as bundle:
-            for member in bundle:
-                oid = member.name.removeprefix('objects/')
-                if (member.name != 'objects/'+oid or oid not in objects or oid in seen or not member.isfile()
-                        or member.size != objects[oid]):
-                    raise ValueError('Unexpected, duplicate, non-file or wrong-sized LFS archive member')
-                seen.add(oid)
-                path = stage / oid
-                with bundle.extractfile(member) as source, path.open('xb') as out:
-                    shutil.copyfileobj(source, out)
-                if digest(path) != oid:
-                    raise ValueError('LFS archive member hash differs')
-        if seen != set(objects):
-            raise ValueError('LFS object archive inventory is incomplete')
+        for archive, _, subset in archives:
+            seen = set()
+            with tarfile.open(archive, 'r:xz') as bundle:
+                for member in bundle:
+                    oid = member.name.removeprefix('objects/')
+                    if (member.name != 'objects/'+oid or oid not in subset or oid in seen or not member.isfile()
+                            or member.size != subset[oid]):
+                        raise ValueError('Unexpected, duplicate, non-file or wrong-sized LFS archive member')
+                    seen.add(oid)
+                    path = stage / oid
+                    with bundle.extractfile(member) as source, path.open('xb') as out:
+                        shutil.copyfileobj(source, out)
+                    if digest(path) != oid:
+                        raise ValueError('LFS archive member hash differs')
+            if seen != set(subset):
+                raise ValueError('LFS object archive inventory is incomplete')
         for name, entry in sorted(missing.items()):
             path = destination(root, name)
             if path.exists() and path.read_bytes() != entry['pointer']:

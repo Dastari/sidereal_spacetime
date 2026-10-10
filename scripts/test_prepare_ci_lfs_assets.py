@@ -131,6 +131,42 @@ class LfsAssetsTests(unittest.TestCase):
         self.assertEqual((self.root / 'assets/b.png').read_bytes(), b'local edits')
         self.assertEqual((self.root / 'assets/a.glb').read_bytes(), self.pointer(self.files['assets/a.glb']))
 
+    def supplement(self):
+        data = b'new provisional runtime object'
+        oid = hashlib.sha256(data).hexdigest()
+        p = self.root / 'assets/new.glb'
+        p.write_bytes(self.pointer(data))
+        self.git('add', 'assets/new.glb')
+        archive = self.root / 'assets/ci/crew-study-r002-lfs.tar.xz'
+        archive.parent.mkdir(parents=True, exist_ok=True)
+        with tarfile.open(archive, 'w:xz') as bundle:
+            member = tarfile.TarInfo('objects/'+oid)
+            member.size = len(data)
+            bundle.addfile(member, io.BytesIO(data))
+        self.manifest['supplements'] = [{'path': 'assets/ci/crew-study-r002-lfs.tar.xz',
+                                        'bytes': archive.stat().st_size, 'sha256': digest(archive),
+                                        'objects': [{'sha256': oid, 'bytes': len(data)}]}]
+        self.save()
+        return archive, p, data
+
+    def test_local_supplement_restores_new_revision_with_no_lfs_download(self):
+        base = self.bundle()
+        _, p, data = self.supplement()
+        with patch('prepare_ci_lfs_assets.download') as downloader:
+            result = prepare(self.root, base)
+            downloader.assert_not_called()
+        self.assertEqual(result['restored'], 4)
+        self.assertEqual(p.read_bytes(), data)
+
+    def test_corrupt_supplement_fails_before_any_destination_changes(self):
+        base = self.bundle()
+        archive, p, data = self.supplement()
+        archive.write_bytes(b'corrupt')
+        with self.assertRaisesRegex(ValueError, 'size/hash'):
+            prepare(self.root, base)
+        self.assert_pointers()
+        self.assertEqual(p.read_bytes(), self.pointer(data))
+
     def test_symlink_destination_is_rejected(self):
         archive = self.bundle()
         path = self.root / 'assets/b.png'
