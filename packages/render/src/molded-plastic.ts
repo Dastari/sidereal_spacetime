@@ -11,6 +11,7 @@
  * shared (pooled) slot material, so batching per material is unchanged.
  */
 import { protectPbrLight } from "./pbr-light-budget";
+import { guardNeutralToneMapping } from "./tone-map-guard";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Material } from "@babylonjs/core/Materials/material";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -259,6 +260,8 @@ export const MOLDED_GRADING = {
 function sceneResources(scene: Scene): MoldedSceneResources {
   let r = resources.get(scene);
   if (r) return r;
+  if (!guardNeutralToneMapping())
+    console.warn("Neutral tone mapping guard does not match this Babylon.js");
   const processing = new ImageProcessingConfiguration();
   processing.toneMappingEnabled = true;
   processing.toneMappingType =
