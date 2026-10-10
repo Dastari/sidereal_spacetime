@@ -39,6 +39,13 @@ const perf = q.get("perf") === "1";
 // Electron can report DOM focus false in its embedded view; never infer that
 // confirmation from a running animation loop. Other readiness/throttle gates stay.
 const hostFocusConfirmed = perf && q.get("perfFocus") === "host";
+const cam = (
+  q.get("cam") ??
+  (perf ? "2.0207963267948967,0.9553166181245092,30,0,0" : undefined)
+)
+  ?.split(",")
+  .map(Number);
+const validCam = cam && cam.length >= 3 && cam.every(Number.isFinite);
 const doc =
   BOW_HOSTS.find((p) => p.id === q.get("prefab")) ??
   prefabById(q.get("prefab") ?? "fed.s.wren") ??
@@ -125,6 +132,24 @@ async function main() {
         ? (sample) => probe?.recordFrame(sample)
         : undefined,
       blocksCameraInput: perf ? () => true : undefined,
+      onFrameCamera:
+        perf && validCam
+          ? (camera) => {
+              if (cam.length >= 5) camera.target.set(cam[3], 1.2, -cam[4]);
+              [camera.alpha, camera.beta, camera.radius] = cam as [
+                number,
+                number,
+                number,
+              ];
+              if (q.get("ortho") === "1") {
+                camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
+                camera.orthoTop = 7;
+                camera.orthoBottom = -7;
+                camera.orthoLeft = (-7 * width) / height;
+                camera.orthoRight = (7 * width) / height;
+              }
+            }
+          : undefined,
     },
   );
   import.meta.hot?.dispose(() => {
@@ -165,14 +190,8 @@ async function main() {
   (window as unknown as { __prefabState?: SceneState }).__prefabState = state;
   // Review-only camera override (&cam=alpha,beta,radius): the game eases its RPG camera toward the
   // crew every frame; this re-applies fixed matching angles after it, never touching game state.
-  const cam = (
-    q.get("cam") ??
-    (perf ? "2.0207963267948967,0.9553166181245092,30,0,0" : undefined)
-  )
-    ?.split(",")
-    .map(Number);
   // Optional 4th/5th values: camera target in ship metres (x starboard, y fore) at deck height.
-  if (cam && cam.length >= 3 && cam.every(Number.isFinite))
+  if (!perf && validCam)
     scene!.onBeforeRenderObservable.add(() => {
       const c = scene!.activeCamera as unknown as {
         alpha: number;
@@ -300,6 +319,7 @@ async function main() {
         userAgent: navigator.userAgent,
         gpu: gpuInfo ? gl!.getParameter(gpuInfo.UNMASKED_RENDERER_WEBGL) : null,
         query: location.search,
+        delivery: import.meta.env.PROD ? "bundle" : "development modules",
         focusValidation: hostFocusConfirmed
           ? "owner-confirmed embedded preview"
           : "document.hasFocus()",

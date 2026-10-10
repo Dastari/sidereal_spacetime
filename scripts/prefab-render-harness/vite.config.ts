@@ -8,7 +8,12 @@
  * straight from the repository (read-only); everything else under /assets is a hard 404 so a
  * missing GLB can never be answered by the SPA index.html fallback.
  */
-import { defineConfig, type Plugin } from "vite";
+import {
+  defineConfig,
+  type Plugin,
+  type ViteDevServer,
+  type PreviewServer,
+} from "vite";
 import { fileURLToPath } from "node:url";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { join, normalize, sep } from "node:path";
@@ -61,23 +66,25 @@ function resolveAsset(url: string): string | null {
 }
 
 function repositoryAssets(): Plugin {
+  const mount = (server: ViteDevServer | PreviewServer) => {
+    server.middlewares.use((req, res, next) => {
+      if (!req.url?.startsWith("/assets/")) return next();
+      const file = resolveAsset(req.url);
+      if (!file) {
+        res.statusCode = 404;
+        res.end("not found");
+        return;
+      }
+      const ext = file.slice(file.lastIndexOf("."));
+      res.setHeader("Content-Type", TYPES[ext] ?? "application/octet-stream");
+      res.setHeader("Cache-Control", "no-cache");
+      createReadStream(file).pipe(res);
+    });
+  };
   return {
     name: "prefab-harness-assets",
-    configureServer(server) {
-      server.middlewares.use((req, res, next) => {
-        if (!req.url?.startsWith("/assets/")) return next();
-        const file = resolveAsset(req.url);
-        if (!file) {
-          res.statusCode = 404;
-          res.end("not found");
-          return;
-        }
-        const ext = file.slice(file.lastIndexOf("."));
-        res.setHeader("Content-Type", TYPES[ext] ?? "application/octet-stream");
-        res.setHeader("Cache-Control", "no-cache");
-        createReadStream(file).pipe(res);
-      });
-    },
+    configureServer: mount,
+    configurePreviewServer: mount,
   };
 }
 
@@ -110,6 +117,18 @@ export default defineConfig({
   publicDir: false,
   esbuild: { jsx: "automatic" },
   clearScreen: false,
+  // The hardware probe uses a fixed bundle rather than hundreds of dev-module
+  // round trips and HMR reloads. Runtime art remains read-only through the same
+  // allowlisted mount; generated code lives in the ignored dependency cache.
+  build: {
+    outDir: join(repo, "node_modules/.cache/sidereal-prefab-performance"),
+    emptyOutDir: true,
+    assetsDir: "harness-code",
+    rolldownOptions: {
+      input: fileURLToPath(new URL("./game.html", import.meta.url)),
+    },
+  },
+  preview: { host: "127.0.0.1" },
   server: {
     host: "127.0.0.1",
     fs: {
