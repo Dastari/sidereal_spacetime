@@ -104,6 +104,23 @@ test("reuses the filtered list across render IDs without repeating plane tests",
   expect(filter(0, [inside, outside], 2)).toEqual([inside]);
 });
 
+test("uncached control repeats the original plane filter and switching back rebuilds once", () => {
+  const { scene, box } = setup(),
+    mesh = box("inside");
+  let cache = false;
+  const filter = createTransmissionCaptureFilter(scene, null, () => cache);
+  const plane = vi.spyOn(scene.frustumPlanes[0], "dotCoordinate");
+  expect(filter(0, [mesh], 1)?.map((mesh) => mesh.name)).toEqual(["inside"]);
+  const first = plane.mock.calls.length;
+  filter(0, [mesh], 1);
+  expect(plane.mock.calls.length).toBeGreaterThan(first);
+  cache = true;
+  filter(0, [mesh], 1);
+  const rebuilt = plane.mock.calls.length;
+  filter(0, [mesh], 1);
+  expect(plane.mock.calls.length).toBe(rebuilt);
+});
+
 test("invalidates in-place list, prefix, geometry and rigid-qualification changes", () => {
   const { scene, filter, box } = setup(),
     inside = box("inside"),

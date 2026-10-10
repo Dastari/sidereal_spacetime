@@ -83,6 +83,7 @@ function hasConservativeRigidBounds(mesh: AbstractMesh): boolean {
 export function createTransmissionCaptureFilter(
   scene: Scene,
   previous: RenderListCallback | null,
+  cacheEnabled: () => boolean = () => true,
 ): RenderListCallback {
   const filtered: AbstractMesh[] = [];
   const inputs: unknown[] = [];
@@ -120,46 +121,49 @@ export function createTransmissionCaptureFilter(
     const length = selected
       ? selected.length
       : Math.min(list.length, Math.max(0, renderListLength));
-    cursor = 0;
-    changed = !valid;
-    read(face);
-    read(length);
-    for (const plane of planes) {
-      read(plane.normal.x);
-      read(plane.normal.y);
-      read(plane.normal.z);
-      read(plane.d);
-    }
-    // Comparing public values catches in-place list/geometry edits. It avoids
-    // the per-frame vertex/plane filter and preserves upstream callback order.
-    for (let i = 0; i < length; i++) {
-      const mesh = list[i];
-      read(mesh);
-      const enabled = !!mesh && mesh.isEnabled() && mesh.isVisible;
-      read(enabled);
-      rigid[i] = enabled && hasConservativeRigidBounds(mesh);
-      read(rigid[i]);
-      if (!rigid[i]) continue;
-      for (const value of mesh.computeWorldMatrix().asArray()) read(value);
-      const box = mesh.getBoundingInfo().boundingBox;
-      for (const point of [box.minimum, box.maximum]) {
-        read(point.x);
-        read(point.y);
-        read(point.z);
+    const caching = cacheEnabled();
+    if (caching) {
+      cursor = 0;
+      changed = !valid;
+      read(face);
+      read(length);
+      for (const plane of planes) {
+        read(plane.normal.x);
+        read(plane.normal.y);
+        read(plane.normal.z);
+        read(plane.d);
       }
+      // Comparing public values catches in-place list/geometry edits. It avoids
+      // the per-frame vertex/plane filter and preserves upstream callback order.
+      for (let i = 0; i < length; i++) {
+        const mesh = list[i];
+        read(mesh);
+        const enabled = !!mesh && mesh.isEnabled() && mesh.isVisible;
+        read(enabled);
+        rigid[i] = enabled && hasConservativeRigidBounds(mesh);
+        read(rigid[i]);
+        if (!rigid[i]) continue;
+        for (const value of mesh.computeWorldMatrix().asArray()) read(value);
+        const box = mesh.getBoundingInfo().boundingBox;
+        for (const point of [box.minimum, box.maximum]) {
+          read(point.x);
+          read(point.y);
+          read(point.z);
+        }
+      }
+      if (inputs.length !== cursor) {
+        inputs.length = cursor;
+        changed = true;
+      }
+      if (!changed) return filtered;
     }
-    if (inputs.length !== cursor) {
-      inputs.length = cursor;
-      changed = true;
-    }
-    if (!changed) return filtered;
-    valid = true;
+    valid = caching;
     filtered.length = 0;
     for (let i = 0; i < length; i++) {
       const mesh = list[i];
       if (!mesh || !mesh.isEnabled() || !mesh.isVisible) continue;
       // Preserve upstream visibility/material/mask handling for exceptional meshes.
-      if (!rigid[i]) {
+      if (!(caching ? rigid[i] : hasConservativeRigidBounds(mesh))) {
         filtered.push(mesh);
         continue;
       }

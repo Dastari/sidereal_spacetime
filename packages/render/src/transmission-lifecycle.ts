@@ -14,6 +14,7 @@ import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { prepareTemporalInstanceAttributes } from "./temporal-instance-attributes";
 
 export type CaptureExperiments = {
+  captureListCache?: boolean;
   captureOnMotion: boolean;
   captureGlobalsOnly: boolean;
 };
@@ -79,7 +80,11 @@ export function maintainSceneTransmission(
     restoreCapture = null;
     if (!next) return;
     const previous = next.getCustomRenderList;
-    const filter = createTransmissionCaptureFilter(scene, previous);
+    const filter = createTransmissionCaptureFilter(
+      scene,
+      previous,
+      () => experiments?.().captureListCache !== false,
+    );
     next.getCustomRenderList = filter;
     const capturePassId = next.renderPassId;
     // Separate capture material buffers prevent the reduced lighting from
@@ -91,8 +96,24 @@ export function maintainSceneTransmission(
     >();
     let restorePass: (() => void) | undefined;
     const cloneMaterial = (original: Material): Material | null => {
+      if (!hasRigidMaterial(original)) return null;
       const existing = clones.get(original);
       if (existing) {
+        if (
+          original instanceof MultiMaterial &&
+          existing instanceof MultiMaterial
+        ) {
+          const sub = original.subMaterials.map((material) =>
+            material ? cloneMaterial(material) : null,
+          );
+          if (sub.some((material, i) => !material && original.subMaterials[i]))
+            return null;
+          if (
+            sub.some((material, i) => material !== existing.subMaterials[i]) ||
+            sub.length !== existing.subMaterials.length
+          )
+            existing.subMaterials = sub;
+        }
         let changed = existing.alpha !== original.alpha;
         existing.alpha = original.alpha;
         if (
@@ -119,7 +140,6 @@ export function maintainSceneTransmission(
         if (changed) existing.unfreeze();
         return existing;
       }
-      if (!hasRigidMaterial(original)) return null;
       const kind: Function = original.constructor;
       let clone: Material | null = null;
       if (kind === MultiMaterial) {
@@ -176,10 +196,17 @@ export function maintainSceneTransmission(
           continue;
         owners.add(mesh);
         const material = mesh.material;
-        if (!material) continue;
-        const clone = cloneMaterial(material);
-        if (!clone) continue; // Unknown/custom shaders retain their contract.
+        const clone = material ? cloneMaterial(material) : null;
         const prior = mappings.get(mesh);
+        if (!clone) {
+          if (
+            prior &&
+            mesh.getMaterialForRenderPass(capturePassId) === prior.clone
+          )
+            mesh.setMaterialForRenderPass(capturePassId, prior.previous);
+          mappings.delete(mesh);
+          continue; // Unknown/custom shaders retain their contract.
+        }
         if (prior?.clone !== clone) {
           if (
             prior &&

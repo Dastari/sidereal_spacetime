@@ -393,6 +393,8 @@ async function main() {
     world.getDiagnostics(true);
     // Private experiment switches use the same F3 path, before probe warmup.
     const captureExperiment = q.get("captureExperiment");
+    if (captureExperiment === "control")
+      world.toggleDebugFeature("captureListCache");
     if (captureExperiment === "motion")
       world.toggleDebugFeature("captureOnMotion");
     if (captureExperiment === "globals")
@@ -470,6 +472,7 @@ async function main() {
         backend: world.getRenderBackend(),
         aa: world.getAntialiasing(),
         graphics: world.getGraphicsSettings(),
+        debugFeatures: world.getDiagnostics(true)?.debugFeatures,
       }),
     });
     window.__prefabPerf = probe.report;

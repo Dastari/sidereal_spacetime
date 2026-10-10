@@ -16,6 +16,7 @@ export type DebugFeature =
   | "skeleton"
   | "lightBounds"
   | "collision"
+  | "captureListCache"
   | "captureOnMotion"
   | "captureGlobalsOnly";
 export type DebugFeatures = Record<DebugFeature, boolean>;
@@ -43,6 +44,7 @@ export function createDebugFeatures(
     skeleton: false,
     lightBounds: false,
     collision: false,
+    captureListCache: true,
     captureOnMotion: false,
     captureGlobalsOnly: false,
   };

@@ -28,6 +28,7 @@ const overlays: readonly [DebugFeature, string][] = [
   ["collision", "Collision"],
 ];
 const captureExperiments: readonly [DebugFeature, string][] = [
+  ["captureListCache", "Capture list cache"],
   ["captureOnMotion", "Capture on motion"],
   ["captureGlobalsOnly", "Capture globals only"],
 ];
@@ -273,7 +274,7 @@ export function createDiagnosticsUI(
         "Local presentation only · F3 keeps overrides.",
       ];
       const visualHeight =
-        406 +
+        440 +
         BACKEND_HEIGHT +
         QUALITY_HEIGHT +
         visualLines.reduce(
@@ -430,7 +431,7 @@ export function createDiagnosticsUI(
         );
         const reset = {
           x: viewport.x,
-          y: featuresTop + 298,
+          y: featuresTop + 332,
           w: viewport.w,
           h: 28,
         };
@@ -452,7 +453,9 @@ export function createDiagnosticsUI(
                 !controls.reset ||
                 (disabled().length === 0 &&
                   !overlays.some(([key]) => enabled[key] === true) &&
-                  !captureExperiments.some(([key]) => enabled[key] === true) &&
+                  !captureExperiments.some(
+                    ([key]) => enabled[key] !== (key === "captureListCache"),
+                  ) &&
                   (
                     Object.keys(
                       RENDER_QUALITY_DEFAULTS,
@@ -462,7 +465,7 @@ export function createDiagnosticsUI(
                   )),
             },
           );
-        let y = featuresTop + 339;
+        let y = featuresTop + 373;
         for (const line of visualLines) {
           const count = Math.max(20, Math.floor(viewport.w / 5.8));
           const words = line.split(" ");
