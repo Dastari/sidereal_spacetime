@@ -128,3 +128,56 @@ test("waits for focus and readiness, discards interrupted samples and records tw
     vi.restoreAllMocks();
   }
 });
+
+test("explicit host focus retains hidden, stalled and zero-delta frame guards", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  let now = 0,
+    step = 20,
+    delta = 20;
+  const documentState = { visibilityState: "visible", hasFocus: () => false };
+  vi.stubGlobal("document", documentState);
+  vi.spyOn(performance, "now").mockImplementation(() => (now += step));
+  vi.spyOn(scene, "isReady").mockReturnValue(true);
+  vi.spyOn(engine, "getDeltaTime").mockImplementation(() => delta);
+  const probe = createPerformanceProbe(scene, {
+    frames: 2,
+    warmup: 1,
+    metadata: { focusValidation: "owner-confirmed embedded preview" },
+    focused: () => true,
+    ready: () => true,
+    diagnostics: () => undefined,
+    settings: () => ({}),
+  });
+  function frame() {
+    engine.onBeginFrameObservable.notifyObservers(engine);
+    probe.recordFrame({ renderCpuMs: 4, updateCpuMs: 1, frameCpuMs: 6 });
+    engine.onEndFrameObservable.notifyObservers(engine);
+  }
+  try {
+    frame();
+    frame();
+    expect(probe.report.progress).toBe(1);
+    documentState.visibilityState = "hidden";
+    frame();
+    expect(probe.report.progress).toBe(0);
+    documentState.visibilityState = "visible";
+    step = 1000;
+    frame();
+    expect(probe.report.status).toBe("waiting");
+    step = 20;
+    delta = 0;
+    frame();
+    expect(probe.report.status).toBe("waiting");
+    delta = 20;
+    for (let i = 0; i < 6; i++) frame();
+    expect(probe.report.status).toBe("complete");
+    expect(probe.report.documentFocused).toBe(false);
+  } finally {
+    probe.dispose();
+    vi.unstubAllGlobals();
+    scene.dispose();
+    engine.dispose();
+    vi.restoreAllMocks();
+  }
+});

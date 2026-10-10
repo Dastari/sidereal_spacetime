@@ -80,6 +80,9 @@ export function createPerformanceProbe(
     warmup: number;
     metadata: Record<string, unknown>;
     ready: () => boolean;
+    /** Embedded browser hosts may not expose keyboard focus through the DOM.
+     * A host-confirmed predicate must be explicitly recorded in metadata. */
+    focused?: () => boolean;
     diagnostics: () => RenderDiagnostics | undefined;
     settings: () => unknown;
   },
@@ -114,6 +117,7 @@ export function createPerformanceProbe(
     view: {} as Record<string, unknown>,
     progress: 0,
     warmupProgress: 0,
+    documentFocused: false,
     runs,
     repeatability: {} as Record<
       string,
@@ -194,12 +198,13 @@ export function createPerformanceProbe(
     frameMs = lastFrame ? now - lastFrame : 0;
     lastFrame = now;
     raw = undefined;
+    report.documentFocused = document.hasFocus();
     passes = {};
     collecting = false;
     if (report.status === "complete" || disposed) return;
     if (
       document.visibilityState !== "visible" ||
-      !document.hasFocus() ||
+      !(options.focused?.() ?? report.documentFocused) ||
       engine.getDeltaTime() === 0 ||
       frameMs > 250 ||
       !options.ready() ||

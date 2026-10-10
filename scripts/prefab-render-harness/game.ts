@@ -35,6 +35,10 @@ declare global {
 
 const q = new URLSearchParams(location.search);
 const perf = q.get("perf") === "1";
+// Use only after the owner confirms the embedded preview is visible/focused.
+// Electron can report DOM focus false in its embedded view; never infer that
+// confirmation from a running animation loop. Other readiness/throttle gates stay.
+const hostFocusConfirmed = perf && q.get("perfFocus") === "host";
 const doc =
   BOW_HOSTS.find((p) => p.id === q.get("prefab")) ??
   prefabById(q.get("prefab") ?? "fed.s.wren") ??
@@ -296,6 +300,9 @@ async function main() {
         userAgent: navigator.userAgent,
         gpu: gpuInfo ? gl!.getParameter(gpuInfo.UNMASKED_RENDERER_WEBGL) : null,
         query: location.search,
+        focusValidation: hostFocusConfirmed
+          ? "owner-confirmed embedded preview"
+          : "document.hasFocus()",
         definitions: {
           renderCpuMs:
             "Raw scene.render() wall duration, including scene observers and targets",
@@ -314,6 +321,7 @@ async function main() {
         },
       },
       ready: () => window.__prefabReady === true && !window.__prefabError,
+      focused: hostFocusConfirmed ? () => true : undefined,
       diagnostics: () => world.getDiagnostics(true),
       settings: () => ({
         backend: world.getRenderBackend(),
