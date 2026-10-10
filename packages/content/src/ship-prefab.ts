@@ -1,5 +1,15 @@
+import {
+  isWayfarerHullAccessProfile,
+  hullAccessInterior,
+  HULL_ACCESS_SOURCE,
+} from "./hull-access-profile";
 import { bowJoinErrors, bowWalkable } from "./bow-profiles";
 import { interiorArtQuarterTurns } from "./ship-furniture";
+import { fleetAccessDoorClearance } from "./fleet-access-physical";
+import {
+  isWayfarerAccessProfile,
+  wayfarerAccessInterior,
+} from "./wayfarer-access-profile";
 import {
   assertWayfarerPrefabContract,
   isWayfarerGameplay,
@@ -183,13 +193,21 @@ export interface PrefabSkylight {
 }
 
 /**
- * Storage deck objects a prefab places by hand (2026-09-29, Wren r8 EVA suit locker), next to the
- * ones the room types derive. A fixture is an ordinary derived storage socket (same designs, key
- * `<room>/<design>`, collision, dressing and operator-bound container); only its place is authored.
+ * Deck furniture and storage a prefab places by hand, next to the ones its room types derive.
+ * Fixtures use the same authored designs, collision and dressing as room sockets, with explicit
+ * furniture envelopes large enough to preserve their native source proportions.
+ * Storage designs also retain their operator-bound container; only placement is authored.
  */
 export const PREFAB_FIXTURE_DESIGNS = [
   "shipyard.equipment.wall-locker",
   "cargo.standard.medium",
+  "shipyard.equipment.medical-bed",
+  "shipyard.equipment.lounge-sofa",
+  "pale-studless.table.standard",
+  "pale-studless.console.standard",
+  "shipyard.equipment.bridge-bank",
+  "shipyard.equipment.command-console",
+  "pale-studless.kitchen.standard",
 ] as const;
 export type PrefabFixtureDesign = (typeof PREFAB_FIXTURE_DESIGNS)[number];
 
@@ -198,14 +216,18 @@ export interface PrefabFixture {
   design: PrefabFixtureDesign;
   /** Footprint min corner (m, 0.05 m snap), deck 0. */
   at: [number, number];
-  /** The side it opens to (faces into the room), as for derived storage sockets. */
+  /** Access side, or operator view direction for consoles, as for derived room sockets. */
   facing: FaceNormal;
 }
 
-/** Room-grammar dimensions of a fixture design: [width along its wall, depth, height] in texels. */
+/** Explicit fixture envelope: [width along its wall, depth, height] in texels. */
 export function fixtureDesignTexels(
   design: PrefabFixtureDesign,
 ): [number, number, number] {
+  // Explicit fleet fixtures reserve the native study furniture's full plan envelope.
+  // Auto-derived room sockets retain their original grammar dimensions/live pins.
+  if (design === "shipyard.equipment.lounge-sofa") return [40, 26, 14];
+  if (design === "shipyard.equipment.bridge-bank") return [32, 13, 22];
   for (const spec of Object.values(G.roomTypes))
     for (const [id, w, d, h] of spec.sockets)
       if (id === design) return [w, d, h];
@@ -229,7 +251,7 @@ export interface PrefabMarkings {
 
 export interface ShipPrefabDocumentV1 {
   /** Exact code-owned geometry profile; never caller-supplied collider data. */
-  authoredGameplay?: { id: "wayfarer-authored-r001"; revision: 1 };
+  authoredGameplay?: { id: "wayfarer-authored-r001"; revision: 1 | 2 | 3 };
   schema: typeof SHIP_PREFAB_SCHEMA;
   id: string;
   name: string;
@@ -446,13 +468,13 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
             ]);
             if (
               p.id !== "wayfarer-authored-r001" ||
-              p.revision !== 1 ||
+              (p.revision !== 1 && p.revision !== 2 && p.revision !== 3) ||
               o.id !== "fed.m.wayfarer"
             )
               fail("authoredGameplay", "unknown profile or prefab");
             return {
               id: "wayfarer-authored-r001" as const,
-              revision: 1 as const,
+              revision: p.revision as 1 | 2 | 3,
             };
           })(),
         }),
@@ -935,7 +957,24 @@ export function placeMount(
   ctx?: MountTileContext,
 ): MountPlacement {
   if (ctx?.id && isWayfarerGameplay(ctx as ShipPrefabDocumentV1)) {
-    const pose = WAYFARER_MOUNT_POSES[mount.id];
+    const accessOuter =
+      (isWayfarerAccessProfile(ctx as ShipPrefabDocumentV1) ||
+        isWayfarerHullAccessProfile(ctx as ShipPrefabDocumentV1)) &&
+      (mount.id === "personnel-outer" || mount.id === "cargo-outer");
+    const nativePose = WAYFARER_MOUNT_POSES[mount.id];
+    const accessRcs =
+      (isWayfarerAccessProfile(ctx as ShipPrefabDocumentV1) ||
+        isWayfarerHullAccessProfile(ctx as ShipPrefabDocumentV1)) &&
+      mount.id === "rcs-stern-p" &&
+      mount.attach === "face" &&
+      mount.normal === "port";
+    const pose =
+      (accessRcs && nativePose
+        ? { ...nativePose, at: mount.at }
+        : nativePose) ??
+      (accessOuter && mount.attach === "edge"
+        ? { at: mount.at, z: 0.1875, quarterTurns: 3 as const }
+        : undefined);
     if (!pose) throw Error(`Unknown authored Wayfarer mount ${mount.id}`);
     const width = spec?.cells[0] ?? 1,
       depth = spec?.cells[1] ?? 1;
@@ -943,10 +982,10 @@ export function placeMount(
       mount,
       spec,
       rect: [
-        pose.at[0] - depth / 2,
-        pose.at[1] - width / 2,
-        pose.at[0] + depth / 2,
-        pose.at[1] + width / 2,
+        pose.at[0] - (accessOuter ? width : depth) / 2,
+        pose.at[1] - (accessOuter ? depth : width) / 2,
+        pose.at[0] + (accessOuter ? width : depth) / 2,
+        pose.at[1] + (accessOuter ? depth : width) / 2,
       ],
       z: [pose.z * 16, pose.z * 16 + (spec?.heightTexels ?? 16)],
       quarterTurns: pose.quarterTurns,
@@ -1224,6 +1263,8 @@ export function deckApproachZones(
 // ---------------------------------------------------------------- interior derivation
 export interface DerivedFloor {
   cell: [number, number];
+  /** Exact supported rectangle for native boundary fragments; otherwise a 1m cell. */
+  extentM?: readonly [number, number];
   kind: FloorKindId;
   room: string;
   /** Partial cells (sloped or curved hull) get a generated slab clipped to the outline. */
@@ -1246,6 +1287,8 @@ export interface DerivedDoor {
   type: EdgeTypeId;
   rooms: [string | null, string | null];
   exterior: boolean;
+  /** Code-owned native profile clear width; absent retains the generic jamb rule. */
+  clearWidthM?: number;
 }
 export interface DerivedSocket {
   designId: string;
@@ -1382,7 +1425,14 @@ export function deriveInterior(
   deck = 0,
   catalog?: PrefabComponentCatalog,
 ): DerivedInterior {
-  if (isWayfarerGameplay(doc)) return wayfarerInterior(deck);
+  if (isWayfarerGameplay(doc)) {
+    const native = wayfarerInterior(deck);
+    return isWayfarerHullAccessProfile(doc)
+      ? hullAccessInterior(native)
+      : isWayfarerAccessProfile(doc)
+        ? wayfarerAccessInterior(native)
+        : native;
+  }
   const empty: DerivedInterior = {
     deck,
     volume: null,
@@ -1627,6 +1677,9 @@ export function deriveInterior(
       type: cargo ? "door.blast" : "door.airlock",
       rooms: [inside?.id ?? null, null],
       exterior: true,
+      ...(fleetAccessDoorClearance(doc, m.id)
+        ? { clearWidthM: fleetAccessDoorClearance(doc, m.id)!.clearWidthM }
+        : {}),
     });
   }
   // Doors on the exterior replace the wall segments they occupy.
@@ -2849,6 +2902,43 @@ export function logicWallPlacement(
 ): LogicWallPlacement | { error: string } {
   if (!device.at || !device.normal)
     return { error: "needs a wall point and a facing" };
+  if (isWayfarerHullAccessProfile(doc)) {
+    assertWayfarerPrefabContract(doc);
+    const installed = HULL_ACCESS_SOURCE.logic?.devices.find(
+      (d) =>
+        d.kind === "button" &&
+        d.normal === device.normal &&
+        d.at?.[0] === device.at![0] &&
+        d.at?.[1] === device.at![1],
+    );
+    if (!installed) return { error: "unregistered native hull control" };
+    const exterior = installed.id.endsWith("outside-button");
+    const hall = installed.id.endsWith("hall-button");
+    const module = installed.id.startsWith("cargo-") ? "cargo" : "personnel";
+    const normal = NORMAL_VECTOR[device.normal];
+    // These exact devices attach to the native hull jambs and existing entrance
+    // pilasters. Generic grammar ships retain the integer wall-line admission.
+    return {
+      at: [...device.at],
+      // Quarter-metre device anchors select the exact native aperture cheek.
+      surface: installed.id.endsWith("inside-button")
+        ? [module === "personnel" ? 3.6 : -5.125, device.at[1]]
+        : [...device.at],
+      normal: [...normal],
+      side: exterior ? "exterior" : "interior",
+      wall:
+        installed.id.endsWith("inside-button") || exterior
+          ? "hull"
+          : "partition",
+      room: exterior
+        ? null
+        : hall
+          ? "hall"
+          : module === "cargo"
+            ? "cargo"
+            : "utility",
+    };
+  }
   const deck = deckVolume(doc, 0);
   if (!deck?.outline) return { error: "the ship has no walkable deck" };
   const n = NORMAL_VECTOR[device.normal];
@@ -3067,7 +3157,12 @@ export function prefabStats(
       g.area * G.heightClasses[g.volume.height].massPerM2 * 1000;
   }
   const interior = deriveInterior(doc, 0, catalog);
-  structureMassKg += interior.floors.length * FLOOR_KG_PER_M2;
+  const deckAreaM2 = interior.floors.reduce(
+    (sum, floor) =>
+      sum + (floor.extentM ? floor.extentM[0] * floor.extentM[1] : 1),
+    0,
+  );
+  structureMassKg += deckAreaM2 * FLOOR_KG_PER_M2;
   structureMassKg +=
     (interior.partitions.length + interior.exteriorWalls.length) *
     WALL_KG_PER_M;
@@ -3119,7 +3214,7 @@ export function prefabStats(
     lengthM: x1 - x0,
     beamM: y1 - y0,
     hullAreaM2,
-    deckAreaM2: interior.floors.length,
+    deckAreaM2,
     rooms: doc.rooms.length,
     structureMassKg,
     componentMassKg,

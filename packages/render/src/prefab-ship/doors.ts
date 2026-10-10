@@ -353,12 +353,18 @@ export function createPrefabDoors(
   catalog: PrefabComponentCatalog,
   theme: ShipThemeId = doc.theme,
   referenceStyle = false,
+  excludedDoors: ReadonlySet<string> = new Set(),
+  exteriorOnly = false,
 ) {
-  const doors: DoorState[] = prefabDoorSpecs(doc, catalog).map((spec) => ({
-    spec,
-    open: 0,
-    target: 0,
-  }));
+  const doors: DoorState[] = prefabDoorSpecs(doc, catalog)
+    .filter(
+      (spec) => !excludedDoors.has(spec.id) && (!exteriorOnly || spec.exterior),
+    )
+    .map((spec) => ({
+      spec,
+      open: 0,
+      target: 0,
+    }));
   const meshes = new Map<ShipKitSlot, Mesh>();
   const meshFor = (slot: ShipKitSlot) => {
     let m = meshes.get(slot);

@@ -11,6 +11,8 @@
 import assert from "node:assert/strict";
 import { DbConnection, tables } from "../packages/net/src/generated";
 import { prefabExteriorAssetId } from "../packages/sim/src/ship-exterior";
+import { STARTER_PREFAB, STARTER_CATALOG } from "./native-starter-smoke";
+import { shipLogicModel } from "../packages/sim/src/ship-logic-model";
 
 /** Public views allowed to name another player's ship, with their exact columns. */
 const EXTERIOR_VIEWS: Record<string, readonly string[]> = {
@@ -35,6 +37,17 @@ const EXTERIOR_VIEWS: Record<string, readonly string[]> = {
   ],
   visibleShipSystemEffects: ["power", "shipId"],
   visibleActuatorExhaust: ["key", "shipId", "sourceId", "throttle"],
+  visibleShipLogic: [
+    "deviceId",
+    "endsMicros",
+    "key",
+    "kind",
+    "light",
+    "open",
+    "pressedMicros",
+    "shipId",
+    "state",
+  ],
 };
 /** Blueprint-derived flight source ids (never fitting UUIDs). */
 const PREFAB_SOURCE = /^mount-[A-Za-z0-9][A-Za-z0-9._-]*(#[A-Za-z0-9._-]+)?$/;
@@ -51,6 +64,8 @@ const PRIVATE_TABLES = [
   "ship_world_motion",
   "construction_flight_fitting",
   "station",
+  "ship_logic_state",
+  "ship_logic_timer",
   // X-2 pinned definitions: pins are per item; definitions are served through the public view.
   "inventory_item_pin",
   "content_definition",
@@ -286,6 +301,38 @@ export async function visibilityLeakSmoke(options: {
           [...columns],
           `${key} exposes only its exterior columns`,
         );
+        if (key === "visibleShipLogic") {
+          const model = shipLogicModel(STARTER_PREFAB, STARTER_CATALOG)!;
+          const publicDoor = model.doors.some(
+            (door) => door.exterior && door.deviceId === row.deviceId,
+          );
+          const publicButton = model.panels.some(
+            (panel) =>
+              panel.side === "exterior" && panel.deviceId === row.deviceId,
+          );
+          assert(
+            (publicDoor && row.kind === "door") ||
+              (publicButton && row.kind === "button"),
+            "only immutable exterior slots, never inner doors/buttons/controllers",
+          );
+          assert.equal(
+            row.key,
+            `${ownShip.id}/${row.deviceId}`,
+            "public device key contains only the ship and immutable exterior slot",
+          );
+          assert.equal(row.endsMicros, 0n, "private cycle timer is redacted");
+          assert.equal(
+            row.pressedMicros,
+            0n,
+            "private press timer is redacted",
+          );
+          if (publicButton)
+            assert.equal(
+              row.state,
+              row.light,
+              "button exposes only its public light",
+            );
+        }
       }
     }
     for (const key of [
@@ -297,13 +344,14 @@ export async function visibilityLeakSmoke(options: {
         ![...(db[key]?.iter() ?? [])].some((r) => json(r).includes(actor.id)),
         `${key}: no crew body from inside another player's ship`,
       );
-    // Ship logic (doors, buttons, airlock phase) and suit state: the observer's own only.
+    // Interior logic is occupied-ship-only; nearby exterior slots were strictly
+    // qualified above. Suit state remains the observer's own only.
     const observerShip = [...observer.db.ownShips.iter()][0]!.id;
     const observerActor = [...observer.db.ownCharacters.iter()][0]!.id;
     const logic = [...spy.db.visibleShipLogic.iter()];
     assert(
-      logic.every((r) => r.shipId === observerShip),
-      "visible_ship_logic: only the ship the observer is aboard",
+      logic.every((r) => r.shipId === observerShip || r.shipId === ownShip.id),
+      "visible_ship_logic: occupied interior or qualified nearby exterior only",
     );
     assert(
       [...spy.db.ownEvaSuit.iter()].every(
@@ -328,7 +376,10 @@ export async function visibilityLeakSmoke(options: {
       views: Object.keys(checked).length,
       rows: Object.values(checked).reduce((a, b) => a + b, 0),
       interiorIdentifiersTracked: secrets.length,
-      ownShipLogicRows: logic.length,
+      ownShipLogicRows: logic.filter((row) => row.shipId === observerShip)
+        .length,
+      exteriorShipLogicRows: logic.filter((row) => row.shipId !== observerShip)
+        .length,
       publishedItemDefinitions: published.length,
       observerItemPins: pins.length,
       exterior: {

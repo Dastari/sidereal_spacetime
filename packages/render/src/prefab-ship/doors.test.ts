@@ -1,3 +1,5 @@
+import legacyWayfarer from "@sidereal/content/wayfarer-prefab.v1.json";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { describe, expect, it } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
@@ -48,7 +50,9 @@ describe("prefab door specs", () => {
   });
 
   it("does not invent an exterior hatch for the authored Wayfarer cutaway", () => {
-    expect(prefabDoorSpecs(prefabById("fed.m.wayfarer")!, catalog)).toEqual([]);
+    expect(prefabDoorSpecs(readShipPrefab(legacyWayfarer), catalog)).toEqual(
+      [],
+    );
   });
 });
 

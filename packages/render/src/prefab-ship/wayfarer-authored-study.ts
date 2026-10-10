@@ -39,7 +39,29 @@ export interface AuthoredInstanceInput {
 }
 export interface AuthoredPaletteInput {
   family: string;
+  /** Theme mutation is a rendering policy, even when initial colours match. */
+  sourceSlotName?: string;
 }
+const themeSlots = [
+  "primary",
+  "secondary",
+  "accent",
+  "trim",
+  "dark",
+  "metal",
+  "emit_a",
+  "emit_b",
+] as const;
+/** Match the actual template mutation policy; Blender aliases without a palette
+ * slot mapping must not inherit the base material's later theme edits. */
+export function authoredThemeSlot(
+  name: string,
+  palette: Readonly<Record<string, AuthoredPaletteInput>>,
+) {
+  const slot = palette[name]?.sourceSlotName ?? name.split("@")[0];
+  return themeSlots.find((candidate) => candidate === slot);
+}
+
 export interface AuthoredRange {
   object: string;
   piece: string;
@@ -194,7 +216,16 @@ export function authoredMaterialIdentity(
     sha256(
       new TextEncoder().encode(
         canonical({
-          definition: expand(definition),
+          // Fold Blender duplicate suffixes only. Semantic base names still
+          // distinguish theme slots and legacy halo policy. Every original
+          // label survives in AuthoredRange; all shading inputs remain exact.
+          definition: expand({
+            ...definition,
+            name:
+              typeof definition.name === "string"
+                ? definition.name.replace(/\.\d{3,}$/, "")
+                : definition.name,
+          }),
           family,
           finishPolicy: "shared-molded-v1",
           emissionPolicy: "min-source-strength-1",
@@ -274,6 +305,8 @@ export async function loadAuthoredStudy(
   fetchPiece: (piece: AuthoredPieceInput) => Promise<Uint8Array>,
   options: {
     batchRegions?: ReadonlyMap<string, string>;
+    /** Generic templates mutate supported palette slots after import. */
+    themed?: boolean;
     /** Source-pinned reusable object metadata; independent of scene and placement names. */
     assetLighting?: ReadonlyMap<string, AuthoredAssetLighting>;
     /** Optional grammar clipping/deformation, after the native node and instance transforms.
@@ -390,11 +423,13 @@ export async function loadAuthoredStudy(
           const gameStrength = ownedEmission
             ? sourceStrength
             : Math.min(sourceStrength, 1);
-          const sourceKey = authoredMaterialIdentity(
-            document,
-            definition,
-            family,
-          );
+          const sourceKey = canonical([
+            authoredMaterialIdentity(document, definition, family),
+            palette[original.name]?.sourceSlotName ?? null,
+            options.themed
+              ? (authoredThemeSlot(original.name, palette) ?? null)
+              : null,
+          ]);
           const key = !ownedEmission
             ? sourceKey
             : canonical([sourceKey, "asset-owned-emission"]);

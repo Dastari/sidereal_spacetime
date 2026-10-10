@@ -11,10 +11,16 @@ import tempfile
 from prepare_ci_lfs_assets import ROOT, SCHEMA, digest, inventory
 
 
-def build(root, revision, output):
+def build(root, revision, output, reviewed_commit=None):
     root = Path(root).resolve()
     source_commit = subprocess.check_output(['git', 'rev-parse', revision+'^{commit}'], cwd=root, text=True).strip()
-    subprocess.run(['git', 'merge-base', '--is-ancestor', source_commit, 'origin/main'], cwd=root, check=True)
+    if reviewed_commit is not None:
+        # Reviewed feature baselines can already be live before their PR stack merges.
+        # Require the full immutable source hash, never a moving branch or implicit approval.
+        if reviewed_commit != source_commit or len(reviewed_commit) != 40:
+            raise ValueError('Reviewed source must match the exact full source commit')
+    else:
+        subprocess.run(['git', 'merge-base', '--is-ancestor', source_commit, 'origin/main'], cwd=root, check=True)
     files = inventory(root, source_commit)
     objects = {}
     for name, entry in sorted(files.items()):
@@ -65,5 +71,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--revision', default='origin/main')
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--reviewed-commit', help='Explicit exact source already reviewed/approved outside main; no art regeneration')
     args = parser.parse_args()
-    print(json.dumps(build(ROOT, args.revision, args.output.resolve()), indent=2))
+    print(json.dumps(build(ROOT, args.revision, args.output.resolve(), args.reviewed_commit), indent=2))

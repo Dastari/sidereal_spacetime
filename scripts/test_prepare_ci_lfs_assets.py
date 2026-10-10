@@ -139,6 +139,24 @@ class LfsAssetsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'symlink'):
             prepare(self.root, archive)
 
+    def test_feature_bundle_requires_explicit_exact_reviewed_commit(self):
+        (self.root / 'source.txt').write_text('reviewed feature')
+        self.git('add', 'source.txt')
+        self.git('commit', '-qm', 'Feature baseline')
+        feature = self.git('rev-parse', 'HEAD').strip()
+        for oid, data in self.objects.items():
+            path = self.root / '.git/lfs/objects' / oid[:2] / oid[2:4] / oid
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+        with self.assertRaises(subprocess.CalledProcessError):
+            build(self.root, feature, self.root / 'not-main')
+        with self.assertRaisesRegex(ValueError, 'exact full source commit'):
+            build(self.root, feature, self.root / 'wrong-pin', self.commit)
+        with self.assertRaisesRegex(ValueError, 'exact full source commit'):
+            build(self.root, feature, self.root / 'moving-ref', 'HEAD')
+        result = build(self.root, feature, self.root / 'reviewed', feature)
+        self.assertEqual((result['paths'], result['objects']), (3, 2))
+
     def test_builder_uses_only_local_public_main_objects_and_preserves_good_cache(self):
         for oid, data in self.objects.items():
             path = self.root / '.git/lfs/objects' / oid[:2] / oid[2:4] / oid

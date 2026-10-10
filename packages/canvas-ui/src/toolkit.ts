@@ -1,17 +1,33 @@
+import { Viewport } from "@babylonjs/core/Maths/math.viewport";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { Layer } from "@babylonjs/core/Layers/layer";
 import type { Scene } from "@babylonjs/core/scene";
 import { contains, type Rect } from "./layout";
 import { gameCursors } from "./cursors";
-export const palette = {
-  text: "#eff6ff",
-  muted: "#a7c5e8",
-  line: "#277fbd",
-  blue: "#47dfff",
-  gold: "#ffd26d",
-  red: "#ff8eaa",
-  green: "#74dcbb",
-  well: "#091a30",
+import { panelFrameGeometry, uiTheme } from "@sidereal/ui/theme";
+import {
+  canvasControlState,
+  controlAction,
+  controlCornerCut,
+  type CanvasControlState,
+} from "./component-state";
+/** Compatibility names used by existing HUD compositions; all resolve to shared tokens. */
+export const palette: Record<
+  "text" | "muted" | "line" | "blue" | "gold" | "red" | "green" | "well",
+  string
+> = {
+  text: uiTheme.colors.text,
+  muted: uiTheme.colors.textSecondary,
+  line: uiTheme.colors.border,
+  blue: uiTheme.colors.primary,
+  gold: uiTheme.colors.warning,
+  red: uiTheme.colors.danger,
+  green: uiTheme.colors.success,
+  well: uiTheme.colors.input,
+};
+const rgba = (hex: string, alpha: number) => {
+  const value = Number.parseInt(hex.slice(1), 16);
+  return `rgba(${(value >> 16) & 255},${(value >> 8) & 255},${value & 255},${Math.max(0, Math.min(1, alpha))})`;
 };
 export type PointerAction = {
   x: number;
@@ -29,7 +45,12 @@ type Hit = {
   press?: () => void;
   change?: (value: number) => void;
   value?: number;
-  edit?: { value: string; max: number; change: (text: string) => void };
+  edit?: {
+    value: string;
+    max: number;
+    change: (text: string) => void;
+    submit?: () => void;
+  };
   drag?: (dx: number, dy: number) => void;
   drop?: (x: number, y: number) => void;
   cancel?: () => void;
@@ -45,12 +66,18 @@ export function isEditableTarget(target: EventTarget | null) {
   );
 }
 export class CanvasUI {
-  readonly texture: DynamicTexture;
-  readonly layer: Layer;
+  readonly texture: {
+    getContext: () => unknown;
+    scaleTo: (width: number, height: number) => void;
+    update: (invertY?: boolean) => void;
+    dispose: () => void;
+    hasAlpha: boolean;
+  };
+  readonly layer?: Layer;
   readonly ctx: CanvasRenderingContext2D;
   width = 1;
   height = 1;
-  scale = window.innerWidth >= 1100 ? 1.35 : 1;
+  scale = 1;
   opacity = 0.94;
   hits: Hit[] = [];
   panels: Rect[] = [];
@@ -58,6 +85,7 @@ export class CanvasUI {
   hover = "";
   keyboard = false;
   private selectedText = "";
+  private clipboardRequest = 0;
   modal = false;
   private active?: {
     hit: Hit;
@@ -122,6 +150,8 @@ export class CanvasUI {
   private backingHeight = 1;
   private disposed = false;
   private observer;
+  private rasterFrame = 0;
+  private defaultLabel: string;
   draw: () => void = () => {};
   escape: () => void = () => {};
   scroll: (
@@ -133,24 +163,57 @@ export class CanvasUI {
   shortcut: (code: string) => boolean = () => false;
   constructor(
     readonly canvas: HTMLCanvasElement,
-    private readonly scene: Scene,
+    private readonly scene?: Scene,
+    options: { label?: string } = {},
   ) {
-    this.texture = new DynamicTexture(
-      "game-interface",
-      { width: 1, height: 1 },
-      scene,
-      false,
-    );
-    this.texture.hasAlpha = true;
+    this.defaultLabel =
+      options.label ??
+      "Sidereal game. WASD moves. Shift sprints on deck. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls.";
+    if (scene) {
+      const texture = new DynamicTexture(
+        "game-interface",
+        { width: 1, height: 1 },
+        scene,
+        false,
+      );
+      texture.hasAlpha = true;
+      this.texture = texture;
+      this.layer = new Layer("game-interface", null, scene, false);
+      this.layer.texture = texture;
+      this.layer.applyPostProcess = false;
+      let previousViewport = scene.getEngine().currentViewport;
+      this.layer.onBeforeRenderObservable.add(() => {
+        previousViewport = scene.getEngine().currentViewport;
+        scene.getEngine().setViewport(new Viewport(0, 0, 1, 1));
+      });
+      this.layer.onAfterRenderObservable.add(() => {
+        if (previousViewport) scene.getEngine().setViewport(previousViewport);
+      });
+      this.observer = scene.onBeforeRenderObservable.add(() => this.paint());
+      scene.doNotHandleCursors = true;
+      scene.onDisposeObservable.add(() => this.dispose());
+    } else {
+      // Entry/error screens use the exact painter without requiring a working3D GPU.
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Canvas2D is unavailable.");
+      this.texture = {
+        hasAlpha: true,
+        getContext: () => context,
+        scaleTo: (width, height) => {
+          canvas.width = width;
+          canvas.height = height;
+        },
+        update: () => {},
+        dispose: () => {},
+      };
+      const paint = () => {
+        if (this.disposed) return;
+        if (!document.hidden) this.paint();
+        this.rasterFrame = requestAnimationFrame(paint);
+      };
+      this.rasterFrame = requestAnimationFrame(paint);
+    }
     this.ctx = this.texture.getContext() as CanvasRenderingContext2D;
-    this.layer = new Layer("game-interface", null, scene, false);
-    this.layer.texture = this.texture;
-    // HUD windows cover world effects, including selection silhouettes.
-    // Use Babylon's existing foreground stage after camera postprocessing.
-    this.layer.applyPostProcess = false;
-    this.observer = scene.onBeforeRenderObservable.add(() => this.paint());
-    // The HUD owns the canvas cursor; Babylon would reset it on every scene pointer move.
-    scene.doNotHandleCursors = true;
     canvas.addEventListener("pointerdown", this.down, true);
     canvas.addEventListener("pointermove", this.move, true);
     canvas.addEventListener("pointerup", this.up, true);
@@ -162,12 +225,12 @@ export class CanvasUI {
     });
     window.addEventListener("keydown", this.key, true);
     window.addEventListener("blur", this.blur);
+    window.addEventListener("paste", this.paste, true);
     // Scene hover (prefab object under the pointer) is decided by later canvas listeners;
     // re-evaluate once the move has finished propagating.
     window.addEventListener("pointermove", this.afterMove);
     document.addEventListener?.("pointerlockchange", this.afterMove);
     document.fonts.ready.then(() => this.invalidate());
-    scene.onDisposeObservable.add(() => this.dispose());
   }
   invalidate() {
     this.dirty = true;
@@ -279,8 +342,10 @@ export class CanvasUI {
     if (moved && hit.drop) hit.drop(p.x, p.y);
     else {
       hit.cancel?.();
-      if (contains(hit.rect, p.x, p.y))
-        hit.action?.({ ...p, button: e.button, shiftKey: e.shiftKey });
+      // A repaint may have disabled/removed this control while the pointer was held.
+      const current = this.hits.find((candidate) => candidate.id === hit.id);
+      if (current && !current.disabled && contains(current.rect, p.x, p.y))
+        current.action?.({ ...p, button: e.button, shiftKey: e.shiftKey });
     }
     this.updateCursor();
     this.invalidate();
@@ -297,6 +362,7 @@ export class CanvasUI {
     this.invalidate();
   };
   private blur = () => {
+    this.clipboardRequest++;
     this.active?.hit.cancel?.();
     this.active = undefined;
     this.focus = "";
@@ -325,6 +391,50 @@ export class CanvasUI {
     );
     this.invalidate();
   }
+  private insertClipboard(
+    text: string,
+    original: Hit,
+    value: string,
+    selected: boolean,
+    request: number,
+  ) {
+    const current = this.hits.find(
+      (hit) => hit.id === original.id && !hit.disabled,
+    );
+    if (
+      this.disposed ||
+      request !== this.clipboardRequest ||
+      this.focus !== original.id ||
+      !current?.edit ||
+      current.edit.change !== original.edit?.change ||
+      current.edit.value !== value
+    )
+      return;
+    const next = ((selected ? "" : value) + text.replace(/[\r\n]/g, "")).slice(
+      0,
+      current.edit.max,
+    );
+    current.edit.value = next;
+    current.edit.change(next);
+    this.selectedText = "";
+    this.invalidate();
+  }
+  private paste = (event: ClipboardEvent) => {
+    if (this.canvas.closest("[inert]") || isEditableTarget(event.target))
+      return;
+    const hit = this.hits.find((h) => h.id === this.focus && !h.disabled);
+    if (!hit?.edit || !event.clipboardData) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const request = ++this.clipboardRequest;
+    this.insertClipboard(
+      event.clipboardData.getData("text/plain"),
+      hit,
+      hit.edit.value,
+      this.selectedText === hit.id,
+      request,
+    );
+  };
   private key = (e: KeyboardEvent) => {
     // The DOM loading/error layer owns input while the game surface is inert.
     // Window listeners still receive keys even when their canvas is inert.
@@ -375,12 +485,33 @@ export class CanvasUI {
       this.scroll((e.code === "PageDown" ? 1 : -1) * 160);
     } else if (hit?.edit) {
       const replace = (value: string) => {
+        this.clipboardRequest++;
         // Input events can arrive faster than the HUD's paint cadence.
         hit.edit!.value = value;
         hit.edit!.change(value);
         this.selectedText = "";
       };
-      if ((e.ctrlKey || e.metaKey) && e.code === "KeyA") {
+      if ((e.ctrlKey || e.metaKey) && e.code === "KeyV") {
+        if (typeof navigator !== "undefined" && navigator.clipboard?.readText) {
+          e.preventDefault();
+          const request = ++this.clipboardRequest;
+          const value = hit.edit.value,
+            selected = this.selectedText === hit.id;
+          void navigator.clipboard
+            .readText()
+            .then((text) =>
+              this.insertClipboard(text, hit, value, selected, request),
+            )
+            .catch(() => {});
+        }
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (hit.edit.submit) hit.edit.submit();
+        else {
+          this.keyboard = false;
+          this.focus = "";
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.code === "KeyA") {
         e.preventDefault();
         this.selectedText = hit.id;
       } else if (
@@ -495,11 +626,7 @@ export class CanvasUI {
     this.fluid = false;
     this.draw();
     const focused = this.hits.find((h) => h.id === this.focus);
-    if (!focused)
-      this.canvas.setAttribute(
-        "aria-label",
-        "Sidereal game. WASD moves. Shift sprints on deck. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls.",
-      );
+    if (!focused) this.canvas.setAttribute("aria-label", this.defaultLabel);
     if (focused)
       this.canvas.setAttribute(
         "aria-label",
@@ -507,43 +634,61 @@ export class CanvasUI {
       );
     this.texture.update(true);
   }
+  private framePath(r: Rect, inset = 0) {
+    const c = this.ctx,
+      x = r.x + inset,
+      y = r.y + inset,
+      w = Math.max(0, r.w - inset * 2),
+      h = Math.max(0, r.h - inset * 2),
+      cut = controlCornerCut(w, h, uiTheme.frame.cornerCut);
+    c.beginPath();
+    c.moveTo(x + cut, y);
+    c.lineTo(x + w - cut, y);
+    c.lineTo(x + w, y + cut);
+    c.lineTo(x + w, y + h - cut);
+    c.lineTo(x + w - cut, y + h);
+    c.lineTo(x + cut, y + h);
+    c.lineTo(x, y + h - cut);
+    c.lineTo(x, y + cut);
+    c.closePath();
+  }
   panel(r: Rect, strong = false) {
     this.panels.push(r);
     const c = this.ctx;
     c.save();
+    const frame = panelFrameGeometry(r.w, r.h);
     c.beginPath();
-    c.moveTo(r.x + 8, r.y);
-    c.lineTo(r.x + r.w - 10, r.y);
-    c.lineTo(r.x + r.w, r.y + 10);
-    c.lineTo(r.x + r.w, r.y + r.h - 8);
-    c.lineTo(r.x + r.w - 8, r.y + r.h);
-    c.lineTo(r.x, r.y + r.h);
-    c.lineTo(r.x, r.y + 8);
+    frame.outline.forEach(([x, y], i) => {
+      if (i === 0) c.moveTo(r.x + x, r.y + y);
+      else c.lineTo(r.x + x, r.y + y);
+    });
     c.closePath();
     const gradient = c.createLinearGradient(0, r.y, 0, r.y + r.h);
-    gradient.addColorStop(0, `rgba(5,23,54,${strong ? 0.995 : this.opacity})`);
+    gradient.addColorStop(
+      0,
+      rgba(uiTheme.colors.panel, strong ? 0.995 : this.opacity),
+    );
     gradient.addColorStop(
       1,
-      `rgba(2,9,27,${strong ? 0.985 : this.opacity * 0.9})`,
+      rgba(uiTheme.colors.background, strong ? 0.985 : this.opacity * 0.9),
     );
     c.fillStyle = gradient;
     c.fill();
     c.strokeStyle = palette.line;
-    c.lineWidth = 1;
+    c.lineWidth = uiTheme.frame.borderWidth;
     c.stroke();
+    // Glow is confined to two small edge segments, never the whole window.
     c.strokeStyle = palette.blue;
-    c.lineWidth = 2;
-    c.shadowColor = "#169bff";
-    c.shadowBlur = 12;
+    c.lineWidth = uiTheme.frame.focusWidth;
+    c.shadowColor = uiTheme.colors.glow;
+    c.shadowBlur = strong ? 6 : 3;
     c.beginPath();
-    c.moveTo(r.x, r.y + 22);
-    c.lineTo(r.x, r.y + 8);
-    c.lineTo(r.x + 8, r.y);
-    c.lineTo(r.x + 46, r.y);
-    c.moveTo(r.x + r.w - 46, r.y + r.h);
-    c.lineTo(r.x + r.w - 8, r.y + r.h);
-    c.lineTo(r.x + r.w, r.y + r.h - 8);
-    c.lineTo(r.x + r.w, r.y + r.h - 28);
+    frame.accents.forEach((vertices) =>
+      vertices.forEach(([x, y], i) => {
+        if (i === 0) c.moveTo(r.x + x, r.y + y);
+        else c.lineTo(r.x + x, r.y + y);
+      }),
+    );
     c.stroke();
     c.shadowBlur = 0;
     c.strokeStyle = "#759ad044";
@@ -563,7 +708,7 @@ export class CanvasUI {
     maxWidth?: number,
   ) {
     const c = this.ctx;
-    c.font = `${size >= 24 ? "600" : "500"} ${size}px ${size >= 24 ? '"Barlow Condensed"' : "Barlow"}, sans-serif`;
+    c.font = `${size >= 24 ? "600" : "500"} ${size}px ${size >= 24 ? uiTheme.fonts.title : uiTheme.fonts.body}`;
     c.fillStyle = color;
     c.textBaseline = "top";
     if (maxWidth) {
@@ -575,7 +720,7 @@ export class CanvasUI {
   paragraph(text: string, r: Rect, size = 15, color = palette.muted) {
     let line = "",
       y = r.y;
-    this.ctx.font = `500 ${size}px Barlow, sans-serif`;
+    this.ctx.font = `500 ${size}px ${uiTheme.fonts.body}`;
     for (const word of text.split(" ")) {
       if (this.ctx.measureText(line + word).width > r.w && line) {
         this.text(line, r.x, y, size, color);
@@ -591,103 +736,93 @@ export class CanvasUI {
     label: string,
     r: Rect,
     action: () => void,
-    options: { selected?: boolean; disabled?: boolean; accent?: boolean } = {},
+    options: CanvasControlState = {},
   ) {
     const c = this.ctx,
-      focus = id === this.focus,
-      hover = id === this.hover;
-    const fill = c.createLinearGradient(0, r.y, 0, r.y + r.h);
-    fill.addColorStop(
-      0,
-      options.selected ? "#124c9c" : hover ? "#174e77" : "#112c50",
-    );
-    fill.addColorStop(0.5, options.selected ? "#063771" : "#071a35");
-    fill.addColorStop(1, options.selected ? "#165dc3" : "#0a2344");
-    c.fillStyle = fill;
-    c.fillRect(r.x, r.y, r.w, r.h);
-    c.strokeStyle = focus
-      ? "#ffffff"
-      : options.accent
-        ? palette.gold
-        : options.selected || hover
-          ? palette.blue
-          : palette.line;
-    c.lineWidth = focus || options.selected ? 2 : 1;
-    if (options.selected || focus) {
-      c.save();
-      c.shadowColor = "#168aff";
-      c.shadowBlur = 17;
-      c.strokeStyle = "#f0fcff";
-      c.strokeRect(r.x + 1, r.y + 1, r.w - 2, r.h - 2);
-      c.restore();
-    } else c.strokeRect(r.x + 0.5, r.y + 0.5, r.w - 1, r.h - 1);
-    if (!options.disabled) {
-      c.save();
-      c.shadowColor = options.accent ? "#ffaf29" : "#159fff";
-      c.shadowBlur = options.selected || hover || focus ? 10 : 0;
-      c.strokeStyle =
-        options.selected || focus
-          ? "#f3fdff"
-          : options.accent
-            ? palette.gold
-            : palette.blue;
-      c.lineWidth = 2;
-      c.beginPath();
-      c.moveTo(r.x + 1, r.y + 12);
-      c.lineTo(r.x + 1, r.y + 1);
-      c.lineTo(r.x + 20, r.y + 1);
-      c.moveTo(r.x + r.w - 20, r.y + r.h - 1);
-      c.lineTo(r.x + r.w - 1, r.y + r.h - 1);
-      c.lineTo(r.x + r.w - 1, r.y + r.h - 12);
+      style = canvasControlState({
+        ...options,
+        focused: options.focused || id === this.focus,
+        hovered: options.hovered || id === this.hover,
+        pressed: options.pressed || id === this.active?.hit.id,
+      });
+    c.save();
+    this.framePath(r, 0.5);
+    c.fillStyle = style.fill;
+    c.fill();
+    c.strokeStyle = style.border;
+    c.lineWidth = options.selected
+      ? uiTheme.frame.focusWidth
+      : uiTheme.frame.borderWidth;
+    c.stroke();
+    if (style.focus) {
+      this.framePath(r, 3);
+      c.strokeStyle = style.focus;
+      c.lineWidth = uiTheme.frame.focusWidth;
       c.stroke();
-      c.restore();
+    }
+    if (style.glow) {
+      c.strokeStyle = style.accent;
+      c.shadowColor = style.accent;
+      c.shadowBlur = style.glow;
+      c.beginPath();
+      c.moveTo(r.x + 12, r.y + 1);
+      c.lineTo(r.x + Math.min(36, r.w - 12), r.y + 1);
+      c.stroke();
+      c.shadowBlur = 0;
     }
     const keycap = /^(Esc|Tab|[A-Z])   (.+)$/.exec(label);
     let inset = 12;
     if (keycap) {
       const kw = keycap[1].length > 1 ? 35 : 24;
-      c.fillStyle = "#163d60";
+      c.fillStyle = uiTheme.colors.input;
       c.fillRect(r.x + 8, r.y + (r.h - 25) / 2, kw, 25);
-      c.strokeStyle = options.disabled ? "#526477" : "#91c6e5";
+      c.strokeStyle = style.border;
       c.strokeRect(r.x + 8.5, r.y + (r.h - 25) / 2 + 0.5, kw, 25);
-      this.text(keycap[1], r.x + 13, r.y + (r.h - 17) / 2, 15);
+      this.text(keycap[1], r.x + 13, r.y + (r.h - 17) / 2, 15, style.text);
       inset = kw + 17;
     }
+    const text = (options.pending ? "… " : "") + (keycap?.[2] ?? label);
+    c.font = `500 16px ${uiTheme.fonts.body}`;
     this.text(
-      keycap?.[2] ?? label,
+      text,
       r.x +
-        (r.w < 45
-          ? Math.max(3, (r.w - c.measureText(keycap?.[2] ?? label).width) / 2)
-          : inset),
-      r.y + (r.h - 17) / 2,
+        (r.w < 45 ? Math.max(3, (r.w - c.measureText(text).width) / 2) : inset),
+      r.y +
+        (r.h - 17) / 2 +
+        (style.interactive && (options.pressed || id === this.active?.hit.id)
+          ? 1
+          : 0),
       16,
-      options.disabled
-        ? "#62778d"
-        : options.accent
-          ? palette.gold
-          : palette.text,
+      style.text,
       r.w < 45 ? r.w - 6 : r.w - inset - 8,
     );
-    this.hits.push({ id, label, rect: r, action, disabled: options.disabled });
+    c.restore();
+    this.hits.push({
+      id,
+      label: options.pending ? `${label}, pending` : label,
+      rect: r,
+      action: controlAction(action, () => options),
+      disabled: !style.interactive,
+    });
   }
   /** Shared measured-value bar; callers provide real replicated quantities. */
   bar(r: Rect, fraction: number, color = palette.blue) {
     const c = this.ctx;
     c.save();
-    c.fillStyle = "#051327";
+    c.fillStyle = uiTheme.colors.input;
     c.fillRect(r.x, r.y, r.w, r.h);
-    c.strokeStyle = "#386aa0";
+    c.strokeStyle = palette.line;
     c.strokeRect(r.x + 0.5, r.y + 0.5, r.w - 1, r.h - 1);
     const w =
       Math.max(0, Math.min(1, Number.isFinite(fraction) ? fraction : 0)) *
       (r.w - 4);
     const fill = c.createLinearGradient(0, r.y, 0, r.y + r.h);
-    fill.addColorStop(0, "#e9fdff");
+    fill.addColorStop(0, palette.text);
     fill.addColorStop(0.3, color);
-    fill.addColorStop(1, "#116bcb");
+    fill.addColorStop(1, color);
     c.fillStyle = fill;
     c.shadowColor = color;
-    c.shadowBlur = 8;
+    c.shadowBlur = 3;
     c.fillRect(r.x + 2, r.y + 2, w, Math.max(1, r.h - 4));
     c.restore();
   }
@@ -708,9 +843,9 @@ export class CanvasUI {
     });
     const c = this.ctx;
     c.save();
-    c.strokeStyle = focused ? "#e7faff" : palette.blue;
-    c.shadowColor = "#138dff";
-    c.shadowBlur = focused ? 12 : 4;
+    c.strokeStyle = focused ? palette.text : palette.blue;
+    c.shadowColor = palette.blue;
+    c.shadowBlur = focused ? 5 : 0;
     c.beginPath();
     c.moveTo(r.x + 12, r.y + 43);
     c.lineTo(r.x + r.w - 12, r.y + 43);
@@ -735,6 +870,75 @@ export class CanvasUI {
       "×",
       { x: r.x + r.w - 38, y: r.y + 8, w: 28, h: 27 },
       close,
+    );
+  }
+  /** Standard frame with a transparent GPU viewport and chrome-only hit regions. */
+  viewportWindow(
+    id: string,
+    title: string,
+    r: Rect,
+    viewport: Rect,
+    close: () => void,
+  ) {
+    this.windowFrame(id, title, r, true, () => {}, close);
+    this.ctx.clearRect(viewport.x, viewport.y, viewport.w, viewport.h);
+    this.hits = this.hits.filter(
+      (hit) => hit.id !== id + "-surface" && hit.id !== id + "-title",
+    );
+    this.panels = this.panels.filter((panel) => panel !== r);
+    this.panels.push(
+      { x: r.x, y: r.y, w: r.w, h: viewport.y - r.y },
+      { x: r.x, y: viewport.y, w: viewport.x - r.x, h: viewport.h },
+      {
+        x: viewport.x + viewport.w,
+        y: viewport.y,
+        w: r.x + r.w - viewport.x - viewport.w,
+        h: viewport.h,
+      },
+      {
+        x: r.x,
+        y: viewport.y + viewport.h,
+        w: r.w,
+        h: r.y + r.h - viewport.y - viewport.h,
+      },
+    );
+  }
+  /** Clip drawing and controls together so scrolled content cannot intercept another pane. */
+  scrollRegion(r: Rect, draw: () => void) {
+    const start = this.hits.length;
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.rect(r.x, r.y, r.w, r.h);
+    this.ctx.clip();
+    draw();
+    this.ctx.restore();
+    this.hits = [
+      ...this.hits.slice(0, start),
+      ...this.hits.slice(start).flatMap((hit) => {
+        const x = Math.max(r.x, hit.rect.x),
+          y = Math.max(r.y, hit.rect.y);
+        const w = Math.min(r.x + r.w, hit.rect.x + hit.rect.w) - x;
+        const h = Math.min(r.y + r.h, hit.rect.y + hit.rect.h) - y;
+        return w > 0 && h > 0 ? [{ ...hit, rect: { x, y, w, h } }] : [];
+      }),
+    ];
+  }
+  listButton(
+    id: string,
+    label: string,
+    description: string,
+    r: Rect,
+    action: () => void,
+    selected = false,
+  ) {
+    this.button(id, label, r, action, { selected });
+    this.text(
+      description,
+      r.x + 12,
+      r.y + r.h - 17,
+      11,
+      palette.muted,
+      r.w - 24,
     );
   }
   toggle(
@@ -770,11 +974,11 @@ export class CanvasUI {
     );
     const track = { ...r, y: r.y + 23, h: 30 },
       c = this.ctx;
-    c.fillStyle = "#0a192c";
+    c.fillStyle = uiTheme.colors.input;
     c.fillRect(track.x + 12, track.y + 12, track.w - 24, 5);
     c.fillStyle = palette.blue;
     c.fillRect(track.x + 12, track.y + 12, (track.w - 24) * value, 5);
-    c.fillStyle = this.focus === id ? "#ffffff" : palette.blue;
+    c.fillStyle = this.focus === id ? palette.text : palette.blue;
     c.fillRect(track.x + 8 + (track.w - 24) * value, track.y + 4, 8, 21);
     this.hits.push({ id, label, rect: track, change, value });
   }
@@ -785,10 +989,13 @@ export class CanvasUI {
     r: Rect,
     change: (v: string) => void,
     max = 40,
+    options: { submit?: () => void; disabled?: boolean } = {},
   ) {
-    this.button(id, value + (this.focus === id ? "│" : ""), r, () => {});
+    this.button(id, value + (this.focus === id ? "│" : ""), r, () => {}, {
+      disabled: options.disabled,
+    });
     if (this.selectedText === id && this.focus === id) {
-      this.ctx.fillStyle = "rgba(45,165,255,.25)";
+      this.ctx.fillStyle = rgba(palette.blue, 0.2);
       this.ctx.fillRect(
         r.x + 8,
         r.y + 5,
@@ -799,7 +1006,7 @@ export class CanvasUI {
     Object.assign(this.hits[this.hits.length - 1], {
       label,
       action: undefined,
-      edit: { value, max, change },
+      edit: { value, max, change, submit: options.submit },
     });
   }
   drag(
@@ -813,7 +1020,9 @@ export class CanvasUI {
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
-    this.scene.onBeforeRenderObservable.remove(this.observer);
+    this.clipboardRequest++;
+    this.scene?.onBeforeRenderObservable.remove(this.observer ?? null);
+    if (this.rasterFrame) cancelAnimationFrame(this.rasterFrame);
     this.canvas.removeEventListener("pointerdown", this.down, true);
     this.canvas.removeEventListener("pointermove", this.move, true);
     this.canvas.removeEventListener("pointerup", this.up, true);
@@ -822,8 +1031,10 @@ export class CanvasUI {
     this.canvas.removeEventListener("wheel", this.wheel, true);
     window.removeEventListener("keydown", this.key, true);
     window.removeEventListener("blur", this.blur);
+    window.removeEventListener("paste", this.paste, true);
     window.removeEventListener("pointermove", this.afterMove);
     document.removeEventListener?.("pointerlockchange", this.afterMove);
-    this.layer.dispose();
+    this.layer?.dispose();
+    if (!this.layer) this.texture.dispose();
   }
 }

@@ -32,6 +32,9 @@ import {
 } from "./prefab-ship-pins";
 import { clearConstructionCollisionCache } from "./construction-doors";
 import { planPrefabReplacement, replacePrefabShip } from "./ship-replace";
+import { installFactionFleet } from "./faction-fleet";
+import { FEDERATION_FLEET_PIN_SET } from "./faction-fleet-pins";
+import "./prefab-ship-spawners";
 const HEAVY = { timeout: 120_000 };
 type Row = Record<string, any>;
 const PRIMARY: Record<string, string> = {
@@ -112,6 +115,16 @@ function fixture() {
           get(t, index: string) {
             if (index in t) return (t as any)[index];
             if (index === "count") return () => BigInt(rows.length);
+            if (index === "by_cell")
+              return {
+                filter: ([systemId, cellX, cellY]: [string, bigint, bigint]) =>
+                  rows.filter(
+                    (r) =>
+                      r.systemId === systemId &&
+                      r.cellX === cellX &&
+                      r.cellY === cellY,
+                  ),
+              };
             if (index === "by_revision")
               return {
                 filter: () =>
@@ -219,6 +232,90 @@ function sourceShip() {
   };
   return { f, args, shipId, deckId, characterId };
 }
+test(
+  "additive install preserves current actor, admission, pilot/input and personal inventory",
+  HEAVY,
+  () => {
+    const { f, characterId, shipId } = sourceShip();
+    const tables = [
+      "character",
+      "constructionLocation",
+      "worldAdmission",
+      "input",
+      "inputControl",
+      "constructionPilotSeat",
+      "couchSeat",
+      "inventoryItem",
+      "inventoryContainer",
+      "personalStarterReceipt",
+    ];
+    const before = f.json(tables.map((name) => [...f.db[name].iter()]));
+    const source = f.json(f.db.ship.id.find(shipId));
+    const result = installPrefabShip(
+      f.ctx,
+      f.db.character.id.find(characterId),
+      {
+        prefabId: FED_WREN_PIN.prefabId,
+        pose: {
+          kind: "at",
+          systemId: f.db.shipWorldMotion.shipId.find(shipId).systemId,
+          x: 200,
+          y: 200,
+          heading: 0.5,
+        },
+      },
+      { boardActor: false },
+    );
+    expect(result.shipId).not.toBe(shipId);
+    expect(f.json(tables.map((name) => [...f.db[name].iter()]))).toBe(before);
+    expect(f.json(f.db.ship.id.find(shipId))).toBe(source);
+    expect(f.db.gameShipAccess.shipId.find(result.shipId).characterId).toBe(
+      characterId,
+    );
+    expect(
+      f.db.ship.id
+        .find(result.shipId)
+        .owner.isEqual(f.db.character.id.find(characterId).owner),
+    ).toBe(true);
+  },
+);
+test(
+  "six-ship fleet installs atomically without boarding; exact replay creates no duplicates",
+  HEAVY,
+  () => {
+    const { f, characterId, shipId } = sourceShip();
+    const before = f.json({
+      actor: f.db.character.id.find(characterId),
+      location: f.db.constructionLocation.characterId.find(characterId),
+      admission: f.db.worldAdmission.characterId.find(characterId),
+      input: f.db.input.characterId.find(characterId),
+    });
+    const count = f.db.ship.rows.length;
+    const request = {
+      operationId: "fleet-test-0001",
+      characterId,
+      expectedShipId: shipId,
+      expectedInstanceRevision: 1n,
+      expectedFleetPinSet: FEDERATION_FLEET_PIN_SET,
+    };
+    installFactionFleet(f.ctx, request);
+    expect(f.db.ship.rows.length).toBe(count + 6);
+    expect(
+      f.json({
+        actor: f.db.character.id.find(characterId),
+        location: f.db.constructionLocation.characterId.find(characterId),
+        admission: f.db.worldAdmission.characterId.find(characterId),
+        input: f.db.input.characterId.find(characterId),
+      }),
+    ).toBe(before);
+    const snapshot = f.snapshot();
+    installFactionFleet(f.ctx, request);
+    expect(f.snapshot()).toBe(snapshot);
+    expect(() =>
+      installFactionFleet(f.ctx, { ...request, expectedInstanceRevision: 2n }),
+    ).toThrow("different");
+  },
+);
 test(
   "replacement preserves personal kit, unrelated actor/world, ship/deck ids, and replay is a no-op",
   HEAVY,

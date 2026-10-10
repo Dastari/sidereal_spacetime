@@ -5,7 +5,7 @@
  *
  * In one transaction it installs a complete ship owned by the character's account from a
  * developer prefab (grammar data -> construction document -> instance -> dormant flight ->
- * activation) and boards the EXISTING character at the prefab spawn deck. It never creates a
+ * activation). Boarding the EXISTING character is optional for an additive fleet install. It never creates a
  * character, personal kit or starter receipt and never writes map state.
  */
 import { recordSpawn } from "./lifecycle";
@@ -102,6 +102,10 @@ export interface PrefabInstallOptions {
   template?: TrustedPrefabTemplate;
   reuseIds?: readonly string[];
   instanceRevision?: bigint;
+  /** Fleet installation preserves the occupied ship, input lease and admission. */
+  boardActor?: boolean;
+  /** Trusted upgrade only: matching source devices retain their fitting/station UUIDs. */
+  flightIdentityBySource?: ReadonlyMap<string, string>;
 }
 
 /** Install and board. Throws (rolling back the transaction) on any failed precondition. */
@@ -249,7 +253,14 @@ export function installPrefabShip(
       name,
     },
     placement,
-    allocate,
+    (sourceDeviceId) => {
+      const retained =
+        sourceDeviceId && options.flightIdentityBySource?.get(sourceDeviceId);
+      if (!retained) return allocate();
+      if (taken(retained))
+        throw Error("Retained flight identity still allocated");
+      return retained;
+    },
   );
   insertQualifiedFlightPlan(ownerCtx, flight);
   const ship = ctx.db.ship.id.find(shipId)!;
@@ -308,16 +319,28 @@ export function installPrefabShip(
     revision: binding.revision + 1n,
   });
 
-  // Board the existing character.
+  markShipFlightDirty(ctx, shipId);
+  markShipSystemsDirty(ctx, shipId, revision > 1n ? "refit" : "install");
+  ctx.db.gameShipAccess.insert({
+    shipId,
+    instanceId: shipId,
+    owner,
+    characterId: actor.id,
+    deckId: plan.spawn.deckId,
+    templateSha256: plan.blueprintSha256,
+    instanceRevision: revision,
+    lifecycle: "active",
+  });
+  if (options.boardActor === false)
+    return { shipId, deckId: plan.spawn.deckId };
+
+  // Board the existing character only when the trusted caller requests it.
   const [x, y] = plan.spawn.positionM;
   commitFlightCharacter(
     ctx,
     { ...actor, shipId, localX: x, localY: y, sprinting: false },
     (row) => ctx.db.character.id.update(row),
   );
-  markShipFlightDirty(ctx, shipId);
-  // S4-1: compile the systems budget on the next tick (a reinstall is an upgrade/refit).
-  markShipSystemsDirty(ctx, shipId, revision > 1n ? "refit" : "install");
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
   const locationRow = {
     characterId: actor.id,
@@ -354,16 +377,6 @@ export function installPrefabShip(
   };
   if (admission) ctx.db.worldAdmission.characterId.update(admissionRow);
   else ctx.db.worldAdmission.insert(admissionRow);
-  ctx.db.gameShipAccess.insert({
-    shipId,
-    instanceId: shipId,
-    owner,
-    characterId: actor.id,
-    deckId: plan.spawn.deckId,
-    templateSha256: plan.blueprintSha256,
-    instanceRevision: revision,
-    lifecycle: "active",
-  });
   return { shipId, deckId: plan.spawn.deckId };
 }
 

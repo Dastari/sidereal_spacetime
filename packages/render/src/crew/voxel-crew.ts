@@ -1,3 +1,9 @@
+import {
+  CREW_STUDY,
+  CREW_STUDY_SCALE,
+  crewStudyUrl,
+} from "@sidereal/content/crew-study";
+import { loadStudyAnimations } from "./crew-study-assets";
 import { setPbrLightBudget, GAME_PBR_LIGHT_LIMIT } from "../pbr-light-budget";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -10,7 +16,6 @@ import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import "@babylonjs/loaders/glTF";
 import {
   VOXEL_CREW_ANKLE_HEIGHT_M,
-  VOXEL_CREW_ASSET_URL,
   VOXEL_CREW_DEFAULT_OUTFIT,
   voxelCrewOutfitFor,
   VOXEL_CREW_FACE_ATLAS_URL,
@@ -39,6 +44,7 @@ import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
 import type { CrewArmorSlot } from "@sidereal/content/crew-armor";
 import {
   createCrewRegionalLayers,
+  createStudyBaseCoverage,
   crewArmorClothRegions,
 } from "./voxel-crew-regions";
 import {
@@ -66,7 +72,14 @@ type Track = {
   target: number;
 };
 
-const UPPER = new Set<string>(VOXEL_CREW_UPPER_BONES);
+const UPPER = new Set<string>([
+  ...VOXEL_CREW_UPPER_BONES,
+  "hair.1",
+  "hair.2",
+  ...["L", "R"].flatMap((side) =>
+    ["thumb", "index", "fingers", "prop"].map((bone) => `${bone}.${side}`),
+  ),
+]);
 /**
  * Authored crew emissive strength (6) suits offline renders; in game the emit slot is a small
  * saturated accent. Same cap as voxel-crew-outfit's toneCrewEmissive.
@@ -127,14 +140,14 @@ export function voxelCrewVariant(appearance: CrewAppearance): VoxelCrewVariant {
 }
 
 /**
- * Presentation only: the voxel crew bundle (CHAR-BODY r001, proposal art) with Babylon
- * AnimationGroups mapped to gameplay states. Same outward shape as the legacy createCrewVisual
- * so the world can switch bundles behind an explicit preview flag.
+ * Presentation only: pinned provisional crew-study v2 by default, with source animations
+ * retargeted onto the existing gameplay state mapper. Explicit legacy assets retain their
+ * original assembly and scale for compatibility tests/review.
  */
 export async function createVoxelCrewVisual(
   scene: Scene,
   parent: TransformNode,
-  assetUrl: string | ArrayBufferView = VOXEL_CREW_ASSET_URL,
+  assetUrl: string | ArrayBufferView = crewStudyUrl(CREW_STUDY.body.file),
   options: {
     /** Face atlas; omitted = fetch the default atlas (browser); false = keep the GLB's baked face. */
     faceAtlas?: { atlas: FaceAtlas; image: FaceAtlasImage } | false;
@@ -145,6 +158,8 @@ export async function createVoxelCrewVisual(
      * Requires a URL; an in-memory asset always loads its own copy.
      */
     shared?: boolean;
+    /** In-memory test/review animation bytes; URL loads share a scene cache. */
+    studyAnimation?: ArrayBufferView;
   } = {},
 ) {
   const container: CrewBodyAssets =
@@ -155,6 +170,9 @@ export async function createVoxelCrewVisual(
   root.parent = parent;
   const visual = new TransformNode("crew-model", scene);
   visual.parent = root;
+  const study = container.skeletons[0]?.bones.length === 32;
+  const modelScale = study ? CREW_STUDY_SCALE : 1;
+  visual.scaling.setAll(modelScale);
   // crew_rig faces Blender +Y, exported as glTF -Z, which is already gameplay forward.
   for (const mesh of container.meshes) setMeshRole(mesh, "crew");
   for (const node of container.rootNodes) node.parent = visual;
@@ -204,6 +222,25 @@ export async function createVoxelCrewVisual(
     const node = bone.getTransformNode();
     if (node) joints.set(bone.name, node);
   }
+  let studyAnimationSource: AssetContainer | undefined;
+  if (study) {
+    visual.setEnabled(false);
+    try {
+      studyAnimationSource = options.studyAnimation
+        ? await SceneLoader.LoadAssetContainerAsync(
+            "",
+            options.studyAnimation,
+            scene,
+            undefined,
+            ".glb",
+          )
+        : await loadStudyAnimations(scene);
+    } catch (error) {
+      container.dispose();
+      root.dispose();
+      throw error;
+    }
+  }
   const attached = new Set<AssetContainer>();
   // support-hand IK: after animations, pin socket.hand.L onto the held item's support socket
   let supportTarget: TransformNode | null = null;
@@ -227,10 +264,12 @@ export async function createVoxelCrewVisual(
     legs.length === 2
       ? createFootPlanting(visual, parent, legs, {
           restAnkle: VOXEL_CREW_ANKLE_HEIGHT_M,
+          maxDrift: 0.12 * modelScale,
         })
       : undefined;
   let seatContact:
-    { lift: number; lean: number; footSupport: number } | undefined;
+    | { lift: number; lean: number; footSupport: number; footForward?: number }
+    | undefined;
   let footIk = true;
   let footSettleS = 0;
   let seatSpineOriginal: Quaternion | undefined;
@@ -255,9 +294,11 @@ export async function createVoxelCrewVisual(
         const goal = leg.end.computeWorldMatrix(true).clone();
         const at = Vector3.TransformCoordinates(goal.getTranslation(), inverse);
         at.y =
-          VOXEL_CREW_ANKLE_HEIGHT_M +
+          VOXEL_CREW_ANKLE_HEIGHT_M * modelScale +
           seatContact.footSupport -
           seatContact.lift;
+        if (study && seatContact.footForward !== undefined)
+          at.z = -seatContact.footForward;
         goal.setTranslation(
           Vector3.TransformCoordinates(at, root.getWorldMatrix()),
         );
@@ -287,7 +328,9 @@ export async function createVoxelCrewVisual(
         upper: joints.get("upper_arm.L")!,
         lower: joints.get("forearm.L")!,
         end: joints.get("hand.L")!,
-        effector: socketNodes["socket.hand.L"] ?? joints.get("hand.L")!,
+        effector:
+          (study ? joints.get("prop.L") : socketNodes["socket.hand.L"]) ??
+          joints.get("hand.L")!,
       },
       supportTarget.computeWorldMatrix(true),
     );
@@ -317,8 +360,29 @@ export async function createVoxelCrewVisual(
   // ------------------------------------------------------------------ layered playback
   const masked = new Map<string, AnimationGroup>();
   const owned: AnimationGroup[] = [];
+  const studyClips = new Map(
+    studyAnimationSource?.animationGroups.map((group) => [group.name, group]) ??
+      [],
+  );
+  const hasClip = (name: string) => clips.has(name) || studyClips.has(name);
+  const ensureClip = (name: string) => {
+    const existing = clips.get(name);
+    if (existing) return existing;
+    const source = studyClips.get(name);
+    if (!source) return undefined;
+    const clone = source.clone(
+      source.name,
+      (target: { name?: string }) =>
+        (target?.name && (joints.get(target.name) ?? nodes.get(target.name))) ||
+        target,
+    );
+    clone.stop();
+    clips.set(name, clone);
+    owned.push(clone);
+    return clone;
+  };
   const groupFor = (clip: VoxelCrewAction, mask: Mask) => {
-    const source = clips.get(clip);
+    const source = ensureClip(clip);
     if (!source) return undefined;
     if (mask === "full") return source;
     const key = `${clip}|${mask}`;
@@ -337,7 +401,7 @@ export async function createVoxelCrewVisual(
     return g;
   };
   const resolveClip = (clip: VoxelCrewAction): VoxelCrewAction =>
-    clips.has(clip) ? clip : (VOXEL_CREW_CLIP_FALLBACK[clip] ?? clip);
+    hasClip(clip) ? clip : (VOXEL_CREW_CLIP_FALLBACK[clip] ?? clip);
   const tracks = new Map<string, Track>();
   let blendElapsed = 0;
   let blendDuration = 0.2;
@@ -444,7 +508,13 @@ export async function createVoxelCrewVisual(
   let outfit: VoxelCrewOutfit = { ...VOXEL_CREW_DEFAULT_OUTFIT };
   // Review harnesses may force a layer; the game derives the outfit from equipment.
   let outfitOverride: Partial<VoxelCrewOutfit> = {};
-  const regionalLayers = createCrewRegionalLayers(container.meshes);
+  const regionalLayers = study
+    ? undefined
+    : createCrewRegionalLayers(container.meshes);
+  const studyCoverage = study
+    ? createStudyBaseCoverage(container.meshes)
+    : undefined;
+  let studyCovered = new Set<string>();
   let armourCloth = crewArmorClothRegions([]);
   const face = createVoxelFace(
     scene,
@@ -453,6 +523,7 @@ export async function createVoxelCrewVisual(
         m instanceof PBRMaterial && /^crew\.face(\.\d+)?$/.test(m.name),
     ),
     options.random,
+    { flipRows: !study },
   );
 
   const customize = (next: CrewAppearance) => {
@@ -494,7 +565,7 @@ export async function createVoxelCrewVisual(
     const byOutfit = new Set(voxelCrewHiddenRegions(outfit));
     for (const mesh of container.meshes) {
       const match =
-        /^GEO-crew-(base|hands|head|suit|gear|hair-default)-(male|female|neutral)/.exec(
+        /^GEO-crew-(base|hands|head_low|head|suit|gear|hair-default)-(male|female|neutral)/.exec(
           mesh.name,
         );
       if (!match) continue;
@@ -502,14 +573,22 @@ export async function createVoxelCrewVisual(
         match[1] === "hair-default" ? "hair" : match[1]
       ) as VoxelCrewBodyRegion;
       const hidden =
-        byOutfit.has(region) ||
+        (!study && byOutfit.has(region)) ||
+        (study &&
+          (region as string) === "head_low" &&
+          !studyCovered.has("scalp")) ||
+        (study && region === "head" && studyCovered.has("scalp")) ||
+        (study &&
+          (region as string) === "head_low" &&
+          hiddenRegions.has("head")) ||
         hiddenRegions.has(region) ||
         (region === "hair" && (hairHidden || hiddenRegions.has("head")));
       mesh.setEnabled(match[2] === meshVariant() && !hidden);
     }
     const uniform = appearance.equippedComponents?.uniform;
     const eva = !!uniform && crewWardrobeItem(uniform)?.eva === "suit";
-    regionalLayers.refresh(
+    studyCoverage?.refresh(meshVariant(), studyCovered);
+    regionalLayers?.refresh(
       meshVariant(),
       outfit.suit,
       armourCloth,
@@ -526,15 +605,23 @@ export async function createVoxelCrewVisual(
     if (driver) {
       const g = oneShot?.group ?? clips.get(driver);
       const frame = g?.animatables[0]?.masterFrame ?? 0;
-      face.setTrackExpression(
-        voxelCrewExpressionAt(driver, frame - (g?.from ?? 0)),
-      );
+      const authoredFrame = study
+        ? ((frame - (g?.from ?? 0)) * 24) /
+          (g?.targetedAnimations[0]?.animation.framePerSecond ?? 60)
+        : frame - (g?.from ?? 0);
+      const expression = study
+        ? CREW_STUDY.clips[driver]?.expressionTrack
+            ?.filter(([at, id]) => at <= authoredFrame && id !== "blink")
+            .at(-1)?.[1]
+        : voxelCrewExpressionAt(driver, authoredFrame);
+      face.setTrackExpression(expression);
     }
     face.tick(dt);
   });
   if (options.faceAtlas)
     face.setAtlas(options.faceAtlas.atlas, options.faceAtlas.image);
   else if (
+    !study &&
     options.faceAtlas === undefined &&
     typeof fetch === "function" &&
     typeof OffscreenCanvas !== "undefined"
@@ -570,7 +657,7 @@ export async function createVoxelCrewVisual(
       !motion.carrying &&
       !motion.hovering
     ) {
-      const has = (c: string) => clips.has(`${armedClass}.${c}`);
+      const has = (c: string) => hasClip(`${armedClass}.${c}`);
       const name = (c: string) => `${armedClass}.${c}` as VoxelCrewAction;
       const aimClip =
         motion.combat && !motion.sprinting && has("aim")
@@ -590,7 +677,7 @@ export async function createVoxelCrewVisual(
           "lower" in layers ? layers.lower : layers.full;
         const speedRatio = voxelCrewSpeedRatio(legs, motion);
         const period = (c: VoxelCrewAction) => {
-          const g = clips.get(c);
+          const g = ensureClip(c);
           return g ? g.to - g.from : 0;
         };
         const upperSpeedRatio =
@@ -627,7 +714,7 @@ export async function createVoxelCrewVisual(
       weapon !== "none"
     )
       startOneShot(
-        armedClass && clips.has(`${armedClass}.shoot`)
+        armedClass && hasClip(`${armedClass}.shoot`)
           ? (`${armedClass}.shoot` as VoxelCrewAction)
           : weapon === "rifle"
             ? "shoot_rifle"
@@ -723,16 +810,24 @@ export async function createVoxelCrewVisual(
           speed: layers.upperSpeedRatio ?? 1,
         });
     }
+    if (study)
+      for (const request of wanted) {
+        if (CREW_STUDY.clips[request.clip]?.nominalSpeed)
+          request.speed /= modelScale;
+      }
     setDesired(wanted, reduced);
   };
 
   customize(appearance);
   update({ moving: false, seated: false });
+  visual.setEnabled(true);
   return {
     root,
     /** Parent of the body's glTF root; armour parts attach beside it. */
     model: visual,
     bundle: "voxel" as const,
+    study,
+    modelScale,
     update,
     customize(next: CrewAppearance) {
       customize(next);
@@ -745,6 +840,10 @@ export async function createVoxelCrewVisual(
     joints,
     attachPart,
     /** Hide regions replaced by attached parts (heads, gloves, boots, armour); see bodyMeshRegions. */
+    setStudyCoverage(regions: Iterable<string>) {
+      studyCovered = new Set(regions);
+      refreshRegions();
+    },
     setHiddenRegions(regions: Iterable<VoxelCrewBodyRegion>) {
       hiddenRegions.clear();
       for (const r of regions) hiddenRegions.add(r);
@@ -777,9 +876,19 @@ export async function createVoxelCrewVisual(
     },
     /** Exact authored support relative to the standing floor; never writes actor state. */
     setSeatContact(
-      contact: { lift: number; lean: number; footSupport: number } | undefined,
+      contact:
+        | {
+            lift: number;
+            lean: number;
+            footSupport: number;
+            forward?: number;
+            footForward?: number;
+          }
+        | undefined,
     ) {
       seatContact = contact;
+      // Source pelvis rests within the authored chair pan. The accepted actor root stays put.
+      if (study) visual.position.z = -(contact?.forward ?? 0);
     },
     /** Foot planting on the deck (default on; review harnesses compare with it off). */
     setFootIk(enabled: boolean) {
@@ -806,7 +915,11 @@ export async function createVoxelCrewVisual(
     },
     /** Whether the loaded bundle has this clip (EVA clips arrive in parallel). */
     hasClip(clip: string) {
-      return clips.has(clip);
+      return hasClip(clip);
+    },
+    /** Lazily retarget a source clip for deterministic review without playing it. */
+    prepareClip(name: string) {
+      return ensureClip(name);
     },
     /** Masked clip keys currently blending toward full weight. */
     get activeClips() {
@@ -867,9 +980,11 @@ export async function createVoxelCrewVisual(
       scene.onAfterAnimationsObservable.remove(ikObserver);
       face.dispose();
       for (const g of owned) g.dispose();
+      if (options.studyAnimation) studyAnimationSource?.dispose();
       for (const part of attached) part.dispose();
       attached.clear();
-      regionalLayers.dispose();
+      regionalLayers?.dispose();
+      studyCoverage?.dispose();
       container.dispose();
       root.dispose();
     },

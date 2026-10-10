@@ -47,6 +47,34 @@ async function main() {
     doc,
     defaultPrefabComponentCatalog(),
   );
+  // Production-renderer fleet fixture: one occupied ship plus public-only
+  // exterior projections. These accepted-shaped rows never connect to a DB.
+  const fleetSize = Math.max(1, Math.min(20, Number(q.get("fleet")) || 1));
+  const fleetIds = [
+    "fed.s.wren-fleet",
+    "fed.s.petrel-fleet",
+    "fed.m.wayfarer-fleet",
+    "fed.m.heron-fleet",
+    "fed.l.kestrel-fleet",
+    "fed.l.albatross-fleet",
+  ];
+  const poses = Array.from({ length: fleetSize - 1 }, (_, i) => ({
+    shipId: `review-remote-${i}`,
+    x: ((i % 5) - 2) * 36,
+    y: 45 + Math.floor(i / 5) * 40,
+  }));
+  const snapshot = {
+    epoch: 1,
+    shipMotion: poses,
+    shipDescription: poses.map((pose, i) => {
+      const ship = prefabById(fleetIds[i % fleetIds.length])!;
+      return {
+        shipId: pose.shipId,
+        publishedExteriorAssetId: `prefab:${ship.id}`,
+        appearanceRevision: BigInt(ship.revision),
+      };
+    }),
+  };
   let scene: Scene | undefined;
   const world = await createWorld(
     canvas,
@@ -55,6 +83,23 @@ async function main() {
       prefabVisualVariant:
         q.get("visual") === "reference-r001"
           ? SHIP_REFERENCE_VISUAL
+          : undefined,
+      sharedWorld:
+        fleetSize > 1
+          ? {
+              bodies: () => undefined,
+              ships: {
+                localShipId: () => "review-local",
+                store: {
+                  getSnapshot: () => snapshot,
+                  subscribeTable: () => () => {},
+                  sampleShip: (id) => {
+                    const pose = poses.find((p) => p.shipId === id);
+                    return pose && { x: pose.x, y: pose.y, heading: 0 };
+                  },
+                },
+              },
+            }
           : undefined,
       construction: {
         instanceId: construction.layout.id,

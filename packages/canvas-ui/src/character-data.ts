@@ -85,37 +85,4 @@ export const STAT_GROUPS = [
   },
 ] as const;
 
-/** Stable appearance examples, not a server-owned rarity or loot valuation. */
-export const ITEM_PRESENTATION: Readonly<
-  Record<string, { rarity: ItemRarity }>
-> = {
-  "compact-pistol": { rarity: "common" },
-  "heavy-handgun": { rarity: "rare" },
-  carbine: { rarity: "epic" },
-  "long-rifle": { rarity: "legendary" },
-  scanner: { rarity: "rare" },
-  "plasma-cutter": { rarity: "legendary" },
-  medkit: { rarity: "common" },
-  "power-cell": { rarity: "rare" },
-  "field-pack": { rarity: "uncommon" },
-  "resource-canister": { rarity: "common" },
-};
-export function itemRarity(definitionId: string): ItemRarity {
-  const archetype = definitionId.startsWith("crew-")
-    ? definitionId.split("-")[1]
-    : "";
-  const armor: Record<string, ItemRarity> = {
-    captain: "legendary",
-    marine: "epic",
-    security: "rare",
-    medic: "rare",
-    engineer: "uncommon",
-    recon: "rare",
-    salvage: "uncommon",
-    pilot: "rare",
-    scientist: "epic",
-  };
-  return (
-    ITEM_PRESENTATION[definitionId]?.rarity ?? armor[archetype] ?? "common"
-  );
-}
+export { ITEM_PRESENTATION, itemRarity } from "@sidereal/ui/item-frame";

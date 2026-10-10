@@ -1,6 +1,10 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
 import { installCursorTheme } from "@sidereal/canvas-ui/cursors";
-import AuthGate from "./AuthGate";
+import "@fontsource/barlow/400.css";
+import "@fontsource/barlow/500.css";
+import "@fontsource/barlow/600.css";
+import "@fontsource/barlow-condensed/600.css";
+import { startCanvasClient } from "./canvas-entry";
+document.body.style.margin = "0";
 installCursorTheme();
-createRoot(document.getElementById("root")!).render(<AuthGate />);
+const client = startCanvasClient(document.getElementById("root")!);
+if (import.meta.hot) import.meta.hot.dispose(() => client.dispose());

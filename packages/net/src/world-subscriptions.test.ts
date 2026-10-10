@@ -9,6 +9,7 @@ import {
   createWorldSubscriptions,
   sharedCellQueries,
   type WorldSubscriptionTransport,
+  type AcceptedEvaObserver,
 } from "./world-subscriptions";
 const systemId = "ad7bf00a-caa0-50ee-b307-332afaac71a1";
 const shipId = "fb1ddc75-9ffa-4807-80ad-38f59b0a4a11";
@@ -288,4 +289,58 @@ describe("shared authorized cell scopes", () => {
     expect(f.adapter.getState().running).toBe(false);
     expect(f.queries).toHaveLength(3);
   });
+});
+
+const eva = (
+  x = 1600,
+  serverTick = 2n,
+  revision = 1n,
+): AcceptedEvaObserver => ({
+  characterId,
+  systemId,
+  x,
+  y: -401,
+  serverTick,
+  revision,
+});
+it("uses independent accepted EVA ordering with bounded apply/retire handover and ship return", async () => {
+  const f = await ready();
+  f.adapter.acceptObserver(admission, motion(0, 0, 100n));
+  expect(f.adapter.acceptEvaObserver(eva())).toBe(true);
+  expect(f.queries[3].sql[0]).toContain("cell_x = 3 AND cell_y = -3");
+  expect(f.queries[2].unsubscribe).not.toHaveBeenCalled();
+  f.adapter.acceptObserver(admission, motion(800, 0, 101n));
+  expect(f.adapter.getState().desiredCell).toBe(`${systemId}/4/-2`);
+  for (let i = 3; i < 100; i++)
+    f.adapter.acceptEvaObserver(eva(i * 400, BigInt(i), BigInt(i)));
+  expect(f.adapter.getState().cellSets).toBe(2);
+  expect(f.queries).toHaveLength(4);
+  f.queries[3].apply();
+  await flush();
+  expect(f.queries[2].unsubscribe).toHaveBeenCalledOnce();
+  f.adapter.acceptEvaObserver(undefined);
+  expect(f.adapter.getState().desiredCell).toBe(`${systemId}/2/0`);
+  f.queries[2].ack();
+  await flush();
+  expect(f.queries[4].sql[0]).toContain("cell_x = 1 AND cell_y = -1");
+  expect(f.adapter.acceptEvaObserver(eva(-401, 200n, 1n))).toBe(true);
+  f.adapter.dispose();
+});
+it("rejects invalid/stale/foreign EVA inputs without changing accepted coverage", async () => {
+  const f = await ready();
+  f.adapter.acceptEvaObserver(eva(800, 10n, 10n));
+  for (const bad of [
+    { ...eva(), characterId: shipId },
+    { ...eva(), systemId: shipId },
+    eva(NaN),
+    eva(1e9 + 1),
+    eva(900, 9n, 11n),
+    eva(900, 11n, 9n),
+  ])
+    expect(f.adapter.acceptEvaObserver(bad)).toBe(false);
+  expect(f.adapter.acceptEvaObserver(eva(8000, 20n, 20n), -1)).toBe(false);
+  expect(f.adapter.getState().desiredCell).toBe(`${systemId}/2/-2`);
+  f.adapter.revoke();
+  expect(f.adapter.acceptEvaObserver(eva(8000, 20n, 20n))).toBe(false);
+  expect(f.adapter.getState().desiredCell).toBeUndefined();
 });

@@ -17,6 +17,7 @@ import {
 } from "./ship-operator-tables";
 import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
+import { installFactionFleet } from "./faction-fleet";
 import { stockShipCargo } from "./ship-cargo-operator";
 import { upgradePrefabShip } from "./ship-upgrade";
 import { replacePrefabShip } from "./ship-replace";
@@ -933,7 +934,7 @@ export const stepWorld = db.reducer(
     });
     // Ship logic timers (airlock stages, door close retries), then EVA after the ships moved:
     // ride-along, jetpack flight, hull contact and doorway hand-offs (eva.ts).
-    shipLogic.stepShipLogic(ctx);
+    shipLogic.stepShipLogic(ctx, (id) => eva.evaSuitRefusal(ctx, id));
     eva.stepEva(ctx);
     // Legacy rows remain preserved for explicit validated migration. A missing
     // shared admission/compiled definition may never invoke fixture flight.
@@ -1812,6 +1813,16 @@ export const operatorAssignPrefabShip = db.reducer(
   },
   withComponentSnapshots(assignPrefabShip),
 );
+export const operatorInstallFactionFleet = db.reducer(
+  {
+    operationId: t.string(),
+    characterId: t.string(),
+    expectedShipId: t.string(),
+    expectedInstanceRevision: t.u64(),
+    expectedFleetPinSet: t.string(),
+  },
+  withComponentSnapshots(installFactionFleet),
+);
 /** Operator-only, additive: binds a prefab storage socket (e.g. Wren's hold crate) to a
  * ship-owned container if needed and inserts new item instances. See ship-cargo-operator.ts. */
 export const operatorStockShipCargo = db.reducer(
@@ -1826,8 +1837,8 @@ export const operatorStockShipCargo = db.reducer(
   },
   withComponentSnapshots(stockShipCargo),
 );
-/** Operator-only: replaces one game-owned prefab ship's revision in place (e.g. Wren r2/r3 -> r4),
- * keeping the ship/deck ids, pose, owner, containers and items. See ship-upgrade.ts. */
+/** Operator-only preserving prefab refit: retain ship/deck ids, pose, owner and inventory.
+ * Furnishing carry-over binds apply to the exact clean dry-run. See ship-upgrade.ts. */
 export const operatorUpgradePrefabShip = db.reducer(
   {
     operationId: t.string(),
@@ -1837,6 +1848,7 @@ export const operatorUpgradePrefabShip = db.reducer(
     expectedInstanceRevision: t.u64(),
     targetPrefabId: t.string(),
     expectedTargetBlueprintSha256: t.string(),
+    fromDryRunOperationId: t.option(t.string()),
   },
   withComponentSnapshots(upgradePrefabShip),
 );

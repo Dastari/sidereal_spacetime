@@ -109,7 +109,7 @@ def dry_run(args):
     require_operation_id(args.operation_id)
     ship_id, source_sha, revision, pin = expectations(args)
     call(args.server, args.database, 'operator_upgrade_prefab_ship', args.operation_id, True, ship_id,
-         source_sha, revision, args.target_prefab_id, pin['blueprintSha256'])
+         source_sha, revision, args.target_prefab_id, pin['blueprintSha256'], None)
     result = ledger(args.server, args.database, args.operation_id)
     print(json.dumps(result, indent=1))
     if result['summary'].get('refusals'):
@@ -137,7 +137,7 @@ def apply(args):
     request = plan['request']
     call(args.server, args.database, 'operator_upgrade_prefab_ship', args.operation_id, False,
          request['shipId'], request['expectedSourceBlueprintSha256'], int(request['expectedInstanceRevision']),
-         request['targetPrefabId'], request['expectedTargetBlueprintSha256'])
+         request['targetPrefabId'], request['expectedTargetBlueprintSha256'], {'some': args.from_dry_run})
     result = ledger(args.server, args.database, args.operation_id)
     print(json.dumps(result, indent=1))
     return result

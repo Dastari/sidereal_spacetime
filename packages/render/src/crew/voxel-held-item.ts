@@ -17,6 +17,7 @@ import {
 } from "../equipment/voxel-items";
 import type { createVoxelCrewVisual } from "./voxel-crew";
 import type { VoxelCrewAction } from "@sidereal/content/crew-voxel-bundle";
+import { CREW_STUDY } from "@sidereal/content/crew-study";
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 export type HeldItemVisual = Awaited<ReturnType<typeof createVoxelItemVisual>>;
@@ -36,6 +37,7 @@ export function crewUsesSupportGrip(clips: readonly string[]) {
 const armedClipsLoaded = new WeakMap<object, Promise<void>>();
 /** Register CHAR-WEAPONS armed-actions.glb clips (`<class>.<clip>`) on a voxel crew once. */
 export function loadArmedClips(scene: Scene, crew: VoxelCrew) {
+  if (crew.study) return Promise.resolve();
   let promise = armedClipsLoaded.get(crew);
   if (!promise) {
     promise = SceneLoader.LoadAssetContainerAsync(
@@ -104,13 +106,21 @@ export function createVoxelHeldItem(
   let disposed = false;
   const reduced = () => !!options.reducedMotion?.();
   const now = options.now ?? (() => performance.now());
-  const hand = () => crew.socketNodes["socket.hand.R"];
+  const hand = () =>
+    crew.study ? crew.joints.get("prop.R")! : crew.socketNodes["socket.hand.R"];
   const toHand = (visual: HeldItemVisual) => {
     visual.root.parent = hand();
-    visual.root.rotationQuaternion = crewItemHandSocketRotation();
+    visual.root.rotationQuaternion = crew.study
+      ? Quaternion.Identity()
+      : crewItemHandSocketRotation();
     visual.root.position.setAll(0);
   };
   const toHolster = (h: Held) => {
+    // Rig-v2 draw/holster clips animate prop.R to the exact holster frame themselves.
+    if (crew.study) {
+      toHand(h.visual);
+      return;
+    }
     const holster = h.item.holster;
     const socket = holster && crew.socketNodes[holster.socket as never];
     if (!holster || !socket) return;
@@ -119,8 +129,14 @@ export function createVoxelHeldItem(
     h.visual.root.rotationQuaternion = rotation;
     h.visual.root.position.copyFrom(position);
   };
-  const clip = (h: Held, name: "draw" | "holster") =>
-    h.cls ? crewArmedClipInfo(h.item, name) : null;
+  const clip = (h: Held, name: "draw" | "holster") => {
+    if (crew.study && h.cls) {
+      const animation = `${h.cls}.${name}`;
+      const info = CREW_STUDY.clips[animation];
+      return info ? { ...info, animation } : null;
+    }
+    return h.cls ? crewArmedClipInfo(h.item, name) : null;
+  };
 
   const finishHolster = () => {
     if (!held) return;
@@ -151,7 +167,10 @@ export function createVoxelHeldItem(
     const cls = crewArmedClass(item);
     const [visual] = await Promise.all([
       createVoxelItemVisual(scene, hand(), id, {
-        localRotation: crewItemHandSocketRotation(),
+        localRotation: crew.study
+          ? Quaternion.Identity()
+          : crewItemHandSocketRotation(),
+        study: crew.study,
       }),
       cls ? loadArmedClips(scene, crew) : undefined,
     ]);
@@ -188,6 +207,16 @@ export function createVoxelHeldItem(
   // The solver runs onAfterAnimations: select/release its target before that frame animates.
   const supportObserver = scene.onBeforeAnimationsObservable.add(updateSupport);
   function updateSupport() {
+    // V2 clips bake the authored rolled/slid prop.L grip, rather than the legacy raw socket.
+    if (crew.study) {
+      held?.visual.setSightDeployed(
+        crew.activeClips.some(
+          (clip) => CREW_STUDY.clips[clip.split(":")[0]]?.sight === "deployed",
+        ),
+      );
+      crew.setSupportTarget(null);
+      return;
+    }
     // Reload/draw/holster author the free hand reaching a magazine or holster. Keep those
     // choreographed tracks free; solve the foregrip in ready/aim/fire and locomotion poses.
     crew.setSupportTarget(

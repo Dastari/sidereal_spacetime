@@ -44,6 +44,14 @@ describe("interior facing convention", () => {
       const interior = deriveInterior(prefab, 0, catalog);
       expect(interior.station, "pilot station").not.toBeNull();
       for (const s of interior.sockets) {
+        if (s.fixture) {
+          // Explicit workstations look in their authored operator direction; their
+          // role/position need not match the automatic bridge furniture recipe.
+          const authored = prefab.fixtures!.find((f) => f.id === s.fixture)!;
+          expect(authored, s.fixture).toBeDefined();
+          expect(s.facing, s.fixture).toBe(authored.facing);
+          continue;
+        }
         if (
           s.designId.endsWith("pilot-seat") ||
           s.designId.endsWith("command-console")

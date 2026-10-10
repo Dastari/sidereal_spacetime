@@ -25,6 +25,7 @@ import { prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   createPbrLightBudget,
+  PBR_LIGHT_LAYOUT_WAIT,
   pbrLightCapabilities,
   pbrLightLimit,
   protectPbrLight,
@@ -319,6 +320,8 @@ test("clamps detached prototype materials and dirty-marks their actual shader on
   const defines = new MaterialDefines();
   defines.markAsProcessed();
   source.subMeshes[0].setEffect({ isReady: () => true } as Effect, defines);
+  // The reordered layout is already linked, so it is adopted at once.
+  vi.spyOn(material, "isReadyForSubMesh").mockReturnValue(true);
   const dirty = vi.spyOn(source, "_markSubMeshesAsLightDirty");
   const task = local(scene, "room", 0),
     key = global(scene, 0);
@@ -471,6 +474,8 @@ test("changing the effective local selection invalidates frozen shared PBR effec
   scene.onBeforeRenderObservable.notifyObservers(scene);
   scene.onAfterRenderObservable.notifyObservers(scene);
   expect(material.isFrozen).toBe(true);
+  // The reordered layout is already linked, so it is adopted at once.
+  vi.spyOn(material, "isReadyForSubMesh").mockReturnValue(true);
   expect(budget.update(new Vector3(100, 0, 0))).toBe(true);
   freeze.prepare();
   scene.onBeforeRenderObservable.notifyObservers(scene);
@@ -704,4 +709,71 @@ test("standard and mixed-cap submaterials receive relevant stable prefixes", () 
   expect(mesh.lightSources).toEqual([far, middle, near]);
   expect(standard.maxSimultaneousLights).toBe(1);
   expect(material.maxSimultaneousLights).toBe(2);
+});
+
+test("a reordered prefix waits for its compiled layout and keeps its incumbents", () => {
+  const { scene, mesh, material, budget } = setup();
+  material.maxSimultaneousLights = 1;
+  const near = local(scene, "near", 0),
+    far = local(scene, "far", 100);
+  budget.update(focus);
+  expect(mesh.lightSources[0]).toBe(near);
+  mesh.subMeshes[0].setEffect(
+    { isReady: () => true } as Effect,
+    new MaterialDefines(),
+  );
+  // WebGL2 links a changed light layout asynchronously.
+  const ready = vi.spyOn(material, "isReadyForSubMesh").mockReturnValue(false),
+    dirty = vi.spyOn(mesh, "_markSubMeshesAsLightDirty");
+  const away = new Vector3(100, 0, 0);
+  for (let i = 0; i < 3; i++) expect(budget.update(away)).toBe(false);
+  expect(mesh.lightSources.slice(0, 2)).toEqual([near, far]);
+  expect(dirty).not.toHaveBeenCalled();
+  expect(ready).toHaveBeenCalledTimes(3);
+  // The probe is detached and saw the proposed order, not the bound one.
+  expect(ready.mock.calls[0][1]).not.toBe(mesh.subMeshes[0]);
+  expect(mesh.subMeshes).toHaveLength(1);
+  // Returning before the layout links withdraws the proposal entirely.
+  expect(budget.update(focus)).toBe(false);
+  expect(ready).toHaveBeenCalledTimes(3);
+  ready.mockReturnValue(true);
+  expect(budget.update(away)).toBe(true);
+  expect(mesh.lightSources.slice(0, 2)).toEqual([far, near]);
+  expect(dirty).toHaveBeenCalledTimes(1);
+  expect(budget.update(away)).toBe(false);
+  budget.dispose();
+  mesh.subMeshes[0].setEffect(null);
+});
+
+test("a layout that never links falls back to the stock swap, and cap changes never wait", () => {
+  const { scene, mesh, material, budget } = setup();
+  material.maxSimultaneousLights = 1;
+  const near = local(scene, "near", 0),
+    far = local(scene, "far", 100);
+  budget.update(focus);
+  const ready = vi.spyOn(material, "isReadyForSubMesh").mockReturnValue(false);
+  const away = new Vector3(100, 0, 0);
+  // A receiver that has never drawn has no linked shader to protect.
+  expect(budget.update(away)).toBe(true);
+  expect(budget.update(focus)).toBe(true);
+  expect(ready).not.toHaveBeenCalled();
+  mesh.subMeshes[0].setEffect(
+    { isReady: () => true } as Effect,
+    new MaterialDefines(),
+  );
+  for (let i = 0; i < PBR_LIGHT_LAYOUT_WAIT; i++)
+    expect(budget.update(away)).toBe(false);
+  expect(mesh.lightSources[0]).toBe(near);
+  expect(budget.update(away)).toBe(true);
+  expect(mesh.lightSources[0]).toBe(far);
+  // A changed cap needs its own shader whatever order the lights are in.
+  ready.mockClear();
+  material.maxSimultaneousLights = 2;
+  expect(budget.update(away)).toBe(true);
+  material.maxSimultaneousLights = 1;
+  expect(budget.update(focus)).toBe(true);
+  expect(mesh.lightSources[0]).toBe(near);
+  expect(ready).not.toHaveBeenCalled();
+  budget.dispose();
+  mesh.subMeshes[0].setEffect(null);
 });

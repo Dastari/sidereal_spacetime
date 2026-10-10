@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
+import { WAYFARER_ACCESS_PHYSICAL } from "@sidereal/content/wayfarer-access-profile";
 import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -9,6 +10,7 @@ import { transformPoint } from "./frames";
 import {
   authoredInstanceMatrix,
   authoredMaterialIdentity,
+  authoredThemeSlot,
   readAuthoredGlb,
   loadAuthoredStudy,
   type AuthoredGlbDocument,
@@ -168,6 +170,61 @@ describe("authored material pooling", () => {
           extensions: { KHR_materials_transmission: { transmissionFactor: 1 } },
         },
         "glass",
+      ),
+    ).not.toBe(key);
+  });
+  it("pools Blender duplicate aliases only when every rendering property and family matches", () => {
+    const source = textured(0, [1, 2, 3]);
+    const material = {
+      name: "trim.001",
+      pbrMetallicRoughness: {
+        baseColorFactor: [0.1, 0.2, 0.3, 1],
+        roughnessFactor: 0.6,
+      },
+      extras: { sr_family: "plastic-dark" },
+    };
+    const key = authoredMaterialIdentity(source, material, "plastic-dark");
+    expect(
+      authoredMaterialIdentity(
+        source,
+        { ...material, name: "trim.002" },
+        "plastic-dark",
+      ),
+    ).toBe(key);
+    for (const changed of [
+      { ...material, alphaMode: "BLEND" },
+      { ...material, doubleSided: true },
+      {
+        ...material,
+        pbrMetallicRoughness: {
+          ...material.pbrMetallicRoughness,
+          roughnessFactor: 0.7,
+        },
+      },
+      { ...material, extras: { sr_family: "plastic-dark", mutable: true } },
+      {
+        ...material,
+        extensions: {
+          KHR_materials_emissive_strength: { emissiveStrength: 2 },
+        },
+      },
+    ])
+      expect(
+        authoredMaterialIdentity(source, changed, "plastic-dark"),
+      ).not.toBe(key);
+    expect(authoredMaterialIdentity(source, material, "metal")).not.toBe(key);
+    expect(
+      authoredMaterialIdentity(
+        source,
+        { ...material, name: "primary" },
+        "plastic-dark",
+      ),
+    ).not.toBe(key);
+    expect(
+      authoredMaterialIdentity(
+        source,
+        { ...material, name: "trim.1" },
+        "plastic-dark",
       ),
     ).not.toBe(key);
   });
@@ -624,4 +681,154 @@ it("accounts for clipped native placement ranges and disposes an entirely remove
     scene.dispose();
     engine.dispose();
   }
+});
+
+it("keeps native access geometry and provenance while pooling Blender material copies", async () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  const piece = {
+    ...WAYFARER_ACCESS_PHYSICAL.pieces.find((p) => p.id === "native.flight")!,
+    frame: "piece-local" as const,
+  };
+  const bytes = new Uint8Array(
+    readFileSync(
+      new URL(
+        "../../../../assets/runtime/wayfarer-access/r002/native.flight.glb",
+        import.meta.url,
+      ),
+    ),
+  );
+  const source = readAuthoredGlb(bytes, piece.sha256);
+  const candidate = await loadAuthoredStudy(
+    scene,
+    [piece],
+    [
+      {
+        object: "native-flight",
+        piece: piece.id,
+        role: "structure",
+        matrix: identity,
+      },
+    ],
+    WAYFARER_ACCESS_PHYSICAL.palette,
+    [0, 0],
+    async () => bytes,
+  );
+  try {
+    expect(candidate.report.placedTriangles).toBe(piece.triangles);
+    const definitions = source.json.materials as { name: string }[];
+    expect(definitions.length).toBeGreaterThan(200);
+    expect(
+      candidate.meshes.filter(
+        (mesh) => !mesh.material!.needAlphaBlendingForMesh(mesh),
+      ).length,
+    ).toBeLessThan(30);
+    const originalNames = new Set(definitions.map((d) => d.name));
+    const ranges = candidate.meshes.flatMap(
+      (mesh) => mesh.metadata.authoredStudy.placementRanges,
+    );
+    expect(new Set(ranges.map((range) => range.material))).toEqual(
+      originalNames,
+    );
+    expect(ranges.reduce((n, range) => n + range.indexCount, 0)).toBe(
+      piece.triangles * 3,
+    );
+    expect(
+      ranges.every(
+        (range) => range.object === "native-flight" && range.piece === piece.id,
+      ),
+    ).toBe(true);
+    expect(
+      candidate.meshes.every(
+        (mesh) =>
+          mesh.isVerticesDataPresent("normal") &&
+          mesh.isVerticesDataPresent("uv"),
+      ),
+    ).toBe(true);
+  } finally {
+    candidate.dispose();
+    scene.dispose();
+    engine.dispose();
+  }
+});
+
+it("preserves independent theme policies for otherwise identical Blender aliases", async () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  const piece = {
+    ...WAYFARER_ACCESS_PHYSICAL.pieces.find((p) => p.id === "native.flight")!,
+    frame: "piece-local" as const,
+  };
+  const bytes = new Uint8Array(
+    readFileSync(
+      new URL(
+        "../../../../assets/runtime/wayfarer-access/r002/native.flight.glb",
+        import.meta.url,
+      ),
+    ),
+  );
+  const source = readAuthoredGlb(bytes, piece.sha256);
+  const definitions = source.json.materials as {
+    name: string;
+    extras: { sr_family: string };
+  }[];
+  const names = definitions
+    .filter((d) => /^primary\.\d{3,}$/.test(d.name))
+    .slice(0, 2);
+  expect(names).toHaveLength(2);
+  const candidate = await loadAuthoredStudy(
+    scene,
+    [piece],
+    [
+      {
+        object: "theme-policy",
+        piece: piece.id,
+        role: "structure",
+        matrix: identity,
+      },
+    ],
+    {
+      ...WAYFARER_ACCESS_PHYSICAL.palette,
+      [names[0].name]: {
+        family: names[0].extras.sr_family,
+        sourceSlotName: "primary",
+      },
+      [names[1].name]: {
+        family: names[1].extras.sr_family,
+        sourceSlotName: "accent",
+      },
+    },
+    [0, 0],
+    async () => bytes,
+  );
+  try {
+    const first = candidate.meshes.find(
+      (mesh) => mesh.material?.name === names[0].name,
+    )!;
+    const second = candidate.meshes.find(
+      (mesh) => mesh.material?.name === names[1].name,
+    )!;
+    expect(first).toBeDefined();
+    expect(second).toBeDefined();
+    expect(first.material).not.toBe(second.material);
+    (first.material as PBRMaterial).albedoColor.set(1, 0, 0);
+    expect((second.material as PBRMaterial).albedoColor.r).not.toBe(1);
+  } finally {
+    candidate.dispose();
+    scene.dispose();
+    engine.dispose();
+  }
+});
+
+it("uses the same effective theme fallback policy for pooling and template edits", () => {
+  expect(authoredThemeSlot("primary", {})).toBe("primary");
+  expect(authoredThemeSlot("primary.001", {})).toBeUndefined();
+  expect(authoredThemeSlot("emit_a@high", {})).toBe("emit_a");
+  expect(
+    authoredThemeSlot("trim.002", {
+      "trim.002": { family: "plastic-dark", sourceSlotName: "accent" },
+    }),
+  ).toBe("accent");
 });

@@ -113,6 +113,8 @@ export function updateMeta(
     >
   >,
 ): Doc {
+  if (patch.sizeClass !== undefined && patch.sizeClass !== doc.sizeClass)
+    throw Error("Blueprint size class is fixed at creation");
   const keys = Object.keys(patch) as (keyof typeof patch)[];
   if (keys.every((k) => doc[k] === patch[k])) return doc;
   return { ...doc, ...patch };
@@ -685,6 +687,13 @@ const withFixtures = (doc: Doc, fixtures: PrefabFixture[]): Doc => {
 export const FIXTURE_DESIGN_LABELS: Record<PrefabFixtureDesign, string> = {
   "shipyard.equipment.wall-locker": "Wall locker",
   "cargo.standard.medium": "Storage crate",
+  "shipyard.equipment.medical-bed": "Medical bed",
+  "shipyard.equipment.lounge-sofa": "Lounge sofa",
+  "pale-studless.table.standard": "Table",
+  "pale-studless.console.standard": "Work console",
+  "shipyard.equipment.bridge-bank": "Instrument bank",
+  "shipyard.equipment.command-console": "Command console",
+  "pale-studless.kitchen.standard": "Kitchen unit",
 };
 
 /** Storage tool: the footprint centred on the cursor, min corner on the 0.05 m grid. */
