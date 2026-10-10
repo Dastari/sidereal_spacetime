@@ -8,6 +8,8 @@ vi.mock("@babylonjs/core/Materials/Textures/dynamicTexture", () => ({
 }));
 vi.mock("@babylonjs/core/Layers/layer", () => ({
   Layer: class {
+    onBeforeRenderObservable = { add() {} };
+    onAfterRenderObservable = { add() {} };
     dispose() {}
   },
 }));
@@ -40,6 +42,7 @@ function setup() {
     style: {},
   };
   const scene = {
+    getEngine: () => ({ currentViewport: null, setViewport() {} }),
     onBeforeRenderObservable: { add() {}, remove() {} },
     onDisposeObservable: { add() {} },
   };
@@ -235,4 +238,65 @@ test("loading surface blocks window keyboard shortcuts until inert is cleared", 
   f.setInert(false);
   f.key("v", "KeyV");
   expect(f.ui.shortcut).toHaveBeenCalledExactlyOnceWith("KeyV");
+});
+
+test("clipboard paste preserves selection and length limits on the actual canvas input", async () => {
+  const f = setup(),
+    change = vi.fn();
+  let resolve!: (text: string) => void;
+  vi.stubGlobal("navigator", {
+    clipboard: {
+      readText: () =>
+        new Promise<string>((done) => {
+          resolve = done;
+        }),
+    },
+  });
+  f.ui.hits = [
+    {
+      id: "transfer",
+      label: "Code",
+      rect: { x: 0, y: 0, w: 200, h: 40 },
+      edit: { value: "old", max: 6, change },
+    },
+  ];
+  f.ui.focus = "transfer";
+  f.ui.keyboard = true;
+  f.key("a", "KeyA", true);
+  f.key("v", "KeyV", true);
+  resolve("abcdefghi\n");
+  await Promise.resolve();
+  expect(change).toHaveBeenLastCalledWith("abcdef");
+});
+test("late clipboard reads cannot change a replaced, blurred or disposed field", async () => {
+  for (const reason of ["focus", "replacement", "disposed"]) {
+    const f = setup(),
+      change = vi.fn();
+    let resolve!: (text: string) => void;
+    vi.stubGlobal("navigator", {
+      clipboard: {
+        readText: () =>
+          new Promise<string>((done) => {
+            resolve = done;
+          }),
+      },
+    });
+    f.ui.hits = [
+      {
+        id: "transfer",
+        label: "Code",
+        rect: { x: 0, y: 0, w: 200, h: 40 },
+        edit: { value: "", max: 66, change },
+      },
+    ];
+    f.ui.focus = "transfer";
+    f.ui.keyboard = true;
+    f.key("v", "KeyV", true);
+    if (reason === "focus") f.ui.focus = "other";
+    if (reason === "replacement") f.ui.hits[0].edit!.change = vi.fn();
+    if (reason === "disposed") f.ui.dispose();
+    resolve("a".repeat(64));
+    await Promise.resolve();
+    expect(change).not.toHaveBeenCalled();
+  }
 });

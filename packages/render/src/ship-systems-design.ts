@@ -4,6 +4,7 @@ import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
+import { Viewport } from "@babylonjs/core/Maths/math.viewport";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -112,9 +113,10 @@ export function createSystemsDesignView(
     onStatus: (message: string) => void;
     onError: (message: string) => void;
   },
+  existing?: { engine: Engine; scene: Scene },
 ) {
   return withSceneCoordinateContext(undefined, () =>
-    buildView(canvas, doc, catalogRevision, model, callbacks),
+    buildView(canvas, doc, catalogRevision, model, callbacks, existing),
   );
 }
 function buildView(
@@ -127,14 +129,17 @@ function buildView(
     onStatus: (message: string) => void;
     onError: (message: string) => void;
   },
+  existing?: { engine: Engine; scene: Scene },
 ) {
-  const engine = new Engine(canvas, true, {
-    preserveDrawingBuffer: true,
-    stencil: true,
-    useHighPrecisionMatrix: true,
-  });
+  const engine =
+    existing?.engine ??
+    new Engine(canvas, true, {
+      preserveDrawingBuffer: true,
+      stencil: true,
+      useHighPrecisionMatrix: true,
+    });
   engine.setHardwareScalingLevel(Math.max(1, window.devicePixelRatio / 1.5));
-  const scene = new Scene(engine);
+  const scene = existing?.scene ?? new Scene(engine);
   scene.useRightHandedSystem = true;
   scene.clearColor = new Color4(0.045, 0.075, 0.115, 1);
   const environment = new HDRCubeTexture(
@@ -162,6 +167,7 @@ function buildView(
     new Vector3(0, -0.5, 0),
     scene,
   );
+  scene.activeCamera = camera;
   camera.minZ = 0.05;
   camera.maxZ = 500;
   camera.lowerRadiusLimit = 2;
@@ -483,6 +489,19 @@ function buildView(
     }
   }
   return {
+    scene,
+    viewport(
+      rect: { x: number; y: number; w: number; h: number },
+      width: number,
+      height: number,
+    ) {
+      camera.viewport = new Viewport(
+        rect.x / width,
+        1 - (rect.y + rect.h) / height,
+        rect.w / width,
+        rect.h / height,
+      );
+    },
     ready,
     select(id: string | undefined) {
       selected = id;

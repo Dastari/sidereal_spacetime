@@ -1,6 +1,6 @@
 {
   "name": "sidereal-spacetime",
-  "version": "0.18.1",
+  "version": "0.19.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -18,7 +18,7 @@
     "build": "npm run world:build && npm run world:generate && npm run build:client && npm run build:dashboard",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --maxWorkers=2",
-    "check": "npm run typecheck && npm test && python3 scripts/check_docs.py",
+    "check": "npm run typecheck && npm test && python3 scripts/check_docs.py && node scripts/check_canvas_ui.mjs && node --test scripts/canvas-ui-rules.test.mjs",
     "world:build": "python3 scripts/dev.py build-world",
     "world:generate": "python3 scripts/dev.py generate",
     "world:publish": "python3 scripts/dev.py publish",

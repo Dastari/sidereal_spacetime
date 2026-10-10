@@ -252,7 +252,7 @@ export function createComponentGallery(ui: CanvasUI, onClose?: () => void) {
         add(110, (r) => {
           ui.panel(r);
           ui.paragraph(
-            "Canvas text editing is a basic example. Account forms keep native browser editing and accessibility.",
+            "Canvas inputs own keyboard editing and clipboard actions. Native credentials remain with the OAuth provider.",
             { ...r, x: r.x + 12, y: r.y + 12, w: r.w - 24 },
             14,
           );
@@ -288,6 +288,64 @@ export function createComponentGallery(ui: CanvasUI, onClose?: () => void) {
               example,
               { selected: i === 0, disabled: i === 2 },
             );
+        });
+        add(175, (r) => {
+          const viewport = {
+            x: r.x + 12,
+            y: r.y + 54,
+            w: r.w - 24,
+            h: r.h - 68,
+          };
+          ui.viewportWindow(
+            "gallery-viewport",
+            "Viewport window",
+            r,
+            viewport,
+            example,
+          );
+          ui.text(
+            "Transparent3D workspace sample",
+            viewport.x + 6,
+            viewport.y + 12,
+            14,
+            palette.muted,
+            viewport.w - 12,
+          );
+        });
+        add(155, (r) => {
+          ui.panel(r);
+          ui.text("Equipment list", r.x + 12, r.y + 10, 20);
+          ui.listButton(
+            "gallery-list-active",
+            "Selected equipment",
+            "Elevation and slot detail",
+            { x: r.x + 12, y: r.y + 42, w: r.w - 24, h: 48 },
+            example,
+            true,
+          );
+          ui.listButton(
+            "gallery-list-rest",
+            "Equipment",
+            "Resting list control",
+            { x: r.x + 12, y: r.y + 98, w: r.w - 24, h: 48 },
+            example,
+          );
+        });
+        add(150, (r) => {
+          ui.panel(r);
+          ui.text("Clipped content", r.x + 12, r.y + 10, 20);
+          ui.scrollRegion(
+            { x: r.x + 12, y: r.y + 42, w: r.w - 24, h: 92 },
+            () => {
+              ui.listButton(
+                "gallery-clip",
+                "Partial row",
+                "Hit area follows visible content",
+                { x: r.x + 12, y: r.y + 108, w: r.w - 24, h: 48 },
+                example,
+              );
+            },
+          );
         });
       } else {
         for (const [label, color] of [

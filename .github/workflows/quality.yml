@@ -12,10 +12,12 @@ permissions:
 jobs:
   source:
     runs-on: ubuntu-latest
+    env:
+      GIT_LFS_SKIP_SMUDGE: "1"
     steps:
       - uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
@@ -23,6 +25,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: .runtime/ci-lfs
+          key: ci-lfs-${{ hashFiles('assets/ci/lfs-objects-r001.json') }}
+      - run: python scripts/prepare_ci_lfs_assets.py
       - run: python scripts/prepare_ci_assets.py
       - run: npm ci
       - run: python -m pip install -r scripts/art_library/requirements.txt
@@ -30,7 +37,8 @@ jobs:
       - run: .runtime/construction-enclosure-python/bin/python -m pip install -r scripts/geometry_tests/requirements.txt
       - run: npm run typecheck
       - run: npm test
-      - run: node --test scripts/quality-rules.test.mjs
+      - run: node --test scripts/quality-rules.test.mjs scripts/canvas-ui-rules.test.mjs
+      - run: node scripts/check_canvas_ui.mjs
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test:python

@@ -22,6 +22,8 @@ vi.mock("@babylonjs/core/Materials/Textures/dynamicTexture", () => ({
 }));
 vi.mock("@babylonjs/core/Layers/layer", () => ({
   Layer: class {
+    onBeforeRenderObservable = { add() {} };
+    onAfterRenderObservable = { add() {} };
     dispose() {}
   },
 }));
@@ -53,6 +55,7 @@ test("repainted pending state prevents a held pointer from invoking a stale acti
     removeEventListener() {},
   };
   const scene = {
+    getEngine: () => ({ currentViewport: null, setViewport() {} }),
     onBeforeRenderObservable: { add() {}, remove() {} },
     onDisposeObservable: { add() {} },
   };
