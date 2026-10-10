@@ -30,11 +30,13 @@ declare global {
     __prefabError?: string;
     __prefabWorld?: unknown;
     __prefabPerf?: ReturnType<typeof createPerformanceProbe>["report"];
+    __prefabLoadStage?: string;
   }
 }
 
 const q = new URLSearchParams(location.search);
 const perf = q.get("perf") === "1";
+if (perf) window.__prefabLoadStage = "entry";
 // Use only after the owner confirms the embedded preview is visible/focused.
 // Electron can report DOM focus false in its embedded view; never infer that
 // confirmation from a running animation loop. Other readiness/throttle gates stay.
@@ -128,6 +130,11 @@ async function main() {
         (window as unknown as { __prefabScene?: Scene }).__prefabScene = s;
       },
       onLoadError: (m) => (window.__prefabError = m),
+      onLoadStage: perf
+        ? (stage) => {
+            window.__prefabLoadStage = stage;
+          }
+        : undefined,
       onFrameDiagnostics: perf
         ? (sample) => probe?.recordFrame(sample)
         : undefined,
@@ -213,6 +220,7 @@ async function main() {
       }
     });
   const instrumentation = new SceneInstrumentation(scene!);
+  if (perf) window.__prefabLoadStage = "settling";
   const engine = scene!.getEngine();
   const warmup = Math.max(6, Math.min(120, Number(q.get("frames")) || 30));
   const settle = 3;
@@ -294,6 +302,10 @@ async function main() {
   if (q.get("freeze") === "1") engine.stopRenderLoop();
   window.__prefabReady = true;
   if (perf) {
+    window.__prefabLoadStage = "ready";
+    // Warm the existing on-demand diagnostics before sampling so actual
+    // quality/debug settings are available in the completed provenance record.
+    world.getDiagnostics(true);
     const bounded = (
       name: string,
       fallback: number,
@@ -342,6 +354,13 @@ async function main() {
       },
       ready: () => window.__prefabReady === true && !window.__prefabError,
       focused: hostFocusConfirmed ? () => true : undefined,
+      completed: () => {
+        void fetch("/__prefab-perf-result", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(probe?.report),
+        }).catch(() => {});
+      },
       diagnostics: () => world.getDiagnostics(true),
       settings: () => ({
         backend: world.getRenderBackend(),

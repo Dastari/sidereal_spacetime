@@ -93,6 +93,9 @@ test("waits for focus and readiness, discards interrupted samples and records tw
     ready: () => ready,
     diagnostics: () => undefined,
     settings: () => ({}),
+    completed: () => {
+      throw new Error("collector unavailable");
+    },
   });
   function frame() {
     engine.onBeginFrameObservable.notifyObservers(engine);
@@ -120,6 +123,8 @@ test("waits for focus and readiness, discards interrupted samples and records tw
     expect(probe.report.repeatability.frameCpuMs.within3Percent).toBe(true);
     probe.report.restart();
     expect(probe.report.runs).toHaveLength(0);
+    for (let i = 0; i < 6; i++) frame();
+    expect(probe.report.status).toBe("complete");
   } finally {
     probe.dispose();
     vi.unstubAllGlobals();

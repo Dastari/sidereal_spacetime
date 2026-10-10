@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { join, normalize, sep } from "node:path";
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 
 const repo = fileURLToPath(new URL("../..", import.meta.url));
@@ -68,6 +68,68 @@ function resolveAsset(url: string): string | null {
 function repositoryAssets(): Plugin {
   const mount = (server: ViteDevServer | PreviewServer) => {
     server.middlewares.use((req, res, next) => {
+      // Private, opt-in local result collection. Never accepts a client path;
+      // the operator supplies an outside-repository directory at server start.
+      if (req.url === "/__prefab-perf-result" && req.method === "POST") {
+        const directory = process.env.SIDEREAL_PREFAB_PERF_RESULTS_DIR;
+        if (!directory) {
+          res.statusCode = 503;
+          res.end("collection disabled");
+          return;
+        }
+        let body = "",
+          tooLarge = false;
+        req.on("data", (chunk: Buffer) => {
+          body += chunk.toString("utf8");
+          if (Buffer.byteLength(body) > 65536) {
+            tooLarge = true;
+            body = "";
+          }
+        });
+        req.on("end", () => {
+          try {
+            if (tooLarge) {
+              res.statusCode = 413;
+              res.end();
+              return;
+            }
+            const report = JSON.parse(body);
+            if (
+              report.status !== "complete" ||
+              report.runs?.length !== 2 ||
+              !/^[0-9a-f]{40}$/.test(report.metadata?.source?.head ?? "")
+            ) {
+              res.statusCode = 400;
+              res.end("not a completed probe");
+              return;
+            }
+            const key = createHash("sha256")
+              .update(body)
+              .digest("hex")
+              .slice(0, 16);
+            mkdirSync(directory, { recursive: true });
+            writeFileSync(
+              join(
+                directory,
+                `probe-${report.metadata.source.head.slice(0, 9)}-${key}.json`,
+              ),
+              JSON.stringify(report, null, 2),
+              { flag: "wx" },
+            );
+            res.statusCode = 201;
+            res.end("recorded");
+          } catch (error) {
+            if ((error as NodeJS.ErrnoException).code === "EEXIST") {
+              res.statusCode = 200;
+              res.end("already recorded");
+            } else {
+              res.statusCode = 400;
+              res.end("invalid result");
+            }
+          }
+        });
+        return;
+      }
       if (!req.url?.startsWith("/assets/")) return next();
       const file = resolveAsset(req.url);
       if (!file) {

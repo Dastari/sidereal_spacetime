@@ -85,6 +85,7 @@ export function createPerformanceProbe(
     focused?: () => boolean;
     diagnostics: () => RenderDiagnostics | undefined;
     settings: () => unknown;
+    completed?: () => void;
   },
 ) {
   const engine = scene.getEngine();
@@ -294,6 +295,12 @@ export function createPerformanceProbe(
     report.metadata.passNames = engine.getRenderPassNames();
     report.status = "complete";
     collecting = false;
+    // Optional local collection must never break the renderer if unavailable.
+    try {
+      options.completed?.();
+    } catch {
+      /* caller can inspect the report */
+    }
   });
   function dispose() {
     if (disposed) return;
