@@ -107,6 +107,7 @@ test("waits for focus and readiness, discards interrupted samples and records tw
     ready = false;
     frame();
     expect(probe.report.status).toBe("waiting");
+    expect(probe.report.reason).toContain("harness not ready");
     ready = true;
     frame();
     frame();
@@ -114,6 +115,12 @@ test("waits for focus and readiness, discards interrupted samples and records tw
     focused = false;
     frame();
     expect(probe.report.progress).toBe(0);
+    expect(probe.report.reason).toContain("page not focused");
+    expect(probe.report.interruptions.at(-1)).toMatchObject({
+      reason: "page not focused",
+      sampledFrames: 1,
+      completedRuns: 0,
+    });
     focused = true;
     for (let i = 0; i < 6; i++) frame();
     expect(probe.report.status).toBe("complete");
@@ -121,6 +128,12 @@ test("waits for focus and readiness, discards interrupted samples and records tw
     expect(probe.report.runs[0].metrics.renderCpuMs.median).toBe(4);
     expect(probe.report.runs[0].metrics.drawCalls.median).toBe(7);
     expect(probe.report.repeatability.frameCpuMs.within3Percent).toBe(true);
+    // Inspecting the finished result in DevTools must never invalidate it.
+    focused = false;
+    frame();
+    expect(probe.report.status).toBe("complete");
+    expect(probe.report.runs).toHaveLength(2);
+    focused = true;
     probe.report.restart();
     expect(probe.report.runs).toHaveLength(0);
     for (let i = 0; i < 6; i++) frame();
@@ -166,14 +179,22 @@ test("explicit host focus retains hidden, stalled and zero-delta frame guards", 
     documentState.visibilityState = "hidden";
     frame();
     expect(probe.report.progress).toBe(0);
+    expect(probe.report.reason).toContain("tab hidden");
     documentState.visibilityState = "visible";
     step = 1000;
     frame();
     expect(probe.report.status).toBe("waiting");
+    expect(probe.report.reason).toContain("frame interval exceeds 250ms");
     step = 20;
     delta = 0;
     frame();
     expect(probe.report.status).toBe("waiting");
+    expect(probe.report.reason).toContain("zero engine frame delta");
+    expect(probe.report.blockedFrames).toMatchObject({
+      "tab hidden": 1,
+      "frame interval exceeds 250ms": 1,
+      "zero engine frame delta": 1,
+    });
     delta = 20;
     for (let i = 0; i < 6; i++) frame();
     expect(probe.report.status).toBe("complete");

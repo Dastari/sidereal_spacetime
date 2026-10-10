@@ -31,6 +31,7 @@ declare global {
     __prefabWorld?: unknown;
     __prefabPerf?: ReturnType<typeof createPerformanceProbe>["report"];
     __prefabLoadStage?: string;
+    __prefabPerfUpload?: { status: string; error?: string };
   }
 }
 
@@ -59,6 +60,53 @@ canvas.width = width;
 canvas.height = height;
 canvas.style.width = `${width}px`;
 canvas.style.height = `${height}px`;
+
+// The opt-in benchmark needs visible progress: opening DevTools to check an
+// unfinished run takes page focus and correctly discards that partial run.
+if (perf) {
+  const progress = document.createElement("div");
+  progress.id = "performance-probe-status";
+  progress.setAttribute("role", "status");
+  Object.assign(progress.style, {
+    position: "fixed",
+    left: "12px",
+    top: "12px",
+    padding: "8px",
+    color: "#cfd8ff",
+    background: "rgba(18, 10, 36, 0.85)",
+    font: "13px/1.4 ui-monospace, monospace",
+    whiteSpace: "pre-wrap",
+    pointerEvents: "none",
+    maxWidth: "calc(100vw - 40px)",
+  });
+  document.body.append(progress);
+  const updateProgress = () => {
+    const report = window.__prefabPerf;
+    let text = `Performance probe · Loading: ${window.__prefabLoadStage}`;
+    if (report?.status === "waiting")
+      text = `Performance probe · ${report.reason}\nClick the ship view and keep this tab in front.`;
+    else if (report?.status === "warming")
+      text = `Performance probe · Run ${report.runs.length + 1}/2 · Warmup ${report.warmupProgress}/${report.config.warmup}`;
+    else if (report?.status === "sampling")
+      text = `Performance probe · Run ${report.runs.length + 1}/2 · Frames ${report.progress}/${report.config.frames}`;
+    else if (report?.status === "complete") {
+      const upload = window.__prefabPerfUpload;
+      text =
+        upload?.status === "saved"
+          ? "Performance probe · Result saved. Return to the chat."
+          : upload?.status === "failed"
+            ? `Performance probe · Run complete; upload failed: ${upload.error}.\nThe result remains on window.__prefabPerf.`
+            : "Performance probe · Run complete; sending result…";
+    }
+    if (progress.textContent !== text) progress.textContent = text;
+  };
+  updateProgress();
+  const timer = window.setInterval(updateProgress, 500);
+  import.meta.hot?.dispose(() => {
+    window.clearInterval(timer);
+    progress.remove();
+  });
+}
 
 async function main() {
   const construction = prefabConstructionDocument(
@@ -355,11 +403,23 @@ async function main() {
       ready: () => window.__prefabReady === true && !window.__prefabError,
       focused: hostFocusConfirmed ? () => true : undefined,
       completed: () => {
+        window.__prefabPerfUpload = { status: "uploading" };
         void fetch("/__prefab-perf-result", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(probe?.report),
-        }).catch(() => {});
+        })
+          .then((response) => {
+            window.__prefabPerfUpload = response.ok
+              ? { status: "saved" }
+              : { status: "failed", error: `HTTP ${response.status}` };
+          })
+          .catch((error) => {
+            window.__prefabPerfUpload = {
+              status: "failed",
+              error: String(error),
+            };
+          });
       },
       diagnostics: () => world.getDiagnostics(true),
       settings: () => ({

@@ -119,6 +119,14 @@ export function createPerformanceProbe(
     progress: 0,
     warmupProgress: 0,
     documentFocused: false,
+    blockedFrames: {} as Record<string, number>,
+    interruptions: [] as {
+      reason: string;
+      frameMs: number;
+      warmupFrames: number;
+      sampledFrames: number;
+      completedRuns: number;
+    }[],
     runs,
     repeatability: {} as Record<
       string,
@@ -203,19 +211,34 @@ export function createPerformanceProbe(
     passes = {};
     collecting = false;
     if (report.status === "complete" || disposed) return;
-    if (
-      document.visibilityState !== "visible" ||
-      !(options.focused?.() ?? report.documentFocused) ||
-      engine.getDeltaTime() === 0 ||
-      frameMs > 250 ||
-      !options.ready() ||
-      (warmed === 0 && !scene.isReady()) ||
-      scene.getWaitingItemsCount() > 0
-    ) {
+    // Preserve the guards and their short-circuit order, but name the condition
+    // so a failed foreground capture can be diagnosed without another blind run.
+    let blocked = "";
+    if (document.visibilityState !== "visible") blocked = "tab hidden";
+    else if (!(options.focused?.() ?? report.documentFocused))
+      blocked = "page not focused";
+    else if (engine.getDeltaTime() === 0) blocked = "zero engine frame delta";
+    else if (frameMs > 250) blocked = "frame interval exceeds 250ms";
+    else if (!options.ready()) blocked = "harness not ready";
+    else if (warmed === 0 && !scene.isReady())
+      blocked = "scene shaders or render targets not ready";
+    else if (scene.getWaitingItemsCount() > 0) blocked = "assets still pending";
+    if (blocked) {
+      report.blockedFrames[blocked] = (report.blockedFrames[blocked] ?? 0) + 1;
+      const reason = `Waiting: ${blocked}; interrupted partial run discarded`;
+      if (report.status !== "waiting" || report.reason !== reason) {
+        report.interruptions.push({
+          reason: blocked,
+          frameMs,
+          warmupFrames: report.warmupProgress,
+          sampledFrames: report.progress,
+          completedRuns: runs.length,
+        });
+        if (report.interruptions.length > 16) report.interruptions.shift();
+      }
       report.restart();
       report.status = "waiting";
-      report.reason =
-        "Waiting for a ready, visible, focused, unthrottled view; interrupted partial run discarded";
+      report.reason = reason;
       return;
     }
     const nextView = view(),
