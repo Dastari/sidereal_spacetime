@@ -33,7 +33,7 @@ it("composites the existing HUD only after camera effects, without a second laye
     style: {},
   } as unknown as HTMLCanvasElement;
   const ui = new CanvasUI(canvas, scene),
-    draw = vi.spyOn(ui.layer, "render").mockImplementation(() => {});
+    draw = vi.spyOn(ui.layer!, "render").mockImplementation(() => {});
   const component = scene._getComponent("Layer") as unknown as {
     _drawCameraForegroundWithPostProcessing(camera: FreeCamera): void;
     _drawCameraForegroundWithoutPostProcessing(camera: FreeCamera): void;

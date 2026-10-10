@@ -1,3 +1,4 @@
+import type { CanvasServiceView } from "./ship-systems";
 import { logicalUiScale } from "@sidereal/ui/theme";
 import { createComponentGallery } from "./component-gallery";
 import { onboardingCopy } from "./onboarding-copy";
@@ -75,7 +76,7 @@ import {
 } from "./layout";
 export { gameplayIntent } from "./layout";
 export { isEditableTarget } from "./toolkit";
-/** A DOM service panel the system menu can open (account, ship systems…). */
+/** A canvas service window the system menu can open (account, ship systems…). */
 export type MenuService = { id: string; label: string };
 export const MENU_TABS = [
   "Controls",
@@ -87,10 +88,12 @@ export const MENU_TABS = [
 ] as const;
 export type MenuTab = (typeof MENU_TABS)[number];
 export type GameUIState = {
+  zones?: readonly string[];
+  contextNotice?: { title: string; lines: readonly string[] };
   accountKind?: "oidc" | "development";
   /** Account tab: signed-in name, status line and whether a character transfer applies. */
   account?: { name: string; note: string; transfer: boolean };
-  /** Vessel tab: DOM ship service panels currently available. */
+  /** Vessel tab: canvas ship service windows currently available. */
   vesselServices?: readonly MenuService[];
   sharedEntry?: SharedEntryState;
   characterAppearance?: CrewAppearance;
@@ -168,9 +171,10 @@ export type GameUIActions = {
   localLightLimit?: (limit: LocalLightLimit) => void;
   combat?: () => void;
   cruise?: () => void;
-  /** Open a DOM service panel by id ("account", "ship-systems", …). */
+  /** Open a canvas service window by id ("account", "ship-systems", …). */
   openService?: (id: string) => void;
-  /** Close the open DOM service panel; true when one was open. */
+  readService?: () => CanvasServiceView | undefined;
+  /** Close the open canvas service window; true when one was open. */
   closeService?: () => boolean;
   signOut?: () => void;
   inventory?: InventoryActions;
@@ -279,6 +283,7 @@ export function createGameUI(
     maxScroll = 0;
   let showGroundLabels = true;
   ui.shortcut = (code) => {
+    if (actions.readService?.()) return false;
     if (componentGallery.isOpen()) return false;
     if (code === "KeyZ" && state.hasActor && !menu) {
       showGroundLabels = !showGroundLabels;
@@ -328,6 +333,7 @@ export function createGameUI(
     return false;
   };
   ui.scroll = (delta, x, y, horizontalDelta) => {
+    if (actions.readService?.()?.scroll(delta, x, y)) return ui.invalidate();
     if (componentGallery.scroll(delta)) return;
     if (diagnostics.scroll(delta, x, y)) return;
     if (!menu && objectDetails?.scroll(delta, x, y)) return;
@@ -354,6 +360,7 @@ export function createGameUI(
   const change = () => ui.invalidate();
   const drawFeedback = createCombatFeedback();
   ui.escape = () => {
+    if (actions.readService?.()?.close?.()) return change();
     if (componentGallery.isOpen()) {
       componentGallery.close();
       menu = true;
@@ -392,9 +399,51 @@ export function createGameUI(
       `${state.modelStatus}. Connection ${state.status}. ${state.hasActor ? `${state.shipName}. ${state.interior ? "Deck" : "Flight"} view. ${state.seated ? "Control seat occupied" : state.resting ? "Seated" : "On foot"}.` : "Character entry"} ${state.error}`,
     );
     if (componentGallery.draw()) return;
+    const service = actions.readService?.();
+    if (service) {
+      ui.modal = true;
+      service.draw(ui);
+      return;
+    }
     const w = ui.width,
       h = ui.height,
       narrow = w < 700;
+    if (state.zones?.length)
+      ui.text(
+        state.zones.join(" / "),
+        Math.max(16, w / 2 - 180),
+        16,
+        14,
+        palette.muted,
+        360,
+      );
+    if (state.contextNotice) {
+      const r = {
+        x: Math.max(12, (w - 430) / 2),
+        y: 42,
+        w: Math.min(430, w - 24),
+        h: 58 + state.contextNotice.lines.length * 22,
+      };
+      ui.panel(r);
+      ui.text(
+        state.contextNotice.title,
+        r.x + 12,
+        r.y + 10,
+        20,
+        palette.text,
+        r.w - 24,
+      );
+      state.contextNotice.lines.forEach((line, index) =>
+        ui.text(
+          line,
+          r.x + 12,
+          r.y + 40 + index * 22,
+          14,
+          palette.muted,
+          r.w - 24,
+        ),
+      );
+    }
     // Floating inventory/character windows own their panel bounds, not the
     // uncovered world. Keyboard/gameplay remains blocked while they are open.
     ui.modal = menu || !state.hasActor || state.status !== "ready";
@@ -1323,6 +1372,7 @@ export function createGameUI(
     );
   };
   return {
+    invalidate: () => ui.invalidate(),
     update(next: GameUIState) {
       const serialized = JSON.stringify(next.characterAppearance ?? {});
       if (serialized !== appearanceServerJson) {
@@ -1346,6 +1396,7 @@ export function createGameUI(
       return opened;
     },
     blocked: () =>
+      !!actions.readService?.() ||
       componentGallery.isOpen() ||
       !!inventory?.isOpen() ||
       menu ||

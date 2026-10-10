@@ -1,3 +1,4 @@
+import { Viewport } from "@babylonjs/core/Maths/math.viewport";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { Layer } from "@babylonjs/core/Layers/layer";
 import type { Scene } from "@babylonjs/core/scene";
@@ -44,7 +45,12 @@ type Hit = {
   press?: () => void;
   change?: (value: number) => void;
   value?: number;
-  edit?: { value: string; max: number; change: (text: string) => void };
+  edit?: {
+    value: string;
+    max: number;
+    change: (text: string) => void;
+    submit?: () => void;
+  };
   drag?: (dx: number, dy: number) => void;
   drop?: (x: number, y: number) => void;
   cancel?: () => void;
@@ -60,8 +66,14 @@ export function isEditableTarget(target: EventTarget | null) {
   );
 }
 export class CanvasUI {
-  readonly texture: DynamicTexture;
-  readonly layer: Layer;
+  readonly texture: {
+    getContext: () => unknown;
+    scaleTo: (width: number, height: number) => void;
+    update: (invertY?: boolean) => void;
+    dispose: () => void;
+    hasAlpha: boolean;
+  };
+  readonly layer?: Layer;
   readonly ctx: CanvasRenderingContext2D;
   width = 1;
   height = 1;
@@ -73,6 +85,7 @@ export class CanvasUI {
   hover = "";
   keyboard = false;
   private selectedText = "";
+  private clipboardRequest = 0;
   modal = false;
   private active?: {
     hit: Hit;
@@ -137,6 +150,8 @@ export class CanvasUI {
   private backingHeight = 1;
   private disposed = false;
   private observer;
+  private rasterFrame = 0;
+  private defaultLabel: string;
   draw: () => void = () => {};
   escape: () => void = () => {};
   scroll: (
@@ -148,24 +163,57 @@ export class CanvasUI {
   shortcut: (code: string) => boolean = () => false;
   constructor(
     readonly canvas: HTMLCanvasElement,
-    private readonly scene: Scene,
+    private readonly scene?: Scene,
+    options: { label?: string } = {},
   ) {
-    this.texture = new DynamicTexture(
-      "game-interface",
-      { width: 1, height: 1 },
-      scene,
-      false,
-    );
-    this.texture.hasAlpha = true;
+    this.defaultLabel =
+      options.label ??
+      "Sidereal game. WASD moves. Shift sprints on deck. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls.";
+    if (scene) {
+      const texture = new DynamicTexture(
+        "game-interface",
+        { width: 1, height: 1 },
+        scene,
+        false,
+      );
+      texture.hasAlpha = true;
+      this.texture = texture;
+      this.layer = new Layer("game-interface", null, scene, false);
+      this.layer.texture = texture;
+      this.layer.applyPostProcess = false;
+      let previousViewport = scene.getEngine().currentViewport;
+      this.layer.onBeforeRenderObservable.add(() => {
+        previousViewport = scene.getEngine().currentViewport;
+        scene.getEngine().setViewport(new Viewport(0, 0, 1, 1));
+      });
+      this.layer.onAfterRenderObservable.add(() => {
+        if (previousViewport) scene.getEngine().setViewport(previousViewport);
+      });
+      this.observer = scene.onBeforeRenderObservable.add(() => this.paint());
+      scene.doNotHandleCursors = true;
+      scene.onDisposeObservable.add(() => this.dispose());
+    } else {
+      // Entry/error screens use the exact painter without requiring a working3D GPU.
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Canvas2D is unavailable.");
+      this.texture = {
+        hasAlpha: true,
+        getContext: () => context,
+        scaleTo: (width, height) => {
+          canvas.width = width;
+          canvas.height = height;
+        },
+        update: () => {},
+        dispose: () => {},
+      };
+      const paint = () => {
+        if (this.disposed) return;
+        if (!document.hidden) this.paint();
+        this.rasterFrame = requestAnimationFrame(paint);
+      };
+      this.rasterFrame = requestAnimationFrame(paint);
+    }
     this.ctx = this.texture.getContext() as CanvasRenderingContext2D;
-    this.layer = new Layer("game-interface", null, scene, false);
-    this.layer.texture = this.texture;
-    // HUD windows cover world effects, including selection silhouettes.
-    // Use Babylon's existing foreground stage after camera postprocessing.
-    this.layer.applyPostProcess = false;
-    this.observer = scene.onBeforeRenderObservable.add(() => this.paint());
-    // The HUD owns the canvas cursor; Babylon would reset it on every scene pointer move.
-    scene.doNotHandleCursors = true;
     canvas.addEventListener("pointerdown", this.down, true);
     canvas.addEventListener("pointermove", this.move, true);
     canvas.addEventListener("pointerup", this.up, true);
@@ -177,12 +225,12 @@ export class CanvasUI {
     });
     window.addEventListener("keydown", this.key, true);
     window.addEventListener("blur", this.blur);
+    window.addEventListener("paste", this.paste, true);
     // Scene hover (prefab object under the pointer) is decided by later canvas listeners;
     // re-evaluate once the move has finished propagating.
     window.addEventListener("pointermove", this.afterMove);
     document.addEventListener?.("pointerlockchange", this.afterMove);
     document.fonts.ready.then(() => this.invalidate());
-    scene.onDisposeObservable.add(() => this.dispose());
   }
   invalidate() {
     this.dirty = true;
@@ -314,6 +362,7 @@ export class CanvasUI {
     this.invalidate();
   };
   private blur = () => {
+    this.clipboardRequest++;
     this.active?.hit.cancel?.();
     this.active = undefined;
     this.focus = "";
@@ -342,6 +391,50 @@ export class CanvasUI {
     );
     this.invalidate();
   }
+  private insertClipboard(
+    text: string,
+    original: Hit,
+    value: string,
+    selected: boolean,
+    request: number,
+  ) {
+    const current = this.hits.find(
+      (hit) => hit.id === original.id && !hit.disabled,
+    );
+    if (
+      this.disposed ||
+      request !== this.clipboardRequest ||
+      this.focus !== original.id ||
+      !current?.edit ||
+      current.edit.change !== original.edit?.change ||
+      current.edit.value !== value
+    )
+      return;
+    const next = ((selected ? "" : value) + text.replace(/[\r\n]/g, "")).slice(
+      0,
+      current.edit.max,
+    );
+    current.edit.value = next;
+    current.edit.change(next);
+    this.selectedText = "";
+    this.invalidate();
+  }
+  private paste = (event: ClipboardEvent) => {
+    if (this.canvas.closest("[inert]") || isEditableTarget(event.target))
+      return;
+    const hit = this.hits.find((h) => h.id === this.focus && !h.disabled);
+    if (!hit?.edit || !event.clipboardData) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const request = ++this.clipboardRequest;
+    this.insertClipboard(
+      event.clipboardData.getData("text/plain"),
+      hit,
+      hit.edit.value,
+      this.selectedText === hit.id,
+      request,
+    );
+  };
   private key = (e: KeyboardEvent) => {
     // The DOM loading/error layer owns input while the game surface is inert.
     // Window listeners still receive keys even when their canvas is inert.
@@ -392,12 +485,33 @@ export class CanvasUI {
       this.scroll((e.code === "PageDown" ? 1 : -1) * 160);
     } else if (hit?.edit) {
       const replace = (value: string) => {
+        this.clipboardRequest++;
         // Input events can arrive faster than the HUD's paint cadence.
         hit.edit!.value = value;
         hit.edit!.change(value);
         this.selectedText = "";
       };
-      if ((e.ctrlKey || e.metaKey) && e.code === "KeyA") {
+      if ((e.ctrlKey || e.metaKey) && e.code === "KeyV") {
+        if (typeof navigator !== "undefined" && navigator.clipboard?.readText) {
+          e.preventDefault();
+          const request = ++this.clipboardRequest;
+          const value = hit.edit.value,
+            selected = this.selectedText === hit.id;
+          void navigator.clipboard
+            .readText()
+            .then((text) =>
+              this.insertClipboard(text, hit, value, selected, request),
+            )
+            .catch(() => {});
+        }
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (hit.edit.submit) hit.edit.submit();
+        else {
+          this.keyboard = false;
+          this.focus = "";
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.code === "KeyA") {
         e.preventDefault();
         this.selectedText = hit.id;
       } else if (
@@ -512,11 +626,7 @@ export class CanvasUI {
     this.fluid = false;
     this.draw();
     const focused = this.hits.find((h) => h.id === this.focus);
-    if (!focused)
-      this.canvas.setAttribute(
-        "aria-label",
-        "Sidereal game. WASD moves. Shift sprints on deck. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls.",
-      );
+    if (!focused) this.canvas.setAttribute("aria-label", this.defaultLabel);
     if (focused)
       this.canvas.setAttribute(
         "aria-label",
@@ -762,6 +872,75 @@ export class CanvasUI {
       close,
     );
   }
+  /** Standard frame with a transparent GPU viewport and chrome-only hit regions. */
+  viewportWindow(
+    id: string,
+    title: string,
+    r: Rect,
+    viewport: Rect,
+    close: () => void,
+  ) {
+    this.windowFrame(id, title, r, true, () => {}, close);
+    this.ctx.clearRect(viewport.x, viewport.y, viewport.w, viewport.h);
+    this.hits = this.hits.filter(
+      (hit) => hit.id !== id + "-surface" && hit.id !== id + "-title",
+    );
+    this.panels = this.panels.filter((panel) => panel !== r);
+    this.panels.push(
+      { x: r.x, y: r.y, w: r.w, h: viewport.y - r.y },
+      { x: r.x, y: viewport.y, w: viewport.x - r.x, h: viewport.h },
+      {
+        x: viewport.x + viewport.w,
+        y: viewport.y,
+        w: r.x + r.w - viewport.x - viewport.w,
+        h: viewport.h,
+      },
+      {
+        x: r.x,
+        y: viewport.y + viewport.h,
+        w: r.w,
+        h: r.y + r.h - viewport.y - viewport.h,
+      },
+    );
+  }
+  /** Clip drawing and controls together so scrolled content cannot intercept another pane. */
+  scrollRegion(r: Rect, draw: () => void) {
+    const start = this.hits.length;
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.rect(r.x, r.y, r.w, r.h);
+    this.ctx.clip();
+    draw();
+    this.ctx.restore();
+    this.hits = [
+      ...this.hits.slice(0, start),
+      ...this.hits.slice(start).flatMap((hit) => {
+        const x = Math.max(r.x, hit.rect.x),
+          y = Math.max(r.y, hit.rect.y);
+        const w = Math.min(r.x + r.w, hit.rect.x + hit.rect.w) - x;
+        const h = Math.min(r.y + r.h, hit.rect.y + hit.rect.h) - y;
+        return w > 0 && h > 0 ? [{ ...hit, rect: { x, y, w, h } }] : [];
+      }),
+    ];
+  }
+  listButton(
+    id: string,
+    label: string,
+    description: string,
+    r: Rect,
+    action: () => void,
+    selected = false,
+  ) {
+    this.button(id, label, r, action, { selected });
+    this.text(
+      description,
+      r.x + 12,
+      r.y + r.h - 17,
+      11,
+      palette.muted,
+      r.w - 24,
+    );
+  }
   toggle(
     id: string,
     label: string,
@@ -810,8 +989,11 @@ export class CanvasUI {
     r: Rect,
     change: (v: string) => void,
     max = 40,
+    options: { submit?: () => void; disabled?: boolean } = {},
   ) {
-    this.button(id, value + (this.focus === id ? "│" : ""), r, () => {});
+    this.button(id, value + (this.focus === id ? "│" : ""), r, () => {}, {
+      disabled: options.disabled,
+    });
     if (this.selectedText === id && this.focus === id) {
       this.ctx.fillStyle = rgba(palette.blue, 0.2);
       this.ctx.fillRect(
@@ -824,7 +1006,7 @@ export class CanvasUI {
     Object.assign(this.hits[this.hits.length - 1], {
       label,
       action: undefined,
-      edit: { value, max, change },
+      edit: { value, max, change, submit: options.submit },
     });
   }
   drag(
@@ -838,7 +1020,9 @@ export class CanvasUI {
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
-    this.scene.onBeforeRenderObservable.remove(this.observer);
+    this.clipboardRequest++;
+    this.scene?.onBeforeRenderObservable.remove(this.observer ?? null);
+    if (this.rasterFrame) cancelAnimationFrame(this.rasterFrame);
     this.canvas.removeEventListener("pointerdown", this.down, true);
     this.canvas.removeEventListener("pointermove", this.move, true);
     this.canvas.removeEventListener("pointerup", this.up, true);
@@ -847,8 +1031,10 @@ export class CanvasUI {
     this.canvas.removeEventListener("wheel", this.wheel, true);
     window.removeEventListener("keydown", this.key, true);
     window.removeEventListener("blur", this.blur);
+    window.removeEventListener("paste", this.paste, true);
     window.removeEventListener("pointermove", this.afterMove);
     document.removeEventListener?.("pointerlockchange", this.afterMove);
-    this.layer.dispose();
+    this.layer?.dispose();
+    if (!this.layer) this.texture.dispose();
   }
 }

@@ -3,10 +3,10 @@ import {
   weaponDefinitionOf,
 } from "@sidereal/content/item-presentation";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
-import { GameLoadingScreen } from "./GameLoadingScreen";
-import { CharacterSelect } from "./CharacterSelect";
-import { ShipSystemsPanel } from "./ShipSystemsPanel";
-import { FurnishingEditor } from "./FurnishingEditor";
+import { openShipSystemsService } from "./ship-systems-service";
+import type { CanvasServiceView } from "@sidereal/canvas-ui/ship-systems";
+import type { EntryState } from "@sidereal/canvas-ui/entry";
+import { equipmentAppearance } from "./inventory";
 import type { ObjectPlacementState } from "@sidereal/canvas-ui";
 import { FurnishingPlacement } from "./FurnishingPlacement";
 import { furnishingRequest } from "./furnishing-command";
@@ -23,7 +23,6 @@ import {
 } from "./scoped-cargo";
 import { useSharedWorldEntry } from "./use-shared-world-entry";
 import { remoteExhaustByShip } from "./remote-exhaust";
-import { SharedWorldReview } from "./SharedWorldReview";
 import {
   sharedBodyPresentation,
   bodyDestinations,
@@ -42,9 +41,10 @@ import { createCruiseControl } from "./flight-controls";
 import { shipComponentIntegrity } from "./ship-hud";
 import { SHIP_FLIGHT_SPEED } from "@sidereal/content/physical-definitions";
 import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
-import { ConstructionReview, testShipCount } from "./ConstructionReview";
+import { openShipReviewService, testShipCount } from "./ship-review-service";
 import { PILOT_LAYOUT } from "../../../packages/content/src/pilot-layout";
-import { AccountPanel, accountSummary } from "./AccountPanel";
+import { accountSummary, openAccountService } from "./account-service";
+import { openFurnishingConfirmation } from "./furnishing-service";
 import { createConnectionSession } from "./connection-session";
 import React, {
   useCallback,
@@ -59,7 +59,6 @@ import "@fontsource/barlow/400.css";
 import "@fontsource/barlow/500.css";
 import "@fontsource/barlow/600.css";
 import "@fontsource/barlow-condensed/600.css";
-import "./style.css";
 import {
   connect,
   createSharedWorldPresentation,
@@ -130,11 +129,24 @@ const IMPACT_LABELS: Record<string, string> = {
   hatch: "Hatch",
   ship: "Ship hull",
 };
+export type GamePresentation = {
+  state: EntryState;
+  enter: () => void;
+  create: (name: string) => Promise<void>;
+  account: () => void;
+  service: () => CanvasServiceView | undefined;
+};
 export default function App({
+  canvasElement,
+  onPresentation,
+  onCanvasInvalidate,
   auth,
   accountName = "Development character",
   onSignOut = () => {},
 }: {
+  canvasElement: HTMLCanvasElement;
+  onPresentation: (presentation: GamePresentation) => void;
+  onCanvasInvalidate: () => void;
   auth?: { token: string; kind: "oidc" };
   accountName?: string;
   onSignOut?: () => void;
@@ -170,6 +182,7 @@ export default function App({
   servicePanelOpen.current = furnishingEdit
     ? "furnishing-editor"
     : servicePanel;
+  const serviceDisplay = useRef<CanvasServiceView | undefined>(undefined);
   const closeServicePanel = useCallback(() => setServicePanel(""), []);
   const openServicePanel = useCallback((name: string) => {
     furnishingCancel.current?.();
@@ -223,7 +236,7 @@ export default function App({
   const session = useRef<ReturnType<
     typeof createConnectionSession<DbConnection>
   > | null>(null);
-  const canvas = useRef<HTMLCanvasElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(canvasElement);
   const view = useRef<Awaited<
     ReturnType<(typeof import("@sidereal/render"))["createWorld"]>
   > | null>(null);
@@ -284,6 +297,48 @@ export default function App({
     session.current?.authenticate(auth);
   }, [auth?.token]);
   const c = connection.current;
+  useEffect(() => {
+    if (!c) return;
+    const invalidate = () => {
+      gui.current?.invalidate();
+      onCanvasInvalidate();
+    };
+    const options = {
+      close: closeServicePanel,
+      invalidate,
+      error: setError,
+      canvas: () => canvas.current,
+    };
+    const service =
+      servicePanel === "ship-systems"
+        ? openShipSystemsService(c, options)
+        : servicePanel === "account"
+          ? openAccountService(c, {
+              name: accountName,
+              oidc: !!auth,
+              close: closeServicePanel,
+              signOut: () => onSignOutRef.current(),
+              invalidate,
+            })
+          : servicePanel === "test-ships"
+            ? openShipReviewService(c, closeServicePanel, invalidate, setError)
+            : undefined;
+    if (!service) return;
+    serviceDisplay.current = service.display;
+    invalidate();
+    return () => {
+      service.dispose();
+      serviceDisplay.current = undefined;
+      invalidate();
+    };
+  }, [
+    c,
+    servicePanel,
+    closeServicePanel,
+    accountName,
+    !!auth,
+    onCanvasInvalidate,
+  ]);
   const systemScape = c
     ? [...c.db.admittedSystemScapes.iter()].find(
         (s) => s.id === sharedAdmission?.systemId,
@@ -968,6 +1023,31 @@ export default function App({
           : []),
       ];
   const uiState: GameUIState = {
+    zones: zoneNames,
+    contextNotice: awaitingShip
+      ? {
+          title: "No ship assigned",
+          lines: [
+            "Your character and personal kit are safe.",
+            "A new ship will be assigned to your account.",
+          ],
+        }
+      : passengerInterior
+        ? {
+            title: `${passengerInterior.name} · Passenger`,
+            lines: [
+              ...(passengerInterior.flightStatus !== "ready"
+                ? [`Flight unavailable: ${passengerInterior.flightReason}`]
+                : []),
+              c
+                ? [...c.db.currentInteriorCrew.iter()]
+                    .filter((p) => p.shipId === passengerInterior.shipId)
+                    .map((p) => p.name)
+                    .join(", ")
+                : "",
+            ],
+          }
+        : undefined,
     accountKind: auth?.kind === "oidc" ? "oidc" : "development",
     account: {
       name: accountName,
@@ -1475,6 +1555,7 @@ export default function App({
                   combat: () => setCombatEnabled((v) => !v),
                   cruise: () => toggleCruise(),
                   openService: openServicePanel,
+                  readService: () => serviceDisplay.current,
                   closeService: () => {
                     if (!servicePanelOpen.current) return false;
                     if (servicePanelOpen.current === "furnishing-editor") {
@@ -2418,205 +2499,154 @@ export default function App({
       document.removeEventListener("visibilitychange", visibility);
     };
   }, []);
-  return (
-    <>
-      <div
-        className="game-surface"
-        inert={loadingRef.current || entryBlocked.current}
-      >
-        <canvas
-          key={rendererFailed ? "fallback" : "webgl"}
-          className="game-canvas"
-          ref={canvas}
-          tabIndex={loadingRef.current || entryBlocked.current ? -1 : 0}
-          aria-hidden={loadingRef.current || entryBlocked.current}
-          aria-label={
-            rendererFailed
-              ? "Graphics renderer failed. Enable WebGL, then press Enter to retry."
-              : "Sidereal game. WASD moves. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls."
-          }
-        />
-        {shipZones && (
-          <div
-            aria-label="Current zones"
-            style={{
-              position: "absolute",
-              top: 16,
-              left: "50%",
-              transform: "translateX(-50%)",
-              color: "#b8ccdc",
-              fontSize: 12,
-              pointerEvents: "none",
-            }}
-          >
-            {zoneNames.length ? zoneNames.join(" / ") : "Deep space"}
-          </div>
-        )}
-        {!passengerVisit && (
-          <ConstructionReview
-            connection={c}
-            onError={setError}
-            open={servicePanel === "test-ships"}
-            onClose={closeServicePanel}
-          />
-        )}
-        {passengerInterior && (
-          <aside aria-label="Passenger interior" className="passenger-interior">
-            <strong>{passengerInterior.name} · Passenger</strong>
-            {passengerInterior.flightStatus !== "ready" && (
-              <p role="status">
-                Flight unavailable: {passengerInterior.flightReason}
-              </p>
-            )}
-            <small>
-              {c
-                ? [...c.db.currentInteriorCrew.iter()]
-                    .filter((p) => p.shipId === passengerInterior.shipId)
-                    .map((p) => p.name)
-                    .join(", ")
-                : ""}
-            </small>
-          </aside>
-        )}
-        {furnishingEdit &&
-          constructionInstance &&
-          c?.isActive &&
-          ownsCurrentShip &&
-          (furnishingEdit.mode === "move" ? (
-            <FurnishingPlacement
-              key={`${constructionInstance.id}:${furnishingEdit.placementId}`}
-              instance={constructionInstance}
-              placementId={furnishingEdit.placementId}
-              canvas={canvas.current}
-              renderer={() => view.current ?? undefined}
-              cancelRef={furnishingCancel}
-              actionRef={placementAction}
-              onState={setPlacementState}
-              submit={(request) => {
-                const current = connection.current;
-                if (
-                  !current?.isActive ||
-                  !live.current.actor?.connected ||
-                  live.current.constructionInstance?.id !== request.instanceId
-                )
-                  return Promise.reject(new Error("Ship edit context changed"));
-                return current.reducers.editShipFurnishing(request);
-              }}
-              close={() => {
-                setFurnishingEdit(undefined);
-                setPlacementState(undefined);
-              }}
-            />
-          ) : (
-            <FurnishingEditor
-              key={`${constructionInstance.id}:${furnishingEdit.placementId}:${furnishingEdit.mode}`}
-              instance={constructionInstance}
-              placementId={furnishingEdit.placementId}
-              name={furnishingEdit.name}
-              submit={(request) => {
-                const current = connection.current;
-                if (
-                  !current?.isActive ||
-                  !live.current.actor?.connected ||
-                  live.current.constructionInstance?.id !== request.instanceId
-                )
-                  return Promise.reject(new Error("Ship edit context changed"));
-                return current.reducers.editShipFurnishing(request);
-              }}
-              close={() => setFurnishingEdit(undefined)}
-            />
-          ))}
-        {!awaitingShip && (
-          <>
-            <ShipSystemsPanel
-              connection={c}
-              onError={setError}
-              open={servicePanel === "ship-systems"}
-              onClose={closeServicePanel}
-            />
-          </>
-        )}
-        {awaitingShip && ready && (
-          <div
-            className="no-ship-notice"
-            role="status"
-            aria-label="No ship assigned"
-          >
-            <strong>No ship assigned</strong>
-            <span>
-              Your character and personal kit are safe. A new ship will be
-              assigned to your account.
-            </span>
-          </div>
-        )}
-        {sharedReview && (
-          <SharedWorldReview
-            connection={c}
-            source={sharedBinding?.store}
-            readiness={sharedBinding?.readiness}
-            onError={setError}
-          />
-        )}
-        <AccountPanel
-          connection={c}
-          characterId={actor?.id}
-          name={accountName}
-          oidc={!!auth}
-          open={servicePanel === "account"}
-          onClose={closeServicePanel}
-          onSignOut={onSignOut}
-        />
-      </div>
-      {!enteredWorld && ready && (!actor || !loadingRef.current) && (
-        <CharacterSelect
-          actor={actor ?? null}
-          items={c ? [...c.db.ownInventoryItems.iter()] : []}
-          ship={
-            c
-              ? ([...c.db.ownShips.iter()].find(
-                  (row) => row.id === actor?.shipId,
-                ) ?? null)
-              : null
-          }
-          appearance={cosmetics}
-          vitals={ownVitals}
-          pending={pending}
-          error={error}
-          onEnter={() => {
-            if (!actor || loadingRef.current || pending) return;
-            setEnteredWorld(true);
-            requestAnimationFrame(() => canvas.current?.focus());
-          }}
-          onCreate={async (name) => {
-            const current = connection.current;
-            if (
-              !current?.isActive ||
-              !live.current.ready ||
-              actionPending.current
-            )
-              throw new Error("Reconnect before creating a character.");
-            actionPending.current = true;
-            setPending(true);
-            setError("");
-            try {
-              await current.reducers.enterLab({ name });
-            } finally {
-              actionPending.current = false;
-              setPending(false);
+  useEffect(() => {
+    if (
+      furnishingEdit?.mode !== "delete" ||
+      !constructionInstance ||
+      !c?.isActive ||
+      !ownsCurrentShip
+    )
+      return;
+    const service = openFurnishingConfirmation(
+      () => live.current.constructionInstance ?? constructionInstance,
+      furnishingEdit.placementId,
+      furnishingEdit.name,
+      async (request) => {
+        const current = connection.current;
+        if (
+          !current?.isActive ||
+          !live.current.actor?.connected ||
+          live.current.constructionInstance?.id !== request.instanceId
+        )
+          throw Error("Ship edit context changed");
+        await current.reducers.editShipFurnishing(request);
+      },
+      () => setFurnishingEdit(undefined),
+      () => gui.current?.invalidate(),
+    );
+    serviceDisplay.current = service.display;
+    gui.current?.invalidate();
+    return () => {
+      service.dispose();
+      serviceDisplay.current = undefined;
+      gui.current?.invalidate();
+    };
+  }, [
+    furnishingEdit?.placementId,
+    furnishingEdit?.mode,
+    constructionInstance?.id,
+    c,
+    ownsCurrentShip,
+  ]);
+  useLayoutEffect(() => {
+    const equipped = c
+      ? [...c.db.ownInventoryItems.iter()].filter(
+          (item) => !!item.equipmentSlot,
+        )
+      : [];
+    const appearance = equipmentAppearance(equipped, cosmetics);
+    const state: EntryState =
+      enteredWorld && !loadingRef.current
+        ? { kind: "world" }
+        : ready && (!actor || !loadingRef.current) && !enteredWorld
+          ? {
+              kind: "character",
+              pending,
+              error,
+              character: actor
+                ? {
+                    id: actor.id,
+                    name: actor.name,
+                    shipName: ship?.name ?? "No ship assigned",
+                    appearance: {
+                      ...appearance.crewAppearance,
+                      equipmentItem: appearance.heldItem ?? undefined,
+                    },
+                    health: ownVitals?.health,
+                    maxHealth: ownVitals?.maxHealth,
+                    equipment: equipped.map((item) => ({
+                      name: itemDefinitionOf(item)?.name ?? "Equipment",
+                      slot: item.equipmentSlot,
+                    })),
+                  }
+                : undefined,
             }
-          }}
-          onSignOut={onSignOut}
-        />
-      )}
-      {loadingRef.current && (enteredWorld || !ready || !!actor) && (
-        <GameLoadingScreen
-          stage={status === "ready" ? loadStage : "connecting"}
-          shipName={ship?.name ?? ""}
-          awaitingShip={awaitingShip}
-          failure={loadFailure}
-          onSignOut={onSignOut}
-        />
-      )}
-    </>
-  );
+          : {
+              kind: "loading",
+              stage: status === "ready" ? loadStage : "connecting",
+              shipName: ship?.name ?? "",
+              awaitingShip,
+              error: loadFailure ?? "",
+            };
+    canvasElement.inert = state.kind !== "world";
+    onPresentation({
+      state,
+      account: () => setServicePanel("account"),
+      service: () => serviceDisplay.current,
+      enter: () => {
+        if (!actor || loadingRef.current || pending) return;
+        setEnteredWorld(true);
+        requestAnimationFrame(() => canvas.current?.focus());
+      },
+      create: async (name) => {
+        const current = connection.current;
+        if (!current?.isActive || !live.current.ready || actionPending.current)
+          return;
+        actionPending.current = true;
+        setPending(true);
+        setError("");
+        try {
+          await current.reducers.enterLab({ name });
+        } catch (error) {
+          setError(String(error));
+        } finally {
+          actionPending.current = false;
+          setPending(false);
+        }
+      },
+    });
+  }, [
+    status,
+    error,
+    pending,
+    enteredWorld,
+    ready,
+    revision,
+    loadStage,
+    loadFailure,
+    loadedSceneKey,
+    rendererFailed,
+    onPresentation,
+    canvasElement,
+  ]);
+  // No React/DOM player interface: this child owns pointer/SDK lifecycles only.
+  return furnishingEdit?.mode === "move" &&
+    constructionInstance &&
+    c?.isActive &&
+    ownsCurrentShip ? (
+    <FurnishingPlacement
+      key={`${constructionInstance.id}:${furnishingEdit.placementId}`}
+      instance={constructionInstance}
+      placementId={furnishingEdit.placementId}
+      canvas={canvas.current}
+      renderer={() => view.current ?? undefined}
+      cancelRef={furnishingCancel}
+      actionRef={placementAction}
+      onState={setPlacementState}
+      submit={(request) => {
+        const current = connection.current;
+        if (
+          !current?.isActive ||
+          !live.current.actor?.connected ||
+          live.current.constructionInstance?.id !== request.instanceId
+        )
+          return Promise.reject(new Error("Ship edit context changed"));
+        return current.reducers.editShipFurnishing(request);
+      }}
+      close={() => {
+        setFurnishingEdit(undefined);
+        setPlacementState(undefined);
+      }}
+    />
+  ) : null;
 }

@@ -37,7 +37,8 @@ jobs:
       - run: .runtime/construction-enclosure-python/bin/python -m pip install -r scripts/geometry_tests/requirements.txt
       - run: npm run typecheck
       - run: npm test
-      - run: node --test scripts/quality-rules.test.mjs
+      - run: node --test scripts/quality-rules.test.mjs scripts/canvas-ui-rules.test.mjs
+      - run: node scripts/check_canvas_ui.mjs
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test:python
