@@ -393,7 +393,7 @@ async function main() {
     world.getDiagnostics(true);
     // Private experiment switches use the same F3 path, before probe warmup.
     const captureExperiment = q.get("captureExperiment");
-    if (captureExperiment === "control")
+    if (captureExperiment === "cache")
       world.toggleDebugFeature("captureListCache");
     if (captureExperiment === "motion")
       world.toggleDebugFeature("captureOnMotion");

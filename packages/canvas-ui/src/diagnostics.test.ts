@@ -14,7 +14,7 @@ it("retains local override status after F3 closes and restores through explicit 
     skeleton: false,
     lightBounds: false,
     collision: false,
-    captureListCache: true,
+    captureListCache: false,
     captureOnMotion: false,
     captureGlobalsOnly: false,
   };
@@ -134,7 +134,7 @@ it("scrolls every new visual option into reach on compact screens without offscr
     skeleton: false,
     lightBounds: false,
     collision: false,
-    captureListCache: true,
+    captureListCache: false,
     captureOnMotion: false,
     captureGlobalsOnly: false,
   };
@@ -278,7 +278,7 @@ it("switches the render-cost settings live through the quality control", () => {
       skeleton: false,
       lightBounds: false,
       collision: false,
-      captureListCache: true,
+      captureListCache: false,
       captureOnMotion: false,
       captureGlobalsOnly: false,
     },

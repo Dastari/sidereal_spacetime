@@ -44,7 +44,7 @@ export function createDebugFeatures(
     skeleton: false,
     lightBounds: false,
     collision: false,
-    captureListCache: true,
+    captureListCache: false,
     captureOnMotion: false,
     captureGlobalsOnly: false,
   };

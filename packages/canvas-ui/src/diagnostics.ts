@@ -453,9 +453,7 @@ export function createDiagnosticsUI(
                 !controls.reset ||
                 (disabled().length === 0 &&
                   !overlays.some(([key]) => enabled[key] === true) &&
-                  !captureExperiments.some(
-                    ([key]) => enabled[key] !== (key === "captureListCache"),
-                  ) &&
+                  !captureExperiments.some(([key]) => enabled[key] === true) &&
                   (
                     Object.keys(
                       RENDER_QUALITY_DEFAULTS,
