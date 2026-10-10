@@ -25,3 +25,4 @@ apps/dashboard/public/reviewed-planets/**/kit.json filter=lfs diff=lfs merge=lfs
 assets/reviewed-celestials/**/kit.json filter=lfs diff=lfs merge=lfs -text
 # CI bootstrap data must remain readable before LFS hydration.
 assets/ci/crew-study-r002-lfs.tar.xz -filter -diff -merge -text
+assets/ci/crew-refit-r001-lfs.tar.xz -filter -diff -merge -text

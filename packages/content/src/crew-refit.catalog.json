@@ -1,0 +1,239 @@
+{
+  "schema": "sidereal.crew-refit.v1",
+  "revision": "refit-r001",
+  "status": "provisional, not owner-approved",
+  "sourceRevision": "study-v2-r002",
+  "sourceCommit": "8f26c307fed1bc781789030457b41f4065d11670",
+  "sourceBlend": "assets/source/crew-refit/r001/crew.blend",
+  "sourceBlendSha256": "3323ebea1508336d9cd1cbbf40951bf6aca86c652adbe73960a23c113dd3cd40",
+  "files": {
+    "anim/crew-anims.glb": {
+      "sha256": "41afc89188f72aae36114590b257bd7245944827f639acd5f4194629026ffead",
+      "bytes": 17381572,
+      "sourceSha256": "fd33f4973bb0eee434cbda37431fa72859e63f73ab12ca884f8217390077f522",
+      "changedAccessors": [6675, 6699]
+    },
+    "crew-body.glb": {
+      "sha256": "b57e79a445a38898afa097923233c8a6284d3b902c8811253c2256e253bc96f5",
+      "bytes": 289980,
+      "sourceSha256": "fca4f28c2bffba1eaa3299867278a9011f09c54c6ec1dabfaecc8bd171e4174c",
+      "changedAccessors": [0, 1, 13, 14, 24, 25, 27, 28, 30, 31, 33, 34]
+    },
+    "parts/outfits/gloves.black@narrow.glb": {
+      "sha256": "a56090daf08aa35bf239b5200c8cb209e2e9515ee1fdc61684264da53dbd16ad",
+      "bytes": 38584,
+      "sourceSha256": "8e489bf47e88e347fc427d01e8824eb6afc0be6015c675b8f29e85048f4f3e0c",
+      "changedAccessors": [0, 1, 3, 4]
+    },
+    "parts/outfits/gloves.black@wide.glb": {
+      "sha256": "008d6d5d731fe9cd76ba66f52bcfd817c166ae3c700f31f30c1c9419c683f97b",
+      "bytes": 38584,
+      "sourceSha256": "afaa42ff3d78fc605e09ffc2f4cd7c7b6eec402ec0f13ca476a4ae2fb3cdd24c",
+      "changedAccessors": [0, 1, 3, 4]
+    },
+    "parts/outfits/gloves.flight@narrow.glb": {
+      "sha256": "0a8c1ab9a4cc1d584f9290143e0d2c4310c6d733556ea9231cd647e62bcf9900",
+      "bytes": 48432,
+      "sourceSha256": "a45a10092f80f833e4627fd6256cd4d79bd0be471b8e21db0d8ecc0df5a4d3b3",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 12, 13, 18, 19, 21, 22]
+    },
+    "parts/outfits/gloves.flight@wide.glb": {
+      "sha256": "3bc87ddad4b1bd9e83498c55e28c2e8e9c5f7a358de170c4c902e809f47932db",
+      "bytes": 48432,
+      "sourceSha256": "36412d72143de1254ec208d80ee273e8570d8e7b8236556e974796727724f25c",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 12, 13, 18, 19, 21, 22]
+    },
+    "parts/outfits/gloves.heavy@narrow.glb": {
+      "sha256": "11484d28b0c74119141a6d25730f3f00d51f7fdc76940c05da526904c323870b",
+      "bytes": 51072,
+      "sourceSha256": "4664940cf39729adc7c4005153b9b76f698b21164667b1d06d397bdbc548f358",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 9, 10, 12, 13]
+    },
+    "parts/outfits/gloves.heavy@wide.glb": {
+      "sha256": "9d7d8fd6016baa2c1554c8b6cc3e74e246eb6b199a7e909cbcd2245f46a357b3",
+      "bytes": 51044,
+      "sourceSha256": "2a06d92e4d9b6f6dcb421491ab3c5c3f209cb1bd92709fb5c4709b4df36eb9c8",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 9, 10, 12, 13]
+    },
+    "parts/outfits/gloves.tactical@narrow.glb": {
+      "sha256": "680ec7f3c4192b909b3e4dc44728ae5b9581877063aaec12a0ecb8061acbba3d",
+      "bytes": 49624,
+      "sourceSha256": "3dec15d781b168fe84190c7dfa92b648fcdaff6f07ce8eb87a2c03e9c2cb17b2",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 9, 10]
+    },
+    "parts/outfits/gloves.tactical@wide.glb": {
+      "sha256": "716a9fd4a0ef7e63c139687fe4d7c8bdaa06eabef40562c0369456b02a5af7bf",
+      "bytes": 49624,
+      "sourceSha256": "9433aff41442e990e8a2e71985864a5398110dfba2cc8bbaf14c1b94df86c28d",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 9, 10]
+    },
+    "parts/outfits/gloves.white@narrow.glb": {
+      "sha256": "55bbbbdadfb811f7571577b51c9d5b23187481fad3f57faed57108c773696e5b",
+      "bytes": 38576,
+      "sourceSha256": "1096aa201fd2451c0dee25e51d4c435e03f3e58e666837b02b6d2734bdd5bf68",
+      "changedAccessors": [0, 1, 3, 4]
+    },
+    "parts/outfits/gloves.white@wide.glb": {
+      "sha256": "70dc2bc99f197ccd5faf5c70b255c97edc991fcc3c85a1d24b1835cd7e9cd163",
+      "bytes": 38576,
+      "sourceSha256": "036843259a38858611046f9dfc9078359f96e880ba9f2a1263166fe270036f0b",
+      "changedAccessors": [0, 1, 3, 4]
+    },
+    "parts/outfits/gloves.work@narrow.glb": {
+      "sha256": "ab0947e5ee968bd3fe8efe12f8d607c44b7cb21dcf9573609496fd11b862c9e7",
+      "bytes": 43152,
+      "sourceSha256": "a8474def3f17d16dc892b1ec92ebfd166468691718c8b6796b1212192c5472e7",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 9, 10]
+    },
+    "parts/outfits/gloves.work@wide.glb": {
+      "sha256": "021822a489cadf1ef58b20fff73b7e3e1851e831fa1cb22ac6e8da512b021f44",
+      "bytes": 43152,
+      "sourceSha256": "ede127efed7d2abfe9f897f5306ea190f9859ad9664179c41c096e40d5670b9e",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 9, 10]
+    },
+    "parts/outfits/uniform.captain@narrow.glb": {
+      "sha256": "1f193b6cec06567bb59021ed3a782cc91d674247b4f2e8fcaa01f76a9a8568c1",
+      "bytes": 184272,
+      "sourceSha256": "147ec20a77d109e6961c42157695f24da2ba47350d23af1ea5ef3a210b74fb04",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 12, 13, 15, 16]
+    },
+    "parts/outfits/uniform.captain@wide.glb": {
+      "sha256": "ffd990671e5a55ff213b048ab462ddc19eac6990ceaf3e5ea8fdd5f10641645a",
+      "bytes": 169432,
+      "sourceSha256": "57e00d667f7238dbfaadf58247a0bd72f39ec253e7b3af5693e155f5deb570cb",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 12, 13, 15, 16]
+    },
+    "parts/outfits/uniform.civilian@narrow.glb": {
+      "sha256": "484bccc75f017149b1ce4228f01fa11dd6a12f18a28cfc7bcce31c4714fdd29d",
+      "bytes": 123108,
+      "sourceSha256": "d544050b3c135a99f23095259cf41d49db78b2204a29b9203764730afdd2fdb0",
+      "changedAccessors": [0, 1, 6, 7]
+    },
+    "parts/outfits/uniform.civilian@wide.glb": {
+      "sha256": "332b7f68db05e6d3b6d49a1a31fd1517a33751361e311c28c76cc57970372b40",
+      "bytes": 119336,
+      "sourceSha256": "5b6fbfd72132b061f6e659e946364a7c0013965018f5e9383aabd2ace1ac6302",
+      "changedAccessors": [0, 1, 6, 7]
+    },
+    "parts/outfits/uniform.civilian_f@narrow.glb": {
+      "sha256": "e160f55e747b23696babf88386480f9363273cfdef26d441a15b07b11ea720f3",
+      "bytes": 112236,
+      "sourceSha256": "e8274cb4e670805af6a947c2d4775986d07459c5a001beb3ca85379a314492cf",
+      "changedAccessors": [0, 1, 6, 7]
+    },
+    "parts/outfits/uniform.civilian_f@wide.glb": {
+      "sha256": "dc8be57c2fcbe918c940f8b6a85edb844fc2d071af06c2f64f089f15ab19fc51",
+      "bytes": 105200,
+      "sourceSha256": "c9de473489995c146df7670ecbd9f9899ef5b765662634fda2421a6ca274bbf9",
+      "changedAccessors": [0, 1, 6, 7]
+    },
+    "parts/outfits/uniform.engineer@narrow.glb": {
+      "sha256": "6132b52847508d536c83363f90bdb4eb659c6b288ff2394a1c95341a05d69b47",
+      "bytes": 191952,
+      "sourceSha256": "ebdd055ed91ea08546d1a93cd1ba2082fb32e061ae02b416e6867cfb9b5cf6ca",
+      "changedAccessors": [6, 7, 12, 13, 18, 19]
+    },
+    "parts/outfits/uniform.engineer@wide.glb": {
+      "sha256": "bfb5c7774c22afd01dc5a892f34766b5ebf98f66182f49a56000df9f7569086f",
+      "bytes": 181764,
+      "sourceSha256": "8d926d1a72a8099ee6ecd7462c43abc8bf820fee8f8889a6c11ec563e78bd2ac",
+      "changedAccessors": [6, 7, 12, 13, 18, 19]
+    },
+    "parts/outfits/uniform.marine@narrow.glb": {
+      "sha256": "a95c9903efd7f3d5d7466e3087e1a31fedd66a67a7746a299a443f9138c99b6f",
+      "bytes": 124396,
+      "sourceSha256": "5fcf2205a79cf37140f3156e380aa95db8a4d0ccb38e42b598718d80d47ed3c6",
+      "changedAccessors": [0, 1, 6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.marine@wide.glb": {
+      "sha256": "1eeaa327d6419b5f83e852ae4e652b619570bcd022f89e999da2d2af1a67b8a7",
+      "bytes": 120580,
+      "sourceSha256": "03b914ce00bbc33effad1e2567abcc251e853b5d569668a2fe65732a4867a722",
+      "changedAccessors": [0, 1, 6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.mechanic@narrow.glb": {
+      "sha256": "6e6c8dfe67006ec2a4783854c2c65d75f3392693d6da3e800aca803ab07d0300",
+      "bytes": 125008,
+      "sourceSha256": "8a411bb0bd9de1d408cb333e8a45c16d5d1de947cec5641ec07d0bd5f04f7e43",
+      "changedAccessors": [6, 7, 18, 19]
+    },
+    "parts/outfits/uniform.mechanic@wide.glb": {
+      "sha256": "58d48849d546be5d51112e0d5296d4d80c01fd121523eb13a15effc1555c92a1",
+      "bytes": 144632,
+      "sourceSha256": "2421171847b8bfdde84158d84a151afc57728b4bb46f426ce2ed07e04ccff55b",
+      "changedAccessors": [6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.medic@narrow.glb": {
+      "sha256": "151d912ad1978040c2373ad17aab290d10bd6269b7bb577efd172678a409414f",
+      "bytes": 174664,
+      "sourceSha256": "d549b045900db8a1e737c096ae19d94896eeda40058198b2db8bbd133d64c53d",
+      "changedAccessors": [6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.medic@wide.glb": {
+      "sha256": "1a4844214c8b069ffe9b94db79997365bbae0712b3f0cf9fd596e4807756fe31",
+      "bytes": 161236,
+      "sourceSha256": "24f6c4d47e700a509d9428857ccf746d70cd57e59a0d7cd0a6df34a5c66c2499",
+      "changedAccessors": [6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.pilot@narrow.glb": {
+      "sha256": "fb3882e9f36903e5129035700e26c0e20782ad39f82a9eff5cd54a0d622852b9",
+      "bytes": 156876,
+      "sourceSha256": "e4bfbf3c5bbb7d1c627d253050440dc597de96f31b870eabe2b1ab5bc8a8af2d",
+      "changedAccessors": [0, 1, 6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.pilot@wide.glb": {
+      "sha256": "45a64c7995b2527c904b2b22c63beaf0f14c1a7ed007b78be7c7a8aa2430e5f9",
+      "bytes": 146652,
+      "sourceSha256": "bce6e52f41be819ef3dc7a9365486cd59e55f3c6155dbc35dfd2c050e55cf1b8",
+      "changedAccessors": [0, 1, 6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.salvage@narrow.glb": {
+      "sha256": "d475949ba26a6cf0e493394cf7983faf5bec23ca906a6c8c0e4dcfbf8c096ac1",
+      "bytes": 186204,
+      "sourceSha256": "d8ee3c17be9e11e632d4d8109de2fd9a42714a0adc01fc2e7e1335e809359113",
+      "changedAccessors": [6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.salvage@wide.glb": {
+      "sha256": "6493cf9a5db153c24db70fd3774b3119476ad3ecf8f13d8927f7f4b0b669eb44",
+      "bytes": 172828,
+      "sourceSha256": "8534556e95dbc08b96abe4f8e8ce20c73e6422a30c1734e25b90f32437ebcb4d",
+      "changedAccessors": [6, 7, 12, 13]
+    },
+    "parts/outfits/uniform.scientist@narrow.glb": {
+      "sha256": "91772bac730979a95b4e716b7df10b71e21784a92f62256cec109bb33e0159a9",
+      "bytes": 181640,
+      "sourceSha256": "bff280e6973f0ab6b4b073a9ad9c45a297ac375860113fe47d125b83d031da4e",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 9, 10, 12, 13, 18, 19, 21, 22]
+    },
+    "parts/outfits/uniform.scientist@wide.glb": {
+      "sha256": "de3c1d4b98776e40ee3447dfe23f94e16e2d3ecb95dae4dde2fb4df0f69c4b9e",
+      "bytes": 173312,
+      "sourceSha256": "15b40ec99c9ed9010e4f30eb68ccb2298510a18bf92f7cde10c9f1216ceb1171",
+      "changedAccessors": [0, 1, 3, 4, 6, 7, 9, 10, 12, 13]
+    },
+    "parts/outfits/uniform.scout@narrow.glb": {
+      "sha256": "b7dad944e9e79da23e257c690fbc63884da0bca17258f7774b46e143369becdc",
+      "bytes": 194112,
+      "sourceSha256": "ef89d6d72059d35781bcb71f1b24079d94a76807d87ba69edf2309cd33b8c513",
+      "changedAccessors": [0, 1, 6, 7, 12, 13, 18, 19]
+    },
+    "parts/outfits/uniform.scout@wide.glb": {
+      "sha256": "33dff5d46cc17e25f71ffa769cc8e5f221ed659b4b94840798fbed4fb49f915d",
+      "bytes": 187112,
+      "sourceSha256": "b4ec00febd447a5e0bd21792488813d99a33a13ea9d18e6947a65f5cf2a34e65",
+      "changedAccessors": [0, 1, 6, 7, 12, 13, 18, 19]
+    },
+    "parts/outfits/uniform.security@narrow.glb": {
+      "sha256": "78ca80b9955193a5a3debf43e310cff02cea4ccc5b13ddbed747220fdcef5941",
+      "bytes": 180556,
+      "sourceSha256": "5734bd995d673540413e316ee3b2b06a7b1a17e44732191fe625f91d9877c386",
+      "changedAccessors": [0, 1, 6, 7, 12, 13, 18, 19]
+    },
+    "parts/outfits/uniform.security@wide.glb": {
+      "sha256": "fe0f2fd53b2cd67308bfc477b38d91d675102a07baedbf687a0488dcae2619b0",
+      "bytes": 174604,
+      "sourceSha256": "9eb1796063fc98d55374fa100d0adae6e650a93739ebdfd6bbb50d184b5b3945",
+      "changedAccessors": [0, 1, 6, 7, 12, 13, 18, 19]
+    }
+  }
+}

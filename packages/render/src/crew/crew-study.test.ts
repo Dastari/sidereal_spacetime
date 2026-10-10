@@ -39,6 +39,15 @@ const base = new URL(
 );
 const bytes = (file: string) =>
   new Uint8Array(readFileSync(new URL(file.replace(/#/g, "%23"), base)));
+const urlBytes = (url: string) =>
+  new Uint8Array(
+    readFileSync(
+      new URL(
+        `../../../../assets/runtime/crew/${url.split("/assets/crew/")[1]}`,
+        import.meta.url,
+      ),
+    ),
+  );
 const load = async () => {
   const engine = new NullEngine();
   const scene = new Scene(engine);
@@ -67,7 +76,7 @@ describe("immutable provisional crew study", () => {
         loads++;
         return SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(decodeURIComponent(url.split(`/${CREW_STUDY.revision}/`)[1])),
+          urlBytes(url),
           scene,
           undefined,
           ".glb",
@@ -224,7 +233,7 @@ describe("immutable provisional crew study", () => {
       load: (url) =>
         SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(decodeURIComponent(url.split(`/${CREW_STUDY.revision}/`)[1])),
+          urlBytes(url),
           scene,
           undefined,
           ".glb",
@@ -363,12 +372,9 @@ describe("immutable provisional crew study", () => {
     const outfit = createStudyCrewOutfit(scene, crew, {
       face: false,
       load: (url) => {
-        const file = decodeURIComponent(
-          url.split(`/${CREW_STUDY.revision}/`)[1],
-        );
         return SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(file),
+          urlBytes(url),
           scene,
           undefined,
           ".glb",
@@ -442,12 +448,9 @@ describe("immutable provisional crew study", () => {
     const outfit = createStudyCrewOutfit(scene, crew, {
       face: false,
       load: (url) => {
-        const file = decodeURIComponent(
-          url.split(`/${CREW_STUDY.revision}/`)[1],
-        );
         return SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(file),
+          urlBytes(url),
           scene,
           undefined,
           ".glb",
@@ -496,7 +499,7 @@ describe("immutable provisional crew study", () => {
       load: (url) =>
         SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(decodeURIComponent(url.split(`/${CREW_STUDY.revision}/`)[1])),
+          urlBytes(url),
           scene,
           undefined,
           ".glb",
@@ -658,12 +661,10 @@ describe("immutable provisional crew study", () => {
       face: false,
       load: async (url) => {
         if (reject) throw new Error("Unavailable export");
-        const file = decodeURIComponent(
-          url.split(`/${CREW_STUDY.revision}/`)[1],
-        );
+        const file = decodeURIComponent(url.split("/assets/crew/")[1]);
         const container = await SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(file),
+          urlBytes(url),
           scene,
           undefined,
           ".glb",
@@ -698,13 +699,11 @@ describe("immutable provisional crew study", () => {
     const outfit = createStudyCrewOutfit(scene, crew, {
       face: false,
       load: (url) => {
-        const file = decodeURIComponent(
-          url.split(`/${CREW_STUDY.revision}/`)[1],
-        );
-        loaded.push(file);
+        const file = decodeURIComponent(url.split("/assets/crew/")[1]);
+        loaded.push(file.split("/").slice(1).join("/"));
         return SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(file),
+          urlBytes(url),
           scene,
           undefined,
           ".glb",
@@ -746,13 +745,11 @@ describe("immutable provisional crew study", () => {
     const outfit = createStudyCrewOutfit(scene, crew, {
       face: false,
       load: (url) => {
-        const file = decodeURIComponent(
-          url.split(`/${CREW_STUDY.revision}/`)[1],
-        );
-        loaded.push(file);
+        const file = decodeURIComponent(url.split("/assets/crew/")[1]);
+        loaded.push(file.split("/").slice(1).join("/"));
         return SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(file),
+          urlBytes(url),
           scene,
           undefined,
           ".glb",
