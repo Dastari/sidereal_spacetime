@@ -4,6 +4,7 @@ import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTa
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Plane } from "@babylonjs/core/Maths/math.plane";
+import type { BoundingBox } from "@babylonjs/core/Culling/boundingBox";
 import { Frustum } from "@babylonjs/core/Maths/math.frustum";
 import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
@@ -143,13 +144,10 @@ export function createTransmissionVisibilityTest(
 type ScreenBox = { minX: number; maxX: number; minY: number; maxY: number };
 
 function projectedBox(
-  mesh: AbstractMesh,
+  box: BoundingBox,
   transform: Matrix,
   expansion = 0,
 ): ScreenBox | null {
-  if (!hasConservativeRigidBounds(mesh)) return null;
-  mesh.computeWorldMatrix();
-  const box = mesh.getBoundingInfo().boundingBox;
   const min = box.minimumWorld,
     max = box.maximumWorld;
   const m = transform.asArray();
@@ -303,9 +301,14 @@ function glassSampleBoxes(
       !touchesFrustum(mesh, scene.frustumPlanes)
     )
       continue;
+    if (!hasConservativeRigidBounds(mesh)) return null;
     const sampling = thinGlassSampling(mesh, target);
     if (!sampling) return null;
-    const box = projectedBox(mesh, transform, sampling.depth);
+    const box = projectedBox(
+      mesh.getBoundingInfo().boundingBox,
+      transform,
+      sampling.depth,
+    );
     if (!box) return null;
     // The bound includes mip filtering, MSAA coverage and rounding. Mips
     // are still generated unchanged. Repeat/mirror wrap across an edge can sample
@@ -388,7 +391,7 @@ export function createTransmissionCaptureFilter(
         );
       if (!finite || touchesPlane) {
         const screen = glass
-          ? projectedBox(mesh, scene.getTransformMatrix())
+          ? projectedBox(box, scene.getTransformMatrix())
           : null;
         if (
           !screen ||
