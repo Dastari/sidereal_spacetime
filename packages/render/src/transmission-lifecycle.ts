@@ -22,9 +22,25 @@ export function maintainSceneTransmission(scene: Scene) {
     const previous = next.getCustomRenderList;
     const filter = createTransmissionCaptureFilter(scene, previous);
     next.getCustomRenderList = filter;
+    // The helper renders its capture at environment intensity 1 and restores
+    // the scene afterwards. Both passes share each material's uniform buffer,
+    // and a frozen material is rewritten only by the first pass that sees a
+    // moved camera: the capture. Its override then lit the main view, so
+    // panels brightened on zoom. Keep the scene's own intensity for both.
+    let intensity = scene.environmentIntensity;
+    const remember = next.onBeforeBindObservable.add(
+      () => (intensity = scene.environmentIntensity),
+      undefined,
+      true,
+    );
+    const retain = next.onBeforeBindObservable.add(
+      () => (scene.environmentIntensity = intensity),
+    );
     restoreCapture = () => {
       if (next.getCustomRenderList === filter)
         next.getCustomRenderList = previous;
+      next.onBeforeBindObservable.remove(remember);
+      next.onBeforeBindObservable.remove(retain);
     };
   };
   const repair = () => {
