@@ -548,6 +548,7 @@ async function buildWorld(
         // The first item of a session is already in hand; later changes draw and holster.
         instant: () => firstFrame,
         now: presentationNow,
+        resting: () => !!state.seated || (!state.combat?.active && !state.eva),
       });
       avatar.dispose();
       avatar = crew.root;

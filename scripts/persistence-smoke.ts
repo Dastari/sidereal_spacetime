@@ -1,4 +1,9 @@
 import assert from "node:assert/strict";
+import { CHARACTER_HAIR_STYLES } from "../packages/content/src/character-components";
+import {
+  CHARACTER_FACIAL_HAIR,
+  CHARACTER_FACE_VARIANTS,
+} from "../packages/content/src/appearance";
 import type { DbConnection } from "../packages/net/src/generated";
 type Client = (
   token?: string,
@@ -106,7 +111,8 @@ export async function persistenceSmoke(
         armor: "medical",
         helmet: "closed",
         bodyType: i ? "female" : "male",
-        hairStyle: "crest",
+        hairStyle: i ? "groom.twin_tails" : "hair.long_wavy",
+        faceVariant: i ? "m_bold" : "f_sharp",
         backpackStyle: "field",
         suit: "#AABBCC",
         accent: "#223344",
@@ -164,6 +170,9 @@ export async function persistenceSmoke(
         '{"facialHair":"missing"}',
         '{"faceAge":"missing"}',
         '{"bodyType":"missing"}',
+        '{"hairStyle":"hair.missing"}',
+        '{"hairStyle":"groom.missing"}',
+        '{"faceVariant":"f_missing"}',
       ])
         await assert.rejects(
           c.reducers.setCharacterAppearance({
@@ -198,6 +207,30 @@ export async function persistenceSmoke(
           .subscribe(`SELECT * FROM ${table}`);
         await wait(() => denied, "private persistence table rejection");
       }
+      for (const [field, values] of [
+        ["hairStyle", CHARACTER_HAIR_STYLES.filter((id) => id.includes("."))],
+        ["facialHair", CHARACTER_FACIAL_HAIR],
+        ["faceVariant", CHARACTER_FACE_VARIANTS],
+      ] as const) {
+        for (const value of values) {
+          const complete = { ...acceptedAppearance, [field]: value };
+          await c.reducers.setCharacterAppearance({
+            appearanceJson: JSON.stringify(complete),
+            expectedRevision: [...c.db.ownAppearance.iter()][0].revision,
+            operationId: crypto.randomUUID(),
+          });
+          assert.deepEqual(
+            JSON.parse([...c.db.ownAppearance.iter()][0].appearanceJson),
+            complete,
+            `${field} ${value} available on either body`,
+          );
+        }
+      }
+      await c.reducers.setCharacterAppearance({
+        appearanceJson,
+        expectedRevision: [...c.db.ownAppearance.iter()][0].revision,
+        operationId: crypto.randomUUID(),
+      });
       if (i === 0) {
         for (let n = 0; n < 129; n++)
           await c.reducers.setCharacterAppearance({

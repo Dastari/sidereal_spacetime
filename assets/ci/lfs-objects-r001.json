@@ -11480,5 +11480,243 @@
       "sha256": "ffeeec76439d26c1a07297652176f1299ce5a74fb24f47afb93d8efa724762ec",
       "bytes": 135190
     }
+  ],
+  "supplements": [
+    {
+      "path": "assets/ci/crew-study-r002-lfs.tar.xz",
+      "bytes": 220996,
+      "sha256": "207108ad22914ac9f524274dc7a301799f320c67e2f825d5f98462d6deafdfb4",
+      "status": "provisional, not owner-approved; CI-only runtime fixtures",
+      "objects": [
+        {
+          "sha256": "15b40ec99c9ed9010e4f30eb68ccb2298510a18bf92f7cde10c9f1216ceb1171",
+          "bytes": 173312
+        },
+        {
+          "sha256": "364ee0a30ec62b5dfb9e0f815deb56a763496c3ecf8f95210b0fc4abf39e25f0",
+          "bytes": 381428
+        },
+        {
+          "sha256": "40bffd34bbed99a7e48f88e32aa8a309544aad88fe918ff86e6dfbf6e9b8b460",
+          "bytes": 463900
+        },
+        {
+          "sha256": "6378be75ec0d50890898cc292827451a966f167a382333e7843aab61963467dc",
+          "bytes": 398816
+        },
+        {
+          "sha256": "659bd4608ab0de9e7d53aa594ef74976f740809de8252b01c2b8aab820440a81",
+          "bytes": 37832
+        },
+        {
+          "sha256": "6f3501a48eb7d03797ce452433ffea523f6b368d67c0928b47edf68afa810c53",
+          "bytes": 46280
+        },
+        {
+          "sha256": "6f7415be6cb6c34ab955f6a513221860a22ca1392134a10ad0be8ef6e25c4dd3",
+          "bytes": 436736
+        },
+        {
+          "sha256": "7767bbc44492a0c3cde0349f1c1abb0db119e53c1830b0acc49f226ac70d47ac",
+          "bytes": 210384
+        },
+        {
+          "sha256": "91514a6eb3c6bd99d8ea0120cd8b37bf3cfd62f69920bab4e952374e009115fd",
+          "bytes": 26940
+        },
+        {
+          "sha256": "95ae4046ce40932bcd0ddd817e7dee16f6b588267c90d4d51ac95e409e972b3d",
+          "bytes": 32816
+        },
+        {
+          "sha256": "a3fd3458a36b5f502b79a266dedf4a906aea42c734d55dfde55732cee37e79be",
+          "bytes": 42904
+        },
+        {
+          "sha256": "bff280e6973f0ab6b4b073a9ad9c45a297ac375860113fe47d125b83d031da4e",
+          "bytes": 181632
+        },
+        {
+          "sha256": "c7ba32874fc7d3fa85d8cd893ac717d12ae2ce149233af53f3efb44279127511",
+          "bytes": 39204
+        },
+        {
+          "sha256": "c81f90b79bf46b49b60210d21b3912af5005df4023b227597c2423fedc37aa1e",
+          "bytes": 357616
+        },
+        {
+          "sha256": "eb07c511365df33cbe78a67a21f26c237cf381ee547502baaf2ecc8885dd3429",
+          "bytes": 186184
+        },
+        {
+          "sha256": "ebf68b7e276d99a73c31517088b6b0bb699b56f9a220a4fa2df8a26aa0a09729",
+          "bytes": 169408
+        }
+      ]
+    },
+    {
+      "path": "assets/ci/crew-refit-r001-lfs.tar.xz",
+      "bytes": 3839232,
+      "sha256": "0251def81c1d9bc817f337950247e3b86614279cf9335b9f72e85721b2f7267f",
+      "status": "provisional game-owned crew refit, CI hydration only",
+      "objects": [
+        {
+          "sha256": "008d6d5d731fe9cd76ba66f52bcfd817c166ae3c700f31f30c1c9419c683f97b",
+          "bytes": 38584
+        },
+        {
+          "sha256": "021822a489cadf1ef58b20fff73b7e3e1851e831fa1cb22ac6e8da512b021f44",
+          "bytes": 43152
+        },
+        {
+          "sha256": "0a8c1ab9a4cc1d584f9290143e0d2c4310c6d733556ea9231cd647e62bcf9900",
+          "bytes": 48432
+        },
+        {
+          "sha256": "11484d28b0c74119141a6d25730f3f00d51f7fdc76940c05da526904c323870b",
+          "bytes": 51072
+        },
+        {
+          "sha256": "151d912ad1978040c2373ad17aab290d10bd6269b7bb577efd172678a409414f",
+          "bytes": 174664
+        },
+        {
+          "sha256": "1a4844214c8b069ffe9b94db79997365bbae0712b3f0cf9fd596e4807756fe31",
+          "bytes": 161236
+        },
+        {
+          "sha256": "1eeaa327d6419b5f83e852ae4e652b619570bcd022f89e999da2d2af1a67b8a7",
+          "bytes": 120580
+        },
+        {
+          "sha256": "1f193b6cec06567bb59021ed3a782cc91d674247b4f2e8fcaa01f76a9a8568c1",
+          "bytes": 184272
+        },
+        {
+          "sha256": "3323ebea1508336d9cd1cbbf40951bf6aca86c652adbe73960a23c113dd3cd40",
+          "bytes": 1678596
+        },
+        {
+          "sha256": "332b7f68db05e6d3b6d49a1a31fd1517a33751361e311c28c76cc57970372b40",
+          "bytes": 119336
+        },
+        {
+          "sha256": "33dff5d46cc17e25f71ffa769cc8e5f221ed659b4b94840798fbed4fb49f915d",
+          "bytes": 187112
+        },
+        {
+          "sha256": "3bc87ddad4b1bd9e83498c55e28c2e8e9c5f7a358de170c4c902e809f47932db",
+          "bytes": 48432
+        },
+        {
+          "sha256": "41afc89188f72aae36114590b257bd7245944827f639acd5f4194629026ffead",
+          "bytes": 17381572
+        },
+        {
+          "sha256": "45a64c7995b2527c904b2b22c63beaf0f14c1a7ed007b78be7c7a8aa2430e5f9",
+          "bytes": 146652
+        },
+        {
+          "sha256": "484bccc75f017149b1ce4228f01fa11dd6a12f18a28cfc7bcce31c4714fdd29d",
+          "bytes": 123108
+        },
+        {
+          "sha256": "55bbbbdadfb811f7571577b51c9d5b23187481fad3f57faed57108c773696e5b",
+          "bytes": 38576
+        },
+        {
+          "sha256": "58d48849d546be5d51112e0d5296d4d80c01fd121523eb13a15effc1555c92a1",
+          "bytes": 144632
+        },
+        {
+          "sha256": "6132b52847508d536c83363f90bdb4eb659c6b288ff2394a1c95341a05d69b47",
+          "bytes": 191952
+        },
+        {
+          "sha256": "6493cf9a5db153c24db70fd3774b3119476ad3ecf8f13d8927f7f4b0b669eb44",
+          "bytes": 172828
+        },
+        {
+          "sha256": "680ec7f3c4192b909b3e4dc44728ae5b9581877063aaec12a0ecb8061acbba3d",
+          "bytes": 49624
+        },
+        {
+          "sha256": "6e6c8dfe67006ec2a4783854c2c65d75f3392693d6da3e800aca803ab07d0300",
+          "bytes": 125008
+        },
+        {
+          "sha256": "70dc2bc99f197ccd5faf5c70b255c97edc991fcc3c85a1d24b1835cd7e9cd163",
+          "bytes": 38576
+        },
+        {
+          "sha256": "716a9fd4a0ef7e63c139687fe4d7c8bdaa06eabef40562c0369456b02a5af7bf",
+          "bytes": 49624
+        },
+        {
+          "sha256": "78ca80b9955193a5a3debf43e310cff02cea4ccc5b13ddbed747220fdcef5941",
+          "bytes": 180556
+        },
+        {
+          "sha256": "91772bac730979a95b4e716b7df10b71e21784a92f62256cec109bb33e0159a9",
+          "bytes": 181640
+        },
+        {
+          "sha256": "9d7d8fd6016baa2c1554c8b6cc3e74e246eb6b199a7e909cbcd2245f46a357b3",
+          "bytes": 51044
+        },
+        {
+          "sha256": "a56090daf08aa35bf239b5200c8cb209e2e9515ee1fdc61684264da53dbd16ad",
+          "bytes": 38584
+        },
+        {
+          "sha256": "a95c9903efd7f3d5d7466e3087e1a31fedd66a67a7746a299a443f9138c99b6f",
+          "bytes": 124396
+        },
+        {
+          "sha256": "ab0947e5ee968bd3fe8efe12f8d607c44b7cb21dcf9573609496fd11b862c9e7",
+          "bytes": 43152
+        },
+        {
+          "sha256": "b57e79a445a38898afa097923233c8a6284d3b902c8811253c2256e253bc96f5",
+          "bytes": 289980
+        },
+        {
+          "sha256": "b7dad944e9e79da23e257c690fbc63884da0bca17258f7774b46e143369becdc",
+          "bytes": 194112
+        },
+        {
+          "sha256": "bfb5c7774c22afd01dc5a892f34766b5ebf98f66182f49a56000df9f7569086f",
+          "bytes": 181764
+        },
+        {
+          "sha256": "d475949ba26a6cf0e493394cf7983faf5bec23ca906a6c8c0e4dcfbf8c096ac1",
+          "bytes": 186204
+        },
+        {
+          "sha256": "dc8be57c2fcbe918c940f8b6a85edb844fc2d071af06c2f64f089f15ab19fc51",
+          "bytes": 105200
+        },
+        {
+          "sha256": "de3c1d4b98776e40ee3447dfe23f94e16e2d3ecb95dae4dde2fb4df0f69c4b9e",
+          "bytes": 173312
+        },
+        {
+          "sha256": "e160f55e747b23696babf88386480f9363273cfdef26d441a15b07b11ea720f3",
+          "bytes": 112236
+        },
+        {
+          "sha256": "fb3882e9f36903e5129035700e26c0e20782ad39f82a9eff5cd54a0d622852b9",
+          "bytes": 156876
+        },
+        {
+          "sha256": "fe0f2fd53b2cd67308bfc477b38d91d675102a07baedbf687a0488dcae2619b0",
+          "bytes": 174604
+        },
+        {
+          "sha256": "ffd990671e5a55ff213b048ab462ddc19eac6990ceaf3e5ea8fdd5f10641645a",
+          "bytes": 169432
+        }
+      ]
+    }
   ]
 }

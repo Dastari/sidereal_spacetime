@@ -95,13 +95,9 @@ import {
 } from "./crewmates";
 import {
   EVA_HELP,
-  atOpenHatch,
-  buttonDepressurises,
   evaBodiesForScene,
   evaModelOfDocument,
-  evaSuitRefusalOf,
   evaThrustFromKeys,
-  legacyEntryAction,
   exteriorButtonAction,
   exteriorLogicPresentation,
   evaScene,
@@ -587,12 +583,6 @@ export default function App({
           ? [actor.localX, actor.localY]
           : undefined,
       outside: undefined,
-    }) ??
-    legacyEntryAction({
-      shipId: logicShipId,
-      model: evaModelOfDocument(constructionInstance?.documentJson),
-      logic: logicModel,
-      outside: evaView ? [evaView.localX, evaView.localY] : undefined,
     });
   const logicDoors = logicDoorStates(logicRows, logicShipId, logicModel);
   const evaNowMicros = BigInt(Math.round(Date.now() * 1000));
@@ -725,46 +715,18 @@ export default function App({
             !row.parentItemId && row.kind === "grid" && row.placedObjectId,
         )
       : undefined;
-  // Vacuum needs the EVA suit (pressure suit, helmet, jetpack): the server refuses the same.
-  const suitRefusal = evaSuitRefusalOf(inventory.items);
-  const suitPrompt =
-    suitRefusal && !evaBody
-      ? (evaAction?.kind === "button" &&
-          buttonDepressurises(
-            logicModel,
-            logicRows,
-            logicShipId,
-            evaAction.deviceId,
-          )) ||
-        (actor &&
-          constructionVisit &&
-          atOpenHatch(
-            evaModelOfDocument(constructionInstance?.documentJson),
-            logicDoors,
-            [actor.localX, actor.localY],
-          ))
-        ? suitRefusal
-        : undefined
-      : undefined;
-  // Unsuited beside an airlock button with storage in reach (the Wren r8 EVA suit locker): E opens
-  // the storage, since the button would only refuse and the suit is in there. Suited, E cycles.
-  const storageBeforeButton =
-    !evaBody && !!evaAction && !!suitRefusal && !!reachableStorage;
-  const interactionPrompt = storageBeforeButton
-    ? `Open ${reachableStorage.name.toLowerCase()}`
-    : suitPrompt
-      ? suitPrompt
-      : evaAction && (evaBody || !contextObject)
-        ? evaAction.label
-        : contextObject
-          ? interactionLabel(contextObject)
-          : seated
-            ? "Leave control seat"
-            : nearStation
-              ? "Control seat"
-              : reachableStorage
-                ? `Open ${reachableStorage.name.toLowerCase()}`
-                : undefined;
+  const interactionPrompt =
+    evaAction && (evaBody || !contextObject)
+      ? evaAction.label
+      : contextObject
+        ? interactionLabel(contextObject)
+        : seated
+          ? "Leave control seat"
+          : nearStation
+            ? "Control seat"
+            : reachableStorage
+              ? `Open ${reachableStorage.name.toLowerCase()}`
+              : undefined;
   // The legacy stock-ship inspection catalog (hull/cargo/equipment manifests,
   // wayfarer.json) belongs to the retired Wayfarer assets that the game client
   // no longer delivers, so it is never fetched.
@@ -1183,7 +1145,6 @@ export default function App({
     combatEnabled,
     constructionInstance,
     storageId: reachableStorage?.id,
-    storageBeforeButton,
     evaAction,
     evaPhase: evaView?.phase,
     evaLocal: false,
@@ -1205,7 +1166,6 @@ export default function App({
     combatEnabled,
     constructionInstance,
     storageId: reachableStorage?.id,
-    storageBeforeButton,
     evaAction,
     evaPhase: evaView?.phase,
     evaLocal,
@@ -1425,24 +1385,17 @@ export default function App({
     const row = live.current.contextObject;
     const eva = live.current.evaAction;
     const current = connection.current;
-    if (live.current.storageBeforeButton && live.current.storageId)
-      gui.current?.openContainer(live.current.storageId);
-    else if (
+    if (
       eva &&
       current &&
       live.current.actor?.connected &&
       (live.current.evaPhase || !row)
     )
       void perform(() =>
-        eva.kind === "legacy-entry"
-          ? current.reducers.evaCycleAirlock({
-              shipId: eva.shipId,
-              airlockId: eva.airlockId,
-            })
-          : current.reducers.pressShipButton({
-              shipId: eva.shipId,
-              deviceId: eva.deviceId,
-            }),
+        current.reducers.pressShipButton({
+          shipId: eva.shipId,
+          deviceId: eva.deviceId,
+        }),
       );
     else if (row) objectCommand(interactionAction(row), row.placementId);
     else if (

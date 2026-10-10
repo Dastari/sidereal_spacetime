@@ -50,7 +50,10 @@ export function crewArmorClothRegions(
 }
 
 /** Rigid skins only: mixed/missing weights remain base geometry instead of becoming a hole. */
-export function partitionCrewTriangles(mesh: Mesh): Map<Region, number[]> {
+export function partitionCrewTriangles(
+  mesh: Mesh,
+  clothBlend = false,
+): Map<Region, number[]> {
   const indices = mesh.getIndices() ?? [];
   const bones = mesh.skeleton?.bones ?? [];
   const joints = mesh.getVerticesData(VertexBuffer.MatricesIndicesKind);
@@ -67,10 +70,29 @@ export function partitionCrewTriangles(mesh: Mesh): Map<Region, number[]> {
   const out = new Map<Region, number[]>();
   for (let i = 0; i < indices.length; i += 3) {
     const a = regionOf(indices[i]);
-    const region =
+    let region =
       a === regionOf(indices[i + 1]) && a === regionOf(indices[i + 2])
         ? a
         : "unclassified";
+    // Authored coat panels bend across the waist and upper thighs. Filtering a
+    // role's chest/legs must retain the whole panel, including its mixed vertices.
+    // This opt-in is for study wearables; base-body coverage keeps rigid semantics.
+    if (clothBlend && region === "unclassified" && joints && weights) {
+      const regions = new Set<Region>();
+      for (const vertex of indices.slice(i, i + 3))
+        for (let c = 0; c < 4; c++)
+          if (weights[vertex * 4 + c] > 0.0001)
+            regions.add(
+              crewBoneRegion(bones[joints[vertex * 4 + c]]?.name ?? ""),
+            );
+      if (regions.size && [...regions].every((r) => r === "torso"))
+        region = "torso";
+      else if (
+        regions.has("hips") &&
+        [...regions].every((r) => r === "torso" || r === "hips" || r === "legs")
+      )
+        region = "hips";
+    }
     const bucket = out.get(region) ?? [];
     bucket.push(indices[i], indices[i + 1], indices[i + 2]);
     out.set(region, bucket);

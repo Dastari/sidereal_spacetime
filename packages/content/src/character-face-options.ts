@@ -30,6 +30,8 @@ export const CHARACTER_FACIAL_HAIR = [
   "moustache",
   "handlebar",
   "sideburns",
+  "chin_strap",
+  "soul_patch",
 ] as const;
 export const CHARACTER_FACE_AGES = [
   "young",
@@ -40,6 +42,15 @@ export const CHARACTER_FACE_AGES = [
 export type CharacterExpression = (typeof CHARACTER_EXPRESSIONS)[number];
 export type CharacterFaceDetail = (typeof CHARACTER_FACE_DETAILS)[number];
 export type CharacterFacialHair = (typeof CHARACTER_FACIAL_HAIR)[number];
+export const CHARACTER_FACE_VARIANTS = [
+  "m_classic",
+  "m_bold",
+  "m_bright",
+  "f_classic",
+  "f_bright",
+  "f_sharp",
+] as const;
+export type CharacterFaceVariant = (typeof CHARACTER_FACE_VARIANTS)[number];
 export type CharacterFaceAge = (typeof CHARACTER_FACE_AGES)[number];
 
 export const CHARACTER_FACE_DEFAULTS = {
@@ -107,4 +118,5 @@ export const CHARACTER_PERSONAL_APPEARANCE_KEYS = [
   "faceDetail",
   "facialHair",
   "faceAge",
+  "faceVariant",
 ] as const;

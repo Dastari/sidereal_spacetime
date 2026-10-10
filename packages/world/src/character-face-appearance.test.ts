@@ -1,3 +1,4 @@
+import { CHARACTER_HAIR_STYLES } from "@sidereal/content/character-components";
 import { Identity } from "spacetimedb";
 import { describe, expect, test, vi } from "vitest";
 
@@ -147,8 +148,18 @@ const faceOptions = {
     "moustache",
     "handlebar",
     "sideburns",
+    "chin_strap",
+    "soul_patch",
   ],
   faceAge: ["young", "adult", "mature", "elder"],
+  faceVariant: [
+    "m_classic",
+    "m_bold",
+    "m_bright",
+    "f_classic",
+    "f_bright",
+    "f_sharp",
+  ],
 } as const;
 
 describe("r009 character face appearance authority", () => {
@@ -240,6 +251,9 @@ describe("r009 character face appearance authority", () => {
     { facialHair: "beard" },
     { faceAge: "ancient" },
     { hairStyle: "new-uninstalled-style" },
+    { hairStyle: "hair.missing" },
+    { hairStyle: "groom.missing" },
+    { faceVariant: "f_missing" },
     { eyes: "#fff" },
     { eyes: "#12345678" },
     { eyes: "123456" },
@@ -378,3 +392,29 @@ describe("r009 character face appearance authority", () => {
     expect(f.snapshot()).toEqual(before);
   });
 });
+
+test.each(["male", "female"])(
+  "every study hairstyle persists for the %s body without granting equipment",
+  (bodyType) => {
+    const f = fixture();
+    const sourceIds = CHARACTER_HAIR_STYLES.filter((id) => id.includes("."));
+    expect(sourceIds).toHaveLength(29);
+    for (const hairStyle of sourceIds) {
+      f.save({
+        bodyType,
+        hairStyle,
+        skin: "#123456",
+        hair: "#ABCDEF",
+        eyes: "#789ABC",
+      });
+      expect(JSON.parse(ownAppearance(f.a)[0].appearanceJson)).toEqual({
+        bodyType,
+        hairStyle,
+        skin: "#123456",
+        hair: "#abcdef",
+        eyes: "#789abc",
+      });
+      expect(ownAppearance(f.b)[0].revision).toBe(0n);
+    }
+  },
+);

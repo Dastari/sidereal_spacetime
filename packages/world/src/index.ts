@@ -934,7 +934,7 @@ export const stepWorld = db.reducer(
     });
     // Ship logic timers (airlock stages, door close retries), then EVA after the ships moved:
     // ride-along, jetpack flight, hull contact and doorway hand-offs (eva.ts).
-    shipLogic.stepShipLogic(ctx, (id) => eva.evaSuitRefusal(ctx, id));
+    shipLogic.stepShipLogic(ctx);
     eva.stepEva(ctx);
     // Legacy rows remain preserved for explicit validated migration. A missing
     // shared admission/compiled definition may never invoke fixture flight.
@@ -1204,11 +1204,8 @@ export const pressShipButton = db.reducer(
   { shipId: t.string(), deviceId: t.string() },
   auth.gameAction(
     (ctx, args) =>
-      shipLogic.pressShipButton(
-        ctx,
-        args,
-        (actorId, shipId) => eva.exteriorPanelAllowed(ctx, actorId, shipId),
-        (characterId) => eva.evaSuitRefusal(ctx, characterId),
+      shipLogic.pressShipButton(ctx, args, (actorId, shipId) =>
+        eva.exteriorPanelAllowed(ctx, actorId, shipId),
       ),
     true,
   ),

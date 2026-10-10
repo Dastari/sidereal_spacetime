@@ -1,5 +1,6 @@
-/** Pinned provisional study presentation. Inventory and authority keep their existing identities. */
+/** Immutable catalogue revision; provisional, not owner-approved. Existing inventory identities remain authoritative. */
 import raw from "./crew-study.catalog.json";
+import refit from "./crew-refit.catalog.json";
 import { characterComponent } from "./character-components";
 import { crewWardrobeItem } from "./crew-wardrobe";
 
@@ -69,9 +70,13 @@ export const CREW_STUDY_PILOT_CHAIR = {
   footBaseForward: 0.295,
 } as const;
 export const CREW_STUDY_BASE = `/assets/crew/${CREW_STUDY.revision}/`;
+/** Game-owned Blender refit; the imported study snapshots remain byte-exact. Provisional. */
+export const CREW_REFIT = refit;
 /** Encode filename fragments (#/@) as path data, never browser URL fragments. */
 export const crewStudyUrl = (file: string) =>
-  CREW_STUDY_BASE + file.split("/").map(encodeURIComponent).join("/");
+  (Object.hasOwn(CREW_REFIT.files, file)
+    ? `/assets/crew/${CREW_REFIT.revision}/`
+    : CREW_STUDY_BASE) + file.split("/").map(encodeURIComponent).join("/");
 export type StudyPartRequest = { id: string; regions?: string[] };
 
 export function crewStudyPartFile(
@@ -98,13 +103,21 @@ export function crewStudyPartFile(
 export function crewStudyEquipment(
   slot: string,
   id: string,
+  female = false,
+  wearerRole?: "scientist",
 ): StudyPartRequest | undefined {
   const wardrobe = crewWardrobeItem(id);
   if (wardrobe && wardrobe.slot !== slot) return undefined;
+  if (wardrobe?.study) return wardrobe.study;
   const key = id.replace(/^crew-/, "");
   const component = characterComponent(key);
   if (!wardrobe && (!component || component.slot !== slot)) return undefined;
-  const role = key.split("-")[0] === "recon" ? "scout" : key.split("-")[0];
+  const role =
+    slot === "visor" && wearerRole === "scientist"
+      ? "scientist"
+      : key.split("-")[0] === "recon"
+        ? "scout"
+        : key.split("-")[0];
   if (wardrobe?.eva) {
     const eva: Record<string, StudyPartRequest> = {
       uniform: { id: "uniform.pilot" },
@@ -190,7 +203,14 @@ export function crewStudyEquipment(
     };
   if (slot === "visor")
     request = {
-      id: role === "scout" ? "visor.nv_goggles" : "visor.goggles_teal",
+      id:
+        role === "scientist"
+          ? female
+            ? "visor.glasses"
+            : "visor.glasses_blue"
+          : role === "scout"
+            ? "visor.nv_goggles"
+            : "visor.goggles_teal",
     };
   if (slot === "gloves" && gloves[role])
     request = { id: `gloves.${gloves[role]}` };
@@ -222,7 +242,11 @@ export function crewStudyEquipment(
   return request && CREW_STUDY.parts[request.id] ? request : undefined;
 }
 
-export function crewStudyHair(style: string | undefined, female: boolean) {
+export function crewStudyHair(
+  style: string | undefined,
+  female: boolean,
+  defaultRole?: string,
+) {
   const styles: Record<string, [string, string]> = {
     swept: ["swept", "long_wavy"],
     cropped: ["crop", "short_bob"],
@@ -234,5 +258,16 @@ export function crewStudyHair(style: string | undefined, female: boolean) {
     braids: ["braids", "braids"],
   };
   if (style === "none") return undefined;
-  return `hair.${(styles[style ?? "swept"] ?? styles.swept)[female ? 1 : 0]}`;
+  if (style?.startsWith("hair.") || style?.startsWith("groom.")) {
+    if (!CREW_STUDY.parts[style])
+      throw new Error(`Unknown crew hairstyle: ${style}`);
+    return style;
+  }
+  if (style !== undefined && !Object.hasOwn(styles, style))
+    throw new Error(`Unknown crew hairstyle: ${style}`);
+  // Role defaults never replace an explicitly saved personal hairstyle.
+  if (defaultRole === "scientist" || style === "scientist")
+    return female ? "groom.twin_puffs" : "groom.fluffy_curls";
+  if (female && defaultRole === "marine") return "groom.twin_tails";
+  return `hair.${styles[style ?? "swept"][female ? 1 : 0]}`;
 }

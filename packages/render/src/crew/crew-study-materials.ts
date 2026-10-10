@@ -1,52 +1,47 @@
 import type { Material } from "@babylonjs/core/Materials/material";
-import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
-import { Color3 } from "@babylonjs/core/Maths/math.color";
-import type { SurfaceFamily } from "../molded-plastic";
+import { CrewMaterialRegistry } from "./crew-recolor";
+import { CREW_FAMILY_TO_MOLDED } from "./crew-study-material-config";
+import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 
-const families: Record<string, SurfaceFamily> = {
-  plastic: "plastic-colour",
-  plastic_dark: "plastic-dark",
-  cloth: "fabric",
-  fabric: "fabric",
-  hair: "plastic-colour",
-  skin: "skin",
-  metal: "metal",
-  rubber: "rubber",
-  glass: "glass",
-  visor: "plastic-dark",
-  emit: "emissive",
-  emissive: "emissive",
-};
-/** Source palette supplies defaults; cosmetics retint only the appropriate material slots. */
+/** Source look strength 6 becomes the game's 0.9, preserving per-part ratios. */
+export const STUDY_EMISSIVE_SCALE = 0.9 / 6;
+
+/** Saved controls map to study slots; vertex shades and face texture remain authored. */
+export function studyCrewPalette(
+  appearance: CrewAppearance,
+): Record<string, string> {
+  const look = resolveCrewAppearance(appearance);
+  return {
+    skin: look.skin,
+    hair: look.hair,
+    eye: look.eyes,
+    suit_primary: look.suit,
+    suit_secondary: look.trim,
+    accent: look.insignia,
+    metal: look.trim,
+    dark: look.accent,
+    emit: look.light,
+    emit_b: look.light,
+    glass: look.visor,
+    visor: look.visor,
+  };
+}
+
+/** Ported registry owns slot factors only; no material clones and no alpha changes. */
 export function studyMaterials(
   materials: readonly Material[],
   overrides: Record<string, string> = {},
   finish: Record<string, string> = {},
 ) {
-  for (const material of materials) {
-    if (!(material instanceof PBRMaterial)) continue;
-    const slot = /^crew\.([a-z_]+)|^slot:([a-z_]+)@/.exec(material.name);
-    const name = slot?.[1] ?? slot?.[2];
-    if (!name || name === "face") continue;
-    const color = overrides[name];
-    if (color && /^#[0-9a-f]{6}$/i.test(color)) {
-      material.albedoColor = Color3.FromHexString(color).toLinearSpace();
-      if (name.startsWith("emit"))
-        material.emissiveColor = material.albedoColor.clone();
-    }
-    const family =
-      families[finish[name]] ??
-      (name.startsWith("emit")
-        ? "emissive"
-        : name === "skin"
-          ? "skin"
-          : name === "metal"
-            ? "metal"
-            : name === "dark"
-              ? "rubber"
-              : name === "glass"
-                ? "glass"
-                : "plastic-colour");
-    material.metadata = { ...material.metadata, studySurfaceFamily: family };
-  }
+  const registry = new CrewMaterialRegistry();
+  registry.register(materials, "part", finish);
+  registry.applyFinishes({ emissiveScale: STUDY_EMISSIVE_SCALE });
+  for (const entry of registry.entries)
+    entry.material.metadata = {
+      ...entry.material.metadata,
+      studySurfaceFamily:
+        CREW_FAMILY_TO_MOLDED[entry.family] ?? "plastic-colour",
+    };
+  registry.setPalette(overrides);
+  return registry;
 }

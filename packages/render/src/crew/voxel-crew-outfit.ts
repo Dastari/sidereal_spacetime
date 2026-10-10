@@ -1,3 +1,5 @@
+import { scaleCrewEmission } from "./crew-recolor";
+import { STUDY_EMISSIVE_SCALE } from "./crew-study-materials";
 import { setPbrLightBudget, GAME_PBR_LIGHT_LIMIT } from "../pbr-light-budget";
 import type { Scene } from "@babylonjs/core/scene";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -30,8 +32,8 @@ type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
  * Prepare every crew material (body, head kit, armour, held items) for the game lights:
  * - finish: the shared molded-plastic family of each slot (cloth body suit, moulded armour and
  *   helmets, rubber grips, real metal only on metal slots; see molded-plastic.ts);
- * - cap emission: authored `crew.emit` strength 6 blooms across the face and chest in game; the cap
- *   keeps it a small accent;
+ * - scale study emission by 0.9/6 using its original exported strength; legacy materials
+ *   retain their existing cap;
  * - request the hardware-bounded crew light budget; game ordering protects key/fill/rim
  *   before local room lamps for both existing and late-loaded parts.
  * Idempotent.
@@ -45,7 +47,9 @@ export function toneCrewEmissive(meshes: readonly AbstractMesh[]) {
       material instanceof MultiMaterial ? material.subMaterials : [material];
     for (const m of list) {
       if (!(m instanceof PBRMaterial)) continue;
-      if (m.emissiveIntensity > CREW_EMISSIVE_INTENSITY)
+      if (m.metadata?.studyExportedEmissiveStrength !== undefined)
+        scaleCrewEmission(m, STUDY_EMISSIVE_SCALE);
+      else if (m.emissiveIntensity > CREW_EMISSIVE_INTENSITY)
         m.emissiveIntensity = CREW_EMISSIVE_INTENSITY;
       setPbrLightBudget(m, CREW_MAX_LIGHTS);
     }

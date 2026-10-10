@@ -11,6 +11,8 @@ import {
   type CharacterFaceDetail,
   type CharacterFacialHair,
   type CharacterFaceAge,
+  type CharacterFaceVariant,
+  CHARACTER_FACE_VARIANTS,
 } from "@sidereal/content/appearance";
 import looks from "../../../content/src/crew-looks.json";
 export type CrewLook = keyof typeof looks;
@@ -48,6 +50,7 @@ export type CrewAppearance = {
   faceDetail?: CharacterFaceDetail;
   facialHair?: CharacterFacialHair;
   faceAge?: CharacterFaceAge;
+  faceVariant?: CharacterFaceVariant;
   hairStyle?: CharacterHairStyle;
   helmet?:
     | "none"
@@ -98,10 +101,16 @@ export function resolveCrewAppearance(
   input: CrewAppearance,
 ): ResolvedCrewAppearance {
   const outfit = input.outfit ?? "engineer";
-  return {
+  if (
+    input.faceVariant !== undefined &&
+    !CHARACTER_FACE_VARIANTS.includes(input.faceVariant)
+  )
+    throw new Error(`Unknown crew face variant: ${input.faceVariant}`);
+  const resolved = {
     outfit,
     headArtRevision: "legacy",
     bodyType: "male",
+    faceVariant: "m_classic",
     equippedComponents:
       input.equippedComponents ??
       CHARACTER_COMPONENT_SETS[outfit] ??
@@ -129,7 +138,11 @@ export function resolveCrewAppearance(
     ...Object.fromEntries(
       Object.entries(input).filter(([, value]) => value !== undefined),
     ),
-  };
+  } as ResolvedCrewAppearance;
+  resolved.faceVariant =
+    input.faceVariant ??
+    (resolved.bodyType === "female" ? "f_classic" : "m_classic");
+  return resolved;
 }
 
 /** A uniform changes its preset slots, while explicitly chosen features persist. */

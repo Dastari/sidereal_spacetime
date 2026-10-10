@@ -2,12 +2,12 @@ import { expect, test } from "vitest";
 import { validateHeadLoadout } from "./crew-heads";
 import { voxelHeadLoadoutFromAppearance } from "./crew-voxel-appearance";
 import {
-  CREW_WARDROBE,
+  LEGACY_CREW_WARDROBE as CREW_WARDROBE,
   CREW_WARDROBE_KITS,
   crewWardrobeItem,
 } from "./crew-wardrobe";
 import {
-  CREW_WARDROBE_DEFINITIONS,
+  LEGACY_CREW_WARDROBE_DEFINITIONS as CREW_WARDROBE_DEFINITIONS,
   INVENTORY_DEFINITIONS,
   characterEquipmentFromInventory,
 } from "./inventory";
