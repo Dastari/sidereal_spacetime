@@ -12,6 +12,7 @@ import {
   CREW_STUDY,
   CREW_STUDY_SCALE,
   crewStudyEquipment,
+  crewStudyHair,
   crewStudyPartFile,
   crewStudyUrl,
 } from "@sidereal/content/crew-study";
@@ -19,6 +20,10 @@ import { createVoxelCrewVisual } from "./voxel-crew";
 import { createStudyCrewOutfit } from "./crew-study-outfit";
 import { createVoxelItemVisual } from "../equipment/voxel-items";
 import { WALK_SPEED_MPS } from "@sidereal/sim";
+import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
+import { createGlowOccluders, setGlowOccludingActors } from "../glow-occluders";
+import { createConstructionLighting } from "../construction-instance";
+import { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
 import {
   composeCrewFace,
   decodeCrewFacePng,
@@ -50,6 +55,146 @@ const settle = async (outfit: { readonly pending: number }) => {
 };
 
 describe("immutable provisional crew study", () => {
+  it("uses groom role defaults without replacing saved personal hair and reuses standing files in every state", () => {
+    expect(crewStudyHair("scientist", false)).toBe("groom.fluffy_curls");
+    expect(crewStudyHair("scientist", true)).toBe("groom.twin_puffs");
+    expect(crewStudyHair("cropped", true, "marine")).toBe("groom.twin_tails");
+    expect(crewStudyHair("bob", true)).toBe("hair.short_bob");
+    expect(crewStudyHair("none", true, "marine")).toBeUndefined();
+    for (const id of Object.keys(CREW_STUDY.parts).filter((id) =>
+      id.startsWith("groom."),
+    ))
+      for (const female of [false, true])
+        for (const mode of ["full", "cap", "fringe"]) {
+          const stand = crewStudyPartFile(id, female, mode)!;
+          expect(crewStudyPartFile(id, female, mode, "seated")).toEqual(stand);
+          expect(crewStudyPartFile(id, female, mode, "lying")).toEqual(stand);
+          const glb = Buffer.from(bytes(stand.file));
+          const json = JSON.parse(
+            glb.subarray(20, 20 + glb.readUInt32LE(12)).toString(),
+          );
+          if (mode === "full")
+            expect(
+              json.meshes.some(
+                (mesh: {
+                  primitives: { attributes: Record<string, number> }[];
+                }) =>
+                  mesh.primitives.some(
+                    (primitive) => "_GROOM_CLUMP" in primitive.attributes,
+                  ),
+              ),
+            ).toBe(true);
+        }
+  });
+
+  it("preserves the scientist's blended blue lenses and opaque rounded frame in glow and shadow passes", async () => {
+    const { scene, engine, crew } = await load();
+    const glow = new GlowLayer("review", scene, { excludeByDefault: true });
+    const occlusion = createGlowOccluders(glow);
+    occlusion.set(crew.root.getChildMeshes());
+    const lighting = createConstructionLighting(scene, []);
+    for (const female of [false, true]) {
+      const id = crewStudyEquipment(
+        "visor",
+        "engineer-visor",
+        female,
+        "scientist",
+      )!.id;
+      expect(id).toBe(female ? "visor.glasses" : "visor.glasses_blue");
+      const file = crewStudyPartFile(id, female)!;
+      const container = await SceneLoader.LoadAssetContainerAsync(
+        "",
+        bytes(file.file),
+        scene,
+        undefined,
+        ".glb",
+      );
+      const detach = crew.attachPart(container);
+      const lenses = container.meshes.filter((mesh) =>
+        mesh.material?.name.startsWith("crew.glass"),
+      );
+      // The female rounded export contains only an opaque frame, no lens geometry.
+      expect(lenses.length).toBe(female ? 0 : 1);
+      if (female)
+        expect(container.materials.every((m) => m.alpha === 1)).toBe(true);
+      setGlowOccludingActors(scene, lenses);
+      lighting.addActor(lenses);
+      for (const lens of lenses) {
+        expect(lens.material!.alpha).toBeCloseTo(0.35);
+        expect(lens.material!.needAlphaBlending()).toBe(true);
+        expect(glow.hasMesh(lens)).toBe(false);
+      }
+      // Babylon's shadow render skips its transparent queue with this default.
+      const shadow = lighting.primaryLight.getShadowGenerator()!;
+      expect(shadow).toBeInstanceOf(ShadowGenerator);
+      expect((shadow as ShadowGenerator).transparencyShadow).toBe(false);
+      detach();
+    }
+    occlusion.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("attaches groom defaults to both scientist bodies and the female marine while a saved hairstyle wins", async () => {
+    const { scene, engine, crew } = await load();
+    const outfit = createStudyCrewOutfit(scene, crew, {
+      face: false,
+      load: (url) =>
+        SceneLoader.LoadAssetContainerAsync(
+          "",
+          bytes(decodeURIComponent(url.split(`/${CREW_STUDY.revision}/`)[1])),
+          scene,
+          undefined,
+          ".glb",
+        ),
+    });
+    for (const bodyType of ["male", "female"] as const) {
+      const appearance = {
+        bodyType,
+        equippedComponents: {
+          chest: "scientist-chest",
+          visor: "engineer-visor",
+        },
+      };
+      crew.customize(appearance);
+      outfit.apply(appearance);
+      await settle(outfit);
+      expect(
+        crew.root
+          .getChildMeshes()
+          .some((m) =>
+            m.name.includes(
+              bodyType === "female" ? "groom.twin_puffs" : "groom.fluffy_curls",
+            ),
+          ),
+      ).toBe(true);
+    }
+    const marine = {
+      bodyType: "female" as const,
+      equippedComponents: { chest: "marine-chest" },
+    };
+    crew.customize(marine);
+    outfit.apply(marine);
+    await settle(outfit);
+    expect(
+      crew.root
+        .getChildMeshes()
+        .some((m) => m.name.includes("groom.twin_tails")),
+    ).toBe(true);
+    outfit.apply({ ...marine, hairStyle: "bob" });
+    await settle(outfit);
+    expect(
+      crew.root
+        .getChildMeshes()
+        .some((m) => m.name.includes("groom.twin_tails")),
+    ).toBe(false);
+    expect(
+      crew.root.getChildMeshes().some((m) => m.name.includes("hair.short_bob")),
+    ).toBe(true);
+    outfit.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
   it("pins every selected export, including hair filename fragments, without mixed source revisions", () => {
     const snapshot = JSON.parse(
       readFileSync(new URL("source-snapshot.json", base), "utf8"),

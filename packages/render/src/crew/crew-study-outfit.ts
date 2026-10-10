@@ -180,9 +180,15 @@ export function createStudyCrewOutfit(
     const look = resolveCrewAppearance(next);
     const female = look.bodyType === "female";
     const requests = new Map<string, Wanted>();
+    const chestId = next.equippedComponents?.chest;
+    const wearerRole =
+      chestId &&
+      crewStudyEquipment("chest", chestId)?.id === "uniform.scientist"
+        ? "scientist"
+        : undefined;
     for (const [slot, id] of Object.entries(next.equippedComponents ?? {})) {
       if (!id) continue;
-      const part = crewStudyEquipment(slot, id);
+      const part = crewStudyEquipment(slot, id, female, wearerRole);
       if (part) requests.set(slot, part);
     }
     // The sealed body item includes its pressure gloves. A separately equipped
@@ -221,7 +227,16 @@ export function createStudyCrewOutfit(
       const candidate = part.hair_mode ?? "full";
       if (ranking.indexOf(candidate) > ranking.indexOf(mode)) mode = candidate;
     }
-    const hair = crewStudyHair(look.hairStyle, female);
+    const rolePart = requests.get("uniform")?.id ?? requests.get("chest")?.id;
+    const defaultRole =
+      appearance.hairStyle === undefined
+        ? rolePart === "uniform.scientist"
+          ? "scientist"
+          : rolePart === "armor.chest.t3"
+            ? "marine"
+            : undefined
+        : undefined;
+    const hair = crewStudyHair(look.hairStyle, female, defaultRole);
     if (hair && mode !== "hidden")
       requests.set("hair", { id: hair, mode, state: hairState });
     const facial = look.facialHair;
