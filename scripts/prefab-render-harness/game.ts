@@ -20,6 +20,8 @@ import { prefabById, PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
 import { createPerformanceProbe } from "./performance-probe";
+import { CanvasUI } from "../../packages/canvas-ui/src/toolkit";
+import { createDiagnosticsUI } from "../../packages/canvas-ui/src/diagnostics";
 
 declare const __PREFAB_SOURCE__: { head: string; rendererTree: string };
 
@@ -360,11 +362,41 @@ async function main() {
   if (q.get("overlay") === "1") addBowOverlay(scene!, doc);
   if (q.get("freeze") === "1") engine.stopRenderLoop();
   window.__prefabReady = true;
+  if (q.get("f3") === "1" && !perf) {
+    const overlay = document.createElement("canvas");
+    overlay.style.cssText = "position:fixed;inset:0;width:100%;height:100%";
+    document.body.appendChild(overlay);
+    const ui = new CanvasUI(overlay, scene!);
+    const panel = createDiagnosticsUI(
+      ui,
+      (enabled) => world.getDiagnostics(enabled),
+      {
+        toggle: (key) => world.toggleDebugFeature(key),
+        reset: () => world.resetDebugFeatures(),
+        quality: (patch) => world.setRenderQuality(patch),
+      },
+    );
+    ui.draw = () => panel.draw();
+    ui.scroll = (delta, x, y) => panel.scroll(delta, x, y);
+    ui.shortcut = (code) => {
+      if (code !== "F3") return false;
+      panel.toggle();
+      return true;
+    };
+    panel.toggle();
+    Object.assign(window, { __prefabF3: { ui, panel } });
+  }
   if (perf) {
     window.__prefabLoadStage = "ready";
     // Warm the existing on-demand diagnostics before sampling so actual
     // quality/debug settings are available in the completed provenance record.
     world.getDiagnostics(true);
+    // Private experiment switches use the same F3 path, before probe warmup.
+    const captureExperiment = q.get("captureExperiment");
+    if (captureExperiment === "motion")
+      world.toggleDebugFeature("captureOnMotion");
+    if (captureExperiment === "globals")
+      world.toggleDebugFeature("captureGlobalsOnly");
     const bounded = (
       name: string,
       fallback: number,

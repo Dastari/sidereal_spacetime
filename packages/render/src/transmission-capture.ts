@@ -37,7 +37,7 @@ const rigidPlugins = new Set<Function>([
   TemporalInstanceAttributes,
 ]);
 
-function hasRigidMaterial(material: Material | null): boolean {
+export function hasRigidMaterial(material: Material | null): boolean {
   if (!material) return false;
   if (typeof material.customShaderNameResolve === "function") return false;
   if (material.constructor === MultiMaterial) {

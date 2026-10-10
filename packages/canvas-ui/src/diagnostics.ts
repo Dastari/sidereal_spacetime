@@ -27,6 +27,10 @@ const overlays: readonly [DebugFeature, string][] = [
   ["lightBounds", "Light volumes"],
   ["collision", "Collision"],
 ];
+const captureExperiments: readonly [DebugFeature, string][] = [
+  ["captureOnMotion", "Capture on motion"],
+  ["captureGlobalsOnly", "Capture globals only"],
+];
 
 /** Height of the render-cost group near the top of the Visuals tab. */
 const QUALITY_HEIGHT = 172;
@@ -265,10 +269,11 @@ export function createDiagnosticsUI(
         ...(data.debugOverlays?.collisionScopes.length
           ? data.debugOverlays.collisionScopes
           : ["Collision: supplied simulation footprints only."]),
+        "Capture on motion can lag idle animation; globals only changes glass lighting.",
         "Local presentation only · F3 keeps overrides.",
       ];
       const visualHeight =
-        343 +
+        406 +
         BACKEND_HEIGHT +
         QUALITY_HEIGHT +
         visualLines.reduce(
@@ -417,9 +422,15 @@ export function createDiagnosticsUI(
         const featuresTop = top + QUALITY_HEIGHT;
         drawGroup(features, "RENDER FEATURES", featuresTop, false);
         drawGroup(overlays, "DEBUG OVERLAYS", featuresTop + 131, true);
+        drawGroup(
+          captureExperiments,
+          "CAPTURE EXPERIMENTS",
+          featuresTop + 222,
+          true,
+        );
         const reset = {
           x: viewport.x,
-          y: featuresTop + 235,
+          y: featuresTop + 298,
           w: viewport.w,
           h: 28,
         };
@@ -441,6 +452,7 @@ export function createDiagnosticsUI(
                 !controls.reset ||
                 (disabled().length === 0 &&
                   !overlays.some(([key]) => enabled[key] === true) &&
+                  !captureExperiments.some(([key]) => enabled[key] === true) &&
                   (
                     Object.keys(
                       RENDER_QUALITY_DEFAULTS,
@@ -450,7 +462,7 @@ export function createDiagnosticsUI(
                   )),
             },
           );
-        let y = featuresTop + 276;
+        let y = featuresTop + 339;
         for (const line of visualLines) {
           const count = Math.max(20, Math.floor(viewport.w / 5.8));
           const words = line.split(" ");

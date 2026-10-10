@@ -15,7 +15,9 @@ export type DebugFeature =
   | "globalIllumination"
   | "skeleton"
   | "lightBounds"
-  | "collision";
+  | "collision"
+  | "captureOnMotion"
+  | "captureGlobalsOnly";
 export type DebugFeatures = Record<DebugFeature, boolean>;
 type EnabledNode = {
   isEnabled(checkAncestors?: boolean): boolean;
@@ -41,6 +43,8 @@ export function createDebugFeatures(
     skeleton: false,
     lightBounds: false,
     collision: false,
+    captureOnMotion: false,
+    captureGlobalsOnly: false,
   };
   const initialFlags = { ...flags };
   const indirect = createIndirectLightingOverride(scene);
