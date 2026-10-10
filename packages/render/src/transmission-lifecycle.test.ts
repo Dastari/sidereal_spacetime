@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
@@ -8,6 +8,167 @@ import { TransmissionHelper } from "@babylonjs/loaders/glTF/2.0/Extensions/trans
 import { PBRMaterialLoadingAdapter } from "@babylonjs/loaders/glTF/2.0/pbrMaterialLoadingAdapter";
 import { maintainSceneTransmission } from "./transmission-lifecycle";
 import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
+import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
+import { PointLight } from "@babylonjs/core/Lights/pointLight";
+
+test("real RTT readiness notifications cannot recurse into readiness in motion mode", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  new ArcRotateCamera("camera", 1, 1, 20, Vector3.Zero(), scene);
+  const helper = new TransmissionHelper({}, scene),
+    target = helper.getOpaqueTarget()! as RenderTargetTexture;
+  target.renderList = [];
+  const guard = maintainSceneTransmission(scene, () => ({
+    captureOnMotion: true,
+    captureGlobalsOnly: false,
+  }));
+  guard.repair();
+  expect(target._shouldRender()).toBe(true);
+  expect(target.isReadyForRendering()).toBe(true);
+  expect(() => target.render()).not.toThrow();
+  expect(target._shouldRender()).toBe(false);
+  guard.dispose();
+  scene.dispose();
+  engine.dispose();
+});
+
+test("global-only capture uses separate buffers and restores lights, shadows and prior pass material", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const helper = new TransmissionHelper({}, scene),
+    target = helper.getOpaqueTarget()! as RenderTargetTexture;
+  const mesh = CreateBox("receiver", {}, scene);
+  const material = new PBRMaterial("main", scene);
+  mesh.material = material;
+  mesh.receiveShadows = true;
+  const global = new HemisphericLight("global", Vector3.Up(), scene);
+  const local = new PointLight("local", Vector3.Zero(), scene);
+  const prior = new PBRMaterial("previous-pass-owner", scene);
+  mesh.setMaterialForRenderPass(target.renderPassId, prior);
+  target.renderList = [mesh];
+  const flags = { captureOnMotion: false, captureGlobalsOnly: false };
+  const guard = maintainSceneTransmission(
+    scene,
+    () => flags,
+    () => [global],
+  );
+  guard.repair();
+  const originalLights = mesh.lightSources;
+  flags.captureGlobalsOnly = true;
+  target.onBeforeBindObservable.notifyObservers(target);
+  const clone = mesh.getMaterialForRenderPass(
+    target.renderPassId,
+  )! as PBRMaterial;
+  expect(clone).not.toBe(material);
+  expect(clone.maxSimultaneousLights).toBe(3);
+  expect(mesh.lightSources.map((light) => light.name)).toEqual(["global"]);
+  expect(mesh.receiveShadows).toBe(false);
+  expect(mesh.material).toBe(material);
+  target.onAfterUnbindObservable.notifyObservers(target);
+  expect(mesh.lightSources).toBe(originalLights);
+  expect(mesh.lightSources.map((light) => light.name)).toEqual([
+    "global",
+    "local",
+  ]);
+  expect(mesh.receiveShadows).toBe(true);
+  expect(global.isEnabled()).toBe(true);
+  expect(local.isEnabled()).toBe(true);
+  flags.captureGlobalsOnly = false;
+  target.onBeforeBindObservable.notifyObservers(target);
+  target.onAfterUnbindObservable.notifyObservers(target);
+  expect(mesh.getMaterialForRenderPass(target.renderPassId)).toBe(prior);
+  guard.dispose();
+  scene.dispose();
+  engine.dispose();
+});
+
+test("capture exceptions restore receiver state before another pass can run", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const helper = new TransmissionHelper({}, scene),
+    target = helper.getOpaqueTarget()! as RenderTargetTexture;
+  const mesh = CreateBox("receiver", {}, scene);
+  mesh.material = new PBRMaterial("main", scene);
+  mesh.receiveShadows = true;
+  const global = new HemisphericLight("global", Vector3.Up(), scene);
+  new PointLight("local", Vector3.Zero(), scene);
+  target.renderList = [mesh];
+  const originalLights = mesh.lightSources.slice();
+  target.render = () => {
+    target.onBeforeBindObservable.notifyObservers(target);
+    expect(mesh.receiveShadows).toBe(false);
+    throw new Error("capture failed");
+  };
+  const guard = maintainSceneTransmission(
+    scene,
+    () => ({ captureGlobalsOnly: true, captureOnMotion: false }),
+    () => [global],
+  );
+  guard.repair();
+  expect(() => target.render()).toThrow("capture failed");
+  expect(mesh.receiveShadows).toBe(true);
+  expect(mesh.lightSources.map((light) => light.uniqueId)).toEqual(
+    originalLights.map((light) => light.uniqueId),
+  );
+  guard.dispose();
+  scene.dispose();
+  engine.dispose();
+});
+
+test("motion experiment wakes on camera, crew/door transforms and content; default/off retains stock cadence", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const camera = new ArcRotateCamera("camera", 1, 1, 20, Vector3.Zero(), scene);
+  const helper = new TransmissionHelper({}, scene),
+    target = helper.getOpaqueTarget()! as RenderTargetTexture;
+  const crew = new TransformNode("crew", scene),
+    door = CreateBox("door", {}, scene);
+  door.parent = crew;
+  target.renderList = [door];
+  const flags = { captureOnMotion: false, captureGlobalsOnly: false };
+  const original = target._shouldRender;
+  vi.spyOn(target, "isReadyForRendering").mockReturnValue(true);
+  target.render = () => {
+    target.onBeforeBindObservable.notifyObservers(target);
+    target.onAfterUnbindObservable.notifyObservers(target);
+  };
+  const guard = maintainSceneTransmission(scene, () => flags);
+  guard.repair();
+  const captured = () => target.render();
+  expect(target._shouldRender()).toBe(true);
+  expect(target._shouldRender()).toBe(true);
+  flags.captureOnMotion = true;
+  expect(target._shouldRender()).toBe(true);
+  captured();
+  expect(target._shouldRender()).toBe(false);
+  camera.alpha += 0.1;
+  expect(target._shouldRender()).toBe(true);
+  captured();
+  expect(target._shouldRender()).toBe(false);
+  crew.position.x += 1;
+  scene.incrementRenderId();
+  expect(target._shouldRender()).toBe(true);
+  captured();
+  expect(target._shouldRender()).toBe(false);
+  door.position.z += 1;
+  scene.incrementRenderId();
+  expect(target._shouldRender()).toBe(true);
+  captured();
+  expect(target._shouldRender()).toBe(false);
+  door.isVisible = false;
+  expect(target._shouldRender()).toBe(true);
+  captured();
+  flags.captureOnMotion = false;
+  expect(target._shouldRender()).toBe(true);
+  expect(target._shouldRender()).toBe(true);
+  guard.dispose();
+  expect(target._shouldRender).toBe(original);
+  scene.dispose();
+  engine.dispose();
+});
 
 test("repairs a disposed shared refraction target and preserves transmission materials", async () => {
   const engine = new NullEngine(),

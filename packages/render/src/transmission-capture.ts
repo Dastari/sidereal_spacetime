@@ -37,7 +37,7 @@ const rigidPlugins = new Set<Function>([
   TemporalInstanceAttributes,
 ]);
 
-function hasRigidMaterial(material: Material | null): boolean {
+export function hasRigidMaterial(material: Material | null): boolean {
   if (!material) return false;
   if (typeof material.customShaderNameResolve === "function") return false;
   if (material.constructor === MultiMaterial) {
@@ -78,12 +78,26 @@ function hasConservativeRigidBounds(mesh: AbstractMesh): boolean {
 }
 
 /** Only the helper-owned opaque target uses this callback. ObjectRenderer installs
- * that target's camera/frustum before calling it. No admission survives a frame. */
+ * that target's camera/frustum before calling it. Reuse admission while the
+ * actual frustum, input list, visibility and rigid bounds remain unchanged. */
 export function createTransmissionCaptureFilter(
   scene: Scene,
   previous: RenderListCallback | null,
+  cacheEnabled: () => boolean = () => true,
 ): RenderListCallback {
   const filtered: AbstractMesh[] = [];
+  const inputs: unknown[] = [];
+  const rigid: boolean[] = [];
+  let valid = false,
+    changed = true,
+    cursor = 0;
+  const read = (value: unknown) => {
+    if (!Object.is(inputs[cursor], value)) {
+      inputs[cursor] = value;
+      changed = true;
+    }
+    cursor++;
+  };
   return function (this: unknown, face, renderList, renderListLength) {
     const selected =
       previous?.call(this, face, renderList, renderListLength) ?? null;
@@ -100,17 +114,56 @@ export function createTransmissionCaptureFilter(
           !Number.isFinite(p.normal.z) ||
           !Number.isFinite(p.d),
       )
-    )
+    ) {
+      valid = false;
       return selected;
+    }
     const length = selected
       ? selected.length
       : Math.min(list.length, Math.max(0, renderListLength));
+    const caching = cacheEnabled();
+    if (caching) {
+      cursor = 0;
+      changed = !valid;
+      read(face);
+      read(length);
+      for (const plane of planes) {
+        read(plane.normal.x);
+        read(plane.normal.y);
+        read(plane.normal.z);
+        read(plane.d);
+      }
+      // Comparing public values catches in-place list/geometry edits. It avoids
+      // the per-frame vertex/plane filter and preserves upstream callback order.
+      for (let i = 0; i < length; i++) {
+        const mesh = list[i];
+        read(mesh);
+        const enabled = !!mesh && mesh.isEnabled() && mesh.isVisible;
+        read(enabled);
+        rigid[i] = enabled && hasConservativeRigidBounds(mesh);
+        read(rigid[i]);
+        if (!rigid[i]) continue;
+        for (const value of mesh.computeWorldMatrix().asArray()) read(value);
+        const box = mesh.getBoundingInfo().boundingBox;
+        for (const point of [box.minimum, box.maximum]) {
+          read(point.x);
+          read(point.y);
+          read(point.z);
+        }
+      }
+      if (inputs.length !== cursor) {
+        inputs.length = cursor;
+        changed = true;
+      }
+      if (!changed) return filtered;
+    }
+    valid = caching;
     filtered.length = 0;
     for (let i = 0; i < length; i++) {
       const mesh = list[i];
       if (!mesh || !mesh.isEnabled() || !mesh.isVisible) continue;
       // Preserve upstream visibility/material/mask handling for exceptional meshes.
-      if (!hasConservativeRigidBounds(mesh)) {
+      if (!(caching ? rigid[i] : hasConservativeRigidBounds(mesh))) {
         filtered.push(mesh);
         continue;
       }

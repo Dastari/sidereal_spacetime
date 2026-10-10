@@ -459,6 +459,7 @@ export function createConstructionLighting(
   addActor(meshes);
   return {
     primaryLight: sun,
+    globalLights: [sun, fill] as const,
     addActor,
     setCabinVisible(_visible: boolean) {},
     update(_blend: number, _x: number, _y: number) {},

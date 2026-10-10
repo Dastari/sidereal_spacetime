@@ -618,6 +618,7 @@ export const MOLDED_LIGHTING = {
 } as const;
 
 export interface MoldedLightRig {
+  readonly globalLights: readonly [HemisphericLight, DirectionalLight];
   /** Light these meshes with the rig (idempotent; disposed meshes are pruned). */
   include(meshes: readonly AbstractMesh[]): void;
   /** The rim belongs to the molded finish; the fill stays (it replaced the pre-finish fill). */
@@ -670,6 +671,7 @@ export function moldedLightRig(scene: Scene): MoldedLightRig {
     rim.direction.set(-forward.x, -MOLDED_LIGHTING.rim.lift, -forward.z);
   });
   const rig: MoldedLightRig = {
+    globalLights: [fill, rim],
     include(meshes) {
       let changed = false;
       const added: AbstractMesh[] = [];

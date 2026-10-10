@@ -62,7 +62,7 @@ test("keeps intersecting/touching boxes in order and respects the valid list pre
   expect(filter(0, [a, b, c, d, tail], 4)).toEqual([a, c, d]);
 });
 
-test("updates camera, door and parent transforms without cached membership", () => {
+test("invalidates cached membership when camera, door or parent transforms change", () => {
   const { scene, filter, box } = setup(),
     parent = new TransformNode("ship", scene),
     door = box("door");
@@ -81,6 +81,71 @@ test("updates camera, door and parent transforms without cached membership", () 
   expect(filter(0, [door], 1)).toEqual([door]);
   door.position.x = 20;
   expect(filter(0, [door], 1)).toEqual([]);
+});
+
+test("reuses the filtered list across render IDs without repeating plane tests", () => {
+  const { scene, filter, box } = setup(),
+    inside = box("inside"),
+    outside = box("outside", 20);
+  const tests = scene.frustumPlanes.map((plane) =>
+    vi.spyOn(plane, "dotCoordinate"),
+  );
+  const result = filter(0, [inside, outside], 2);
+  expect(result).toEqual([inside]);
+  const count = tests.reduce((sum, spy) => sum + spy.mock.calls.length, 0);
+  expect(count).toBeGreaterThan(0);
+  expect(filter(0, [inside, outside], 2)).toBe(result);
+  expect(tests.reduce((sum, spy) => sum + spy.mock.calls.length, 0)).toBe(
+    count,
+  );
+  inside.isVisible = false;
+  expect(filter(0, [inside, outside], 2)).toEqual([]);
+  inside.isVisible = true;
+  expect(filter(0, [inside, outside], 2)).toEqual([inside]);
+});
+
+test("uncached control repeats the original plane filter and switching back rebuilds once", () => {
+  const { scene, box } = setup(),
+    mesh = box("inside");
+  let cache = false;
+  const filter = createTransmissionCaptureFilter(scene, null, () => cache);
+  const plane = vi.spyOn(scene.frustumPlanes[0], "dotCoordinate");
+  expect(filter(0, [mesh], 1)?.map((mesh) => mesh.name)).toEqual(["inside"]);
+  const first = plane.mock.calls.length;
+  filter(0, [mesh], 1);
+  expect(plane.mock.calls.length).toBeGreaterThan(first);
+  cache = true;
+  filter(0, [mesh], 1);
+  const rebuilt = plane.mock.calls.length;
+  filter(0, [mesh], 1);
+  expect(plane.mock.calls.length).toBe(rebuilt);
+});
+
+test("invalidates in-place list, prefix, geometry and rigid-qualification changes", () => {
+  const { scene, filter, box } = setup(),
+    inside = box("inside"),
+    outside = box("outside", 20),
+    list = [inside, outside];
+  expect(filter(0, list, 1)).toEqual([inside]);
+  list[0] = outside;
+  expect(filter(0, list, 1)).toEqual([]);
+  list[1] = inside;
+  expect(filter(0, list, 2)).toEqual([inside]);
+  // Widen the local bounds into the view without moving the mesh.
+  outside
+    .getBoundingInfo()
+    .reConstruct(
+      new Vector3(-21, -1, -1),
+      new Vector3(1, 1, 1),
+      outside.computeWorldMatrix(),
+    );
+  expect(filter(0, list, 2)).toEqual([outside, inside]);
+  outside.refreshBoundingInfo();
+  expect(filter(0, list, 2)).toEqual([inside]);
+  outside.skeleton = new Skeleton("deformed", "deformed", scene);
+  expect(filter(0, list, 2)).toEqual([outside, inside]);
+  outside.setEnabled(false);
+  expect(filter(0, list, 2)).toEqual([inside]);
 });
 
 test("checks hardware instances separately from a hidden detached source", () => {
