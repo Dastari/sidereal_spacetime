@@ -110,8 +110,10 @@ export async function createVoxelItemVisual(
   for (const material of container.materials)
     if (material instanceof PBRMaterial)
       setPbrLightBudget(material, GAME_PBR_LIGHT_LIMIT);
-  if (studyItem) studyMaterials(container.materials, {}, studyItem.families);
-  else applyCrewItemTheme(container.materials, item, options.theme);
+  const studyRegistry = studyItem
+    ? studyMaterials(container.materials, {}, studyItem.families)
+    : undefined;
+  if (!studyItem) applyCrewItemTheme(container.materials, item, options.theme);
   const root = new TransformNode(`crew-item-placement:${item.id}`, scene);
   root.parent = parent;
   if (options.localRotation)
@@ -206,6 +208,10 @@ export async function createVoxelItemVisual(
   return {
     item,
     root,
+    /** Cosmetic links only; legacy item themes retain their existing behaviour. */
+    setPalette(palette: Record<string, string>) {
+      if (!disposed) studyRegistry?.setPalette(palette);
+    },
     supportTarget,
     setSightDeployed(deployed: boolean) {
       sightTarget = deployed ? 1 : 0;

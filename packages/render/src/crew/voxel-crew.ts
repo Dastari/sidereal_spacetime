@@ -1,3 +1,4 @@
+import { studyCrewPalette, studyMaterials } from "./crew-study-materials";
 import {
   CREW_STUDY,
   CREW_STUDY_SCALE,
@@ -81,8 +82,8 @@ const UPPER = new Set<string>([
   ),
 ]);
 /**
- * Authored crew emissive strength (6) suits offline renders; in game the emit slot is a small
- * saturated accent. Same cap as voxel-crew-outfit's toneCrewEmissive.
+ * Legacy crew emission cap. Study materials preserve their exported ratios through
+ * STUDY_EMISSIVE_SCALE instead.
  */
 export const CREW_EMISSIVE_INTENSITY = 0.9;
 
@@ -526,13 +527,18 @@ export async function createVoxelCrewVisual(
     { flipRows: !study },
   );
 
+  const studyRegistry = study ? studyMaterials(container.materials) : undefined;
   const customize = (next: CrewAppearance) => {
     if (disposed) return;
     appearance = { ...appearance, ...next };
-    const colors = voxelCrewSlotColors(appearance);
+    const colors = study
+      ? studyCrewPalette(appearance)
+      : voxelCrewSlotColors(appearance);
+    studyRegistry?.setPalette(colors);
     for (const material of container.materials) {
       if (!(material instanceof PBRMaterial)) continue;
       setPbrLightBudget(material, GAME_PBR_LIGHT_LIMIT);
+      if (studyRegistry) continue;
       const slot = material.name.replace(/^crew\./, "").replace(/\.\d+$/, "");
       if (slot === "face") continue;
       const hex = colors[slot];
@@ -822,6 +828,10 @@ export async function createVoxelCrewVisual(
   update({ moving: false, seated: false });
   visual.setEnabled(true);
   return {
+    /** Presentation choices used by linked held-item colours. */
+    get appearance(): Readonly<CrewAppearance> {
+      return appearance;
+    },
     root,
     /** Parent of the body's glTF root; armour parts attach beside it. */
     model: visual,
