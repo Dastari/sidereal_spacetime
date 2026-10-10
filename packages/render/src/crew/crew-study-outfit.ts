@@ -16,7 +16,7 @@ import type { CrewAppearance } from "./appearance";
 import { resolveCrewAppearance } from "./appearance";
 import type { createVoxelCrewVisual } from "./voxel-crew";
 import { partitionCrewTriangles } from "./voxel-crew-regions";
-import { studyMaterials } from "./crew-study-materials";
+import { studyCrewPalette, studyMaterials } from "./crew-study-materials";
 import {
   composeCrewFace,
   hexToRgb255,
@@ -28,6 +28,7 @@ type Crew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 type Attachment = {
   id: string;
   covers: string[];
+  recolor(colors: Record<string, string>): void;
   stow(on: boolean): void;
   dispose(): void;
 };
@@ -46,6 +47,8 @@ export function createStudyCrewOutfit(
   let disposed = false;
   let pending = 0;
   let appearance: CrewAppearance = {};
+  let currentPalette: Record<string, string> = {};
+  let paletteKey = "";
   let hairState = "stand";
   let seated = false;
   let faceKey = "";
@@ -82,14 +85,25 @@ export function createStudyCrewOutfit(
     slot: string,
     request: Wanted | undefined,
     female: boolean,
-    colors: Record<string, string>,
+    recolor: boolean,
   ) {
     const file =
       request &&
       crewStudyPartFile(request.id, female, request.mode, request.state);
     const key =
-      request && file ? JSON.stringify([request, female, colors]) : "";
-    if ((wanted.get(slot) ?? "") === key) return;
+      request && file
+        ? JSON.stringify([
+            file.file,
+            request.id,
+            request.regions,
+            request.mode,
+            female,
+          ])
+        : "";
+    if ((wanted.get(slot) ?? "") === key) {
+      if (recolor) active.get(slot)?.recolor(currentPalette);
+      return;
+    }
     wanted.set(slot, key);
     const generation = (generations.get(slot) ?? 0) + 1;
     generations.set(slot, generation);
@@ -141,7 +155,11 @@ export function createStudyCrewOutfit(
         }
         const part = CREW_STUDY.parts[request.id];
         const unattach = crew.attachPart(container);
-        studyMaterials(container.materials, colors, part.families);
+        const registry = studyMaterials(
+          container.materials,
+          currentPalette,
+          part.families,
+        );
         const covers = request.regions
           ? part.covers.filter((region) => request.regions!.includes(region))
           : [...part.covers];
@@ -151,6 +169,9 @@ export function createStudyCrewOutfit(
         const attachment = {
           id: request.id,
           covers,
+          recolor(colors: Record<string, string>) {
+            registry.setPalette(colors);
+          },
           stow(on: boolean) {
             meshes.forEach((mesh, i) => mesh.setEnabled(!on && enabled[i]));
           },
@@ -244,9 +265,16 @@ export function createStudyCrewOutfit(
       const id = `facial.${facial === "moustache" ? "moustache" : facial}`;
       if (CREW_STUDY.parts[id]) requests.set("facial", { id, mode: "full" });
     }
-    const colors = { skin: look.skin, hair: look.hair };
+    const colors = studyCrewPalette(next);
+    const nextPaletteKey = JSON.stringify(colors);
+    const recolor = paletteKey !== nextPaletteKey;
+    if (recolor) {
+      currentPalette = colors;
+      paletteKey = nextPaletteKey;
+    }
     for (const slot of new Set([...wanted.keys(), ...requests.keys()]))
-      sync(slot, requests.get(slot), female, colors);
+      sync(slot, requests.get(slot), female, recolor);
+    if (recolor) options.onChange?.();
     if (options.face !== false) {
       const variant = female ? "f_classic" : "m_classic";
       const key = JSON.stringify([

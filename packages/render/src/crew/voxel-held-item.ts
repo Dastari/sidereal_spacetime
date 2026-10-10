@@ -1,3 +1,4 @@
+import { studyCrewPalette } from "./crew-study-materials";
 import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
@@ -104,6 +105,15 @@ export function createVoxelHeldItem(
   let held: Held | undefined;
   let loading = 0;
   let disposed = false;
+  let paletteKey = "";
+  const syncPalette = () => {
+    if (!held || !crew.study) return;
+    const palette = studyCrewPalette(crew.appearance);
+    const key = JSON.stringify(palette);
+    if (key === paletteKey) return;
+    paletteKey = key;
+    held.visual.setPalette(palette);
+  };
   const reduced = () => !!options.reducedMotion?.();
   const now = options.now ?? (() => performance.now());
   const hand = () =>
@@ -188,6 +198,8 @@ export function createVoxelHeldItem(
       grabS: 0,
       endS: 0,
     };
+    paletteKey = "";
+    syncPalette();
     crew.setArmedClass(cls);
     const info = clip(held, "draw");
     if (info && !reduced() && !options.instant?.()) {
@@ -229,6 +241,7 @@ export function createVoxelHeldItem(
   }
   /** Advance the draw/holster transition to the current clock (also run once per render). */
   function step() {
+    syncPalette();
     if (!held || held.phase === "held") return;
     const t = (now() - held.startedMs) / 1000;
     if (held.phase === "drawing") {

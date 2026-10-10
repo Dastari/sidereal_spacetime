@@ -18,6 +18,9 @@ import {
 } from "@sidereal/content/crew-study";
 import { createVoxelCrewVisual } from "./voxel-crew";
 import { createStudyCrewOutfit } from "./crew-study-outfit";
+import { studyCrewPalette } from "./crew-study-materials";
+import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
+import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { createVoxelItemVisual } from "../equipment/voxel-items";
 import { WALK_SPEED_MPS } from "@sidereal/sim";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
@@ -55,6 +58,85 @@ const settle = async (outfit: { readonly pending: number }) => {
 };
 
 describe("immutable provisional crew study", () => {
+  it("recolours saved controls on an equipped uniform without loading parts or allocating more materials", async () => {
+    const { scene, engine, crew } = await load();
+    let loads = 0;
+    const outfit = createStudyCrewOutfit(scene, crew, {
+      face: false,
+      load: (url) => {
+        loads++;
+        return SceneLoader.LoadAssetContainerAsync(
+          "",
+          bytes(decodeURIComponent(url.split(`/${CREW_STUDY.revision}/`)[1])),
+          scene,
+          undefined,
+          ".glb",
+        );
+      },
+    });
+    let appearance = {
+      bodyType: "female" as const,
+      hairStyle: "scientist" as const,
+      equippedComponents: {
+        uniform: "wardrobe-uniform-command",
+        helmet: "engineer-helmet",
+        visor: "engineer-visor",
+      },
+      suit: "#253450",
+      accent: "#506070",
+      trim: "#c0d0e0",
+      insignia: "#f0c020",
+      visor: "#102030",
+      light: "#30e0f0",
+      skin: "#d09f80",
+      hair: "#403020",
+      eyes: "#2080d0",
+    };
+    crew.customize(appearance);
+    outfit.apply(appearance);
+    await settle(outfit);
+    const initialLoads = loads,
+      materials = scene.materials.length;
+    const slots = {
+      suit: ["suit_primary"],
+      accent: ["dark"],
+      trim: ["suit_secondary", "metal"],
+      insignia: ["accent"],
+      visor: ["glass", "visor"],
+      light: ["emit", "emit_b"],
+      skin: ["skin"],
+      hair: ["hair"],
+      eyes: ["eye"],
+    };
+    for (const key of Object.keys(slots) as (keyof typeof slots)[]) {
+      appearance = { ...appearance, [key]: "#fa2080" };
+      crew.customize(appearance);
+      outfit.apply(appearance);
+      await settle(outfit);
+      expect(loads).toBe(initialLoads);
+      expect(scene.materials.length).toBe(materials);
+      const palette = studyCrewPalette(appearance),
+        want = Color3.FromHexString("#fa2080").toLinearSpace();
+      for (const slot of slots[key]) expect(palette[slot]).toBe("#fa2080");
+      const matching = crew.root
+        .getChildMeshes()
+        .map((m) => m.material)
+        .filter(
+          (m): m is PBRMaterial =>
+            m instanceof PBRMaterial &&
+            slots[key].some((slot) => m.name === `crew.${slot}`),
+        );
+      // Eye pixels live in the composed face atlas, tested by browser/face composer review.
+      if (key !== "eyes") expect(matching.length, key).toBeGreaterThan(0);
+      for (const material of matching)
+        expect(material.albedoColor.equalsWithEpsilon(want, 1e-5), key).toBe(
+          true,
+        );
+    }
+    outfit.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
   it("uses groom role defaults without replacing saved personal hair and reuses standing files in every state", () => {
     expect(crewStudyHair("scientist", false)).toBe("groom.fluffy_curls");
     expect(crewStudyHair("scientist", true)).toBe("groom.twin_puffs");
