@@ -12,6 +12,51 @@ import {
   invalidateStaticMaterials,
 } from "./static-material-freeze";
 
+test("hidden static banks avoid material preparation, with a live veto and first-visible binding", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const material = new StandardMaterial("shared", scene);
+  const visible = CreateBox("visible", {}, scene),
+    hidden = CreateBox("hidden-bank", {}, scene);
+  for (const mesh of [visible, hidden]) {
+    mesh.metadata = { role: "floor" };
+    mesh.material = material;
+    const defines = new MaterialDefines();
+    defines.markAsProcessed();
+    mesh.subMeshes[0].setEffect({ isReady: () => true } as Effect, defines);
+  }
+  hidden.setEnabled(false);
+  const hiddenMaterial = vi.spyOn(hidden.subMeshes[0], "getMaterial");
+  const owner = createStaticMaterialFreeze(scene);
+  const before = () => scene.onBeforeRenderObservable.notifyObservers(scene);
+  const tick = () => {
+    before();
+    scene.onAfterRenderObservable.notifyObservers(scene);
+  };
+  before();
+  expect(hiddenMaterial).not.toHaveBeenCalled();
+  scene.onAfterRenderObservable.notifyObservers(scene);
+  expect(material.isFrozen).toBe(true);
+  // An exceptional hidden use remains a veto because it can mutate shared uniforms.
+  hidden.metadata.mutableMaterial = true;
+  before();
+  expect(hiddenMaterial).toHaveBeenCalled();
+  expect(material.isFrozen).toBe(false);
+  delete hidden.metadata.mutableMaterial;
+  hiddenMaterial.mockClear();
+  tick();
+  expect(material.isFrozen).toBe(true);
+  hidden.setEnabled(true);
+  hidden.metadata.mutableMaterial = true;
+  before();
+  expect(material.isFrozen).toBe(false);
+  expect(hiddenMaterial).toHaveBeenCalled();
+  owner.dispose();
+  for (const mesh of [visible, hidden]) mesh.subMeshes[0].setEffect(null);
+  scene.dispose();
+  engine.dispose();
+});
+
 test("static sharing freezes only compiled uses and invalidates shader/scene changes before binding", () => {
   const engine = new NullEngine(),
     scene = new Scene(engine),

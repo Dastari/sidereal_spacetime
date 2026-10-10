@@ -34,11 +34,14 @@ declare global {
     __prefabPerf?: ReturnType<typeof createPerformanceProbe>["report"];
     __prefabLoadStage?: string;
     __prefabPerfUpload?: { status: string; error?: string };
+    __prefabMeshWork?: { enabled: boolean };
   }
 }
 
 const q = new URLSearchParams(location.search);
 const perf = q.get("perf") === "1";
+const meshWork = { enabled: q.get("meshWork") !== "off" };
+if (perf || q.has("meshWork")) window.__prefabMeshWork = meshWork;
 if (perf) window.__prefabLoadStage = "entry";
 // Use only after the owner confirms the embedded preview is visible/focused.
 // Electron can report DOM focus false in its embedded view; never infer that
@@ -200,6 +203,8 @@ async function main() {
         ? (sample) => probe?.recordFrame(sample)
         : undefined,
       blocksCameraInput: perf ? () => true : undefined,
+      undrawnMeshWorkEnabled:
+        perf || q.has("meshWork") ? () => meshWork.enabled : undefined,
       onFrameCamera:
         perf && validCam
           ? (camera) => {
@@ -473,6 +478,7 @@ async function main() {
         aa: world.getAntialiasing(),
         graphics: world.getGraphicsSettings(),
         debugFeatures: world.getDiagnostics(true)?.debugFeatures,
+        undrawnMeshWork: meshWork.enabled,
       }),
     });
     window.__prefabPerf = probe.report;

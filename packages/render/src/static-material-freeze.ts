@@ -5,6 +5,7 @@ import type { SubMesh } from "@babylonjs/core/Meshes/subMesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { PBRBaseMaterial } from "@babylonjs/core/Materials/PBR/pbrBaseMaterial";
 import type { Light } from "@babylonjs/core/Lights/light";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 
 const staticRoles = new Set([
   "hull",
@@ -15,6 +16,18 @@ const staticRoles = new Set([
   "equipment",
   "remote",
 ]);
+export function isStaticMaterialUse(mesh: AbstractMesh) {
+  return (
+    (staticRoles.has(mesh.metadata?.role) ||
+      (mesh.metadata?.role === "proxy" &&
+        mesh.metadata.staticMaterial === true)) &&
+    !mesh.skeleton &&
+    !mesh.morphTargetManager &&
+    !mesh.bakedVertexAnimationManager &&
+    !mesh.animations.length &&
+    !mesh.metadata?.mutableMaterial
+  );
+}
 const owners = new WeakMap<Scene, { invalidate(): void }>();
 /** Call before a control changes material plugins or authored material state. */
 export function invalidateStaticMaterials(scene: Scene) {
@@ -23,7 +36,11 @@ export function invalidateStaticMaterials(scene: Scene) {
 
 /** Freeze only fully compiled static material uses. A material shared with any
  * animated, switchable or unclassified use remains live. Geometry is untouched. */
-export function createStaticMaterialFreeze(scene: Scene) {
+export function createStaticMaterialFreeze(
+  scene: Scene,
+  skipUndrawn: () => boolean = () => true,
+  materialUses: () => readonly AbstractMesh[] = () => scene.meshes,
+) {
   const entries = new Map<
     Material,
     {
@@ -74,16 +91,16 @@ export function createStaticMaterialFreeze(scene: Scene) {
     if (values.some((value, i) => !Object.is(value, sceneValues[i])))
       invalidate();
     for (let i = 0; i < values.length; i++) sceneValues[i] = values[i];
-    for (const mesh of scene.meshes) {
-      const eligible =
-        (staticRoles.has(mesh.metadata?.role) ||
-          (mesh.metadata?.role === "proxy" &&
-            mesh.metadata.staticMaterial === true)) &&
-        !mesh.skeleton &&
-        !mesh.morphTargetManager &&
-        !mesh.bakedVertexAnimationManager &&
-        !mesh.animations.length &&
-        !mesh.metadata?.mutableMaterial;
+    for (const mesh of materialUses()) {
+      const eligible = isStaticMaterialUse(mesh);
+      // Static hidden banks have no binding to prepare. Keep exceptional hidden
+      // uses in the veto scan: their animation can mutate a shared material.
+      if (
+        skipUndrawn() &&
+        eligible &&
+        (!mesh.isEnabled() || !mesh.isVisible || mesh.visibility <= 0)
+      )
+        continue;
       for (const sub of mesh.subMeshes ?? []) {
         const material = sub.getMaterial();
         if (!material) continue;

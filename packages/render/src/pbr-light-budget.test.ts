@@ -16,6 +16,7 @@ import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { toneCrewEmissive } from "./crew/voxel-crew-outfit";
 import { createStaticMaterialFreeze } from "./static-material-freeze";
+import { createDrawMeshCandidates } from "./draw-mesh-candidates";
 import {
   createPrefabShipView,
   createLegacyPrefabShipView,
@@ -79,6 +80,29 @@ function local(scene: Scene, id: string, x: number) {
   return light;
 }
 const focus = new Vector3(0, 0, 0);
+
+test("registered receivers defer hidden mesh material work until its first visible update", () => {
+  const { scene, budget: original } = setup();
+  original.dispose();
+  const hidden = CreateBox("hidden-bank", {}, scene);
+  hidden.metadata = { role: "floor" };
+  const material = new PBRMaterial("bank-material", scene);
+  hidden.material = material;
+  hidden.setEnabled(false);
+  const uses = createDrawMeshCandidates(scene);
+  const budget = createPbrLightBudget(scene, () => uses.receivers());
+  const get = vi.spyOn(hidden, "material", "get");
+  budget.update(focus);
+  expect(get).not.toHaveBeenCalled();
+  // Creation/accessor guards still protect hidden and detached prototype caps.
+  material.maxSimultaneousLights = 99;
+  expect(material.maxSimultaneousLights).toBe(8);
+  hidden.setEnabled(true);
+  budget.update(focus);
+  expect(get).toHaveBeenCalled();
+  budget.dispose();
+  uses.dispose();
+});
 
 test("import completion cannot compile over-budget PBR before the first frame", () => {
   const { scene, material, budget } = setup();

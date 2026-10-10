@@ -6,6 +6,7 @@ import { createPbrLightBudget } from "./pbr-light-budget";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
 import { createFlightActiveSet } from "./flight-active-set";
+import { createDrawMeshCandidates } from "./draw-mesh-candidates";
 import { createFastSnapshot } from "./fast-snapshot";
 import {
   createStaticMaterialFreeze,
@@ -274,6 +275,8 @@ export interface WorldOptions {
   /** Opt-in review pose, applied before camera-dependent controllers and passes.
    * Absent in the client: normal camera behaviour remains owned by this world. */
   onFrameCamera?: (camera: ArcRotateCamera) => void;
+  /** Private harness A/B control; normal clients skip undrawn mesh work. */
+  undrawnMeshWorkEnabled?: () => boolean;
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
   /** Skip hidden world frames only after first usable-frame readiness completes.
@@ -378,7 +381,9 @@ async function buildWorld(
   );
   const backendPreference = backend;
   const scene = new Scene(engine);
-  const pbrLights = createPbrLightBudget(scene);
+  const pbrLights = createPbrLightBudget(scene, () =>
+    drawMeshCandidates.receivers(),
+  );
   // Review aid: `?slowmo=0.25` plays crew clips, draw/holster and weapon effects at that fraction
   // of real time (presentation only; the server clock is unaffected).
   const slowmo = Number(pageUrl?.searchParams.get("slowmo"));
@@ -1008,7 +1013,15 @@ async function buildWorld(
   const visibleBodies = (nowMs: number) =>
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   const debugVisibilityRevision = createDebugVisibilityRevision();
-  const staticMaterials = createStaticMaterialFreeze(scene);
+  const drawMeshCandidates = createDrawMeshCandidates(
+    scene,
+    options.undrawnMeshWorkEnabled,
+  );
+  const staticMaterials = createStaticMaterialFreeze(
+    scene,
+    options.undrawnMeshWorkEnabled,
+    () => drawMeshCandidates.materialUses(),
+  );
   const flightActiveSet = createFlightActiveSet(scene);
   const fastSnapshot = engine.isWebGPU ? createFastSnapshot(scene) : undefined;
   let firstFrame = true;
@@ -1704,6 +1717,7 @@ async function buildWorld(
       fastSnapshot?.dispose();
       flightActiveSet.dispose();
       staticMaterials.dispose();
+      drawMeshCandidates.dispose();
       updateConstructionTraversal = undefined;
       updateConstructionDoors = undefined;
       updateConstructionView = undefined;
