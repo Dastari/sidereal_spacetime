@@ -142,6 +142,53 @@ export function createTransmissionVisibilityTest(
 }
 
 type ScreenBox = { minX: number; maxX: number; minY: number; maxY: number };
+type SamplePlane = { x: number; y: number; z: number; d: number };
+
+function samplePlanes(box: ScreenBox, transform: Matrix): SamplePlane[] {
+  const m = transform.asArray();
+  return [
+    {
+      x: m[0] - box.minX * m[3],
+      y: m[4] - box.minX * m[7],
+      z: m[8] - box.minX * m[11],
+      d: m[12] - box.minX * m[15],
+    },
+    {
+      x: box.maxX * m[3] - m[0],
+      y: box.maxX * m[7] - m[4],
+      z: box.maxX * m[11] - m[8],
+      d: box.maxX * m[15] - m[12],
+    },
+    {
+      x: m[1] - box.minY * m[3],
+      y: m[5] - box.minY * m[7],
+      z: m[9] - box.minY * m[11],
+      d: m[13] - box.minY * m[15],
+    },
+    {
+      x: box.maxY * m[3] - m[1],
+      y: box.maxY * m[7] - m[5],
+      z: box.maxY * m[11] - m[9],
+      d: box.maxY * m[15] - m[13],
+    },
+  ];
+}
+
+function intersectsSamples(box: BoundingBox, planes: SamplePlane[]): boolean {
+  const min = box.minimumWorld,
+    max = box.maximumWorld;
+  // Positive support vertex of the world AABB: if even this is outside one
+  // sample plane, no point of the mesh can contribute. No opaque projection,
+  // division, allocation or transform/material revalidation is needed.
+  return planes.every(
+    (p) =>
+      p.x * (p.x >= 0 ? max.x : min.x) +
+        p.y * (p.y >= 0 ? max.y : min.y) +
+        p.z * (p.z >= 0 ? max.z : min.z) +
+        p.d >=
+      -1e-4,
+  );
+}
 
 function projectedBox(
   box: BoundingBox,
@@ -167,7 +214,8 @@ function projectedBox(
     if (!(w > 1e-4) || clipZ < -w) return null;
     const sx = (x * m[0] + y * m[4] + z * m[8] + m[12]) / w;
     const sy = (x * m[1] + y * m[5] + z * m[9] + m[13]) / w;
-    if (![sx, sy, clipZ].every(Number.isFinite)) return null;
+    if (!Number.isFinite(sx) || !Number.isFinite(sy) || !Number.isFinite(clipZ))
+      return null;
     result.minX = Math.min(result.minX, sx);
     result.maxX = Math.max(result.maxX, sx);
     result.minY = Math.min(result.minY, sy);
@@ -364,6 +412,9 @@ export function createTransmissionCaptureFilter(
     const glass = capture
       ? glassSampleBoxes(scene, capture.target, capture.candidates())
       : null;
+    const samples =
+      glass?.map((box) => samplePlanes(box, scene.getTransformMatrix())) ??
+      null;
     filtered.length = 0;
     for (let i = 0; i < length; i++) {
       const mesh = list[i];
@@ -390,19 +441,10 @@ export function createTransmissionCaptureFilter(
           box.vectorsWorld.some((v) => plane.dotCoordinate(v) >= -1e-4),
         );
       if (!finite || touchesPlane) {
-        const screen = glass
-          ? projectedBox(box, scene.getTransformMatrix())
-          : null;
         if (
-          !screen ||
-          !glass ||
-          glass.some(
-            (g) =>
-              screen.minX <= g.maxX &&
-              screen.maxX >= g.minX &&
-              screen.minY <= g.maxY &&
-              screen.maxY >= g.minY,
-          )
+          !finite ||
+          !samples ||
+          samples.some((planes) => intersectsSamples(box, planes))
         )
           filtered.push(mesh);
       }
