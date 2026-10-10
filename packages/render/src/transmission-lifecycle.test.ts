@@ -105,3 +105,32 @@ test("does not overwrite another callback owner and releases its observer on sce
   next.dispose();
   engine.dispose();
 });
+
+test("captures at the scene's own environment intensity until the guard is released", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  scene.setTransformMatrix(Matrix.Identity(), Matrix.Identity());
+  scene.environmentIntensity = 0.28;
+  const helper = new TransmissionHelper({}, scene),
+    target = helper.getOpaqueTarget()! as RenderTargetTexture;
+  const capture = () => {
+    target.onBeforeBindObservable.notifyObservers(target);
+    const during = scene.environmentIntensity;
+    target.onAfterUnbindObservable.notifyObservers(target);
+    return [during, scene.environmentIntensity];
+  };
+  // Stock Babylon 9.25: the shared material buffers see intensity 1.
+  expect(capture()).toEqual([1, 0.28]);
+  const guard = maintainSceneTransmission(scene);
+  guard.repair();
+  expect(capture()).toEqual([0.28, 0.28]);
+  scene.environmentIntensity = 0;
+  expect(capture()).toEqual([0, 0]);
+  guard.repair();
+  expect(capture()).toEqual([0, 0]);
+  guard.dispose();
+  scene.environmentIntensity = 0.28;
+  expect(capture()).toEqual([1, 0.28]);
+  scene.dispose();
+  engine.dispose();
+});
