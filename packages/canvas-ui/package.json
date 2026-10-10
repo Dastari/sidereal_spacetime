@@ -16,7 +16,7 @@
   "dependencies": {
     "@babylonjs/core": "9.25.0",
     "@sidereal/content": "0.18.0",
-    "@sidereal/render": "0.21.3",
+    "@sidereal/render": "0.21.4",
     "@sidereal/ui": "0.7.0",
     "@sidereal/sim": "0.12.0"
   }
