@@ -1,5 +1,6 @@
 /** Immutable catalogue revision; provisional, not owner-approved. Existing inventory identities remain authoritative. */
 import raw from "./crew-study.catalog.json";
+import refit from "./crew-refit.catalog.json";
 import { characterComponent } from "./character-components";
 import { crewWardrobeItem } from "./crew-wardrobe";
 
@@ -69,9 +70,13 @@ export const CREW_STUDY_PILOT_CHAIR = {
   footBaseForward: 0.295,
 } as const;
 export const CREW_STUDY_BASE = `/assets/crew/${CREW_STUDY.revision}/`;
+/** Game-owned Blender refit; the imported study snapshots remain byte-exact. Provisional. */
+export const CREW_REFIT = refit;
 /** Encode filename fragments (#/@) as path data, never browser URL fragments. */
 export const crewStudyUrl = (file: string) =>
-  CREW_STUDY_BASE + file.split("/").map(encodeURIComponent).join("/");
+  (Object.hasOwn(CREW_REFIT.files, file)
+    ? `/assets/crew/${CREW_REFIT.revision}/`
+    : CREW_STUDY_BASE) + file.split("/").map(encodeURIComponent).join("/");
 export type StudyPartRequest = { id: string; regions?: string[] };
 
 export function crewStudyPartFile(

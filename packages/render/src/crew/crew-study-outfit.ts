@@ -138,7 +138,7 @@ export function createStudyCrewOutfit(
         if (request.regions) {
           for (const mesh of meshes)
             if (mesh instanceof Mesh) {
-              const selected = [...partitionCrewTriangles(mesh)].filter(
+              const selected = [...partitionCrewTriangles(mesh, true)].filter(
                 ([region]) => request.regions!.includes(region),
               );
               mesh.makeGeometryUnique();
