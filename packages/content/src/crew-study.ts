@@ -98,13 +98,20 @@ export function crewStudyPartFile(
 export function crewStudyEquipment(
   slot: string,
   id: string,
+  female = false,
+  wearerRole?: "scientist",
 ): StudyPartRequest | undefined {
   const wardrobe = crewWardrobeItem(id);
   if (wardrobe && wardrobe.slot !== slot) return undefined;
   const key = id.replace(/^crew-/, "");
   const component = characterComponent(key);
   if (!wardrobe && (!component || component.slot !== slot)) return undefined;
-  const role = key.split("-")[0] === "recon" ? "scout" : key.split("-")[0];
+  const role =
+    slot === "visor" && wearerRole === "scientist"
+      ? "scientist"
+      : key.split("-")[0] === "recon"
+        ? "scout"
+        : key.split("-")[0];
   if (wardrobe?.eva) {
     const eva: Record<string, StudyPartRequest> = {
       uniform: { id: "uniform.pilot" },
@@ -190,7 +197,14 @@ export function crewStudyEquipment(
     };
   if (slot === "visor")
     request = {
-      id: role === "scout" ? "visor.nv_goggles" : "visor.goggles_teal",
+      id:
+        role === "scientist"
+          ? female
+            ? "visor.glasses"
+            : "visor.glasses_blue"
+          : role === "scout"
+            ? "visor.nv_goggles"
+            : "visor.goggles_teal",
     };
   if (slot === "gloves" && gloves[role])
     request = { id: `gloves.${gloves[role]}` };
@@ -222,7 +236,11 @@ export function crewStudyEquipment(
   return request && CREW_STUDY.parts[request.id] ? request : undefined;
 }
 
-export function crewStudyHair(style: string | undefined, female: boolean) {
+export function crewStudyHair(
+  style: string | undefined,
+  female: boolean,
+  defaultRole?: string,
+) {
   const styles: Record<string, [string, string]> = {
     swept: ["swept", "long_wavy"],
     cropped: ["crop", "short_bob"],
@@ -234,5 +252,9 @@ export function crewStudyHair(style: string | undefined, female: boolean) {
     braids: ["braids", "braids"],
   };
   if (style === "none") return undefined;
+  // Role defaults never replace an explicitly saved personal hairstyle.
+  if (defaultRole === "scientist" || style === "scientist")
+    return female ? "groom.twin_puffs" : "groom.fluffy_curls";
+  if (female && defaultRole === "marine") return "groom.twin_tails";
   return `hair.${(styles[style ?? "swept"] ?? styles.swept)[female ? 1 : 0]}`;
 }
