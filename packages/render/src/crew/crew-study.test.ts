@@ -26,7 +26,7 @@ import {
 } from "./crew-study-face";
 
 const base = new URL(
-  "../../../../assets/runtime/crew/study-v2-r001/",
+  `../../../../assets/runtime/crew/${CREW_STUDY.revision}/`,
   import.meta.url,
 );
 const bytes = (file: string) =>
@@ -56,6 +56,11 @@ describe("immutable provisional crew study", () => {
     );
     expect(snapshot.sourceCommit).toBe(CREW_STUDY.sourceCommit);
     expect(snapshot.runtimeCrewScale).toBe(0.9);
+    expect(Object.keys(CREW_STUDY.parts)).toHaveLength(118);
+    expect(CREW_STUDY.parts["groom.fluffy_curls"]).toBeDefined();
+    expect(CREW_STUDY.parts["groom.twin_puffs"]).toBeDefined();
+    expect(CREW_STUDY.parts["groom.twin_tails"]).toBeDefined();
+    expect(CREW_STUDY.parts["groom.high_ponytail"]).toBeDefined();
     for (const [file, record] of Object.entries(snapshot.files) as [
       string,
       { sha256: string; bytes: number },
@@ -131,7 +136,9 @@ describe("immutable provisional crew study", () => {
     const outfit = createStudyCrewOutfit(scene, crew, {
       face: false,
       load: (url) => {
-        const file = decodeURIComponent(url.split("/study-v2-r001/")[1]);
+        const file = decodeURIComponent(
+          url.split(`/${CREW_STUDY.revision}/`)[1],
+        );
         return SceneLoader.LoadAssetContainerAsync(
           "",
           bytes(file),
@@ -208,7 +215,9 @@ describe("immutable provisional crew study", () => {
     const outfit = createStudyCrewOutfit(scene, crew, {
       face: false,
       load: (url) => {
-        const file = decodeURIComponent(url.split("/study-v2-r001/")[1]);
+        const file = decodeURIComponent(
+          url.split(`/${CREW_STUDY.revision}/`)[1],
+        );
         return SceneLoader.LoadAssetContainerAsync(
           "",
           bytes(file),
@@ -260,7 +269,7 @@ describe("immutable provisional crew study", () => {
       load: (url) =>
         SceneLoader.LoadAssetContainerAsync(
           "",
-          bytes(decodeURIComponent(url.split("/study-v2-r001/")[1])),
+          bytes(decodeURIComponent(url.split(`/${CREW_STUDY.revision}/`)[1])),
           scene,
           undefined,
           ".glb",
@@ -422,7 +431,9 @@ describe("immutable provisional crew study", () => {
       face: false,
       load: async (url) => {
         if (reject) throw new Error("Unavailable export");
-        const file = decodeURIComponent(url.split("/study-v2-r001/")[1]);
+        const file = decodeURIComponent(
+          url.split(`/${CREW_STUDY.revision}/`)[1],
+        );
         const container = await SceneLoader.LoadAssetContainerAsync(
           "",
           bytes(file),
@@ -460,7 +471,9 @@ describe("immutable provisional crew study", () => {
     const outfit = createStudyCrewOutfit(scene, crew, {
       face: false,
       load: (url) => {
-        const file = decodeURIComponent(url.split("/study-v2-r001/")[1]);
+        const file = decodeURIComponent(
+          url.split(`/${CREW_STUDY.revision}/`)[1],
+        );
         loaded.push(file);
         return SceneLoader.LoadAssetContainerAsync(
           "",
@@ -506,7 +519,9 @@ describe("immutable provisional crew study", () => {
     const outfit = createStudyCrewOutfit(scene, crew, {
       face: false,
       load: (url) => {
-        const file = decodeURIComponent(url.split("/study-v2-r001/")[1]);
+        const file = decodeURIComponent(
+          url.split(`/${CREW_STUDY.revision}/`)[1],
+        );
         loaded.push(file);
         return SceneLoader.LoadAssetContainerAsync(
           "",

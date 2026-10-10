@@ -1,4 +1,4 @@
-/** Pinned provisional study presentation. Inventory and authority keep their existing identities. */
+/** Immutable catalogue revision; provisional, not owner-approved. Existing inventory identities remain authoritative. */
 import raw from "./crew-study.catalog.json";
 import { characterComponent } from "./character-components";
 import { crewWardrobeItem } from "./crew-wardrobe";

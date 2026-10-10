@@ -6,7 +6,7 @@
   "dependencies": {
     "@fontsource/barlow": "5.3.0",
     "@fontsource/barlow-condensed": "5.3.0",
-    "@sidereal/content": "0.16.0",
+    "@sidereal/content": "0.16.1",
     "@sidereal/net": "0.8.4",
     "@sidereal/render": "0.18.1",
     "@sidereal/sim": "0.12.0",
