@@ -19,6 +19,9 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { prefabById, PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
+import { createPerformanceProbe } from "./performance-probe";
+
+declare const __PREFAB_SOURCE__: { head: string; rendererTree: string };
 
 declare global {
   interface Window {
@@ -26,10 +29,26 @@ declare global {
     __prefabMetrics?: unknown;
     __prefabError?: string;
     __prefabWorld?: unknown;
+    __prefabPerf?: ReturnType<typeof createPerformanceProbe>["report"];
+    __prefabLoadStage?: string;
+    __prefabPerfUpload?: { status: string; error?: string };
   }
 }
 
 const q = new URLSearchParams(location.search);
+const perf = q.get("perf") === "1";
+if (perf) window.__prefabLoadStage = "entry";
+// Use only after the owner confirms the embedded preview is visible/focused.
+// Electron can report DOM focus false in its embedded view; never infer that
+// confirmation from a running animation loop. Other readiness/throttle gates stay.
+const hostFocusConfirmed = perf && q.get("perfFocus") === "host";
+const cam = (
+  q.get("cam") ??
+  (perf ? "2.0207963267948967,0.9553166181245092,30,0,0" : undefined)
+)
+  ?.split(",")
+  .map(Number);
+const validCam = cam && cam.length >= 3 && cam.every(Number.isFinite);
 const doc =
   BOW_HOSTS.find((p) => p.id === q.get("prefab")) ??
   prefabById(q.get("prefab") ?? "fed.s.wren") ??
@@ -41,6 +60,64 @@ canvas.width = width;
 canvas.height = height;
 canvas.style.width = `${width}px`;
 canvas.style.height = `${height}px`;
+
+// The opt-in benchmark needs visible progress: opening DevTools to check an
+// unfinished run takes page focus and correctly discards that partial run.
+if (perf) {
+  // Focusing the benchmark must not select/hover an object and introduce an
+  // outline proxy/pass. Register before the production input listeners.
+  const focusOnly = (event: PointerEvent) => {
+    canvas.focus({ preventScroll: true });
+    event.stopImmediatePropagation();
+  };
+  const noHover = (event: PointerEvent) => event.stopImmediatePropagation();
+  canvas.addEventListener("pointerdown", focusOnly, true);
+  canvas.addEventListener("pointermove", noHover, true);
+  const progress = document.createElement("div");
+  progress.id = "performance-probe-status";
+  progress.setAttribute("role", "status");
+  Object.assign(progress.style, {
+    position: "fixed",
+    left: "12px",
+    top: "12px",
+    padding: "8px",
+    color: "#cfd8ff",
+    background: "rgba(18, 10, 36, 0.85)",
+    font: "13px/1.4 ui-monospace, monospace",
+    whiteSpace: "pre-wrap",
+    pointerEvents: "none",
+    maxWidth: "calc(100vw - 40px)",
+  });
+  document.body.append(progress);
+  const updateProgress = () => {
+    const report = window.__prefabPerf;
+    let text = `Performance probe · Loading: ${window.__prefabLoadStage}`;
+    if (report?.status === "waiting")
+      text = `Performance probe · ${report.reason}\nClick the ship view and keep this tab in front.`;
+    else if (report?.status === "warming")
+      text = `Performance probe · Run ${report.runs.length + 1}/2 · Warmup ${report.warmupProgress}/${report.config.warmup}`;
+    else if (report?.status === "sampling")
+      text = `Performance probe · Run ${report.runs.length + 1}/2 · Frames ${report.progress}/${report.config.frames}`;
+    else if (report?.status === "complete") {
+      const upload = window.__prefabPerfUpload;
+      text =
+        upload?.status === "saved"
+          ? "Performance probe · Result saved. Return to the chat."
+          : upload?.status === "failed"
+            ? `Performance probe · Run complete; upload failed: ${upload.error}.\nThe result remains on window.__prefabPerf.`
+            : "Performance probe · Run complete; sending result…";
+    }
+    if (progress.textContent !== text) progress.textContent = text;
+  };
+  updateProgress();
+  const timer = window.setInterval(updateProgress, 500);
+  import.meta.hot?.dispose(() => {
+    window.clearInterval(timer);
+    progress.remove();
+    canvas.removeEventListener("pointerdown", focusOnly, true);
+    canvas.removeEventListener("pointermove", noHover, true);
+  });
+}
 
 async function main() {
   const construction = prefabConstructionDocument(
@@ -76,6 +153,7 @@ async function main() {
     }),
   };
   let scene: Scene | undefined;
+  let probe: ReturnType<typeof createPerformanceProbe> | undefined;
   const world = await createWorld(
     canvas,
     (text) => (document.getElementById("hud")!.textContent = text),
@@ -111,9 +189,39 @@ async function main() {
         (window as unknown as { __prefabScene?: Scene }).__prefabScene = s;
       },
       onLoadError: (m) => (window.__prefabError = m),
+      onLoadStage: perf
+        ? (stage) => {
+            window.__prefabLoadStage = stage;
+          }
+        : undefined,
+      onFrameDiagnostics: perf
+        ? (sample) => probe?.recordFrame(sample)
+        : undefined,
+      blocksCameraInput: perf ? () => true : undefined,
+      onFrameCamera:
+        perf && validCam
+          ? (camera) => {
+              if (cam.length >= 5) camera.target.set(cam[3], 1.2, -cam[4]);
+              [camera.alpha, camera.beta, camera.radius] = cam as [
+                number,
+                number,
+                number,
+              ];
+              if (q.get("ortho") === "1") {
+                camera.mode = Camera.ORTHOGRAPHIC_CAMERA;
+                camera.orthoTop = 7;
+                camera.orthoBottom = -7;
+                camera.orthoLeft = (-7 * width) / height;
+                camera.orthoRight = (7 * width) / height;
+              }
+            }
+          : undefined,
     },
   );
-  import.meta.hot?.dispose(() => world.dispose());
+  import.meta.hot?.dispose(() => {
+    probe?.dispose();
+    world.dispose();
+  });
   const interior = q.get("interior") !== "0";
   const state: SceneState = {
     heading: 0,
@@ -148,9 +256,8 @@ async function main() {
   (window as unknown as { __prefabState?: SceneState }).__prefabState = state;
   // Review-only camera override (&cam=alpha,beta,radius): the game eases its RPG camera toward the
   // crew every frame; this re-applies fixed matching angles after it, never touching game state.
-  const cam = q.get("cam")?.split(",").map(Number);
   // Optional 4th/5th values: camera target in ship metres (x starboard, y fore) at deck height.
-  if (cam && cam.length >= 3 && cam.every(Number.isFinite))
+  if (!perf && validCam)
     scene!.onBeforeRenderObservable.add(() => {
       const c = scene!.activeCamera as unknown as {
         alpha: number;
@@ -172,6 +279,7 @@ async function main() {
       }
     });
   const instrumentation = new SceneInstrumentation(scene!);
+  if (perf) window.__prefabLoadStage = "settling";
   const engine = scene!.getEngine();
   const warmup = Math.max(6, Math.min(120, Number(q.get("frames")) || 30));
   const settle = 3;
@@ -252,6 +360,88 @@ async function main() {
   if (q.get("overlay") === "1") addBowOverlay(scene!, doc);
   if (q.get("freeze") === "1") engine.stopRenderLoop();
   window.__prefabReady = true;
+  if (perf) {
+    window.__prefabLoadStage = "ready";
+    // Warm the existing on-demand diagnostics before sampling so actual
+    // quality/debug settings are available in the completed provenance record.
+    world.getDiagnostics(true);
+    const bounded = (
+      name: string,
+      fallback: number,
+      min: number,
+      max: number,
+    ) => {
+      const value = Number(q.get(name) ?? fallback);
+      return Number.isFinite(value)
+        ? Math.max(min, Math.min(max, Math.floor(value)))
+        : fallback;
+    };
+    const gl = canvas.getContext("webgl2");
+    const gpuInfo = gl?.getExtension("WEBGL_debug_renderer_info");
+    probe = createPerformanceProbe(scene!, {
+      frames: bounded("perfFrames", 300, 60, 3600),
+      warmup: bounded("perfWarmup", 180, 60, 1800),
+      metadata: {
+        source: __PREFAB_SOURCE__,
+        prefab: doc.id,
+        fleetSize,
+        interior,
+        crewPosition: [state.localX, state.localY],
+        userAgent: navigator.userAgent,
+        gpu: gpuInfo ? gl!.getParameter(gpuInfo.UNMASKED_RENDERER_WEBGL) : null,
+        query: location.search,
+        delivery: import.meta.env.PROD ? "bundle" : "development modules",
+        focusValidation: hostFocusConfirmed
+          ? "owner-confirmed embedded preview"
+          : "document.hasFocus()",
+        interaction: "focus only; object selection/hover input suppressed",
+        definitions: {
+          renderCpuMs:
+            "Raw scene.render() wall duration, including scene observers and targets",
+          updateCpuMs:
+            "Raw controller duration, identical to F3 diagnostics before static material preparation",
+          frameCpuMs:
+            "Raw world frame callback duration, identical to F3 diagnostics",
+          frameMs:
+            "Interval between engine frame starts; fps includes presentation pacing",
+          gpuFrameMs:
+            "New asynchronously completed engine GPU timer samples; unsupported is null",
+          litMaterialBinds:
+            "Material onBind events with lighting enabled, positive light cap and an enabled nonzero eligible light; not a GPU draw count",
+          draws:
+            "Babylon draw counter increments, including fullscreen draws, by currentRenderPassId",
+        },
+      },
+      ready: () => window.__prefabReady === true && !window.__prefabError,
+      focused: hostFocusConfirmed ? () => true : undefined,
+      completed: () => {
+        window.__prefabPerfUpload = { status: "uploading" };
+        void fetch("/__prefab-perf-result", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(probe?.report),
+        })
+          .then((response) => {
+            window.__prefabPerfUpload = response.ok
+              ? { status: "saved" }
+              : { status: "failed", error: `HTTP ${response.status}` };
+          })
+          .catch((error) => {
+            window.__prefabPerfUpload = {
+              status: "failed",
+              error: String(error),
+            };
+          });
+      },
+      diagnostics: () => world.getDiagnostics(true),
+      settings: () => ({
+        backend: world.getRenderBackend(),
+        aa: world.getAntialiasing(),
+        graphics: world.getGraphicsSettings(),
+      }),
+    });
+    window.__prefabPerf = probe.report;
+  }
 }
 
 main().catch((e) => {

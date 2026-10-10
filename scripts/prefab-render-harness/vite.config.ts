@@ -8,10 +8,18 @@
  * straight from the repository (read-only); everything else under /assets is a hard 404 so a
  * missing GLB can never be answered by the SPA index.html fallback.
  */
-import { defineConfig, type Plugin } from "vite";
+import {
+  defineConfig,
+  type Plugin,
+  type ViteDevServer,
+  type PreviewServer,
+} from "vite";
 import { fileURLToPath } from "node:url";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { join, normalize, sep } from "node:path";
+import { execFileSync } from "node:child_process";
+import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 
 const repo = fileURLToPath(new URL("../..", import.meta.url));
 
@@ -58,32 +66,131 @@ function resolveAsset(url: string): string | null {
 }
 
 function repositoryAssets(): Plugin {
-  return {
-    name: "prefab-harness-assets",
-    configureServer(server) {
-      server.middlewares.use((req, res, next) => {
-        if (!req.url?.startsWith("/assets/")) return next();
-        const file = resolveAsset(req.url);
-        if (!file) {
-          res.statusCode = 404;
-          res.end("not found");
+  const mount = (server: ViteDevServer | PreviewServer) => {
+    server.middlewares.use((req, res, next) => {
+      // Private, opt-in local result collection. Never accepts a client path;
+      // the operator supplies an outside-repository directory at server start.
+      if (req.url === "/__prefab-perf-result" && req.method === "POST") {
+        const directory = process.env.SIDEREAL_PREFAB_PERF_RESULTS_DIR;
+        if (!directory) {
+          res.statusCode = 503;
+          res.end("collection disabled");
           return;
         }
-        const ext = file.slice(file.lastIndexOf("."));
-        res.setHeader("Content-Type", TYPES[ext] ?? "application/octet-stream");
-        res.setHeader("Cache-Control", "no-cache");
-        createReadStream(file).pipe(res);
-      });
-    },
+        let body = "",
+          tooLarge = false;
+        req.on("data", (chunk: Buffer) => {
+          body += chunk.toString("utf8");
+          if (Buffer.byteLength(body) > 65536) {
+            tooLarge = true;
+            body = "";
+          }
+        });
+        req.on("end", () => {
+          try {
+            if (tooLarge) {
+              res.statusCode = 413;
+              res.end();
+              return;
+            }
+            const report = JSON.parse(body);
+            if (
+              report.status !== "complete" ||
+              report.runs?.length !== 2 ||
+              !/^[0-9a-f]{40}$/.test(report.metadata?.source?.head ?? "")
+            ) {
+              res.statusCode = 400;
+              res.end("not a completed probe");
+              return;
+            }
+            const key = createHash("sha256")
+              .update(body)
+              .digest("hex")
+              .slice(0, 16);
+            mkdirSync(directory, { recursive: true });
+            writeFileSync(
+              join(
+                directory,
+                `probe-${report.metadata.source.head.slice(0, 9)}-${key}.json`,
+              ),
+              JSON.stringify(report, null, 2),
+              { flag: "wx" },
+            );
+            res.statusCode = 201;
+            res.end("recorded");
+          } catch (error) {
+            if ((error as NodeJS.ErrnoException).code === "EEXIST") {
+              res.statusCode = 200;
+              res.end("already recorded");
+            } else {
+              res.statusCode = 400;
+              res.end("invalid result");
+            }
+          }
+        });
+        return;
+      }
+      if (!req.url?.startsWith("/assets/")) return next();
+      const file = resolveAsset(req.url);
+      if (!file) {
+        res.statusCode = 404;
+        res.end("not found");
+        return;
+      }
+      const ext = file.slice(file.lastIndexOf("."));
+      res.setHeader("Content-Type", TYPES[ext] ?? "application/octet-stream");
+      res.setHeader("Cache-Control", "no-cache");
+      createReadStream(file).pipe(res);
+    });
+  };
+  return {
+    name: "prefab-harness-assets",
+    configureServer: mount,
+    configurePreviewServer: mount,
   };
 }
 
 export default defineConfig({
+  define: {
+    __PREFAB_SOURCE__: JSON.stringify({
+      head: execFileSync("git", ["rev-parse", "HEAD"], {
+        cwd: repo,
+        encoding: "utf8",
+      }).trim(),
+      rendererTree: execFileSync(
+        "git",
+        ["rev-parse", "HEAD:packages/render/src"],
+        { cwd: repo, encoding: "utf8" },
+      ).trim(),
+      frameCallbackSourceSha256: createHash("sha256")
+        .update(readFileSync(join(repo, "packages/render/src/index.ts")))
+        .digest("hex"),
+      probeSourceSha256: createHash("sha256")
+        .update(
+          readFileSync(
+            join(repo, "scripts/prefab-render-harness/performance-probe.ts"),
+          ),
+        )
+        .digest("hex"),
+    }),
+  },
   root: fileURLToPath(new URL(".", import.meta.url)),
   plugins: [repositoryAssets()],
   publicDir: false,
   esbuild: { jsx: "automatic" },
   clearScreen: false,
+  // The hardware probe uses a fixed bundle rather than hundreds of dev-module
+  // round trips and HMR reloads. Runtime art remains read-only through the same
+  // allowlisted mount; generated code lives in the ignored dependency cache.
+  build: {
+    outDir: join(repo, "node_modules/.cache/sidereal-prefab-performance"),
+    emptyOutDir: true,
+    assetsDir: "harness-code",
+    rolldownOptions: {
+      input: fileURLToPath(new URL("./game.html", import.meta.url)),
+    },
+  },
+  preview: { host: "127.0.0.1" },
   server: {
     host: "127.0.0.1",
     fs: {
