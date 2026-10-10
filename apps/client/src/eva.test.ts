@@ -4,10 +4,7 @@ import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-cat
 import { EVA, prefabEvaModel, shipToWorld } from "@sidereal/sim/eva";
 import { shipLogicModel } from "@sidereal/sim/ship-logic-model";
 import {
-  atOpenHatch,
-  buttonDepressurises,
   evaFacingFromAim,
-  evaSuitRefusalOf,
   evaThrustFromKeys,
   evaBodiesForScene,
   exteriorButtonAction,
@@ -17,7 +14,6 @@ import {
   evaIntent,
   evaScene,
   localAimAngle,
-  legacyEntryAction,
   logicButtonAction,
   logicDoorStates,
   logicPanelLights,
@@ -69,7 +65,7 @@ const keys = (...codes: string[]) => new Set(codes);
 const identity = (h: number, v: number) => ({ dx: h, dy: v });
 
 describe("accepted public exterior interaction", () => {
-  it("offers legacy entry at a published target even when the EVA trip began elsewhere", () => {
+  it("offers no teleport action at an unactuated closed hatch", () => {
     const doc = PREFAB_SHIPS.find(
       (p) => !p.logic && prefabEvaModel(p, catalog).entries.length > 0,
     )!;
@@ -94,11 +90,7 @@ describe("accepted public exterior interaction", () => {
       ],
       rows: [],
     });
-    expect(action).toMatchObject({
-      kind: "legacy-entry",
-      shipId: target.shipId,
-      airlockId: model.entries[0].id,
-    });
+    expect(action).toBeUndefined();
   });
 
   it("uses the target's rotated world frame and requires its accepted public button row", () => {
@@ -439,71 +431,14 @@ describe("suit IFCS controls (pointer facing, thrust relative to it)", () => {
   });
 });
 
-describe("suit gate on the client (the server enforces the same rule)", () => {
-  const item = (equipmentSlot: string, definitionId: string) => ({
-    equipmentSlot,
-    definitionId,
-  });
-  it("refuses without the suit, helmet and jetpack", () => {
-    expect(evaSuitRefusalOf([])).toContain(
-      "pressure suit, helmet and EVA jetpack",
-    );
+describe("door presentation does not depend on protective equipment", () => {
+  it("offers only a physical door button, including an unsuited caller", () => {
     expect(
-      evaSuitRefusalOf([
-        item("uniform", "wardrobe-suit-body"),
-        item("helmet", "wardrobe-suit-helmet"),
-        item("back", "wardrobe-suit-pack"),
-      ]),
-    ).toBe("");
-  });
-  it("knows which presses depressurise and when a walker stands in an open hatch", () => {
-    const row = (state: string): ShipLogicRow => ({
-      shipId: "wren",
-      deviceId: "lock",
-      kind: "airlock-controller",
-      state,
-      light: "green",
-      open: false,
-      endsMicros: 0n,
-      pressedMicros: 0n,
-    });
-    expect(
-      buttonDepressurises(logic, [row("pressurised")], "wren", "btn-lock-in"),
-    ).toBe(true);
-    expect(
-      buttonDepressurises(logic, [row("vacuum")], "wren", "btn-lock-in"),
-    ).toBe(false);
-    expect(
-      buttonDepressurises(logic, [row("pressurised")], "wren", "btn-hall"),
-    ).toBe(false);
-    const inLane: [number, number] = [
-      lock.hatch[0] - lock.normal[0] * 0.3,
-      lock.hatch[1] - lock.normal[1] * 0.3,
-    ];
-    expect(atOpenHatch(model, new Map([[lock.id, true]]), inLane)).toBe(true);
-    expect(atOpenHatch(model, new Map([[lock.id, false]]), inLane)).toBe(false);
-  });
-});
-
-describe("legacy re-entry at hatches without ship logic (never stranded)", () => {
-  it("offers E at a logic-less hatch, never at a logic-driven one", () => {
-    const at: [number, number] = [lock.outside[0], lock.outside[1]];
-    expect(
-      legacyEntryAction({ shipId: "wren", model, logic: null, outside: at }),
-    ).toMatchObject({
-      kind: "legacy-entry",
-      airlockId: lock.id,
-    });
-    expect(
-      legacyEntryAction({ shipId: "wren", model, logic, outside: at }),
-    ).toBeUndefined();
-    expect(
-      legacyEntryAction({
+      logicButtonAction({
         shipId: "wren",
-        model,
-        logic: null,
-        outside: [60, 60],
+        logic,
+        aboard: logic.panels.find((p) => p.deviceId === "btn-lock-in")!.front,
       }),
-    ).toBeUndefined();
+    ).toMatchObject({ kind: "button", deviceId: "btn-lock-in" });
   });
 });

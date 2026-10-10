@@ -108,6 +108,7 @@ export function crewStudyEquipment(
 ): StudyPartRequest | undefined {
   const wardrobe = crewWardrobeItem(id);
   if (wardrobe && wardrobe.slot !== slot) return undefined;
+  if (wardrobe?.study) return wardrobe.study;
   const key = id.replace(/^crew-/, "");
   const component = characterComponent(key);
   if (!wardrobe && (!component || component.slot !== slot)) return undefined;

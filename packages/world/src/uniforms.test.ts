@@ -19,7 +19,7 @@ vi.mock("spacetimedb/server", () => ({
 }));
 import { seedCharacterUniforms } from "./inventory";
 import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
-import { CREW_WARDROBE_DEFINITIONS } from "@sidereal/content/inventory";
+import { LEGACY_CREW_WARDROBE_DEFINITIONS } from "@sidereal/content/inventory";
 test("uniform migration fills the original four containers once, retaining cargo, IDs and placements", () => {
   const grid = (id: string, carried = false) => ({
     id,
@@ -108,7 +108,10 @@ test("uniform migration fills the original four containers once, retaining cargo
   expect(state.revision).toBe(12n);
   containers.find((c) => c.id === "crate-0")!.maxMassKg = 500;
   expect(seedCharacterUniforms(ctx, "actor")).toBe(true);
-  expect(items).toHaveLength(1 + CREW_WARDROBE_DEFINITIONS.length);
+  expect(items).toHaveLength(1 + LEGACY_CREW_WARDROBE_DEFINITIONS.length);
+  expect(items.some((i) => i.definitionId.startsWith("wardrobe-study-"))).toBe(
+    false,
+  );
   // The retired r008 armour is no longer issued; the r006 wardrobe is.
   expect(items.some((i) => i.definitionId.startsWith("crew-"))).toBe(false);
   expect(items.find((i) => i.id === original.id)).toEqual(original);

@@ -115,32 +115,41 @@ try {
       c.reducers.pressShipButton({ shipId, deviceId: `${id}-outside-button` }),
       /outside/,
     );
-    if (id === "personnel") {
-      await c.reducers.setIntent({
+    const intent = (dx: number) =>
+      c.reducers.setIntent({
         sequence: nextSequence(c),
         throttle: 0,
         turn: 0,
-        dx: -1,
+        dx,
         dy: 0,
         sprint: false,
       });
-      await pause(450);
-      await c.reducers.setIntent({
-        sequence: nextSequence(c),
-        throttle: 0,
-        turn: 0,
-        dx: 0,
-        dy: 0,
-        sprint: false,
-      });
-      assert.equal(
-        c.db.ownEvaBody.count(),
-        0n,
-        "Vacuum crossing still requires EVA equipment",
-      );
-      assert.equal(actor().shipId, shipId);
-      await walkNative(c, ...panel.front);
+    const exitDeadline = Date.now() + 8000;
+    while (c.db.ownEvaBody.count() === 0n && Date.now() < exitDeadline) {
+      await intent(-1);
+      await pause(50);
     }
+    assert.equal(
+      c.db.ownEvaBody.count(),
+      1n,
+      "Unsuited ordinary movement crosses the open physical door",
+    );
+    const body = [...c.db.ownEvaBody.iter()][0]!;
+    assert.equal(body.exitShipId, shipId);
+    receipts.push({ door: id, unsuitedExit: [body.localX, body.localY] });
+    const entryDeadline = Date.now() + 10000;
+    while (c.db.ownEvaBody.count() > 0n && Date.now() < entryDeadline) {
+      await intent(0.6);
+      await pause(50);
+    }
+    await intent(0);
+    assert.equal(
+      c.db.ownEvaBody.count(),
+      0n,
+      "Return is ordinary movement through the same aperture",
+    );
+    assert.equal(actor().shipId, shipId);
+    await walkNative(c, ...panel.front);
     await c.reducers.pressShipButton({ shipId, deviceId: panel.deviceId });
     await wait(() => !door().open, "close command");
   }
@@ -151,7 +160,7 @@ try {
     buttons: 4,
     pressureControllers: 0,
     unsuitedInsideOpen: true,
-    vacuumCrossingSuitRequired: true,
+    unsuitedMovementExitAndReturn: true,
     receipts,
   };
   if (process.env.SIDEREAL_HULL_FIELD_RECEIPT)

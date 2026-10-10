@@ -247,6 +247,8 @@ export function createRemoteCrew(
       reducedMotion: () => reducedMotion,
       // A body first seen already holds its item (no draw replayed on arrival).
       instant: () => !entry.lookApplied,
+      resting: () =>
+        entry.state.seated || (!entry.state.aimActive && !entry.state.eva),
     });
     entry.held.set(entry.state.heldItem);
     entry.lookApplied = true;

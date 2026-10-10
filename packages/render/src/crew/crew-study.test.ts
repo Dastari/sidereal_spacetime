@@ -22,6 +22,13 @@ import { studyCrewPalette } from "./crew-study-materials";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { createVoxelItemVisual } from "../equipment/voxel-items";
+import {
+  createVoxelHeldItem,
+  studyHolsterTransform,
+  studyItemLod,
+} from "./voxel-held-item";
+import { STUDY_EQUIPMENT_KITS } from "@sidereal/content/crew-study-equipment";
+import { inventoryDefinition } from "@sidereal/content/inventory";
 import { WALK_SPEED_MPS } from "@sidereal/sim";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import { createGlowOccluders, setGlowOccludingActors } from "../glow-occluders";
@@ -67,6 +74,166 @@ const settle = async (outfit: { readonly pending: number }) => {
 };
 
 describe("immutable provisional crew study", () => {
+  it("rated suit pieces preserve the owned coat until successful load and restore it on removal or failure", async () => {
+    const { scene, engine, crew } = await load();
+    let release: (() => void) | undefined;
+    let reject = false;
+    let garment:
+      import("@babylonjs/core/assetContainer").AssetContainer | undefined;
+    const outfit = createStudyCrewOutfit(scene, crew, {
+      face: false,
+      load: async (url) => {
+        if (url.includes("uniform.pilot")) {
+          if (reject) throw new Error("Test pressure layer unavailable");
+          await new Promise<void>((resolve) => {
+            release = resolve;
+          });
+        }
+        const container = await SceneLoader.LoadAssetContainerAsync(
+          "",
+          urlBytes(url),
+          scene,
+          undefined,
+          ".glb",
+        );
+        if (url.includes("uniform.captain")) garment = container;
+        return container;
+      },
+    });
+    const base = {
+      hairStyle: "none" as const,
+      equippedComponents: { uniform: "wardrobe-study-clothing-captain" },
+    };
+    outfit.apply(base);
+    await settle(outfit);
+    const indices = () =>
+      garment!.meshes.reduce(
+        (sum, mesh) => sum + (mesh.isEnabled() ? mesh.getTotalIndices() : 0),
+        0,
+      );
+    const original = indices();
+    outfit.apply({
+      ...base,
+      equippedComponents: {
+        ...base.equippedComponents,
+        chest: "wardrobe-study-eva-pilot-chest",
+      },
+    });
+    expect(indices()).toBe(original);
+    expect(outfit.armour.uniform).toBe("uniform.captain");
+    release!();
+    await settle(outfit);
+    expect(outfit.armour.chest).toBe("uniform.pilot");
+    expect(indices()).toBeGreaterThan(0);
+    expect(indices()).toBeLessThan(original);
+    outfit.apply(base);
+    await settle(outfit);
+    expect(indices()).toBe(original);
+    reject = true;
+    const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
+    outfit.apply({
+      ...base,
+      equippedComponents: {
+        ...base.equippedComponents,
+        chest: "wardrobe-study-eva-pilot-chest",
+      },
+    });
+    await settle(outfit);
+    expect(indices()).toBe(original);
+    expect(outfit.armour.chest).toBeUndefined();
+    warning.mockRestore();
+    outfit.dispose();
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("loads all five modular pressure families on both bodies without replacing their clothing identity", async () => {
+    const { scene, engine, crew } = await load();
+    const outfit = createStudyCrewOutfit(scene, crew, {
+      face: false,
+      load: (url) =>
+        SceneLoader.LoadAssetContainerAsync(
+          "",
+          urlBytes(url),
+          scene,
+          undefined,
+          ".glb",
+        ),
+    });
+    for (const bodyType of ["male", "female"] as const)
+      for (const family of ["medic", "pilot", "marine", "salvage", "recon"]) {
+        const equippedComponents = Object.fromEntries(
+          STUDY_EQUIPMENT_KITS[`study-eva-${family}`].map((id) => [
+            inventoryDefinition(id)!.equipSlot,
+            id,
+          ]),
+        );
+        equippedComponents.uniform = "wardrobe-study-clothing-captain";
+        outfit.apply({
+          bodyType,
+          hairStyle: "groom.twin_puffs",
+          equippedComponents,
+        });
+        await settle(outfit);
+        expect(outfit.armour.uniform).toBe("uniform.captain");
+        expect(Object.keys(outfit.armour)).toHaveLength(7);
+        expect(outfit.armour.hair).toBeUndefined();
+      }
+    outfit.dispose();
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("uses every source holster frame and swaps a stowed owned item between pinned LODs without changing its pose", async () => {
+    const { scene, engine, crew } = await load();
+    for (const name of ["back", "belt", "hip.R", "hip.L"]) {
+      const transform = studyHolsterTransform(crew, name);
+      expect(transform?.parent.name).toBe(name === "back" ? "chest" : "pelvis");
+      expect(transform?.position.length()).toBeGreaterThan(0);
+      expect(transform?.rotation.length()).toBeCloseTo(1);
+    }
+    let distance = 4;
+    const loads: string[] = [];
+    const held = createVoxelHeldItem(scene, crew, {
+      instant: () => true,
+      resting: () => true,
+      distance: () => distance,
+      loadVisual: (s, parent, id, options) => {
+        loads.push(options!.lod!);
+        const item = CREW_STUDY.items[`item.${id.replace(/-/g, "_")}`];
+        return createVoxelItemVisual(s, parent, id, {
+          ...options,
+          source: urlBytes(crewStudyUrl(item.files[options!.lod!].file)),
+        });
+      },
+    });
+    held.set("rifle");
+    await vi.waitFor(() => expect(held.phase).toBe("stowed"));
+    const parent = held.visual!.root.parent;
+    const position = held.visual!.root.position.clone();
+    distance = 25;
+    scene.onBeforeRenderObservable.notifyObservers(scene);
+    await vi.waitFor(() => expect(held.lod).toBe("lod1"));
+    expect(held.visual!.root.parent).toBe(parent);
+    expect(held.visual!.root.position.equalsWithEpsilon(position)).toBe(true);
+    distance = 20;
+    scene.onBeforeRenderObservable.notifyObservers(scene);
+    expect(loads).toEqual(["lod0", "lod1"]);
+    distance = 17;
+    scene.onBeforeRenderObservable.notifyObservers(scene);
+    await vi.waitFor(() => expect(held.lod).toBe("lod0"));
+    expect(held.itemId).toBe("rifle");
+    expect(studyItemLod(20, "lod1")).toBe("lod1");
+    held.set(null);
+    expect(held.visual).toBeUndefined();
+    held.dispose();
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
   it("recolours saved controls on an equipped uniform without loading parts or allocating more materials", async () => {
     const { scene, engine, crew } = await load();
     let loads = 0;

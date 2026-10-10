@@ -23,8 +23,6 @@ import {
   type ShipLogicModel,
 } from "@sidereal/sim/ship-logic-model";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
-import { evaSuitCheck, evaSuitMessage } from "@sidereal/content/crew-wardrobe";
-import { evaExitThrough } from "@sidereal/sim/eva";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import type { CrewAppearance } from "@sidereal/render/crew/appearance";
 import { prefabById } from "@sidereal/content/prefabs";
@@ -142,13 +140,6 @@ export function exteriorButtonAction(input: {
   );
   if (!model) return;
   const at = worldToShip(motion, [body.x, body.y]);
-  if (!model.logic)
-    return legacyEntryAction({
-      shipId: body.anchorShipId,
-      model: model.eva,
-      logic: null,
-      outside: at,
-    });
   if (!model.logic) return;
   const action = logicButtonAction({
     shipId: body.anchorShipId,
@@ -325,40 +316,7 @@ export function evaHomeVisit(
 
 export type EvaAction =
   | { kind: "button"; shipId: string; deviceId: string; label: string }
-  | { kind: "legacy-entry"; shipId: string; airlockId: string; label: string }
   | undefined;
-
-/** Reach from a hatch's outside point for the legacy re-entry (the server rechecks it). */
-const LEGACY_HATCH_REACH_M = 2.5;
-/**
- * Outside a ship whose exterior door has no ship-logic actuator (Wren r2-r6, other prefabs): that
- * door never opens, so E at the hatch is the legacy way back in. Never offered for doors that
- * logic drives (their wall buttons open them).
- */
-export function legacyEntryAction(input: {
-  shipId: string | undefined;
-  model: EvaShipModel | null;
-  logic: ShipLogicModel | null;
-  outside?: readonly [number, number];
-}): EvaAction {
-  const { shipId, model, logic, outside } = input;
-  if (!shipId || !model || !outside) return;
-  let best: { d: number; id: string } | undefined;
-  for (const e of model.entries) {
-    if (logic?.doors.some((d) => d.doorId === e.id)) continue;
-    const d = Math.hypot(outside[0] - e.outside[0], outside[1] - e.outside[1]);
-    if (d <= LEGACY_HATCH_REACH_M && (!best || d < best.d))
-      best = { d, id: e.id };
-  }
-  return best
-    ? {
-        kind: "legacy-entry",
-        shipId,
-        airlockId: best.id,
-        label: "Enter the airlock",
-      }
-    : undefined;
-}
 
 const BUTTON_LABELS: Record<string, string> = {
   cycle: "Cycle airlock",
@@ -492,48 +450,6 @@ export function evaThrustFromKeys(
     dx: (f[0] * forward + r[0] * strafe) / len,
     dy: (f[1] * forward + r[1] * strafe) / len,
   };
-}
-
-/** The suit rule on the client (the server checks the same): refusal message, or "". */
-export function evaSuitRefusalOf(
-  items: Iterable<{ equipmentSlot: string; definitionId: string }>,
-): string {
-  const equipped = [];
-  for (const i of items)
-    if (i.equipmentSlot)
-      equipped.push({ slot: i.equipmentSlot, id: i.definitionId });
-  const check = evaSuitCheck(equipped);
-  return check.ready ? "" : evaSuitMessage(check.missing);
-}
-
-/** Whether pressing `deviceId` now would start depressurising an airlock (needs a suit). */
-export function buttonDepressurises(
-  logic: ShipLogicModel | null,
-  rows: Iterable<ShipLogicRow>,
-  shipId: string | undefined,
-  deviceId: string,
-): boolean {
-  if (!logic || !shipId) return false;
-  const target = logic.graph.wires.get(`${deviceId}.pressed`)?.[0];
-  if (!target || (target.port !== "cycle" && target.port !== "open_outer"))
-    return false;
-  for (const r of rows)
-    if (r.shipId === shipId && r.deviceId === target.device)
-      return r.state === "pressurised";
-  return false;
-}
-
-/** A walker stands in an open exterior doorway, at the hull line (where stepping out happens). */
-export function atOpenHatch(
-  model: EvaShipModel | null,
-  doors: ReadonlyMap<string, boolean>,
-  p: readonly [number, number],
-): boolean {
-  if (!model) return false;
-  const open = new Set([...doors].filter(([, v]) => v).map(([k]) => k));
-  return model.entries.some(
-    (e) => open.has(e.id) && !!evaExitThrough(model, p, e.normal, open),
-  );
 }
 
 /** Screen direction to a world direction for the top-down EVA camera (north-up). */

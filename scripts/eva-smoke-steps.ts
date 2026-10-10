@@ -128,32 +128,12 @@ export async function evaSmoke(
   assert.equal(device("door-outer").open, false, "hatch starts shut");
   assert.equal(device("door-inner").open, true, "hold door starts open");
 
-  // 0. Vacuum needs the EVA suit: without it the inside button refuses to depressurise.
-  for (const [x, y] of prefabWalkRoute(
-    prefab,
-    catalog,
-    [actor().localX, actor().localY],
-    panel("btn-lock-in").front,
-  ))
-    await walkNative(s, x, y);
-  const refusal = await press("btn-lock-in").then(
-    () => "",
-    (e: unknown) => String(e),
+  // No equipment or transition reducer: open the physical door, then cross using ordinary intent.
+  assert(
+    ![...s.db.ownInventoryItems.iter()].some(
+      (i: any) => i.equipmentSlot && /^wardrobe-suit-/.test(i.definitionId),
+    ),
   );
-  assert.match(refusal, /EVA needs a pressure suit, helmet and EVA jetpack/);
-  assert.equal(device("lock").state, "pressurised", "no cycle without a suit");
-  // Smoke-only: wear the EVA suit (production stocks it with `ship_cargo.py --kit eva-suit` and the
-  // player equips it from the crate).
-  await s.reducers.wearPrefabSmokeEvaSuit({});
-  await wait(
-    () =>
-      [...s.db.ownInventoryItems.iter()].filter(
-        (i: any) => /^wardrobe-suit-/.test(i.definitionId) && i.equipmentSlot,
-      ).length === 4,
-    "EVA suit worn",
-    5000,
-  );
-
   // 1. Walk to the inside button and press it: interlocked 3 s cycle, then the hatch opens.
   for (const [x, y] of prefabWalkRoute(
     prefab,
@@ -261,13 +241,27 @@ export async function evaSmoke(
   // 5. Seal the lock from outside, then call it back (the outside button cycles).
   await flyTo(panel("btn-lock-out").front, "outside button");
   await press("btn-lock-out");
+  await flyTo(
+    plus(panel("btn-lock-out").front, lock.normal, 1.2),
+    "clear the physical exterior door sweep",
+  );
   await wait(
-    () => device("lock")?.state === "pressurised",
+    () =>
+      device("btn-lock-out")?.light === "green" && !device("door-outer")?.open,
     "sealed behind me",
     10000,
   );
   assert.equal(device("door-outer").open, false);
-  assert.equal(device("door-inner").open, true);
+  assert.equal(
+    device("lock"),
+    undefined,
+    "controller stays private while outside",
+  );
+  assert.equal(
+    device("door-inner"),
+    undefined,
+    "inner door stays private while outside",
+  );
   // A shut hatch is hull: pushing at it keeps the body outside.
   await flyTo(plus(lock.hatch, lock.normal, 1), "at the shut hatch");
   await hold(1500, { dx: -lock.normal[0], dy: -lock.normal[1] });

@@ -18,6 +18,7 @@ import {
   STARTER_PREFAB_ID,
 } from "./native-starter-smoke";
 import { characterComponentsSmoke } from "./character-components-smoke";
+import { crewEquipmentSmoke } from "./crew-equipment-smoke";
 import { constructionDenialSmoke } from "./construction-smoke";
 import { identityLinkSmoke } from "./identity-link-smoke";
 import { persistenceSmoke, verifyPersistence } from "./persistence-smoke";
@@ -854,6 +855,11 @@ if (restore) {
       wait,
       (reducer, ...args) => operatorCall(host, database, reducer, ...args),
       lifecycleSql,
+    );
+    summary.crew_equipment = await crewEquipmentSmoke(
+      client,
+      wait,
+      (reducer, ...args) => operatorCall(host, database, reducer, ...args),
     );
     summary.item_definitions_x2 = await itemDefinitionsSmoke(
       host,
