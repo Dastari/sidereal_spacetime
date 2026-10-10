@@ -812,3 +812,131 @@ describe("immutable provisional crew study", () => {
     engine.dispose();
   });
 });
+
+it("resolves every explicit study hairstyle unchanged for either body, mode and state, while invalid ids fail", () => {
+  const ids = Object.keys(CREW_STUDY.parts).filter((id) =>
+    /^(hair|groom)\./.test(id),
+  );
+  expect(ids).toHaveLength(29);
+  for (const female of [false, true])
+    for (const id of ids) {
+      expect(crewStudyHair(id, female, "scientist")).toBe(id);
+      for (const mode of ["full", "cap", "fringe"])
+        for (const state of ["stand", "sit", "lie"]) {
+          const part = crewStudyPartFile(id, female, mode, state)!;
+          expect(part, `${id}/${female}/${mode}/${state}`).toBeDefined();
+          expect(bytes(part.file).length).toBeGreaterThan(0);
+        }
+    }
+  for (const [alias, male, female] of [
+    ["swept", "hair.swept", "hair.long_wavy"],
+    ["cropped", "hair.crop", "hair.short_bob"],
+    ["crest", "hair.crest", "hair.pixie"],
+    ["scientist", "groom.fluffy_curls", "groom.twin_puffs"],
+    ["bob", "hair.short_bob", "hair.short_bob"],
+    ["ponytail", "hair.high_ponytail", "hair.long_ponytail"],
+    ["bun", "hair.bun", "hair.bun"],
+    ["braids", "hair.braids", "hair.braids"],
+  ]) {
+    expect(crewStudyHair(alias, false)).toBe(male);
+    expect(crewStudyHair(alias, true)).toBe(female);
+  }
+  expect(crewStudyHair("none", false)).toBeUndefined();
+  expect(crewStudyHair("none", true)).toBeUndefined();
+  for (const invalid of [
+    "hair.missing",
+    "groom.missing",
+    "bad",
+    "constructor",
+    "toString",
+  ])
+    expect(() => crewStudyHair(invalid, false, "scientist")).toThrow(
+      "Unknown crew hairstyle",
+    );
+});
+
+it("all 29 saved hairstyles hide under a full equipped helmet and return unchanged for both bodies", async () => {
+  const { scene, engine, crew } = await load();
+  const outfit = createStudyCrewOutfit(scene, crew, {
+    face: false,
+    load: (url) =>
+      SceneLoader.LoadAssetContainerAsync(
+        "",
+        urlBytes(url),
+        scene,
+        undefined,
+        ".glb",
+      ),
+  });
+  for (const bodyType of ["male", "female"] as const) {
+    const ids = Object.keys(CREW_STUDY.parts).filter((id) =>
+      /^(hair|groom)\./.test(id),
+    );
+    for (const hairStyle of ids) {
+      const saved = {
+        bodyType,
+        hairStyle: hairStyle as never,
+        equippedComponents: {},
+      };
+      crew.customize(saved);
+      outfit.apply(saved);
+      await settle(outfit);
+      expect(
+        crew.root
+          .getChildMeshes()
+          .some((mesh) => mesh.name.includes(hairStyle) && mesh.isEnabled()),
+      ).toBe(true);
+      outfit.apply({
+        ...saved,
+        equippedComponents: { helmet: "wardrobe-suit-helmet" },
+      });
+      await settle(outfit);
+
+      expect(
+        crew.root
+          .getChildMeshes()
+          .filter(
+            (mesh) => /GEO-(hair|groom)\./.test(mesh.name) && mesh.isEnabled(),
+          ),
+      ).toHaveLength(0);
+      outfit.apply(saved);
+      await settle(outfit);
+      expect(
+        crew.root
+          .getChildMeshes()
+          .some((mesh) => mesh.name.includes(hairStyle) && mesh.isEnabled()),
+      ).toBe(true);
+      expect(saved.hairStyle).toBe(hairStyle);
+    }
+    for (const facialHair of [
+      "stubble",
+      "short",
+      "full",
+      "goatee",
+      "moustache",
+      "handlebar",
+      "sideburns",
+      "chin_strap",
+      "soul_patch",
+    ] as const) {
+      outfit.apply({
+        bodyType,
+        hairStyle: "none",
+        facialHair,
+        equippedComponents: {},
+      });
+      await settle(outfit);
+      expect(
+        crew.root
+          .getChildMeshes()
+          .some(
+            (mesh) =>
+              mesh.name.includes(`facial.${facialHair}`) && mesh.isEnabled(),
+          ),
+      ).toBe(true);
+    }
+  }
+  outfit.dispose();
+  scene.dispose();
+  engine.dispose();
+}, 30000);

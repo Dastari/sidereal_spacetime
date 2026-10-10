@@ -261,7 +261,7 @@ export function createStudyCrewOutfit(
     if (hair && mode !== "hidden")
       requests.set("hair", { id: hair, mode, state: hairState });
     const facial = look.facialHair;
-    if (!female && mode !== "hidden" && facial && facial !== "none") {
+    if (mode !== "hidden" && facial && facial !== "none") {
       const id = `facial.${facial === "moustache" ? "moustache" : facial}`;
       if (CREW_STUDY.parts[id]) requests.set("facial", { id, mode: "full" });
     }
@@ -276,7 +276,7 @@ export function createStudyCrewOutfit(
       sync(slot, requests.get(slot), female, recolor);
     if (recolor) options.onChange?.();
     if (options.face !== false) {
-      const variant = female ? "f_classic" : "m_classic";
+      const variant = look.faceVariant;
       const key = JSON.stringify([
         variant,
         look.skin,
