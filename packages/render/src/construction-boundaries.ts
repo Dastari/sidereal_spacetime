@@ -1,6 +1,4 @@
-import { setMeshRole } from "./mesh-roles";
-import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
-import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { loadNativeLibrary } from "./installed-equipment";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Matrix, Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { Scene } from "@babylonjs/core/scene";
@@ -43,115 +41,115 @@ export async function loadConstructionBoundaries(
     throw Error(
       "Construction native adapter requires the declared right-handed renderer frame",
     );
-  const response = await fetch(runtimeKit.url);
-  if (!response.ok) throw Error("Native construction boundaries unavailable");
-  const bytes = new Uint8Array(await response.arrayBuffer());
-  if (constructionHash(bytes) !== runtimeKit.sha256)
-    throw Error("Pinned native boundary GLB hash mismatch");
-  const imported = await SceneLoader.ImportMeshAsync(
-    "",
-    "",
-    bytes,
+  const { meshes: sources } = await loadNativeLibrary(
     scene,
-    undefined,
-    ".glb",
+    runtimeKit.url,
+    runtimeKit.sha256,
+    "wall",
   );
-  const sources = imported.meshes
-    .map((m) => setMeshRole(m, "wall"))
-    .filter((m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0);
+  if (scene.isDisposed || parent.isDisposed())
+    throw Error("Construction load cancelled");
   const matrices = new Map(
     sources.map((m) => [m, m.computeWorldMatrix(true).clone()]),
   );
-  for (const mesh of imported.meshes) {
-    mesh.isVisible = false;
-    mesh.isPickable = false;
-  }
+
   const hinges = new Map<string, TransformNode>();
-  const results = placements.map((p) => {
-    const definition = runtimeKit.parts.find((d) => d.id === p.partId);
-    if (!definition) throw Error("Unknown pinned boundary component");
-    const prefix = definition.native.nodePrefix,
-      selected = sources.filter(
-        (m) =>
-          m.name === prefix ||
-          m.name.startsWith(prefix + "_") ||
-          m.name.startsWith(prefix + "."),
-      );
-    if (!selected.length)
-      throw Error("Missing native boundary selector " + prefix);
-    const id =
-      "construction:" +
-      constructionHash(
-        JSON.stringify([parent.metadata?.instanceId ?? parent.name, p.key]),
-      ).slice(0, 32);
-    const node = new TransformNode("placement-" + id, scene);
-    node.parent = parent;
-    node.position.set(p.origin[0] / 32, p.origin[2] / 32, -p.origin[1] / 32);
-    node.rotation.y = (p.quarterTurns * Math.PI) / 2;
-    node.metadata = {
-      partId: id,
-      assetId: definition.assetUuid,
-      constructionBoundary: true,
-      role: "wall",
-      nativeRevision: runtimeKit.revision,
-      openingId: p.openingId,
-      semanticKey: p.key,
-      damageMode: "voxel",
-      damageReady: false,
-    };
-    const moving = p.partId === "door-leaf";
-    let primitiveParent = node,
-      inverseBind = Matrix.Identity();
-    if (moving) {
-      if (!p.openingId || hinges.has(p.openingId))
-        throw Error("Door leaf requires one unique opening identity");
-      const hinge = new TransformNode("hinge-" + p.openingId, scene);
-      hinge.parent = node;
-      hinge.position = Vector3.FromArray(kit.door.leafBindTranslationGltfM);
-      inverseBind = Matrix.Translation(
-        -hinge.position.x,
-        -hinge.position.y,
-        -hinge.position.z,
-      );
-      primitiveParent = hinge;
-      hinges.set(p.openingId, hinge);
-    }
-    const meshes = selected.map((source) => {
-      const mesh = source.clone(
-        "GEO-" + id + "--native--" + source.name,
-        primitiveParent,
-        true,
-      )!;
-      const transform = matrices.get(source)!.multiply(inverseBind),
-        rotation = new Quaternion();
-      transform.decompose(mesh.scaling, rotation, mesh.position);
-      mesh.rotationQuaternion = rotation;
-      mesh.isVisible = true;
-      mesh.isPickable = false;
-      mesh.receiveShadows = true;
-      mesh.metadata = { ...node.metadata };
-      return mesh;
-    });
-    const lighting = createEquipmentLighting(scene, node, []);
-    lighting.setMeshes(meshes);
-    return { node, meshes, lighting };
-  });
-  return {
-    placements: results,
-    meshes: results.flatMap((p) => p.meshes),
-    // Boundaries remain present throughout orbit; roof visibility is separate.
-    setView(_cameraPosition: Vector3, _interior: boolean) {},
-    setDoors(states: readonly { openingId: string; fraction: number }[]) {
-      const current = new Map(states.map((s) => [s.openingId, s.fraction]));
-      for (const [id, hinge] of hinges) {
-        const fraction = current.get(id) ?? 0;
-        hinge.rotation.y = Number.isFinite(fraction)
-          ? (Math.max(0, Math.min(1, fraction)) *
-              kit.door.openAngleDegrees *
-              Math.PI) /
-            180
-          : 0;
+  const owner = new TransformNode("native-construction-boundaries", scene);
+  owner.parent = parent;
+  try {
+    const results = placements.map((p) => {
+      const definition = runtimeKit.parts.find((d) => d.id === p.partId);
+      if (!definition) throw Error("Unknown pinned boundary component");
+      const prefix = definition.native.nodePrefix,
+        selected = sources.filter(
+          (m) =>
+            m.name === prefix ||
+            m.name.startsWith(prefix + "_") ||
+            m.name.startsWith(prefix + "."),
+        );
+      if (!selected.length)
+        throw Error("Missing native boundary selector " + prefix);
+      const id =
+        "construction:" +
+        constructionHash(
+          JSON.stringify([parent.metadata?.instanceId ?? parent.name, p.key]),
+        ).slice(0, 32);
+      const node = new TransformNode("placement-" + id, scene);
+      node.parent = owner;
+      node.position.set(p.origin[0] / 32, p.origin[2] / 32, -p.origin[1] / 32);
+      node.rotation.y = (p.quarterTurns * Math.PI) / 2;
+      node.metadata = {
+        partId: id,
+        assetId: definition.assetUuid,
+        constructionBoundary: true,
+        role: "wall",
+        nativeRevision: runtimeKit.revision,
+        openingId: p.openingId,
+        semanticKey: p.key,
+        damageMode: "voxel",
+        damageReady: false,
+      };
+      const moving = p.partId === "door-leaf";
+      let primitiveParent = node,
+        inverseBind = Matrix.Identity();
+      if (moving) {
+        if (!p.openingId || hinges.has(p.openingId))
+          throw Error("Door leaf requires one unique opening identity");
+        const hinge = new TransformNode("hinge-" + p.openingId, scene);
+        hinge.parent = node;
+        hinge.position = Vector3.FromArray(kit.door.leafBindTranslationGltfM);
+        inverseBind = Matrix.Translation(
+          -hinge.position.x,
+          -hinge.position.y,
+          -hinge.position.z,
+        );
+        primitiveParent = hinge;
+        hinges.set(p.openingId, hinge);
       }
-    },
-  };
+      const meshes = selected.map((source) => {
+        const mesh = source.clone(
+          "GEO-" + id + "--native--" + source.name,
+          primitiveParent,
+          true,
+        )!;
+        const transform = matrices.get(source)!.multiply(inverseBind),
+          rotation = new Quaternion();
+        transform.decompose(mesh.scaling, rotation, mesh.position);
+        mesh.rotationQuaternion = rotation;
+        mesh.isVisible = true;
+        mesh.isPickable = false;
+        mesh.receiveShadows = true;
+        mesh.metadata = { ...node.metadata };
+        return mesh;
+      });
+      const lighting = createEquipmentLighting(scene, node, []);
+      lighting.setMeshes(meshes);
+      node.onDisposeObservable.addOnce(() => lighting.dispose());
+      return { node, meshes, lighting };
+    });
+    return {
+      dispose() {
+        owner.dispose();
+      },
+      placements: results,
+      meshes: results.flatMap((p) => p.meshes),
+      // Boundaries remain present throughout orbit; roof visibility is separate.
+      setView(_cameraPosition: Vector3, _interior: boolean) {},
+      setDoors(states: readonly { openingId: string; fraction: number }[]) {
+        const current = new Map(states.map((s) => [s.openingId, s.fraction]));
+        for (const [id, hinge] of hinges) {
+          const fraction = current.get(id) ?? 0;
+          hinge.rotation.y = Number.isFinite(fraction)
+            ? (Math.max(0, Math.min(1, fraction)) *
+                kit.door.openAngleDegrees *
+                Math.PI) /
+              180
+            : 0;
+        }
+      },
+    };
+  } catch (error) {
+    owner.dispose();
+    throw error;
+  }
 }

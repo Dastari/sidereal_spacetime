@@ -58,6 +58,9 @@ test("installed models share geometry while retaining placement frames, identiti
   expect(a.lighting.lights[0]!.canAffectMesh(b.meshes[0]!)).toBe(false);
   expect(source.isVisible).toBe(false);
   expect(p.removedCells).toEqual([[0, 0, 0]]);
+  const disposedLights = vi.spyOn(a.lighting, "dispose");
+  a.node.dispose();
+  expect(disposedLights).toHaveBeenCalledTimes(1);
   scene.dispose();
   engine.dispose();
 });
@@ -104,6 +107,29 @@ test("shared Blender kit imports once and resolves only each asset mesh group", 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(spy.mock.calls[0]![2]).toEqual(bytes);
+    const meshCount = scene.meshes.length;
+    const again = await loadEquipmentPrototypes(scene, [
+      make("square", "GEO-floor-square"),
+    ]);
+    expect(again.get("square")).toBe(models.get("square"));
+    expect(scene.meshes.length).toBe(meshCount);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    const cargo = {
+      ...make("cargo-square", "GEO-floor-square"),
+      category: "cargo" as const,
+    };
+    const batched = await loadEquipmentPrototypes(scene, [cargo]);
+    expect(batched.get(cargo.id)!.every((m) => m.getTotalVertices() > 0)).toBe(
+      true,
+    );
+    const alias = await loadEquipmentPrototypes(scene, [
+      make("alias-square", "GEO-floor-square"),
+    ]);
+    expect(alias.get("alias-square")).toEqual([square, side]);
+    expect(
+      [square, side].every((m) => !m.isDisposed() && m.getTotalVertices() > 0),
+    ).toBe(true);
     expect(models.get("square")).toEqual([square, side]);
     expect(models.get("wedge")).toEqual([wedge]);
     expect(
@@ -124,9 +150,14 @@ test("shared Blender kit imports once and resolves only each asset mesh group", 
     tampered[tampered.length - 1]! ^= 1;
     fetcher.mockResolvedValue(new Response(tampered.buffer));
     spy.mockClear();
-    await expect(
-      loadEquipmentPrototypes(scene, [make("square", "GEO-floor-square")]),
-    ).rejects.toThrow("Native visual hash mismatch");
+    const fresh = new Scene(engine);
+    try {
+      await expect(
+        loadEquipmentPrototypes(fresh, [make("square", "GEO-floor-square")]),
+      ).rejects.toThrow("Native visual hash mismatch");
+    } finally {
+      fresh.dispose();
+    }
     expect(spy).not.toHaveBeenCalled();
   } finally {
     spy.mockRestore();

@@ -10,6 +10,58 @@ export function easeCameraZoom(current: number, target: number, dt: number) {
   return current + (target - current) * -Math.expm1(-12 * Math.max(0, dt));
 }
 
+/** Missing EVA/entry projections must not briefly select the ship's flight
+ * camera. Hold the actor view until the accepted deck is ready, or truly leave
+ * that entry path. This is presentation state, never an EVA authority grant. */
+export function createEvaCameraHandoff() {
+  let actorView = false;
+  return (eva: boolean, awaitingInterior: boolean) => {
+    actorView = eva || (actorView && awaitingInterior);
+    return actorView;
+  };
+}
+
+/** Ease framing, not walking: the displayed actor remains the moving anchor.
+ * One final zoom target avoids an exit detour through the old ship-flight zoom. */
+export function createPlayerCameraFrame() {
+  let offset: [number, number, number] | undefined;
+  let halfExtent = 0;
+  return {
+    reset() {
+      offset = undefined;
+    },
+    frame(input: {
+      actor: readonly [number, number, number];
+      target: readonly [number, number, number];
+      halfExtent: number;
+      dt: number;
+      reducedMotion?: boolean;
+    }) {
+      const next = input.target.map((v, i) => v - input.actor[i]) as [
+        number,
+        number,
+        number,
+      ];
+      if (!offset || input.reducedMotion) {
+        offset = next;
+        halfExtent = input.halfExtent;
+      } else {
+        const amount = -Math.expm1(-6 * Math.max(0, input.dt));
+        for (let i = 0; i < 3; i++) offset[i] += (next[i] - offset[i]) * amount;
+        halfExtent = easeCameraZoom(halfExtent, input.halfExtent, input.dt);
+      }
+      return {
+        target: input.actor.map((v, i) => v + offset![i]) as [
+          number,
+          number,
+          number,
+        ],
+        halfExtent,
+      };
+    },
+  };
+}
+
 /** Preserve the ship overview at normal zoom, but frame the actor at close zoom.
  * Multiply by the existing Deck/Flight blend; this never changes accepted poses,
  * orbit, elevation, or zoom. Use displayed (already eased) zoom, not wheel intent.

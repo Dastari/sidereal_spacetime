@@ -104,3 +104,32 @@ test("hidden caster banks refresh before fitting, and glow proxies never cast pr
     engine.dispose();
   }
 });
+
+test("private caster membership is replaced without recreating world sunlight or actor shadows", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const old = CreateBox("private-old", {}, scene),
+    next = CreateBox("private-next", {}, scene),
+    actor = CreateBox("actor", {}, scene);
+  const light = createConstructionLighting(scene, [old]);
+  light.addActor([actor]);
+  const sun = light.primaryLight;
+  light.replaceStructure([]);
+  expect(
+    sun
+      .getShadowGenerator()!
+      .getShadowMap()!
+      .renderList!.map((m) => m.name),
+  ).toEqual([actor.name]);
+  old.dispose();
+  light.replaceStructure([next]);
+  expect(light.primaryLight).toBe(sun);
+  expect(
+    sun
+      .getShadowGenerator()!
+      .getShadowMap()!
+      .renderList!.map((m) => m.name),
+  ).toEqual([actor.name, next.name]);
+  scene.dispose();
+  engine.dispose();
+});

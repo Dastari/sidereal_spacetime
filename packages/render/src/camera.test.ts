@@ -16,7 +16,127 @@ import {
   easeCameraZoom,
   createObservationCamera,
   deckCameraActorWeight,
+  createPlayerCameraFrame,
+  createEvaCameraHandoff,
 } from "./camera";
+test("EVA projection loss, delayed admission and shader install keep actor framing before one direct deck transition", () => {
+  for (const fps of [30, 60, 144]) {
+    const handoff = createEvaCameraHandoff();
+    const camera = createPlayerCameraFrame();
+    expect(handoff(true, false)).toBe(true);
+    const actor = [7, 0.2, -3] as const;
+    camera.frame({ actor, target: actor, halfExtent: 7, dt: 1 / fps });
+    for (let frame = 0; frame < fps * 3; frame++) {
+      // No ownEvaBody; either entry rows or the actual GPU-ready view is pending.
+      expect(handoff(false, true)).toBe(true);
+      const result = camera.frame({
+        actor,
+        target: actor,
+        halfExtent: 7,
+        dt: 1 / fps,
+      });
+      expect(result.target).toEqual([...actor]);
+      expect(result.halfExtent).toBe(7);
+    }
+    expect(handoff(false, false)).toBe(false);
+    let previous = 7;
+    for (let frame = 0; frame < fps; frame++) {
+      const result = camera.frame({
+        actor,
+        target: [6.8, 1, -2.8],
+        halfExtent: 3,
+        dt: 1 / fps,
+      });
+      expect(result.halfExtent).toBeLessThan(previous);
+      expect(result.halfExtent).toBeGreaterThanOrEqual(3);
+      previous = result.halfExtent;
+    }
+  }
+});
+test("cancelled boarding retains EVA framing and an aboard flight preference is never turned into EVA by an edit", () => {
+  const handoff = createEvaCameraHandoff();
+  expect(handoff(true, false)).toBe(true);
+  expect(handoff(false, true)).toBe(true);
+  expect(handoff(true, false)).toBe(true);
+  expect(handoff(false, false)).toBe(false);
+  expect(handoff(false, true)).toBe(false);
+});
+test("an off-centre deck-to-EVA handoff eases framing and zoom monotonically without a wide-flight detour", () => {
+  for (const fps of [30, 60, 144]) {
+    const camera = createPlayerCameraFrame();
+    const actor = [7, 0.2, -3] as const;
+    camera.frame({
+      actor,
+      target: [4.2, 1, -1.8],
+      halfExtent: 12,
+      dt: 1 / fps,
+    });
+    let half = 12;
+    let previousX = 4.2;
+    for (let i = 0; i < fps; i++) {
+      const f = camera.frame({
+        actor,
+        target: [7, 0.2, -3],
+        halfExtent: 7,
+        dt: 1 / fps,
+      });
+      expect(f.halfExtent).toBeLessThan(half);
+      expect(f.halfExtent).toBeGreaterThan(7);
+      expect(f.target[0]).toBeGreaterThan(previousX);
+      expect(f.target[0] - previousX).toBeLessThan(0.6);
+      half = f.halfExtent;
+      previousX = f.target[0];
+    }
+    expect(half).toBeCloseTo(7, 3);
+    expect(previousX).toBeCloseTo(7, 1);
+  }
+});
+test("framing preserves walking responsiveness and reverses an interrupted boarding transition", () => {
+  const camera = createPlayerCameraFrame();
+  const start = camera.frame({
+    actor: [7, 0, -3],
+    target: [4.2, 1, -1.8],
+    halfExtent: 12,
+    dt: 1 / 60,
+  });
+  const walk = camera.frame({
+    actor: [7.1, 0, -3],
+    target: [4.3, 1, -1.8],
+    halfExtent: 12,
+    dt: 1 / 60,
+  });
+  expect(walk.target[0] - start.target[0]).toBeCloseTo(0.1);
+  const exit = camera.frame({
+    actor: [7.1, 0, -3],
+    target: [7.1, 0, -3],
+    halfExtent: 7,
+    dt: 1 / 60,
+  });
+  const board = camera.frame({
+    actor: [7.1, 0, -3],
+    target: [4.3, 1, -1.8],
+    halfExtent: 12,
+    dt: 1 / 60,
+  });
+  expect(board.target[0]).toBeLessThan(exit.target[0]);
+  expect(board.target[0]).toBeGreaterThan(4.3);
+  expect(board.halfExtent).toBeGreaterThan(exit.halfExtent);
+  expect(board.halfExtent).toBeLessThan(12);
+});
+test("first entry and reduced-motion view changes snap to the accepted target", () => {
+  const camera = createPlayerCameraFrame();
+  const a = {
+    actor: [3, 0, 4] as const,
+    target: [2, 1, 2] as const,
+    halfExtent: 12,
+    dt: 1 / 60,
+  };
+  expect(camera.frame(a)).toEqual({ target: [...a.target], halfExtent: 12 });
+  const b = { ...a, target: a.actor, halfExtent: 7, reducedMotion: true };
+  expect(camera.frame(b)).toEqual({ target: [...b.target], halfExtent: 7 });
+  camera.reset();
+  expect(camera.frame(a)).toEqual({ target: [...a.target], halfExtent: 12 });
+});
 test("wheel zoom converges consistently across frame rates and reverses without overshoot", () => {
   const results = [30, 60, 144].map((fps) => {
     let zoom = 55;
