@@ -264,6 +264,16 @@ export interface WorldOptions {
   authoredFlightEffects?: boolean;
   onObjectSelected?: (placementId?: string) => void;
   onScene?: (scene: Scene) => void;
+  /** Opt-in completed-frame samples for the no-database performance harness.
+   * Raw timings use the same boundaries as diagnostics, without HUD smoothing. */
+  onFrameDiagnostics?: (sample: {
+    renderCpuMs: number;
+    frameCpuMs: number;
+    updateCpuMs: number;
+  }) => void;
+  /** Opt-in review pose, applied before camera-dependent controllers and passes.
+   * Absent in the client: normal camera behaviour remains owned by this world. */
+  onFrameCamera?: (camera: ArcRotateCamera) => void;
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
   /** Skip hidden world frames only after first usable-frame readiness completes.
@@ -1243,8 +1253,10 @@ async function buildWorld(
       camera.beta = observed.beta;
       camera.radius = observed.radius;
     }
+    options.onFrameCamera?.(camera);
     camera.minZ = Math.max(0.1, camera.radius * 0.02);
     camera.maxZ = Math.max(1600, camera.radius + 1600);
+    if (options.onFrameCamera) camera.getViewMatrix(true);
     updateConstructionView?.(camera.position, state.interior);
     prefabView?.setInterior(state.interior);
     // Per-actuator exhaust from the achieved allocation (own ship; FLIGHT-IFCS).
@@ -1332,8 +1344,15 @@ async function buildWorld(
         !focusedBodyId &&
         blend < 0.001,
     );
+    const renderStarted = options.onFrameDiagnostics ? performance.now() : 0;
     scene.render();
-    diagnostics.recordFrameCpu(performance.now() - frameStarted, updateCpuMs);
+    const frameCpuMs = performance.now() - frameStarted;
+    diagnostics.recordFrameCpu(frameCpuMs, updateCpuMs);
+    options.onFrameDiagnostics?.({
+      renderCpuMs: frameStarted + frameCpuMs - renderStarted,
+      frameCpuMs,
+      updateCpuMs,
+    });
     if (
       firstFrame &&
       initialStateApplied &&
