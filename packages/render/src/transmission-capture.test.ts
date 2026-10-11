@@ -18,6 +18,8 @@ import {
   TemporalInstanceAttributes,
   prepareTemporalInstanceAttributes,
 } from "./temporal-instance-attributes";
+import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
 import { createTransmissionCaptureFilter } from "./transmission-capture";
 
 const fixtures: { engine: NullEngine; scene: Scene }[] = [];
@@ -256,4 +258,108 @@ test("retains locked bounds after geometry moves and unknown shader subclasses/d
   plugin.material = new PBRMaterial("new-plugin-host", scene);
   new DerivedTemporal(plugin.material as PBRMaterial);
   expect(filter(0, [plugin], 1)).toEqual([plugin]);
+});
+
+function glassFixture() {
+  const { scene, box } = setup();
+  const camera = new FreeCamera("main", new Vector3(0, 0, -10), scene);
+  camera.mode = FreeCamera.ORTHOGRAPHIC_CAMERA;
+  camera.orthoLeft = -5;
+  camera.orthoRight = 5;
+  camera.orthoTop = 5;
+  camera.orthoBottom = -5;
+  camera.minZ = 0.1;
+  camera.maxZ = 100;
+  camera.setTarget(Vector3.Zero());
+  scene.setTransformMatrix(
+    camera.getViewMatrix(),
+    camera.getProjectionMatrix(),
+  );
+  const target = new RenderTargetTexture("capture", 1024, scene, true);
+  target.ignoreCameraViewport = true;
+  target.lodGenerationScale = 1;
+  target.lodGenerationOffset = -4;
+  const glass = box("glass");
+  const material = glass.material as PBRMaterial;
+  material.roughness = 0.05;
+  material.subSurface.isRefractionEnabled = true;
+  material.subSurface.volumeIndexOfRefraction = 1;
+  material.subSurface.refractionTexture = target;
+  const list = [glass];
+  const raw = createTransmissionCaptureFilter(scene, null, {
+    target,
+    candidates: () => list,
+  });
+  const filter: typeof raw = (...args) => {
+    scene.incrementRenderId();
+    return raw(...args);
+  };
+  return { scene, box, glass, material, target, camera, list, filter };
+}
+
+test("captures only opaque boxes overlapping conservative thin-glass samples, preserving foreground/offset geometry", () => {
+  const { box, filter, glass } = glassFixture();
+  const behind = box("behind"),
+    foreground = box("foreground");
+  foreground.position.z = -2;
+  const offset = box("offset", 1.9),
+    unrelated = box("unrelated", 4),
+    skin = box("skin", 4);
+  skin.skeleton = new Skeleton("skin", "skin", skin.getScene());
+  expect(filter(0, [behind, foreground, offset, unrelated, skin], 5)).toEqual([
+    behind,
+    foreground,
+    offset,
+    skin,
+  ]);
+  glass.position.x = 3;
+  expect(filter(0, [behind, unrelated], 2)).toEqual([unrelated]);
+});
+
+test("retains the full frustum list for unknown/near-plane/wrapped glass and exceptional opaque bounds", () => {
+  const { box, filter, glass, material, target, camera, scene } =
+    glassFixture();
+  const far = box("outside footprint", 4);
+  material.roughness = null;
+  expect(filter(0, [far], 1)).toEqual([far]);
+  material.roughness = 0.05;
+  material.subSurface.useThicknessAsDepth = true;
+  expect(filter(0, [far], 1)).toEqual([far]);
+  material.subSurface.useThicknessAsDepth = false;
+  target.lodLevelInAlpha = true;
+  expect(filter(0, [far], 1)).toEqual([far]);
+  target.lodLevelInAlpha = false;
+  glass.position.x = 4.5;
+  expect(filter(0, [far], 1)).toEqual([far]);
+  glass.position.x = 0;
+  glass.position.z = -9.5;
+  expect(filter(0, [far], 1)).toEqual([far]);
+  glass.position.z = 0;
+  glass.skeleton = new Skeleton("glass", "glass", scene);
+  expect(filter(0, [far], 1)).toEqual([far]);
+  glass.skeleton = null;
+  far.getBoundingInfo().isLocked = true;
+  expect(filter(0, [far], 1)).toEqual([far]);
+  far.getBoundingInfo().isLocked = false;
+  target.activeCamera = new FreeCamera("other", Vector3.Zero(), scene);
+  expect(filter(0, [far], 1)).toEqual([far]);
+  target.activeCamera = camera;
+  material.subSurface.refractionTexture = null;
+  expect(filter(0, [far], 1)).toEqual([far]);
+});
+
+test("mip support grows with roughness and curved normals keep the original list", () => {
+  const { box, material, glass, filter } = glassFixture();
+  const outside = box("outside base-level samples", 3);
+  expect(filter(0, [outside], 1)).toEqual([]);
+  material.subSurface.volumeIndexOfRefraction = 1.5;
+  material.roughness = 1;
+  expect(filter(0, [outside], 1)).toEqual([outside]);
+  material.roughness = 0.05;
+  const normals = glass.getVerticesData("normal")!;
+  const indices = glass.getIndices()!;
+  const changed = Array.from(normals);
+  changed[indices[0] * 3] += 0.01;
+  glass.setVerticesData("normal", changed);
+  expect(filter(0, [outside], 1)).toEqual([outside]);
 });
