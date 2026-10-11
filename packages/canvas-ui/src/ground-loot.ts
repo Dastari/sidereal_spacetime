@@ -6,7 +6,23 @@ import { ITEM_RARITY_PALETTES } from "./item-frame";
 import type { CanvasUI } from "./toolkit";
 import { drawItemTooltip } from "./item-details";
 import { drawInventoryIcon } from "./inventory";
+import { createGroundLootLayout } from "./ground-loot-layout";
 const menus = new WeakMap<CanvasUI, { itemId: string; x: number; y: number }>();
+const layouts = new WeakMap<
+  CanvasUI,
+  ReturnType<typeof createGroundLootLayout>
+>();
+/** Include visibility and current reach in the same-frame paint/hit revision. */
+export const groundLootRevision = (rows: readonly GroundItemLabel[]) =>
+  JSON.stringify(
+    rows.map(({ id, definitionId, x, y, reachable }) => [
+      id,
+      definitionId,
+      x,
+      y,
+      reachable,
+    ]),
+  );
 export function dismissGroundLootMenu(ui: CanvasUI) {
   menus.delete(ui);
   if (ui.focus.startsWith("ground-menu-")) {
@@ -29,7 +45,38 @@ export function drawGroundLoot(
     ui.invalidate();
   };
   if (!ui.focus.startsWith("ground-menu-")) menus.delete(ui);
-  const used: { x: number; y: number; w: number; h: number }[] = [];
+  let layout = layouts.get(ui);
+  if (!layout) {
+    layout = createGroundLootLayout();
+    layouts.set(ui, layout);
+  }
+  const visible = rows.flatMap((row) => {
+    const d = itemDefinitionOf(row);
+    if (!d) return [];
+    const point = { x: row.x / ui.scale, y: row.y / ui.scale };
+    if (
+      !Number.isFinite(point.x) ||
+      !Number.isFinite(point.y) ||
+      point.x < 0 ||
+      point.x > ui.width ||
+      point.y < 0 ||
+      point.y > ui.height
+    )
+      return [];
+    return [
+      {
+        row,
+        d,
+        point,
+        w: Math.min(228, ui.width - 16, Math.max(142, d.name.length * 6 + 30)),
+      },
+    ];
+  });
+  const positions = layout(
+    visible.map(({ row, point, w }) => ({ id: row.id, ...point, w })),
+    ui.width,
+    ui.height,
+  );
   let hover:
     | {
         d: InventoryDefinition;
@@ -37,60 +84,13 @@ export function drawGroundLoot(
       }
     | undefined;
   let overflow = 0;
-  for (const row of rows) {
-    const d = itemDefinitionOf(row);
-    if (!d) continue;
-    const point = { x: row.x / ui.scale, y: row.y / ui.scale };
-    if (point.x < 0 || point.x > ui.width || point.y < 0 || point.y > ui.height)
-      continue;
+  for (const { row, d, point } of visible) {
     const color = ITEM_RARITY_PALETTES[itemRarity(d.id)];
-    const w = Math.min(
-      228,
-      ui.width - 16,
-      Math.max(142, d.name.length * 6 + 30),
-    );
-    const anchorX = Math.max(8, Math.min(point.x - w / 2, ui.width - w - 8));
-    const anchorY = Math.max(55, Math.min(point.y - 24, ui.height - 130));
-    let r: { x: number; y: number; w: number; h: number } | undefined;
-    placement: for (
-      let column = 0;
-      column <= Math.ceil(ui.width / (w + 6));
-      column++
-    )
-      for (const direction of column ? [-1, 1] : [0])
-        for (let step = 0; step <= Math.ceil(ui.height / 30); step++)
-          for (const vertical of step ? [-1, 1] : [0]) {
-            const box = {
-              x: anchorX + column * direction * (w + 6),
-              y: anchorY + step * vertical * 30,
-              w,
-              h: 26,
-            };
-            if (
-              box.x < 8 ||
-              box.x + w > ui.width - 8 ||
-              box.y < 55 ||
-              box.y + 26 > ui.height - 104
-            )
-              continue;
-            if (
-              !used.some(
-                (b) =>
-                  box.x < b.x + b.w + 3 &&
-                  box.x + w + 3 > b.x &&
-                  box.y < b.y + b.h + 3 &&
-                  box.y + 29 > b.y,
-              )
-            ) {
-              r = box;
-              break placement;
-            }
-          }
+    const r = positions.get(row.id);
     if (!r) {
       overflow++;
       continue;
     }
-    used.push(r);
     const c = ui.ctx;
     c.save();
     c.strokeStyle = color.edge;

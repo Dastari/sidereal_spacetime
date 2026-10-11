@@ -17,7 +17,11 @@ import {
   appearanceControlsHeight,
   drawAppearanceControls,
 } from "./appearance-controls";
-import { dismissGroundLootMenu, drawGroundLoot } from "./ground-loot";
+import {
+  dismissGroundLootMenu,
+  drawGroundLoot,
+  groundLootRevision,
+} from "./ground-loot";
 import type { GroundItemLabel } from "@sidereal/render/ground-items";
 import type { LocalLightLimit } from "../../render/src/local-light-budget";
 import { topHudLayout } from "./system-menu-layout";
@@ -400,6 +404,14 @@ export function createGameUI(
           minimumFractionDigits: precision,
           maximumFractionDigits: precision,
         });
+  ui.frameRevision = () =>
+    showGroundLabels &&
+    !menu &&
+    state.interior &&
+    !componentGallery.isOpen() &&
+    !actions.readService?.()
+      ? groundLootRevision(actions.groundItems?.() ?? [])
+      : "";
   ui.draw = () => {
     canvas.setAttribute(
       "aria-description",

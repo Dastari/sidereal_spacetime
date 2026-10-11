@@ -97,162 +97,177 @@ export async function loadPrefabShipPresentation(
   let interior = initialInteriorVisibility;
   // Published component (ship-components/r002) and interior object (ship-objects/r001) GLBs;
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.
-  const view = await createPrefabShipView(scene, doc, {
-    catalog,
-    furnishings: readFurnishingOverrides(furnishingsJson),
-    visualVariant,
-    view: interior ? "deck" : "flight",
-    parent: shipRoot,
-    // Closed, animated door leaves (doors.ts) replace the airlock GLB's baked leaves.
-    externalDoorLeaves: true,
-    // Engines glow only while the server fires them (exhaust.ts), not as a baked idle plume.
-    staticPlumes: false,
-    accessResolver,
-  });
-  const exhaust = createShipExhaust(
-    scene,
-    doc.id === "fed.m.wayfarer" ? shipRoot : view.root,
-    doc.theme,
-  );
-  const doors = isWayfarerHullAccessProfile(doc)
-    ? await (
-        await import("./prefab-ship/wayfarer-access-doors")
-      ).createWayfarerHullAccessDoors(
-        scene,
-        view.root,
-        doc,
-        catalog,
-        accessResolver!,
-      )
-    : isWayfarerAccessProfile(doc)
+  const cleanups: (() => void)[] = [];
+  let disposed = false;
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    for (const cleanup of cleanups.reverse()) cleanup();
+  };
+  try {
+    const view = await createPrefabShipView(scene, doc, {
+      catalog,
+      furnishings: readFurnishingOverrides(furnishingsJson),
+      visualVariant,
+      view: interior ? "deck" : "flight",
+      parent: shipRoot,
+      // Closed, animated door leaves (doors.ts) replace the airlock GLB's baked leaves.
+      externalDoorLeaves: true,
+      // Engines glow only while the server fires them (exhaust.ts), not as a baked idle plume.
+      staticPlumes: false,
+      accessResolver,
+    });
+    cleanups.push(() => view.dispose());
+    const exhaust = createShipExhaust(
+      scene,
+      doc.id === "fed.m.wayfarer" ? shipRoot : view.root,
+      doc.theme,
+    );
+    cleanups.push(() => exhaust.dispose());
+    const doors = isWayfarerHullAccessProfile(doc)
       ? await (
           await import("./prefab-ship/wayfarer-access-doors")
-        ).createWayfarerAccessDoors(scene, view.root, accessResolver!)
-      : isFederationFleet(doc)
-        ? await createFederationFleetAccessDoors(
-            scene,
-            view.root,
-            doc,
-            catalog,
-            accessResolver!,
-          )
-        : createPrefabDoors(
-            scene,
-            view.root,
-            doc,
-            catalog,
-            doc.theme,
-            view.metrics().visualRevision !== undefined,
-          );
-  // Ship logic wall buttons (wiki Systems/Ship Logic): lights follow `visible_ship_logic`.
-  const panels = createLogicPanels(scene, view.root, doc, catalog);
-  doors.setView(interior ? "deck" : "flight");
-  panels.setView(interior ? "deck" : "flight");
-  // The native construction loader also builds boundary guide meshes for the same layout; the
-  // dressed view replaces them visually (walking and collision stay authoritative), so hide them.
-  for (const mesh of shipRoot.getChildMeshes())
-    if (
-      mesh.name.startsWith("construction-boundary-guide") &&
-      !mesh.isDescendantOf(view.root)
-    )
-      mesh.setEnabled(false);
-  // Bloom: a ship-owned glow layer over the ship's emissive meshes only (light strips, canopy
-  // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
-  const halo = authoredGlowTargetOptions(
-    scene,
-    view
-      .emissiveMeshes()
-      .some((mesh) => mesh.material?.metadata?.authoredAssetEmission),
-  );
-  const glow = new GlowLayer("prefab-ship-glow", scene, {
-    mainTextureFixedSize: SHIP_GLOW_PROFILE.mainTextureFixedSize,
-    blurKernelSize: SHIP_GLOW_PROFILE.blurKernelSize,
-    ...(halo.assetHalo
-      ? {
-          mainTextureType: halo.mainTextureType,
-          alphaBlendingMode: halo.alphaBlendingMode,
-          blurKernelSize: halo.blurKernelSize,
-        }
-      : {}),
-  });
-  applyShipGlowProfile(glow, { assetHalo: halo.assetHalo });
-  // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
-  // housings, walls and hull plates do not bloom through them.
-  const occluders = createGlowOccluders(glow);
-  const glowBatches = createShipGlowOccluders(scene, view.root, glow);
-  // Shared molded light rig (cool fill + camera-relative rim), also lighting the crew.
-  const rig = moldedLightRig(scene);
-  const glowing = new Set<AbstractMesh>();
-  const adapt = () => {
-    const meshes = view.root
-      .getChildMeshes()
-      .filter((mesh) => !glowBatches.proxies.includes(mesh as Mesh));
-    rig.include(meshes);
-    for (const mesh of meshes) {
-      const m = mesh.material;
-      // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
-      if (m instanceof PBRMaterial)
-        m.directIntensity = /-(floor|wall)-/.test(m.name)
-          ? GAME_INTERIOR_DIRECT
-          : GAME_SHIP_DIRECT;
-    }
-    const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
-    for (const mesh of emissive) glowing.add(mesh);
-    const opaque = meshes.filter((m) => !glowing.has(m));
-    occluders.set(opaque);
-    glowBatches.set(opaque);
-    // A previously hidden cohort can have been owned by the black-mask set.
-    // Re-admit its emitters after those owners release their old memberships.
-    for (const mesh of emissive) glow.addIncludedOnlyMesh(mesh as Mesh);
-  };
-  adapt();
-  // Draw-cost evidence: one line per presentation after its first rendered frame.
-  const logMetrics = () =>
-    scene.onAfterRenderObservable.addOnce(() => {
-      const m = view.metrics();
-      console.info(
-        `prefab-ship ${doc.id} ${interior ? "deck" : "flight"}: shipDrawsPerPass=${m.meshes} triangles=${m.triangles} instances=${m.instances}`,
-      );
+        ).createWayfarerHullAccessDoors(
+          scene,
+          view.root,
+          doc,
+          catalog,
+          accessResolver!,
+        )
+      : isWayfarerAccessProfile(doc)
+        ? await (
+            await import("./prefab-ship/wayfarer-access-doors")
+          ).createWayfarerAccessDoors(scene, view.root, accessResolver!)
+        : isFederationFleet(doc)
+          ? await createFederationFleetAccessDoors(
+              scene,
+              view.root,
+              doc,
+              catalog,
+              accessResolver!,
+            )
+          : createPrefabDoors(
+              scene,
+              view.root,
+              doc,
+              catalog,
+              doc.theme,
+              view.metrics().visualRevision !== undefined,
+            );
+    cleanups.push(() => doors.dispose());
+    if (scene.isDisposed || shipRoot.isDisposed())
+      throw Error("Prefab presentation load cancelled");
+    // Ship logic wall buttons (wiki Systems/Ship Logic): lights follow `visible_ship_logic`.
+    const panels = createLogicPanels(scene, view.root, doc, catalog);
+    cleanups.push(() => panels.dispose());
+    doors.setView(interior ? "deck" : "flight");
+    panels.setView(interior ? "deck" : "flight");
+    // The native construction loader also builds boundary guide meshes for the same layout; the
+    // dressed view replaces them visually (walking and collision stay authoritative), so hide them.
+    for (const mesh of shipRoot.getChildMeshes())
+      if (
+        mesh.name.startsWith("construction-boundary-guide") &&
+        !mesh.isDescendantOf(view.root)
+      )
+        mesh.setEnabled(false);
+    // Bloom: a ship-owned glow layer over the ship's emissive meshes only (light strips, canopy
+    // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
+    const halo = authoredGlowTargetOptions(
+      scene,
+      view
+        .emissiveMeshes()
+        .some((mesh) => mesh.material?.metadata?.authoredAssetEmission),
+    );
+    const glow = new GlowLayer("prefab-ship-glow", scene, {
+      mainTextureFixedSize: SHIP_GLOW_PROFILE.mainTextureFixedSize,
+      blurKernelSize: SHIP_GLOW_PROFILE.blurKernelSize,
+      ...(halo.assetHalo
+        ? {
+            mainTextureType: halo.mainTextureType,
+            alphaBlendingMode: halo.alphaBlendingMode,
+            blurKernelSize: halo.blurKernelSize,
+          }
+        : {}),
     });
-  logMetrics();
-  const handle: PrefabShipViewHandle = {
-    setInterior(next) {
-      if (next === interior) return;
-      interior = next;
-      view.setView(next ? "deck" : "flight");
-      doors.setView(next ? "deck" : "flight");
-      panels.setView(next ? "deck" : "flight");
-      adapt();
-      logMetrics();
-    },
-    metrics: () => view.metrics(),
-    updateDoors: (input) => doors.update(input),
-    updatePanels: (lights, nowMs) => panels.update(lights, nowMs),
-    updateExhaust(actuators, nowMs) {
-      exhaust.update(prefabExhaustJets(doc, catalog, actuators), nowMs);
-      // Review diagnostics: lit jet count on the canvas (changes only when the count changes).
-      const canvas = scene.getEngine().getRenderingCanvas();
-      const lit = String(exhaust.lit().length);
-      if (canvas && canvas.dataset.exhaustLit !== lit)
-        canvas.dataset.exhaustLit = lit;
-      // Jets are created on first fire; add new ones to the ship glow.
-      for (const mesh of exhaust.meshes())
-        if (!glowing.has(mesh))
-          (glowing.add(mesh), glow.addIncludedOnlyMesh(mesh));
-    },
-    exhaust: () => exhaust.lit(),
-    doors: () => doors.doors(),
-    dispose() {
-      exhaust.dispose();
-      panels.dispose();
-      doors.dispose();
-      glowBatches.dispose();
-      occluders.dispose();
-      glow.dispose();
-      view.dispose();
-    },
-  };
-  // Diagnostics hook (review harnesses read mesh-origin metrics from the ship frame).
-  shipRoot.metadata = { ...shipRoot.metadata, prefabView: handle };
-  return handle;
+    cleanups.push(() => glow.dispose());
+    applyShipGlowProfile(glow, { assetHalo: halo.assetHalo });
+    // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
+    // housings, walls and hull plates do not bloom through them.
+    const occluders = createGlowOccluders(glow);
+    cleanups.push(() => occluders.dispose());
+    const glowBatches = createShipGlowOccluders(scene, view.root, glow);
+    cleanups.push(() => glowBatches.dispose());
+    // Shared molded light rig (cool fill + camera-relative rim), also lighting the crew.
+    const rig = moldedLightRig(scene);
+    const glowing = new Set<AbstractMesh>();
+    const adapt = () => {
+      const meshes = view.root
+        .getChildMeshes()
+        .filter((mesh) => !glowBatches.proxies.includes(mesh as Mesh));
+      rig.include(meshes);
+      for (const mesh of meshes) {
+        const m = mesh.material;
+        // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
+        if (m instanceof PBRMaterial)
+          m.directIntensity = /-(floor|wall)-/.test(m.name)
+            ? GAME_INTERIOR_DIRECT
+            : GAME_SHIP_DIRECT;
+      }
+      const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
+      for (const mesh of emissive) glowing.add(mesh);
+      const opaque = meshes.filter((m) => !glowing.has(m));
+      occluders.set(opaque);
+      glowBatches.set(opaque);
+      // A previously hidden cohort can have been owned by the black-mask set.
+      // Re-admit its emitters after those owners release their old memberships.
+      for (const mesh of emissive) glow.addIncludedOnlyMesh(mesh as Mesh);
+    };
+    adapt();
+    // Draw-cost evidence: one line per presentation after its first rendered frame.
+    const logMetrics = () => {
+      const observer = scene.onAfterRenderObservable.addOnce(() => {
+        const m = view.metrics();
+        console.info(
+          `prefab-ship ${doc.id} ${interior ? "deck" : "flight"}: shipDrawsPerPass=${m.meshes} triangles=${m.triangles} instances=${m.instances}`,
+        );
+      });
+      cleanups.push(() => scene.onAfterRenderObservable.remove(observer));
+    };
+    logMetrics();
+    const handle: PrefabShipViewHandle = {
+      setInterior(next) {
+        if (next === interior) return;
+        interior = next;
+        view.setView(next ? "deck" : "flight");
+        doors.setView(next ? "deck" : "flight");
+        panels.setView(next ? "deck" : "flight");
+        adapt();
+        logMetrics();
+      },
+      metrics: () => view.metrics(),
+      updateDoors: (input) => doors.update(input),
+      updatePanels: (lights, nowMs) => panels.update(lights, nowMs),
+      updateExhaust(actuators, nowMs) {
+        exhaust.update(prefabExhaustJets(doc, catalog, actuators), nowMs);
+        // Review diagnostics: lit jet count on the canvas (changes only when the count changes).
+        const canvas = scene.getEngine().getRenderingCanvas();
+        const lit = String(exhaust.lit().length);
+        if (canvas && canvas.dataset.exhaustLit !== lit)
+          canvas.dataset.exhaustLit = lit;
+        // Jets are created on first fire; add new ones to the ship glow.
+        for (const mesh of exhaust.meshes())
+          if (!glowing.has(mesh))
+            (glowing.add(mesh), glow.addIncludedOnlyMesh(mesh));
+      },
+      exhaust: () => exhaust.lit(),
+      doors: () => doors.doors(),
+      dispose,
+    };
+    // Diagnostics hook (review harnesses read mesh-origin metrics from the ship frame).
+    shipRoot.metadata = { ...shipRoot.metadata, prefabView: handle };
+    return handle;
+  } catch (error) {
+    dispose();
+    throw error;
+  }
 }

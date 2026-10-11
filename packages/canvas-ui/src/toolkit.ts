@@ -145,6 +145,10 @@ export class CanvasUI {
   pointerAction: (event: PointerAction) => boolean = () => false;
   private dirty = true;
   private lastPaint = 0;
+  /** A changing world projection paints in the same camera frame. Static chrome
+   * still uses invalidation and the ordinary HUD cadence. */
+  frameRevision: () => string = () => "";
+  private lastFrameRevision = "";
   private revision = "";
   private backingWidth = 1;
   private backingHeight = 1;
@@ -189,7 +193,11 @@ export class CanvasUI {
       this.layer.onAfterRenderObservable.add(() => {
         if (previousViewport) scene.getEngine().setViewport(previousViewport);
       });
-      this.observer = scene.onBeforeRenderObservable.add(() => this.paint());
+      // The scene's before-render hook still holds the previous camera transform.
+      // This hook runs after the displayed camera's view/projection is installed.
+      this.observer = scene.onBeforeCameraRenderObservable.add(() =>
+        this.paint(),
+      );
       scene.doNotHandleCursors = true;
       scene.onDisposeObservable.add(() => this.dispose());
     } else {
@@ -578,6 +586,9 @@ export class CanvasUI {
   };
   paint() {
     if (this.disposed) return;
+    const frameRevision = this.frameRevision();
+    const projectionChanged = frameRevision !== this.lastFrameRevision;
+    if (projectionChanged) this.dirty = true;
     const w = Math.max(1, Math.round(this.canvas.clientWidth)),
       h = Math.max(1, Math.round(this.canvas.clientHeight));
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -604,10 +615,14 @@ export class CanvasUI {
     const fluid = this.fluid || !!this.active?.moved;
     if (
       !this.dirty ||
-      (!resized && !fluid && performance.now() - this.lastPaint < 33)
+      (!resized &&
+        !fluid &&
+        !projectionChanged &&
+        performance.now() - this.lastPaint < 33)
     )
       return;
     this.lastPaint = performance.now();
+    this.lastFrameRevision = frameRevision;
     this.dirty = false;
     this.width = w / this.scale;
     this.height = h / this.scale;
@@ -1021,7 +1036,7 @@ export class CanvasUI {
     if (this.disposed) return;
     this.disposed = true;
     this.clipboardRequest++;
-    this.scene?.onBeforeRenderObservable.remove(this.observer ?? null);
+    this.scene?.onBeforeCameraRenderObservable.remove(this.observer ?? null);
     if (this.rasterFrame) cancelAnimationFrame(this.rasterFrame);
     this.canvas.removeEventListener("pointerdown", this.down, true);
     this.canvas.removeEventListener("pointermove", this.move, true);

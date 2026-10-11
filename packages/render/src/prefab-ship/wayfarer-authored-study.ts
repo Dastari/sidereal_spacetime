@@ -1,3 +1,4 @@
+import type { BaseTexture } from "@babylonjs/core/Materials/Textures/baseTexture";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AuthoredAssetLighting } from "../authored-asset-lighting";
 /** Private intact authored-kit trial. No catalog, collision or damage integration. */
@@ -296,6 +297,129 @@ function primitive(mesh: Mesh, indexStart: number, indexCount: number) {
 
 export type AuthoredPrimitive = ReturnType<typeof primitive>;
 
+interface AuthoredSource {
+  container: AssetContainer;
+  document: AuthoredGlbDocument;
+  definitions: Map<string, JsonObject>;
+  primitives: {
+    material: PBRMaterial;
+    matrix: Matrix;
+    data: AuthoredPrimitive;
+    sourceId: number;
+    indexStart: number;
+  }[];
+  identities: Map<JsonObject, Map<SurfaceFamily, string>>;
+}
+
+// Only verified public source assets survive a visit. Placement batches, private
+// furnishing state and mutable material policy remain owned by each consumer.
+const authoredSources = new WeakMap<
+  Scene,
+  Map<string, Promise<AuthoredSource>>
+>();
+async function importAuthoredSource(
+  scene: Scene,
+  piece: AuthoredPieceInput,
+  fetchPiece: (piece: AuthoredPieceInput) => Promise<Uint8Array>,
+): Promise<AuthoredSource> {
+  const bytes = Uint8Array.from(await fetchPiece(piece));
+  if (scene.isDisposed) throw Error("Authored study load cancelled");
+  const document = readAuthoredGlb(bytes, piece.sha256);
+  const definitions = new Map<string, JsonObject>();
+  for (const raw of array(document.json.materials)) {
+    const def = object(raw);
+    if (typeof def.name !== "string" || definitions.has(def.name))
+      throw Error("Ambiguous authored material name inside one pinned GLB");
+    definitions.set(def.name, def);
+  }
+  const container = await LoadAssetContainerAsync(bytes, scene, {
+    pluginExtension: ".glb",
+  });
+  try {
+    if (scene.isDisposed) throw Error("Authored study load cancelled");
+    const primitives: AuthoredSource["primitives"] = [];
+    for (const mesh of container.meshes) {
+      if (!(mesh instanceof Mesh) || !mesh.getTotalVertices()) continue;
+      const matrix = mesh.computeWorldMatrix(true).clone();
+      if (!mesh.subMeshes?.length)
+        throw Error("Authored mesh missing primitive partitions");
+      for (const sub of mesh.subMeshes) {
+        const material =
+          mesh.material instanceof MultiMaterial
+            ? mesh.material.subMaterials[sub.materialIndex]
+            : mesh.material;
+        if (!(material instanceof PBRMaterial))
+          throw Error("Authored primitive lost PBR material");
+        primitives.push({
+          material,
+          matrix,
+          data: primitive(mesh, sub.indexStart, sub.indexCount),
+          sourceId: mesh.uniqueId,
+          indexStart: sub.indexStart,
+        });
+      }
+    }
+    // Imported node/GPU buffers are unnecessary once immutable CPU channels and
+    // source transforms have been extracted. Textures stay scene-owned.
+    for (const mesh of container.meshes) mesh.dispose(false, false);
+    return {
+      container,
+      document,
+      definitions,
+      primitives,
+      identities: new Map(),
+    };
+  } catch (error) {
+    container.dispose();
+    throw error;
+  }
+}
+function reusableAuthoredSource(
+  scene: Scene,
+  piece: AuthoredPieceInput,
+  fetchPiece: (piece: AuthoredPieceInput) => Promise<Uint8Array>,
+) {
+  let cache = authoredSources.get(scene);
+  if (!cache) {
+    cache = new Map();
+    authoredSources.set(scene, cache);
+    const owned = cache;
+    scene.onDisposeObservable.addOnce(() => {
+      for (const source of owned.values())
+        void source.then(
+          (value) => value.container.dispose(),
+          () => {},
+        );
+      owned.clear();
+      authoredSources.delete(scene);
+    });
+  }
+  let source = cache.get(piece.sha256);
+  if (!source) {
+    source = importAuthoredSource(scene, piece, fetchPiece);
+    cache.set(piece.sha256, source);
+    const owned = cache;
+    void source.catch(() => {
+      if (owned.get(piece.sha256) === source) owned.delete(piece.sha256);
+    });
+  }
+  return source;
+}
+function sourceMaterialIdentity(
+  source: AuthoredSource,
+  definition: JsonObject,
+  family: SurfaceFamily,
+) {
+  let families = source.identities.get(definition);
+  if (!families) source.identities.set(definition, (families = new Map()));
+  let identity = families.get(family);
+  if (!identity) {
+    identity = authoredMaterialIdentity(source.document, definition, family);
+    families.set(family, identity);
+  }
+  return identity;
+}
+
 /** Own imported materials/textures until all candidate draws have been disposed. */
 export async function loadAuthoredStudy(
   scene: Scene,
@@ -307,6 +431,8 @@ export async function loadAuthoredStudy(
   options: {
     /** Owning visibility/cancellation gate; attach before any frame can observe a batch. */
     parent?: TransformNode;
+    /** Cache immutable pinned source channels; never retain private placement batches. */
+    reuseSources?: boolean;
     batchRegions?: ReadonlyMap<string, string>;
     /** Generic templates mutate supported palette slots after import. */
     themed?: boolean;
@@ -331,6 +457,7 @@ export async function loadAuthoredStudy(
   const containers: AssetContainer[] = [],
     meshes: Mesh[] = [];
   const materials = new Map<string, PBRMaterial>();
+  const clonedTextures = new Set<BaseTexture>();
   const groups = new Map<
     string,
     {
@@ -351,6 +478,9 @@ export async function loadAuthoredStudy(
     scene.onDisposeObservable.remove(sceneDisposeObserver);
     for (const mesh of meshes) mesh.dispose(false, false);
     for (const container of containers) container.dispose();
+    if (options.reuseSources)
+      for (const material of materials.values()) material.dispose(false, false);
+    for (const texture of clonedTextures) texture.dispose();
   };
   const ensureActive = () => {
     if (disposed || scene.isDisposed || options.parent?.isDisposed())
@@ -360,161 +490,146 @@ export async function loadAuthoredStudy(
   try {
     for (const piece of pieces) {
       ensureActive();
-      const bytes = Uint8Array.from(await fetchPiece(piece));
+      const source = await (options.reuseSources
+        ? reusableAuthoredSource(scene, piece, fetchPiece)
+        : importAuthoredSource(scene, piece, async (input) => {
+            const bytes = await fetchPiece(input);
+            ensureActive();
+            return bytes;
+          }));
+      if (!options.reuseSources) containers.push(source.container);
       ensureActive();
-      const document = readAuthoredGlb(bytes, piece.sha256);
-      const definitions = new Map<string, JsonObject>();
-      for (const raw of array(document.json.materials)) {
-        const def = object(raw);
-        if (typeof def.name !== "string" || definitions.has(def.name))
-          throw Error("Ambiguous authored material name inside one pinned GLB");
-        definitions.set(def.name, def);
-      }
-      const container = await LoadAssetContainerAsync(bytes, scene, {
-        pluginExtension: ".glb",
-      });
-      if (disposed || scene.isDisposed) {
-        container.dispose();
-        throw Error("Authored study load cancelled");
-      }
-      containers.push(container);
-      const local = container.meshes.filter(
-        (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
-      );
+      const { definitions } = source;
       let pieceTriangles = 0;
       const placements = instances.filter((row) => row.piece === piece.id);
       if (!placements.length)
         throw Error(`Unplaced authored piece: ${piece.id}`);
-      for (const source of local) {
-        const nodeMatrix = source.computeWorldMatrix(true);
-        if (!source.subMeshes?.length)
-          throw Error("Authored mesh missing primitive partitions");
-        for (const sub of source.subMeshes) {
-          const original =
-            source.material instanceof MultiMaterial
-              ? source.material.subMaterials[sub.materialIndex]
-              : source.material;
-          if (!(original instanceof PBRMaterial))
-            throw Error("Authored primitive lost PBR material");
-          const definition = definitions.get(original.name);
-          if (!definition)
-            throw Error(
-              `Imported authored material lost its source definition: ${original.name}`,
-            );
-          const family = materialFamily(definition, palette);
-          const sourceStrength = definition.extensions
-            ? (object(
-                object(definition.extensions).KHR_materials_emissive_strength ??
-                  {},
-              ).emissiveStrength ?? 1)
-            : 1;
-          if (
-            typeof sourceStrength !== "number" ||
-            !Number.isFinite(sourceStrength) ||
-            sourceStrength < 0
-          )
-            throw Error("Invalid authored emission strength");
-          const ownedEmission = options.assetLighting?.get(piece.sha256)
-            ?.emissions[original.name];
-          if (
-            ownedEmission &&
-            (ownedEmission.strength !== sourceStrength ||
-              canonical(ownedEmission.factor) !==
-                canonical(definition.emissiveFactor))
-          )
-            throw Error("Changed authored asset emission definition");
-          const gameStrength = ownedEmission
-            ? sourceStrength
-            : Math.min(sourceStrength, 1);
-          const sourceKey = canonical([
-            authoredMaterialIdentity(document, definition, family),
-            palette[original.name]?.sourceSlotName ?? null,
-            options.themed
-              ? (authoredThemeSlot(original.name, palette) ?? null)
-              : null,
-          ]);
-          const key = !ownedEmission
-            ? sourceKey
-            : canonical([sourceKey, "asset-owned-emission"]);
-          let pooled = materials.get(key);
-          if (!pooled) {
-            pooled = original;
-            materials.set(key, pooled);
-            applySurfaceFinish(pooled, family);
-            pooled.emissiveIntensity = gameStrength;
-            if (ownedEmission)
-              pooled.metadata = {
-                ...pooled.metadata,
-                authoredAssetEmission: ownedEmission,
-              };
-            setPbrLightBudget(pooled, GAME_PBR_LIGHT_LIMIT);
-            materialPolicy.push({
-              name: original.name,
-              key,
-              family,
-              sourceStrength,
-              gameStrength: pooled.emissiveIntensity,
-              assetOwnedEmission: Boolean(ownedEmission),
-              textureNames: pooled.getActiveTextures().map((t) => t.name),
-            });
+      for (const part of source.primitives) {
+        const original = part.material;
+        const nodeMatrix = part.matrix;
+        const definition = definitions.get(original.name);
+        if (!definition)
+          throw Error(
+            `Imported authored material lost its source definition: ${original.name}`,
+          );
+        const family = materialFamily(definition, palette);
+        const sourceStrength = definition.extensions
+          ? (object(
+              object(definition.extensions).KHR_materials_emissive_strength ??
+                {},
+            ).emissiveStrength ?? 1)
+          : 1;
+        if (
+          typeof sourceStrength !== "number" ||
+          !Number.isFinite(sourceStrength) ||
+          sourceStrength < 0
+        )
+          throw Error("Invalid authored emission strength");
+        const ownedEmission = options.assetLighting?.get(piece.sha256)
+          ?.emissions[original.name];
+        if (
+          ownedEmission &&
+          (ownedEmission.strength !== sourceStrength ||
+            canonical(ownedEmission.factor) !==
+              canonical(definition.emissiveFactor))
+        )
+          throw Error("Changed authored asset emission definition");
+        const gameStrength = ownedEmission
+          ? sourceStrength
+          : Math.min(sourceStrength, 1);
+        const sourceKey = canonical([
+          sourceMaterialIdentity(source, definition, family),
+          palette[original.name]?.sourceSlotName ?? null,
+          options.themed
+            ? (authoredThemeSlot(original.name, palette) ?? null)
+            : null,
+        ]);
+        const key = !ownedEmission
+          ? sourceKey
+          : canonical([sourceKey, "asset-owned-emission"]);
+        let pooled = materials.get(key);
+        if (!pooled) {
+          pooled = options.reuseSources
+            ? original.clone(original.name)
+            : original;
+          if (options.reuseSources)
+            for (const texture of pooled.getActiveTextures())
+              clonedTextures.add(texture);
+          materials.set(key, pooled);
+          applySurfaceFinish(pooled, family);
+          pooled.emissiveIntensity = gameStrength;
+          if (ownedEmission)
+            pooled.metadata = {
+              ...pooled.metadata,
+              authoredAssetEmission: ownedEmission,
+            };
+          setPbrLightBudget(pooled, GAME_PBR_LIGHT_LIMIT);
+          materialPolicy.push({
+            name: original.name,
+            key,
+            family,
+            sourceStrength,
+            gameStrength: pooled.emissiveIntensity,
+            assetOwnedEmission: Boolean(ownedEmission),
+            textureNames: pooled.getActiveTextures().map((t) => t.name),
+          });
+        }
+        const data = part.data;
+        pieceTriangles += data.indices.length / 3;
+        importedPrimitives++;
+        for (const row of placements) {
+          const region = batchRegions.get(row.object) ?? "";
+          const compatibleKey = region ? canonical([key, region]) : key;
+          // Glass and decals retain independent placement depth sorting.
+          const batchKey =
+            definition.alphaMode === "BLEND"
+              ? `${compatibleKey}:${row.object}:${part.sourceId}:${part.indexStart}`
+              : compatibleKey;
+          let group = groups.get(batchKey);
+          if (!group) {
+            group = {
+              geometry: {
+                key: batchKey,
+                positions: [],
+                normals: [],
+                indices: [],
+              },
+              material: pooled,
+              ranges: [],
+              region,
+              materialKey: key,
+            };
+            groups.set(batchKey, group);
           }
-          const data = primitive(source, sub.indexStart, sub.indexCount);
-          pieceTriangles += sub.indexCount / 3;
-          importedPrimitives++;
-          for (const row of placements) {
-            const region = batchRegions.get(row.object) ?? "";
-            const compatibleKey = region ? canonical([key, region]) : key;
-            // Glass and decals retain independent placement depth sorting.
-            const batchKey =
-              definition.alphaMode === "BLEND"
-                ? `${compatibleKey}:${row.object}:${source.uniqueId}:${sub.indexStart}`
-                : compatibleKey;
-            let group = groups.get(batchKey);
-            if (!group) {
-              group = {
-                geometry: {
-                  key: batchKey,
-                  positions: [],
-                  normals: [],
-                  indices: [],
-                },
-                material: pooled,
-                ranges: [],
-                region,
-                materialKey: key,
-              };
-              groups.set(batchKey, group);
-            }
-            let transform = nodeMatrix.multiply(
-              Matrix.FromArray(
-                authoredInstanceMatrix(piece.frame, row.matrix, origin),
-              ),
-            );
-            let placed = data;
-            if (options.transformGeometry) {
-              const adjusted = options.transformGeometry(row, data, transform);
-              placed = adjusted.geometry;
-              transform = adjusted.transform;
-            }
-            const start = group.geometry.indices.length;
-            appendTransformed(
-              group.geometry,
-              placed.positions,
-              placed.normals,
-              placed.indices,
-              transform.asArray(),
-              placed,
-              { correctNormals: true },
-            );
-            group.ranges.push({
-              object: row.object,
-              piece: piece.id,
-              role: row.role,
-              material: original.name,
-              indexStart: start,
-              indexCount: placed.indices.length,
-            });
+          let transform = nodeMatrix.multiply(
+            Matrix.FromArray(
+              authoredInstanceMatrix(piece.frame, row.matrix, origin),
+            ),
+          );
+          let placed = data;
+          if (options.transformGeometry) {
+            const adjusted = options.transformGeometry(row, data, transform);
+            placed = adjusted.geometry;
+            transform = adjusted.transform;
           }
+          const start = group.geometry.indices.length;
+          appendTransformed(
+            group.geometry,
+            placed.positions,
+            placed.normals,
+            placed.indices,
+            transform.asArray(),
+            placed,
+            { correctNormals: true },
+          );
+          group.ranges.push({
+            object: row.object,
+            piece: piece.id,
+            role: row.role,
+            material: original.name,
+            indexStart: start,
+            indexCount: placed.indices.length,
+          });
         }
       }
       if (pieceTriangles !== piece.triangles)
@@ -522,8 +637,6 @@ export async function loadAuthoredStudy(
           `Authored imported triangle mismatch: ${piece.id} (${pieceTriangles}/${piece.triangles})`,
         );
       uniqueTriangles += pieceTriangles;
-      // CPU batching is complete for this asset. Retain its materials and embedded textures.
-      for (const source of container.meshes) source.dispose(false, false);
     }
     // AssetContainer import removes these from the scene registry. Retained
     // originals must participate in scene-wide shader/prepass invalidation.
@@ -575,10 +688,13 @@ export async function loadAuthoredStudy(
         (n, m) => n + m.getTotalVertices() * 8 * 4 + m.getTotalIndices() * 4,
         0,
       ),
-      ownedImportedTextures: containers.reduce(
-        (n, c) => n + c.textures.length,
-        0,
-      ),
+      ownedImportedTextures: options.reuseSources
+        ? new Set(
+            [...materials.values()].flatMap((material) =>
+              material.getActiveTextures(),
+            ),
+          ).size
+        : containers.reduce((n, c) => n + c.textures.length, 0),
       materialPolicy,
       placementRanges: [...groups.values()].flatMap((g) => g.ranges),
       presentationOnly: true,

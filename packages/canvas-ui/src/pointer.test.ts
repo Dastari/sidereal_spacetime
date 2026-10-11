@@ -43,7 +43,7 @@ function setup() {
   };
   const scene = {
     getEngine: () => ({ currentViewport: null, setViewport() {} }),
-    onBeforeRenderObservable: { add() {}, remove() {} },
+    onBeforeCameraRenderObservable: { add() {}, remove() {} },
     onDisposeObservable: { add() {} },
   };
   const ui = new CanvasUI(

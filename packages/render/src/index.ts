@@ -150,6 +150,7 @@ import {
   easeCameraZoom,
   deckCameraActorWeight,
   createObservationCamera,
+  createPlayerCameraFrame,
 } from "./camera";
 import { createSpaceEnvironment, type SpaceBodyState } from "./environment";
 import { DEFAULT_SPACE_VISTA } from "../../content/src/environment";
@@ -913,8 +914,8 @@ async function buildWorld(
     orbit = 0.45,
     zoom = initialDeckZoom;
   let flightZoom = initialFlightZoom;
-  let displayedZoom = zoom,
-    displayedFlightZoom = flightZoom;
+  let displayedZoom = zoom;
+  const playerCameraFrame = createPlayerCameraFrame();
   let focusedBodyId: string | undefined;
   const observation = createObservationCamera();
   let resizePending = true;
@@ -1051,9 +1052,6 @@ async function buildWorld(
     displayedZoom = state.reducedMotion
       ? zoom
       : easeCameraZoom(displayedZoom, zoom, dt);
-    displayedFlightZoom = state.reducedMotion
-      ? flightZoom
-      : easeCameraZoom(displayedFlightZoom, flightZoom, dt);
     shipRoot.rotation.y = displayed.heading;
     const traversalFrame = updateConstructionTraversal?.(
       state.constructionDeckId,
@@ -1220,16 +1218,28 @@ async function buildWorld(
     const targetLocalY =
       (constructionFrame?.centerY ?? 0) * (1 - actorBlend) +
       -avatar.position.z * actorBlend;
-    camera.target.set(
+    const desiredTarget: [number, number, number] = [
       targetLocalX * c - targetLocalY * s,
       0.8 * blend +
         (options.construction || options.constructionEgress
           ? avatar.position.y
           : 0),
       -(targetLocalX * s + targetLocalY * c),
-    );
+    ];
+    const framing = playerCameraFrame.frame({
+      actor: [
+        avatar.position.x * c + avatar.position.z * s,
+        avatar.position.y,
+        -avatar.position.x * s + avatar.position.z * c,
+      ],
+      target: desiredTarget,
+      halfExtent: state.interior ? zoom : flightZoom,
+      dt,
+      reducedMotion: state.reducedMotion,
+    });
+    camera.target.set(...framing.target);
     const aspect = canvas.clientWidth / Math.max(1, canvas.clientHeight),
-      half = displayedFlightZoom * (1 - blend) + displayedZoom * blend;
+      half = framing.halfExtent;
     camera.radius = half / Math.tan(camera.fov / 2);
     const bodies = visibleBodies(frameStarted);
     const focus = bodies.find((body) => body.id === focusedBodyId);
@@ -1649,7 +1659,6 @@ async function buildWorld(
       invalidateStaticMaterials(scene);
       scene.resetCachedMaterial();
       engine.wipeCaches(true);
-      initialized = false;
     },
   });
   return {
@@ -1872,6 +1881,7 @@ async function buildWorld(
       if (!initialStateApplied) {
         initialStateApplied = true;
         initialized = false;
+        playerCameraFrame.reset();
         blend = next.interior ? 1 : 0;
         camera.alpha = cameraAlpha(next.heading, next.interior, orbit);
         camera.beta = next.interior ? RPG_BETA : next.inspect ? 0.6 : 0.015;

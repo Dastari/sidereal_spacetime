@@ -868,3 +868,172 @@ it("uses the same effective theme fallback policy for pooling and template edits
     }),
   ).toBe("accent");
 });
+
+describe("scene-owned public authored sources", () => {
+  const piece = {
+    id: "floor.grate",
+    file: "floor.grate.glb",
+    sha256: "55d663ea86cef90fb3f155e3e8c436aa4ac7c4e467842066f6852c7834ee9317",
+    triangles: 1404,
+    frame: "piece-local" as const,
+  };
+  const bytes = () =>
+    new Uint8Array(
+      readFileSync(
+        new URL(
+          "../../../../assets/runtime/ship-study/wayfarer-authored-r001/glb/floor/floor.grate.glb",
+          import.meta.url,
+        ),
+      ),
+    );
+  const placement = (id: string, x = 0) => ({
+    object: id,
+    piece: piece.id,
+    role: "floor",
+    matrix: identity.map((row, i) =>
+      row.map((v, j) => (i === 0 && j === 3 ? x : v)),
+    ),
+  });
+  const palette = {
+    deck_dark: { family: "plastic-dark" },
+    secondary: { family: "plastic-dark" },
+    trim: { family: "plastic-dark" },
+  };
+  it("imports once, rebuilds new placements and keeps mutable materials and shared reflections independent", async () => {
+    const { Texture } =
+      await import("@babylonjs/core/Materials/Textures/texture");
+    const { vi } = await import("vitest");
+    const engine = new NullEngine(),
+      scene = new Scene(engine);
+    scene.useRightHandedSystem = true;
+    const fetch = vi.fn(async () => bytes());
+    const load = (id: string, x = 0) =>
+      loadAuthoredStudy(
+        scene,
+        [piece],
+        [placement(id, x)],
+        palette,
+        [0, 0],
+        fetch,
+        { reuseSources: true },
+      );
+    try {
+      const a = await load("old-visit");
+      const baseline = a.meshes.map((m) => [...m.getVerticesData("position")!]);
+      const b = await load("new-visit", 3);
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(
+        b.report.placementRanges.every((row) => row.object === "new-visit"),
+      ).toBe(true);
+      expect(
+        b.meshes.map((m) => [...m.getVerticesData("position")!]),
+      ).not.toEqual(baseline);
+      const ma = a.meshes[0].material as PBRMaterial,
+        mb = b.meshes[0].material as PBRMaterial;
+      expect(ma).not.toBe(mb);
+      const original = mb.albedoColor.clone();
+      ma.albedoColor.set(1, 0, 0);
+      ma.directIntensity = 0.01;
+      expect(mb.albedoColor).toEqual(original);
+      expect(mb.directIntensity).not.toBe(0.01);
+      const studio = new Texture(null, scene);
+      const disposeStudio = vi.spyOn(studio, "dispose");
+      ma.reflectionTexture = mb.reflectionTexture = studio;
+      a.dispose();
+      a.dispose();
+      expect(disposeStudio).not.toHaveBeenCalled();
+      expect(b.meshes.every((m) => !m.isDisposed())).toBe(true);
+      const c = await load("third-visit");
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(c.meshes.map((m) => [...m.getVerticesData("position")!])).toEqual(
+        baseline,
+      );
+      expect((c.meshes[0].material as PBRMaterial).albedoColor).toEqual(
+        original,
+      );
+      c.dispose();
+      b.dispose();
+      expect(disposeStudio).not.toHaveBeenCalled();
+      scene.dispose();
+      expect(disposeStudio).toHaveBeenCalledTimes(1);
+      expect(scene.meshes).toHaveLength(0);
+    } finally {
+      scene.dispose();
+      engine.dispose();
+    }
+  });
+  it("a revoked private consumer cannot cancel or retain private data in a shared public import", async () => {
+    const { vi } = await import("vitest");
+    const engine = new NullEngine(),
+      scene = new Scene(engine);
+    scene.useRightHandedSystem = true;
+    let finish!: (bytes: Uint8Array) => void;
+    const fetch = vi.fn(
+      () => new Promise<Uint8Array>((resolve) => (finish = resolve)),
+    );
+    const owner = new TransformNode("revoked-owner", scene);
+    const load = loadAuthoredStudy(
+      scene,
+      [piece],
+      [placement("revoked-private")],
+      palette,
+      [0, 0],
+      fetch,
+      { reuseSources: true, parent: owner },
+    );
+    owner.dispose();
+    finish(bytes());
+    try {
+      await expect(load).rejects.toThrow("load cancelled");
+      expect(scene.meshes).toHaveLength(0);
+      const fresh = await loadAuthoredStudy(
+        scene,
+        [piece],
+        [placement("fresh-private")],
+        palette,
+        [0, 0],
+        fetch,
+        { reuseSources: true },
+      );
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(
+        fresh.report.placementRanges.every(
+          (row) => row.object === "fresh-private",
+        ),
+      ).toBe(true);
+      fresh.dispose();
+    } finally {
+      scene.dispose();
+      engine.dispose();
+    }
+  });
+  it("evicts a failed source so a verified retry can recover", async () => {
+    const { vi } = await import("vitest");
+    const engine = new NullEngine(),
+      scene = new Scene(engine);
+    scene.useRightHandedSystem = true;
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(Uint8Array.of(1))
+      .mockResolvedValueOnce(bytes());
+    const load = () =>
+      loadAuthoredStudy(
+        scene,
+        [piece],
+        [placement("current")],
+        palette,
+        [0, 0],
+        fetch,
+        { reuseSources: true },
+      );
+    try {
+      await expect(load()).rejects.toThrow("hash mismatch");
+      const good = await load();
+      expect(fetch).toHaveBeenCalledTimes(2);
+      good.dispose();
+    } finally {
+      scene.dispose();
+      engine.dispose();
+    }
+  });
+});

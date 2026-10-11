@@ -1,3 +1,4 @@
+import { createDeckViewRestoration } from "./vessel-view";
 import { cursorShipTurn, evaSteering, steeringHelp } from "./steering";
 import {
   readSteeringStyle,
@@ -271,6 +272,7 @@ export default function App({
     bodies: [] as SpaceBodyRow[],
   });
   const installedSceneKey = useRef<string | undefined>(undefined);
+  const deckViewRestoration = useRef(createDeckViewRestoration());
   const acceptedSceneKey = useRef<string | undefined>(undefined);
   useEffect(() => {
     const active = createConnectionSession(
@@ -622,9 +624,13 @@ export default function App({
       }
     : undefined;
   const evaLocal = !!evaView?.local;
-  useEffect(() => {
-    setInterior(acceptedInterior);
-  }, [acceptedInterior]);
+  useLayoutEffect(() => {
+    const restore = deckViewRestoration.current(
+      acceptedInterior ? sceneKey : undefined,
+      installedSceneKey.current,
+    );
+    if (restore !== undefined) setInterior(restore);
+  }, [acceptedInterior, sceneKey, loadedSceneKey]);
   useLayoutEffect(() => {
     // Clear a retained scene before the next browser frame on exit or revoked occupancy.
     if (acceptedInterior && installedSceneKey.current === sceneKey) return;
@@ -1160,6 +1166,7 @@ export default function App({
     destinations: bodyDestinations(navigationBodies),
   };
   const live = useRef({
+    canDeck: false,
     actor,
     ship,
     ready,
@@ -1182,6 +1189,7 @@ export default function App({
     shipOmega: 0,
   });
   live.current = {
+    canDeck: acceptedInterior && installedSceneKey.current === sceneKey,
     actor,
     ship,
     ready,
@@ -1215,6 +1223,11 @@ export default function App({
     { facing: number; mode: string; active: boolean; at: number } | undefined
   >(undefined);
   const suitMode = useRef<string | undefined>(undefined);
+  const toggleVesselView = () => {
+    if (!live.current.canDeck || loadingRef.current || entryBlocked.current)
+      return;
+    setInterior((v) => !v);
+  };
   const toggleCruise = () => {
     const current = live.current;
     const conn = connection.current;
@@ -1577,11 +1590,7 @@ export default function App({
                       setSelectedObject(undefined);
                     },
                   },
-                  view: () => {
-                    // No ship: there is no exterior/flight view to switch to.
-                    if (live.current.actor?.shipId === "") return;
-                    setInterior((v) => !v);
-                  },
+                  view: () => toggleVesselView(),
                   station: useControlStation,
                   enter: (name) =>
                     void perform(() =>
@@ -2309,30 +2318,28 @@ export default function App({
       );
     };
     const down = (e: KeyboardEvent) => {
+      if (isEditableTarget(e.target) || !actor?.connected || !ready) return;
+      // Tab remains owned by the game throughout the accepted entry handoff.
+      // Visual preparation can block a view change without releasing focus to
+      // browser chrome. Kit/service dialogs retain their own focus handling.
       if (
-        isEditableTarget(e.target) ||
-        !!servicePanelOpen.current ||
-        entryBlocked.current ||
-        loadingRef.current ||
-        gui.current?.blocked() ||
-        !actor?.connected ||
-        !ready
-      )
-        return;
-      if (e.code === "Tab") {
+        e.code === "Tab" &&
+        !servicePanelOpen.current &&
+        !gui.current?.blocked()
+      ) {
         e.preventDefault();
         keys.clear();
         send();
-        // No ship: there is no exterior/flight view to switch to. Outside the hull
-        // (EVA) the top-down space view is the only view.
-        if (
-          !e.repeat &&
-          live.current.actor?.shipId !== "" &&
-          !live.current.evaPhase
-        )
-          setInterior((v) => !v);
+        if (!e.repeat) toggleVesselView();
         return;
       }
+      if (
+        servicePanelOpen.current ||
+        entryBlocked.current ||
+        loadingRef.current ||
+        gui.current?.blocked()
+      )
+        return;
       if (e.code === "KeyX" && !e.repeat && live.current.evaPhase) {
         // Suit stabiliser: hold (kill rotation and relative drift) or free (pure momentum).
         e.preventDefault();

@@ -3,6 +3,7 @@ import { STEERING_DEFAULT, type SteeringStyle } from "./control-settings";
 import { uiTheme, type ControlVariant } from "@sidereal/ui/theme";
 import { type Rect } from "./layout";
 import { type CanvasUI, palette } from "./toolkit";
+import { drawGroundLoot } from "./ground-loot";
 
 export const galleryPages = [
   "Actions",
@@ -10,6 +11,7 @@ export const galleryPages = [
   "Controls",
   "Frames",
   "Status",
+  "World labels",
 ] as const;
 
 /** Logical viewport geometry; DPR is owned solely by CanvasUI's texture transform. */
@@ -135,6 +137,27 @@ export function createComponentGallery(ui: CanvasUI, onClose?: () => void) {
         },
         { variant: "ghost" },
       );
+      if (galleryPages[page] === "World labels") {
+        // A moving projected pile exercises the production painter and hits.
+        ui.fluid = true;
+        ui.invalidate();
+        const drift = Math.sin(performance.now() / 2000) * 24;
+        drawGroundLoot(
+          ui,
+          ["scanner", "power-cell", "flashlight"].map((definitionId, i) => ({
+            id: `gallery-${i}`,
+            definitionId,
+            localX: 0,
+            localY: 0,
+            reachable: i !== 2,
+            x: (content.x + content.w / 2 + drift) * ui.scale,
+            y: (content.y + Math.max(75, content.h / 2) + i * 2) * ui.scale,
+          })),
+          example,
+          pending,
+        );
+        return true;
+      }
       const controls: (() => void)[] = [];
       const heights: number[] = [];
       const add = (height: number, draw: (r: Rect) => void) => {
