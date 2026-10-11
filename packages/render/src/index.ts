@@ -395,7 +395,11 @@ async function buildWorld(
   const presentationScale = slowmo > 0.02 && slowmo < 1 ? slowmo : 1;
   scene.animationTimeScale = presentationScale;
   const presentationNow = () => performance.now() * presentationScale;
-  const transmissionLifecycle = maintainSceneTransmission(scene);
+  const transmissionLifecycle = maintainSceneTransmission(
+    scene,
+    () => debugFeatures.snapshot(),
+    () => [...lighting.globalLights, ...moldedLightRig(scene).globalLights],
+  );
   // Object selection performs one explicit click ray; camera/HUD use DOM input.
   scene.skipPointerMovePicking = true;
   scene.skipPointerDownPicking = true;
@@ -797,6 +801,7 @@ async function buildWorld(
   );
   /** Apply (live) and save the F3 render-cost switches. Presentation only. */
   function applyRenderQuality(next: RenderQuality) {
+    transmissionLifecycle.invalidate();
     const previous = renderQuality;
     renderQuality = normalizeRenderQuality(next);
     writeRenderQuality(backendStorage, renderQuality);
@@ -1903,6 +1908,7 @@ async function buildWorld(
         : undefined;
     },
     toggleDebugFeature(key: DebugFeature) {
+      transmissionLifecycle.invalidate();
       fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
@@ -1917,6 +1923,7 @@ async function buildWorld(
       }
     },
     resetDebugFeatures() {
+      transmissionLifecycle.invalidate();
       fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);

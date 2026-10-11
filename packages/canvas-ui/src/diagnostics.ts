@@ -27,6 +27,11 @@ const overlays: readonly [DebugFeature, string][] = [
   ["lightBounds", "Light volumes"],
   ["collision", "Collision"],
 ];
+const captureExperiments: readonly [DebugFeature, string][] = [
+  ["captureListCache", "Capture list cache"],
+  ["captureOnMotion", "Capture on motion"],
+  ["captureGlobalsOnly", "Capture globals only"],
+];
 
 /** Height of the render-cost group near the top of the Visuals tab. */
 const QUALITY_HEIGHT = 172;
@@ -265,10 +270,11 @@ export function createDiagnosticsUI(
         ...(data.debugOverlays?.collisionScopes.length
           ? data.debugOverlays.collisionScopes
           : ["Collision: supplied simulation footprints only."]),
+        "Capture on motion can lag idle animation; globals only changes glass lighting.",
         "Local presentation only · F3 keeps overrides.",
       ];
       const visualHeight =
-        343 +
+        474 +
         BACKEND_HEIGHT +
         QUALITY_HEIGHT +
         visualLines.reduce(
@@ -314,15 +320,17 @@ export function createDiagnosticsUI(
           title: string,
           y: number,
           overlay: boolean,
+          columns = 2,
         ) => {
           ui.text(title, viewport.x, y, 11, palette.muted, viewport.w);
           entries.forEach(([key, label], i) => {
             const on = overlay ? enabled[key] === true : enabled[key] !== false;
             const r = {
-              x: viewport.x + (i % 2) * (width + 8),
-              y: y + 22 + Math.floor(i / 2) * 34,
+              x: viewport.x + (i % columns) * (width + 8),
+              y: y + 22 + Math.floor(i / columns) * 34,
               w:
-                i === entries.length - 1 && entries.length % 2
+                columns === 1 ||
+                (i === entries.length - 1 && entries.length % 2)
                   ? viewport.w
                   : width,
               h: 28,
@@ -417,9 +425,16 @@ export function createDiagnosticsUI(
         const featuresTop = top + QUALITY_HEIGHT;
         drawGroup(features, "RENDER FEATURES", featuresTop, false);
         drawGroup(overlays, "DEBUG OVERLAYS", featuresTop + 131, true);
+        drawGroup(
+          captureExperiments,
+          "CAPTURE EXPERIMENTS",
+          featuresTop + 222,
+          true,
+          1,
+        );
         const reset = {
           x: viewport.x,
-          y: featuresTop + 235,
+          y: featuresTop + 366,
           w: viewport.w,
           h: 28,
         };
@@ -441,6 +456,7 @@ export function createDiagnosticsUI(
                 !controls.reset ||
                 (disabled().length === 0 &&
                   !overlays.some(([key]) => enabled[key] === true) &&
+                  !captureExperiments.some(([key]) => enabled[key] === true) &&
                   (
                     Object.keys(
                       RENDER_QUALITY_DEFAULTS,
@@ -450,7 +466,7 @@ export function createDiagnosticsUI(
                   )),
             },
           );
-        let y = featuresTop + 276;
+        let y = reset.y + reset.h + 13;
         for (const line of visualLines) {
           const count = Math.max(20, Math.floor(viewport.w / 5.8));
           const words = line.split(" ");
