@@ -22,6 +22,7 @@ import {
 export type ReviewedAssetDescriptor = ReviewedNativePlanetDescriptor;
 export type ReviewedRegistration = {
   assetKey: string;
+  invariantBanks?: "temperate-r003-v1";
   header: ModernNativePlanetHeader;
   weatherHeader?: {
     schema: string;
@@ -37,6 +38,19 @@ type Asset = {
   promise: Promise<ModernNativePlanetKit | ReviewedWeatherKit>;
   refs: number;
 };
+/** Only these accepted source hashes have bank-level invariance qualified. */
+function invariantBanks(descriptor: ReviewedAssetDescriptor) {
+  return descriptor.id === "temperate-r003" &&
+    descriptor.layout === "temperate-native-continents" &&
+    descriptor.runtimeKitSha256 ===
+      "c8c3470f41e85b53b9ce1e1f05b24446900bfad439a0522cfedce3c48eef01fc" &&
+    descriptor.weather?.revision === "cloud-r002" &&
+    descriptor.weather.runtimeKitSha256 ===
+      "ae4a1f95517ff4425d0f7ab532c2d91e960b6512f833c23d01b816e717dbdd01" &&
+    descriptor.weather.layout === "cloud-banks"
+    ? ("temperate-r003-v1" as const)
+    : undefined;
+}
 /** Worker-only bounded registry. Catalog identity is separate from caller body identity. */
 export function createReviewedWorkerRegistry(
   options: {
@@ -58,7 +72,8 @@ export function createReviewedWorkerRegistry(
       assets: string[];
     }
   >();
-  const digest = options.digest ?? (async (bytes: Uint8Array) => bytesToHex(sha256(bytes)));
+  const digest =
+    options.digest ?? (async (bytes: Uint8Array) => bytesToHex(sha256(bytes)));
   const decode = options.decode ?? decodeReviewedNativePayload;
   let disposed = false;
   async function load(payload: Payload, weather: boolean) {
@@ -168,6 +183,7 @@ export function createReviewedWorkerRegistry(
           // Compact explicit headers only; never send variants or packed source arrays.
           return {
             assetKey,
+            invariantBanks: invariantBanks(accepted),
             header: {
               schema: kit.schema,
               layout: kit.layout,
@@ -201,7 +217,13 @@ export function createReviewedWorkerRegistry(
       const registration = registrations.get(assetKey);
       if (!registration || disposed)
         throw new Error("Reviewed asset not registered");
-      await registration.promise;
+      const registered = await registration.promise;
+      if (
+        input.partition &&
+        input.partition !== "complete" &&
+        !registered.invariantBanks
+      )
+        throw Error("Reviewed partition requires qualified invariant banks");
       if (registrations.get(assetKey) !== registration)
         throw new Error("Reviewed asset released");
       if (input.recipe.style !== registration.descriptor.style)

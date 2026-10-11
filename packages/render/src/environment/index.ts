@@ -18,6 +18,7 @@ import {
   updateBodyRangePlane,
 } from "./body-visibility";
 import { createBodyVisualRevision } from "./body-visual-revision";
+import { createStaticAsteroidInstances } from "./asteroid-instances";
 import { createDustField } from "./dust-field";
 import { createDistantStarfield } from "./starfield";
 import { setMeshRole } from "../mesh-roles";
@@ -139,7 +140,13 @@ export function material(
 /** Infinite directional sky + actual world bodies + local volumetric flecks.
  * Only the sky follows the camera. World bodies subtract the f64 render origin.
  */
-export function createSpaceEnvironment(scene: Scene) {
+export function createSpaceEnvironment(
+  scene: Scene,
+  options: {
+    shareTemperateInvariantBanks?: boolean;
+    instanceStaticAsteroids?: boolean;
+  } = {},
+) {
   const planetWorker = createPlanetWorkerClient();
   const heroShadows = createPlanetShadows(scene);
   let primaryLight: DirectionalLight | undefined;
@@ -171,6 +178,7 @@ export function createSpaceEnvironment(scene: Scene) {
     planetWorker,
     heroShadows,
     planetGlow,
+    options,
   );
   const nebula = new Texture(
     "/assets/environment/veil-nebula-v1.png",
@@ -191,6 +199,7 @@ export function createSpaceEnvironment(scene: Scene) {
     t.wrapV = Texture.CLAMP_ADDRESSMODE;
   }
   const dustField = createDustField(scene, root);
+  let asteroidInstances: ReturnType<typeof createStaticAsteroidInstances>;
   let prefab: TransformNode | undefined,
     rockRadius = 1,
     disposed = false,
@@ -213,6 +222,8 @@ export function createSpaceEnvironment(scene: Scene) {
     rockRadius = Math.max(bounds.max.length(), bounds.min.length());
     prefab.parent = root;
     prefab.setEnabled(false);
+    if (options.instanceStaticAsteroids !== false)
+      asteroidInstances = createStaticAsteroidInstances(prefab);
   });
   let nativeIceKit: NativePlanetKit | undefined;
   let nativeIceCache: NativePlanetCache | undefined;
@@ -300,7 +311,9 @@ export function createSpaceEnvironment(scene: Scene) {
     let cloudSpeed = 0.025;
     if (body.kind === "asteroid") {
       if (!prefab) return;
-      const clone = prefab.clone("physical-asteroid-" + body.id, root);
+      const clone =
+        asteroidInstances?.("physical-asteroid-" + body.id, root) ??
+        prefab.clone("physical-asteroid-" + body.id, root);
       if (!clone) throw new Error("Asteroid clone failed");
       node = clone;
       node.setEnabled(true);
