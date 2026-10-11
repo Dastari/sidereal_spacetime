@@ -148,7 +148,10 @@ export function registerLocalPbrLight(light: Light, id: string) {
 
 /** Orders the real mesh light arrays after all power/visibility/receiver owners.
  * No light enable, shadow, intensity or receiver-list ownership is taken here. */
-export function createPbrLightBudget(scene: Scene) {
+export function createPbrLightBudget(
+  scene: Scene,
+  receivers: () => readonly AbstractMesh[] = () => scene.meshes,
+) {
   if (activeControllers.has(scene))
     throw new Error("Scene already owns a PBR light budget");
   activeControllers.add(scene);
@@ -328,10 +331,11 @@ export function createPbrLightBudget(scene: Scene) {
       const clamped = new Set(pendingCaps);
       pendingCaps.clear();
       let changed = clamped.size > 0;
+      const uses = receivers();
       // AssetContainer prototypes can live outside scene.materials while their
       // placed instances still render. Include the real material references.
       const materials = new Set(scene.materials);
-      for (const mesh of scene.meshes) {
+      for (const mesh of uses) {
         if (!mesh.material) continue;
         materials.add(mesh.material);
         if (mesh.material instanceof MultiMaterial)
@@ -383,7 +387,7 @@ export function createPbrLightBudget(scene: Scene) {
       // InstancedMesh.lightSources delegates to its prototype, as does shader
       // preparation. Visit that owner once even when the prototype is detached.
       const owners = new Set(
-        scene.meshes
+        uses
           .filter(
             (mesh) => !mesh.isDisposed() && mesh.isEnabled() && mesh.isVisible,
           )
