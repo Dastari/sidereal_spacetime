@@ -42,6 +42,29 @@ function fixture() {
   return { scene, glow, inactive };
 }
 describe("local rendering feature overrides", () => {
+  it("suppresses late equipment and replacement banks, restoring their own enable intent", () => {
+    const { scene } = fixture();
+    let equipment = [node(), node(false)];
+    const original = [...equipment];
+    const debug = createDebugFeatures(scene, () => equipment);
+    debug.beforeFrame("deck");
+    debug.toggle("equipment");
+    const late = node();
+    equipment.push(late);
+    debug.afterFrame();
+    expect(equipment.every((mesh) => !mesh.isEnabled())).toBe(true);
+    // A removed consumer must not remain disabled by a stale local override.
+    equipment = [node(), node(false)];
+    debug.afterFrame();
+    expect(original.map((mesh) => mesh.isEnabled())).toEqual([true, false]);
+    expect(late.isEnabled()).toBe(true);
+    expect(equipment.map((mesh) => mesh.isEnabled())).toEqual([false, false]);
+    debug.reset();
+    expect(equipment.map((mesh) => mesh.isEnabled())).toEqual([true, false]);
+    debug.toggle("equipment");
+    debug.dispose();
+    expect(equipment.map((mesh) => mesh.isEnabled())).toEqual([true, false]);
+  });
   it("registers native MultiMaterial children once without adding prototype meshes", () => {
     const engine = new NullEngine(),
       scene = new BabylonScene(engine);

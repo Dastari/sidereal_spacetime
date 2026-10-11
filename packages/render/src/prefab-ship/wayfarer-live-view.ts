@@ -454,9 +454,11 @@ export async function createWayfarerLiveView(
         lights.push(light);
       }
     }
-    let view = options.exteriorOnly ? "flight" : options.view;
+    let view: "deck" | "flight" | undefined;
     const setView = (next: "deck" | "flight") => {
-      view = options.exteriorOnly ? "flight" : next;
+      const resolved = options.exteriorOnly ? "flight" : next;
+      if (view === resolved) return;
+      view = resolved;
       // Separate exact cohorts avoid overlaying the later grid roof on the older bow.
       // Disabled meshes participate in neither the scene, shadow nor glow passes.
       for (const mesh of candidate?.meshes ?? [])
@@ -467,7 +469,7 @@ export async function createWayfarerLiveView(
       deckRig?.setEnabled(view === "deck");
       flightRig.setEnabled(view === "flight");
     };
-    setView(view);
+    setView(options.view);
     return {
       root,
       // Authored geometry is already dressed. No procedural dressing is admitted to this view.
