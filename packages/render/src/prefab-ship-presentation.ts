@@ -123,6 +123,16 @@ export async function loadPrefabShipPresentation(
       scene,
       doc.id === "fed.m.wayfarer" ? shipRoot : view.root,
       doc.theme,
+      {
+        onGlowMesh(mesh) {
+          glowing.add(mesh);
+          glow.addIncludedOnlyMesh(mesh as Mesh);
+          mesh.onDisposeObservable.addOnce(() => {
+            glowing.delete(mesh);
+            glow.removeIncludedOnlyMesh(mesh as Mesh);
+          });
+        },
+      },
     );
     cleanups.push(() => exhaust.dispose());
     const doors = isWayfarerHullAccessProfile(doc)
@@ -200,7 +210,11 @@ export async function loadPrefabShipPresentation(
     cleanups.push(() => glowBatches.dispose());
     // Shared molded light rig (cool fill + camera-relative rim), also lighting the crew.
     const rig = moldedLightRig(scene);
-    const glowing = new Set<AbstractMesh>();
+    // Exhaust templates exist before the first achieved output. Register
+    // their ownership before adapt() can mistake the hidden source for a
+    // black-mask occluder; replacements are registered by onGlowMesh above.
+    const glowing = new Set<AbstractMesh>(exhaust.glowMeshes());
+    for (const mesh of glowing) glow.addIncludedOnlyMesh(mesh as Mesh);
     const adapt = () => {
       const meshes = view.root
         .getChildMeshes()
@@ -260,9 +274,9 @@ export async function loadPrefabShipPresentation(
         if (canvas && canvas.dataset.exhaustLit !== lit)
           canvas.dataset.exhaustLit = lit;
         // Jets are created on first fire; add new ones to the ship glow.
-        for (const mesh of exhaust.meshes())
+        for (const mesh of exhaust.glowMeshes())
           if (!glowing.has(mesh))
-            (glowing.add(mesh), glow.addIncludedOnlyMesh(mesh));
+            (glowing.add(mesh), glow.addIncludedOnlyMesh(mesh as Mesh));
       },
       exhaust: () => exhaust.lit(),
       doors: () => doors.doors(),
