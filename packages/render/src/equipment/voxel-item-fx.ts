@@ -2,6 +2,8 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
+import { Material } from "@babylonjs/core/Materials/material";
+import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -51,13 +53,18 @@ export function forwardRotation(direction: Vector3): Quaternion {
   );
 }
 
-interface Live {
-  fx: CrewItemFxDefinition;
+interface Bundle {
+  file: string;
   root: TransformNode;
   meshes: AbstractMesh[];
   materials: PBRMaterial[];
+  ownedMaterials: Material[];
   baseAlpha: number[];
   baseIntensity: number[];
+  baseEmissive: Color3[];
+}
+interface Live extends Bundle {
+  fx: CrewItemFxDefinition;
   t: number;
   lengthScale: number;
   size: number;
@@ -99,6 +106,8 @@ export function createVoxelFxPlayer(
     onMesh?: (mesh: AbstractMesh) => void;
     /** At most this many live effects; the oldest end first. */
     maxLive?: number;
+    /** Global retained clone limit across every effect file; zero disables reuse. */
+    maxIdle?: number;
     /** Presentation time scale (review slow motion); 1 = real time. */
     timeScale?: number;
   } = {},
@@ -108,6 +117,8 @@ export function createVoxelFxPlayer(
   const maxLive = options.maxLive ?? 96;
   const containers = new Map<string, Promise<AssetContainer>>();
   const live: Live[] = [];
+  const idle: Bundle[] = [];
+  const maxIdle = Math.max(0, Math.floor(options.maxIdle ?? maxLive));
   let disposed = false;
   const load = (file: string) => {
     let promise = containers.get(file);
@@ -123,10 +134,29 @@ export function createVoxelFxPlayer(
     }
     return promise;
   };
+  const destroyBundle = (bundle: Bundle) => {
+    // Parent disposal may already have removed the hierarchy; handles still own clones.
+    bundle.root.dispose(false, false);
+    for (const material of bundle.ownedMaterials)
+      material.dispose(false, false);
+  };
   const end = (index: number) => {
     const [fx] = live.splice(index, 1);
-    fx.root.dispose(false, true);
-    fx.onEnd?.();
+    const callback = fx.onEnd;
+    fx.onEnd = undefined;
+    fx.root.setEnabled(false);
+    fx.travel = undefined;
+    fx.holdS = undefined;
+    if (
+      !disposed &&
+      !parent.isDisposed() &&
+      !scene.isDisposed &&
+      idle.length < maxIdle
+    )
+      idle.push(fx);
+    else destroyBundle(fx);
+    // Retire before callbacks: impacts/reentrant disposal cannot end this event twice.
+    callback?.();
   };
   const timeScale = options.timeScale ?? 1;
   const observer = scene.onBeforeRenderObservable.add(() => {
@@ -134,6 +164,7 @@ export function createVoxelFxPlayer(
       Math.min(scene.getEngine().getDeltaTime() / 1000, 0.1) * timeScale;
     for (let i = live.length - 1; i >= 0; i--) {
       const fx = live[i];
+      if (!fx) continue;
       // The first rendered frame shows the effect as spawned: on a slow client a flash shorter
       // than one frame (muzzle flash 70 ms) or a fast tracer would otherwise never be seen.
       if (fx.shown) fx.t += dt;
@@ -173,42 +204,90 @@ export function createVoxelFxPlayer(
   });
 
   const instance = async (fxId: string, spawn: FxSpawnOptions) => {
+    if (disposed || parent.isDisposed() || scene.isDisposed) return undefined;
     const fx = crewItemFx(fxId);
     const container = await load(fx.file);
     if (disposed) return undefined;
-    const entries = container.instantiateModelsToScene(
-      (name) => `crew-fx:${fx.id}:${name}`,
-      true,
-      { doNotInstantiate: true },
-    );
-    const root = new TransformNode(`crew-fx:${fx.id}`, scene);
-    root.parent = parent;
-    for (const node of entries.rootNodes) node.parent = root;
+    if (parent.isDisposed() || scene.isDisposed) return undefined;
+    const reusable = idle.findIndex((bundle) => bundle.file === fx.file);
+    let bundle: Bundle;
+    if (reusable >= 0) bundle = idle.splice(reusable, 1)[0];
+    else {
+      // Keep total retained clones bounded even when changing effect libraries.
+      if (idle.length >= maxIdle && idle.length) destroyBundle(idle.shift()!);
+      const entries = container.instantiateModelsToScene(
+        (name) => `crew-fx:${fx.id}:${name}`,
+        true,
+        { doNotInstantiate: true },
+      );
+      const root = new TransformNode(`crew-fx:${fx.id}`, scene);
+      root.parent = parent;
+      root.setEnabled(false);
+      for (const node of entries.rootNodes) node.parent = root;
+      const meshes = root.getChildMeshes(false),
+        materials: PBRMaterial[] = [];
+      const ownedMaterials = new Set<Material>();
+      for (const mesh of meshes) {
+        setMeshRole(mesh, "effect");
+        mesh.isPickable = false;
+        const material = mesh.material;
+        if (material) ownedMaterials.add(material);
+        if (material instanceof MultiMaterial)
+          for (const sub of material.subMaterials)
+            if (sub) ownedMaterials.add(sub);
+        if (material instanceof PBRMaterial && !materials.includes(material))
+          materials.push(material);
+      }
+      bundle = {
+        file: fx.file,
+        root,
+        meshes,
+        materials,
+        ownedMaterials: [...ownedMaterials],
+        baseAlpha: materials.map((m) => m.alpha),
+        baseIntensity: materials.map((m) => m.emissiveIntensity),
+        baseEmissive: materials.map((m) => m.emissiveColor.clone()),
+      };
+    }
+    try {
+      if (reusable < 0)
+        for (const mesh of bundle.meshes) {
+          onMesh?.(mesh);
+          if (
+            disposed ||
+            parent.isDisposed() ||
+            scene.isDisposed ||
+            bundle.root.isDisposed()
+          ) {
+            destroyBundle(bundle);
+            return undefined;
+          }
+        }
+    } catch (error) {
+      destroyBundle(bundle);
+      throw error;
+    }
+    const { root, materials } = bundle;
     root.position.copyFrom(spawn.at);
-    const direction =
-      spawn.direction ?? spawn.travelTo?.subtract(spawn.at) ?? undefined;
+    root.scaling.setAll(1);
+    root.rotation.setAll(0);
+    root.rotationQuaternion = Quaternion.Identity();
+    const direction = spawn.direction ?? spawn.travelTo?.subtract(spawn.at);
     if (direction && direction.lengthSquared() > 1e-9)
       root.rotationQuaternion = forwardRotation(direction);
-    const meshes = root.getChildMeshes(false);
-    const materials: PBRMaterial[] = [];
-    for (const mesh of meshes) {
-      setMeshRole(mesh, "effect");
-      mesh.isPickable = false;
-      const m = mesh.material;
-      if (m instanceof PBRMaterial && !materials.includes(m)) materials.push(m);
-      onMesh?.(mesh);
-    }
+    materials.forEach((material, i) => {
+      material.alpha = bundle.baseAlpha[i];
+      material.emissiveIntensity = bundle.baseIntensity[i];
+      material.emissiveColor.copyFrom(bundle.baseEmissive[i]);
+    });
     if (spawn.tint && fx.tint !== "fixed")
       for (const m of materials)
         if (m.emissiveColor.toLuminance() > 0)
           m.emissiveColor = spawn.tint.clone();
     const entry: Live = {
+      ...bundle,
       fx,
-      root,
-      meshes,
-      materials,
-      baseAlpha: materials.map((m) => m.alpha),
-      baseIntensity: materials.map((m) => m.emissiveIntensity),
+      shown: false,
       t: 0,
       lengthScale: fx.lengthM && spawn.lengthM ? spawn.lengthM / fx.lengthM : 1,
       size: spawn.scale ?? 1,
@@ -223,6 +302,7 @@ export function createVoxelFxPlayer(
       holdS: spawn.holdS,
       onEnd: spawn.onEnd,
     };
+    root.setEnabled(true);
     live.push(entry);
     while (live.length > maxLive) end(0);
     return entry;
@@ -231,6 +311,38 @@ export function createVoxelFxPlayer(
     if (fxId && !disposed) void instance(fxId, spawn).catch(() => undefined);
   };
 
+  function dispose() {
+    if (disposed) return;
+    disposed = true;
+    scene.onBeforeRenderObservable.remove(observer);
+    scene.onDisposeObservable.remove(sceneDisposal);
+    parent.onDisposeObservable.remove(parentDisposal);
+    let failure: unknown;
+    const drain = (work: () => void) => {
+      try {
+        work();
+      } catch (error) {
+        failure ??= error;
+      }
+    };
+    while (live.length) drain(() => end(0));
+    for (const bundle of idle) drain(() => destroyBundle(bundle));
+    idle.length = 0;
+    for (const promise of containers.values())
+      void promise
+        .then((container) => container.dispose())
+        .catch(() => undefined);
+    containers.clear();
+    if (failure !== undefined) throw failure;
+  }
+  // Owner teardown must not be interrupted by a user callback's exception.
+  const ownerDisposal = () => {
+    try {
+      dispose();
+    } catch {}
+  };
+  const sceneDisposal = scene.onDisposeObservable.add(ownerDisposal);
+  const parentDisposal = parent.onDisposeObservable.add(ownerDisposal);
   return {
     /** Spawn one effect (fire-and-forget; resolves when it is on screen). */
     async spawn(fxId: string, spawn: FxSpawnOptions) {
@@ -328,15 +440,7 @@ export function createVoxelFxPlayer(
     meshes() {
       return live.flatMap((l) => l.meshes);
     },
-    dispose() {
-      if (disposed) return;
-      disposed = true;
-      scene.onBeforeRenderObservable.remove(observer);
-      while (live.length) end(0);
-      for (const promise of containers.values())
-        void promise.then((c) => c.dispose()).catch(() => undefined);
-      containers.clear();
-    },
+    dispose,
   };
 }
 export type VoxelFxPlayer = ReturnType<typeof createVoxelFxPlayer>;
