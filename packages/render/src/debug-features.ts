@@ -26,7 +26,7 @@ type EnabledNode = {
 /** Reversible local overrides layered after normal cutaway/power presentation. */
 export function createDebugFeatures(
   scene: Scene,
-  equipment: readonly EnabledNode[],
+  equipment: readonly EnabledNode[] | (() => readonly EnabledNode[]),
   characters: readonly EnabledNode[] = [],
   sources: DebugOverlaySources = {},
 ) {
@@ -71,9 +71,21 @@ export function createDebugFeatures(
     scene.shadowsEnabled =
       defaults.shadows && flags.shadows && scene.lightsEnabled;
     const suppressed = [
-      ...(!flags.equipment ? equipment : []),
+      ...(!flags.equipment
+        ? typeof equipment === "function"
+          ? equipment()
+          : equipment
+        : []),
       ...(!flags.characters ? characters : []),
     ];
+    const current = new Set(suppressed);
+    for (const [node, enabled] of hidden) {
+      if (node.isDisposed()) hidden.delete(node);
+      else if (!current.has(node)) {
+        node.setEnabled(enabled);
+        hidden.delete(node);
+      }
+    }
     for (const node of suppressed)
       if (!node.isDisposed()) {
         if (!hidden.has(node)) hidden.set(node, node.isEnabled(false));

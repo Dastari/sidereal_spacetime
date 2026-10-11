@@ -147,7 +147,7 @@ export function createFurnishingPreview(
       ghost.enableEdgesRendering();
       ghost.edgesWidth = 1.5;
       ghost.edgesColor = new Color4(0.3, 0.9, 1, 1);
-      setMeshRole(ghost, "effect");
+      setMeshRole(ghost, "equipment");
       ghosts.push(ghost);
       for (const light of scene.lights) {
         for (const field of ["includedOnlyMeshes", "excludedMeshes"] as const) {

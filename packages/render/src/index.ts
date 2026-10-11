@@ -621,7 +621,16 @@ async function buildWorld(
   ];
   const debugFeatures = createDebugFeatures(
     scene,
-    debugEquipment,
+    () => [
+      ...debugEquipment,
+      // Current scene membership covers authored furniture, async installs,
+      // extracted placement previews and replacement vessels after boarding.
+      ...scene.meshes.filter(
+        (mesh) =>
+          mesh.metadata?.role === "equipment" ||
+          mesh.metadata?.role === "cargo",
+      ),
+    ],
     [avatar, marker],
     {
       characterRoots: () => [avatar],

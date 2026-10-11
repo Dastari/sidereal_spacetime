@@ -22,7 +22,15 @@ import {
   type SurfaceFamily,
 } from "../molded-plastic";
 import { GAME_PBR_LIGHT_LIMIT, setPbrLightBudget } from "../pbr-light-budget";
-import { setMeshRole } from "../mesh-roles";
+import { setMeshRole, type MeshRole } from "../mesh-roles";
+
+/** Fixed and movable room contents share one geometry diagnostic category.
+ * Structural doors, floors and partitions retain the ship's presentation. */
+export function authoredPresentationRole(role: string): MeshRole {
+  return role === "room-content" || role === "equipment" || role === "cargo"
+    ? "equipment"
+    : "hull";
+}
 
 type JsonObject = Record<string, unknown>;
 export interface AuthoredPieceInput {
@@ -466,6 +474,7 @@ export async function loadAuthoredStudy(
       ranges: AuthoredRange[];
       region: string;
       materialKey: string;
+      role: MeshRole;
     }
   >();
   const materialPolicy: unknown[] = [];
@@ -580,11 +589,18 @@ export async function loadAuthoredStudy(
         for (const row of placements) {
           const region = batchRegions.get(row.object) ?? "";
           const compatibleKey = region ? canonical([key, region]) : key;
+          const role = authoredPresentationRole(row.role);
+          // Preserve material pooling and the existing eligible light regions;
+          // only independently suppressible geometry needs a separate batch.
+          const presentationKey =
+            role === "equipment"
+              ? canonical([compatibleKey, "equipment"])
+              : compatibleKey;
           // Glass and decals retain independent placement depth sorting.
           const batchKey =
             definition.alphaMode === "BLEND"
-              ? `${compatibleKey}:${row.object}:${part.sourceId}:${part.indexStart}`
-              : compatibleKey;
+              ? `${presentationKey}:${row.object}:${part.sourceId}:${part.indexStart}`
+              : presentationKey;
           let group = groups.get(batchKey);
           if (!group) {
             group = {
@@ -598,6 +614,7 @@ export async function loadAuthoredStudy(
               ranges: [],
               region,
               materialKey: key,
+              role,
             };
             groups.set(batchKey, group);
           }
@@ -664,11 +681,11 @@ export async function loadAuthoredStudy(
       mesh.material = group.material;
       mesh.sideOrientation = Constants.MATERIAL_CounterClockWiseSideOrientation;
       mesh.receiveShadows = true;
-      setMeshRole(mesh, "hull");
+      setMeshRole(mesh, group.role);
       mesh.metadata = {
         ...mesh.metadata,
         authoredStudy: {
-          materialKey: batchRegions.size ? group.materialKey : key,
+          materialKey: group.materialKey,
           placementRanges: group.ranges,
           ...(batchRegions.size
             ? { receiverRegion: group.region || "rest" }
