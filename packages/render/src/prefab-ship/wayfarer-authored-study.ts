@@ -24,6 +24,10 @@ import {
 import { GAME_PBR_LIGHT_LIMIT, setPbrLightBudget } from "../pbr-light-budget";
 import { setMeshRole } from "../mesh-roles";
 
+/** Geometry diagnostics use the authored role, including fixed furniture. */
+export const isAuthoredEquipmentRole = (role: unknown) =>
+  role === "room-content" || role === "equipment" || role === "cargo";
+
 type JsonObject = Record<string, unknown>;
 export interface AuthoredPieceInput {
   id: string;
@@ -670,6 +674,9 @@ export async function loadAuthoredStudy(
         authoredStudy: {
           materialKey: batchRegions.size ? group.materialKey : key,
           placementRanges: group.ranges,
+          equipmentOnly: group.ranges.every((range) =>
+            isAuthoredEquipmentRole(range.role),
+          ),
           ...(batchRegions.size
             ? { receiverRegion: group.region || "rest" }
             : {}),

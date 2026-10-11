@@ -148,6 +148,9 @@ export function createFurnishingPreview(
       ghost.edgesWidth = 1.5;
       ghost.edgesColor = new Color4(0.3, 0.9, 1, 1);
       setMeshRole(ghost, "effect");
+      // Retain the mutable preview's material/occluder policy while letting the
+      // Equipment diagnostic suppress its extracted furniture geometry.
+      ghost.metadata = { ...ghost.metadata, debugEquipment: true };
       ghosts.push(ghost);
       for (const light of scene.lights) {
         for (const field of ["includedOnlyMeshes", "excludedMeshes"] as const) {
