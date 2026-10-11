@@ -1,7 +1,7 @@
 import type { AbstractEngine } from "@babylonjs/core/Engines/abstractEngine";
 import type { Scene } from "@babylonjs/core/scene";
-import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
-import type { Light } from "@babylonjs/core/Lights/light";
+import { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { Light } from "@babylonjs/core/Lights/light";
 import { ShadowLight } from "@babylonjs/core/Lights/shadowLight";
 import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
 import { SubMesh } from "@babylonjs/core/Meshes/subMesh";
@@ -9,7 +9,97 @@ import { PBRBaseMaterial } from "@babylonjs/core/Materials/PBR/pbrBaseMaterial";
 import { Material } from "@babylonjs/core/Materials/material";
 import { MaterialPluginEvent } from "@babylonjs/core/Materials/materialPluginEvent";
 import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
+import { MaterialDefines } from "@babylonjs/core/Materials/materialDefines";
 import { selectLocalLights, type LightBudgetPoint } from "./local-light-budget";
+import { createOwnedTransformRefresh } from "./shadow-transform-refresh";
+
+// Unknown eligibility callbacks may mutate their peers. They retain the
+// original live path for the entire update.
+const stockEligibility = Light.prototype.canAffectMesh;
+const stockTransformInformation =
+  ShadowLight.prototype.computeTransformedInformation;
+const stockAbsolutePosition = ShadowLight.prototype.getAbsolutePosition;
+const stockLightDirty = AbstractMesh.prototype._markSubMeshesAsLightDirty;
+const stockSubMeshesDirty = AbstractMesh.prototype["_markSubMeshesAsDirty"];
+const stockDefinesLightDirty = MaterialDefines.prototype.markAsLightDirty;
+function ownedDirtyHooks(mesh: AbstractMesh) {
+  return (
+    mesh._markSubMeshesAsLightDirty === stockLightDirty &&
+    mesh["_markSubMeshesAsDirty"] === stockSubMeshesDirty &&
+    (mesh.subMeshes ?? []).every((sub) =>
+      sub._drawWrappers.every(
+        (wrapper) =>
+          !wrapper?.defines ||
+          (wrapper.defines instanceof MaterialDefines &&
+            wrapper.defines.markAsLightDirty === stockDefinesLightDirty),
+      ),
+    )
+  );
+}
+type Proposal = { next: Light[]; incumbents: Map<number, ReadonlySet<string>> };
+type ProposalTrie = {
+  children?: Map<unknown, ProposalTrie>;
+  proposal?: Proposal;
+};
+const GLOBALS_END = Symbol(),
+  LOCALS_END = Symbol(),
+  OTHER_END = Symbol(),
+  CAPS_END = Symbol();
+function proposalSlot(
+  root: ProposalTrie,
+  globals: Light[],
+  locals: Light[],
+  other: Light[],
+  caps: number[],
+  incumbents: Map<number, ReadonlySet<string>> | undefined,
+  ids: Map<Light, string>,
+) {
+  let node = root;
+  const enter = (key: unknown) => {
+    const children = (node.children ??= new Map());
+    let next = children.get(key);
+    if (!next) children.set(key, (next = {}));
+    node = next;
+  };
+  for (const light of globals) enter(light);
+  enter(GLOBALS_END);
+  for (const light of locals) enter(light);
+  enter(LOCALS_END);
+  for (const light of other) enter(light);
+  enter(OTHER_END);
+  for (const cap of caps) {
+    enter(cap);
+    // Only currently eligible candidates can receive incumbent hysteresis.
+    for (const light of locals)
+      enter(incumbents?.get(cap)?.has(ids.get(light)!) ?? false);
+  }
+  enter(CAPS_END);
+  return node;
+}
+function prepareEligibility(lights: readonly Light[]) {
+  if (lights.some((light) => light.canAffectMesh !== stockEligibility))
+    return undefined;
+  const membership = new Map(
+    lights.map((light) => [
+      light,
+      {
+        included: new Set(light.includedOnlyMeshes),
+        excluded: new Set(light.excludedMeshes),
+        includeMask: light.includeOnlyWithLayerMask,
+        excludeMask: light.excludeWithLayerMask,
+      },
+    ]),
+  );
+  return (light: Light, mesh: AbstractMesh) => {
+    const state = membership.get(light)!;
+    return (
+      (!state.included.size || state.included.has(mesh)) &&
+      !state.excluded.has(mesh) &&
+      (!state.includeMask || (state.includeMask & mesh.layerMask) !== 0) &&
+      (!state.excludeMask || (state.excludeMask & mesh.layerMask) === 0)
+    );
+  };
+}
 
 /** A shader contribution budget, separate from Graphics' enabled local lamps. */
 export const GAME_PBR_LIGHT_LIMIT = 8;
@@ -362,16 +452,24 @@ export function createPbrLightBudget(
       const globals = enabled
         .filter((light) => r.protected.has(light))
         .sort((a, b) => r.protected.get(a)! - r.protected.get(b)!);
+      let refresh = createOwnedTransformRefresh();
+      const enabledSet = new Set(enabled);
       const candidates = [...r.locals]
-        .filter(([light]) => enabled.includes(light))
+        .filter(([light]) => enabledSet.has(light))
         .map(([light, id]) => {
-          if (light.parent && "computeWorldMatrix" in light.parent)
-            light.parent.computeWorldMatrix(true);
+          if (light.parent) refresh(light.parent);
           if (light instanceof ShadowLight)
             light.computeTransformedInformation();
+          const position = light.getAbsolutePosition();
+          if (
+            !(light instanceof ShadowLight) ||
+            light.computeTransformedInformation !== stockTransformInformation ||
+            light.getAbsolutePosition !== stockAbsolutePosition
+          )
+            refresh = createOwnedTransformRefresh();
           return {
             id,
-            position: light.getAbsolutePosition(),
+            position,
             range: light.range,
             eligible: true,
             requiresShadow: false,
@@ -397,6 +495,8 @@ export function createPbrLightBudget(
       );
       for (const mesh of layouts.keys())
         if (!owners.has(mesh)) releaseLayout(mesh);
+      let eligibility = prepareEligibility(enabled);
+      let proposals: ProposalTrie = {};
       for (const mesh of owners) {
         const boundMaterials =
           mesh.material instanceof MultiMaterial
@@ -421,51 +521,78 @@ export function createPbrLightBudget(
         ].sort((a, b) => a - b);
         const visibleLimit = Math.max(0, ...contributionCaps);
         const meshGlobals = globals.filter((light) =>
-            light.canAffectMesh(mesh),
+            eligibility ? eligibility(light, mesh) : light.canAffectMesh(mesh),
           ),
-          meshLocals = locals.filter((light) => light.canAffectMesh(mesh));
-        // A copy: a deferred reorder must keep its accepted incumbents.
-        const incumbents = new Map(previous.get(mesh));
-        const admitted = new Set<string>(),
-          admittedLights: Light[] = [];
-        // A multi-material's smaller cap needs its own relevant prefix. Build
-        // nested admitted sets, each stable until that prefix's membership changes.
-        for (const cap of contributionCaps) {
-          const slots = Math.max(0, cap - meshGlobals.length - admitted.size);
-          const remaining = meshLocals.filter(
-            (light) => !admitted.has(r.locals.get(light)!),
+          meshLocals = locals.filter((light) =>
+            eligibility ? eligibility(light, mesh) : light.canAffectMesh(mesh),
           );
-          const ids = new Set(remaining.map((light) => r.locals.get(light)!));
-          const selected =
-            remaining.length <= slots
-              ? ids
-              : new Set(
-                  [
-                    ...selectLocalLights(
-                      candidates.filter((candidate) => ids.has(candidate.id)),
-                      { focus },
-                      "all",
-                      incumbents.get(cap),
-                    ).selectedIds,
-                  ].slice(0, slots),
-                );
-          // Camera relevance controls admission, never ordinal churn within an
-          // unchanged set. Every fitting fixture therefore keeps the same slot.
-          for (const light of remaining)
-            if (selected.has(r.locals.get(light)!)) {
-              admitted.add(r.locals.get(light)!);
-              admittedLights.push(light);
-            }
-          incumbents.set(cap, new Set(admitted));
+        // Unknown "other" callbacks originally run after local selection.
+        // Preserve that order because they may mutate focus or candidate data.
+        const meshOther = eligibility
+          ? other.filter((light) => eligibility!(light, mesh))
+          : undefined;
+        const slot = eligibility
+          ? proposalSlot(
+              proposals,
+              meshGlobals,
+              meshLocals,
+              meshOther!,
+              contributionCaps,
+              previous.get(mesh),
+              r.locals,
+            )
+          : {};
+        let proposal = slot.proposal;
+        if (!proposal) {
+          // A copy: a deferred reorder must keep its accepted incumbents.
+          const incumbents = new Map(previous.get(mesh));
+          const admitted = new Set<string>(),
+            admittedLights: Light[] = [];
+          // A multi-material's smaller cap needs its own relevant prefix. Build
+          // nested admitted sets, each stable until that prefix's membership changes.
+          for (const cap of contributionCaps) {
+            const slots = Math.max(0, cap - meshGlobals.length - admitted.size);
+            const remaining = meshLocals.filter(
+              (light) => !admitted.has(r.locals.get(light)!),
+            );
+            const ids = new Set(remaining.map((light) => r.locals.get(light)!));
+            const selected =
+              remaining.length <= slots
+                ? ids
+                : new Set(
+                    [
+                      ...selectLocalLights(
+                        candidates.filter((candidate) => ids.has(candidate.id)),
+                        { focus },
+                        "all",
+                        incumbents.get(cap),
+                      ).selectedIds,
+                    ].slice(0, slots),
+                  );
+            // Camera relevance controls admission, never ordinal churn within an
+            // unchanged set. Every fitting fixture therefore keeps the same slot.
+            for (const light of remaining)
+              if (selected.has(r.locals.get(light)!)) {
+                admitted.add(r.locals.get(light)!);
+                admittedLights.push(light);
+              }
+            incumbents.set(cap, new Set(admitted));
+          }
+          for (const cap of incumbents.keys())
+            if (!contributionCaps.includes(cap)) incumbents.delete(cap);
+          const next = [
+            ...meshGlobals,
+            ...admittedLights,
+            ...meshLocals.filter(
+              (light) => !admitted.has(r.locals.get(light)!),
+            ),
+            ...(meshOther ??
+              other.filter((light) => light.canAffectMesh(mesh))),
+          ];
+          proposal = { next, incumbents };
+          slot.proposal = proposal;
         }
-        for (const cap of incumbents.keys())
-          if (!contributionCaps.includes(cap)) incumbents.delete(cap);
-        const next = [
-          ...meshGlobals,
-          ...admittedLights,
-          ...meshLocals.filter((light) => !admitted.has(r.locals.get(light)!)),
-          ...other.filter((light) => light.canAffectMesh(mesh)),
-        ];
+        const { next, incumbents } = proposal;
         const old = mesh.lightSources;
         const capChanged =
           mesh.material instanceof MultiMaterial
@@ -478,7 +605,7 @@ export function createPbrLightBudget(
           old.length === next.length &&
           old.every((light, i) => light === next[i])
         ) {
-          previous.set(mesh, incumbents);
+          previous.set(mesh, new Map(incumbents));
           const layout = layouts.get(mesh);
           if (
             layout &&
@@ -492,11 +619,16 @@ export function createPbrLightBudget(
             releaseLayout(mesh);
           continue;
         }
-        const effectiveChanged =
+        let effectiveChanged =
           capChanged ||
-          old.slice(0, visibleLimit).length !==
-            next.slice(0, visibleLimit).length ||
-          old.slice(0, visibleLimit).some((light, i) => light !== next[i]);
+          Math.min(old.length, visibleLimit) !==
+            Math.min(next.length, visibleLimit);
+        for (
+          let i = 0;
+          !effectiveChanged && i < Math.min(old.length, visibleLimit);
+          i++
+        )
+          effectiveChanged = old[i] !== next[i];
         // Only a reorder of the receiver's own lights can wait, and only while
         // a linked shader is drawing them. A changed cap needs its new shader
         // whatever order those lights are bound in.
@@ -509,15 +641,25 @@ export function createPbrLightBudget(
             sub._drawWrappers.some((wrapper) => wrapper?.effect?.isReady()),
           )
         ) {
-          if (!layoutReady(mesh, next, visibleLimit)) continue;
+          const ready = layoutReady(mesh, next, visibleLimit);
+          // Shader preparation may run custom material/plugin callbacks.
+          // Discard proposals and reread eligibility before visiting a peer.
+          eligibility = prepareEligibility(enabled);
+          proposals = {};
+          if (!ready) continue;
           const layout = layouts.get(mesh)!;
           layout.committed = true;
           layout.waited = 0;
         }
-        previous.set(mesh, incumbents);
+        previous.set(mesh, new Map(incumbents));
         old.splice(0, old.length, ...next);
         if (effectiveChanged) {
+          const owned = ownedDirtyHooks(mesh);
           mesh._markSubMeshesAsLightDirty();
+          if (!owned) {
+            eligibility = prepareEligibility(enabled);
+            proposals = {};
+          }
           changed = true;
         }
       }
