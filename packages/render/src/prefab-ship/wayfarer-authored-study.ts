@@ -1,3 +1,4 @@
+import { registerOwnedShadowCasterBank } from "../shadow-transform-refresh";
 import type { BaseTexture } from "@babylonjs/core/Materials/Textures/baseTexture";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AuthoredAssetLighting } from "../authored-asset-lighting";
@@ -684,6 +685,10 @@ export async function loadAuthoredStudy(
       };
       meshes.push(mesh);
     }
+    // Local transforms are fixed by this producer; geometry edits notify the
+    // registered bank through Babylon's existing geometry update callback.
+    if (options.parent && meshes.length)
+      registerOwnedShadowCasterBank(options.parent, meshes);
     const report = {
       pieces: pieces.length,
       instances: instances.length,
