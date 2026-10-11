@@ -1,4 +1,5 @@
 import type { Scene } from "@babylonjs/core/scene";
+import { createEquipmentGeometryOverride } from "./debug-equipment-geometry";
 import { createIndirectLightingOverride } from "./debug-indirect-lighting";
 import {
   createDebugOverlays,
@@ -44,6 +45,7 @@ export function createDebugFeatures(
   };
   const initialFlags = { ...flags };
   const indirect = createIndirectLightingOverride(scene);
+  const geometry = createEquipmentGeometryOverride(scene);
   let overlays: ReturnType<typeof createDebugOverlays> | undefined;
   const defaults = {
     lighting: scene.lightsEnabled,
@@ -56,6 +58,7 @@ export function createDebugFeatures(
     boolean
   >();
   function restoreEquipment() {
+    geometry.restore();
     for (const [node, enabled] of hidden)
       if (!node.isDisposed()) node.setEnabled(enabled);
     hidden.clear();
@@ -70,6 +73,7 @@ export function createDebugFeatures(
     // Off must close that gate too, while preserving the separate shadow intent.
     scene.shadowsEnabled =
       defaults.shadows && flags.shadows && scene.lightsEnabled;
+    geometry.apply(flags.equipment);
     const suppressed = [
       ...(!flags.equipment
         ? typeof equipment === "function"
@@ -102,6 +106,9 @@ export function createDebugFeatures(
     }
   }
   return {
+    // Accepted geometry/preview owners must read complete current indices,
+    // then afterFrame reapplies the overlay to their newly committed geometry.
+    beforeGeometryChange: geometry.restore,
     snapshot: () => ({ ...flags }),
     overlaySnapshot: () =>
       overlays?.snapshot() ?? {

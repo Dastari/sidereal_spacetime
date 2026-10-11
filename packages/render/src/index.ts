@@ -628,7 +628,9 @@ async function buildWorld(
       ...scene.meshes.filter(
         (mesh) =>
           mesh.metadata?.role === "equipment" ||
-          mesh.metadata?.role === "cargo",
+          mesh.metadata?.role === "cargo" ||
+          mesh.metadata?.debugEquipment === true ||
+          mesh.metadata?.authoredStudy?.equipmentOnly === true,
       ),
     ],
     [avatar, marker],
@@ -1470,6 +1472,7 @@ async function buildWorld(
     );
   });
   const updateFurnishings = (next: AcceptedFurnishings) => {
+    debugFeatures.beforeGeometryChange();
     if (acceptedFurnishings?.apply(next) && prefabBinding) {
       prefabPicker?.dispose();
       prefabPicker = createPrefabObjectPicker(
@@ -1821,9 +1824,11 @@ async function buildWorld(
       pose: FurnishingOverride,
       valid = true,
     ) {
+      debugFeatures.beforeGeometryChange();
       return furnishingPreview?.show(sourceObjectId, pose, valid) ?? false;
     },
     clearFurnishingPreview() {
+      debugFeatures.beforeGeometryChange();
       furnishingPreview?.clear();
     },
     pickFurnishingPreview(x: number, y: number) {
