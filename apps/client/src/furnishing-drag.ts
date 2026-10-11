@@ -1,3 +1,8 @@
+import {
+  isWayfarerAccessProfile,
+  wayfarerAccessObjects,
+} from "@sidereal/content/wayfarer-access-profile";
+import { isWayfarerHullAccessProfile } from "@sidereal/content/hull-access-profile";
 import type { FurnishingOverride } from "@sidereal/content/wayfarer-furnishings";
 import type { WayfarerGameplayObject } from "@sidereal/content/wayfarer-authored-gameplay";
 import {
@@ -61,10 +66,14 @@ export function floorPreviewIssue(
   source: WayfarerGameplayObject,
   pose: FurnishingOverride,
   frame: DeckCollisionFrame,
+  doc?: ShipPrefabDocumentV1,
 ) {
-  const moved = effectiveWayfarerObjects({ [source.object]: pose }).find(
-    (o) => o.object === source.object,
-  )!;
+  const objects = effectiveWayfarerObjects({ [source.object]: pose });
+  const effective =
+    doc && (isWayfarerAccessProfile(doc) || isWayfarerHullAccessProfile(doc))
+      ? wayfarerAccessObjects(objects)
+      : objects;
+  const moved = effective.find((o) => o.object === source.object)!;
   const polygon = moved.footprint.map(([x, y]) => [-y, x] as [number, number]);
   const coverage = footprintFloorCoverage(polygon, frame.floors);
   if (coverage.area - coverage.supported > 1e-9)

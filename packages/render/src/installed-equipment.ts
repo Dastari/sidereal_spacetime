@@ -1,7 +1,7 @@
 import { createHullPaintBinding } from "./hull-paint";
 import { canInstancePlacement } from "./placement-instance";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
-import { categoryMeshRole, setMeshRole } from "./mesh-roles";
+import { categoryMeshRole, setMeshRole, type MeshRole } from "./mesh-roles";
 import { updateHullDecals } from "./hull-decals";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -13,25 +13,38 @@ import { createEquipmentLighting } from "./equipment-lighting";
 import { batchStaticMaterials } from "./static-material-batches";
 import { nativeMeshInGroup } from "./native-mesh-group";
 
-/** Load pinned native surfaces. Geometry/materials are shared, placement IDs are not. */
-export async function loadEquipmentPrototypes(
+type PrototypeLibrary = {
+  sha256: string;
+  meshes: Mesh[];
+  groups: Map<string, Mesh[]>;
+};
+const sceneLibraries = new WeakMap<
+  Scene,
+  Map<string, { sha256: string; ready: Promise<PrototypeLibrary> }>
+>();
+/** Immutable native source library; Scene owns its meshes, transforms and materials. */
+export async function loadNativeLibrary(
   scene: Scene,
-  assets: readonly PartAsset[],
-) {
-  const result = new Map<string, Mesh[]>();
-  const libraries = new Map<string, { sha256: string; meshes: Mesh[] }>();
-  for (const asset of assets) {
-    if (!asset.visual) continue;
-    const url = asset.visual.url;
-    let library = libraries.get(url);
-    if (library && library.sha256 !== asset.visual.sha256)
-      throw new Error("Conflicting visual revisions for shared GLB: " + url);
-    if (!library) {
+  url: string,
+  sha256: string,
+  role: MeshRole,
+): Promise<PrototypeLibrary> {
+  let libraries = sceneLibraries.get(scene);
+  if (!libraries) {
+    libraries = new Map();
+    sceneLibraries.set(scene, libraries);
+  }
+  let cached = libraries.get(url);
+  if (cached && cached.sha256 !== sha256)
+    throw new Error("Conflicting visual revisions for shared GLB: " + url);
+  if (!cached) {
+    const ready = (async () => {
       const response = await fetch(url);
       if (!response.ok) throw new Error("Native visual unavailable: " + url);
       const bytes = new Uint8Array(await response.arrayBuffer());
-      if (constructionHash(bytes) !== asset.visual.sha256)
+      if (constructionHash(bytes) !== sha256)
         throw new Error("Native visual hash mismatch: " + url);
+      if (scene.isDisposed) throw Error("Native visual load cancelled");
       const imported = await SceneLoader.ImportMeshAsync(
         "",
         "",
@@ -40,8 +53,11 @@ export async function loadEquipmentPrototypes(
         undefined,
         ".glb",
       );
-      for (const mesh of imported.meshes)
-        setMeshRole(mesh, categoryMeshRole(asset.category));
+      if (scene.isDisposed) {
+        for (const mesh of imported.meshes) mesh.dispose(false, true);
+        throw Error("Native visual load cancelled");
+      }
+      for (const mesh of imported.meshes) setMeshRole(mesh, role);
       const meshes = imported.meshes.filter(
         (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
       );
@@ -49,10 +65,43 @@ export async function loadEquipmentPrototypes(
         mesh.isVisible = false;
         mesh.isPickable = false;
       }
-      library = { sha256: asset.visual.sha256, meshes };
-      libraries.set(url, library);
+      return { sha256, meshes, groups: new Map<string, Mesh[]>() };
+    })();
+    cached = { sha256, ready };
+    libraries.set(url, cached);
+    void ready.catch(() => {
+      if (libraries!.get(url)?.ready === ready) libraries!.delete(url);
+    });
+  }
+  return cached.ready;
+}
+/** Load pinned native surfaces. Geometry/materials are shared, placement IDs are not. */
+export async function loadEquipmentPrototypes(
+  scene: Scene,
+  assets: readonly PartAsset[],
+) {
+  const result = new Map<string, Mesh[]>();
+  for (const asset of assets) {
+    const visual = asset.visual;
+    if (!visual) continue;
+    const library = await loadNativeLibrary(
+      scene,
+      visual.url,
+      visual.sha256,
+      categoryMeshRole(asset.category),
+    );
+    const groupKey = JSON.stringify([
+      asset.id,
+      asset.category,
+      visual.nodePrefix,
+      visual.designId,
+    ]);
+    const existing = library.groups.get(groupKey);
+    if (existing) {
+      result.set(asset.id, existing);
+      continue;
     }
-    const prefix = asset.visual.nodePrefix;
+    const prefix = visual.nodePrefix;
     let meshes = prefix
       ? library.meshes.filter((m) => nativeMeshInGroup(m.name, prefix))
       : library.meshes;
@@ -62,26 +111,20 @@ export async function loadEquipmentPrototypes(
       );
     if (
       asset.category === "cargo" ||
-      asset.visual?.designId === "shipyard.hull.pilot-section"
+      visual?.designId === "shipyard.hull.pilot-section"
     )
-      meshes = batchStaticMaterials(meshes, categoryMeshRole(asset.category));
+      meshes = batchStaticMaterials(
+        meshes,
+        categoryMeshRole(asset.category),
+        false,
+      );
     for (const mesh of meshes)
       setMeshRole(mesh, categoryMeshRole(asset.category));
+    library.groups.set(groupKey, meshes);
     result.set(asset.id, meshes);
   }
-  // A shared kit includes optional sizes and variants. Once every requested
-  // group has been resolved, retain only its actual prototypes (including the
-  // merged engines). Keep shared materials and parent transforms alive.
-  const retained = new Set([...result.values()].flat());
-  for (const library of libraries.values()) {
-    for (const mesh of library.meshes)
-      if (
-        !retained.has(mesh) &&
-        !mesh.isDisposed() &&
-        mesh.getChildren().length === 0
-      )
-        mesh.dispose(true, false);
-  }
+  // Immutable hidden sources belong to the Scene, not an occupied private vessel.
+  // Keep every library group available for later accepted decks; Scene.dispose owns cleanup.
   return result;
 }
 export function equipmentPlacement(
@@ -152,6 +195,15 @@ export function equipmentPlacement(
   );
   const lighting = createEquipmentLighting(scene, node, asset.lights);
   lighting.setMeshes(meshes);
+  const releaseLighting = lighting.dispose.bind(lighting);
+  let lightsDisposed = false;
+  lighting.dispose = () => {
+    if (lightsDisposed) return;
+    lightsDisposed = true;
+    releaseLighting();
+  };
+  node.onDisposeObservable.addOnce(() => lighting.dispose());
+
   return { node, meshes, lighting };
 }
 /** One placed native part: its node, meshes and local light owner. */

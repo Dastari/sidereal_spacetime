@@ -1,3 +1,8 @@
+import {
+  drawSteeringControls,
+  STEERING_CONTROLS_HEIGHT,
+} from "./controls-menu";
+import type { SteeringStyle } from "./control-settings";
 import type { CanvasServiceView } from "./ship-systems";
 import { logicalUiScale } from "@sidereal/ui/theme";
 import { createComponentGallery } from "./component-gallery";
@@ -12,7 +17,11 @@ import {
   appearanceControlsHeight,
   drawAppearanceControls,
 } from "./appearance-controls";
-import { dismissGroundLootMenu, drawGroundLoot } from "./ground-loot";
+import {
+  dismissGroundLootMenu,
+  drawGroundLoot,
+  groundLootRevision,
+} from "./ground-loot";
 import type { GroundItemLabel } from "@sidereal/render/ground-items";
 import type { LocalLightLimit } from "../../render/src/local-light-budget";
 import { topHudLayout } from "./system-menu-layout";
@@ -88,6 +97,7 @@ export const MENU_TABS = [
 ] as const;
 export type MenuTab = (typeof MENU_TABS)[number];
 export type GameUIState = {
+  steeringStyle?: SteeringStyle;
   zones?: readonly string[];
   contextNotice?: { title: string; lines: readonly string[] };
   accountKind?: "oidc" | "development";
@@ -159,6 +169,7 @@ export type GameUIState = {
   }[];
 };
 export type GameUIActions = {
+  steeringStyle?: (style: SteeringStyle) => void;
   sharedEntry?: SharedEntryActions;
   groundItems?: () => readonly GroundItemLabel[];
   graphics?: (patch: Partial<GraphicsSettings>) => void;
@@ -393,6 +404,14 @@ export function createGameUI(
           minimumFractionDigits: precision,
           maximumFractionDigits: precision,
         });
+  ui.frameRevision = () =>
+    showGroundLabels &&
+    !menu &&
+    state.interior &&
+    !componentGallery.isOpen() &&
+    !actions.readService?.()
+      ? groundLootRevision(actions.groundItems?.() ?? [])
+      : "";
   ui.draw = () => {
     canvas.setAttribute(
       "aria-description",
@@ -568,7 +587,9 @@ export function createGameUI(
                 : state.seated
                   ? state.shipHud?.cruiseActive
                     ? "A / D turn · W / S overrides cruise · X cancels"
-                    : "W / S thrust · A / D turn · X cruise · Release to brake"
+                    : state.steeringStyle === "cursor" && !state.interior
+                      ? "Mouse steers · W/S thrust · A/D override · X cruise"
+                      : "W / S thrust · A / D turn · X cruise · Release to brake"
                   : state.combat?.enabled
                     ? "Mouse aim · Left click fire · R reload · Right-drag orbit · V leave combat"
                     : "WASD walk · Shift sprint · E use · C character · I inventory · N map · V combat · Esc menu",
@@ -936,7 +957,7 @@ export function createGameUI(
           : tab === "Crew"
             ? appearanceControlsHeight(viewport.w)
             : tab === "Controls"
-              ? CONTROLS_TAB_HEIGHT
+              ? CONTROLS_TAB_HEIGHT + STEERING_CONTROLS_HEIGHT
               : tab === "Vessel"
                 ? 330 + (state.vesselServices?.length ?? 0) * 46
                 : tab === "Account"
@@ -1212,9 +1233,21 @@ export function createGameUI(
             },
           ),
         );
-        ui.text("Keys", inner.x, inner.y + 172, 14, palette.muted);
+        drawSteeringControls(
+          ui,
+          { ...inner, y: inner.y + 168 },
+          state.steeringStyle,
+          actions.steeringStyle,
+        );
+        ui.text(
+          "Keys",
+          inner.x,
+          inner.y + 172 + STEERING_CONTROLS_HEIGHT,
+          14,
+          palette.muted,
+        );
         CONTROL_KEYS.forEach(([key, value], i) => {
-          const y = inner.y + 198 + i * 26;
+          const y = inner.y + 198 + STEERING_CONTROLS_HEIGHT + i * 26;
           ui.text(key, inner.x, y, 14, palette.blue, 118);
           ui.text(value, inner.x + 124, y, 14, palette.text, inner.w - 124);
         });
@@ -1223,7 +1256,12 @@ export function createGameUI(
           "Reset camera",
           {
             ...inner,
-            y: inner.y + 198 + CONTROL_KEYS.length * 26 + 10,
+            y:
+              inner.y +
+              198 +
+              STEERING_CONTROLS_HEIGHT +
+              CONTROL_KEYS.length * 26 +
+              10,
             h: 38,
           },
           () => {

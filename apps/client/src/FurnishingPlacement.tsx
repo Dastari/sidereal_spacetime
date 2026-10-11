@@ -270,7 +270,10 @@ export function FurnishingPlacement({
         );
         return;
       }
-      preview(next, wall ? "" : floorPreviewIssue(source, next, frame));
+      preview(
+        next,
+        wall ? "" : floorPreviewIssue(source, next, frame, binding.doc),
+      );
     };
     const up = (e: PointerEvent) => {
       if (grab.current?.pointer !== e.pointerId) return;
@@ -341,7 +344,7 @@ export function FurnishingPlacement({
       Math.cos(old.yaw + (direction * Math.PI) / 12),
     );
     const next = { ...old, yaw };
-    preview(next, floorPreviewIssue(source, next, frame));
+    preview(next, floorPreviewIssue(source, next, frame, binding.doc));
   };
   useEffect(() => {
     onState({ pending, snap: pose.snap, wall, issue, error });

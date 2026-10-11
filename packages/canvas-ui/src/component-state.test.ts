@@ -56,7 +56,7 @@ test("repainted pending state prevents a held pointer from invoking a stale acti
   };
   const scene = {
     getEngine: () => ({ currentViewport: null, setViewport() {} }),
-    onBeforeRenderObservable: { add() {}, remove() {} },
+    onBeforeCameraRenderObservable: { add() {}, remove() {} },
     onDisposeObservable: { add() {} },
   };
   const ui = new CanvasUI(

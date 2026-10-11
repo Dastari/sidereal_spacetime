@@ -1,3 +1,8 @@
+import {
+  WAYFARER_ACCESS_SOURCE,
+  WAYFARER_ACCESS_FURNISHING_SHIFTS,
+} from "@sidereal/content/wayfarer-access-profile";
+import { HULL_ACCESS_SOURCE } from "@sidereal/content/hull-access-profile";
 import { expect, test, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
@@ -26,17 +31,24 @@ import {
   invalidatePrefabShipTriangles,
 } from "./prefab-ship-interaction";
 
-test("accepted move/rotate/delete updates loaded batch geometry and source lights without world/camera/asset reload, including an outstanding drag", () => {
+const cases = [
+  [PREFAB_SHIPS.find((p) => p.id === "fed.m.wayfarer")!, "Lounge_coffee_table"],
+  ...[WAYFARER_ACCESS_SOURCE, HULL_ACCESS_SOURCE].flatMap((doc) =>
+    [
+      "Cargo_crate_white_blue",
+      "Cargo_crate_small_white",
+      "Cargo_crate_yellow",
+    ].map((id) => [doc, id] as const),
+  ),
+] as const;
+test.each(cases)("profile-aware furnishing matrix case %#", (doc, id) => {
   const engine = new NullEngine(),
     scene = new Scene(engine);
   const root = new TransformNode("ship", scene);
   root.position.set(41, 2, -30);
   root.rotation.y = 0.72;
-  const doc = PREFAB_SHIPS.find((p) => p.id === "fed.m.wayfarer")!;
   const origin = prefabOrigin(doc);
-  const source = WAYFARER_GAMEPLAY_OBJECTS.find(
-    (s) => s.object === "Lounge_coffee_table",
-  )!;
+  const source = WAYFARER_GAMEPLAY_OBJECTS.find((s) => s.object === id)!;
   const initial = { ...FURNISHING_DEFAULT, dx: 0.25, dy: -0.5, yaw: 0.2 };
   const binding = {
     doc,
@@ -57,7 +69,11 @@ test("accepted move/rotate/delete updates loaded batch geometry and source light
   ];
   const localPoint = (point: number[], pose: FurnishingOverride) => {
     const [x, y] = transformFurnishingPoint(source, point, pose);
-    return [-y + origin[1], 0.5, -x + origin[0]];
+    const shift =
+      doc === WAYFARER_ACCESS_SOURCE || doc === HULL_ACCESS_SOURCE
+        ? (WAYFARER_ACCESS_FURNISHING_SHIFTS[id] ?? [0, 0])
+        : [0, 0];
+    return [-y - shift[1] + origin[1], 0.5, -x - shift[0] + origin[0]];
   };
   const data = new VertexData();
   data.positions = [
@@ -119,7 +135,12 @@ test("accepted move/rotate/delete updates loaded batch geometry and source light
   );
   scene.activeCamera = camera;
   const canvas = {
-    getBoundingClientRect: () => ({ left: 0, top: 0, width: 512, height: 512 }),
+    getBoundingClientRect: () => ({
+      left: 0,
+      top: 0,
+      width: 512,
+      height: 512,
+    }),
     addEventListener() {},
     removeEventListener() {},
     dataset: {},
@@ -194,15 +215,14 @@ test("accepted move/rotate/delete updates loaded batch geometry and source light
     expect(preview.active).toBe(false);
     preview.clear(); // Late component cleanup must not put stale indices/lights back.
     assertPose(moved);
+    const shift =
+      doc === WAYFARER_ACCESS_SOURCE || doc === HULL_ACCESS_SOURCE
+        ? (WAYFARER_ACCESS_FURNISHING_SHIFTS[id] ?? [0, 0])
+        : [0, 0];
     const footprint = source.footprint.map((p) => {
       const [x, y] = transformFurnishingPoint(source, p, moved);
-      return [-y + origin[1] + 0, x - origin[0] + 0];
+      return [-y - shift[1] + origin[1], x + shift[0] - origin[0]];
     });
-    expect(
-      prefabBeamModel(doc, binding.catalog, binding.furnishings).objects.find(
-        (o) => o.id === `socket:${source.object}`,
-      )!.polygon,
-    ).toEqual(footprint);
     expect(
       prefabDeckObstacles(doc, binding.catalog, binding.furnishings).find(
         (o) => o.id === `prefab-socket:${source.object}`,

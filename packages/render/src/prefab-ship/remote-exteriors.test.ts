@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, test, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
@@ -110,6 +110,186 @@ function fakeStore(
     },
   };
 }
+
+test("the accepted own exterior is warm while suppressed and reveals without another load", async () => {
+  const scene = headless();
+  const store = fakeStore([{ id: "home", x: 0, y: 0 }]);
+  let local: string | undefined = "home";
+  const load = vi.fn(
+    (s: Scene, r: Parameters<typeof loadRemoteExteriorPrototype>[1]) =>
+      loadRemoteExteriorPrototype(s, r, { standinComponents: true }),
+  );
+  const remote = createRemoteShipExteriors(scene, store, {
+    localShipId: () => local,
+    load,
+  });
+  await remote.warmLocal();
+  expect(load).toHaveBeenCalledTimes(1);
+  expect(remote.count).toBe(0);
+  local = undefined;
+  const camera = new FreeCamera("camera", new Vector3(0, 60, 0), scene);
+  remote.update({ x: 0, y: 0 }, 0, camera, 1000);
+  expect(remote.diagnostics().ships[0].loaded).toBe(true);
+  expect(load).toHaveBeenCalledTimes(1);
+  local = "home";
+  remote.update({ x: 0, y: 0 }, 1, camera, 1000);
+  local = undefined;
+  remote.update({ x: 0, y: 0 }, 2, camera, 1000);
+  expect(remote.diagnostics().ships[0].loaded).toBe(true);
+  expect(load).toHaveBeenCalledTimes(1);
+  remote.dispose();
+  scene.dispose();
+  scene.getEngine().dispose();
+});
+
+test("cold own-ship warming includes delayed native doors and retains the exact public consumer across long aboard visits", async () => {
+  const scene = headless();
+  const store = fakeStore([
+    { id: "home", x: 0, y: 0, exterior: "prefab:fed.m.wayfarer-fleet" },
+  ]);
+  let local: string | undefined = "home";
+  let complete!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    complete = resolve;
+  });
+  const resolver = vi.fn(async (piece: { file: string }) => {
+    if (piece.file.includes("personnel")) await gate;
+    return new Uint8Array(
+      readFileSync(
+        new URL(
+          `../../../../assets/runtime/wayfarer-access/r002/${piece.file}`,
+          import.meta.url,
+        ),
+      ),
+    );
+  });
+  const remote = createRemoteShipExteriors(scene, store, {
+    localShipId: () => local,
+    warmShipId: () => "home",
+    accessResolver: resolver,
+    load: (s, r) =>
+      loadRemoteExteriorPrototype(s, r, {
+        standinComponents: true,
+        accessResolver: resolver,
+      }),
+  });
+  let finished = false;
+  const warming = remote.warmLocal().then(() => {
+    finished = true;
+  });
+  await vi.waitFor(() =>
+    expect(remote.diagnostics().warm?.accessPending).toBe(true),
+  );
+  expect(finished).toBe(false);
+  const full = scene.getTransformNodeByName("remote-ship-home:full")!;
+  const root = scene.getTransformNodeByName("remote-ship-home")!;
+  const proxy = scene.getTransformNodeByName("remote-ship-home:proxy")!;
+  expect(root.isEnabled()).toBe(false);
+  complete();
+  await warming;
+  const access = scene.getTransformNodeByName("remote-ship-home:access")!;
+  expect(remote.diagnostics().warm?.accessPending).toBe(false);
+  const calls = resolver.mock.calls.length;
+  const camera = new FreeCamera("camera", new Vector3(0, 20, 0), scene);
+  const logic = new Map([
+    ["home", { doors: new Map([["cargo-outer", true]]), panels: new Map() }],
+  ]);
+  for (const aboard of [false, true, false]) {
+    local = aboard ? "home" : undefined;
+    for (let frame = 0; frame < 3; frame++) {
+      remote.update(
+        { x: 0, y: 0 },
+        (aboard ? 30_000 : 40_000) + frame,
+        camera,
+        1000,
+        undefined,
+        0,
+        logic,
+      );
+      expect(proxy.isEnabled()).toBe(false);
+      expect(root.isEnabled()).toBe(!aboard);
+      expect(full.isEnabled()).toBe(!aboard);
+      expect(scene.getTransformNodeByName("remote-ship-home:access")).toBe(
+        access,
+      );
+    }
+  }
+  expect(resolver).toHaveBeenCalledTimes(calls);
+  store.replace([]);
+  expect(root.isDisposed()).toBe(true);
+  expect(access.isDisposed()).toBe(true);
+  remote.dispose();
+});
+
+test("public projection revocation cancels own door warming without waiting for delayed source bytes", async () => {
+  const scene = headless();
+  const store = fakeStore([
+    { id: "home", x: 0, y: 0, exterior: "prefab:fed.m.wayfarer-fleet" },
+  ]);
+  let complete!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    complete = resolve;
+  });
+  const resolver = async (piece: { file: string }) => {
+    if (piece.file.includes("personnel")) await gate;
+    return new Uint8Array(
+      readFileSync(
+        new URL(
+          `../../../../assets/runtime/wayfarer-access/r002/${piece.file}`,
+          import.meta.url,
+        ),
+      ),
+    );
+  };
+  const remote = createRemoteShipExteriors(scene, store, {
+    localShipId: () => "home",
+    warmShipId: () => "home",
+    accessResolver: resolver,
+    load: (s, r) =>
+      loadRemoteExteriorPrototype(s, r, {
+        standinComponents: true,
+        accessResolver: resolver,
+      }),
+  });
+  const warming = remote.warmLocal();
+  await vi.waitFor(() =>
+    expect(remote.diagnostics().warm?.accessPending).toBe(true),
+  );
+  store.replace([]);
+  await warming;
+  expect(scene.getTransformNodeByName("remote-ship-home")).toBeNull();
+  complete();
+  remote.dispose();
+});
+
+test("row revocation and pin replacement release consumers of a delayed shared prototype", async () => {
+  const scene = headless();
+  const row = { id: "home", x: 0, y: 0 };
+  const store = fakeStore([row]);
+  let complete!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    complete = resolve;
+  });
+  const remote = createRemoteShipExteriors(scene, store, {
+    localShipId: () => "home",
+    warmShipId: () => "home",
+    load: async (s, r) => {
+      await gate;
+      return loadRemoteExteriorPrototype(s, r, { standinComponents: true });
+    },
+  });
+  const first = remote.warmLocal();
+  store.replace([{ ...row, exterior: "prefab:fed.m.wayfarer-fleet" }]);
+  await first;
+  const replacement = remote.warmLocal();
+  store.replace([]);
+  await replacement;
+  expect(remote.count).toBe(0);
+  complete();
+  await remote.settled();
+  expect(scene.getTransformNodeByName("remote-ship-home")).toBeNull();
+  remote.dispose();
+});
 
 describe("remote prefab exteriors (other ships never render interiors)", () => {
   it("skips appearance resolution on hot poses but applies membership, pin and local-ship changes immediately", async () => {

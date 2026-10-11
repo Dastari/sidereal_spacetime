@@ -1,4 +1,14 @@
 import {
+  awaitingDeckPresentation,
+  createDeckViewRestoration,
+} from "./vessel-view";
+import { cursorShipTurn, evaSteering, steeringHelp } from "./steering";
+import {
+  readSteeringStyle,
+  saveSteeringStyle,
+  type SteeringStyle,
+} from "@sidereal/canvas-ui/control-settings";
+import {
   itemDefinitionOf,
   weaponDefinitionOf,
 } from "@sidereal/content/item-presentation";
@@ -94,10 +104,8 @@ import {
   presentationLook,
 } from "./crewmates";
 import {
-  EVA_HELP,
   evaBodiesForScene,
   evaModelOfDocument,
-  evaThrustFromKeys,
   exteriorButtonAction,
   exteriorLogicPresentation,
   evaScene,
@@ -201,6 +209,17 @@ export default function App({
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
   const [loadedSceneKey, setLoadedSceneKey] = useState<string>();
+  const [worldReady, setWorldReady] = useState(false);
+  const [steeringStyle, setSteeringStyle] = useState<SteeringStyle>(() => {
+    try {
+      return readSteeringStyle(localStorage);
+    } catch {
+      return readSteeringStyle();
+    }
+  });
+  const steeringRef = useRef(steeringStyle);
+  steeringRef.current = steeringStyle;
+  const clearSteeringInput = useRef<() => void>(() => {});
   const [loadStage, setLoadStage] = useState("connecting");
   const [loadFailure, setLoadFailure] = useState<string>();
   const loadingRef = useRef(true);
@@ -256,6 +275,7 @@ export default function App({
     bodies: [] as SpaceBodyRow[],
   });
   const installedSceneKey = useRef<string | undefined>(undefined);
+  const deckViewRestoration = useRef(createDeckViewRestoration());
   const acceptedSceneKey = useRef<string | undefined>(undefined);
   useEffect(() => {
     const active = createConnectionSession(
@@ -424,7 +444,7 @@ export default function App({
     c && actor
       ? [...c.db.ownEvaBody.iter()].find((r) => r.characterId === actor.id)
       : undefined;
-  localShipId.current = evaBody ? undefined : ship?.id;
+
   const evaShipPose = ship
     ? {
         id: ship.id,
@@ -494,16 +514,33 @@ export default function App({
     // Rebuilding here would download/compile the whole ship on every refresh.
     c?.identity?.toHexString(),
     constructionInstance?.id,
+    constructionVisit?.deckId,
     sceneDocument.current.version,
-    constructionVisit?.visitId,
     constructionScene.egress?.proofHash,
     constructionScene.egress?.stairId,
-    gameShipAccess?.shipId,
-    awaitingShip,
     acceptedInterior,
   ]);
+  const worldKey = c?.identity?.toHexString();
+  const vesselInput = {
+    construction: acceptedInterior ? constructionScene.construction : undefined,
+    constructionEgress: !evaBody ? constructionScene.egress : undefined,
+    authoredFlightEffects: true,
+  };
+  const requestedVessel = useRef({ key: sceneKey, input: vesselInput });
+  requestedVessel.current = { key: sceneKey, input: vesselInput };
   acceptedSceneKey.current = sceneKey;
-  loadingRef.current = loadedSceneKey !== sceneKey || status !== "ready";
+  loadingRef.current =
+    !worldReady || loadedSceneKey !== sceneKey || status !== "ready";
+  localShipId.current =
+    acceptedInterior && installedSceneKey.current === sceneKey
+      ? ship?.id
+      : undefined;
+  const awaitingInterior = awaitingDeckPresentation({
+    connected: !!actor?.connected,
+    shipId: actor?.shipId,
+    hasEva: !!evaBody,
+    interiorReady: acceptedInterior && installedSceneKey.current === sceneKey,
+  });
   const authoredFlight = authoredFlightPresentation(
     actor,
     constructionVisit,
@@ -589,22 +626,26 @@ export default function App({
   const evaHud = evaBody
     ? {
         label: evaStatusLabel(evaBody, evaShipPose, evaNowMicros, evaSuitRow),
-        help: EVA_HELP,
+        help: steeringHelp(steeringStyle),
         maglock: false,
         stranded: evaBody.stranded,
         beacon: evaBody.returnEndsMicros > 0n,
       }
     : undefined;
   const evaLocal = !!evaView?.local;
-  useEffect(() => {
-    setInterior(acceptedInterior);
-  }, [acceptedInterior]);
+  useLayoutEffect(() => {
+    const restore = deckViewRestoration.current(
+      acceptedInterior ? sceneKey : undefined,
+    );
+    if (restore !== undefined) setInterior(restore);
+  }, [acceptedInterior, sceneKey, loadedSceneKey]);
   useLayoutEffect(() => {
     // Clear a retained scene before the next browser frame on exit or revoked occupancy.
     if (acceptedInterior && installedSceneKey.current === sceneKey) return;
     sceneState.current = {
       ...sceneState.current,
       interior: false,
+      awaitingInterior,
       furnishings: undefined,
       selectedObject: undefined,
       crewmates: [],
@@ -985,6 +1026,7 @@ export default function App({
           : []),
       ];
   const uiState: GameUIState = {
+    steeringStyle,
     zones: zoneNames,
     contextNotice: awaitingShip
       ? {
@@ -1133,6 +1175,7 @@ export default function App({
     destinations: bodyDestinations(navigationBodies),
   };
   const live = useRef({
+    canDeck: false,
     actor,
     ship,
     ready,
@@ -1152,8 +1195,10 @@ export default function App({
     evaSuitMode: "hold",
     evaBeaconAvailable: false,
     shipHeading: 0,
+    shipOmega: 0,
   });
   live.current = {
+    canDeck: acceptedInterior && installedSceneKey.current === sceneKey,
     actor,
     ship,
     ready,
@@ -1179,6 +1224,7 @@ export default function App({
     evaBeaconAvailable:
       !!evaBody && (evaBody.stranded || evaBody.returnEndsMicros > 0n),
     shipHeading: evaShipPose?.heading ?? 0,
+    shipOmega: evaShipPose?.omega ?? 0,
   };
   const actionPending = useRef(false);
   /** EVA suit controls last sent (facing throttle) and the local stabiliser toggle. */
@@ -1186,6 +1232,11 @@ export default function App({
     { facing: number; mode: string; active: boolean; at: number } | undefined
   >(undefined);
   const suitMode = useRef<string | undefined>(undefined);
+  const toggleVesselView = () => {
+    if (!live.current.canDeck || loadingRef.current || entryBlocked.current)
+      return;
+    setInterior((v) => !v);
+  };
   const toggleCruise = () => {
     const current = live.current;
     const conn = connection.current;
@@ -1427,17 +1478,12 @@ export default function App({
   ]);
   useEffect(() => {
     setLoadFailure(undefined);
+    setWorldReady(false);
     setLoadStage(ready ? "ship" : "connecting");
-    if (!ready || (gameShipAccess && !constructionVisit)) return;
-    // A visit can arrive before its authorized geometry in another keyed view.
-    // Dispose the previous world and wait; never substitute the stock ship or a
-    // cached private document after a grant is revoked.
-    if (
-      constructionScene.active &&
-      !constructionScene.construction &&
-      !constructionScene.egress
-    )
-      return;
+    if (!ready) return;
+    // Start the account world once. Its accepted private vessel is installed
+    // separately as keyed projections arrive, and revoked without restarting.
+
     let disposed = false;
     const abort = new AbortController();
     const element = canvas.current!;
@@ -1449,7 +1495,7 @@ export default function App({
           (text) => {
             if (!disposed) {
               setModelStatus(text);
-              setLoadedSceneKey(sceneKey);
+              setWorldReady(true);
             }
           },
           {
@@ -1473,6 +1519,7 @@ export default function App({
                   ships: {
                     store: sharedPresentation.store,
                     localShipId: () => localShipId.current,
+                    warmShipId: () => live.current.ship?.id,
                     exhaust: () =>
                       remoteExhaustByShip(
                         connection.current?.db.visibleActuatorExhaust.iter() ??
@@ -1491,8 +1538,7 @@ export default function App({
                 }
               : undefined,
             // Without an authorized construction scene the character has no vessel.
-            construction: constructionScene.construction,
-            constructionEgress: constructionScene.egress,
+            ...requestedVessel.current.input,
             onScene(scene) {
               if (disposed) return;
               gui.current = createGameUI(
@@ -1503,6 +1549,24 @@ export default function App({
                   sharedEntry: {
                     join: () => sharedEntryActions.current.join(),
                     review: () => sharedEntryActions.current.review(),
+                  },
+                  steeringStyle: (style) => {
+                    clearSteeringInput.current();
+                    cruise.cancel();
+                    suitSent.current = undefined;
+                    steeringRef.current = style;
+                    setSteeringStyle(style);
+                    try {
+                      saveSteeringStyle(style, localStorage);
+                    } catch {
+                      /* Session preference remains. */
+                    }
+                    const next = {
+                      ...live.current.uiState,
+                      steeringStyle: style,
+                    };
+                    live.current.uiState = next;
+                    gui.current?.update(next);
                   },
                   interact,
                   combat: () => setCombatEnabled((v) => !v),
@@ -1535,11 +1599,7 @@ export default function App({
                       setSelectedObject(undefined);
                     },
                   },
-                  view: () => {
-                    // No ship: there is no exterior/flight view to switch to.
-                    if (live.current.actor?.shipId === "") return;
-                    setInterior((v) => !v);
-                  },
+                  view: () => toggleVesselView(),
                   station: useControlStation,
                   enter: (name) =>
                     void perform(() =>
@@ -1772,10 +1832,26 @@ export default function App({
       })
       .then((result) => {
         if (!result) return;
-        if (disposed || acceptedSceneKey.current !== sceneKey) result.dispose();
+        if (disposed) result.dispose();
         else {
           view.current = result;
-          installedSceneKey.current = sceneKey;
+          const requested = requestedVessel.current;
+          void result
+            .setVessel(requested.input)
+            .then((applied) => {
+              if (
+                !disposed &&
+                applied &&
+                requestedVessel.current.key === requested.key
+              ) {
+                installedSceneKey.current = requested.key;
+                setLoadedSceneKey(requested.key);
+                refresh((v) => v + 1);
+              }
+            })
+            .catch((error) => {
+              if (!disposed) setLoadFailure(String(error));
+            });
           result.update(sceneState.current);
           refresh((v) => v + 1);
           // Development review only: EVA presentation diagnostics (never simulation state).
@@ -1805,16 +1881,36 @@ export default function App({
       view.current = null;
       installedSceneKey.current = undefined;
     };
-  }, [
-    sceneKey,
-    constructionInstance?.id,
-    constructionInstance?.documentJson,
-    constructionVisit?.visitId,
-    constructionScene.egress?.proofHash,
-    constructionScene.egress?.stairId,
-    gameShipAccess?.shipId,
-    ready,
-  ]);
+  }, [worldKey, ready]);
+  useLayoutEffect(() => {
+    const renderer = view.current;
+    if (!renderer) return;
+    const requested = requestedVessel.current;
+    let cancelled = false;
+    setLoadFailure(undefined);
+    void renderer
+      .setVessel(requested.input)
+      .then((applied) => {
+        if (
+          !cancelled &&
+          applied &&
+          requestedVessel.current.key === requested.key
+        ) {
+          installedSceneKey.current = requested.key;
+          setLoadedSceneKey(requested.key);
+          refresh((v) => v + 1);
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setLoadFailure(String(error));
+          setError(String(error));
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [sceneKey]);
   useEffect(() => {
     if (!rendererFailed || !canvas.current) return;
     const element = canvas.current;
@@ -1992,6 +2088,9 @@ export default function App({
       localX: evaView?.localX ?? actor?.localX ?? 0,
       localY: evaView?.localY ?? actor?.localY ?? PILOT_LAYOUT.station.y,
       interior: interior && deliverInterior,
+      // Occupancy views may arrive after ownEvaBody is removed. Preserve actor
+      // framing through that gap without delivering any private deck geometry.
+      awaitingInterior,
       eva: evaView ?? null,
       airlockCycle: null,
       shipLogic: deliverInterior
@@ -2075,6 +2174,8 @@ export default function App({
     status,
     error,
     modelStatus,
+    steeringStyle,
+    loadedSceneKey,
     pending,
     cosmetics,
     selectedObject,
@@ -2083,6 +2184,7 @@ export default function App({
   ]);
   useEffect(() => {
     const keys = new Set<string>();
+    clearSteeringInput.current = () => keys.clear();
     const transmitter = createIntentTransmitter<DbConnection>({
       now: () => performance.now(),
       send: (c, intent) => {
@@ -2146,20 +2248,25 @@ export default function App({
         // Outside the hull (suit IFCS, wiki Systems/EVA): the pointer is the facing the suit
         // turns to through torque; W/S thrust toward/away from it, A/D strafe. Intent only.
         const mode = suitMode.current ?? live.current.evaSuitMode;
-        const free = mode === "free";
         // Free (Newtonian) mode: no pointer facing; thrust along the body and A/D spin it.
         const pointer =
-          free || blocked ? undefined : view.current?.pointerDirection();
+          blocked || steeringRef.current === "keyboard"
+            ? undefined
+            : view.current?.pointerDirection();
         const aim = pointer
           ? Math.atan2(-pointer[0], pointer[1]) +
             (live.current.evaLocal ? 0 : live.current.shipHeading)
           : undefined;
-        const facing = aim !== undefined ? aim : live.current.evaFrameHeading;
-        transmitter.offer(
-          c,
-          evaThrustFromKeys(keys, facing, blocked, free),
-          false,
+        const steering = evaSteering(
+          keys,
+          steeringRef.current,
+          mode,
+          live.current.evaFrameHeading,
+          aim,
+          blocked,
         );
+        const { facing, active: facingActive } = steering;
+        transmitter.offer(c, steering.intent, false);
         const now = performance.now();
         const last = suitSent.current;
         const turned =
@@ -2173,17 +2280,17 @@ export default function App({
         if (
           !last ||
           last.mode !== mode ||
-          last.active !== (aim !== undefined) ||
+          last.active !== facingActive ||
           (turned && now - last.at > 100)
         ) {
           suitSent.current = {
             facing,
             mode,
-            active: aim !== undefined,
+            active: facingActive,
             at: now,
           };
           void c.reducers
-            .evaSetSuit({ mode, facing, facingActive: aim !== undefined })
+            .evaSetSuit({ mode, facing, facingActive })
             .catch(() => undefined);
         }
         return;
@@ -2206,7 +2313,15 @@ export default function App({
         c,
         {
           throttle,
-          turn: intent.turn,
+          turn:
+            seated && !interior && steeringRef.current === "cursor"
+              ? cursorShipTurn(
+                  view.current?.pointerDirection(),
+                  live.current.shipOmega,
+                  intent.turn,
+                  blocked,
+                )
+              : intent.turn,
           dx: walk.dx,
           dy: walk.dy,
           sprint: intent.sprint,
@@ -2215,30 +2330,28 @@ export default function App({
       );
     };
     const down = (e: KeyboardEvent) => {
+      if (isEditableTarget(e.target) || !actor?.connected || !ready) return;
+      // Tab remains owned by the game throughout the accepted entry handoff.
+      // Visual preparation can block a view change without releasing focus to
+      // browser chrome. Kit/service dialogs retain their own focus handling.
       if (
-        isEditableTarget(e.target) ||
-        !!servicePanelOpen.current ||
-        entryBlocked.current ||
-        loadingRef.current ||
-        gui.current?.blocked() ||
-        !actor?.connected ||
-        !ready
-      )
-        return;
-      if (e.code === "Tab") {
+        e.code === "Tab" &&
+        !servicePanelOpen.current &&
+        !gui.current?.blocked()
+      ) {
         e.preventDefault();
         keys.clear();
         send();
-        // No ship: there is no exterior/flight view to switch to. Outside the hull
-        // (EVA) the top-down space view is the only view.
-        if (
-          !e.repeat &&
-          live.current.actor?.shipId !== "" &&
-          !live.current.evaPhase
-        )
-          setInterior((v) => !v);
+        if (!e.repeat) toggleVesselView();
         return;
       }
+      if (
+        servicePanelOpen.current ||
+        entryBlocked.current ||
+        loadingRef.current ||
+        gui.current?.blocked()
+      )
+        return;
       if (e.code === "KeyX" && !e.repeat && live.current.evaPhase) {
         // Suit stabiliser: hold (kill rotation and relative drift) or free (pure momentum).
         e.preventDefault();
@@ -2498,39 +2611,38 @@ export default function App({
         )
       : [];
     const appearance = equipmentAppearance(equipped, cosmetics);
-    const state: EntryState =
-      enteredWorld && !loadingRef.current
-        ? { kind: "world" }
-        : ready && (!actor || !loadingRef.current) && !enteredWorld
-          ? {
-              kind: "character",
-              pending,
-              error,
-              character: actor
-                ? {
-                    id: actor.id,
-                    name: actor.name,
-                    shipName: ship?.name ?? "No ship assigned",
-                    appearance: {
-                      ...appearance.crewAppearance,
-                      equipmentItem: appearance.heldItem ?? undefined,
-                    },
-                    health: ownVitals?.health,
-                    maxHealth: ownVitals?.maxHealth,
-                    equipment: equipped.map((item) => ({
-                      name: itemDefinitionOf(item)?.name ?? "Equipment",
-                      slot: item.equipmentSlot,
-                    })),
-                  }
-                : undefined,
-            }
-          : {
-              kind: "loading",
-              stage: status === "ready" ? loadStage : "connecting",
-              shipName: ship?.name ?? "",
-              awaitingShip,
-              error: loadFailure ?? "",
-            };
+    const state: EntryState = enteredWorld
+      ? { kind: "world" }
+      : ready && (!actor || !loadingRef.current) && !enteredWorld
+        ? {
+            kind: "character",
+            pending,
+            error,
+            character: actor
+              ? {
+                  id: actor.id,
+                  name: actor.name,
+                  shipName: ship?.name ?? "No ship assigned",
+                  appearance: {
+                    ...appearance.crewAppearance,
+                    equipmentItem: appearance.heldItem ?? undefined,
+                  },
+                  health: ownVitals?.health,
+                  maxHealth: ownVitals?.maxHealth,
+                  equipment: equipped.map((item) => ({
+                    name: itemDefinitionOf(item)?.name ?? "Equipment",
+                    slot: item.equipmentSlot,
+                  })),
+                }
+              : undefined,
+          }
+        : {
+            kind: "loading",
+            stage: status === "ready" ? loadStage : "connecting",
+            shipName: ship?.name ?? "",
+            awaitingShip,
+            error: loadFailure ?? "",
+          };
     canvasElement.inert = state.kind !== "world";
     onPresentation({
       state,
@@ -2568,6 +2680,7 @@ export default function App({
     loadStage,
     loadFailure,
     loadedSceneKey,
+    worldReady,
     rendererFailed,
     onPresentation,
     canvasElement,

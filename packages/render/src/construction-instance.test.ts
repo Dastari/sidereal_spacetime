@@ -20,9 +20,11 @@ vi.mock("./installed-equipment", () => ({
     node.position.set(p.position[0], p.position[2], -p.position[1]);
     const mesh = new Mesh("native-" + p.id, scene);
     mesh.parent = node;
-    return { node, meshes: [mesh], lighting: {} };
+    return { node, meshes: [mesh], lighting: { dispose: vi.fn() } };
   },
 }));
+import { CONSTRUCTION_ROOF_PIN } from "@sidereal/content/construction-roof";
+import * as roofLoader from "./construction-roofs";
 import { loadConstructionInstance } from "./construction-instance";
 afterEach(() => vi.unstubAllGlobals());
 function fixture() {
@@ -110,6 +112,42 @@ test("wrong native revision hash fails instead of substituting a current catalog
       }),
     ).rejects.toThrow("Pinned");
   } finally {
+    scene.dispose();
+    engine.dispose();
+  }
+});
+
+test("a later roof failure releases already-allocated floor placements without disposing the world", async () => {
+  const { doc, catalog } = fixture();
+  doc.roofKit = CONSTRUCTION_ROOF_PIN;
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => ({ ok: true, json: async () => catalog })),
+  );
+  const failure = vi
+    .spyOn(roofLoader, "loadConstructionRoofs")
+    .mockRejectedValue(Error("roof failed"));
+  const engine = new NullEngine(),
+    scene = new Scene(engine),
+    parent = new TransformNode("instance", scene);
+  const observerCount = scene.onBeforeRenderObservable.observers.length;
+  try {
+    await expect(
+      loadConstructionInstance(scene, parent, {
+        instanceId: "instance",
+        deckId: "upper",
+        documentJson: JSON.stringify(doc),
+      }),
+    ).rejects.toThrow("roof failed");
+    expect(failure).toHaveBeenCalledTimes(1);
+    expect(parent.isDisposed()).toBe(false);
+    expect(parent.getChildMeshes()).toHaveLength(0);
+    expect(parent.getChildTransformNodes()).toHaveLength(0);
+    expect(scene.onBeforeRenderObservable.observers).toHaveLength(
+      observerCount,
+    );
+  } finally {
+    failure.mockRestore();
     scene.dispose();
     engine.dispose();
   }

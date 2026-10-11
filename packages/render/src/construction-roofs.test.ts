@@ -87,3 +87,74 @@ test("native roof loader rejects changed bytes before importing geometry", async
     engine.dispose();
   }
 });
+
+test("scene library is reused across placements and parent cancellation cannot revive a private kit", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  let resume!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    resume = resolve;
+  });
+  const fetcher = vi.fn(async () => {
+    await gate;
+    return {
+      ok: true,
+      arrayBuffer: async () =>
+        bytes.buffer.slice(
+          bytes.byteOffset,
+          bytes.byteOffset + bytes.byteLength,
+        ),
+    };
+  });
+  vi.stubGlobal("fetch", fetcher);
+  try {
+    const cancelled = new TransformNode("cancelled", scene);
+    const pending = loadConstructionRoofs(scene, cancelled, [
+      {
+        key: "roof",
+        floorId: "floor",
+        partId: kit.parts[0].id,
+        origin: [0, 0, 0],
+        quarterTurns: 0,
+      },
+    ]);
+    cancelled.dispose();
+    resume();
+    await expect(pending).rejects.toThrow("cancelled");
+    expect(
+      scene.transformNodes.every((n) => !n.name.startsWith("placement-")),
+    ).toBe(true);
+    const base = {
+      meshes: scene.meshes.length,
+      nodes: scene.transformNodes.length,
+      materials: scene.materials.length,
+      observers: scene.onBeforeRenderObservable.observers.length,
+    };
+    for (let i = 0; i < 2; i++) {
+      const parent = new TransformNode("visit" + i, scene);
+      const loaded = await loadConstructionRoofs(scene, parent, [
+        {
+          key: "roof",
+          floorId: "floor",
+          partId: kit.parts[0].id,
+          origin: [0, 0, 0],
+          quarterTurns: 0,
+        },
+      ]);
+      expect(loaded.placements).toHaveLength(1);
+      loaded.dispose();
+      parent.dispose();
+      expect({
+        meshes: scene.meshes.length,
+        nodes: scene.transformNodes.length,
+        materials: scene.materials.length,
+        observers: scene.onBeforeRenderObservable.observers.length,
+      }).toEqual(base);
+    }
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
+}, 15000);

@@ -38,7 +38,8 @@ export function createCabinVisibility(
 ) {
   const interior = meshes.filter(isCabinVisual);
   const enabled = new Map<TransformNode, boolean>(
-    [...interior, actor].map((node) => [node, node.isEnabled()]),
+    // A staged parent is hidden independently from its authored child flags.
+    [...interior, actor].map((node) => [node, node.isEnabled(false)]),
   );
   const fixtureLights = placements.filter((p) => isCabinVisual(p.node));
   let visible = true;

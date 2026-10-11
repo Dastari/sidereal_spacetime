@@ -1,3 +1,5 @@
+import { createVesselLifecycle } from "./vessel-lifecycle";
+import { renderRootReady } from "./mesh-readiness";
 import { publishedShipAccessBytes as publishedAccessBytes } from "./prefab-ship/wayfarer-access-assets";
 import { createFurnishingPreview } from "./furnishing-preview";
 import type { FurnishingOverride } from "@sidereal/content/wayfarer-furnishings";
@@ -39,6 +41,7 @@ import {
 } from "./local-light-budget";
 import { createAntialiasing } from "./antialiasing-pipeline";
 import { createRenderEngine } from "./render-engine";
+import { guardShaderDisposal } from "./shader-disposal";
 import {
   readRenderBackend,
   readWebGPUFailure,
@@ -148,6 +151,8 @@ import {
   easeCameraZoom,
   deckCameraActorWeight,
   createObservationCamera,
+  createPlayerCameraFrame,
+  createEvaCameraHandoff,
 } from "./camera";
 import { createSpaceEnvironment, type SpaceBodyState } from "./environment";
 import { DEFAULT_SPACE_VISTA } from "../../content/src/environment";
@@ -201,6 +206,9 @@ export type SceneState = {
   localX: number;
   localY: number;
   interior: boolean;
+  /** Accepted actor has left EVA but the currently admitted deck is not yet
+   * ready. Holds camera framing only; never delivers private geometry/input. */
+  awaitingInterior?: boolean;
   inspect: boolean;
   grid: boolean;
   seated?: boolean;
@@ -247,6 +255,7 @@ export interface WorldOptions {
     ships?: {
       store: import("./prefab-ship/remote-exteriors").RemoteShipStore;
       localShipId: () => string | undefined;
+      warmShipId?: () => string | undefined;
       /** `visible_actuator_exhaust`: firing thrusters per perceived ship (source id -> throttle). */
       exhaust?: () => ReadonlyMap<string, ReadonlyMap<string, number>>;
       exteriorLogic?: () => ReadonlyMap<
@@ -366,6 +375,7 @@ async function buildWorld(
     throw Error("Reloading with WebGL after WebGPU initialization failed.");
   }
   const engine = createdEngine.engine;
+  guardShaderDisposal(engine);
   backend = createRenderBackendPreference(
     createdEngine.active,
     requestedBackend,
@@ -416,12 +426,32 @@ async function buildWorld(
   camera.minZ = 0.1;
   camera.maxZ = 1600;
   options.onScene?.(scene);
-  // The DOM loading screen covers startup. Rendering each partial GLB assembly
+  // The canvas entry screen covers startup. Rendering each partial GLB assembly
   // compiles transient material/effect combinations before the final lighting
   // and visibility state exists, competing with asset decoding on slower GPUs.
   // Start rendering only once the scene's loaders and wiring are assembled.
   const shipRoot = new TransformNode("ship-frame", scene);
+  let vesselRoot = new TransformNode("local-vessel", scene);
+  vesselRoot.parent = shipRoot;
   const environment = createSpaceEnvironment(scene);
+  const lighting = createConstructionLighting(scene, []);
+  environment.setPrimaryLight(lighting.primaryLight);
+  const sharedShips = options.sharedWorld?.ships;
+  let vesselPresented = !!(options.construction || options.constructionEgress);
+  const remoteShips = sharedShips
+    ? await import("./prefab-ship/remote-exteriors").then(
+        ({ createRemoteShipExteriors }) =>
+          createRemoteShipExteriors(scene, sharedShips.store, {
+            localShipId: () =>
+              vesselPresented ? sharedShips.localShipId() : undefined,
+            warmShipId: sharedShips.warmShipId,
+            exteriorLogic: sharedShips.exteriorLogic,
+            accessResolver: publishedAccessBytes,
+            onError: (error) =>
+              console.warn("remote ship exterior unavailable", error),
+          }),
+      )
+    : undefined;
   let crew: Awaited<ReturnType<typeof createVoxelCrewVisual>> | undefined;
   let crewOutfit: ReturnType<typeof createVoxelCrewOutfit> | undefined;
   /** Voxel crew: the held r001 item with draw/holster transitions. */
@@ -475,17 +505,17 @@ async function buildWorld(
       const loaded = options.constructionEgress
         ? await loadNativeStairEgress(
             scene,
-            shipRoot,
+            vesselRoot,
             options.constructionEgress,
           )
         : ((await loadNativeStairConstruction(
             scene,
-            shipRoot,
+            vesselRoot,
             options.construction!,
           )) ??
           (await loadConstructionInstance(
             scene,
-            shipRoot,
+            vesselRoot,
             options.construction!,
           )));
       installed = loaded.placements;
@@ -512,7 +542,7 @@ async function buildWorld(
       if (options.construction) {
         prefabView = await loadPrefabShipPresentation(
           scene,
-          shipRoot,
+          vesselRoot,
           options.construction.documentJson,
           options.prefabVisualVariant,
           options.construction.furnishingsJson,
@@ -572,17 +602,16 @@ async function buildWorld(
     if (!mesh.metadata?.role) setMeshRole(mesh, legacyMeshRole(mesh));
     if (legacyCutawayFade(mesh)) mesh.metadata.cutawayFade = true;
   }
-  const roof = imported.meshes.filter(
+  let roof = imported.meshes.filter(
     (m) =>
       m.getTotalVertices() > 0 &&
       m.metadata?.role === "roof" &&
       m.metadata?.cutawayFade,
   );
   prepareCutawayMeshes(roof);
-  const lighting = createConstructionLighting(scene, imported.meshes);
-  environment.setPrimaryLight(lighting.primaryLight);
+  lighting.replaceStructure(imported.meshes);
   lighting.addActor(avatar.getChildMeshes());
-  const cabinVisibility = createCabinVisibility(
+  let cabinVisibility = createCabinVisibility(
     imported.meshes,
     avatar,
     installed,
@@ -594,14 +623,15 @@ async function buildWorld(
   );
   const fixturePlacements = shipEquipment;
   let debugCollision = createDebugCollisionSource(options.construction);
+  const debugEquipment = [
+    ...fixturePlacements.map((p) => p.node),
+    ...imported.meshes.filter((m) =>
+      /^GEO-(equipment(?:-|$)|room-storage-container(?:-|$))/.test(m.name),
+    ),
+  ];
   const debugFeatures = createDebugFeatures(
     scene,
-    [
-      ...fixturePlacements.map((p) => p.node),
-      ...imported.meshes.filter((m) =>
-        /^GEO-(equipment(?:-|$)|room-storage-container(?:-|$))/.test(m.name),
-      ),
-    ],
+    debugEquipment,
     [avatar, marker],
     {
       characterRoots: () => [avatar],
@@ -639,7 +669,7 @@ async function buildWorld(
     blurKernelSize: 24,
   });
   glow.intensity = 0.4;
-  const flightEffects =
+  let flightEffects =
     !options.construction ||
     !options.authoredFlightEffects ||
     options.constructionEgress
@@ -658,6 +688,7 @@ async function buildWorld(
   let evaCrew: ReturnType<typeof createRemoteCrew> | undefined;
   let ownEva: ReturnType<typeof createEvaBodyPresentation> | undefined;
   let evaShown = false;
+  let evaCameraShown = false;
   let flightZoomBeforeEva: number | undefined;
   const actorMeshes = () => [
     ...(crew?.root.getChildMeshes() ?? []),
@@ -696,7 +727,7 @@ async function buildWorld(
   if (crewOutfit) refreshCrewPresentation();
   // Prefab ships (SHIP-INTERACTION): geometric object picking over the batched dressed view,
   // beam clipping against the compiled structure, and the authoritative impact flash.
-  const prefabBinding = prefabView
+  let prefabBinding = prefabView
     ? prefabBindingOf(
         options.construction?.documentJson,
         options.construction?.furnishingsJson,
@@ -711,14 +742,14 @@ async function buildWorld(
         () => state.interior,
       )
     : undefined;
-  const furnishingPreview = prefabBinding
+  let furnishingPreview = prefabBinding
     ? createFurnishingPreview(scene, canvas, shipRoot, prefabBinding, () => {
         fastSnapshot?.invalidate();
         flightActiveSet.invalidate();
         antialiasing.resetHistory();
       })
     : undefined;
-  const acceptedFurnishings =
+  let acceptedFurnishings =
     prefabBinding && options.construction
       ? createAcceptedFurnishings(
           scene,
@@ -741,7 +772,7 @@ async function buildWorld(
       : undefined;
   const impactFlash = createImpactFlash(scene, shipRoot);
   let lastImpactSequence: bigint | undefined;
-  const objects = createObjectPresentation(
+  let objects = createObjectPresentation(
     canvas,
     scene,
     imported.meshes,
@@ -806,7 +837,7 @@ async function buildWorld(
   let temporalStateAt = performance.now();
   let temporalAppearance = "";
   const localLights = createLocalLightBudget();
-  const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
+  let combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
   /** Last pointer position (client pixels) for the EVA facing. */
   let pointerClient: { x: number; y: number } | undefined;
   for (const mesh of combatAim.meshes) glow.addIncludedOnlyMesh(mesh);
@@ -902,8 +933,9 @@ async function buildWorld(
     orbit = 0.45,
     zoom = initialDeckZoom;
   let flightZoom = initialFlightZoom;
-  let displayedZoom = zoom,
-    displayedFlightZoom = flightZoom;
+  let displayedZoom = zoom;
+  const playerCameraFrame = createPlayerCameraFrame();
+  const evaCameraHandoff = createEvaCameraHandoff();
   let focusedBodyId: string | undefined;
   const observation = createObservationCamera();
   let resizePending = true;
@@ -988,18 +1020,6 @@ async function buildWorld(
   // Other players' ships: exterior only, dynamic LOD, one shared prototype per published hull
   // (wiki `Architecture/Visibility and Interest Management`). Loads in the background; a ship
   // whose hull is still loading is drawn as a marker, never hidden.
-  const sharedShips = options.sharedWorld?.ships;
-  const remoteShips = sharedShips
-    ? await import("./prefab-ship/remote-exteriors").then(
-        ({ createRemoteShipExteriors }) =>
-          createRemoteShipExteriors(scene, sharedShips.store, {
-            localShipId: sharedShips.localShipId,
-            accessResolver: publishedAccessBytes,
-            onError: (error) =>
-              console.warn("remote ship exterior unavailable", error),
-          }),
-      )
-    : undefined;
   const visibleBodies = (nowMs: number) =>
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   const debugVisibilityRevision = createDebugVisibilityRevision();
@@ -1015,11 +1035,27 @@ async function buildWorld(
     // submitting the hidden scene while the user recovers from that failure.
     if (assetFailure) return;
     const frameStarted = performance.now();
+    const stageVessel =
+      !vesselPresented &&
+      !state.awaitingInterior &&
+      !state.eva &&
+      !!(options.construction || options.constructionEgress) &&
+      (!options.construction ||
+        state.constructionDeckId === options.construction.deckId);
+    // Let existing visibility and light budgets prepare the real final layout.
+    // No await or draw occurs while staging is enabled. A not-ready candidate
+    // is hidden again before scene.render, with its public exterior retained.
+    if (!vesselPresented) vesselRoot.setEnabled(stageVessel);
+    const cameraInterior = state.interior && vesselPresented;
     // Reconcile overrides only when normal visibility/power intent changes.
     // Re-enabling every hidden fixture each frame defeats the performance probe.
     debugFeatures.beforeFrame(
       debugVisibilityRevision(
-        cabinIsVisible(state.interior, blend, !!focusedBodyId),
+        cabinIsVisible(
+          state.interior && (vesselPresented || stageVessel),
+          blend,
+          !!focusedBodyId,
+        ),
         state.objectLights,
       ),
     );
@@ -1048,13 +1084,10 @@ async function buildWorld(
     }
     for (const key of ["x", "y", "localX", "localY"] as const)
       displayed[key] += (state[key] - displayed[key]) * motion;
-    blend += ((state.interior ? 1 : 0) - blend) * transition;
+    blend += ((cameraInterior ? 1 : 0) - blend) * transition;
     displayedZoom = state.reducedMotion
       ? zoom
       : easeCameraZoom(displayedZoom, zoom, dt);
-    displayedFlightZoom = state.reducedMotion
-      ? flightZoom
-      : easeCameraZoom(displayedFlightZoom, flightZoom, dt);
     shipRoot.rotation.y = displayed.heading;
     const traversalFrame = updateConstructionTraversal?.(
       state.constructionDeckId,
@@ -1069,6 +1102,10 @@ async function buildWorld(
     )
       walkingElevation = state.constructionSupportElevation!;
     const eva = state.eva ?? undefined;
+    const evaCamera = evaCameraHandoff(
+      !!eva,
+      !!state.awaitingInterior || (!vesselPresented && !!options.construction),
+    );
     if (eva)
       walkingElevation =
         eva.elevation -
@@ -1076,15 +1113,16 @@ async function buildWorld(
           eva,
           (clip) => !!crew && "hasClip" in crew && crew.hasClip(clip),
         );
-    if (!!eva !== evaShown) {
+    if (evaCamera !== evaCameraShown) {
       // Leaving the ship: close top-down EVA view; coming back: the previous flight zoom.
-      if (eva) {
+      if (evaCamera) {
         flightZoomBeforeEva = flightZoom;
         flightZoom = EVA_FLIGHT_ZOOM;
       } else if (flightZoomBeforeEva !== undefined) {
         flightZoom = flightZoomBeforeEva;
         flightZoomBeforeEva = undefined;
       }
+      evaCameraShown = evaCamera;
     }
     const acceptedStair =
       state.constructionTraversal &&
@@ -1139,13 +1177,19 @@ async function buildWorld(
     if (eva && !state.combat?.active)
       avatar.rotation.y +=
         angleDelta(avatar.rotation.y, eva.localHeading) * Math.min(1, dt * 18);
-    const cabinVisible = cabinIsVisible(state.interior, blend, !!focusedBodyId);
+    let cabinVisible = cabinIsVisible(cameraInterior, blend, !!focusedBodyId);
+    const preparedCabin = cabinIsVisible(
+      state.interior && (vesselPresented || stageVessel),
+      blend,
+      !!focusedBodyId,
+    );
     updateConstructionDoors?.(state.constructionDoors ?? []);
-    cabinVisibility.update(cabinVisible, state.objectLights ?? []);
-    lighting.setCabinVisible(cabinVisible);
+    cabinVisibility.update(preparedCabin, state.objectLights ?? []);
+    lighting.setCabinVisible(state.interior || cabinVisible);
     groundItems.update(state.groundItems ?? [], cabinVisible);
     // The own body outside the ship is drawn in the (top-down) space view too.
-    if (eva) avatar.setEnabled(debugFeatures.snapshot().characters);
+    if (eva || evaCamera)
+      avatar.setEnabled(debugFeatures.snapshot().characters);
     else if (evaShown && !cabinVisible) avatar.setEnabled(false);
     evaShown = !!eva;
     ownEva?.update(eva, dt, {
@@ -1197,14 +1241,14 @@ async function buildWorld(
     camera.alpha +=
       angleDelta(
         camera.alpha,
-        cameraAlpha(displayed.heading, state.interior, orbit),
+        cameraAlpha(displayed.heading, cameraInterior, orbit),
       ) * transition;
     camera.beta +=
-      ((state.interior
+      ((cameraInterior
         ? RPG_BETA
         : state.inspect
           ? 0.6
-          : eva
+          : evaCamera
             ? EVA_CAMERA_BETA
             : 0.015) -
         camera.beta) *
@@ -1212,7 +1256,7 @@ async function buildWorld(
     const c = Math.cos(displayed.heading),
       s = Math.sin(displayed.heading);
     // EVA: the top-down camera follows the body, not the ship centre.
-    const actorBlend = eva
+    const actorBlend = evaCamera
       ? 1
       : blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
     const targetLocalX =
@@ -1221,16 +1265,28 @@ async function buildWorld(
     const targetLocalY =
       (constructionFrame?.centerY ?? 0) * (1 - actorBlend) +
       -avatar.position.z * actorBlend;
-    camera.target.set(
+    const desiredTarget: [number, number, number] = [
       targetLocalX * c - targetLocalY * s,
       0.8 * blend +
         (options.construction || options.constructionEgress
           ? avatar.position.y
           : 0),
       -(targetLocalX * s + targetLocalY * c),
-    );
+    ];
+    const framing = playerCameraFrame.frame({
+      actor: [
+        avatar.position.x * c + avatar.position.z * s,
+        avatar.position.y,
+        -avatar.position.x * s + avatar.position.z * c,
+      ],
+      target: desiredTarget,
+      halfExtent: cameraInterior ? zoom : flightZoom,
+      dt,
+      reducedMotion: state.reducedMotion,
+    });
+    camera.target.set(...framing.target);
     const aspect = canvas.clientWidth / Math.max(1, canvas.clientHeight),
-      half = displayedFlightZoom * (1 - blend) + displayedZoom * blend;
+      half = framing.halfExtent;
     camera.radius = half / Math.tan(camera.fov / 2);
     const bodies = visibleBodies(frameStarted);
     const focus = bodies.find((body) => body.id === focusedBodyId);
@@ -1267,7 +1323,7 @@ async function buildWorld(
       nowMs: Date.now(),
       // Real elapsed time (the frame dt is capped at 0.1 s): on slow software-rendered clients
       // the leaves still finish their stroke inside the airlock cycle window.
-      dt: Math.min(engine.getDeltaTime() / 1000, 1),
+      dt: vesselPresented ? Math.min(engine.getDeltaTime() / 1000, 1) : 1,
       cycle: state.airlockCycle ?? null,
       actors: [
         ...(state.eva ? [] : [{ x: displayed.localX, y: displayed.localY }]),
@@ -1280,15 +1336,6 @@ async function buildWorld(
     });
     prefabView?.updatePanels(state.shipLogic?.panels, Date.now());
     camera.getViewMatrix(true);
-    remoteShips?.update(
-      { x: displayed.x, y: displayed.y },
-      frameStarted,
-      camera,
-      engine.getRenderHeight(),
-      sharedShips?.exhaust?.(),
-      undefined,
-      sharedShips?.exteriorLogic?.(),
-    );
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,
       region: state.spaceRegion,
@@ -1322,6 +1369,31 @@ async function buildWorld(
       flightActiveSet.invalidate();
       antialiasing.resetHistory();
     }
+    // Installation only stages the candidate. Its first visible frame uses
+    // the matching admitted deck/view, current doors/lights and ready shaders.
+    // Until then the accepted public exterior remains the ship representation.
+    if (stageVessel && renderRootReady(vesselRoot)) {
+      vesselRoot.setEnabled(true);
+      vesselPresented = true;
+      cabinVisible = preparedCabin;
+      groundItems.update(state.groundItems ?? [], cabinVisible);
+      remoteCrew?.frame(cabinVisible && debugFeatures.snapshot().characters, {
+        reducedMotion: state.reducedMotion,
+      });
+      fastSnapshot?.invalidate();
+      flightActiveSet.invalidate();
+      antialiasing.resetHistory();
+    }
+    if (!vesselPresented) vesselRoot.setEnabled(false);
+    remoteShips?.update(
+      { x: displayed.x, y: displayed.y },
+      frameStarted,
+      camera,
+      engine.getRenderHeight(),
+      sharedShips?.exhaust?.(),
+      undefined,
+      sharedShips?.exteriorLogic?.(),
+    );
     const updateCpuMs = performance.now() - frameStarted;
     staticMaterials.prepare();
     const snapshotCandidate =
@@ -1365,6 +1437,7 @@ async function buildWorld(
       presentationFrames.ready();
     }
   };
+  await remoteShips?.warmLocal();
   engine.runRenderLoop(presentationFrames.wrap(renderWorldFrame));
   resize();
   let disposed = false;
@@ -1425,8 +1498,253 @@ async function buildWorld(
       });
     }
   };
+  type VesselInput = Pick<
+    WorldOptions,
+    "construction" | "constructionEgress" | "authoredFlightEffects"
+  >;
+  const vesselKey = (input: VesselInput) =>
+    JSON.stringify([
+      input.construction?.instanceId,
+      input.construction?.deckId,
+      input.construction?.documentJson,
+      input.constructionEgress?.proofHash,
+      input.constructionEgress?.stairId,
+    ]);
+  const clearVessel = () => {
+    vesselPresented = false;
+    furnishingPreview?.dispose();
+    furnishingPreview = undefined;
+    acceptedFurnishings = undefined;
+    objects.dispose();
+    prefabPicker?.dispose();
+    prefabPicker = undefined;
+    prefabBeamClip = undefined;
+    prefabBinding = undefined;
+    combatAim.dispose();
+    disposeConstruction?.();
+    disposeConstruction = undefined;
+    prefabView?.dispose();
+    prefabView = undefined;
+    vesselRoot.dispose();
+    imported = { meshes: [] };
+    installed = [];
+    roof = [];
+    debugEquipment.splice(0);
+    debugFeatures.beforeFrame();
+    debugCollision = createDebugCollisionSource(undefined);
+    updateConstructionView = undefined;
+    updateConstructionDoors = undefined;
+    updateConstructionTraversal = undefined;
+    constructionFrame = undefined;
+    flightEffects.dispose();
+    flightEffects = {
+      meshes: [] as Mesh[],
+      update() {
+        return false;
+      },
+      dispose() {},
+    };
+    lighting.replaceStructure([]);
+    avatar.setEnabled(true);
+    cabinVisibility = createCabinVisibility([], avatar, [], new Set());
+    objects = createObjectPresentation(
+      canvas,
+      scene,
+      [],
+      [],
+      () => true,
+      options.onObjectSelected,
+    );
+    combatAim = createCombatAim(scene, canvas, shipRoot, []);
+    refreshCrewPresentation();
+    invalidateStaticMaterials(scene);
+    scene.resetCachedMaterial();
+    engine.wipeCaches(true);
+    fastSnapshot?.invalidate();
+    flightActiveSet.invalidate();
+    antialiasing.resetHistory();
+  };
+  const vesselLifecycle = createVesselLifecycle({
+    initialKey: vesselKey(options),
+    clear: clearVessel,
+    prepare(input: VesselInput) {
+      const root = new TransformNode("local-vessel", scene);
+      root.parent = shipRoot;
+      root.setEnabled(false);
+      const ready = (async () => {
+        let loaded:
+          | Awaited<ReturnType<typeof loadConstructionInstance>>
+          | Awaited<ReturnType<typeof loadNativeStairEgress>>
+          | undefined;
+        let prefab: PrefabShipViewHandle | undefined;
+        try {
+          loaded = input.constructionEgress
+            ? await loadNativeStairEgress(scene, root, input.constructionEgress)
+            : ((await loadNativeStairConstruction(
+                scene,
+                root,
+                input.construction!,
+              )) ??
+              (await loadConstructionInstance(
+                scene,
+                root,
+                input.construction!,
+              )));
+          if (input.construction) {
+            prefab = await loadPrefabShipPresentation(
+              scene,
+              root,
+              input.construction.documentJson,
+              options.prefabVisualVariant,
+              input.construction.furnishingsJson,
+              publishedAccessBytes,
+              state.interior || !!state.awaitingInterior,
+            );
+            if (prefab)
+              for (const mesh of loaded.meshes) mesh.setEnabled(false);
+          }
+          return { input, root, loaded, prefab };
+        } catch (error) {
+          prefab?.dispose();
+          loaded?.dispose();
+          root.dispose();
+          throw error;
+        }
+      })();
+      return { ready, cancel: () => root.dispose() };
+    },
+    discard(value) {
+      value.prefab?.dispose();
+      value.loaded.dispose?.();
+      value.root.dispose();
+    },
+    install({ input, root, loaded, prefab }) {
+      objects.dispose();
+      combatAim.dispose();
+      Object.assign(options, input);
+      vesselRoot = root;
+      prefabView = prefab;
+      imported = { meshes: loaded.meshes };
+      installed = loaded.placements;
+      walkingElevation = loaded.walkingElevation;
+      constructionFrame = loaded.cameraFrame;
+      updateConstructionView = loaded.setView;
+      updateConstructionDoors = loaded.setDoors;
+      disposeConstruction = loaded.dispose;
+      if ("applyAcceptedStair" in loaded)
+        updateConstructionTraversal = (deck, value) =>
+          loaded.applyAcceptedStair(
+            deck,
+            value && "kind" in value && value.kind === "stair"
+              ? value
+              : undefined,
+          );
+      else if ("applyAcceptedTraversal" in loaded)
+        updateConstructionTraversal = (deck, value) =>
+          loaded.applyAcceptedTraversal(
+            deck,
+            value && "destinationDeckId" in value ? value : undefined,
+          );
+      roof = imported.meshes.filter(
+        (m) =>
+          m.getTotalVertices() > 0 &&
+          m.metadata?.role === "roof" &&
+          m.metadata?.cutawayFade,
+      );
+      prepareCutawayMeshes(roof);
+      lighting.replaceStructure(imported.meshes);
+      avatar.setEnabled(true);
+      cabinVisibility = createCabinVisibility(
+        imported.meshes,
+        avatar,
+        installed,
+        new Set(),
+      );
+      debugCollision = createDebugCollisionSource(input.construction);
+      debugEquipment.splice(
+        0,
+        debugEquipment.length,
+        ...imported.meshes.filter((m) =>
+          /^GEO-(equipment(?:-|$)|room-storage-container(?:-|$))/.test(m.name),
+        ),
+      );
+      if (input.authoredFlightEffects && !input.constructionEgress)
+        flightEffects = createFlightEffects(scene, shipRoot);
+      prefabBinding = prefab
+        ? prefabBindingOf(
+            input.construction?.documentJson,
+            input.construction?.furnishingsJson,
+          )
+        : undefined;
+      if (prefabBinding) {
+        prefabPicker = createPrefabObjectPicker(
+          scene,
+          canvas,
+          shipRoot,
+          prefabBinding,
+          () => state.interior,
+        );
+        prefabBeamClip = createPrefabBeamClip(shipRoot, prefabBinding);
+        furnishingPreview = createFurnishingPreview(
+          scene,
+          canvas,
+          shipRoot,
+          prefabBinding,
+          () => {
+            fastSnapshot?.invalidate();
+            flightActiveSet.invalidate();
+            antialiasing.resetHistory();
+          },
+        );
+        acceptedFurnishings = createAcceptedFurnishings(
+          scene,
+          shipRoot,
+          prefabBinding,
+          {
+            instanceId: input.construction!.instanceId,
+            revision: input.construction!.furnishingRevision ?? 0n,
+            json: input.construction!.furnishingsJson ?? "{}",
+          },
+          () => furnishingPreview?.clear(),
+          (meshes) => {
+            invalidatePrefabShipTriangles(meshes);
+            invalidateStaticMaterials(scene);
+            fastSnapshot?.invalidate();
+            flightActiveSet.invalidate();
+            antialiasing.resetHistory();
+          },
+        );
+      }
+      objects = createObjectPresentation(
+        canvas,
+        scene,
+        imported.meshes,
+        installed,
+        () =>
+          (options.blocksCameraInput?.() ?? false) ||
+          (options.blocksObjectSelection?.() ?? false),
+        options.onObjectSelected,
+        prefabPicker ? (event) => prefabPicker?.pick(event) : undefined,
+      );
+      combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
+      for (const mesh of combatAim.meshes) glow.addIncludedOnlyMesh(mesh);
+      root.setEnabled(false);
+      refreshCrewPresentation();
+      invalidateStaticMaterials(scene);
+      scene.resetCachedMaterial();
+      engine.wipeCaches(true);
+    },
+  });
   return {
     updateFurnishings,
+    setVessel(input: VesselInput) {
+      options.construction = input.construction;
+      options.constructionEgress = input.constructionEgress;
+      return vesselLifecycle.replace(
+        vesselKey(input),
+        input.construction || input.constructionEgress ? input : undefined,
+      );
+    },
     /** Presentation-only crew handle for review harnesses (never simulation state). */
     getCrewVisual() {
       return crew;
@@ -1540,7 +1858,9 @@ async function buildWorld(
         h = engine.getRenderHeight();
       if (rect.width <= 0 || rect.height <= 0) return;
       const p = Vector3.Project(
-        avatar.getAbsolutePosition(),
+        state.seated && !state.eva
+          ? shipRoot.getAbsolutePosition()
+          : avatar.getAbsolutePosition(),
         Matrix.Identity(),
         scene.getTransformMatrix(),
         camera.viewport.toGlobal(w, h),
@@ -1635,6 +1955,7 @@ async function buildWorld(
       if (!initialStateApplied) {
         initialStateApplied = true;
         initialized = false;
+        playerCameraFrame.reset();
         blend = next.interior ? 1 : 0;
         camera.alpha = cameraAlpha(next.heading, next.interior, orbit);
         camera.beta = next.interior ? RPG_BETA : next.inspect ? 0.6 : 0.015;
@@ -1692,7 +2013,9 @@ async function buildWorld(
     dispose() {
       if (disposed) return;
       disposed = true;
-      furnishingPreview?.dispose();
+      vesselLifecycle.dispose();
+      objects.dispose();
+      combatAim.dispose();
       remoteShips?.dispose();
       fastSnapshot?.dispose();
       flightActiveSet.dispose();
