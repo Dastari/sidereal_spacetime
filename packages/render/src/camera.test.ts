@@ -17,7 +17,50 @@ import {
   createObservationCamera,
   deckCameraActorWeight,
   createPlayerCameraFrame,
+  createEvaCameraHandoff,
 } from "./camera";
+test("EVA projection loss, delayed admission and shader install keep actor framing before one direct deck transition", () => {
+  for (const fps of [30, 60, 144]) {
+    const handoff = createEvaCameraHandoff();
+    const camera = createPlayerCameraFrame();
+    expect(handoff(true, false)).toBe(true);
+    const actor = [7, 0.2, -3] as const;
+    camera.frame({ actor, target: actor, halfExtent: 7, dt: 1 / fps });
+    for (let frame = 0; frame < fps * 3; frame++) {
+      // No ownEvaBody; either entry rows or the actual GPU-ready view is pending.
+      expect(handoff(false, true)).toBe(true);
+      const result = camera.frame({
+        actor,
+        target: actor,
+        halfExtent: 7,
+        dt: 1 / fps,
+      });
+      expect(result.target).toEqual([...actor]);
+      expect(result.halfExtent).toBe(7);
+    }
+    expect(handoff(false, false)).toBe(false);
+    let previous = 7;
+    for (let frame = 0; frame < fps; frame++) {
+      const result = camera.frame({
+        actor,
+        target: [6.8, 1, -2.8],
+        halfExtent: 3,
+        dt: 1 / fps,
+      });
+      expect(result.halfExtent).toBeLessThan(previous);
+      expect(result.halfExtent).toBeGreaterThanOrEqual(3);
+      previous = result.halfExtent;
+    }
+  }
+});
+test("cancelled boarding retains EVA framing and an aboard flight preference is never turned into EVA by an edit", () => {
+  const handoff = createEvaCameraHandoff();
+  expect(handoff(true, false)).toBe(true);
+  expect(handoff(false, true)).toBe(true);
+  expect(handoff(true, false)).toBe(true);
+  expect(handoff(false, false)).toBe(false);
+  expect(handoff(false, true)).toBe(false);
+});
 test("an off-centre deck-to-EVA handoff eases framing and zoom monotonically without a wide-flight detour", () => {
   for (const fps of [30, 60, 144]) {
     const camera = createPlayerCameraFrame();

@@ -95,6 +95,7 @@ export async function loadPrefabShipPresentation(
     import("./prefab-ship/logic-panels"),
   ]);
   let interior = initialInteriorVisibility;
+  let hierarchyEnabled = shipRoot.isEnabled();
   // Published component (ship-components/r002) and interior object (ship-objects/r001) GLBs;
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.
   const cleanups: (() => void)[] = [];
@@ -208,10 +209,12 @@ export async function loadPrefabShipPresentation(
       for (const mesh of meshes) {
         const m = mesh.material;
         // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
-        if (m instanceof PBRMaterial)
+        if (m instanceof PBRMaterial) {
+          m.allowShaderHotSwapping = false;
           m.directIntensity = /-(floor|wall)-/.test(m.name)
             ? GAME_INTERIOR_DIRECT
             : GAME_SHIP_DIRECT;
+        }
       }
       const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
       for (const mesh of emissive) glowing.add(mesh);
@@ -236,7 +239,9 @@ export async function loadPrefabShipPresentation(
     logMetrics();
     const handle: PrefabShipViewHandle = {
       setInterior(next) {
-        if (next === interior) return;
+        const enabled = shipRoot.isEnabled();
+        if (next === interior && enabled === hierarchyEnabled) return;
+        hierarchyEnabled = enabled;
         interior = next;
         view.setView(next ? "deck" : "flight");
         doors.setView(next ? "deck" : "flight");

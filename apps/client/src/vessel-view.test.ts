@@ -1,25 +1,47 @@
 import { expect, test } from "vitest";
-import { createDeckViewRestoration } from "./vessel-view";
-test("waits for the current accepted assembly and restores once on entry", () => {
+import {
+  awaitingDeckPresentation,
+  createDeckViewRestoration,
+} from "./vessel-view";
+test("requests deck before graphics install, so the first ready frame has its final view", () => {
   const restore = createDeckViewRestoration();
-  expect(restore(undefined, "old")).toBe(false);
-  expect(restore("entry", undefined)).toBeUndefined();
-  expect(restore("new-entry", "entry")).toBeUndefined();
-  expect(restore("new-entry", "new-entry")).toBe(true);
-  expect(restore("new-entry", "new-entry")).toBeUndefined();
+  expect(restore(undefined)).toBe(false);
+  expect(restore("entry")).toBe(true);
+  expect(restore("new-entry")).toBeUndefined();
+  expect(restore("new-entry")).toBeUndefined();
+});
+test("holds actor framing when EVA clears before admission/install, and releases only for ready deck or no ship", () => {
+  const before = {
+    connected: true,
+    shipId: "ship",
+    hasEva: true,
+    interiorReady: false,
+  };
+  expect(awaitingDeckPresentation(before)).toBe(false);
+  const projectionGap = { ...before, hasEva: false };
+  expect(awaitingDeckPresentation(projectionGap)).toBe(true);
+  expect(
+    awaitingDeckPresentation({ ...projectionGap, interiorReady: true }),
+  ).toBe(false);
+  expect(awaitingDeckPresentation({ ...projectionGap, connected: false })).toBe(
+    false,
+  );
+  expect(awaitingDeckPresentation({ ...projectionGap, shipId: "" })).toBe(
+    false,
+  );
 });
 test("preserves flight preference across an aboard document rebuild but restores on re-entry", () => {
   const restore = createDeckViewRestoration();
-  expect(restore("visit", "visit")).toBe(true);
-  expect(restore("edit", "visit")).toBeUndefined();
-  expect(restore("edit", "edit")).toBeUndefined();
-  expect(restore(undefined, "edit")).toBe(false);
-  expect(restore("return", undefined)).toBeUndefined();
-  expect(restore("return", "return")).toBe(true);
+  expect(restore("visit")).toBe(true);
+  expect(restore("edit")).toBeUndefined();
+  expect(restore("edit")).toBeUndefined();
+  expect(restore(undefined)).toBe(false);
+  expect(restore("return")).toBe(true);
+  expect(restore("return")).toBeUndefined();
 });
 test("revoked pending entry cannot restore a later exterior assembly", () => {
   const restore = createDeckViewRestoration();
-  expect(restore("entry", undefined)).toBeUndefined();
-  expect(restore(undefined, undefined)).toBe(false);
-  expect(restore(undefined, "entry")).toBe(false);
+  expect(restore("entry")).toBe(true);
+  expect(restore(undefined)).toBe(false);
+  expect(restore(undefined)).toBe(false);
 });

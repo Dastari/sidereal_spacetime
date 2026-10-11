@@ -40,6 +40,7 @@ import {
 } from "@sidereal/content/ship-prefab";
 import { rasterOutline } from "@sidereal/sim/ship-dresser";
 import { prefabIdOfExterior } from "@sidereal/sim/ship-exterior";
+import { renderRootMeshes, waitForRenderRoot } from "../mesh-readiness";
 import { setMeshRole } from "../mesh-roles";
 import { moldedLightRig } from "../molded-plastic";
 import {
@@ -454,6 +455,8 @@ async function createExteriorAccess(
   );
 }
 interface Entry {
+  pinLifetime?: AbortController;
+  accessCompletion?: Promise<void>;
   accessRoot?: TransformNode;
   accessNeedsSync?: boolean;
   prepareFull?: () => void;
@@ -484,6 +487,13 @@ export interface RemoteShipExteriorsOptions {
   accessResolver?: (piece: ShipAccessDoorPiece) => Promise<Uint8Array>;
   localShipId: () => string | undefined;
   warmShipId?: () => string | undefined;
+  exteriorLogic?: () => ReadonlyMap<
+    string,
+    {
+      doors: ReadonlyMap<string, boolean>;
+      panels: ReadonlyMap<string, { state: string; light: string }>;
+    }
+  >;
   resolve?: typeof resolvePublishedExterior;
   load?: (
     scene: Scene,
@@ -494,9 +504,11 @@ export interface RemoteShipExteriorsOptions {
 }
 
 /**
- * Remote ship presentation keyed by the store's accepted rows. Every perceived ship other than
- * the viewer's own gets a root: its exterior at the tier its projected size allows, or a marker
+ * Remote ship presentation keyed by the store's accepted rows. Every perceived ship
+ * gets a public root: its exterior at the tier its projected size allows, or a marker
  * while its hull is unpublished or still loading. Rows leaving the store remove the ship at once.
+ * The occupied ship also keeps a hidden public consumer, including its doors,
+ * so its first exit never needs to substitute the coarse hull proxy.
  */
 export function createRemoteShipExteriors(
   scene: Scene,
@@ -529,6 +541,7 @@ export function createRemoteShipExteriors(
     inexact = 0;
 
   const release = (entry: Entry) => {
+    entry.accessCompletion = undefined;
     entry.accessToken = undefined;
     entry.accessPending = false;
     entry.accessNeedsSync = false;
@@ -553,6 +566,7 @@ export function createRemoteShipExteriors(
     const entry = entries.get(id);
     if (!entry) return;
     entries.delete(id);
+    entry.pinLifetime?.abort();
     release(entry);
     entry.root.dispose();
   };
@@ -576,8 +590,14 @@ export function createRemoteShipExteriors(
       scene,
     );
     accessRoot.parent = full;
+    accessRoot.setEnabled(true);
     entry.accessRoot = accessRoot;
-    void createExteriorAccess(
+    let cancel!: () => void;
+    const cancelled = new Promise<void>((resolve) => {
+      cancel = resolve;
+    });
+    const cancelObserver = accessRoot.onDisposeObservable.add(() => cancel());
+    const work = createExteriorAccess(
       scene,
       accessRoot,
       resolved,
@@ -606,6 +626,10 @@ export function createRemoteShipExteriors(
           resolved.catalog,
         );
         entry.panels.setView("flight");
+        moldedLightRig(scene).include(full.getChildMeshes());
+        for (const mesh of full.getChildMeshes())
+          if (mesh.material instanceof PBRMaterial)
+            mesh.material.allowShaderHotSwapping = false;
       })
       .catch((error) => {
         accessRoot.dispose();
@@ -624,6 +648,18 @@ export function createRemoteShipExteriors(
           options.onError?.(error);
         }
       });
+    entry.accessCompletion = Promise.race([work, cancelled]).finally(() =>
+      accessRoot.onDisposeObservable.remove(cancelObserver),
+    );
+  };
+  const prepareWarm = (entry: Entry) => {
+    entry.prepareFull?.();
+    requestAccess(entry);
+    // Root suppression is separate from child readiness. Disabled children
+    // cannot be compiled as the cohort that will draw on the first exit.
+    entry.full?.setEnabled(true);
+    entry.proxy?.setEnabled(false);
+    entry.marker.setEnabled(false);
   };
   const attach = (entry: Entry) => {
     const prototype = entry.key ? loaded.get(entry.key) : undefined;
@@ -636,6 +672,8 @@ export function createRemoteShipExteriors(
     full.setEnabled(false);
     proxy.setEnabled(false);
     Object.assign(entry, { prototype, full, proxy, prepareFull, releaseFull });
+    if (entry.shipId === (options.warmShipId?.() ?? options.localShipId()))
+      prepareWarm(entry);
   };
   const request = (resolved: ResolvedExterior) => {
     if (prototypes.has(resolved.key)) return;
@@ -679,6 +717,7 @@ export function createRemoteShipExteriors(
   };
   let reconciledDescriptions: RemoteShipSnapshot["shipDescription"] | undefined;
   let reconciledLocal: string | undefined;
+  let reconciledWarm: string | undefined;
   const reconcile = () => {
     if (disposed) return;
     const snapshot = store.getSnapshot();
@@ -688,24 +727,20 @@ export function createRemoteShipExteriors(
       reconciledDescriptions = undefined;
     }
     const local = options.localShipId();
+    const warm = options.warmShipId?.() ?? local;
     if (
       reconciledDescriptions === snapshot.shipDescription &&
-      reconciledLocal === local
+      reconciledLocal === local &&
+      reconciledWarm === warm
     ) {
       let members = 0;
       for (const motion of snapshot.shipMotion) {
-        if (motion.shipId === local) continue;
         if (!entries.has(motion.shipId)) break;
         members++;
       }
       // Hot pose updates do not change appearance or membership. Keep pose
       // interpolation live; removals and new IDs still reconcile immediately.
-      if (
-        members === entries.size &&
-        members ===
-          snapshot.shipMotion.length -
-            (snapshot.shipMotion.some((m) => m.shipId === local) ? 1 : 0)
-      )
+      if (members === entries.size && members === snapshot.shipMotion.length)
         return;
     }
     const descriptions = new Map(
@@ -713,7 +748,6 @@ export function createRemoteShipExteriors(
     );
     // Prepare the public exterior while its private occupied assembly is drawn.
     // Exit only switches representation; it must not start a cold hull load.
-    const warm = options.warmShipId?.() ?? local;
     const ownDescription = warm ? descriptions.get(warm) : undefined;
     const ownExterior = ownDescription
       ? resolve(
@@ -722,9 +756,7 @@ export function createRemoteShipExteriors(
         )
       : undefined;
     if (ownExterior) request(ownExterior);
-    const wanted = new Set(
-      snapshot.shipMotion.map((m) => m.shipId).filter((id) => id !== local),
-    );
+    const wanted = new Set(snapshot.shipMotion.map((m) => m.shipId));
     for (const id of [...entries.keys()]) if (!wanted.has(id)) destroy(id);
     for (const id of wanted) {
       const d = descriptions.get(id);
@@ -747,22 +779,27 @@ export function createRemoteShipExteriors(
         entries.set(id, entry);
       }
       if (entry.key !== resolved?.key) {
+        entry.pinLifetime?.abort();
+        entry.pinLifetime = new AbortController();
         release(entry);
         entry.key = resolved?.key;
       }
       if (resolved) {
         request(resolved);
         attach(entry);
+        if (id === warm && entry.prototype) prepareWarm(entry);
       }
     }
     reconciledDescriptions = snapshot.shipDescription;
     reconciledLocal = local;
+    reconciledWarm = warm;
   };
   const unbind = (["shipMotion", "shipDescription", "admission"] as const).map(
     (table) => store.subscribeTable(table, reconcile),
   );
   reconcile();
   let lastLocal = options.localShipId();
+  let lastWarm = options.warmShipId?.() ?? lastLocal;
   let lastUpdateMs: number | undefined;
   const dispose = () => {
     if (disposed) return;
@@ -799,8 +836,11 @@ export function createRemoteShipExteriors(
       >,
     ) {
       if (disposed) return;
-      if (options.localShipId() !== lastLocal) {
+      const local = options.localShipId();
+      const warm = options.warmShipId?.() ?? local;
+      if (local !== lastLocal || warm !== lastWarm) {
         lastLocal = options.localShipId();
+        lastWarm = warm;
         reconcile();
       }
       if (![origin.x, origin.y, nowMs].every(Number.isFinite)) return;
@@ -823,9 +863,32 @@ export function createRemoteShipExteriors(
           entry.root.setEnabled(false);
           continue;
         }
-        entry.root.setEnabled(true);
+        entry.root.setEnabled(id !== local);
         entry.root.position.set(sample.x - origin.x, 0, -(sample.y - origin.y));
         entry.root.rotation.y = sample.heading;
+        if (id === local) {
+          prepareWarm(entry);
+          const logic = exteriorLogic?.get(id);
+          entry.access?.update({
+            actors: [],
+            nowMs,
+            dt: entry.accessNeedsSync ? 1 : accessDt,
+            logic: logic?.doors,
+          });
+          if (entry.access) entry.accessNeedsSync = false;
+          entry.panels?.update(
+            logic
+              ? new Map(
+                  [...logic.panels].map(([slot, value]) => [
+                    slot,
+                    { light: value.light, pressedMicros: 0 },
+                  ]),
+                )
+              : undefined,
+            nowMs,
+          );
+          continue;
+        }
         const radius = entry.prototype?.radius ?? DEFAULT_RADIUS_M;
         const distance = eye
           ? Vector3.Distance(eye, entry.root.position)
@@ -836,8 +899,19 @@ export function createRemoteShipExteriors(
           previous: entry.tier,
         });
       }
-      const tiers = assignShipTiers(sized, budget);
+      const reservedWarm = warm && entries.get(warm)?.prototype ? 1 : 0;
+      const tiers = assignShipTiers(
+        sized.filter(({ id }) => id !== warm),
+        Math.max(0, budget - reservedWarm),
+      );
+      const warmSize = sized.find(({ id }) => id === warm);
+      if (warmSize)
+        tiers.set(
+          warmSize.id,
+          assignShipTiers([warmSize], 1).get(warmSize.id)!,
+        );
       const retireDetail = (entry: Entry) => {
+        entry.accessCompletion = undefined;
         entry.accessToken = undefined;
         entry.accessPending = false;
         entry.accessNeedsSync = false;
@@ -860,10 +934,15 @@ export function createRemoteShipExteriors(
       const retained = [...entries.values()]
         .filter(
           (entry) =>
-            entry.lastFullAt !== undefined && tiers.get(entry.shipId) !== 0,
+            entry.shipId !== warm &&
+            entry.lastFullAt !== undefined &&
+            tiers.get(entry.shipId) !== 0,
         )
         .sort((a, b) => b.lastFullAt! - a.lastFullAt!);
-      let available = Math.max(0, budget - selected);
+      let available = Math.max(
+        0,
+        budget - selected - (warm && tiers.get(warm) === 0 ? 0 : reservedWarm),
+      );
       for (const entry of retained) {
         if (nowMs - entry.lastFullAt! >= 5000 || available <= 0)
           retireDetail(entry);
@@ -936,6 +1015,7 @@ export function createRemoteShipExteriors(
     diagnostics() {
       return {
         ships: [...entries.values()]
+          .filter((e) => e.shipId !== options.localShipId())
           .map((e) => ({
             shipId: e.shipId,
             exterior: e.key ?? null,
@@ -958,6 +1038,20 @@ export function createRemoteShipExteriors(
           radius: p.radius,
           ...p.metrics,
         })),
+        warm: (() => {
+          const id = options.warmShipId?.() ?? options.localShipId();
+          const entry = id ? entries.get(id) : undefined;
+          return entry
+            ? {
+                shipId: id,
+                loaded: !!entry.prototype,
+                accessPending: !!entry.accessPending,
+                accessUnavailable: !!entry.accessUnavailable,
+                enabled: entry.root.isEnabled(),
+                fullMeshes: entry.full?.getChildMeshes().length ?? 0,
+              }
+            : undefined;
+        })(),
         inexactPrototypes: inexact,
       };
     },
@@ -975,14 +1069,72 @@ export function createRemoteShipExteriors(
         : undefined;
       if (resolved) {
         request(resolved);
-        const prototype = await prototypes.get(resolved.key);
-        if (prototype && scene.getEngine().getClassName() !== "NullEngine")
-          await Promise.all(
-            prototype.sources.map((mesh) =>
-              mesh.material?.forceCompilationAsync(mesh, {
-                useInstances: true,
-              }),
-            ),
+        const entry = id ? entries.get(id) : undefined;
+        const source = prototypes.get(resolved.key);
+        const lifetime = entry?.pinLifetime;
+        if (!entry || !source || !lifetime) return;
+        // The immutable source may finish warming after revocation; this
+        // consumer must stop waiting immediately on row, pin or scene loss.
+        const prototype = await new Promise<
+          RemoteExteriorPrototype | undefined
+        >((resolve, reject) => {
+          const cancel = () => {
+            lifetime.signal.removeEventListener("abort", cancel);
+            resolve(undefined);
+          };
+          if (lifetime.signal.aborted) return resolve(undefined);
+          lifetime.signal.addEventListener("abort", cancel, { once: true });
+          source.then(
+            (value) => {
+              lifetime.signal.removeEventListener("abort", cancel);
+              resolve(lifetime.signal.aborted ? undefined : value);
+            },
+            (error) => {
+              lifetime.signal.removeEventListener("abort", cancel);
+              reject(error);
+            },
+          );
+        });
+        if (!prototype || !entry || entry.key !== resolved.key) return;
+        attach(entry);
+        prepareWarm(entry);
+        await entry.accessCompletion;
+        if (
+          disposed ||
+          entries.get(entry.shipId) !== entry ||
+          entry.accessUnavailable ||
+          !entry.full
+        )
+          return;
+        const root = entry.full;
+        const logic = options.exteriorLogic?.().get(entry.shipId);
+        entry.access?.update({
+          actors: [],
+          nowMs: Date.now(),
+          dt: 1,
+          logic: logic?.doors,
+        });
+        entry.panels?.update(
+          logic
+            ? new Map(
+                [...logic.panels].map(([slot, value]) => [
+                  slot,
+                  { light: value.light, pressedMicros: 0 },
+                ]),
+              )
+            : undefined,
+          Date.now(),
+        );
+        if (entry.access) entry.accessNeedsSync = false;
+        moldedLightRig(scene).include(root.getChildMeshes());
+        for (const mesh of renderRootMeshes(root, true))
+          if (mesh.material instanceof PBRMaterial)
+            mesh.material.allowShaderHotSwapping = false;
+        if (scene.getEngine().getRenderingCanvas())
+          await waitForRenderRoot(
+            root,
+            () => !disposed && entries.get(entry.shipId) === entry,
+            true,
           );
       }
     },
@@ -991,7 +1143,7 @@ export function createRemoteShipExteriors(
       await Promise.all(prototypes.values());
     },
     get count() {
-      return entries.size;
+      return entries.size - (entries.has(options.localShipId() ?? "") ? 1 : 0);
     },
     dispose,
   };

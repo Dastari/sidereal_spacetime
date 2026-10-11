@@ -7,6 +7,35 @@ import { PointLight } from "@babylonjs/core/Lights/pointLight";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { cabinIsVisible, createCabinVisibility } from "./cabin-visibility";
 
+test("a hidden staging parent preserves each authored child enable for first deck publication", () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  const staged = new TransformNode("staged", scene);
+  staged.setEnabled(false);
+  const floor = CreateBox("GEO-deck-floor", {}, scene);
+  floor.parent = staged;
+  const hidden = CreateBox("GEO-deck-overlay", {}, scene);
+  hidden.parent = staged;
+  hidden.setEnabled(false);
+  const actor = new TransformNode("actor", scene);
+  const visibility = createCabinVisibility(
+    [floor, hidden],
+    actor,
+    [],
+    new Set(),
+  );
+  visibility.update(false, []);
+  visibility.update(true, []);
+  expect(floor.isEnabled(false)).toBe(true);
+  expect(hidden.isEnabled(false)).toBe(false);
+  expect(floor.isEnabled()).toBe(false);
+  staged.setEnabled(true);
+  expect(floor.isEnabled()).toBe(true);
+  expect(hidden.isEnabled()).toBe(false);
+  scene.dispose();
+  engine.dispose();
+});
+
 test("cabin remains during closing transition and opens immediately for Deck", () => {
   expect(cabinIsVisible(false, 0.1, false)).toBe(true);
   expect(cabinIsVisible(false, 0.005, false)).toBe(false);

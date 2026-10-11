@@ -6,6 +6,7 @@ import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-cat
 import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
 import { EngineStore } from "@babylonjs/core/Engines/engineStore";
 import type { Scene } from "@babylonjs/core/scene";
+import type { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import {
   readSteeringStyle,
   saveSteeringStyle,
@@ -45,7 +46,7 @@ const snapshot = {
   ],
 };
 let local: string | undefined = shipId,
-  scene: Scene,
+  scene!: Scene,
   ready = false,
   error = "";
 let gui: ReturnType<typeof createGameUI> | undefined;
@@ -154,6 +155,35 @@ const stats = () => ({
   privateRoots: scene.transformNodes.filter(
     (n) => n.name === "local-vessel" && !n.isDisposed(),
   ).length,
+  privateVisibleRoots: scene.transformNodes.filter(
+    (n) => n.name === "local-vessel" && !n.isDisposed() && n.isEnabled(),
+  ).length,
+  privateViews: scene.transformNodes
+    .filter((n) => n.name === "local-vessel" && !n.isDisposed())
+    .map((n) => ({
+      visible: n.isEnabled(),
+      revision: n.metadata?.prefabView?.metrics().visualRevision,
+    })),
+  camera: (() => {
+    const camera = scene.activeCamera as ArcRotateCamera;
+    return {
+      alpha: camera.alpha,
+      beta: camera.beta,
+      halfExtent: camera.radius * Math.tan(camera.fov / 2),
+      target: camera.target.asArray(),
+    };
+  })(),
+  presentation: {
+    interior: state.interior,
+    awaitingInterior: !!state.awaitingInterior,
+    eva: !!state.eva,
+  },
+  publicFullVisible:
+    scene.getTransformNodeByName(`remote-ship-${shipId}:full`)?.isEnabled() ??
+    false,
+  publicProxyVisible:
+    scene.getTransformNodeByName(`remote-ship-${shipId}:proxy`)?.isEnabled() ??
+    false,
   remote: world.getSharedWorldDiagnostics().remoteShips,
   domWidgets: document.querySelectorAll(
     "button,input,select,form,[role=dialog]",
@@ -166,15 +196,58 @@ const stats = () => ({
   selectedVertices:
     scene.getMeshByName("prefab-object-selected")?.getTotalVertices() ?? 0,
 });
+const frames: ReturnType<typeof stats>[] = [];
+scene.onAfterRenderObservable.add(() => {
+  frames.push(stats());
+  if (frames.length > 360) frames.shift();
+});
+let boardingGeneration = 0;
+let reviewFrames: ReadonlyArray<() => void> | undefined;
 Object.assign(window, {
   __evaFixture: {
     stats,
+    frames: () => frames.map((frame) => ({ ...frame })),
+    clearFrames: () => {
+      frames.splice(0);
+    },
+    // Isolated QA only: background collaborative previews can suspend RAF.
+    // Invoke the saved production callbacks with an explicit review timestep;
+    // this is frame/state qualification, never hardware timing evidence.
+    pauseFrames() {
+      const engine = scene.getEngine();
+      reviewFrames ??= [...engine.activeRenderLoops];
+      engine.stopRenderLoop();
+      return stats();
+    },
+    stepFrames(count = 1, dtMs = 1000 / 60) {
+      const engine = scene.getEngine();
+      const delta = engine.getDeltaTime;
+      engine.getDeltaTime = () => dtMs;
+      try {
+        for (let frame = 0; frame < Math.min(120, count); frame++) {
+          engine.beginFrame();
+          for (const callback of reviewFrames ?? []) callback();
+          engine.endFrame();
+        }
+      } finally {
+        engine.getDeltaTime = delta;
+      }
+      return stats();
+    },
+    resumeFrames() {
+      for (const callback of reviewFrames ?? [])
+        scene.getEngine().runRenderLoop(callback);
+      reviewFrames = undefined;
+      return stats();
+    },
     async exit() {
+      boardingGeneration++;
       local = undefined;
       await world.setVessel({});
       state = {
         ...state,
         interior: false,
+        awaitingInterior: false,
         furnishings: undefined,
         selectedObject: undefined,
         constructionDeckId: undefined,
@@ -206,15 +279,38 @@ Object.assign(window, {
       gui?.update(uiState);
       return stats();
     },
-    async board() {
-      await world.setVessel({ construction, authoredFlightEffects: true });
+    async board(
+      options: { admissionDelayMs?: number; deliveryDelayMs?: number } = {},
+    ) {
+      const generation = ++boardingGeneration;
+      // Actual App ordering: ownEvaBody clears first; entry rows and private
+      // graphics arrive later. The previous fixture retained EVA through load.
+      state = { ...state, interior: false, awaitingInterior: true, eva: null };
+      world.update(state);
+      uiState = { ...uiState, interior: false, eva: undefined };
+      gui?.update(uiState);
+      if (options.admissionDelayMs)
+        await new Promise((resolve) =>
+          setTimeout(resolve, options.admissionDelayMs),
+        );
+      if (generation !== boardingGeneration)
+        return { applied: false, ...stats() };
+      const applied = await world.setVessel({
+        construction,
+        authoredFlightEffects: true,
+      });
+      if (options.deliveryDelayMs)
+        await new Promise((resolve) =>
+          setTimeout(resolve, options.deliveryDelayMs),
+        );
+      if (!applied || generation !== boardingGeneration)
+        return { applied: false, ...stats() };
       local = shipId;
       state = {
         ...state,
         interior: true,
+        awaitingInterior: false,
         eva: null,
-        localX: 0,
-        localY: 0,
         constructionDeckId: deckId,
         furnishings: {
           instanceId: construction.instanceId,
@@ -225,7 +321,7 @@ Object.assign(window, {
       world.update(state);
       uiState = { ...uiState, interior: true, eva: undefined };
       gui?.update(uiState);
-      return stats();
+      return { applied: true, ...stats() };
     },
     rotate() {
       yaw += Math.PI / 12;

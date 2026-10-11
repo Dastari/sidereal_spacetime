@@ -1,23 +1,28 @@
-/** Restore third person once for each accepted entry, after its assembly is installed.
- * Later ship edits must preserve the player's chosen deck/flight view. */
+/** Request third person once when entry is accepted. Graphics installation gates
+ * disclosure separately; the first ready frame must already have its final view.
+ * Later ship edits preserve the player's chosen deck/flight preference. */
 export function createDeckViewRestoration() {
   let aboard = false;
-  let pending = false;
-  return (
-    acceptedKey: string | undefined,
-    installedKey: string | undefined,
-  ): boolean | undefined => {
+  return (acceptedKey: string | undefined): boolean | undefined => {
     if (acceptedKey === undefined) {
       aboard = false;
-      pending = false;
       return false;
     }
-    if (!aboard) pending = true;
+    const entering = !aboard;
     aboard = true;
-    if (pending && acceptedKey === installedKey) {
-      pending = false;
-      return true;
-    }
-    return undefined;
+    return entering ? true : undefined;
   };
+}
+
+/** ownEvaBody can clear before the separately filtered location/instance rows
+ * arrive. Hold the camera across that interval, without claiming deck access. */
+export function awaitingDeckPresentation(input: {
+  connected: boolean;
+  shipId: string | undefined;
+  hasEva: boolean;
+  interiorReady: boolean;
+}) {
+  return (
+    input.connected && !!input.shipId && !input.hasEva && !input.interiorReady
+  );
 }

@@ -10,6 +10,17 @@ export function easeCameraZoom(current: number, target: number, dt: number) {
   return current + (target - current) * -Math.expm1(-12 * Math.max(0, dt));
 }
 
+/** Missing EVA/entry projections must not briefly select the ship's flight
+ * camera. Hold the actor view until the accepted deck is ready, or truly leave
+ * that entry path. This is presentation state, never an EVA authority grant. */
+export function createEvaCameraHandoff() {
+  let actorView = false;
+  return (eva: boolean, awaitingInterior: boolean) => {
+    actorView = eva || (actorView && awaitingInterior);
+    return actorView;
+  };
+}
+
 /** Ease framing, not walking: the displayed actor remains the moving anchor.
  * One final zoom target avoids an exit detour through the old ship-flight zoom. */
 export function createPlayerCameraFrame() {

@@ -1,4 +1,7 @@
-import { createDeckViewRestoration } from "./vessel-view";
+import {
+  awaitingDeckPresentation,
+  createDeckViewRestoration,
+} from "./vessel-view";
 import { cursorShipTurn, evaSteering, steeringHelp } from "./steering";
 import {
   readSteeringStyle,
@@ -532,6 +535,12 @@ export default function App({
     acceptedInterior && installedSceneKey.current === sceneKey
       ? ship?.id
       : undefined;
+  const awaitingInterior = awaitingDeckPresentation({
+    connected: !!actor?.connected,
+    shipId: actor?.shipId,
+    hasEva: !!evaBody,
+    interiorReady: acceptedInterior && installedSceneKey.current === sceneKey,
+  });
   const authoredFlight = authoredFlightPresentation(
     actor,
     constructionVisit,
@@ -627,7 +636,6 @@ export default function App({
   useLayoutEffect(() => {
     const restore = deckViewRestoration.current(
       acceptedInterior ? sceneKey : undefined,
-      installedSceneKey.current,
     );
     if (restore !== undefined) setInterior(restore);
   }, [acceptedInterior, sceneKey, loadedSceneKey]);
@@ -637,6 +645,7 @@ export default function App({
     sceneState.current = {
       ...sceneState.current,
       interior: false,
+      awaitingInterior,
       furnishings: undefined,
       selectedObject: undefined,
       crewmates: [],
@@ -2079,6 +2088,9 @@ export default function App({
       localX: evaView?.localX ?? actor?.localX ?? 0,
       localY: evaView?.localY ?? actor?.localY ?? PILOT_LAYOUT.station.y,
       interior: interior && deliverInterior,
+      // Occupancy views may arrive after ownEvaBody is removed. Preserve actor
+      // framing through that gap without delivering any private deck geometry.
+      awaitingInterior,
       eva: evaView ?? null,
       airlockCycle: null,
       shipLogic: deliverInterior
