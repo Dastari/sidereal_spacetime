@@ -11,7 +11,7 @@ import { Color4 } from "@babylonjs/core/Maths/math.color";
 import { Ray } from "@babylonjs/core/Culling/ray";
 import type { FurnishingOverride } from "@sidereal/content/wayfarer-furnishings";
 import { FURNISHING_DEFAULT } from "@sidereal/content/wayfarer-furnishings";
-import { WAYFARER_GAMEPLAY_OBJECTS } from "@sidereal/content/wayfarer-authored-gameplay";
+import { furnishingSources } from "./furnishing-source";
 import { prefabOrigin } from "@sidereal/content/ship-prefab";
 import type { PrefabShipBinding } from "./prefab-ship-interaction";
 import { setMeshRole } from "./mesh-roles";
@@ -66,7 +66,7 @@ export function createFurnishingPreview(
   const begin = (id: string) => {
     if (selected === id) return true;
     clear();
-    const source = WAYFARER_GAMEPLAY_OBJECTS.find((o) => o.object === id);
+    const source = furnishingSources(binding.doc).find((o) => o.object === id);
     if (!source) return false;
     baseline = binding.furnishings?.[id] ?? FURNISHING_DEFAULT;
     const center = new Vector3(
@@ -226,7 +226,9 @@ export function createFurnishingPreview(
     },
     show(id: string, pose: FurnishingOverride, valid = true) {
       if (!begin(id) || !pivot) return false;
-      const source = WAYFARER_GAMEPLAY_OBJECTS.find((o) => o.object === id)!;
+      const source = furnishingSources(binding.doc).find(
+        (o) => o.object === id,
+      )!;
       pivot.position.set(
         -((source.min[1] + source.max[1]) / 2 + pose.dy - origin[1]),
         0,

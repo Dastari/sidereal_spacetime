@@ -165,255 +165,286 @@ export async function loadConstructionInstance(
   });
   const unique = [...new Map(assets.map((a) => [a.id, a])).values()],
     prototypes = await loadEquipmentPrototypes(scene, unique);
-  const placements = requested.map((p, i) => {
-    const asset = assets[i];
-    const placement: PartPlacement = {
-      id: p.id,
-      assetId: asset.id,
-      position: p.origin.map((v) => v / 32) as [number, number, number],
-      rotation: (p.quarterTurns * Math.PI) / 2,
-      flipped: p.reflected,
-      removedCells: [],
-    };
-    const result = equipmentPlacement(
-      scene,
-      parent,
-      asset,
-      placement,
-      prototypes.get(asset.id)!,
-    );
-    result.node.metadata = {
-      ...result.node.metadata,
-      instanceId: input.instanceId,
-      deckId: input.deckId,
-    };
-    for (const m of result.meshes) {
-      // Structural floors block the pick ray but are not selectable equipment.
-      m.isPickable = true;
-      m.metadata = {
-        ...m.metadata,
+  if (scene.isDisposed || parent.isDisposed())
+    throw Error("Construction load cancelled");
+  const release: (() => void)[] = [];
+  let disposed = false;
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    for (const cleanup of release.reverse()) cleanup();
+  };
+  try {
+    const placements = requested.map((p, i) => {
+      const asset = assets[i];
+      const placement: PartPlacement = {
+        id: p.id,
+        assetId: asset.id,
+        position: p.origin.map((v) => v / 32) as [number, number, number],
+        rotation: (p.quarterTurns * Math.PI) / 2,
+        flipped: p.reflected,
+        removedCells: [],
+      };
+      const result = equipmentPlacement(
+        scene,
+        parent,
+        asset,
+        placement,
+        prototypes.get(asset.id)!,
+      );
+      release.push(() => {
+        result.lighting.dispose();
+        result.node.dispose();
+      });
+      result.node.metadata = {
         ...result.node.metadata,
+        instanceId: input.instanceId,
+        deckId: input.deckId,
+      };
+      for (const m of result.meshes) {
+        // Structural floors block the pick ray but are not selectable equipment.
+        m.isPickable = true;
+        m.metadata = {
+          ...m.metadata,
+          ...result.node.metadata,
+          category: "floor",
+        };
+      }
+      return result;
+    });
+    const slabs = shapedFloors ? createLayoutFloorSlabs(scene) : undefined;
+    if (slabs) release.push(() => slabs.dispose());
+    const slabIssues =
+      slabs?.update(
+        { document: document.layout, deckId: input.deckId },
+        true,
+      ) ?? [];
+    if (slabIssues.length) {
+      slabs?.dispose();
+      throw Error(slabIssues.join("; "));
+    }
+    const slabPlacements = (slabs?.meshes ?? []).map((mesh) => {
+      mesh.parent = parent;
+      mesh.isPickable = true;
+      mesh.metadata = {
+        ...mesh.metadata,
+        instanceId: input.instanceId,
+        deckId: input.deckId,
         category: "floor",
       };
-    }
-    return result;
-  });
-  const slabs = shapedFloors ? createLayoutFloorSlabs(scene) : undefined;
-  const slabIssues =
-    slabs?.update({ document: document.layout, deckId: input.deckId }, true) ??
-    [];
-  if (slabIssues.length) {
-    slabs?.dispose();
-    throw Error(slabIssues.join("; "));
-  }
-  const slabPlacements = (slabs?.meshes ?? []).map((mesh) => {
-    mesh.parent = parent;
-    mesh.isPickable = true;
-    mesh.metadata = {
-      ...mesh.metadata,
-      instanceId: input.instanceId,
-      deckId: input.deckId,
-      category: "floor",
-    };
-    const lighting = createEquipmentLighting(scene, mesh, []);
-    lighting.setMeshes([mesh]);
-    return { node: mesh, meshes: [mesh], lighting };
-  });
-  const deck = document.layout.decks.find((d) => d.id === input.deckId)!;
-  const vertices = document.layout.tiles
-    .filter((t) => t.deckId === input.deckId)
-    .flatMap((t) => t.vertices);
-  const minX = Math.min(...vertices.map((p) => p[0])) / 32,
-    maxX = Math.max(...vertices.map((p) => p[0])) / 32;
-  const minY = Math.min(...vertices.map((p) => p[1])) / 32,
-    maxY = Math.max(...vertices.map((p) => p[1])) / 32;
-  const perimeter = compileLayout(document.layout).walls.filter(
-    (w) => w.deckId === input.deckId && w.source === "perimeter",
-  );
-  const isInset = document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id;
-  const insetPlan = isInset
-    ? planLayoutInsetVisuals({
-        document: document.layout,
-        compiled: compileLayout(document.layout),
+      const lighting = createEquipmentLighting(scene, mesh, []);
+      lighting.setMeshes([mesh]);
+      release.push(() => lighting.dispose());
+      return { node: mesh, meshes: [mesh], lighting };
+    });
+    const deck = document.layout.decks.find((d) => d.id === input.deckId)!;
+    const vertices = document.layout.tiles
+      .filter((t) => t.deckId === input.deckId)
+      .flatMap((t) => t.vertices);
+    const minX = Math.min(...vertices.map((p) => p[0])) / 32,
+      maxX = Math.max(...vertices.map((p) => p[0])) / 32;
+    const minY = Math.min(...vertices.map((p) => p[1])) / 32,
+      maxY = Math.max(...vertices.map((p) => p[1])) / 32;
+    const perimeter = compileLayout(document.layout).walls.filter(
+      (w) => w.deckId === input.deckId && w.source === "perimeter",
+    );
+    const isInset =
+      document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id;
+    const insetPlan = isInset
+      ? planLayoutInsetVisuals({
+          document: document.layout,
+          compiled: compileLayout(document.layout),
+          deckId: input.deckId,
+        })
+      : undefined;
+    if (insetPlan?.issues.length)
+      throw Error(insetPlan.issues.map((i) => i.message).join("; "));
+    const inset = insetPlan
+      ? await loadInsetNativeVisuals(
+          scene,
+          parent,
+          insetPlan.requests.filter(
+            (request) =>
+              !shapedFloors ||
+              INSET_VISUAL_PARTS.find((part) => part.key === request.key)
+                ?.kind !== "floor",
+          ),
+        )
+      : undefined;
+    if (inset) release.push(() => inset.dispose());
+    if (scene.isDisposed || parent.isDisposed())
+      throw Error("Construction load cancelled");
+    const insetPlacements = (inset?.roots ?? []).map((node) => {
+      node.metadata = {
+        ...node.metadata,
+        instanceId: input.instanceId,
         deckId: input.deckId,
-      })
-    : undefined;
-  if (insetPlan?.issues.length)
-    throw Error(insetPlan.issues.map((i) => i.message).join("; "));
-  const inset = insetPlan
-    ? await loadInsetNativeVisuals(
-        scene,
-        parent,
-        insetPlan.requests.filter(
-          (request) =>
-            !shapedFloors ||
-            INSET_VISUAL_PARTS.find((part) => part.key === request.key)
-              ?.kind !== "floor",
-        ),
-      )
-    : undefined;
-  const insetPlacements = (inset?.roots ?? []).map((node) => {
-    node.metadata = {
-      ...node.metadata,
-      instanceId: input.instanceId,
-      deckId: input.deckId,
-      authoringPreview: false,
-      category: node.metadata.role,
-      constructionBoundary: node.metadata.role === "wall",
-      damageReady: false,
-    };
-    const meshes = inset!.meshes.filter((m) => m.parent === node);
-    for (const mesh of meshes) {
-      mesh.metadata = { ...node.metadata };
+        authoringPreview: false,
+        category: node.metadata.role,
+        constructionBoundary: node.metadata.role === "wall",
+        damageReady: false,
+      };
+      const meshes = inset!.meshes.filter((m) => m.parent === node);
+      for (const mesh of meshes) {
+        mesh.metadata = { ...node.metadata };
+        mesh.isPickable = true;
+      }
+      const lighting = createEquipmentLighting(scene, node, []);
+      lighting.setMeshes(meshes);
+      release.push(() => lighting.dispose());
+      return { node, meshes, lighting };
+    });
+    for (const mesh of inset?.meshes ?? []) {
+      if (!mesh.metadata?.nativeBatch) continue;
+      mesh.metadata = {
+        ...mesh.metadata,
+        instanceId: input.instanceId,
+        deckId: input.deckId,
+        category: mesh.metadata.role,
+        authoringPreview: false,
+      };
       mesh.isPickable = true;
     }
-    const lighting = createEquipmentLighting(scene, node, []);
-    lighting.setMeshes(meshes);
-    return { node, meshes, lighting };
-  });
-  for (const mesh of inset?.meshes ?? []) {
-    if (!mesh.metadata?.nativeBatch) continue;
-    mesh.metadata = {
-      ...mesh.metadata,
-      instanceId: input.instanceId,
-      deckId: input.deckId,
-      category: mesh.metadata.role,
-      authoringPreview: false,
-    };
-    mesh.isPickable = true;
-  }
-  const insetCutaway = inset
-    ? createInsetWallCutaway(scene, parent, inset)
-    : undefined;
-  const familyPlan =
-    document.boundaryKit?.revision === "r004"
-      ? planPinnedBoundaryFamily(document.layout, input.deckId)
-      : null;
-  const boundaries = familyPlan
-    ? await loadConstructionBoundaries(
-        scene,
-        parent,
-        familyPlan.placements.map((p) => {
-          const point: Point =
-            p.aUnits && p.bUnits
-              ? [
-                  (p.aUnits[0] + p.bUnits[0]) / 2,
-                  (p.aUnits[1] + p.bUnits[1]) / 2,
-                ]
-              : p.originUnits;
-          const cutawayNormals = perimeter
-            .filter((w) => onSegment(point, w.a, w.b))
-            .map((w) => [w.b[1] - w.a[1], w.a[0] - w.b[0]] as Point);
-          return {
-            ...p,
-            origin: [
-              p.originUnits[0],
-              p.originUnits[1],
-              familyPlan.elevationUnits,
-            ] as [number, number, number],
-            cutawayNormals,
-          };
-        }),
-        {
-          sha256: CONSTRUCTION_BOUNDARY_FAMILY_GLB_SHA,
-          url: CONSTRUCTION_BOUNDARY_FAMILY_URL,
-          revision: "r004",
-          parts: CONSTRUCTION_BOUNDARY_FAMILY_INTERFACES.parts,
-        },
-      )
-    : document.boundaryKit && !isInset
+    const insetCutaway = inset
+      ? createInsetWallCutaway(scene, parent, inset)
+      : undefined;
+    const familyPlan =
+      document.boundaryKit?.revision === "r004"
+        ? planPinnedBoundaryFamily(document.layout, input.deckId)
+        : null;
+    const boundaries = familyPlan
       ? await loadConstructionBoundaries(
           scene,
           parent,
-          planNativeBoundaries(document.layout, input.deckId, {
-            floorTopUnits: 6,
-          }).placements.map((p) => {
-            const offset = transformPoint(
-                [
-                  p.partId === "wall-2m" ? 32 : p.partId === "wall-1m" ? 16 : 0,
-                  0,
-                ],
-                p.quarterTurns,
-              ),
-              point: Point = [
-                p.originUnits[0] + offset[0],
-                p.originUnits[1] + offset[1],
-              ];
+          familyPlan.placements.map((p) => {
+            const point: Point =
+              p.aUnits && p.bUnits
+                ? [
+                    (p.aUnits[0] + p.bUnits[0]) / 2,
+                    (p.aUnits[1] + p.bUnits[1]) / 2,
+                  ]
+                : p.originUnits;
             const cutawayNormals = perimeter
               .filter((w) => onSegment(point, w.a, w.b))
               .map((w) => [w.b[1] - w.a[1], w.a[0] - w.b[0]] as Point);
-            return { ...p, origin: p.originUnits, cutawayNormals };
+            return {
+              ...p,
+              origin: [
+                p.originUnits[0],
+                p.originUnits[1],
+                familyPlan.elevationUnits,
+              ] as [number, number, number],
+              cutawayNormals,
+            };
           }),
+          {
+            sha256: CONSTRUCTION_BOUNDARY_FAMILY_GLB_SHA,
+            url: CONSTRUCTION_BOUNDARY_FAMILY_URL,
+            revision: "r004",
+            parts: CONSTRUCTION_BOUNDARY_FAMILY_INTERFACES.parts,
+          },
         )
+      : document.boundaryKit && !isInset
+        ? await loadConstructionBoundaries(
+            scene,
+            parent,
+            planNativeBoundaries(document.layout, input.deckId, {
+              floorTopUnits: 6,
+            }).placements.map((p) => {
+              const offset = transformPoint(
+                  [
+                    p.partId === "wall-2m"
+                      ? 32
+                      : p.partId === "wall-1m"
+                        ? 16
+                        : 0,
+                    0,
+                  ],
+                  p.quarterTurns,
+                ),
+                point: Point = [
+                  p.originUnits[0] + offset[0],
+                  p.originUnits[1] + offset[1],
+                ];
+              const cutawayNormals = perimeter
+                .filter((w) => onSegment(point, w.a, w.b))
+                .map((w) => [w.b[1] - w.a[1], w.a[0] - w.b[0]] as Point);
+              return { ...p, origin: p.originUnits, cutawayNormals };
+            }),
+          )
+        : null;
+    if (boundaries) release.push(() => boundaries.dispose());
+    const roofPlacements = document.roofKit
+      ? planNativeRoofs(document, input.deckId)
+      : [];
+    const roofs = roofPlacements.length
+      ? await loadConstructionRoofs(scene, parent, roofPlacements)
       : null;
-  const roofPlacements = document.roofKit
-    ? planNativeRoofs(document, input.deckId)
-    : [];
-  const roofs = roofPlacements.length
-    ? await loadConstructionRoofs(scene, parent, roofPlacements)
-    : null;
-  // Clearly marked review guides until a native wall interface is installed.
-  const collision = compileDeckCollision(document.layout, input.deckId, {
-    shipId: input.instanceId,
-    perimeterHalfWidthM: 0,
-    partitionHalfWidthM: 0,
-  });
-  for (const wall of boundaries || inset
-    ? []
-    : [...collision.walls, ...collision.openings]) {
-    const height = deck.elevation / 32 + 0.21;
-    const line = CreateLines(
-      "construction-boundary-guide-" + wall.id,
-      {
-        points: [
-          new Vector3(wall.a[0], height, -wall.a[1]),
-          new Vector3(wall.b[0], height, -wall.b[1]),
-        ],
+    if (roofs) release.push(() => roofs.dispose());
+    if (scene.isDisposed || parent.isDisposed())
+      throw Error("Construction load cancelled");
+    // Clearly marked review guides until a native wall interface is installed.
+    const collision = compileDeckCollision(document.layout, input.deckId, {
+      shipId: input.instanceId,
+      perimeterHalfWidthM: 0,
+      partitionHalfWidthM: 0,
+    });
+    for (const wall of boundaries || inset
+      ? []
+      : [...collision.walls, ...collision.openings]) {
+      const height = deck.elevation / 32 + 0.21;
+      const line = CreateLines(
+        "construction-boundary-guide-" + wall.id,
+        {
+          points: [
+            new Vector3(wall.a[0], height, -wall.a[1]),
+            new Vector3(wall.b[0], height, -wall.b[1]),
+          ],
+        },
+        scene,
+      );
+      setMeshRole(line, "effect");
+      line.parent = parent;
+      release.push(() => line.dispose());
+      line.color = Color3.FromHexString("#e3b85c");
+      line.isPickable = false;
+    }
+    return {
+      cameraFrame: {
+        centerX: (minX + maxX) / 2,
+        centerY: (minY + maxY) / 2,
+        halfExtent: Math.max(maxX - minX, maxY - minY) / 2,
       },
-      scene,
-    );
-    setMeshRole(line, "effect");
-    line.parent = parent;
-    line.color = Color3.FromHexString("#e3b85c");
-    line.isPickable = false;
+      placements: [
+        ...placements,
+        ...slabPlacements,
+        ...insetPlacements,
+        ...(boundaries?.placements ?? []),
+        ...(roofs?.placements ?? []),
+      ],
+      meshes: [
+        ...placements.flatMap((p) => p.meshes),
+        ...(slabs?.meshes ?? []),
+        ...(inset?.meshes ?? []),
+        ...(boundaries?.meshes ?? []),
+        ...(roofs?.meshes ?? []),
+      ],
+      setDoors: boundaries?.setDoors ?? (() => {}),
+      setView(cameraPosition: Vector3, interior: boolean) {
+        boundaries?.setView(cameraPosition, interior);
+        for (const node of inset?.roots ?? [])
+          if (node.metadata.role === "roof") node.setEnabled(!interior);
+        insetCutaway?.update(cameraPosition, interior);
+        roofs?.setVisible(!interior);
+      },
+      dispose,
+      walkingElevation:
+        deck.elevation / 32 + PINNED_FLOOR_KIT.datums.floorTop / 32,
+    };
+  } catch (error) {
+    dispose();
+    throw error;
   }
-  return {
-    cameraFrame: {
-      centerX: (minX + maxX) / 2,
-      centerY: (minY + maxY) / 2,
-      halfExtent: Math.max(maxX - minX, maxY - minY) / 2,
-    },
-    placements: [
-      ...placements,
-      ...slabPlacements,
-      ...insetPlacements,
-      ...(boundaries?.placements ?? []),
-      ...(roofs?.placements ?? []),
-    ],
-    meshes: [
-      ...placements.flatMap((p) => p.meshes),
-      ...(slabs?.meshes ?? []),
-      ...(inset?.meshes ?? []),
-      ...(boundaries?.meshes ?? []),
-      ...(roofs?.meshes ?? []),
-    ],
-    setDoors: boundaries?.setDoors ?? (() => {}),
-    setView(cameraPosition: Vector3, interior: boolean) {
-      boundaries?.setView(cameraPosition, interior);
-      for (const node of inset?.roots ?? [])
-        if (node.metadata.role === "roof") node.setEnabled(!interior);
-      insetCutaway?.update(cameraPosition, interior);
-      roofs?.setVisible(!interior);
-    },
-    dispose() {
-      for (const p of slabPlacements) p.lighting.dispose();
-      slabs?.dispose();
-      for (const p of insetPlacements) p.lighting.dispose();
-      inset?.dispose();
-    },
-    walkingElevation:
-      deck.elevation / 32 + PINNED_FLOOR_KIT.datums.floorTop / 32,
-  };
 }
 /** Shared star/fill only. Laboratory room fixtures never appear on authored instances. */
 export function createConstructionLighting(
@@ -456,8 +487,14 @@ export function createConstructionLighting(
       shadow.addShadowCaster(mesh);
     }
   };
-  addActor(meshes);
+  let structure = [...meshes];
+  addActor(structure);
   return {
+    replaceStructure(next: AbstractMesh[]) {
+      for (const mesh of structure) shadow.removeShadowCaster(mesh);
+      structure = [...next];
+      addActor(structure);
+    },
     primaryLight: sun,
     addActor,
     setCabinVisible(_visible: boolean) {},

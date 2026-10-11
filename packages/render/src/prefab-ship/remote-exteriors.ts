@@ -267,8 +267,12 @@ export async function loadRemoteExteriorPrototype(
   const proxyParts = proxy.map(part);
   // Same finish as the own prefab hull: plastic takes a share of the key light.
   for (const mesh of [...exterior, ...proxy])
-    if (mesh.material instanceof PBRMaterial)
+    if (mesh.material instanceof PBRMaterial) {
       mesh.material.directIntensity = REMOTE_SHIP_DIRECT;
+      // A newly promoted source must wait for its actual light-slot shader;
+      // an old effect may expect a different LightN uniform-buffer layout.
+      mesh.material.allowShaderHotSwapping = false;
+    }
   const sources = [...exterior, ...proxy];
   moldedLightRig(scene).include(sources);
   const bounds = root.getHierarchyBoundingVectors(true);
@@ -479,6 +483,7 @@ interface Entry {
 export interface RemoteShipExteriorsOptions {
   accessResolver?: (piece: ShipAccessDoorPiece) => Promise<Uint8Array>;
   localShipId: () => string | undefined;
+  warmShipId?: () => string | undefined;
   resolve?: typeof resolvePublishedExterior;
   load?: (
     scene: Scene,
@@ -706,6 +711,17 @@ export function createRemoteShipExteriors(
     const descriptions = new Map(
       snapshot.shipDescription.map((d) => [d.shipId, d]),
     );
+    // Prepare the public exterior while its private occupied assembly is drawn.
+    // Exit only switches representation; it must not start a cold hull load.
+    const warm = options.warmShipId?.() ?? local;
+    const ownDescription = warm ? descriptions.get(warm) : undefined;
+    const ownExterior = ownDescription
+      ? resolve(
+          ownDescription.publishedExteriorAssetId,
+          ownDescription.appearanceRevision,
+        )
+      : undefined;
+    if (ownExterior) request(ownExterior);
     const wanted = new Set(
       snapshot.shipMotion.map((m) => m.shipId).filter((id) => id !== local),
     );
@@ -948,6 +964,27 @@ export function createRemoteShipExteriors(
     /** Hidden prototype sources (for lighting/occlusion lists); instances share their bindings. */
     sourceMeshes(): Mesh[] {
       return [...loaded.values()].flatMap((p) => [...p.sources]);
+    },
+    async warmLocal() {
+      const id = options.warmShipId?.() ?? options.localShipId();
+      const d = store
+        .getSnapshot()
+        .shipDescription.find((row) => row.shipId === id);
+      const resolved = d
+        ? resolve(d.publishedExteriorAssetId, d.appearanceRevision)
+        : undefined;
+      if (resolved) {
+        request(resolved);
+        const prototype = await prototypes.get(resolved.key);
+        if (prototype && scene.getEngine().getClassName() !== "NullEngine")
+          await Promise.all(
+            prototype.sources.map((mesh) =>
+              mesh.material?.forceCompilationAsync(mesh, {
+                useInstances: true,
+              }),
+            ),
+          );
+      }
     },
     /** Resolves when every requested prototype has settled (review harnesses). */
     async settled() {

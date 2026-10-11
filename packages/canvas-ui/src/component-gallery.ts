@@ -1,3 +1,5 @@
+import { drawSteeringControls } from "./controls-menu";
+import { STEERING_DEFAULT, type SteeringStyle } from "./control-settings";
 import { uiTheme, type ControlVariant } from "@sidereal/ui/theme";
 import { type Rect } from "./layout";
 import { type CanvasUI, palette } from "./toolkit";
@@ -46,6 +48,7 @@ export function createComponentGallery(ui: CanvasUI, onClose?: () => void) {
   let selected = false,
     disabled = false,
     pending = false;
+  let steeringStyle: SteeringStyle = STEERING_DEFAULT;
   let enabled = true,
     amount = 0.62,
     text = "Wayfarer",
@@ -217,6 +220,12 @@ export function createComponentGallery(ui: CanvasUI, onClose?: () => void) {
           );
         });
       } else if (page === 2) {
+        add(180, (r) =>
+          drawSteeringControls(ui, r, steeringStyle, (value) => {
+            steeringStyle = value;
+            change();
+          }),
+        );
         add(72, (r) => {
           ui.text("Text field example", r.x, r.y, 14, palette.muted);
           ui.input(

@@ -1,3 +1,4 @@
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { WAYFARER_ACCESS_PHYSICAL } from "@sidereal/content/wayfarer-access-profile";
@@ -518,6 +519,41 @@ it("cancels a pending asset fetch when its scene is disposed", async () => {
   expect(scene.meshes).toHaveLength(0);
   expect(scene.materials).toHaveLength(0);
   expect(scene.textures).toHaveLength(0);
+  engine.dispose();
+});
+
+it("cancels a pending asset fetch when only its owning vessel is revoked", async () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  let finish!: (bytes: Uint8Array) => void;
+  const pending = new Promise<Uint8Array>((resolve) => (finish = resolve));
+  const owner = new TransformNode("pending-vessel", scene);
+  owner.setEnabled(false);
+  const load = loadAuthoredStudy(
+    scene,
+    [
+      {
+        id: "test",
+        file: "test.glb",
+        sha256: "0".repeat(64),
+        triangles: 1,
+        frame: "piece-local",
+      },
+    ],
+    [],
+    {},
+    [0, 0],
+    () => pending,
+    { parent: owner },
+  );
+  owner.dispose();
+  finish(Uint8Array.of(1, 2, 3));
+  await expect(load).rejects.toThrow("load cancelled");
+  expect(scene.meshes).toHaveLength(0);
+  expect(scene.materials).toHaveLength(0);
+  expect(scene.textures).toHaveLength(0);
+  scene.dispose();
   engine.dispose();
 });
 

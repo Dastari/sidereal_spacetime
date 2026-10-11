@@ -1,3 +1,4 @@
+import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AuthoredAssetLighting } from "../authored-asset-lighting";
 /** Private intact authored-kit trial. No catalog, collision or damage integration. */
 import type { Scene } from "@babylonjs/core/scene";
@@ -304,6 +305,8 @@ export async function loadAuthoredStudy(
   origin: readonly [number, number],
   fetchPiece: (piece: AuthoredPieceInput) => Promise<Uint8Array>,
   options: {
+    /** Owning visibility/cancellation gate; attach before any frame can observe a batch. */
+    parent?: TransformNode;
     batchRegions?: ReadonlyMap<string, string>;
     /** Generic templates mutate supported palette slots after import. */
     themed?: boolean;
@@ -350,7 +353,7 @@ export async function loadAuthoredStudy(
     for (const container of containers) container.dispose();
   };
   const ensureActive = () => {
-    if (disposed || scene.isDisposed)
+    if (disposed || scene.isDisposed || options.parent?.isDisposed())
       throw Error("Authored study load cancelled");
   };
   const sceneDisposeObserver = scene.onDisposeObservable.addOnce(dispose);
@@ -535,6 +538,7 @@ export async function loadAuthoredStudy(
       if (!group.geometry.indices.length) continue;
       const mesh = new Mesh(`authored-study:${key}`, scene),
         data = new VertexData();
+      mesh.parent = options.parent ?? null;
       data.positions = Float32Array.from(group.geometry.positions);
       data.normals = Float32Array.from(group.geometry.normals);
       data.indices = Uint32Array.from(group.geometry.indices);

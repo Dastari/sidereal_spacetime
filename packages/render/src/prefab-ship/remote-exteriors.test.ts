@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, test, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
@@ -110,6 +110,37 @@ function fakeStore(
     },
   };
 }
+
+test("the accepted own exterior is warm while suppressed and reveals without another load", async () => {
+  const scene = headless();
+  const store = fakeStore([{ id: "home", x: 0, y: 0 }]);
+  let local: string | undefined = "home";
+  const load = vi.fn(
+    (s: Scene, r: Parameters<typeof loadRemoteExteriorPrototype>[1]) =>
+      loadRemoteExteriorPrototype(s, r, { standinComponents: true }),
+  );
+  const remote = createRemoteShipExteriors(scene, store, {
+    localShipId: () => local,
+    load,
+  });
+  await remote.warmLocal();
+  expect(load).toHaveBeenCalledTimes(1);
+  expect(remote.count).toBe(0);
+  local = undefined;
+  const camera = new FreeCamera("camera", new Vector3(0, 60, 0), scene);
+  remote.update({ x: 0, y: 0 }, 0, camera, 1000);
+  expect(remote.diagnostics().ships[0].loaded).toBe(true);
+  expect(load).toHaveBeenCalledTimes(1);
+  local = "home";
+  remote.update({ x: 0, y: 0 }, 1, camera, 1000);
+  local = undefined;
+  remote.update({ x: 0, y: 0 }, 2, camera, 1000);
+  expect(remote.diagnostics().ships[0].loaded).toBe(true);
+  expect(load).toHaveBeenCalledTimes(1);
+  remote.dispose();
+  scene.dispose();
+  scene.getEngine().dispose();
+});
 
 describe("remote prefab exteriors (other ships never render interiors)", () => {
   it("skips appearance resolution on hot poses but applies membership, pin and local-ship changes immediately", async () => {

@@ -9,7 +9,7 @@ import {
   WAYFARER_MOVABLE_FURNISHINGS,
   type FurnishingOverride,
 } from "@sidereal/content/wayfarer-furnishings";
-import { WAYFARER_GAMEPLAY_OBJECTS } from "@sidereal/content/wayfarer-authored-gameplay";
+import { furnishingSources } from "./furnishing-source";
 import { prefabOrigin } from "@sidereal/content/ship-prefab";
 import type { PrefabShipBinding } from "./prefab-ship-interaction";
 
@@ -102,7 +102,7 @@ export function createAcceptedFurnishings(
     });
   };
   const transform = (id: string, pose: FurnishingOverride) => {
-    const source = WAYFARER_GAMEPLAY_OBJECTS.find((s) => s.object === id)!;
+    const source = furnishingSources(binding.doc).find((s) => s.object === id)!;
     const loaded = baseline[id] ?? FURNISHING_DEFAULT;
     const x = (source.min[0] + source.max[0]) / 2 - origin[0];
     const y = (source.min[1] + source.max[1]) / 2 - origin[1];

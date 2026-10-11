@@ -296,7 +296,7 @@ export async function createWayfarerLiveView(
             : bytes(
                 `${WAYFARER_POST_APERTURES[piece.id] ? DETAILS_BASE : BASE}${piece.file}`,
               ),
-        { batchRegions: regions, assetLighting },
+        { parent: root, batchRegions: regions, assetLighting },
       );
     const flightInstances = [
       ...flight.instances.filter(
@@ -324,6 +324,7 @@ export async function createWayfarerLiveView(
           ? resolveAccess(piece.id)
           : bytes(`${piece.id === RCS.id ? BASE : FLIGHT_BASE}${piece.file}`),
       {
+        parent: root,
         assetLighting,
         batchRegions: new Map(
           flightInstances.map((row) => [row.object, "exterior/flight"]),
