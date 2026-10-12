@@ -87,6 +87,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import { createShipExhaust, type ExhaustJet } from "./exhaust";
+import { createDebugFeatures } from "../debug-features";
 
 function exhaustScene(
   instances = true,
@@ -172,6 +173,90 @@ const plumeSignature = (exhaust: ReturnType<typeof createShipExhaust>) =>
     pickable: mesh.isPickable,
     alpha: mesh.hasVertexAlpha,
   }));
+it("applies the F3 experiment to current and later owners and restores clones immediately", async () => {
+  const h = exhaustScene(false);
+  const debug = createDebugFeatures(h.scene, []);
+  const observers =
+    h.scene.onBeforeActiveMeshesEvaluationObservable.observers.filter(
+      (observer) => !observer._willBeUnregistered,
+    ).length;
+  try {
+    await h.ready();
+    h.frame();
+    const original = plumeSignature(h.exhaust);
+    expect(debug.snapshot().exhaustInstances).toBe(false);
+    debug.toggle("exhaustInstances");
+    for (const mesh of h.exhaust.glowMeshes())
+      await mesh.material!.forceCompilationAsync(mesh as Mesh, {
+        useInstances: !mesh.isVisible,
+      });
+    for (let i = 0; i < 5; i++) h.frame();
+    expect(
+      h.exhaust.meshes().every((mesh) => mesh instanceof InstancedMesh),
+    ).toBe(true);
+    expect(plumeSignature(h.exhaust)).toEqual(original);
+    const late = createShipExhaust(h.scene, h.ship, "federation");
+    late.update(h.jets, 400);
+    for (const mesh of late.glowMeshes())
+      await mesh.material!.forceCompilationAsync(mesh as Mesh, {
+        useInstances: !mesh.isVisible,
+      });
+    for (let i = 0; i < 5; i++) h.frame();
+    expect(late.meshes().every((mesh) => mesh instanceof InstancedMesh)).toBe(
+      true,
+    );
+    debug.reset();
+    // No frame callback or helper-registration delay is required to restore originals.
+    expect(h.exhaust.meshes().every((mesh) => mesh instanceof Mesh)).toBe(true);
+    expect(late.meshes().every((mesh) => mesh instanceof Mesh)).toBe(true);
+    expect(plumeSignature(h.exhaust)).toEqual(original);
+    expect(
+      h.scene.onBeforeActiveMeshesEvaluationObservable.observers.filter(
+        (observer) => !observer._willBeUnregistered,
+      ).length,
+    ).toBe(observers);
+    debug.toggle("exhaustInstances");
+    for (let i = 0; i < 5; i++) h.frame();
+    expect(
+      h.exhaust.meshes().every((mesh) => mesh instanceof InstancedMesh),
+    ).toBe(true);
+    debug.toggle("exhaustInstances");
+    expect(plumeSignature(h.exhaust)).toEqual(original);
+    late.dispose();
+    debug.dispose();
+    const following = createShipExhaust(h.scene, h.ship, "federation");
+    following.update(h.jets, 400);
+    expect(following.meshes().every((mesh) => mesh instanceof Mesh)).toBe(true);
+    following.dispose();
+  } finally {
+    debug.dispose();
+    h.dispose();
+  }
+});
+
+it("keeps original plumes when F3 requests instances on an unsupported engine", async () => {
+  const h = exhaustScene(false),
+    debug = createDebugFeatures(h.scene, []);
+  try {
+    await h.ready();
+    h.engine.getCaps().instancedArrays = false;
+    const observers =
+      h.scene.onBeforeActiveMeshesEvaluationObservable.observers.filter(
+        (observer) => !observer._willBeUnregistered,
+      ).length;
+    debug.toggle("exhaustInstances");
+    for (let i = 0; i < 5; i++) h.frame();
+    expect(h.exhaust.meshes().every((mesh) => mesh instanceof Mesh)).toBe(true);
+    expect(
+      h.scene.onBeforeActiveMeshesEvaluationObservable.observers.filter(
+        (observer) => !observer._willBeUnregistered,
+      ).length,
+    ).toBe(observers);
+  } finally {
+    debug.dispose();
+    h.dispose();
+  }
+});
 it("keeps plume geometry, achieved throttle, phase, world bounds and transforms identical to clones", async () => {
   const original = exhaustScene(false),
     candidate = exhaustScene();

@@ -17,6 +17,7 @@ it("retains local override status after F3 closes and restores through explicit 
     captureListCache: false,
     captureOnMotion: false,
     captureGlobalsOnly: false,
+    exhaustInstances: false,
   };
   const defaults = { ...flags };
   const data = {
@@ -137,6 +138,7 @@ it("scrolls every new visual option into reach on compact screens without offscr
     captureListCache: false,
     captureOnMotion: false,
     captureGlobalsOnly: false,
+    exhaustInstances: false,
   };
   const defaults = { ...flags };
   const data = {
@@ -223,6 +225,8 @@ it("scrolls every new visual option into reach on compact screens without offscr
         window.y + window.h - 22,
       );
       if (id === "diagnostics-lightBounds" && !flags.lightBounds) hit.action();
+      if (id === "diagnostics-exhaustInstances" && !flags.exhaustInstances)
+        hit.action();
     }
     panel.scroll(60);
   }
@@ -243,6 +247,7 @@ it("scrolls every new visual option into reach on compact screens without offscr
     expect(seen.has(id)).toBe(true);
   expect(seen.has("diagnostics-reset")).toBe(true);
   expect(flags.lightBounds).toBe(true);
+  expect(flags.exhaustInstances).toBe(true);
   expect(panel.disabled()).toEqual([]);
   expect(
     text.mock.calls.some(([value]) =>
@@ -289,6 +294,7 @@ it("switches the render-cost settings live through the quality control", () => {
       captureListCache: false,
       captureOnMotion: false,
       captureGlobalsOnly: false,
+      exhaustInstances: false,
     },
     renderQuality: quality,
   } as RenderDiagnostics;

@@ -78,13 +78,30 @@ function bank(batch: Result["batches"][number]) {
     channel(batch.uvs),
     channel(batch.indices, true),
   ];
+  // Exact indexing can change the storage layout without changing any ordered
+  // triangle corner. Keep storage costs separate from the appearance proof.
+  const bits = buffers
+    .slice(0, 3)
+    .map((v) => new Uint32Array(v.buffer, v.byteOffset, v.length));
+  const expanded = new Uint32Array(batch.indices.length * 8);
+  let at = 0;
+  for (const index of batch.indices)
+    for (let c = 0; c < 3; c++)
+      for (let k = 0; k < (c === 2 ? 2 : 3); k++)
+        expanded[at++] = bits[c][index * (c === 2 ? 2 : 3) + k];
   return {
+    expandedSha256: sha(new Uint8Array(expanded.buffer)),
     hashes: buffers.map((b) => sha(new Uint8Array(b.buffer))),
     bytes: buffers.reduce((n, b) => n + b.byteLength, 0),
     triangles: batch.indices.length / 3,
     ranges: batch.ranges,
   };
 }
+const bankShape = (value: ReturnType<typeof bank>) => ({
+  expandedSha256: value.expandedSha256,
+  triangles: value.triangles,
+  ranges: value.ranges,
+});
 function signature(result: Result) {
   const w = result.weather as unknown as
     Record<string, ArrayLike<number>> | undefined;
@@ -222,8 +239,8 @@ try {
       throw Error("Control resource output drifted");
     for (let i = 0; i < before[lod].banks.length; i++)
       if (
-        JSON.stringify(before[lod].banks[i]) !==
-        JSON.stringify(i === 0 ? own[lod].banks[i] : common.banks[i])
+        JSON.stringify(bankShape(before[lod].banks[i])) !==
+        JSON.stringify(bankShape(i === 0 ? own[lod].banks[i] : common.banks[i]))
       )
         throw Error("LOD bank geometry/provenance differs");
     if (JSON.stringify(before[lod].weather) !== JSON.stringify(common.weather))
@@ -285,7 +302,7 @@ try {
   const result = {
     status: "complete",
     method:
-      "Original/candidate/following control, actual pinned Pelagic and asteroid assets, exact canonical buffer and contact-policy checks; no FPS/GPU timing",
+      "Original/candidate/following control, actual pinned Pelagic and asteroid assets, exact expanded corner bits and contact-policy checks with storage costs separate; no FPS/GPU timing",
     controlRef: ref,
     node: process.version,
     assets: { bodySha256: sha(raw), cloudSha256: sha(cloudRaw) },

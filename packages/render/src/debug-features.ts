@@ -1,4 +1,5 @@
 import type { Scene } from "@babylonjs/core/scene";
+import { setSceneExhaustInstances } from "./prefab-ship/exhaust-settings";
 import { createEquipmentGeometryOverride } from "./debug-equipment-geometry";
 import { createIndirectLightingOverride } from "./debug-indirect-lighting";
 import {
@@ -19,7 +20,8 @@ export type DebugFeature =
   | "collision"
   | "captureListCache"
   | "captureOnMotion"
-  | "captureGlobalsOnly";
+  | "captureGlobalsOnly"
+  | "exhaustInstances";
 export type DebugFeatures = Record<DebugFeature, boolean>;
 type EnabledNode = {
   isEnabled(checkAncestors?: boolean): boolean;
@@ -48,6 +50,7 @@ export function createDebugFeatures(
     captureListCache: false,
     captureOnMotion: false,
     captureGlobalsOnly: false,
+    exhaustInstances: false,
   };
   const initialFlags = { ...flags };
   const indirect = createIndirectLightingOverride(scene);
@@ -125,6 +128,8 @@ export function createDebugFeatures(
       },
     toggle(key: DebugFeature) {
       flags[key] = !flags[key];
+      if (key === "exhaustInstances")
+        setSceneExhaustInstances(scene, flags.exhaustInstances);
       restoreEquipment();
       apply();
     },
@@ -140,10 +145,12 @@ export function createDebugFeatures(
     afterFrame: apply,
     reset() {
       Object.assign(flags, initialFlags);
+      setSceneExhaustInstances(scene, flags.exhaustInstances);
       restoreEquipment();
       apply();
     },
     dispose() {
+      setSceneExhaustInstances(scene, false);
       restoreEquipment();
       indirect.dispose();
       overlays?.dispose();

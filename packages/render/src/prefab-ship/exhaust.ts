@@ -21,6 +21,7 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { registerExhaustBatch } from "./exhaust-batching";
+import { registerExhaustInstanceSetting } from "./exhaust-settings";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
@@ -237,12 +238,7 @@ export function createShipExhaust(
   };
   templates.hot.parent = root;
   templates.cold.parent = root;
-  const useInstances =
-    options.instances === true && !!scene.getEngine().getCaps().instancedArrays;
-  if (useInstances)
-    for (const source of Object.values(templates)) {
-      source.isVisible = false;
-    }
+  let useInstances = false;
   let disposed = false;
   const entries = new Map<
     string,
@@ -291,76 +287,104 @@ export function createShipExhaust(
     announce(mesh);
     return mesh;
   };
-  const releaseBatches = useInstances
-    ? Object.values(templates).map((source) => {
-        const status = { stable: 0 };
-        return registerExhaustBatch(scene, {
-          source,
-          jets: () =>
-            [...entries.values()]
-              .filter(
-                (entry) =>
-                  (entry.kind === "rcs" ? templates.cold : templates.hot) ===
-                  source,
-              )
-              .flatMap((entry) => entry.jets),
-          handles: () =>
-            [...entries.values()]
-              .filter(
-                (entry) =>
-                  (entry.kind === "rcs" ? templates.cold : templates.hot) ===
-                  source,
-              )
-              .flatMap((entry) => [
-                ...entry.clones,
-                ...(entry.instances ?? []),
-              ]),
-          allow(allowed) {
-            if (disposed) return;
-            if (!allowed) status.stable = 0;
-            else status.stable++;
-            const next = allowed && status.stable >= 3;
-            source.setEnabled(next);
-            for (const [id, entry] of entries) {
-              if (
-                (entry.kind === "rcs" ? templates.cold : templates.hot) !==
-                  source ||
-                entry.batched === next
-              )
-                continue;
-              const old = entry.jets;
-              // Keep prepared clones for immediate fallback. Effect/helper
-              // registrations may be deferred, so creating a replacement at
-              // fallback time could omit it from that frame's capture pass.
-              const target = next
-                ? (entry.instances ??= entry.clones.map((_, i) =>
-                    createJet(
-                      source,
-                      entry.node,
-                      entry.sides[i],
-                      entry.phases[i],
-                      `ship-exhaust:${id}:${i}:instance`,
-                      true,
-                    ),
-                  ))
-                : entry.clones;
-              target.forEach((mesh, i) => {
-                mesh.scaling.copyFrom(old[i].scaling);
-                mesh.setEnabled(true);
-                mesh.computeWorldMatrix(true);
-              });
-              old.forEach((mesh) => mesh.setEnabled(false));
-              entry.jets = target;
-              entry.batched = next;
-            }
-          },
+  let releaseBatches: (() => void)[] = [];
+  function setInstances(enabled: boolean) {
+    const next = enabled && !!scene.getEngine().getCaps().instancedArrays;
+    if (disposed || next === useInstances) return;
+    useInstances = next;
+    if (!next) {
+      releaseBatches.forEach((release) => release());
+      releaseBatches = [];
+      for (const entry of entries.values()) {
+        if (!entry.batched) continue;
+        entry.clones.forEach((mesh, i) => {
+          mesh.scaling.copyFrom(entry.jets[i].scaling);
+          mesh.setEnabled(true);
+          mesh.computeWorldMatrix(true);
         });
-      })
-    : [];
+        entry.jets.forEach((mesh) => mesh.setEnabled(false));
+        entry.jets = entry.clones;
+        entry.batched = false;
+      }
+      for (const source of Object.values(templates)) source.setEnabled(false);
+      return;
+    }
+    for (const source of Object.values(templates)) {
+      source.isVisible = false;
+      if (entries.size) announce(source);
+    }
+    releaseBatches = Object.values(templates).map((source) => {
+      const status = { stable: 0 };
+      return registerExhaustBatch(scene, {
+        source,
+        jets: () =>
+          [...entries.values()]
+            .filter(
+              (entry) =>
+                (entry.kind === "rcs" ? templates.cold : templates.hot) ===
+                source,
+            )
+            .flatMap((entry) => entry.jets),
+        handles: () =>
+          [...entries.values()]
+            .filter(
+              (entry) =>
+                (entry.kind === "rcs" ? templates.cold : templates.hot) ===
+                source,
+            )
+            .flatMap((entry) => [...entry.clones, ...(entry.instances ?? [])]),
+        allow(allowed) {
+          if (disposed) return;
+          if (!allowed) status.stable = 0;
+          else status.stable++;
+          const next = allowed && status.stable >= 3;
+          source.setEnabled(next);
+          for (const [id, entry] of entries) {
+            if (
+              (entry.kind === "rcs" ? templates.cold : templates.hot) !==
+                source ||
+              entry.batched === next
+            )
+              continue;
+            const old = entry.jets;
+            // Keep prepared clones for immediate fallback. Effect/helper
+            // registrations may be deferred, so creating a replacement at
+            // fallback time could omit it from that frame's capture pass.
+            const target = next
+              ? (entry.instances ??= entry.clones.map((_, i) =>
+                  createJet(
+                    source,
+                    entry.node,
+                    entry.sides[i],
+                    entry.phases[i],
+                    `ship-exhaust:${id}:${i}:instance`,
+                    true,
+                  ),
+                ))
+              : entry.clones;
+            target.forEach((mesh, i) => {
+              mesh.scaling.copyFrom(old[i].scaling);
+              mesh.setEnabled(true);
+              mesh.computeWorldMatrix(true);
+            });
+            old.forEach((mesh) => mesh.setEnabled(false));
+            entry.jets = target;
+            entry.batched = next;
+          }
+        },
+      });
+    });
+  }
+  const releaseSetting = registerExhaustInstanceSetting(
+    scene,
+    setInstances,
+    options.instances,
+  );
   const ownerDisposed = root.onDisposeObservable.addOnce(() => dispose());
   function dispose() {
     if (disposed) return;
     disposed = true;
+    releaseSetting();
     releaseBatches.forEach((release) => release());
     root.onDisposeObservable.remove(ownerDisposed);
     root.dispose();
