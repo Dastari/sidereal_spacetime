@@ -1,3 +1,4 @@
+import { loadDeferredExterior } from "./deferred-exteriors";
 import { createDoorFields } from "./door-fields";
 import {
   isWayfarerHullAccessProfile,
@@ -159,6 +160,10 @@ export interface RemoteExteriorPrototype {
     exteriorTriangles: number;
     proxyTriangles: number;
   };
+  /** Shared immutable native demand; consumer revocation never cancels a peer bank. */
+  ensureFull?: () => Promise<boolean>;
+  fullReady?: () => boolean;
+  settleFull?: () => Promise<unknown>;
   instantiate(
     parent: TransformNode,
     shipId: string,
@@ -177,7 +182,7 @@ function triangles(mesh: Mesh) {
 }
 
 /** Low-poly hull proxy (LOD S3): every volume outline extruded to its height, 4 m panels. */
-function buildProxy(
+export function buildProxy(
   scene: Scene,
   doc: ShipPrefabDocumentV1,
   frame: TransformNode,
@@ -519,7 +524,7 @@ export function createRemoteShipExteriors(
   const load =
     options.load ??
     ((s, r) =>
-      loadRemoteExteriorPrototype(s, r, {
+      loadDeferredExterior(s, r, {
         accessResolver: options.accessResolver,
       }));
   const budget = options.fullDetailBudget ?? SHIP_LOD.fullDetailBudget;
@@ -536,6 +541,36 @@ export function createRemoteShipExteriors(
     { resolved: ResolvedExterior; count: number; retryAt: number }
   >();
   const entries = new Map<string, Entry>();
+  const warmWaiters = new Set<() => void>();
+  const checkWarmWaiters = () => {
+    for (const check of [...warmWaiters]) check();
+  };
+  const waitForDemand = <T>(
+    source: Promise<T>,
+    lifetime: AbortController,
+    current: () => boolean,
+  ) =>
+    new Promise<T | undefined>((resolve, reject) => {
+      let done = false;
+      const finish = (value?: T, error?: unknown) => {
+        if (done) return;
+        done = true;
+        warmWaiters.delete(check);
+        lifetime.signal.removeEventListener("abort", check);
+        if (error !== undefined) reject(error);
+        else resolve(value);
+      };
+      const check = () => {
+        if (!current()) finish();
+      };
+      warmWaiters.add(check);
+      lifetime.signal.addEventListener("abort", check, { once: true });
+      check();
+      source.then(
+        (value) => finish(current() ? value : undefined),
+        (error) => finish(undefined, error),
+      );
+    });
   let disposed = false,
     epoch = store.getSnapshot().epoch,
     inexact = 0;
@@ -575,6 +610,7 @@ export function createRemoteShipExteriors(
       full = entry.full;
     if (
       !prototype?.nativeAccess ||
+      (prototype.fullReady && !prototype.fullReady()) ||
       !full ||
       entry.access ||
       entry.accessPending ||
@@ -652,8 +688,14 @@ export function createRemoteShipExteriors(
       accessRoot.onDisposeObservable.remove(cancelObserver),
     );
   };
-  const prepareWarm = (entry: Entry) => {
+  const demandFull = (entry: Entry) => {
+    const prototype = entry.prototype;
+    if (prototype?.ensureFull && !prototype.fullReady?.())
+      void prototype.ensureFull();
     entry.prepareFull?.();
+  };
+  const prepareWarm = (entry: Entry) => {
+    demandFull(entry);
     requestAccess(entry);
     // Root suppression is separate from child readiness. Disabled children
     // cannot be compiled as the cohort that will draw on the first exit.
@@ -719,6 +761,7 @@ export function createRemoteShipExteriors(
   let reconciledLocal: string | undefined;
   let reconciledWarm: string | undefined;
   const reconcile = () => {
+    checkWarmWaiters();
     if (disposed) return;
     const snapshot = store.getSnapshot();
     if (snapshot.epoch !== epoch) {
@@ -836,6 +879,7 @@ export function createRemoteShipExteriors(
       >,
     ) {
       if (disposed) return;
+      checkWarmWaiters();
       const local = options.localShipId();
       const warm = options.warmShipId?.() ?? local;
       if (local !== lastLocal || warm !== lastWarm) {
@@ -955,12 +999,15 @@ export function createRemoteShipExteriors(
         const promoted = tier === 0 && !entry.detailed;
         entry.tier = entry.prototype ? tier : undefined;
         if (tier === 0) {
-          entry.prepareFull?.();
+          demandFull(entry);
           requestAccess(entry);
           entry.lastFullAt = nowMs;
         }
         entry.detailed = tier === 0;
-        const safeProxy = entry.accessPending || entry.accessUnavailable;
+        const safeProxy =
+          entry.accessPending ||
+          entry.accessUnavailable ||
+          (entry.prototype?.fullReady && !entry.prototype.fullReady());
         const logic = exteriorLogic?.get(id);
         if (tier === 0)
           entry.access?.update({
@@ -1020,14 +1067,22 @@ export function createRemoteShipExteriors(
             shipId: e.shipId,
             exterior: e.key ?? null,
             loaded: !!e.prototype,
+            fullReady:
+              !!e.prototype &&
+              (!e.prototype.fullReady || e.prototype.fullReady()),
+            fullPending: e.tier === 0 && e.prototype?.fullReady?.() === false,
+            desiredTier: e.tier,
             accessPending: !!e.accessPending,
             accessUnavailable: !!e.accessUnavailable,
             litJets: e.exhaust?.lit().length ?? 0,
             enabled: e.root.isEnabled(),
             tier:
-              e.tier === 0
+              e.tier === 0 &&
+              !e.accessPending &&
+              !e.accessUnavailable &&
+              (!e.prototype?.fullReady || e.prototype.fullReady())
                 ? "exterior"
-                : e.tier === 1
+                : e.tier === 0 || e.tier === 1
                   ? "proxy"
                   : ("marker" as const),
           }))
@@ -1075,37 +1130,32 @@ export function createRemoteShipExteriors(
         if (!entry || !source || !lifetime) return;
         // The immutable source may finish warming after revocation; this
         // consumer must stop waiting immediately on row, pin or scene loss.
-        const prototype = await new Promise<
-          RemoteExteriorPrototype | undefined
-        >((resolve, reject) => {
-          const cancel = () => {
-            lifetime.signal.removeEventListener("abort", cancel);
-            resolve(undefined);
-          };
-          if (lifetime.signal.aborted) return resolve(undefined);
-          lifetime.signal.addEventListener("abort", cancel, { once: true });
-          source.then(
-            (value) => {
-              lifetime.signal.removeEventListener("abort", cancel);
-              resolve(lifetime.signal.aborted ? undefined : value);
-            },
-            (error) => {
-              lifetime.signal.removeEventListener("abort", cancel);
-              reject(error);
-            },
+        const current = () =>
+          !disposed &&
+          !scene.isDisposed &&
+          !lifetime.signal.aborted &&
+          entries.get(entry.shipId) === entry &&
+          entry.key === resolved.key &&
+          entry.pinLifetime === lifetime &&
+          (options.warmShipId?.() ?? options.localShipId()) === id;
+        const prototype = await waitForDemand(source, lifetime, current);
+        if (!prototype || !current()) return;
+        if (prototype.ensureFull) {
+          const ready = await waitForDemand(
+            prototype.ensureFull(),
+            lifetime,
+            current,
           );
-        });
-        if (!prototype || !entry || entry.key !== resolved.key) return;
+          if (!ready || !current()) return;
+        }
         attach(entry);
         prepareWarm(entry);
-        await entry.accessCompletion;
-        if (
-          disposed ||
-          entries.get(entry.shipId) !== entry ||
-          entry.accessUnavailable ||
-          !entry.full
-        )
-          return;
+        await waitForDemand(
+          entry.accessCompletion ?? Promise.resolve(),
+          lifetime,
+          current,
+        );
+        if (!current() || entry.accessUnavailable || !entry.full) return;
         const root = entry.full;
         const logic = options.exteriorLogic?.().get(entry.shipId);
         entry.access?.update({
@@ -1131,16 +1181,15 @@ export function createRemoteShipExteriors(
           if (mesh.material instanceof PBRMaterial)
             mesh.material.allowShaderHotSwapping = false;
         if (scene.getEngine().getRenderingCanvas())
-          await waitForRenderRoot(
-            root,
-            () => !disposed && entries.get(entry.shipId) === entry,
-            true,
-          );
+          await waitForRenderRoot(root, current, true);
       }
     },
     /** Resolves when every requested prototype has settled (review harnesses). */
     async settled() {
       await Promise.all(prototypes.values());
+      await Promise.all(
+        [...loaded.values()].map((prototype) => prototype.settleFull?.()),
+      );
     },
     get count() {
       return entries.size - (entries.has(options.localShipId() ?? "") ? 1 : 0);
