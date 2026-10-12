@@ -131,7 +131,7 @@ async function main() {
   );
   // Production-renderer fleet fixture: one occupied ship plus public-only
   // exterior projections. These accepted-shaped rows never connect to a DB.
-  const fleetSize = Math.max(1, Math.min(20, Number(q.get("fleet")) || 1));
+  const fleetSize = Math.max(1, Math.min(140, Number(q.get("fleet")) || 1));
   const fleetIds = [
     "fed.s.wren-fleet",
     "fed.s.petrel-fleet",
@@ -167,6 +167,8 @@ async function main() {
         q.get("visual") === "reference-r001"
           ? SHIP_REFERENCE_VISUAL
           : undefined,
+      shareTemperateInvariantBanks: q.get("planetBanks") !== "off",
+      instanceStaticAsteroids: q.get("asteroidInstances") !== "off",
       sharedWorld:
         fleetSize > 1
           ? {
@@ -230,6 +232,10 @@ async function main() {
     world.dispose();
   });
   const interior = q.get("interior") !== "0";
+  const asteroidCount = Math.max(
+    0,
+    Math.min(140, Number(q.get("asteroids")) || 0),
+  );
   const state: SceneState = {
     heading: 0,
     x: 0,
@@ -239,7 +245,45 @@ async function main() {
     interior,
     inspect: q.get("inspect") === "1",
     grid: false,
+    ...(q.get("planet") === "pelagic"
+      ? {
+          bodies: [
+            {
+              id: "review-pelagic",
+              kind: "planet",
+              appearance: "temperate-r003",
+              x: -30,
+              y: 75,
+              vx: 0,
+              vy: 0,
+              heading: 0,
+              omega: 0,
+              height: -85,
+              radius: 36,
+              seed: 117,
+            },
+          ],
+        }
+      : {}),
   };
+  if (asteroidCount)
+    state.bodies = [
+      ...(state.bodies ?? []),
+      ...Array.from({ length: asteroidCount }, (_, i) => ({
+        id: `review-asteroid-${i}`,
+        kind: "asteroid" as const,
+        appearance: "asteroid",
+        x: ((i % 14) - 6.5) * 14,
+        y: 45 + Math.floor(i / 14) * 16,
+        vx: 0,
+        vy: 0,
+        heading: i * 0.73,
+        omega: 0,
+        height: -12,
+        radius: 1.5 + (i % 3),
+        seed: i,
+      })),
+    ];
   if (q.get("crew") === "t2") {
     world.customizeCrew({
       bodyType: "male",
@@ -301,6 +345,28 @@ async function main() {
     return draws;
   }
   const ship = scene!.getTransformNodeByName(`prefab-ship:${doc.id}`);
+  // Asset completion and publication must precede the unchanged probe warmup.
+  for (let attempt = 0; ; attempt++) {
+    const ships = world.getSharedWorldDiagnostics().remoteShips?.ships ?? [];
+    const pendingShips = ships.some(
+      (ship) =>
+        !ship.loaded ||
+        ship.accessPending ||
+        (ship as typeof ship & { fullPending?: boolean }).fullPending,
+    );
+    const planets = world.getDiagnostics(true)?.planetBuild?.reviewedSystem;
+    if (planets?.errors.length)
+      throw new Error(`Planet fixture failed: ${planets.errors[0].error}`);
+    if (
+      !pendingShips &&
+      (!q.has("planet") ||
+        (planets && planets.pendingBodies === 0 && planets.activeBodies > 0))
+    )
+      break;
+    if (attempt > 3600)
+      throw new Error("Fleet/planet assets did not finish publishing");
+    await settledDraws(1);
+  }
   await settledDraws(warmup);
   ship?.setEnabled(false);
   const withoutShip = await settledDraws(settle);
@@ -424,6 +490,9 @@ async function main() {
         source: __PREFAB_SOURCE__,
         prefab: doc.id,
         fleetSize,
+        admittedFleet: world.getSharedWorldDiagnostics().remoteShips,
+        planetFixture: q.get("planet"),
+        asteroidCount,
         interior,
         crewPosition: [state.localX, state.localY],
         userAgent: navigator.userAgent,

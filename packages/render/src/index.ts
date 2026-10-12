@@ -250,6 +250,9 @@ export interface WorldOptions {
   /** Exact reviewed proposal selection; absent keeps published presentation. */
   prefabVisualVariant?: import("./prefab-ship/visual-variant").VisualVariantSelection;
   /** Opt-in accepted shared projections, separate from the private local ship. */
+  /** Resource sharing for the exact qualified temperate pin; false retains the complete control path. */
+  shareTemperateInvariantBanks?: boolean;
+  instanceStaticAsteroids?: boolean;
   sharedWorld?: {
     bodies: (nowMs: number) => readonly SpaceBodyState[] | undefined;
     /** Other players' ships from the accepted `visible_ship_*` views (exterior only). */
@@ -442,7 +445,10 @@ async function buildWorld(
   const shipRoot = new TransformNode("ship-frame", scene);
   let vesselRoot = new TransformNode("local-vessel", scene);
   vesselRoot.parent = shipRoot;
-  const environment = createSpaceEnvironment(scene);
+  const environment = createSpaceEnvironment(scene, {
+    shareTemperateInvariantBanks: options.shareTemperateInvariantBanks,
+    instanceStaticAsteroids: options.instanceStaticAsteroids,
+  });
   const lighting = createConstructionLighting(scene, []);
   environment.setPrimaryLight(lighting.primaryLight);
   const sharedShips = options.sharedWorld?.ships;

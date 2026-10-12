@@ -116,13 +116,22 @@ async function main() {
   // Warm shaders and wait for asynchronous native access assembly; cap waits on failure.
   for (
     let i = 0;
-    i < 60 &&
-    (i < 3 || remote.diagnostics().ships.some((s) => s.accessPending));
+    i < 3600 &&
+    (i < 3 ||
+      remote
+        .diagnostics()
+        .ships.some((s) => !s.loaded || s.fullPending || s.accessPending));
     i++
   )
     await new Promise<void>((resolve) =>
       engine.onEndFrameObservable.addOnce(() => resolve()),
     );
+  if (
+    remote
+      .diagnostics()
+      .ships.some((s) => !s.loaded || s.fullPending || s.accessPending)
+  )
+    throw new Error("Native fleet demand did not finish publishing");
   await scene.whenReadyAsync();
   const readyMs = performance.now() - started;
   function distribution(values: number[]) {

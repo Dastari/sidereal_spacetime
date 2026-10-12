@@ -25,6 +25,7 @@ const repo = fileURLToPath(new URL("../..", import.meta.url));
 
 /** URL prefix -> candidate repository directories (first existing file wins). */
 const MOUNTS: [string, string[]][] = [
+  ["/reviewed-planets/", ["assets/reviewed-celestials/reviewed-planets"]],
   ["/assets/ship-kit/", ["assets/runtime/ship-kit"]],
   ["/assets/materials/", ["assets/runtime/materials"]],
   ["/assets/environment/", ["assets/runtime/environment"]],
@@ -130,7 +131,8 @@ function repositoryAssets(): Plugin {
         });
         return;
       }
-      if (!req.url?.startsWith("/assets/")) return next();
+      if (!req.url || !MOUNTS.some(([prefix]) => req.url!.startsWith(prefix)))
+        return next();
       const file = resolveAsset(req.url);
       if (!file) {
         res.statusCode = 404;

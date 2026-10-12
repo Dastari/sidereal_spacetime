@@ -18,6 +18,10 @@
  */
 import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { registerExhaustBatch } from "./exhaust-batching";
+import { registerExhaustInstanceSetting } from "./exhaust-settings";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
@@ -202,7 +206,9 @@ export interface ShipExhaust {
   /** Apply the latest achieved outputs (call every frame; `nowMs` drives a small flicker). */
   update(jets: readonly ExhaustJet[], nowMs: number): void;
   /** Jet meshes created so far (emissive; add to a glow layer). */
-  meshes(): Mesh[];
+  meshes(): AbstractMesh[];
+  /** Hidden render owners plus placed handles for both stock and custom glow admission. */
+  glowMeshes(): AbstractMesh[];
   /** Currently lit jets (diagnostics and review harnesses). */
   lit(): { id: string; kind: ExhaustKind; throttle: number }[];
   dispose(): void;
@@ -212,6 +218,11 @@ export function createShipExhaust(
   scene: Scene,
   shipFrame: TransformNode,
   theme: ShipThemeId,
+  options: {
+    /** Private experiment; defaults to the established individual plume path. */
+    instances?: boolean;
+    onGlowMesh?: (mesh: AbstractMesh) => void;
+  } = {},
 ): ShipExhaust {
   const root = new TransformNode("ship-exhaust", scene);
   root.parent = shipFrame;
@@ -227,13 +238,165 @@ export function createShipExhaust(
   };
   templates.hot.parent = root;
   templates.cold.parent = root;
+  let useInstances = false;
+  let disposed = false;
   const entries = new Map<
     string,
-    { kind: ExhaustKind; node: TransformNode; jets: Mesh[]; throttle: number }
+    {
+      kind: ExhaustKind;
+      node: TransformNode;
+      jets: AbstractMesh[];
+      clones: AbstractMesh[];
+      instances?: AbstractMesh[];
+      throttle: number;
+      sides: number[];
+      phases: number[];
+      batched: boolean;
+    }
   >();
   let phase = 0;
+  const announced = new Set<AbstractMesh>();
+  const announce = (mesh: AbstractMesh) => {
+    if (announced.has(mesh)) return;
+    announced.add(mesh);
+    options.onGlowMesh?.(mesh);
+    mesh.onDisposeObservable.addOnce(() => announced.delete(mesh));
+  };
+  const createJet = (
+    source: Mesh,
+    node: TransformNode,
+    side: number,
+    phaseValue: number,
+    name: string,
+    batched: boolean,
+  ): AbstractMesh => {
+    const mesh = batched
+      ? new InstancedMesh(name, source)
+      : source.clone(name, node);
+    mesh.parent = node;
+    mesh.setEnabled(true);
+    mesh.isVisible = true;
+    mesh.isPickable = false;
+    mesh.layerMask = source.layerMask;
+    mesh.alphaIndex = source.alphaIndex;
+    mesh.cullingStrategy = source.cullingStrategy;
+    mesh.hasVertexAlpha = source.hasVertexAlpha;
+    mesh.useVertexColors = source.useVertexColors;
+    mesh.rotation.y = side * 1.22;
+    mesh.metadata = { exhaustPhase: phaseValue };
+    announce(mesh);
+    return mesh;
+  };
+  let releaseBatches: (() => void)[] = [];
+  function setInstances(enabled: boolean) {
+    const next = enabled && !!scene.getEngine().getCaps().instancedArrays;
+    if (disposed || next === useInstances) return;
+    useInstances = next;
+    if (!next) {
+      releaseBatches.forEach((release) => release());
+      releaseBatches = [];
+      for (const entry of entries.values()) {
+        if (!entry.batched) continue;
+        entry.clones.forEach((mesh, i) => {
+          mesh.scaling.copyFrom(entry.jets[i].scaling);
+          mesh.setEnabled(true);
+          mesh.computeWorldMatrix(true);
+        });
+        entry.jets.forEach((mesh) => mesh.setEnabled(false));
+        entry.jets = entry.clones;
+        entry.batched = false;
+      }
+      for (const source of Object.values(templates)) source.setEnabled(false);
+      return;
+    }
+    for (const source of Object.values(templates)) {
+      source.isVisible = false;
+      if (entries.size) announce(source);
+    }
+    releaseBatches = Object.values(templates).map((source) => {
+      const status = { stable: 0 };
+      return registerExhaustBatch(scene, {
+        source,
+        jets: () =>
+          [...entries.values()]
+            .filter(
+              (entry) =>
+                (entry.kind === "rcs" ? templates.cold : templates.hot) ===
+                source,
+            )
+            .flatMap((entry) => entry.jets),
+        handles: () =>
+          [...entries.values()]
+            .filter(
+              (entry) =>
+                (entry.kind === "rcs" ? templates.cold : templates.hot) ===
+                source,
+            )
+            .flatMap((entry) => [...entry.clones, ...(entry.instances ?? [])]),
+        allow(allowed) {
+          if (disposed) return;
+          if (!allowed) status.stable = 0;
+          else status.stable++;
+          const next = allowed && status.stable >= 3;
+          source.setEnabled(next);
+          for (const [id, entry] of entries) {
+            if (
+              (entry.kind === "rcs" ? templates.cold : templates.hot) !==
+                source ||
+              entry.batched === next
+            )
+              continue;
+            const old = entry.jets;
+            // Keep prepared clones for immediate fallback. Effect/helper
+            // registrations may be deferred, so creating a replacement at
+            // fallback time could omit it from that frame's capture pass.
+            const target = next
+              ? (entry.instances ??= entry.clones.map((_, i) =>
+                  createJet(
+                    source,
+                    entry.node,
+                    entry.sides[i],
+                    entry.phases[i],
+                    `ship-exhaust:${id}:${i}:instance`,
+                    true,
+                  ),
+                ))
+              : entry.clones;
+            target.forEach((mesh, i) => {
+              mesh.scaling.copyFrom(old[i].scaling);
+              mesh.setEnabled(true);
+              mesh.computeWorldMatrix(true);
+            });
+            old.forEach((mesh) => mesh.setEnabled(false));
+            entry.jets = target;
+            entry.batched = next;
+          }
+        },
+      });
+    });
+  }
+  const releaseSetting = registerExhaustInstanceSetting(
+    scene,
+    setInstances,
+    options.instances,
+  );
+  const ownerDisposed = root.onDisposeObservable.addOnce(() => dispose());
+  function dispose() {
+    if (disposed) return;
+    disposed = true;
+    releaseSetting();
+    releaseBatches.forEach((release) => release());
+    root.onDisposeObservable.remove(ownerDisposed);
+    root.dispose();
+    hot.dispose();
+    cold.dispose();
+    entries.clear();
+    announced.clear();
+  }
+
   return {
     update(jets, nowMs) {
+      if (disposed) return;
       const seen = new Set<string>();
       for (const j of jets) {
         if (
@@ -255,18 +418,35 @@ export function createShipExhaust(
           const node = new TransformNode(`ship-exhaust:${j.id}`, scene);
           node.parent = root;
           const template = j.kind === "rcs" ? templates.cold : templates.hot;
-          const meshes = (j.kind === "reverser" ? [-1, 1] : [0]).map(
-            (side, i) => {
-              const jet = template.clone(`ship-exhaust:${j.id}:${i}`, node);
-              jet.setEnabled(true);
-              // Reverser vents splay forward-outward at +/-70 degrees about the vertical, so they
-              // clear the drive housing they sit behind.
-              jet.rotation.y = side * 1.22;
-              jet.metadata = { exhaustPhase: (phase += 1.7) };
-              return jet;
-            },
+          const sides = j.kind === "reverser" ? [-1, 1] : [0];
+          const phases = sides.map(() => (phase += 1.7));
+          // Start with the established representation; admission occurs in
+          // the pre-evaluation phase once the current scene has been checked.
+          const batched = false;
+          if (useInstances) {
+            announce(templates.hot);
+            announce(templates.cold);
+          }
+          const meshes = sides.map((side, i) =>
+            createJet(
+              template,
+              node,
+              side,
+              phases[i],
+              `ship-exhaust:${j.id}:${i}`,
+              batched,
+            ),
           );
-          e = { kind: j.kind, node, jets: meshes, throttle: 0 };
+          e = {
+            kind: j.kind,
+            node,
+            jets: meshes,
+            clones: meshes,
+            throttle: 0,
+            sides,
+            phases,
+            batched,
+          };
           entries.set(j.id, e);
         }
         const t = Math.max(0, Math.min(1, j.throttle));
@@ -292,15 +472,17 @@ export function createShipExhaust(
         }
     },
     meshes: () => [...entries.values()].flatMap((e) => e.jets),
+    glowMeshes: () => [
+      ...(useInstances ? Object.values(templates) : []),
+      ...[...entries.values()].flatMap((e) => [
+        ...e.clones,
+        ...(e.instances ?? []),
+      ]),
+    ],
     lit: () =>
       [...entries]
         .filter(([, e]) => e.throttle > EXHAUST_VISIBLE_THROTTLE)
         .map(([id, e]) => ({ id, kind: e.kind, throttle: e.throttle })),
-    dispose() {
-      root.dispose();
-      hot.dispose();
-      cold.dispose();
-      entries.clear();
-    },
+    dispose,
   };
 }

@@ -8,6 +8,7 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Matrix, Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ManagedLocalLight } from "./local-light-budget";
 import { registerLocalPbrLight } from "./pbr-light-budget";
+import { createOwnedTransformRefresh } from "./shadow-transform-refresh";
 
 export type AssetEmission = { factor: readonly number[]; strength: number };
 export type AssetLightSocket = {
@@ -122,6 +123,7 @@ export function getAuthoredAssetLightSources(
   scene: Scene,
   allowed = true,
 ): ManagedLocalLight[] {
+  const refresh = createOwnedTransformRefresh();
   return [...registry(scene)].map(([id, source]) => {
     const { light, parent } = source;
     const eligible =
@@ -133,11 +135,12 @@ export function getAuthoredAssetLightSources(
         (m) => !m.isDisposed() && m.isEnabled() && m.isVisible,
       );
     source.eligible = eligible;
+    refresh(parent);
     return {
       id,
       position: Vector3.TransformCoordinates(
         light.position,
-        parent.computeWorldMatrix(true),
+        parent.getWorldMatrix(),
       ),
       range: light.range,
       eligible,
@@ -217,7 +220,7 @@ export function createAuthoredAssetLighting(
           selected = selected && source.eligible;
           source.desired = selected;
           if (!selected) {
-            light.setEnabled(false);
+            if (light.isEnabled(false)) light.setEnabled(false);
             light.intensity = 0;
           } else if (!light.isEnabled(false)) {
             light.intensity = 0;

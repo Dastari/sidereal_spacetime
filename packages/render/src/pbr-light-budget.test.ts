@@ -9,11 +9,13 @@ import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { MaterialDefines } from "@babylonjs/core/Materials/materialDefines";
 import type { Effect } from "@babylonjs/core/Materials/effect";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PointLight } from "@babylonjs/core/Lights/pointLight";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import * as localSelection from "./local-light-budget";
 import { toneCrewEmissive } from "./crew/voxel-crew-outfit";
 import { createStaticMaterialFreeze } from "./static-material-freeze";
 import { createDrawMeshCandidates } from "./draw-mesh-candidates";
@@ -80,6 +82,180 @@ function local(scene: Scene, id: string, x: number) {
   return light;
 }
 const focus = new Vector3(0, 0, 0);
+
+test("equal receivers share one proposal per phase and observe mutable eligibility", () => {
+  const { scene, mesh, material, budget } = setup();
+  const peer = CreateBox("same-region", {}, scene);
+  peer.material = material;
+  mesh.metadata = peer.metadata = { receiverRegion: "room" };
+  for (let i = 0; i < 13; i++)
+    local(scene, `lamp-${String(i).padStart(2, "0")}`, i);
+  const select = vi.spyOn(localSelection, "selectLocalLights");
+  budget.update(focus);
+  expect(select).toHaveBeenCalledTimes(1);
+  expect(peer.lightSources).toEqual(mesh.lightSources);
+  select.mockClear();
+  budget.update(focus);
+  expect(select).toHaveBeenCalledTimes(1);
+  const lamp = scene.lights[0];
+  lamp.includedOnlyMeshes = [mesh];
+  lamp.excludedMeshes.push(mesh);
+  budget.update(focus);
+  expect(mesh.lightSources).not.toContain(lamp);
+  expect(peer.lightSources).not.toContain(lamp);
+  lamp.includedOnlyMeshes.splice(0);
+  lamp.excludedMeshes.splice(0);
+  lamp.includeOnlyWithLayerMask = 2;
+  mesh.layerMask = 1;
+  peer.layerMask = 2;
+  budget.update(focus);
+  expect(mesh.lightSources).not.toContain(lamp);
+  expect(peer.lightSources).toContain(lamp);
+  lamp.includeOnlyWithLayerMask = 0;
+  lamp.excludeWithLayerMask = 2;
+  budget.update(focus);
+  expect(mesh.lightSources).toContain(lamp);
+  expect(peer.lightSources).not.toContain(lamp);
+});
+
+test("custom eligibility retains live peer mutations and unshared selection", () => {
+  const { scene, mesh, material, budget } = setup();
+  const peer = CreateBox("peer", {}, scene);
+  peer.material = material;
+  const first = local(scene, "a", 0),
+    later = local(scene, "z", 1);
+  const original = first.canAffectMesh;
+  first.canAffectMesh = function (receiver) {
+    later.includedOnlyMeshes.length = 1;
+    later.includedOnlyMeshes[0] = receiver!;
+    return original.call(this, receiver);
+  };
+  budget.update(focus);
+  expect(mesh.lightSources).toContain(later);
+  expect(peer.lightSources).toContain(later);
+});
+
+test("custom other-light callbacks retain their order after local selection", () => {
+  const { scene, mesh, material, budget } = setup();
+  material.maxSimultaneousLights = 1;
+  const peer = CreateBox("later-receiver", {}, scene);
+  peer.material = material;
+  const near = local(scene, "near", 0),
+    far = local(scene, "far", 100);
+  const currentFocus = new Vector3(0, 0, 0);
+  const other = new PointLight("custom-other", Vector3.Zero(), scene);
+  other.canAffectMesh = () => {
+    currentFocus.x = 100;
+    return true;
+  };
+  budget.update(currentFocus);
+  expect(mesh.lightSources[0]).toBe(near);
+  expect(peer.lightSources[0]).toBe(far);
+});
+
+test("enabled empty mesh owners retain stock no-op dirty behavior", () => {
+  const { scene, material, budget } = setup();
+  const empty = new Mesh("empty-owner", scene);
+  empty.material = material;
+  material.maxSimultaneousLights = 1;
+  const near = local(scene, "near", 0),
+    far = local(scene, "far", 100);
+  budget.update(focus);
+  expect(empty.lightSources[0]).toBe(near);
+  budget.update(new Vector3(100, 0, 0));
+  expect(empty.lightSources[0]).toBe(far);
+});
+
+test.each(["mesh", "submesh", "defines"])(
+  "custom %s dirty callbacks invalidate peer proposals",
+  (hook) => {
+    const { scene, mesh, material, budget } = setup();
+    material.maxSimultaneousLights = 1;
+    const peer = CreateBox("peer", {}, scene);
+    peer.material = material;
+    const near = local(scene, "near", 0),
+      far = local(scene, "far", 100);
+    budget.update(focus);
+    const mutate = () => {
+      far.includedOnlyMeshes = [mesh];
+    };
+    if (hook === "mesh") {
+      const original = mesh._markSubMeshesAsLightDirty;
+      mesh._markSubMeshesAsLightDirty = function (dispose) {
+        original.call(this, dispose);
+        mutate();
+      };
+    } else if (hook === "submesh") {
+      const original = mesh["_markSubMeshesAsDirty"];
+      mesh["_markSubMeshesAsDirty"] = function (
+        callback: (defines: MaterialDefines) => void,
+      ) {
+        original.call(this, callback);
+        mutate();
+      };
+    } else {
+      const defines = new MaterialDefines();
+      defines.markAsLightDirty = mutate;
+      mesh.subMeshes[0].setEffect({ isReady: () => false } as Effect, defines);
+    }
+    budget.update(new Vector3(100, 0, 0));
+    expect(mesh.lightSources[0]).toBe(far);
+    expect(far.canAffectMesh(peer)).toBe(false);
+    expect(peer.lightSources).toEqual([near]);
+    if (hook === "defines") mesh.subMeshes[0].setEffect(null);
+  },
+);
+
+test("shared proposals preserve per-receiver shader deferral and incumbent history", () => {
+  const { scene, mesh, material, budget } = setup();
+  material.maxSimultaneousLights = 1;
+  const peer = CreateBox("ready-peer", {}, scene);
+  peer.material = material;
+  const near = local(scene, "near", 0),
+    far = local(scene, "far", 100);
+  budget.update(focus);
+  for (const receiver of [mesh, peer])
+    receiver.subMeshes[0].setEffect(
+      { isReady: () => true } as Effect,
+      new MaterialDefines(),
+    );
+  const ready = vi
+    .spyOn(material, "isReadyForSubMesh")
+    .mockImplementation((receiver) => receiver === peer);
+  budget.update(new Vector3(100, 0, 0));
+  expect(mesh.lightSources[0]).toBe(near);
+  expect(peer.lightSources[0]).toBe(far);
+  // The same focus now falls inside the hysteresis interval for both incumbents.
+  budget.update(new Vector3(50, 0, 0));
+  expect(mesh.lightSources[0]).toBe(near);
+  expect(peer.lightSources[0]).toBe(far);
+  expect(ready).toHaveBeenCalled();
+  budget.dispose();
+  for (const receiver of [mesh, peer]) receiver.subMeshes[0].setEffect(null);
+});
+
+test("light parents refresh once per phase and update again in the same render ID", () => {
+  const { scene, budget } = setup();
+  const parent = new TransformNode("shared-lamps", scene);
+  for (let i = 0; i < 13; i++) local(scene, `lamp-${i}`, i).parent = parent;
+  budget.update(focus);
+  const revision = parent._childUpdateId;
+  parent.position.x = 20;
+  budget.update(focus);
+  expect(parent._childUpdateId - revision).toBe(1);
+  for (const light of scene.lights)
+    expect(light.getAbsolutePosition().x).toBeCloseTo(
+      (light as PointLight).position.x + 20,
+    );
+  const next = new TransformNode("changed-origin", scene);
+  next.position.x = -40;
+  parent.parent = next;
+  budget.update(focus);
+  for (const light of scene.lights)
+    expect(light.getAbsolutePosition().x).toBeCloseTo(
+      (light as PointLight).position.x - 20,
+    );
+});
 
 test("registered receivers defer hidden mesh material work until its first visible update", () => {
   const { scene, budget: original } = setup();

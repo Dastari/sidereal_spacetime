@@ -27,10 +27,11 @@ const overlays: readonly [DebugFeature, string][] = [
   ["lightBounds", "Light volumes"],
   ["collision", "Collision"],
 ];
-const captureExperiments: readonly [DebugFeature, string][] = [
+const experiments: readonly [DebugFeature, string][] = [
   ["captureListCache", "Capture list cache"],
   ["captureOnMotion", "Capture on motion"],
   ["captureGlobalsOnly", "Capture globals only"],
+  ["exhaustInstances", "Exhaust instances"],
 ];
 
 /** Height of the render-cost group near the top of the Visuals tab. */
@@ -271,10 +272,11 @@ export function createDiagnosticsUI(
           ? data.debugOverlays.collisionScopes
           : ["Collision: supplied simulation footprints only."]),
         "Capture on motion can lag idle animation; globals only changes glass lighting.",
+        "Exhaust instances: eligible exterior plumes; glow/glass can keep individual draws.",
         "Local presentation only · F3 keeps overrides.",
       ];
       const visualHeight =
-        474 +
+        508 +
         BACKEND_HEIGHT +
         QUALITY_HEIGHT +
         visualLines.reduce(
@@ -426,15 +428,15 @@ export function createDiagnosticsUI(
         drawGroup(features, "RENDER FEATURES", featuresTop, false);
         drawGroup(overlays, "DEBUG OVERLAYS", featuresTop + 131, true);
         drawGroup(
-          captureExperiments,
-          "CAPTURE EXPERIMENTS",
+          experiments,
+          "RENDER EXPERIMENTS",
           featuresTop + 222,
           true,
           1,
         );
         const reset = {
           x: viewport.x,
-          y: featuresTop + 366,
+          y: featuresTop + 400,
           w: viewport.w,
           h: 28,
         };
@@ -456,7 +458,7 @@ export function createDiagnosticsUI(
                 !controls.reset ||
                 (disabled().length === 0 &&
                   !overlays.some(([key]) => enabled[key] === true) &&
-                  !captureExperiments.some(([key]) => enabled[key] === true) &&
+                  !experiments.some(([key]) => enabled[key] === true) &&
                   (
                     Object.keys(
                       RENDER_QUALITY_DEFAULTS,
