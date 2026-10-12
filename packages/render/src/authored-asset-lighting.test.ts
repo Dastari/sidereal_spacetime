@@ -1,6 +1,6 @@
 import { Light } from "@babylonjs/core/Lights/light";
 import { SpotLight } from "@babylonjs/core/Lights/spotLight";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
@@ -23,6 +23,69 @@ const descriptor = JSON.parse(
     "utf8",
   ),
 );
+
+test("unselected sockets reset intensity without repeated mesh resynchronization", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const parent = new TransformNode("owner", scene),
+    receiver = new Mesh("receiver", scene);
+  const asset: AuthoredAssetLighting = {
+    id: "socket",
+    sha256: "a".repeat(64),
+    emissions: {},
+    sockets: [
+      {
+        id: "light",
+        position: [0, 0, 0],
+        color: [1, 1, 1],
+        intensity: 0.35,
+        range: 1,
+      },
+    ],
+  };
+  const rig = createAuthoredAssetLighting(scene, parent, [
+    {
+      id: "placement",
+      matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+      asset,
+      receivers: [receiver],
+    },
+  ]);
+  const light = rig.lights[0],
+    enabled = vi.spyOn(light, "setEnabled");
+  const source = getAuthoredAssetLightSources(scene)[0];
+  for (let i = 0; i < 60; i++) {
+    light.intensity = 1;
+    source.apply({ enabled: false, shadowEnabled: false });
+    expect(light.intensity).toBe(0);
+  }
+  expect(enabled).not.toHaveBeenCalled();
+  source.apply({ enabled: true, shadowEnabled: false });
+  expect(enabled).toHaveBeenCalledTimes(1);
+  expect(light.intensity).toBe(0);
+  source.apply({ enabled: true, shadowEnabled: false });
+  expect(enabled).toHaveBeenCalledTimes(1);
+  parent.setEnabled(false);
+  getAuthoredAssetLightSources(scene)[0].apply({
+    enabled: true,
+    shadowEnabled: false,
+  });
+  expect(light.isEnabled(false)).toBe(false);
+  parent.setEnabled(true);
+  getAuthoredAssetLightSources(scene)[0].apply({
+    enabled: true,
+    shadowEnabled: false,
+  });
+  expect(light.isEnabled()).toBe(true);
+  expect(light.intensity).toBe(0);
+  rig.setEnabled(false);
+  rig.setEnabled(false);
+  expect(light.isEnabled(false)).toBe(false);
+  enabled.mockRestore();
+  rig.dispose();
+  scene.dispose();
+  engine.dispose();
+});
 
 test("all reusable descriptor emission factors/strengths and source pins equal immutable GLB bytes", () => {
   const assets = readAuthoredAssetLighting(descriptor);

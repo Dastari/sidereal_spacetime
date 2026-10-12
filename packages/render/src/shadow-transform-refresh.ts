@@ -71,17 +71,13 @@ function supported(node: Node): node is TransformNode {
   return true;
 }
 
-/** Refresh the complete shadow-fit list, including disabled banks. Rebuild
- * supported nodes once, parent first, without recursively forcing ancestors.
- * Rebuilding unconditionally preserves changes absent from isSynchronized(),
- * such as scalingDeterminant, and bypasses the same-render-ID shortcut. */
-export function refreshShadowCasterTransforms(
-  casters: readonly AbstractMesh[],
-) {
+/** One synchronous preparation phase. Force the first supported ancestry
+ * refresh, even in the same render ID. Custom callbacks clear the memo. */
+export function createOwnedTransformRefresh() {
   const visited = new Set<Node>();
   const chain: TransformNode[] = [];
-  for (const mesh of casters) {
-    if (mesh.isDisposed()) continue;
+  return (mesh: Node) => {
+    if (mesh.isDisposed()) return;
     chain.length = 0;
     let safe = true;
     for (
@@ -99,7 +95,7 @@ export function refreshShadowCasterTransforms(
       mesh.computeWorldMatrix(true);
       // A custom callback can change a previously visited ancestor or sibling.
       visited.clear();
-      continue;
+      return;
     }
     for (let i = chain.length - 1; i >= 0; i--) {
       const node = chain[i];
@@ -107,5 +103,13 @@ export function refreshShadowCasterTransforms(
       node.computeWorldMatrix();
       visited.add(node);
     }
-  }
+  };
+}
+
+/** Refresh the complete shadow-fit list, including disabled banks. */
+export function refreshShadowCasterTransforms(
+  casters: readonly AbstractMesh[],
+) {
+  const refresh = createOwnedTransformRefresh();
+  for (const mesh of casters) refresh(mesh);
 }
