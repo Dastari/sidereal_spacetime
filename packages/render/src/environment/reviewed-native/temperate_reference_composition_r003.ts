@@ -1,3 +1,4 @@
+import { indexExactVertices } from "./exact-vertex-indexing";
 import { deformedNormalAt } from "./native_deformation_normals";
 import type { ReviewedComposerInput as NativePlanetKit } from "./reviewed-composer-input";
 type Vec = [number, number, number];
@@ -212,11 +213,13 @@ export function composeTemperateReference(
       );
     }
   }
-  return batches.map((b) => ({
-    ...b,
-    positions: Float32Array.from(b.positions),
-    normals: Float32Array.from(b.normals),
-    uvs: Float32Array.from(b.uvs),
-    indices: Uint32Array.from(b.indices),
-  }));
+  return batches.map((b) =>
+    indexExactVertices({
+      ...b,
+      positions: Float32Array.from(b.positions),
+      normals: Float32Array.from(b.normals),
+      uvs: Float32Array.from(b.uvs),
+      indices: Uint32Array.from(b.indices),
+    }),
+  );
 }
