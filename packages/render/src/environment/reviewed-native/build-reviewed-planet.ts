@@ -28,6 +28,7 @@ export type ReviewedBuildInput = {
   seed: number;
   lod: 0 | 1 | 2;
   recipe: PlanetRecipe;
+  partition?: "complete" | "temperate-common-banks" | "temperate-lod-banks";
 };
 /** Inputs are validated once on worker registration; no kit is mutated here.
  * Readonly structural composer inputs preserve source buffers without cloning.
@@ -48,6 +49,13 @@ export function composeReviewedPlanet(
     ![0, 1, 2].includes(lod)
   )
     throw new Error("Invalid reviewed build intent");
+  const partition = input.partition ?? "complete";
+  if (
+    partition !== "complete" &&
+    (String(kit.layout) !== "temperate-native-continents" ||
+      !["temperate-common-banks", "temperate-lod-banks"].includes(partition))
+  )
+    throw Error("Unsupported reviewed partition");
   const native: NativePlanetKit = kit;
   const batches = (() => {
     switch (String(kit.layout)) {
@@ -56,7 +64,17 @@ export function composeReviewedPlanet(
       case "rocky-crater-geology":
         return rocky(native, seed, lod);
       case "temperate-native-continents":
-        return temperate(native, seed, lod);
+        return temperate(
+          native,
+          seed,
+          lod,
+          false,
+          partition === "complete"
+            ? "all"
+            : partition === "temperate-common-banks"
+              ? "common"
+              : "lod",
+        );
       case "single-glacial-cut-diagnostic":
         return ice(native, seed, lod);
       case "volcanic-regional-geology":
@@ -92,7 +110,10 @@ export function composeReviewedPlanet(
     recipe.style === "toxic" &&
     String(weatherKit?.layout) === "toxic-fog-banks";
   const clouds =
-    !toxicFog && cloudNative && recipe.cloudCoverage > 0
+    partition !== "temperate-lod-banks" &&
+    !toxicFog &&
+    cloudNative &&
+    recipe.cloudCoverage > 0
       ? composeNativeClouds(cloudNative, seed, recipe.cloudCoverage)[0]
       : undefined;
   const weather = toxicFog
@@ -105,18 +126,23 @@ export function composeReviewedPlanet(
       )
     : clouds
       ? {
-          positions: Array.from(clouds.positions),
-          normals: Array.from(clouds.normals),
-          indices: Array.from(clouds.indices),
-          colors: Array(clouds.positions.length / 3)
-            .fill([1, 1, 1, 1])
-            .flat() as number[],
+          positions: clouds.positions,
+          normals: clouds.normals,
+          // Match Babylon's original number[] upload width; keep narrowing off the main thread.
+          indices: clouds.indices.some((index) => index >= 65535)
+            ? clouds.indices
+            : new Uint16Array(clouds.indices),
+          colors: new Float32Array((clouds.positions.length / 3) * 4).fill(1),
           faces: clouds.indices.length / 3,
           ranges: clouds.ranges,
         }
       : undefined;
-  const smoke = buildReferenceVolcanicSmoke({ ...recipe, seed }, lod);
+  const smoke =
+    partition === "temperate-lod-banks"
+      ? undefined
+      : buildReferenceVolcanicSmoke({ ...recipe, seed }, lod);
   return {
+    ...(input.partition ? { partition: input.partition } : {}),
     batches,
     shadowRadii: batches.map((b) => referenceShadowRadius(b.positions)),
     weatherShadowRadius: weather

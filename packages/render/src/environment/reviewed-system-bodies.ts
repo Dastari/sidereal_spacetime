@@ -70,6 +70,7 @@ export function createReviewedSystemBodies(
   worker: ReturnType<typeof createPlanetWorkerClient>,
   shadows: ReturnType<typeof createPlanetShadows>,
   glow: GlowLayer,
+  options: { shareTemperateInvariantBanks?: boolean } = {},
 ) {
   const entries = new Map<string, Entry>();
   const distantStars = new Map<string, ReturnType<typeof createDistantStar>>();
@@ -119,6 +120,7 @@ export function createReviewedSystemBodies(
             recipe,
             worker,
             signal,
+            shareTemperateInvariantBanks: options.shareTemperateInvariantBanks,
             prepareMaterial: (mesh, nextFrame, opaqueRefraction) =>
               shadows.prepare(mesh, nextFrame, { signal, opaqueRefraction }),
           },
@@ -319,6 +321,9 @@ export function createReviewedSystemBodies(
       ),
     stats: () => ({
       retainedBodies: entries.size,
+      activeBodies: [...entries.values()].filter((e) =>
+        e.active?.runtime?.ready(),
+      ).length,
       pendingBodies: [...entries.values()].filter((e) => !!e.pending).length,
       errors: [...entries.values()]
         .filter((e) => e.error)
